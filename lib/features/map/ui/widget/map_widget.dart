@@ -1,0 +1,369 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:collection/collection.dart';
+import 'package:drawable_text/drawable_text.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_map/plugin_api.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:latlong2/latlong.dart';
+import 'package:qareeb_dash/core/api_manager/api_service.dart';
+import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_dash/core/widgets/images/image_multi_type.dart';
+import 'package:qareeb_dash/features/map/data/models/my_marker.dart';
+import 'package:qareeb_dash/features/shared_trip/data/response/shared_trip.dart';
+
+import '../../../../core/strings/app_color_manager.dart';
+import '../../../../core/strings/enum_manager.dart';
+import '../../../../core/widgets/my_card_widget.dart';
+import '../../../../core/widgets/spinner_widget.dart';
+import '../../../../generated/assets.dart';
+import '../../animate_marker/animated_marker_layer.dart';
+import '../../animate_marker/animated_marker_layer_options.dart';
+import '../../bloc/ather_cubit/ather_cubit.dart';
+import '../../bloc/map_controller_cubit/map_controller_cubit.dart';
+import '../../bloc/my_location_cubit/my_location_cubit.dart';
+import '../../bloc/set_point_cubit/map_control_cubit.dart';
+
+class CachedTileProvider extends TileProvider {
+  @override
+  ImageProvider<Object> getImage(TileCoordinates coordinates, TileLayer options) {
+    return CachedNetworkImageProvider(
+      getTileUrl(coordinates, options),
+      //Now you can set options that determine how the image gets cached via whichever plugin you use.
+    );
+  }
+}
+
+class MapWidget extends StatefulWidget {
+  const MapWidget({
+    Key? key,
+    this.onMapReady,
+    this.initialPoint,
+    this.onMapClick,
+  }) : super(key: key);
+
+  final Function(MapController controller)? onMapReady;
+  final Function(LatLng latLng)? onMapClick;
+  final LatLng? initialPoint;
+
+  GlobalKey<MapWidgetState> getKey() {
+    return GlobalKey<MapWidgetState>();
+  }
+
+  @override
+  State<MapWidget> createState() => MapWidgetState();
+}
+
+class MapWidgetState extends State<MapWidget> {
+  late MapController controller;
+
+  String tile = 'https://maps.almobtakiroon.com/osm/tile/{z}/{x}/{y}.png';
+
+  var bearing = 0.0;
+  var maxZoom = 18.0;
+
+  var trackCar = true;
+
+  controlMarkersListener(_, MapControlInitial state) async {
+    if (state.moveCamera) controller.move(state.point, controller.zoom);
+
+    if (state.state == 'mt') {
+      switch (state.type) {
+        case MapType.normal:
+          tile = 'https://maps.almobtakiroon.com/osm/tile/{z}/{x}/{y}.png';
+          maxZoom = 18.0;
+          break;
+
+        case MapType.word:
+          tile = 'https://maps.almobtakiroon.com/world2/tiles/{z}/{x}/{y}.png';
+          maxZoom = 16.4;
+          break;
+
+        case MapType.mix:
+          tile = 'https://maps.almobtakiroon.com/overlay/{z}/{x}/{y}.png';
+          maxZoom = 16.4;
+          break;
+      }
+      setState(() {});
+    }
+
+    setState(() {});
+  }
+
+  late MyLocationCubit myLocationCubit;
+  late MapControllerCubit mapControllerCubit;
+
+  final mapWidgetKey = GlobalKey();
+
+  LatLng get carLocation => context.read<AtherCubit>().state.result.getLatLng();
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<MapControlCubit, MapControlInitial>(
+          listener: controlMarkersListener,
+        ),
+        BlocListener<AtherCubit, AtherInitial>(
+          listener: (context, state) {
+            trackCar = state.trackCar;
+            if (trackCar) {
+              controller.move(state.result.getLatLng(), controller.zoom);
+            }
+          },
+        ),
+        BlocListener<MapControllerCubit, MapControllerInitial>(
+          listenWhen: (p, c) => c.point != null,
+          listener: (context, state) {
+            controller.move(state.point!, state.zoom);
+            context.read<AtherCubit>().trackCar(false);
+          },
+        ),
+      ],
+      child: FlutterMap(
+        key: mapWidgetKey,
+        mapController: controller,
+        options: MapOptions(
+          maxZoom: maxZoom,
+          // interactiveFlags: InteractiveFlag.pinchZoom | InteractiveFlag.drag,
+          onMapReady: () {
+            if (widget.initialPoint != null && widget.initialPoint!.latitude != 0) {
+              controller.move(widget.initialPoint!, 15);
+              mapControllerCubit.addSingleMarker(
+                  marker: MyMarker(point: widget.initialPoint!));
+            } else {
+              myLocationCubit.getMyLocation(context, moveMap: true);
+            }
+
+            if (widget.onMapReady != null) {
+              widget.onMapReady!(controller);
+            }
+          },
+          onTap: widget.onMapClick == null
+              ? null
+              : (tapPosition, point) {
+                  mapControllerCubit.addSingleMarker(
+                    marker: MyMarker(point: point),
+                  );
+                  widget.onMapClick!.call(point);
+                },
+          onMapEvent: (MapEvent p0) {
+            if (p0.source == MapEventSource.mapController) return;
+            if (!trackCar) return;
+            trackCar = false;
+            context.read<AtherCubit>().trackCar(trackCar);
+          },
+          zoom: 16.0,
+        ),
+        nonRotatedChildren: [
+          MapTypeSpinner(
+            controller: controller,
+          ),
+          BlocBuilder<AtherCubit, AtherInitial>(
+            buildWhen: (p, c) => p.trackCar != c.trackCar,
+            builder: (context, state) {
+              return Positioned(
+                bottom: 16.0,
+                right: 16.0,
+                child: FloatingActionButton(
+                  child: Icon(state.trackCar ? Icons.gps_fixed : Icons.gps_not_fixed,
+                      color: Colors.white),
+                  onPressed: () {
+                    context.read<AtherCubit>().trackCar(true);
+                    controller.move(carLocation, 15.0);
+                  },
+                ),
+              );
+            },
+          ),
+        ],
+        children: [
+          TileLayer(
+            urlTemplate: tile,
+            tileProvider: CachedTileProvider(),
+          ),
+          BlocBuilder<MapControllerCubit, MapControllerInitial>(
+            buildWhen: (p, c) {
+              return p.polylineNotifier != c.polylineNotifier;
+            },
+            builder: (context, state) {
+              return PolylineLayer(
+                polylines: MapHelper.initPolyline(state),
+              );
+            },
+          ),
+          BlocBuilder<MapControllerCubit, MapControllerInitial>(
+            buildWhen: (p, c) => p.markerNotifier != c.markerNotifier,
+            builder: (context, state) {
+              return MarkerLayer(
+                markers: MapHelper.initMarker(state),
+              );
+            },
+          ),
+          BlocBuilder<AtherCubit, AtherInitial>(
+            buildWhen: (p, c) =>
+                LatLng(c.result.lat, c.result.lng)
+                    .distanceBetweenLatLng(LatLng(p.result.lat, p.result.lng)) >
+                20,
+            builder: (context, state) {
+              return AnimatedMarkerLayer(
+                options: AnimatedMarkerLayerOptions(
+                  duration: const Duration(seconds: 6),
+                  marker: Marker(
+                    width: 75.0.spMin,
+                    height: 75.0.spMin,
+                    point: state.result.getLatLng(),
+                    builder: (_) {
+                      return Center(
+                        child: Transform.rotate(
+                          angle: -bearing,
+                          child: ImageMultiType(
+                            url: Assets.iconsCarTopView,
+                            height: 200.0.spMin,
+                            width: 200.0.spMin,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  var stream = Stream.periodic(const Duration(seconds: 5));
+
+  @override
+  void initState() {
+    super.initState();
+
+    myLocationCubit = context.read<MyLocationCubit>();
+    mapControllerCubit = context.read<MapControllerCubit>();
+
+    context.read<AtherCubit>().getDriverLocation();
+    controller = MapControllerImpl();
+    stream.takeWhile((element) {
+      return mounted;
+    }).listen((event) {
+      if (!mounted) return;
+      context.read<AtherCubit>().getDriverLocation();
+    });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      mapControllerCubit.mapHeight = mapWidgetKey.currentContext?.size?.height ?? 640.0;
+      mapControllerCubit.mapWidth = mapWidgetKey.currentContext?.size?.width ?? 360.0;
+    });
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+}
+
+//---------------------------------------
+
+final mapTypeList = [
+  SpinnerItem(name: 'خريطة عادية', id: MapType.normal.index),
+  SpinnerItem(name: 'قمر صناعي', id: MapType.word.index),
+  SpinnerItem(name: 'مختلطة', id: MapType.mix.index),
+];
+
+class MapTypeSpinner extends StatelessWidget {
+  const MapTypeSpinner({Key? key, required this.controller}) : super(key: key);
+
+  final MapController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      top: 30.0.h,
+      right: 10.0.w,
+      child: SpinnerWidget(
+        items: mapTypeList,
+        width: 50.0.w,
+        dropdownWidth: 200.0.w,
+        customButton: MyCardWidget(
+          elevation: 10.0,
+          padding: const EdgeInsets.all(10.0).r,
+          cardColor: AppColorManager.lightGray,
+          child: const Icon(Icons.layers_rounded, color: AppColorManager.mainColor),
+        ),
+        onChanged: (p0) {
+          context
+              .read<MapControlCubit>()
+              .changeMapType(MapType.values[p0.id], controller.center);
+        },
+      ),
+    );
+  }
+}
+
+class MapHelper {
+  static List<Marker> initMarker(MapControllerInitial state) {
+    return state.markers.values.mapIndexed(
+      (i, e) {
+        var isPoint = e.type == MyMarkerType.sharedPint;
+        return Marker(
+          point: e.point,
+          height: !isPoint ? 30.0.spMin : 150.0.spMin,
+          width: !isPoint ? 30.0.spMin : 150.0.spMin,
+          builder: (context) {
+            return (e.type == MyMarkerType.sharedPint)
+                ? Builder(builder: (context) {
+                    var nou = 0;
+                    if (state.additional != null && state.additional is SharedTrip) {
+                      nou = (state.additional as SharedTrip).nou(e.point);
+                    }
+                    return Column(
+                      children: [
+                        if (nou != 0)
+                          Container(
+                            height: 35.0.spMin,
+                            width: 70.0.spMin,
+                            margin: EdgeInsets.only(bottom: 5.0.spMin),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(5.0.r),
+                            ),
+                            alignment: Alignment.center,
+                            child: DrawableText(text: '$nou مقعد', color: Colors.black),
+                          ),
+                        ImageMultiType(
+                          url: i.iconPoint,
+                          height: 50.0.spMin,
+                          width: 50.0.spMin,
+                        ),
+                      ],
+                    );
+                  })
+                : ImageMultiType(
+                    url: Assets.iconsMainColorMarker,
+                    height: 30.0.spMin,
+                    width: 30.0.spMin,
+                  );
+          },
+        );
+      },
+    ).toList();
+  }
+
+  static List<Polyline> initPolyline(MapControllerInitial state) {
+    return state.polyLines.values.mapIndexed(
+      (i, e) {
+        var color = Colors.black;
+        return Polyline(
+          points: e,
+          color: color,
+          strokeCap: StrokeCap.round,
+          strokeWidth: 5.0.spMin,
+        );
+      },
+    ).toList();
+  }
+}
