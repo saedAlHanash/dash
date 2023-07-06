@@ -37,13 +37,20 @@ class GetUrl {
 
   static const getOldTrips = 'api/services/app/Order/GetDriverTrips';
 
-  static var myWallet = 'api/services/app/AccountsService/GetAccountBalance';
+  static const myWallet = 'api/services/app/AccountsService/GetAccountBalance';
 
-  static var debt = 'api/services/app/AccountsService/DriverDebts';
+  static const debt = 'api/services/app/AccountsService/DriverDebts';
 
-  static var allDrivers ='api/services/app/User/GetAllDrivers';
+  static const allDrivers = 'api/services/app/User/GetAllDrivers';
 
-  static var getDriverById = 'api/services/app/User/Get';
+  static const getDriverById = 'api/services/app/User/GetDriverById';
+
+  static const driverRedeems = 'api/services/app/RedeemService/GetRedeems';
+  static const allRedeems = 'api/services/app/RedeemService/GetAllRedeems';
+
+  static var carCategories = 'api/services/app/CarCategoriesService/GetAll';
+
+  static var bestDriver = 'api/services/app/User/GetBestDriver';
 }
 
 class PostUrl {
@@ -82,22 +89,33 @@ class PostUrl {
 
   static const endTrip = 'api/services/app/Order/EndTrip';
 
-  static var chargeClient = 'api/services/app/AccountsService/ChargeClientAccount';
+  static const chargeClient = 'api/services/app/AccountsService/ChargeClientAccount';
 
-  static var login = 'api/TokenAuth/Authenticate';
+  static const login = 'api/TokenAuth/Authenticate';
 
-  static var getPermissions = 'api/services/app/Role/GetAllPermissions';
+  static const getPermissions = 'api/services/app/Role/GetAllPermissions';
+
+  static const createRedeem = 'api/services/app/RedeemService/CreateRedeem';
+  static const createDriver = 'api/services/app/User/CreateDriver';
+
+  static const String activateUser = "api/services/app/User/Activate";
+  static const String deactivateUser = "api/services/app/User/DeActivate";
+
+  static var createReason = 'api/services/app/CancelReasons/Create';
 }
 
 class PutUrl {
   static const updateProfile = 'api/services/app/User/UpdateUser';
+  static const updateDriver = 'api/services/app/User/UpdateDriver';
 
   static const updateFavoritePlace = 'api/services/app/FavirotePlacesAppServices/Update';
-  static var changeUserLocation = 'api/services/app/UserService/ChangeUserLocation';
+  static const changeUserLocation = 'api/services/app/UserService/ChangeUserLocation';
 }
 
 class DeleteUrl {
   static const deleteFavoritePlace = 'api/services/app/FavirotePlacesAppServices/Delete';
+
+  static var deleteCancelReason = 'api/services/app/CancelReasons/Delete';
 }
 
 class OrsUrl {
@@ -119,6 +137,8 @@ class OsrmUrl {
 class PathUrl {
   static const updateSharedTrip =
       'api/services/app/SharedTripService/UpdateSharedTripStatus';
+
+  static var changeLoyalty = 'api/services/app/UserService/ChangeSubscriptionInLoyalty';
 }
 
 const baseUrl = 'live.qareeb-maas.com';

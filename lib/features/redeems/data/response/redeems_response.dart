@@ -24,22 +24,20 @@ class RedeemsResult {
   });
 
   final SystemParameters systemParameters;
-  final List<Total> totals;
+  final SystemParameters totals;
   final num totalMeters;
 
   factory RedeemsResult.fromJson(Map<String, dynamic> json) {
     return RedeemsResult(
-      systemParameters: SystemParameters.fromJson(json["systemParameters"] ?? {}),
-      totals: json["totals"] == null
-          ? []
-          : List<Total>.from(json["totals"]!.map((x) => Total.fromJson(x))),
+      systemParameters:  SystemParameters.fromJson(json["systemParameters"]??{}),
+      totals: SystemParameters.fromJson(json["totals"]??{}),
       totalMeters: json["totalMeters"] ?? 0,
     );
   }
 
   Map<String, dynamic> toJson() => {
         "systemParameters": systemParameters.toJson(),
-        "totals": totals.map((x) => x.toJson()).toList(),
+        "totals": totals.toJson(),
         "totalMeters": totalMeters,
       };
 }
@@ -71,27 +69,5 @@ class SystemParameters {
         "gold": gold,
         "oil": oil,
         "tire": tire,
-      };
-}
-
-class Total {
-  Total({
-    required this.value,
-    required this.key,
-  });
-
-  final num value;
-  final String key;
-
-  factory Total.fromJson(Map<String, dynamic> json) {
-    return Total(
-      value: json["value"] ?? 0,
-      key: json["key"] ?? "",
-    );
-  }
-
-  Map<String, dynamic> toJson() => {
-        "value": value,
-        "key": key,
       };
 }

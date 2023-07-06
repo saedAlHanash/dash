@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -10,12 +12,14 @@ class RoundImageWidget extends StatelessWidget {
     this.height,
     this.width,
     this.withFilter,
+    this.fileBytes,
   }) : super(key: key);
 
   final String url;
   final double? height;
   final double? width;
   final bool? withFilter;
+  final Uint8List? fileBytes;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +32,7 @@ class RoundImageWidget extends StatelessWidget {
             child: ImageMultiType(
               url: url,
               height: height,
+              fileBytes: fileBytes,
               width: width,
             ),
           ),

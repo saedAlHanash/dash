@@ -20,9 +20,9 @@ class DebtsCubit extends Cubit<DebtsInitial> {
   DebtsCubit() : super(DebtsInitial.initial());
   final network = sl<NetworkInfo>();
 
-  Future<void> getDebts(BuildContext context) async {
+  Future<void> getDebts(BuildContext context, {required int id}) async {
     emit(state.copyWith(statuses: CubitStatuses.loading));
-    final pair = await _getDebtsApi();
+    final pair = await _getDebtsApi(id: id);
 
     if (pair.first == null) {
       if (context.mounted) {
@@ -34,14 +34,13 @@ class DebtsCubit extends Cubit<DebtsInitial> {
     }
   }
 
-  Future<Pair<List<Debt>?, String?>> _getDebtsApi() async {
+  Future<Pair<List<Debt>?, String?>> _getDebtsApi({required int id}) async {
     if (await network.isConnected) {
-      final response = await APIService().getApi(
-        url: GetUrl.debt,
-      );
+      final response =
+          await APIService().getApi(url: GetUrl.debt, query: {'driverId': id});
 
       if (response.statusCode == 200) {
-        return Pair(DebtsResponse.fromJson(response.json).result.items, null);
+        return Pair(DebtsResponse.fromJson(response.jsonBody).result.items, null);
       } else {
         return Pair(null, ErrorManager.getApiError(response));
       }

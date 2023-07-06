@@ -85,7 +85,6 @@ class UpdateProfilePage extends StatelessWidget {
                         ),
                         15.0.horizontalSpace,
                         CircleImageWidget(
-                          file: request.file,
                           url: request.initialImage,
                           margin: EdgeInsets.only(left: 75.0.r),
                         ),

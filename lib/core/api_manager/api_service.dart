@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:collection/collection.dart';
 import 'package:http/http.dart' as http;
@@ -8,6 +9,7 @@ import 'package:logger/logger.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 
 import '../util/shared_preferences.dart';
+import 'dart:math';
 
 const baseUrl = 'live.qareeb-maas.com';
 
@@ -203,8 +205,7 @@ class APIService {
     required String url,
     String? path,
     String type = 'POST',
-    String nameFile = 'File',
-    List<XFile?>? files,
+    List<UploadFile?>? files,
     Map<String, dynamic>? fields,
     Map<String, String>? header,
   }) async {
@@ -217,13 +218,16 @@ class APIService {
     var request = http.MultipartRequest(type, uri);
 
     ///log
-    logRequest(url, fields, additional: files?.firstOrNull?.path);
+    logRequest(url, fields, additional: files?.firstOrNull?.nameField);
 
-    for (var file in (files ?? <XFile?>[])) {
-      if (file == null) continue;
+    for (var uploadFile in (files ?? <UploadFile?>[])) {
+      if (uploadFile?.fileBytes == null) continue;
 
-      final multipartFile =
-          http.MultipartFile.fromBytes(nameFile, await file.readAsBytes());
+      final multipartFile = http.MultipartFile.fromBytes(
+        uploadFile!.nameField ?? '',
+        uploadFile.fileBytes!,
+        filename: '${getRandomString(10)}.jpg',
+      );
 
       request.files.add(multipartFile);
     }
@@ -242,7 +246,7 @@ class APIService {
     return response;
   }
 
-    Future<DateTime> getServerTime() async {
+  Future<DateTime> getServerTime() async {
     var uri = Uri.https(baseUrl);
 
     final response = await http.get(uri, headers: innerHeader).timeout(
@@ -275,7 +279,6 @@ void logResponse(String url, http.Response response) {
   loggerObject.v('${response.statusCode} \n $res');
 }
 
-
 DateTime getDateTimeFromHeaders(http.Response response) {
   final headers = response.headers;
 
@@ -293,6 +296,42 @@ DateTime getDateTimeFromHeaders(http.Response response) {
 DateTime parseGMTDate(String dateString) {
   final formatter = DateFormat('EEE, dd MMM yyyy HH:mm:ss \'GMT\'');
   return formatter.parseUTC(dateString);
+}
+
+class UploadFile {
+  final Uint8List? fileBytes;
+  final String nameField;
+  final String? initialImage;
+
+  UploadFile({
+    required this.fileBytes,
+    this.initialImage,
+    this.nameField = 'File',
+  });
+
+  UploadFile copyWith({
+    Uint8List? fileBytes,
+    String? nameField,
+  }) {
+    return UploadFile(
+      fileBytes: fileBytes ?? this.fileBytes,
+      nameField: nameField ?? this.nameField,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'filelBytes': fileBytes,
+      'nameField': nameField,
+    };
+  }
+
+  factory UploadFile.fromMap(Map<String, dynamic> map) {
+    return UploadFile(
+      fileBytes: map['filelBytes'] as Uint8List,
+      nameField: map['nameField'] as String,
+    );
+  }
 }
 
 /*
@@ -338,3 +377,9 @@ android {
 }
 
  */
+
+const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+final _rnd = Random();
+
+String getRandomString(int length) => String.fromCharCodes(
+    Iterable.generate(length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));

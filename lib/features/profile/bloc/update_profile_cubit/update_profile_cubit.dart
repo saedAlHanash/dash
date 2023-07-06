@@ -47,9 +47,10 @@ class UpdateProfileCubit extends Cubit<UpdateProfileInitial> {
       final response = await APIService().uploadMultiPart(
         url: PutUrl.updateProfile,
         type: 'PUT',
-        nameFile: 'ImageFile',
         fields: request.toJson(),
-        files: [request.file],
+        files: [
+          UploadFile(fileBytes: await request.file?.readAsBytes(), nameField: 'ImageFile')
+        ],
       );
 
       if (response.statusCode == 200) {

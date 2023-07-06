@@ -8,6 +8,10 @@ enum NavTrip { waiting, have, accepted, started, ended }
 
 enum MapType { normal, word, mix }
 
+enum Gender { mail, female }
+
+enum RedeemType { gold, oil, tire }
+
 enum MtnState { init, pay, otp }
 
 enum TripStatus { non, reject, accept, start, end }

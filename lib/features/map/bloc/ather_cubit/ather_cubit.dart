@@ -69,7 +69,7 @@ class AtherCubit extends Cubit<AtherInitial> {
           hostName: 'admin.alather.net');
 
       if (response.statusCode == 200) {
-        return Pair(AtherResponse.fromJson(response.json, ime).ime, null);
+        return Pair(AtherResponse.fromJson(response.jsonBody, ime).ime, null);
       } else {
         return Pair(null, ErrorManager.getApiError(response));
       }
@@ -101,7 +101,7 @@ class AtherCubit extends Cubit<AtherInitial> {
 
       if (response.statusCode == 200) {
         final list = <LatLng>[];
-        var f1 = response.json;
+        var f1 = response.jsonBody;
         for (var e in f1) {
           list.add(LatLng(double.parse(e[1]), double.parse(e[2])));
         }

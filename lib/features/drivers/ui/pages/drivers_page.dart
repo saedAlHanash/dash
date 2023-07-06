@@ -14,6 +14,7 @@ import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/my_style.dart';
 import '../../../../router/go_route_pages.dart';
+import '../../../auth/bloc/change_user_state_cubit/change_user_state_cubit.dart';
 import '../../bloc/all_drivers/all_drivers_cubit.dart';
 
 import '../widget/DriverDataGrid.dart';
@@ -38,8 +39,10 @@ class _DriverPageState extends State<DriverPage> {
     return Scaffold(
       floatingActionButton: isAllowed(AppPermissions.CREATION)
           ? FloatingActionButton(
-              onPressed: () {},
-              child: Icon(Icons.add),
+              onPressed: () {
+                context.pushNamed(GoRouteName.createDriver);
+              },
+              child: const Icon(Icons.add, color: Colors.white),
             )
           : null,
       body: BlocBuilder<AllDriversCubit, AllDriversInitial>(
@@ -52,11 +55,17 @@ class _DriverPageState extends State<DriverPage> {
           }
           var dataSource = DriveDataSource(
               drivers: state.result,
-              editFunction: (DriverModel driver) {},
-              viewFunction: (DriverModel driver) {
-                context.goNamed(GoRouteName.driverInfo, extra: driver);
+              editFunction: (DriverModel driver) {
+                context.pushNamed(GoRouteName.updateDriver, extra: driver);
               },
-              activeFunction: (DriverModel driver) async {});
+              viewFunction: (DriverModel driver) {
+                context.pushNamed(GoRouteName.driverInfo, queryParams: {'id':driver.id.toString()});
+              },
+              activeFunction: (DriverModel driver) async {
+                context
+                    .read<ChangeUserStateCubit>()
+                    .changeUserState(context, id: driver.id, userState: !driver.isActive);
+              });
 
           return Column(
             children: [
@@ -109,6 +118,7 @@ class _DriverPageState extends State<DriverPage> {
       gridColumn(text: "رقم الهاتف"),
       gridColumn(text: "حالة السائق"),
       gridColumn(text: "IMEI"),
+      gridColumn(text: "الولاء"),
       gridColumn(text: "العمليات"),
     ];
   }

@@ -1,4 +1,3 @@
-
 import 'dart:html';
 import 'dart:math';
 
@@ -17,9 +16,17 @@ import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/shared_preferences.dart';
 import '../../../../core/widgets/logo_text.dart';
 import '../../../../router/go_route_pages.dart';
+import '../../../auth/bloc/change_user_state_cubit/change_user_state_cubit.dart';
 import '../../../drivers/bloc/all_drivers/all_drivers_cubit.dart';
+import '../../../drivers/bloc/loyalty_cubit/loyalty_cubit.dart';
 import '../../../drivers/ui/pages/drivers_page.dart';
+import '../../../reasons/bloc/create_cubit/create_cubit.dart';
+import '../../../reasons/bloc/delete_reason_cubit/delete_reason_cubit.dart';
+import '../../../reasons/bloc/get_reasons_cubit/get_reasons_cubit.dart';
+import '../../../reasons/ui/pages/reasons_page.dart';
+import '../../../redeems/bloc/redeems_cubit/redeems_cubit.dart';
 import '../../bloc/nav_home_cubit/nav_home_cubit.dart';
+import '../screens/dashboard_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key, required this.currentPage}) : super(key: key);
@@ -164,7 +171,7 @@ class _HomePageState extends State<HomePage> {
                   while (Navigator.canPop(context)) {
                     Navigator.pop(context);
                   }
-                  context.goNamed(GoRouteName.loginPage);
+                  context.pushNamed(GoRouteName.loginPage);
                 },
                 child: const DrawableText(
                   text: 'تسجيل الخروج',
@@ -185,7 +192,13 @@ class _HomePageState extends State<HomePage> {
                       color: Colors.yellowAccent, height: 100.0, width: 100.0);
                 case "/drivers":
                   // addQueryParameters(params: {'key': '1'});
-                  return const DriverPage();
+                  return MultiBlocProvider(
+                    providers: [
+                      BlocProvider(create: (context) => sl<LoyaltyCubit>()),
+                      BlocProvider(create: (context) => sl<ChangeUserStateCubit>()),
+                    ],
+                    child: const DriverPage(),
+                  );
                 case "/shared_trips":
                   return Container(color: Colors.green, height: 100.0, width: 100.0);
                 case "/trips":
@@ -199,6 +212,16 @@ class _HomePageState extends State<HomePage> {
                 case "/transactions":
                 case "/car_categories":
                 case "/cancel_reasons":
+                  return MultiBlocProvider(
+                    providers: [
+                      BlocProvider(create: (context) => sl<DeleteReasonCubit>()),
+                      BlocProvider(create: (context) => sl<CreateReasonCubit>()),
+                      BlocProvider(
+                        create: (context) => sl<GetReasonsCubit>()..getReasons(context),
+                      ),
+                    ],
+                    child: const ReasonsPage(),
+                  );
                 case "/messages":
                   return Container(color: Colors.red, height: 100.0, width: 100.0);
               }

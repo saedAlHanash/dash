@@ -40,7 +40,7 @@ class _LoginPageState extends State<LoginPage> {
       const Duration(seconds: 1),
       () {
         if (AppSharedPreference.isLogin) {
-          context.goNamed(GoRouteName.homePage);
+          context.pushNamed(GoRouteName.homePage);
         } else {
           setState(() => isLoading = false);
         }
@@ -54,7 +54,7 @@ class _LoginPageState extends State<LoginPage> {
     if (isLoading) return MyStyle.loadingWidget();
     return BlocListener<LoginCubit, LoginInitial>(
       listenWhen: (p, c) => c.statuses == CubitStatuses.done,
-      listener: (_, state) => context.goNamed(GoRouteName.homePage),
+      listener: (_, state) => context.pushNamed(GoRouteName.homePage),
       child: Scaffold(
         appBar: const AppBarWidget(),
         body: Container(

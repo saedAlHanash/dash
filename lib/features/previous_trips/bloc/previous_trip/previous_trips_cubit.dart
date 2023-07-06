@@ -43,7 +43,7 @@ class PreviousTripsCubit extends Cubit<PreviousTripsInitial> {
       final response = await APIService().getApi(url: GetUrl.getPreviousTrips);
 
       if (response.statusCode == 200) {
-        return Pair(TripsResponse.fromJson(response.json).result.reversed.toList(), null);
+        return Pair(TripsResponse.fromJson(response.jsonBody).result.reversed.toList(), null);
       } else {
         return Pair(null, ErrorManager.getApiError(response));
       }

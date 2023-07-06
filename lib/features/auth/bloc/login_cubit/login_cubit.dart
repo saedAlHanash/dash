@@ -66,7 +66,7 @@ class LoginCubit extends Cubit<LoginInitial> {
       );
 
       if (response.statusCode == 200) {
-        return Pair(LoginResponse.fromJson(response.json).result, null);
+        return Pair(LoginResponse.fromJson(response.jsonBody).result, null);
       } else {
         return Pair(null, ErrorManager.getApiError(response));
       }
@@ -82,7 +82,7 @@ class LoginCubit extends Cubit<LoginInitial> {
       );
 
       if (response.statusCode == 200) {
-        return Pair(PermissionsResponse.fromJson(response.json).result, null);
+        return Pair(PermissionsResponse.fromJson(response.jsonBody).result, null);
       } else {
         return Pair(null, ErrorManager.getApiError(response));
       }

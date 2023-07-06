@@ -2,16 +2,20 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../features/auth/bloc/change_user_state_cubit/change_user_state_cubit.dart';
 import '../../features/auth/bloc/forgot_password_cubit/forgot_password_cubit.dart';
 import '../../features/auth/bloc/login_cubit/login_cubit.dart';
 import '../../features/auth/bloc/policy_cubit/policy_cubit.dart';
 import '../../features/auth/bloc/resend_code_cubit/resend_code_cubit.dart';
 import '../../features/auth/bloc/reset_password_cubit/reset_password_cubit.dart';
 import '../../features/auth/bloc/signup_cubit/signup_cubit.dart';
+import '../../features/car_catigory/bloc/all_car_categories_cubit/all_car_categories_cubit.dart';
 import '../../features/contact/bloc/send_note_cubit/send_note_cubit.dart';
 import '../../features/drivers/bloc/all_drivers/all_drivers_cubit.dart';
 
-import '../../features/drivers/bloc/driver_bu_id_cubit/driver_bu_id_cubit.dart';
+import '../../features/drivers/bloc/create_driver_cubit/create_driver_cubit.dart';
+import '../../features/drivers/bloc/driver_by_id_cubit/driver_by_id_cubit.dart';
+import '../../features/drivers/bloc/loyalty_cubit/loyalty_cubit.dart';
 import '../../features/home/bloc/nav_home_cubit/nav_home_cubit.dart';
 import '../../features/map/bloc/ather_cubit/ather_cubit.dart';
 import '../../features/map/bloc/map_controller_cubit/map_controller_cubit.dart';
@@ -27,6 +31,11 @@ import '../../features/rating/data/repo/rating_repo_imp.dart';
 import '../../features/rating/domain/repo/rating_repo.dart';
 import '../../features/rating/domain/use_cases/rating_use_case.dart';
 import '../../features/rating/presentation/bloc/rating_cubit/rating_cubit.dart';
+import '../../features/reasons/bloc/create_cubit/create_cubit.dart';
+import '../../features/reasons/bloc/delete_reason_cubit/delete_reason_cubit.dart';
+import '../../features/reasons/bloc/get_reasons_cubit/get_reasons_cubit.dart';
+import '../../features/redeems/bloc/create_redeem_cubit/create_redeem_cubit.dart';
+import '../../features/redeems/bloc/redeems_cubit/redeems_cubit.dart';
 import '../../features/shared_trip/bloc/add_point_cubit/add_point_cubit.dart';
 import '../../features/shared_trip/bloc/create_shared_trip_cubit/create_shared_trip_cubit.dart';
 import '../../features/shared_trip/bloc/get_shared_trips_cubit/get_shared_trips_cubit.dart';
@@ -51,6 +60,7 @@ Future<void> init() async {
 
   /// Bloc
   sl.registerFactory(() => LoginCubit());
+  sl.registerFactory(() => ChangeUserStateCubit());
   sl.registerFactory(() => SignupCubit(network: sl()));
   sl.registerFactory(() => PolicyCubit(network: sl()));
   sl.registerFactory(() => ForgotPasswordCubit(network: sl()));
@@ -136,7 +146,7 @@ Future<void> init() async {
 
   //region charge
   sl.registerFactory(() => ChargeClientCubit());
-  sl.registerFactory(() => MyWalletCubit());
+  sl.registerFactory(() => WalletCubit());
   sl.registerFactory(() => DebtsCubit());
 
   //endregion
@@ -144,8 +154,31 @@ Future<void> init() async {
   //region drivers
   sl.registerFactory(() => AllDriversCubit());
   sl.registerFactory(() => DriverBuIdCubit());
+  sl.registerFactory(() => CreateDriverCubit());
 
   //endregion
+
+  //region redeems
+  sl.registerFactory(() => RedeemsCubit());
+  sl.registerFactory(() => CreateRedeemCubit());
+
+  //endregion
+
+  //region car category
+
+  sl.registerFactory(() => AllCarCategoriesCubit());
+  //endregion
+
+  //region loyalty
+  sl.registerFactory(() => LoyaltyCubit());
+
+  //endregion
+
+  sl.registerFactory(() => GetReasonsCubit());
+  sl.registerFactory(() => DeleteReasonCubit());
+  sl.registerFactory(() => CreateReasonCubit());
+
+
 //! External
 
   final sharedPreferences = await SharedPreferences.getInstance();

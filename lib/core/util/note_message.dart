@@ -63,7 +63,8 @@ class NoteMessage {
     );
   }
 
-  static showCustomBottomSheet(BuildContext context, {required Widget child}) async {
+  static Future<bool> showCustomBottomSheet(BuildContext context,
+      {required Widget child, Function(bool val)? onCancel}) async {
     final result = await showModalBottomSheet(
       context: context,
       elevation: null,
@@ -90,6 +91,7 @@ class NoteMessage {
 
     var r = (result == null) ? false : result;
 
+    onCancel?.call(r);
     return r;
   }
 

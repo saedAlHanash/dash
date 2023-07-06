@@ -28,7 +28,7 @@ class ItemPreviousTrip extends StatelessWidget {
     return InkWell(
       splashColor: Colors.transparent,
       onTap: () {
-        // context.goNamed(GoRouteName.tripInfoPage);
+        // context.pushNamed(GoRouteName.tripInfoPage);
       },
       child: MyCardWidget(
         elevation: 5.0,

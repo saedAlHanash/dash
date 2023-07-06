@@ -15,12 +15,12 @@ import '../../data/response/wallet_response.dart';
 
 part 'my_wallet_state.dart';
 
-class MyWalletCubit extends Cubit<MyWalletInitial> {
-  MyWalletCubit() : super(MyWalletInitial.initial());
+class WalletCubit extends Cubit<WalletInitial> {
+  WalletCubit() : super(WalletInitial.initial());
 
-  Future<void> getMyWallet() async {
+  Future<void> getWallet({required int id}) async {
     emit(state.copyWith(statuses: CubitStatuses.loading));
-    final pair = await getMyWalletApi();
+    final pair = await getWalletApi(id: id);
 
     if (pair.first == null) {
       emit(state.copyWith(statuses: CubitStatuses.error, error: pair.second));
@@ -29,16 +29,16 @@ class MyWalletCubit extends Cubit<MyWalletInitial> {
     }
   }
 
-  static Future<Pair<MyWalletResult?, String?>> getMyWalletApi() async {
+  static Future<Pair<WalletResult?, String?>> getWalletApi({required int id}) async {
     final network = sl<NetworkInfo>();
     if (await network.isConnected) {
       final response = await APIService().getApi(
         url: GetUrl.myWallet,
-        query: {'UserId': AppSharedPreference.getMyId},
+        query: {'UserId': id},
       );
 
       if (response.statusCode == 200) {
-        var r = Pair(MyWalletResponse.fromJson(response.json).result, null);
+        var r = Pair(WalletResponse.fromJson(response.jsonBody).result, null);
         AppSharedPreference.setWalletBalance(r.first.totalMoney);
         return r;
       } else {

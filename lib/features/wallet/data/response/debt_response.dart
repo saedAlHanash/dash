@@ -43,7 +43,9 @@ class DebtsResult {
 class Debt {
   Debt({
     required this.id,
-    required this.amount,
+    required this.driverShare,
+    required this.totalCost,
+    required this.companyLoyaltyShare,
     required this.sharedRequestId,
     required this.tripId,
     required this.driverId,
@@ -51,16 +53,20 @@ class Debt {
   });
 
   final int id;
-  final num amount;
+  final num driverShare;
+  final num totalCost;
+  final num companyLoyaltyShare;
   final num sharedRequestId;
   final num tripId;
   final num driverId;
   final DateTime? date;
 
-  factory Debt.fromJson(Map<String, dynamic> json) {
+  factory Debt.fromJson(Map<String, dynamic> json){
     return Debt(
       id: json["id"] ?? 0,
-      amount: json["amount"] ?? 0,
+      driverShare: json["driverShare"] ?? 0,
+      totalCost: json["totalCost"] ?? 0,
+      companyLoyaltyShare: json["companyLoyaltyShare"] ?? 0,
       sharedRequestId: json["sharedRequestId"] ?? 0,
       tripId: json["tripId"] ?? 0,
       driverId: json["driverId"] ?? 0,
@@ -69,11 +75,15 @@ class Debt {
   }
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "amount": amount,
-        "sharedRequestId": sharedRequestId,
-        "tripId": tripId,
-        "driverId": driverId,
-        "date": date?.toIso8601String(),
-      };
+    "id": id,
+    "driverShare": driverShare,
+    "totalCost": totalCost,
+    "companyLoyaltyShare": companyLoyaltyShare,
+    "sharedRequestId": sharedRequestId,
+    "tripId": tripId,
+    "driverId": driverId,
+    "date": date?.toIso8601String(),
+  };
+
 }
+

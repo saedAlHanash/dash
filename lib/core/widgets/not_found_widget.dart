@@ -16,10 +16,9 @@ class NotFoundWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        LottieBuilder.asset(Assets.lottiesError),
+        LottieBuilder.asset(Assets.lottiesError,width: 150.0.r,height: 150.0.r),
         DrawableText(
           text: text,
-           
           color: AppColorManager.black,
         )
       ],

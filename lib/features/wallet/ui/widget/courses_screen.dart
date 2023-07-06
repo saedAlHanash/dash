@@ -10,7 +10,7 @@ import '../../data/response/wallet_response.dart';
 class WalletScreen extends StatefulWidget {
   const WalletScreen({super.key, required this.wallet});
 
-  final MyWalletResult wallet;
+  final WalletResult wallet;
 
   @override
   State<WalletScreen> createState() => _WalletScreenState();

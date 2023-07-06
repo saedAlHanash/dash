@@ -5,16 +5,21 @@ import 'package:qareeb_dash/core/strings/app_color_manager.dart';
 import 'package:qareeb_dash/core/util/my_style.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../core/widgets/not_found_widget.dart';
 import '../../data/response/wallet_response.dart';
 
 class PayedListWidget extends StatelessWidget {
   const PayedListWidget({Key? key, required this.wallet}) : super(key: key);
-  final MyWalletResult wallet;
+  final WalletResult wallet;
 
   @override
   Widget build(BuildContext context) {
     final list = wallet.transactions;
+    if(list.isEmpty){
+      return const NotFoundWidget(text: 'لا يوجد معلومات');
+    }
     return ListView.builder(
+      shrinkWrap: true,
       itemCount: list.length,
       itemBuilder: (context, i) {
         final item = list[i];

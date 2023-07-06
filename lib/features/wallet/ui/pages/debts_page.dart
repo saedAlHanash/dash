@@ -9,7 +9,6 @@ import '../../../../core/util/my_style.dart';
 import '../../../../core/widgets/app_bar_widget.dart';
 import '../../../../core/widgets/my_card_widget.dart';
 import '../../bloc/debt_cubit/debts_cubit.dart';
-import '../../data/response/debt_response.dart';
 
 class DebtsPage extends StatelessWidget {
   const DebtsPage({super.key});
@@ -17,7 +16,9 @@ class DebtsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarWidget(),
+      appBar: const AppBarWidget(
+        text: 'سجل عائدات السائق من الرحلات',
+      ),
       body: BlocBuilder<DebtsCubit, DebtsInitial>(
         builder: (context, state) {
           if (state.statuses.loading) {
@@ -34,25 +35,49 @@ class DebtsPage extends StatelessWidget {
               return MyCardWidget(
                 elevation: 0.0,
                 margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0).r,
-                child: Column(
+                child: Row(
                   children: [
-                    DrawableText(
-                      text: item.sharedRequestId != 0 ? 'رحلة تشاركية' : 'رحلة عادية',
-                      color: Colors.black,
-                      matchParent: true,
-                      fontFamily: FontManager.cairoBold,
-                      drawableAlin: DrawableAlin.between,
-                      drawableEnd: DrawableText(
-                        text: item.amount.formatPrice,
+                    Expanded(
+                      child: DrawableText(
+                        text: item.sharedRequestId != 0
+                            ? 'رحلة تشاركية (id ${item.sharedRequestId})'
+                            : 'رحلة عادية (id  ${item.tripId})',
                         color: Colors.black,
+                        matchParent: true,
                         fontFamily: FontManager.cairoBold,
                       ),
                     ),
-                    const Divider(),
-                    DrawableText(
-                      text: item.date?.formatDateTime ?? '',
-                      color: Colors.grey,
-                    )
+                    Expanded(
+                      child: DrawableText(
+                        text: 'الإجمالي: ${item.totalCost.formatPrice}',
+                        color: Colors.black,
+                        matchParent: true,
+                        fontFamily: FontManager.cairoBold,
+                      ),
+                    ),
+                    Expanded(
+                      child: DrawableText(
+                        text: 'للسائق: ${item.driverShare.formatPrice}',
+                        color: Colors.black,
+                        matchParent: true,
+                        fontFamily: FontManager.cairoBold,
+                      ),
+                    ),
+                    if (item.companyLoyaltyShare != 0)
+                      Expanded(
+                        child: DrawableText(
+                          text: 'للولاء: ${item.companyLoyaltyShare.formatPrice}',
+                          color: Colors.black,
+                          matchParent: true,
+                          fontFamily: FontManager.cairoBold,
+                        ),
+                      ),
+                    Expanded(
+                      child: DrawableText(
+                        text: item.date?.formatDateTime ?? '',
+                        color: Colors.grey,
+                      ),
+                    ),
                   ],
                 ),
               );

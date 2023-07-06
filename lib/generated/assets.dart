@@ -17,8 +17,10 @@ class Assets {
   static const String iconsCarTopView = 'assets/icons/car_top_view.png';
   static const String iconsCheckCircle = 'assets/icons/check_circle.svg';
   static const String iconsCoins = 'assets/icons/coins.svg';
+  static const String iconsContract = 'assets/icons/contract.svg';
   static const String iconsD = 'assets/icons/d.svg';
   static const String iconsDelete = 'assets/icons/delete.svg';
+  static const String iconsDrivingLicence = 'assets/icons/driving_licence.jpg';
   static const String iconsE = 'assets/icons/e.svg';
   static const String iconsEdit = 'assets/icons/edit.svg';
   static const String iconsEmptyStar = 'assets/icons/empty_star.svg';
@@ -26,9 +28,12 @@ class Assets {
   static const String iconsFaftoraLogo = 'assets/icons/faftora_logo.png';
   static const String iconsFatoraLogo = 'assets/icons/fatora_logo.jpg';
   static const String iconsFullStar = 'assets/icons/full_star.svg';
+  static const String iconsGold = 'assets/icons/gold.svg';
   static const String iconsHistory = 'assets/icons/history.svg';
   static const String iconsHistoryGroup = 'assets/icons/history_group.svg';
+  static const String iconsIdentity = 'assets/icons/identity.svg';
   static const String iconsInstagram = 'assets/icons/instagram.svg';
+  static const String iconsLicence = 'assets/icons/licence.png';
   static const String iconsLinkedin = 'assets/icons/linkedin.svg';
   static const String iconsLogoWithText = 'assets/icons/logo_with_text.svg';
   static const String iconsLogoWithoutText = 'assets/icons/logo_without_text.svg';
@@ -42,6 +47,8 @@ class Assets {
   static const String iconsMoneyCash = 'assets/icons/money_cash.svg';
   static const String iconsMoneyOff = 'assets/icons/money_off.svg';
   static const String iconsMtnLogo = 'assets/icons/mtn_logo.jpg';
+  static const String iconsOil = 'assets/icons/oil.svg';
+  static const String iconsPath = 'assets/icons/path.svg';
   static const String iconsPerson = 'assets/icons/person.svg';
   static const String iconsPickerMarker = 'assets/icons/picker_marker.svg';
   static const String iconsPin = 'assets/icons/pin.png';
@@ -50,8 +57,10 @@ class Assets {
   static const String iconsStar = 'assets/icons/star.svg';
   static const String iconsTaxi = 'assets/icons/taxi.png';
   static const String iconsTextLogo = 'assets/icons/text_logo.svg';
+  static const String iconsTires = 'assets/icons/tires.svg';
   static const String iconsTwitter = 'assets/icons/twitter.svg';
   static const String iconsUp = 'assets/icons/up.svg';
+  static const String iconsUser = 'assets/icons/user.svg';
   static const String iconsWallet = 'assets/icons/wallet.svg';
   static const String lottiesAccountsLoginPleasewait = 'assets/lotties/accounts_login_pleasewait.json';
   static const String lottiesError = 'assets/lotties/error.json';

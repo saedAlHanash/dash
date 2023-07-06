@@ -1,19 +1,19 @@
-part of 'driver_bu_id_cubit.dart';
+part of 'all_car_categories_cubit.dart';
 
-class DriverBuIdInitial extends Equatable {
+class AllCarCategoriesInitial extends Equatable {
   final CubitStatuses statuses;
-  final DriverModel result;
+  final List<CarCategory> result;
   final String error;
 
-  const DriverBuIdInitial({
+  const AllCarCategoriesInitial({
     required this.statuses,
     required this.result,
     required this.error,
   });
 
-  factory DriverBuIdInitial.initial() {
-    return DriverBuIdInitial(
-      result: DriverModel.fromJson({}),
+  factory AllCarCategoriesInitial.initial() {
+    return const AllCarCategoriesInitial(
+      result: <CarCategory>[],
       error: '',
       statuses: CubitStatuses.init,
     );
@@ -22,15 +22,16 @@ class DriverBuIdInitial extends Equatable {
   @override
   List<Object> get props => [statuses, result, error];
 
-  DriverBuIdInitial copyWith({
+  AllCarCategoriesInitial copyWith({
     CubitStatuses? statuses,
-    DriverModel? result,
+    List<CarCategory>? result,
     String? error,
   }) {
-    return DriverBuIdInitial(
+    return AllCarCategoriesInitial(
       statuses: statuses ?? this.statuses,
       result: result ?? this.result,
       error: error ?? this.error,
     );
   }
+
 }

@@ -15,6 +15,7 @@ import 'package:qareeb_dash/generated/assets.dart';
 import '../../features/map/data/models/my_marker.dart';
 import '../../features/points/data/response/points_response.dart';
 import '../../features/shared_trip/data/response/shared_trip.dart';
+import '../../features/redeems/data/response/redeems_response.dart';
 import '../../features/trip/data/response/trip_response.dart';
 import '../../services/trip_path/data/models/trip_path.dart';
 import '../strings/app_string_manager.dart';
@@ -74,12 +75,12 @@ extension SplitByLength on String {
   }
 }
 
-final oCcy = NumberFormat("#,##0.00", "en_US");
+final oCcy = NumberFormat("#,##0.00");
 
 extension MaxInt on num {
   int get maxInt => 2147483647;
 
-  String get formatPrice => '${oCcy.format(this)} ل.س';
+  String get formatPrice => 'spy. ${oCcy.format(this)}';
 
   String get iconPoint {
     switch (toInt()) {
@@ -98,6 +99,33 @@ extension MaxInt on num {
 
 extension RealName on Enum {
   String get upperFirst => name.replaceRange(0, 1, name.substring(0, 1).toUpperCase());
+}
+
+extension Redeems on RedeemsResult {
+
+  int get oilCount =>
+      ((totalMeters / systemParameters.oil) - (totals.oil / systemParameters.oil))
+          .floor();
+
+  int get goldCount =>
+      ((totalMeters / systemParameters.gold) - (totals.oil / systemParameters.gold))
+          .floor();
+
+  int get tiresCount =>
+      ((totalMeters / systemParameters.tire) - (totals.oil / systemParameters.tire))
+          .floor();
+
+  int get oilOldCount => (totals.oil / systemParameters.oil).floor();
+
+  int get goldOldCount => (totals.oil / systemParameters.gold).floor();
+
+  int get tiresOldCount => (totals.oil / systemParameters.tire).floor();
+
+  double get oilPCount => ((totals.oil *100) / systemParameters.oil).roundToDouble();
+
+  double get goldPCount => ((totals.oil *100) / systemParameters.gold).roundToDouble();
+
+  double get tiresPCount => ((totals.oil *100) / systemParameters.tire).roundToDouble();
 }
 
 extension StateName on SharedTripStatus {
@@ -285,6 +313,8 @@ extension CubitStateHelper on CubitStatuses {
   bool get loading => this == CubitStatuses.loading;
 
   bool get done => this == CubitStatuses.done;
+
+  bool get error => this == CubitStatuses.error;
 }
 
 extension TripPointHelper on TripPoint {
@@ -292,7 +322,7 @@ extension TripPointHelper on TripPoint {
 }
 
 extension MapResponse on http.Response {
-  dynamic get json => jsonDecode(body);
+  dynamic get jsonBody => jsonDecode(body);
 }
 
 extension FirstItem<E> on Iterable<E> {

@@ -51,7 +51,7 @@ class DriverStatusCubit extends Cubit<DriverStatusInitial> {
       if (response.statusCode == 200) {
         if (available) {
           try {
-            AppSharedPreference.cashIme(response.json['result']['imei']);
+            AppSharedPreference.cashIme(response.jsonBody['result']['imei']);
           } on Exception {
             loggerObject.e('error get ime from response');
           }

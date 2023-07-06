@@ -12,12 +12,12 @@ class CircleImageWidget extends StatelessWidget {
     this.color,
     this.margin,
     this.padding,
-    this.file,
+
   }) : super(key: key);
 
   final double? size;
   final String? url;
-  final XFile? file;
+
   final Color? color;
   final EdgeInsets? margin;
   final EdgeInsets? padding;
@@ -37,7 +37,7 @@ class CircleImageWidget extends StatelessWidget {
       ),
       child: ImageMultiType(
         url: url ?? '',
-        file: file,
+
         fit: BoxFit.cover,
       ),
     );

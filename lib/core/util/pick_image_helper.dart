@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:image_picker/image_picker.dart';
 
 class PickImageHelper {
@@ -14,11 +16,16 @@ class PickImageHelper {
   Future<XFile?> pickImage() async {
     final result = await _picker.pickImage(
       source: ImageSource.gallery,
-      imageQuality: 30,
+      imageQuality: 60,
     );
 
-
     return result;
+  }
+
+  Future<Uint8List?> pickImageBytes() async {
+    final result = await pickImage();
+
+    return result?.readAsBytes();
   }
 
 // // Pick an image
@@ -31,5 +38,4 @@ class PickImageHelper {
 // final XFile? video = await _picker.pickVideo(source: ImageSource.camera);
 // // Pick multiple images
 // final List<XFile>? images = await _picker.pickMultiImage();
-
 }

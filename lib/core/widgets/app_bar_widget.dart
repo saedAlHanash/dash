@@ -26,8 +26,8 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
         leading: Navigator.canPop(context)
             ? IconButton(
                 onPressed: () => Navigator.pop(context),
-                icon: Icon(
-                  Platform.isAndroid ? Icons.arrow_back : Icons.arrow_back_ios,
+                icon: const Icon(
+                  Icons.arrow_back_ios,
                   color: AppColorManager.mainColorDark,
                 ))
             : 0.0.verticalSpace,

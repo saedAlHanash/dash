@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../features/car_catigory/bloc/all_car_categories_cubit/all_car_categories_cubit.dart';
 import '../../features/drivers/bloc/all_drivers/all_drivers_cubit.dart';
 import '../../features/home/bloc/nav_home_cubit/nav_home_cubit.dart';
 import '../../router/go_route_pages.dart';
@@ -39,7 +40,8 @@ class MyApp extends StatelessWidget {
             return MultiBlocProvider(
               providers: [
                 BlocProvider(create: (_) => sl<NavHomeCubit>()),
-                BlocProvider(create: (_) => sl<AllDriversCubit>()..getAllDrivers(_))
+                BlocProvider(create: (_) => sl<AllDriversCubit>()..getAllDrivers(_)),
+                BlocProvider(create: (_) => sl<AllCarCategoriesCubit>()..getCarCategories(_)),
               ],
               child: Directionality(
                 textDirection: TextDirection.rtl,

@@ -39,6 +39,7 @@ class DriverModel {
     required this.userType,
     required this.roleNames,
     required this.isActive,
+    required this.loyalty,
     required this.emailConfirmationCode,
     required this.creationTime,
     required this.emailAddress,
@@ -68,12 +69,13 @@ class DriverModel {
   final CarType carType;
   final int userType;
   final List<String> roleNames;
-  final bool isActive;
+  bool isActive;
+  bool loyalty;
   final String emailConfirmationCode;
   final String creationTime;
   final String emailAddress;
   final dynamic imei;
-  final dynamic qarebDeviceimei;
+  final String qarebDeviceimei;
   final int gender;
   final String avatar;
   final String identity;
@@ -102,15 +104,16 @@ class DriverModel {
           ? []
           : List<String>.from(json["roleNames"]!.map((x) => x)),
       isActive: json["isActive"] ?? false,
+      loyalty: json["isLoyaltySupscriper"] ?? false,
       emailConfirmationCode: json["emailConfirmationCode"] ?? "",
       creationTime: json["creationTime"] ?? "",
       emailAddress: json["emailAddress"] ?? "",
-      imei: json["imei"] ,
-      qarebDeviceimei: json["qarebDeviceimei"],
+      imei: json["imei"] ?? '',
+      qarebDeviceimei: json["qarebDeviceimei"] ?? '',
       gender: json["gender"] ?? 0,
       avatar: fixAvatarImage(json["avatar"] ?? ""),
       identity: fixAvatarImage(json["identity"] ?? ""),
-      contract:fixAvatarImage( json["contract"] ?? ""),
+      contract: fixAvatarImage(json["contract"] ?? ""),
       drivingLicence: fixAvatarImage(json["drivingLicence"] ?? ""),
       carMechanic: fixAvatarImage(json["carMechanic"] ?? ""),
       password: json["password"] ?? "",
@@ -138,6 +141,7 @@ class DriverModel {
         "creationTime": creationTime,
         "emailAddress": emailAddress,
         "imei": imei,
+        "loyalty": loyalty,
         "qarebDeviceimei": qarebDeviceimei,
         "gender": gender,
         "avatar": avatar,
@@ -300,4 +304,3 @@ class CarType {
         "seatsNumber": seatsNumber,
       };
 }
-

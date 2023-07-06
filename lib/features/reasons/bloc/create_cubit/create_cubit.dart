@@ -2,8 +2,6 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:qareeb_dash/core/api_manager/api_url.dart';
-import 'package:qareeb_dash/core/extensions/extensions.dart';
-import 'package:qareeb_dash/features/drivers/data/response/drivers_response.dart';
 
 import '../../../../core/api_manager/api_service.dart';
 import '../../../../core/error/error_manager.dart';
@@ -11,14 +9,14 @@ import '../../../../core/strings/enum_manager.dart';
 import '../../../../core/util/note_message.dart';
 import '../../../../core/util/pair_class.dart';
 
-part 'driver_bu_id_state.dart';
+part 'create_state.dart';
 
-class DriverBuIdCubit extends Cubit<DriverBuIdInitial> {
-  DriverBuIdCubit() : super(DriverBuIdInitial.initial());
+class CreateReasonCubit extends Cubit<CreateReasonInitial> {
+  CreateReasonCubit() : super(CreateReasonInitial.initial());
 
-  Future<void> getDriverBuId(BuildContext context, {required int id}) async {
+  Future<void> createReason(BuildContext context, {required String reason}) async {
     emit(state.copyWith(statuses: CubitStatuses.loading));
-    final pair = await _getDriverBuIdApi();
+    final pair = await _createReasonApi(reason: reason);
 
     if (pair.first == null) {
       if (context.mounted) {
@@ -30,13 +28,12 @@ class DriverBuIdCubit extends Cubit<DriverBuIdInitial> {
     }
   }
 
-  Future<Pair<DriverModel?, String?>> _getDriverBuIdApi() async {
-    final response = await APIService().getApi(
-      url: GetUrl.getDriverById,
-    );
+  Future<Pair<bool?, String?>> _createReasonApi({required String reason}) async {
+    final response =
+        await APIService().postApi(url: PostUrl.createReason, body: {'name': reason});
 
     if (response.statusCode == 200) {
-      return Pair(DriverModel.fromJson(response.json['result'] ?? {}), null);
+      return Pair(true, null);
     } else {
       return Pair(null, ErrorManager.getApiError(response));
     }

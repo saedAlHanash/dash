@@ -1,14 +1,14 @@
 
-class MyWalletResponse {
-  MyWalletResponse({
+class WalletResponse {
+  WalletResponse({
     required this.result,
   });
 
-  final MyWalletResult result;
+  final WalletResult result;
 
-  factory MyWalletResponse.fromJson(Map<String, dynamic> json) {
-    return MyWalletResponse(
-      result: MyWalletResult.fromJson(json["result"] ?? {}),
+  factory WalletResponse.fromJson(Map<String, dynamic> json) {
+    return WalletResponse(
+      result: WalletResult.fromJson(json["result"] ?? {}),
     );
   }
 
@@ -17,8 +17,8 @@ class MyWalletResponse {
       };
 }
 
-class MyWalletResult {
-  MyWalletResult({
+class WalletResult {
+  WalletResult({
     required this.id,
     required this.totalMoney,
     required this.name,
@@ -34,8 +34,8 @@ class MyWalletResult {
   final List<Charging> chargings;
   final List<Transaction> transactions;
 
-  factory MyWalletResult.fromJson(Map<String, dynamic> json) {
-    return MyWalletResult(
+  factory WalletResult.fromJson(Map<String, dynamic> json) {
+    return WalletResult(
       id: json["id"] ?? 0,
       totalMoney: json["totalMoney"] ?? 0,
       name: json["name"] ?? "",

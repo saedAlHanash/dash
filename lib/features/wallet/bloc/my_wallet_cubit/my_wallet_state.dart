@@ -1,19 +1,19 @@
 part of 'my_wallet_cubit.dart';
 
-class MyWalletInitial extends Equatable {
+class WalletInitial extends Equatable {
   final CubitStatuses statuses;
-  final MyWalletResult result;
+  final WalletResult result;
   final String error;
 
-  const MyWalletInitial({
+  const WalletInitial({
     required this.statuses,
     required this.result,
     required this.error,
   });
 
-  factory MyWalletInitial.initial() {
-    return MyWalletInitial(
-      result: MyWalletResult.fromJson({}),
+  factory WalletInitial.initial() {
+    return WalletInitial(
+      result: WalletResult.fromJson({}),
       error: '',
       statuses: CubitStatuses.init,
     );
@@ -22,12 +22,12 @@ class MyWalletInitial extends Equatable {
   @override
   List<Object> get props => [statuses, result, error];
 
-  MyWalletInitial copyWith({
+  WalletInitial copyWith({
     CubitStatuses? statuses,
-    MyWalletResult? result,
+    WalletResult? result,
     String? error,
   }) {
-    return MyWalletInitial(
+    return WalletInitial(
       statuses: statuses ?? this.statuses,
       result: result ?? this.result,
       error: error ?? this.error,

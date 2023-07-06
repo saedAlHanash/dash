@@ -21,11 +21,11 @@ class ImageMultiType extends StatefulWidget {
     this.width,
     this.fit,
     this.color,
-    this.file,
+    this.fileBytes,
   }) : super(key: key);
 
   final String url;
-  final XFile? file;
+  final Uint8List? fileBytes;
   final double? height;
   final double? width;
   final BoxFit? fit;
@@ -39,7 +39,7 @@ class ImageMultiTypeState extends State<ImageMultiType> {
   var type = ImageType.network;
 
   void initialType() {
-    if (widget.file != null) {
+    if (widget.fileBytes != null) {
       type = ImageType.file;
       return;
     }
@@ -112,20 +112,13 @@ class ImageMultiTypeState extends State<ImageMultiType> {
           },
         );
       case ImageType.file:
-        var byte = widget.file?.readAsBytes();
-        return FutureBuilder(
-          future: byte,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return Image.memory(
-                snapshot.requireData as Uint8List,
-                fit: widget.fit,
-              );
-            } else {
-              return 0.0.verticalSpace;
-            }
-          },
+        return Image.memory(
+          widget.fileBytes!,
+          fit: widget.fit,
+          height: widget.height,
+          width: widget.width,
         );
+
       case ImageType.networkSvg:
         return SvgPicture.network(
           widget.url,
