@@ -1,23 +1,23 @@
-part of 'get_all_points_cubit.dart';
+part of 'get_edged_point_cubit.dart';
 
-class PointsInitial extends Equatable {
+class EdgesPointInitial extends Equatable {
   final CubitStatuses statuses;
-  final List<TripPoint> result;
+  final List<EdgeModel> result;
   final String error;
-  final TripPoint tempPoint;
+  final EdgeModel tempPoint;
 
-  const PointsInitial({
+  const EdgesPointInitial({
     required this.statuses,
     required this.result,
     required this.error,
     required this.tempPoint,
   });
 
-  factory PointsInitial.initial() {
-    return PointsInitial(
+  factory EdgesPointInitial.initial() {
+    return EdgesPointInitial(
       result: const [],
       error: '',
-      tempPoint: TripPoint.fromJson({}),
+      tempPoint: EdgeModel.fromJson({}),
       statuses: CubitStatuses.init,
     );
   }
@@ -39,13 +39,13 @@ class PointsInitial extends Equatable {
         .toList();
   }
 
-  PointsInitial copyWith({
+  EdgesPointInitial copyWith({
     CubitStatuses? statuses,
-    List<TripPoint>? result,
+    List<EdgeModel>? result,
     String? error,
-    TripPoint? tempPoint,
+    EdgeModel? tempPoint,
   }) {
-    return PointsInitial(
+    return EdgesPointInitial(
       statuses: statuses ?? this.statuses,
       result: result ?? this.result,
       error: error ?? this.error,

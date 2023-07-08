@@ -1,8 +1,13 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:collection/collection.dart';
+import 'package:flutter/animation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:qareeb_dash/core/strings/enum_manager.dart';
+import 'package:qareeb_dash/features/points/data/response/points_response.dart';
 
 import '../../../../core/api_manager/api_service.dart';
 import '../../../../core/api_manager/api_url.dart';
@@ -113,7 +118,7 @@ class MapControllerCubit extends Cubit<MapControllerInitial> {
 
     if (pair.first != null) {
       var list = decodePolyline(pair.first!.routes.first.geometry).unpackPolyline();
-      state.polyLines[key ?? end.hashCode] = list;
+      state.polyLines[key ?? end.hashCode] = Pair(list, Colors.black);
       emit(state.copyWith(polylineNotifier: state.polylineNotifier + 1));
     }
   }
@@ -122,16 +127,21 @@ class MapControllerCubit extends Cubit<MapControllerInitial> {
     if (myPolyLine.key == null && myPolyLine.endPoint == null) return;
 
     var list = decodePolyline(myPolyLine.encodedPolyLine).unpackPolyline();
-    state.polyLines[myPolyLine.key ?? myPolyLine.endPoint.hashCode] = list;
+    state.polyLines[myPolyLine.key ?? myPolyLine.endPoint.hashCode] =
+        Pair(list, myPolyLine.color ?? Colors.black);
 
     emit(state.copyWith(polylineNotifier: state.polylineNotifier + 1));
   }
 
   void addEncodedPolyLines({required List<MyPolyLine> myPolyLines, bool update = true}) {
+    state.polyLines.clear();
     for (var e in myPolyLines) {
+      if (e.endPoint != null) {
+        addMarker(marker: MyMarker(point: e.endPoint!, type: MyMarkerType.point,item: e.endPoint));
+      }
       if (e.key == null && e.endPoint == null) return;
       var list = decodePolyline(e.encodedPolyLine).unpackPolyline();
-      state.polyLines[e.key ?? e.endPoint.hashCode] = list;
+      state.polyLines[e.key ?? e.endPoint.hashCode] = Pair(list, e.color ?? Colors.black);
     }
     if (update) emit(state.copyWith(polylineNotifier: state.polylineNotifier + 1));
   }
@@ -161,8 +171,17 @@ class MapControllerCubit extends Cubit<MapControllerInitial> {
     emit(state.copyWith(polylineNotifier: state.polylineNotifier + 1));
   }
 
-
+  void addAllPoints({required List<TripPoint> points}) {
+    state.markers.clear();
+    addMarkers(
+        marker: points.mapIndexed(
+      (i, e) {
+        return MyMarker(point: e.getLatLng, type: MyMarkerType.point, key: e.id, item: e);
+      },
+    ).toList());
+  }
 }
+
 double distanceBetween(LatLng point1, LatLng point2) {
   const p = 0.017453292519943295;
   final a = 0.5 -

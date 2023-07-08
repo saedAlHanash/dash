@@ -5,11 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/plugin_api.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:qareeb_dash/core/api_manager/api_service.dart';
+
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/widgets/images/image_multi_type.dart';
 import 'package:qareeb_dash/features/map/data/models/my_marker.dart';
+import 'package:qareeb_dash/features/points/data/response/points_response.dart';
 import 'package:qareeb_dash/features/shared_trip/data/response/shared_trip.dart';
 
 import '../../../../core/strings/app_color_manager.dart';
@@ -17,11 +19,8 @@ import '../../../../core/strings/enum_manager.dart';
 import '../../../../core/widgets/my_card_widget.dart';
 import '../../../../core/widgets/spinner_widget.dart';
 import '../../../../generated/assets.dart';
-import '../../animate_marker/animated_marker_layer.dart';
-import '../../animate_marker/animated_marker_layer_options.dart';
-import '../../bloc/ather_cubit/ather_cubit.dart';
+import '../../../../router/go_route_pages.dart';
 import '../../bloc/map_controller_cubit/map_controller_cubit.dart';
-import '../../bloc/my_location_cubit/my_location_cubit.dart';
 import '../../bloc/set_point_cubit/map_control_cubit.dart';
 
 class CachedTileProvider extends TileProvider {
@@ -90,12 +89,9 @@ class MapWidgetState extends State<MapWidget> {
     setState(() {});
   }
 
-  late MyLocationCubit myLocationCubit;
   late MapControllerCubit mapControllerCubit;
 
   final mapWidgetKey = GlobalKey();
-
-  LatLng get carLocation => context.read<AtherCubit>().state.result.getLatLng();
 
   @override
   Widget build(BuildContext context) {
@@ -104,19 +100,10 @@ class MapWidgetState extends State<MapWidget> {
         BlocListener<MapControlCubit, MapControlInitial>(
           listener: controlMarkersListener,
         ),
-        BlocListener<AtherCubit, AtherInitial>(
-          listener: (context, state) {
-            trackCar = state.trackCar;
-            if (trackCar) {
-              controller.move(state.result.getLatLng(), controller.zoom);
-            }
-          },
-        ),
         BlocListener<MapControllerCubit, MapControllerInitial>(
           listenWhen: (p, c) => c.point != null,
           listener: (context, state) {
             controller.move(state.point!, state.zoom);
-            context.read<AtherCubit>().trackCar(false);
           },
         ),
       ],
@@ -125,14 +112,12 @@ class MapWidgetState extends State<MapWidget> {
         mapController: controller,
         options: MapOptions(
           maxZoom: maxZoom,
-          // interactiveFlags: InteractiveFlag.pinchZoom | InteractiveFlag.drag,
+          interactiveFlags: InteractiveFlag.pinchZoom | InteractiveFlag.drag,
           onMapReady: () {
             if (widget.initialPoint != null && widget.initialPoint!.latitude != 0) {
-              controller.move(widget.initialPoint!, 15);
-              mapControllerCubit.addSingleMarker(
-                  marker: MyMarker(point: widget.initialPoint!));
+              controller.move(widget.initialPoint!, 11);
             } else {
-              myLocationCubit.getMyLocation(context, moveMap: true);
+              controller.move(LatLng(33.16, 36.16), 9);
             }
 
             if (widget.onMapReady != null) {
@@ -147,34 +132,11 @@ class MapWidgetState extends State<MapWidget> {
                   );
                   widget.onMapClick!.call(point);
                 },
-          onMapEvent: (MapEvent p0) {
-            if (p0.source == MapEventSource.mapController) return;
-            if (!trackCar) return;
-            trackCar = false;
-            context.read<AtherCubit>().trackCar(trackCar);
-          },
           zoom: 16.0,
         ),
         nonRotatedChildren: [
           MapTypeSpinner(
             controller: controller,
-          ),
-          BlocBuilder<AtherCubit, AtherInitial>(
-            buildWhen: (p, c) => p.trackCar != c.trackCar,
-            builder: (context, state) {
-              return Positioned(
-                bottom: 16.0,
-                right: 16.0,
-                child: FloatingActionButton(
-                  child: Icon(state.trackCar ? Icons.gps_fixed : Icons.gps_not_fixed,
-                      color: Colors.white),
-                  onPressed: () {
-                    context.read<AtherCubit>().trackCar(true);
-                    controller.move(carLocation, 15.0);
-                  },
-                ),
-              );
-            },
           ),
         ],
         children: [
@@ -200,58 +162,17 @@ class MapWidgetState extends State<MapWidget> {
               );
             },
           ),
-          BlocBuilder<AtherCubit, AtherInitial>(
-            buildWhen: (p, c) =>
-                LatLng(c.result.lat, c.result.lng)
-                    .distanceBetweenLatLng(LatLng(p.result.lat, p.result.lng)) >
-                20,
-            builder: (context, state) {
-              return AnimatedMarkerLayer(
-                options: AnimatedMarkerLayerOptions(
-                  duration: const Duration(seconds: 6),
-                  marker: Marker(
-                    width: 75.0.spMin,
-                    height: 75.0.spMin,
-                    point: state.result.getLatLng(),
-                    builder: (_) {
-                      return Center(
-                        child: Transform.rotate(
-                          angle: -bearing,
-                          child: ImageMultiType(
-                            url: Assets.iconsCarTopView,
-                            height: 200.0.spMin,
-                            width: 200.0.spMin,
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              );
-            },
-          ),
         ],
       ),
     );
   }
 
-  var stream = Stream.periodic(const Duration(seconds: 5));
-
   @override
   void initState() {
     super.initState();
 
-    myLocationCubit = context.read<MyLocationCubit>();
     mapControllerCubit = context.read<MapControllerCubit>();
-
-    context.read<AtherCubit>().getDriverLocation();
     controller = MapControllerImpl();
-    stream.takeWhile((element) {
-      return mounted;
-    }).listen((event) {
-      if (!mounted) return;
-      context.read<AtherCubit>().getDriverLocation();
-    });
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       mapControllerCubit.mapHeight = mapWidgetKey.currentContext?.size?.height ?? 640.0;
@@ -282,7 +203,7 @@ class MapTypeSpinner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      top: 30.0.h,
+      top: 40.0.h,
       right: 10.0.w,
       child: SpinnerWidget(
         items: mapTypeList,
@@ -308,11 +229,60 @@ class MapHelper {
   static List<Marker> initMarker(MapControllerInitial state) {
     return state.markers.values.mapIndexed(
       (i, e) {
+        if (e.type == MyMarkerType.point) {
+          return Marker(
+            point: e.point,
+            height: 70.0.spMin,
+            width: 70.0.spMin,
+            builder: (context) {
+              return InkWell(
+                onTap: () {
+                  context.pushNamed(
+                    GoRouteName.pointInfo,
+                    queryParams: {'id': e.item.id.toString()},
+                  );
+                },
+                child: Column(
+                  children: [
+                    Container(
+                      height: 40.spMin,
+                      width: 40.spMin,
+                      padding: const EdgeInsets.all(5.0).r,
+                      decoration: const BoxDecoration(
+                        color: AppColorManager.black,
+                        shape: BoxShape.circle,
+                      ),
+                      child: ImageMultiType(
+                        url: Assets.iconsLogoWithoutText,
+                        color: Colors.white,
+                        height: 30.0.spMin,
+                        width: 30.0.spMin,
+                      ),
+                    ),
+                    if (e.item is TripPoint)
+                      Container(
+                        width: 70.0.spMin,
+                        color: Colors.white,
+                        padding: const EdgeInsets.all(3.0).r,
+                        child: DrawableText(
+                          text: (e.item as TripPoint).arName,
+                          size: 12.0.sp,
+                          maxLines: 1,
+                          matchParent: true,
+                          textAlign: TextAlign.center,
+                        ),
+                      )
+                  ],
+                ),
+              );
+            },
+          );
+        }
         var isPoint = e.type == MyMarkerType.sharedPint;
         return Marker(
           point: e.point,
-          height: !isPoint ? 30.0.spMin : 150.0.spMin,
-          width: !isPoint ? 30.0.spMin : 150.0.spMin,
+          height: !isPoint ? 40.0.spMin : 150.0.spMin,
+          width: !isPoint ? 40.0.spMin : 150.0.spMin,
           builder: (context) {
             return (e.type == MyMarkerType.sharedPint)
                 ? Builder(builder: (context) {
@@ -344,8 +314,8 @@ class MapHelper {
                   })
                 : ImageMultiType(
                     url: Assets.iconsMainColorMarker,
-                    height: 30.0.spMin,
-                    width: 30.0.spMin,
+                    height: 40.0.spMin,
+                    width: 40.0.spMin,
                   );
           },
         );
@@ -356,10 +326,9 @@ class MapHelper {
   static List<Polyline> initPolyline(MapControllerInitial state) {
     return state.polyLines.values.mapIndexed(
       (i, e) {
-        var color = Colors.black;
         return Polyline(
-          points: e,
-          color: color,
+          points: e.first,
+          color: e.second,
           strokeCap: StrokeCap.round,
           strokeWidth: 5.0.spMin,
         );

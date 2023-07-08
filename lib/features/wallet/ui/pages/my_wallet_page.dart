@@ -17,15 +17,25 @@ import '../widget/charging_list_widget.dart';
 import '../widget/payed_list_widget.dart';
 
 class WalletPage extends StatefulWidget {
-  const WalletPage({Key? key, required this.id}) : super(key: key);
+  const WalletPage({Key? key, required this.id, this.isClient}) : super(key: key);
 
   final int id;
+
+  final bool? isClient;
 
   @override
   State<WalletPage> createState() => _WalletPageState();
 }
 
 class _WalletPageState extends State<WalletPage> {
+  late final bool isClient;
+
+  @override
+  void initState() {
+    isClient = widget.isClient ?? false;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<WalletCubit, WalletInitial>(
@@ -37,34 +47,40 @@ class _WalletPageState extends State<WalletPage> {
         builder: (context, state) {
           return Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  ItemInfoInLine(
-                    title: 'رصيد السائق لدى الشركة',
-                    info: state.result.totalMoney.toString(),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      context.pushNamed(
-                        GoRouteName.debts,
-                        queryParams: {'id': widget.id.toString()},
-                      );
-                      // Navigator.pushNamed(context, RouteNames.debts);
-                    },
-                    child: DrawableText(
-                      text: 'عائدات الرحلات',
-                      underLine: true,
-                      color: Colors.grey,
-                      drawablePadding: 5.0.w,
-                      drawableEnd: const Icon(
-                        Icons.info_outline,
-                        color: Colors.black,
-                      ),
+              if (isClient)
+                ItemInfoInLine(
+                  title: 'رصيد محفظة الزبون',
+                  info: state.result.totalMoney.toString(),
+                ),
+              if (!isClient)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    ItemInfoInLine(
+                      title: 'رصيد السائق لدى الشركة',
+                      info: state.result.totalMoney.toString(),
                     ),
-                  )
-                ],
-              ),
+                    TextButton(
+                      onPressed: () {
+                        context.pushNamed(
+                          GoRouteName.debts,
+                          queryParams: {'id': widget.id.toString()},
+                        );
+                        // Navigator.pushNamed(context, RouteNames.debts);
+                      },
+                      child: DrawableText(
+                        text: 'عائدات الرحلات',
+                        underLine: true,
+                        color: Colors.grey,
+                        drawablePadding: 5.0.w,
+                        drawableEnd: const Icon(
+                          Icons.info_outline,
+                          color: Colors.black,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               10.0.verticalSpace,
               Expanded(
                 child: Row(
@@ -72,10 +88,10 @@ class _WalletPageState extends State<WalletPage> {
                     Expanded(
                       child: Column(
                         children: [
-                          const GradientContainer(
+                           GradientContainer(
                             elevation: 0.0,
                             child: DrawableText(
-                              text: 'شحنات السائق',
+                              text: isClient?'مشحونات الزبون':'شحنات السائق',
                               color: Colors.white,
                             ),
                           ),
@@ -86,14 +102,14 @@ class _WalletPageState extends State<WalletPage> {
                     Expanded(
                       child: Column(
                         children: [
-                          const GradientContainer(
+                           GradientContainer(
                             elevation: 0.0,
                             child: DrawableText(
-                              text: 'دفعات الشركة للسائق',
+                              text: isClient?'دفعات الزبون':'دفعات الشركة للسائق',
                               color: Colors.white,
                             ),
                           ),
-                          PayedListWidget(wallet: state.result),
+                          PayedListWidget(wallet: state.result,isClient: isClient),
                         ],
                       ),
                     ),

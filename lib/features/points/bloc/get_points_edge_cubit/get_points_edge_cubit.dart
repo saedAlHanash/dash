@@ -41,7 +41,7 @@ class PointsEdgeCubit extends Cubit<PointsEdgeInitial> {
     }
   }
 
-  Future<Pair<PointsEdgeResult?, String?>> _getPointsEdgeApi(
+  Future<Pair<EdgeModel?, String?>> _getPointsEdgeApi(
       {required int start, required int end}) async {
     if (await network.isConnected) {
       final response = await APIService().getApi(

@@ -5,11 +5,11 @@ class PointsEdgeResponse {
     required this.result,
   });
 
-  final PointsEdgeResult result;
+  final EdgeModel result;
 
   factory PointsEdgeResponse.fromJson(Map<String, dynamic> json) {
     return PointsEdgeResponse(
-      result: PointsEdgeResult.fromJson(json["result"] ?? {}),
+      result: EdgeModel.fromJson(json["result"] ?? {}),
     );
   }
 
@@ -18,8 +18,8 @@ class PointsEdgeResponse {
       };
 }
 
-class PointsEdgeResult {
-  PointsEdgeResult({
+class EdgeModel {
+  EdgeModel({
     required this.startPoint,
     required this.startPointId,
     required this.endPoint,
@@ -43,8 +43,8 @@ class PointsEdgeResult {
   final String arName;
   final int id;
 
-  factory PointsEdgeResult.fromJson(Map<String, dynamic> json) {
-    return PointsEdgeResult(
+  factory EdgeModel.fromJson(Map<String, dynamic> json) {
+    return EdgeModel(
       startPoint: TripPoint.fromJson(json["startPoint"] ?? {}),
       endPoint: TripPoint.fromJson(json["endPoint"] ?? {}),
       startPointId: json["startPointId"] ?? 0,

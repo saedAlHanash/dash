@@ -3,11 +3,10 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:latlong2/latlong.dart';
 import 'package:qareeb_dash/core/api_manager/api_service.dart';
 import 'package:qareeb_dash/core/api_manager/api_url.dart';
-import 'package:qareeb_dash/core/app/bloc/loading_cubit.dart';
 import 'package:qareeb_dash/services/osrm/data/response/osrm_model.dart';
+import 'package:latlong2/latlong.dart';
 
 import '../../../../core/injection/injection_container.dart';
 import '../../../../core/network/network_info.dart';
@@ -20,25 +19,26 @@ part 'get_route_point_state.dart';
 
 class GetRoutePointCubit extends Cubit<GetRoutePointInitial> {
   GetRoutePointCubit() : super(GetRoutePointInitial.initial());
-  final network = sl<NetworkInfo>();
 
   Future<void> getRoutePoint(BuildContext context,
       {required LatLng start, required LatLng end}) async {
+    emit(state.copyWith(statuses: CubitStatuses.loading));
 
-    final pair = await _getRoutePointApi(start: start, end: end);
+    final pair = await getRoutePointApi(start: start, end: end);
 
     if (pair.first == null) {
       if (context.mounted) {
         NoteMessage.showSnakeBar(message: pair.second ?? '', context: context);
       }
-      //  emit(state.copyWith(statuses: CubitStatuses.error, error: pair.second));
+      emit(state.copyWith(statuses: CubitStatuses.error, error: pair.second));
     } else {
       emit(state.copyWith(statuses: CubitStatuses.done, result: pair.first));
     }
   }
 
-  Future<Pair<OsrmModel?, String?>> _getRoutePointApi(
+  static Future<Pair<OsrmModel?, String?>> getRoutePointApi(
       {required LatLng start, required LatLng end}) async {
+    final network = sl<NetworkInfo>();
     if (await network.isConnected) {
       final response = await APIService().getApi(
           url: OsrmUrl.getRoutePoints,

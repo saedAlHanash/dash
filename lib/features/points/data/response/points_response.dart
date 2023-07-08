@@ -1,5 +1,3 @@
-
-
 class PointsResponse {
   PointsResponse({
     required this.result,
@@ -42,13 +40,12 @@ class PointsResult {
       };
 }
 
-
-
 class TripPoint {
   TripPoint({
     required this.id,
     required this.name,
     required this.arName,
+    required this.tags,
     required this.lat,
     required this.lng,
   });
@@ -56,14 +53,15 @@ class TripPoint {
   final int id;
   final String name;
   final String arName;
+  final String tags;
   final double lat;
   final double lng;
-
 
   factory TripPoint.fromJson(Map<String, dynamic> json) {
     return TripPoint(
       id: json["id"] ?? 0,
       name: json["name"] ?? "",
+      tags: json["tags"] ?? "",
       arName: json["arName"] ?? "",
       lat: json["latitude"] ?? 0,
       lng: json["langitude"] ?? 0,
@@ -74,6 +72,7 @@ class TripPoint {
         "id": id,
         "name": name,
         "arName": arName,
+        "tags": tags,
         "latitude": lat,
         "langitude": lng,
       };

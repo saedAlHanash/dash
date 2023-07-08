@@ -16,7 +16,7 @@ class ChargingListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final list = wallet.chargings;
         if(list.isEmpty){
-              return NotFoundWidget(text: 'لا يووجد معلومات');
+              return const NotFoundWidget(text: 'لا يووجد معلومات');
             }
     return ListView.builder(
       itemCount: list.length,

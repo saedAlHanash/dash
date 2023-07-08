@@ -2,7 +2,7 @@ part of 'get_points_edge_cubit.dart';
 
 class PointsEdgeInitial extends Equatable {
   final CubitStatuses statuses;
-  final PointsEdgeResult result;
+  final EdgeModel result;
   final String error;
 
 
@@ -15,7 +15,7 @@ class PointsEdgeInitial extends Equatable {
 
   factory PointsEdgeInitial.initial() {
     return PointsEdgeInitial(
-      result: PointsEdgeResult.fromJson({}),
+      result: EdgeModel.fromJson({}),
       error: '',
       statuses: CubitStatuses.init,
     );
@@ -27,7 +27,7 @@ class PointsEdgeInitial extends Equatable {
 
   PointsEdgeInitial copyWith({
     CubitStatuses? statuses,
-    PointsEdgeResult? result,
+    EdgeModel? result,
     String? error,
   }) {
     return PointsEdgeInitial(

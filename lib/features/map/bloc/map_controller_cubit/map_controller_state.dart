@@ -19,7 +19,7 @@ class MapControllerInitial {
 
   ///all poly lines that drawn over Map,
   ///Key is hash is : end point hashing (for find and delete )
-  final Map<num, List<LatLng>> polyLines = {};
+  final Map<num, Pair<List<LatLng>,Color>> polyLines = {};
 
   final int markerNotifier;
   final int polylineNotifier;

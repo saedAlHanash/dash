@@ -9,13 +9,15 @@ import '../../../../core/widgets/not_found_widget.dart';
 import '../../data/response/wallet_response.dart';
 
 class PayedListWidget extends StatelessWidget {
-  const PayedListWidget({Key? key, required this.wallet}) : super(key: key);
+  const PayedListWidget({Key? key, required this.wallet, required this.isClient})
+      : super(key: key);
   final WalletResult wallet;
+  final bool isClient;
 
   @override
   Widget build(BuildContext context) {
     final list = wallet.transactions;
-    if(list.isEmpty){
+    if (list.isEmpty) {
       return const NotFoundWidget(text: 'لا يوجد معلومات');
     }
     return ListView.builder(
@@ -23,15 +25,21 @@ class PayedListWidget extends StatelessWidget {
       itemCount: list.length,
       itemBuilder: (context, i) {
         final item = list[i];
-        return ItemPayed(item: item);
+        return ItemPayed(
+          item: item,
+          isClient: isClient,
+        );
       },
     );
   }
 }
 
 class ItemPayed extends StatelessWidget {
-  const ItemPayed({Key? key, required this.item}) : super(key: key);
+  const ItemPayed({Key? key, required this.item, required this.isClient})
+      : super(key: key);
   final Transaction item;
+
+  final bool isClient;
 
   @override
   Widget build(BuildContext context) {
@@ -41,11 +49,12 @@ class ItemPayed extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 2.0).r,
       child: Row(
         children: [
-          DrawableText(
-            text: (item.sharedRequestId != 0) ? 'رحلة تشاركية:' : 'رحلة عادية:',
-            fontFamily: FontManager.cairoBold,
-            color: AppColorManager.black,
-          ),
+          if (isClient)
+            DrawableText(
+              text: (item.sharedRequestId != 0) ? 'رحلة تشاركية:' : 'رحلة عادية:',
+              fontFamily: FontManager.cairoBold,
+              color: AppColorManager.black,
+            ),
           5.0.horizontalSpace,
           Expanded(
             child: DrawableText(

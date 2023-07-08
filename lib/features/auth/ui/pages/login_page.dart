@@ -10,14 +10,10 @@ import 'package:qareeb_dash/router/go_route_pages.dart';
 import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/strings/app_string_manager.dart';
 import '../../../../core/strings/enum_manager.dart';
-import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/my_style.dart';
-import '../../../../core/util/note_message.dart';
 import '../../../../core/widgets/my_button.dart';
 import '../../../../core/widgets/my_card_widget.dart';
 import '../../../../core/widgets/my_text_form_widget.dart';
-import '../../../../generated/assets.dart';
-import '../../../../router/app_router.dart';
 import '../../bloc/login_cubit/login_cubit.dart';
 import '../../data/request/login_request.dart';
 

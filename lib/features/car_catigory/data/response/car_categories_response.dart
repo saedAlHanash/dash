@@ -1,3 +1,5 @@
+import 'package:qareeb_dash/core/strings/fix_url.dart';
+
 class CarCategoriesResponse {
   CarCategoriesResponse({
     required this.result,
@@ -74,7 +76,7 @@ class CarCategory {
   factory CarCategory.fromJson(Map<String, dynamic> json){
     return CarCategory(
       name: json["name"] ?? "",
-      imageUrl: json["imageUrl"] ?? "",
+      imageUrl: fixAvatarImage(json["imageUrl"] ?? ""),
       price: json["price"] ?? 0,
       driverRatio: json["driverRatio"] ?? 0,
       nightKmOverCost: json["nightKMOverCost"] ?? 0,

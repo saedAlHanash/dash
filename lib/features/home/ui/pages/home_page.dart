@@ -9,6 +9,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:qareeb_dash/core/api_manager/api_service.dart';
+import 'package:qareeb_dash/features/car_catigory/bloc/delete_car_cat_cubit/delete_car_cat_cubit.dart';
+import 'package:qareeb_dash/features/map/bloc/map_controller_cubit/map_controller_cubit.dart';
+import 'package:qareeb_dash/features/redeems/bloc/redeems_cubit/redeems_cubit.dart';
 
 import '../../../../core/injection/injection_container.dart';
 import '../../../../core/strings/app_color_manager.dart';
@@ -16,15 +19,18 @@ import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/shared_preferences.dart';
 import '../../../../core/widgets/logo_text.dart';
 import '../../../../router/go_route_pages.dart';
+import '../../../admins/ui/pages/admins_page.dart';
 import '../../../auth/bloc/change_user_state_cubit/change_user_state_cubit.dart';
-import '../../../drivers/bloc/all_drivers/all_drivers_cubit.dart';
+import '../../../car_catigory/ui/pages/car_categories_page.dart';
+import '../../../clients/ui/pages/clients_page.dart';
 import '../../../drivers/bloc/loyalty_cubit/loyalty_cubit.dart';
 import '../../../drivers/ui/pages/drivers_page.dart';
+import '../../../map/bloc/set_point_cubit/map_control_cubit.dart';
+import '../../../points/ui/pages/points_page.dart';
 import '../../../reasons/bloc/create_cubit/create_cubit.dart';
 import '../../../reasons/bloc/delete_reason_cubit/delete_reason_cubit.dart';
 import '../../../reasons/bloc/get_reasons_cubit/get_reasons_cubit.dart';
 import '../../../reasons/ui/pages/reasons_page.dart';
-import '../../../redeems/bloc/redeems_cubit/redeems_cubit.dart';
 import '../../bloc/nav_home_cubit/nav_home_cubit.dart';
 import '../screens/dashboard_page.dart';
 
@@ -72,9 +78,17 @@ class _HomePageState extends State<HomePage> {
           ),
           sideBar: SideBar(
             key: (Key(Random().nextInt(100000).toString())),
-            activeTextStyle: TextStyle(color: Theme.of(context).primaryColor),
+            activeTextStyle: TextStyle(
+              color: Theme.of(context).primaryColor,
+              fontFamily: FontManager.cairoBold.name,
+              fontSize: 20.0.sp,
+            ),
             activeIconColor: Theme.of(context).primaryColor,
-            textStyle: TextStyle(color: Colors.grey[800]),
+            textStyle: TextStyle(
+              color: Colors.grey[800],
+              fontFamily: FontManager.cairoBold.name,
+              fontSize: 20.0.sp,
+            ),
             items: [
               const AdminMenuItem(
                 title: 'الرئيسية',
@@ -144,8 +158,6 @@ class _HomePageState extends State<HomePage> {
             ],
             selectedRoute: state.page,
             onSelected: (item) {
-              loggerObject.wtf(AppSharedPreference.myPermissions);
-
               setState(() {
                 context.read<NavHomeCubit>().changePage(item.route!);
               });
@@ -153,9 +165,10 @@ class _HomePageState extends State<HomePage> {
             header: Container(
               height: 50,
               width: double.infinity,
-              color: Theme.of(context).primaryColor,
+              color: AppColorManager.mainColor,
               child: Center(
                 child: DrawableText(
+                  color: Colors.white,
                   text: AppSharedPreference.getUser.userId.toString(),
                 ),
               ),
@@ -185,13 +198,21 @@ class _HomePageState extends State<HomePage> {
           body: Container(
             margin: EdgeInsets.symmetric(horizontal: 20.w),
             child: Builder(builder: (context) {
+              addQueryParameters(params: {'key': state.page.replaceAll('/', '')});
               switch (state.page) {
                 case "/":
+                  return MultiBlocProvider(
+                    providers: [
+                      BlocProvider(
+                          create: (context) => sl<RedeemsCubit>()..getRedeems(context)),
+                      BlocProvider(create: (context) => sl<LoyaltyCubit>()),
+                    ],
+                    child: const DashboardPage(),
+                  );
                 case "/policy":
                   return Container(
                       color: Colors.yellowAccent, height: 100.0, width: 100.0);
                 case "/drivers":
-                  // addQueryParameters(params: {'key': '1'});
                   return MultiBlocProvider(
                     providers: [
                       BlocProvider(create: (context) => sl<LoyaltyCubit>()),
@@ -203,14 +224,39 @@ class _HomePageState extends State<HomePage> {
                   return Container(color: Colors.green, height: 100.0, width: 100.0);
                 case "/trips":
                 case "/sys_admins":
+                  return MultiBlocProvider(
+                    providers: [
+                      BlocProvider(create: (context) => sl<ChangeUserStateCubit>()),
+                    ],
+                    child: const AdminPage(),
+                  );
                 case "/settings":
                 case "/customers":
+                  return MultiBlocProvider(
+                    providers: [
+                      BlocProvider(create: (context) => sl<ChangeUserStateCubit>()),
+                    ],
+                    child: const ClientsPage(),
+                  );
                 case "/coupons":
                 case "/roles":
                 case "/points":
+                return MultiBlocProvider(
+                  providers: [
+                    BlocProvider(create: (context) => sl<MapControllerCubit>()),
+
+                  ],
+                  child: const PointsPage(),
+                );
                 case "/epayments_provider":
                 case "/transactions":
                 case "/car_categories":
+                  return MultiBlocProvider(
+                    providers: [
+                      BlocProvider(create: (context) => sl<DeleteCarCatCubit>()),
+                    ],
+                    child: const CarCategoriesPage(),
+                  );
                 case "/cancel_reasons":
                   return MultiBlocProvider(
                     providers: [
@@ -246,27 +292,19 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-void addQueryParameters({Map<String, dynamic>? params}) {
+void addQueryParameters({required Map<String, dynamic> params}) {
   final uri = window.location.href;
   final parsedUri = Uri.parse(uri);
-  final newQuery = Map.from(parsedUri.queryParameters)..addAll(params ?? {});
+  if (!parsedUri.toString().contains('Home')) return;
+  final newQuery = Map.from(parsedUri.queryParameters)..addAll(params);
   final s = <String, String>{};
   newQuery.forEach((key, value) => s[key.toString()] = value.toString());
-
   final newUri = Uri(
     scheme: parsedUri.scheme,
     host: parsedUri.host,
     port: parsedUri.port,
     path: parsedUri.path,
-    pathSegments: parsedUri.pathSegments,
-    fragment: parsedUri.fragment,
-    userInfo: parsedUri.userInfo,
     queryParameters: s,
   );
   window.history.pushState(null, '', newUri.toString());
-}
-
-String getKeyLink(String key) {
-  if (key == '1') return '/Driver';
-  return '/';
 }

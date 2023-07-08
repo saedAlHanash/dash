@@ -13,7 +13,7 @@ import '../../../../core/widgets/my_button.dart';
 import '../../../../core/widgets/my_text_form_widget.dart';
 import '../../../../router/app_router.dart';
 import '../../../map/bloc/map_controller_cubit/map_controller_cubit.dart';
-import '../../../points/bloc/get_all_points_cubit/get_all_points_cubit.dart';
+import '../../../points/bloc/get_edged_point_cubit/get_all_points_cubit.dart';
 import '../../../points/bloc/get_points_edge_cubit/get_points_edge_cubit.dart';
 import '../../../points/data/response/points_response.dart';
 import '../../bloc/add_point_cubit/add_point_cubit.dart';

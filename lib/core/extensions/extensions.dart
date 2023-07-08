@@ -102,7 +102,6 @@ extension RealName on Enum {
 }
 
 extension Redeems on RedeemsResult {
-
   int get oilCount =>
       ((totalMeters / systemParameters.oil) - (totals.oil / systemParameters.oil))
           .floor();
@@ -121,11 +120,11 @@ extension Redeems on RedeemsResult {
 
   int get tiresOldCount => (totals.oil / systemParameters.tire).floor();
 
-  double get oilPCount => ((totals.oil *100) / systemParameters.oil).roundToDouble();
+  double get oilPCount => ((totals.oil * 100) / systemParameters.oil).roundToDouble();
 
-  double get goldPCount => ((totals.oil *100) / systemParameters.gold).roundToDouble();
+  double get goldPCount => ((totals.oil * 100) / systemParameters.gold).roundToDouble();
 
-  double get tiresPCount => ((totals.oil *100) / systemParameters.tire).roundToDouble();
+  double get tiresPCount => ((totals.oil * 100) / systemParameters.tire).roundToDouble();
 }
 
 extension StateName on SharedTripStatus {
@@ -315,6 +314,8 @@ extension CubitStateHelper on CubitStatuses {
   bool get done => this == CubitStatuses.done;
 
   bool get error => this == CubitStatuses.error;
+
+  bool get init => this == CubitStatuses.init;
 }
 
 extension TripPointHelper on TripPoint {

@@ -1,15 +1,14 @@
 import 'dart:convert';
+import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:collection/collection.dart';
 import 'package:http/http.dart' as http;
-import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 
 import '../util/shared_preferences.dart';
-import 'dart:math';
 
 const baseUrl = 'live.qareeb-maas.com';
 
@@ -42,6 +41,8 @@ class APIService {
 
   final innerHeader = {
     'Content-Type': 'application/json',
+    'origin': 'x-requested-with',
+    'x-cors-api-key': 'temp_ddc55961defc6c4343f28eec36c009da',
     'Authorization': 'Bearer ${AppSharedPreference.getToken()}',
   };
 
@@ -77,6 +78,63 @@ class APIService {
     logResponse(url, response);
     return response;
   }
+
+  Future<http.Response> getApiProxy({
+    required String url,
+    Map<String, dynamic>? query,
+    Map<String, String>? header,
+    String? path,
+    String? hostName,
+  }) async {
+    if (query != null) query.removeWhere((key, value) => value == null);
+
+    innerHeader.addAll(header ?? {});
+
+    if (path != null) url = '$url/$path';
+
+    if (query != null) {
+      query.removeWhere((key, value) => value == null);
+      query.forEach((key, value) => query[key] = value.toString());
+    }
+
+    logRequest('${hostName ?? ''}$url', query);
+
+    final uri = Uri.https(hostName ?? baseUrl, url, query);
+    final proxyUri = Uri.https('api.allorigins.win', 'raw', {'url': uri.toString()});
+    loggerObject.wtf(proxyUri.toString());
+    final response = await http.get(proxyUri, headers: innerHeader).timeout(
+          const Duration(seconds: 40),
+          onTimeout: () => http.Response('connectionTimeOut', 481),
+        );
+
+    logResponse(url, response);
+    return response;
+  }
+
+  Future<http.Response> getApiProxyPayed({
+    required String url,
+    Map<String, dynamic>? query,
+    Map<String, String>? header,
+    String? path,
+  }) async {
+    if (query != null) query.removeWhere((key, value) => value == null);
+
+    if (path != null) url = '$url/$path';
+
+    if (query != null) {
+      query.removeWhere((key, value) => value == null);
+      query.forEach((key, value) => query[key] = value.toString());
+    }
+
+    final uri = Uri.https('proxy.cors.sh', url, query);
+
+    final response = await http
+        .get(uri, headers: innerHeader)
+        .timeout(const Duration(seconds: 40));
+
+    return response;
+  }
+
 
   Future<http.Response> postApi({
     required String url,
@@ -224,7 +282,7 @@ class APIService {
       if (uploadFile?.fileBytes == null) continue;
 
       final multipartFile = http.MultipartFile.fromBytes(
-        uploadFile!.nameField ?? '',
+        uploadFile!.nameField,
         uploadFile.fileBytes!,
         filename: '${getRandomString(10)}.jpg',
       );

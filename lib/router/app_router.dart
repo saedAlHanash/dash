@@ -24,7 +24,7 @@ import '../features/map/bloc/ather_cubit/ather_cubit.dart';
 import '../features/map/bloc/map_controller_cubit/map_controller_cubit.dart';
 import '../features/map/bloc/my_location_cubit/my_location_cubit.dart';
 import '../features/map/bloc/set_point_cubit/map_control_cubit.dart';
-import '../features/points/bloc/get_all_points_cubit/get_all_points_cubit.dart';
+import '../features/points/bloc/get_all_points_cubit/get_edged_point_cubit.dart';
 import '../features/points/bloc/get_points_edge_cubit/get_points_edge_cubit.dart';
 import '../features/previous_trips/bloc/previous_trip/previous_trips_cubit.dart';
 import '../features/previous_trips/ui/pages/previous_trips_page.dart';

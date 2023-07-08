@@ -537,6 +537,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.0"
+  group_button:
+    dependency: "direct main"
+    description:
+      name: group_button
+      sha256: "1382097b97589a66601fbfdf244dc3214e396724ea43899c481fcd40f0d89298"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.3.0"
   http:
     dependency: "direct main"
     description:
@@ -1166,6 +1174,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.6"
+  url_strategy:
+    dependency: "direct main"
+    description:
+      name: url_strategy
+      sha256: "42b68b42a9864c4d710401add17ad06e28f1c1d5500c93b98c431f6b0ea4ab87"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.0"
   uuid:
     dependency: transitive
     description:

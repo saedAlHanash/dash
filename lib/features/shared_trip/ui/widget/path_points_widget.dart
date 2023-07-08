@@ -3,10 +3,18 @@ import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:qareeb_dash/core/api_manager/api_service.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_dash/features/points/data/response/points_edge_response.dart';
 
+import '../../../../core/strings/app_color_manager.dart';
+import '../../../../core/util/my_style.dart';
 import '../../../../core/widgets/images/image_multi_type.dart';
-import '../../../points/bloc/get_all_points_cubit/get_all_points_cubit.dart';
+import '../../../../core/widgets/my_card_widget.dart';
+import '../../../../generated/assets.dart';
+import '../../../points/bloc/delete_edge_cubit/delete_edge_cubit.dart';
+import '../../../points/bloc/get_all_points_cubit/get_edged_point_cubit.dart';
+import '../../../points/bloc/get_edged_point_cubit/get_all_points_cubit.dart';
 import '../../../points/data/response/points_response.dart';
 import '../../bloc/add_point_cubit/add_point_cubit.dart';
 
@@ -119,6 +127,121 @@ class PathPointsWidgetWrap extends StatelessWidget {
                 ],
               ))
           .toList(),
+    );
+  }
+}
+
+class PathPointsWidgetWrap1 extends StatelessWidget {
+  const PathPointsWidgetWrap1({super.key, required this.list, this.onTap});
+
+  final List<TripPoint> list;
+  final Function(TripPoint e)? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    if (list.isEmpty) {
+      return const DrawableText(
+        text: 'لا يوجد',
+        matchParent: true,
+        textAlign: TextAlign.center,
+      );
+    }
+    return Wrap(
+      direction: Axis.horizontal,
+      runAlignment: WrapAlignment.start,
+      alignment: WrapAlignment.start,
+      children: list.mapIndexed((i, e) {
+        return TextButton(
+          onPressed: () => onTap?.call(e),
+          child: DrawableText(
+            drawablePadding: 3.0.w,
+            text: e.arName,
+            color: Colors.black,
+            drawableStart: Container(
+              height: 40,
+              width: 40,
+              padding: const EdgeInsets.all(5.0).r,
+              decoration: const BoxDecoration(
+                color: AppColorManager.mainColor,
+                shape: BoxShape.circle,
+              ),
+              child: ImageMultiType(
+                url: Assets.iconsLogoWithoutText,
+                color: Colors.white,
+                height: 30.0.spMin,
+                width: 30.0.spMin,
+              ),
+            ),
+          ),
+        );
+      }).toList(),
+    );
+  }
+}
+
+class EdgesPointWidget extends StatelessWidget {
+  const EdgesPointWidget({super.key, required this.item, required this.color});
+
+  final EdgeModel item;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    loggerObject.wtf('${item.endPoint.arName} ${item.endPoint.name}');
+    return MyCardWidget(
+      elevation: 0.0,
+      margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0).r,
+      child: Row(
+        children: [
+          DrawableText(
+            text: 'id: ${item.id}',
+            color: Colors.black,
+            fontFamily: FontManager.cairoBold,
+          ),
+          20.0.horizontalSpace,
+          Expanded(
+            child: DrawableText(
+              text: item.endPoint.arName,
+              color: Colors.black,
+              fontFamily: FontManager.cairoBold,
+            ),
+          ),
+          Expanded(
+            child: DrawableText(
+              text: 'البعد : ${item.distance} متر',
+              color: Colors.black,
+              fontFamily: FontManager.cairoBold,
+            ),
+          ),
+          BlocBuilder<DeleteEdgeCubit, DeleteEdgeInitial>(
+            buildWhen: (p, c) => c.id == item.endPointId,
+            builder: (context, state) {
+              if (state.statuses.loading) {
+                return MyStyle.loadingWidget();
+              }
+              return IconButton(
+                onPressed: () {
+                  context.read<DeleteEdgeCubit>().deleteEdge(context,
+                      start: item.startPointId, end: item.endPointId);
+                },
+                icon: const Icon(
+                  Icons.delete_forever,
+                  color: Colors.red,
+                ),
+              );
+            },
+          ),
+          5.0.horizontalSpace,
+          Container(
+            height: 20.0,
+            width: 20.0,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: color,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

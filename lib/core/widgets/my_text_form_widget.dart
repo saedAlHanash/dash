@@ -345,7 +345,7 @@ class MyTextFormNoLabelWidget extends StatelessWidget {
   final int maxLength;
   final bool obscureText;
   final TextAlign textAlign;
-  final Function(String)? onChanged;
+  final Function(String val)? onChanged;
   final TextEditingController? controller;
   final TextInputType? keyBordType;
   final EdgeInsets? innerPadding;

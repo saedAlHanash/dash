@@ -2,6 +2,8 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../features/admins/bloc/all_admins/all_admins_cubit.dart';
+import '../../features/admins/bloc/create_admin_cubit/create_admin_cubit.dart';
 import '../../features/auth/bloc/change_user_state_cubit/change_user_state_cubit.dart';
 import '../../features/auth/bloc/forgot_password_cubit/forgot_password_cubit.dart';
 import '../../features/auth/bloc/login_cubit/login_cubit.dart';
@@ -10,6 +12,10 @@ import '../../features/auth/bloc/resend_code_cubit/resend_code_cubit.dart';
 import '../../features/auth/bloc/reset_password_cubit/reset_password_cubit.dart';
 import '../../features/auth/bloc/signup_cubit/signup_cubit.dart';
 import '../../features/car_catigory/bloc/all_car_categories_cubit/all_car_categories_cubit.dart';
+import '../../features/car_catigory/bloc/create_car_category_cubit/create_car_category_cubit.dart';
+import '../../features/car_catigory/bloc/delete_car_cat_cubit/delete_car_cat_cubit.dart';
+import '../../features/clients/bloc/all_clients/all_clients_cubit.dart';
+import '../../features/clients/bloc/clients_by_id_cubit/clients_by_id_cubit.dart';
 import '../../features/contact/bloc/send_note_cubit/send_note_cubit.dart';
 import '../../features/drivers/bloc/all_drivers/all_drivers_cubit.dart';
 
@@ -21,8 +27,14 @@ import '../../features/map/bloc/ather_cubit/ather_cubit.dart';
 import '../../features/map/bloc/map_controller_cubit/map_controller_cubit.dart';
 import '../../features/map/bloc/my_location_cubit/my_location_cubit.dart';
 import '../../features/map/bloc/set_point_cubit/map_control_cubit.dart';
-import '../../features/points/bloc/get_all_points_cubit/get_all_points_cubit.dart';
+import '../../features/points/bloc/creta_edge_cubit/create_edge_cubit.dart';
+import '../../features/points/bloc/creta_point_cubit/create_point_cubit.dart';
+import '../../features/points/bloc/delete_edge_cubit/delete_edge_cubit.dart';
+import '../../features/points/bloc/delete_point_cubit/delete_point_cubit.dart';
+import '../../features/points/bloc/get_all_points_cubit/get_edged_point_cubit.dart';
+import '../../features/points/bloc/get_edged_point_cubit/get_all_points_cubit.dart';
 import '../../features/points/bloc/get_points_edge_cubit/get_points_edge_cubit.dart';
+import '../../features/points/bloc/point_by_id_cubit/point_by_id_cubit.dart';
 import '../../features/previous_trips/bloc/previous_trip/previous_trips_cubit.dart';
 import '../../features/profile/bloc/profile_info_cubit/profile_info_cubit.dart';
 import '../../features/profile/bloc/update_profile_cubit/update_profile_cubit.dart';
@@ -36,6 +48,7 @@ import '../../features/reasons/bloc/delete_reason_cubit/delete_reason_cubit.dart
 import '../../features/reasons/bloc/get_reasons_cubit/get_reasons_cubit.dart';
 import '../../features/redeems/bloc/create_redeem_cubit/create_redeem_cubit.dart';
 import '../../features/redeems/bloc/redeems_cubit/redeems_cubit.dart';
+import '../../features/roles/bloc/all_roles/all_roles_cubit.dart';
 import '../../features/shared_trip/bloc/add_point_cubit/add_point_cubit.dart';
 import '../../features/shared_trip/bloc/create_shared_trip_cubit/create_shared_trip_cubit.dart';
 import '../../features/shared_trip/bloc/get_shared_trips_cubit/get_shared_trips_cubit.dart';
@@ -122,7 +135,13 @@ Future<void> init() async {
 
   //region points
   sl.registerFactory(() => PointsCubit());
+  sl.registerFactory(() => PointByIdCubit());
   sl.registerFactory(() => PointsEdgeCubit());
+  sl.registerFactory(() => CreatePointCubit());
+  sl.registerFactory(() => CreateEdgeCubit());
+  sl.registerFactory(() => EdgesPointCubit());
+  sl.registerFactory(() => DeleteEdgeCubit());
+  sl.registerFactory(() => DeletePointCubit());
   //endregion
 
   //region shared trip
@@ -174,10 +193,29 @@ Future<void> init() async {
 
   //endregion
 
+  //region reasons
   sl.registerFactory(() => GetReasonsCubit());
   sl.registerFactory(() => DeleteReasonCubit());
   sl.registerFactory(() => CreateReasonCubit());
 
+  //endregion
+
+  //region reasons
+
+  sl.registerFactory(() => CreateCarCategoryCubit());
+  sl.registerFactory(() => DeleteCarCatCubit());
+
+  //endregion
+
+  //region admins
+  sl.registerFactory(() => AllAdminsCubit());
+  sl.registerFactory(() => CreateAdminCubit());
+  sl.registerFactory(() => AllRolesCubit());
+
+  //endregion
+
+  sl.registerFactory(() => AllClientsCubit());
+  sl.registerFactory(() => ClientByIdCubit());
 
 //! External
 

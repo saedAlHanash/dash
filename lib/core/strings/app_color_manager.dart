@@ -16,16 +16,45 @@ class AppColorManager {
   static const f1 = Color(0xFFF1F1F1);
   static const cardColor = Color(0xFFEFEFEF);
 
+  static Color getPolyLineColor(int i) {
+    if (i >= polyLineColors.length) {
+      return black;
+    }
+    return polyLineColors[i];
+  }
+
   static const polyLineColors = [
+    Color(0xFF67FF00),
+    Color(0xFF002AFF),
+    Color(0xFF660072),
+    red,
+    Color(0xFFBB9600),
+    Color(0xFF01914A),
+    Color(0xFFBB5D00),
+    Color(0xFF02ADAD),
     Color(0xFF008543),
+    Color(0xFF03DADA),
     Color(0xFF03CE6A),
     Color(0xFF00FF81),
+    Color(0xFFBB9600),
     Color(0xFF098000),
+    Color(0xFFBB9600),
     Color(0xFF0BB000),
     Color(0xFF0BCE00),
     Color(0xFF10FF00),
     Color(0xFF008383),
-    Color(0xFF02ADAD),
+    Color(0xFF03DADA),
+    Color(0xFF03DADA),
+    Color(0xFF03DADA),
+    Color(0xFF03DADA),
+    Color(0xFF03DADA),
+    Color(0xFF03DADA),
+    Color(0xFF03DADA),
+    Color(0xFF03DADA),
+    Color(0xFF03DADA),
+    Color(0xFF03DADA),
+    Color(0xFF03DADA),
+    Color(0xFF03DADA),
     Color(0xFF03DADA),
   ];
 }

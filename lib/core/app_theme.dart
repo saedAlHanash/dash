@@ -9,6 +9,7 @@ final appTheme = ThemeData(
       backgroundColor: primaryColor,
       centerTitle: true,
     ),
+    scaffoldBackgroundColor: Colors.white,
     switchTheme: const SwitchThemeData(
         thumbColor: MaterialStatePropertyAll(primaryColor),
         overlayColor: MaterialStatePropertyAll(secondaryColor)),
