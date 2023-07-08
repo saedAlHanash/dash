@@ -6,8 +6,6 @@ import 'package:go_router/go_router.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/widgets/not_found_widget.dart';
 import 'package:qareeb_dash/features/drivers/data/response/drivers_response.dart';
-import 'package:qareeb_dash/features/drivers/data/response/drivers_response.dart';
-import 'package:qareeb_dash/features/drivers/data/response/drivers_response.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
@@ -16,8 +14,7 @@ import '../../../../core/util/my_style.dart';
 import '../../../../router/go_route_pages.dart';
 import '../../../auth/bloc/change_user_state_cubit/change_user_state_cubit.dart';
 import '../../bloc/all_drivers/all_drivers_cubit.dart';
-
-import '../widget/DriverDataGrid.dart';
+import '../widget/driver_data_grid.dart';
 
 class DriverPage extends StatefulWidget {
   const DriverPage({Key? key}) : super(key: key);

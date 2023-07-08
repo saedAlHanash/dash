@@ -48,19 +48,12 @@ class GetSharedTripsCubit extends Cubit<GetSharedTripsInitial> {
     final network = sl<NetworkInfo>();
 
     if (await network.isConnected) {
-      final response = await APIService().postApi(
-        url: GetUrl.getSharedTrips,
-        body: {
-          // 'sharedRequestStatuses':['payed'],
-          'sharedTripStatuses': tripState == null
-              ? ['Pending', 'started']
-              : List.of(tripState).map((e) => e.name).toList(),
-          'driverId': AppSharedPreference.getMyId
-        },
+      final response = await APIService().getApi(
+        url: GetUrl.getAllSharedTrips,
       );
 
       if (response.statusCode == 200) {
-        final json = jsonDecode(response.body)['result'] ?? {};
+        final json = jsonDecode(response.body)['result']?['items'] ?? {};
         final list = List<SharedTrip>.from(json!.map((x) => SharedTrip.fromJson(x)));
         return Pair(list, null);
       } else {

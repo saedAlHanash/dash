@@ -55,12 +55,13 @@ class ItemInfoInLine extends StatelessWidget {
     return DrawableText(
       text: '$title:  ',
       color: Colors.black,
-      size: 20.0.sp,
+      size: 22.0.sp,            padding: const EdgeInsets.only(right: 10.0, bottom: 25.0, top: 7.0).r,
       drawablePadding: 5.0.w,
+      fontFamily: FontManager.cairoBold,
       drawableEnd: widget == null
           ? DrawableText(
               text: info ?? '',
-              size: 20.0.sp,
+              size: 24.0.sp,
               fontFamily: FontManager.cairoBold,
               color: AppColorManager.mainColor,
             )

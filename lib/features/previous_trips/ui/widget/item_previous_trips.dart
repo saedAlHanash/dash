@@ -1,13 +1,12 @@
 import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/widgets/images/image_multi_type.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/widgets/my_card_widget.dart';
 import '../../../../generated/assets.dart';
-
 import '../../../trip/data/response/trip_response.dart';
 
 class ItemPreviousTrip extends StatelessWidget {

@@ -13,7 +13,6 @@ import 'package:qareeb_dash/features/home/ui/pages/home_page.dart';
 import 'package:qareeb_dash/features/map/bloc/map_controller_cubit/map_controller_cubit.dart';
 import 'package:qareeb_dash/features/points/bloc/creta_edge_cubit/create_edge_cubit.dart';
 import 'package:qareeb_dash/features/points/bloc/point_by_id_cubit/point_by_id_cubit.dart';
-import 'package:qareeb_dash/features/points/data/request/create_edg_request.dart';
 
 import '../core/injection/injection_container.dart' as di;
 import '../features/admins/ui/pages/admin_info_page.dart';
@@ -32,6 +31,8 @@ import '../features/points/bloc/get_all_points_cubit/get_edged_point_cubit.dart'
 import '../features/points/ui/pages/point_info_page.dart';
 import '../features/redeems/bloc/create_redeem_cubit/create_redeem_cubit.dart';
 import '../features/redeems/bloc/redeems_cubit/redeems_cubit.dart';
+import '../features/shared_trip/bloc/shared_trip_by_id_cubit/shared_trip_by_id_cubit.dart';
+import '../features/shared_trip/ui/pages/shared_trip_info_page.dart';
 import '../features/trip/bloc/trip_by_id/trip_by_id_cubit.dart';
 import '../features/trip/ui/pages/trip_info_page.dart';
 import '../features/wallet/bloc/debt_cubit/debts_cubit.dart';
@@ -274,6 +275,27 @@ final appGoRouter = GoRouter(
       },
     ),
     //endregion
+
+    //region sharedTripInfo
+    ///sharedTripInfo
+    GoRoute(
+      name: GoRouteName.sharedTripInfo,
+      path: _GoRoutePath.sharedTripInfo,
+      builder: (BuildContext context, GoRouterState state) {
+        final id = int.tryParse(state.queryParams['id'] ?? '0') ?? 0;
+
+        final providers = [
+          BlocProvider(create: (_) => di.sl<MapControllerCubit>()),
+          BlocProvider(
+              create: (_) => di.sl<SharedTripByIdCubit>()..getSharedTripById(_, id: id)),
+        ];
+        return MultiBlocProvider(
+          providers: providers,
+          child: const SharedTripInfoPage(),
+        );
+      },
+    ),
+    //endregion
   ],
 );
 
@@ -290,6 +312,7 @@ class GoRouteName {
   static const clientInfo = 'clientInfo';
   static const pointInfo = 'pointInfo';
   static const tripInfo = 'tripInfo';
+  static const sharedTripInfo = 'sharedTripInfo';
 }
 
 class _GoRoutePath {
@@ -305,4 +328,5 @@ class _GoRoutePath {
   static const clientInfo = '/clientInfo';
   static const pointInfo = '/pointInfo';
   static const tripInfo = '/tripInfo';
+  static const sharedTripInfo = '/sharedTripInfo';
 }

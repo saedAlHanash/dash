@@ -3,10 +3,10 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:qareeb_dash/core/api_manager/api_service.dart';
 import 'package:qareeb_dash/core/api_manager/api_url.dart';
 import 'package:qareeb_dash/services/osrm/data/response/osrm_model.dart';
-import 'package:latlong2/latlong.dart';
 
 import '../../../../core/injection/injection_container.dart';
 import '../../../../core/network/network_info.dart';

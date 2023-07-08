@@ -7,14 +7,11 @@ import 'package:qareeb_dash/core/util/note_message.dart';
 import 'package:qareeb_dash/core/widgets/images/image_multi_type.dart';
 import 'package:qareeb_dash/core/widgets/my_button.dart';
 import 'package:qareeb_dash/generated/assets.dart';
-import 'package:qareeb_dash/generated/assets.dart';
-import 'package:qareeb_dash/generated/assets.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../core/strings/enum_manager.dart';
 import '../../../../core/util/my_style.dart';
 import '../../../../core/widgets/my_card_widget.dart';
-import '../../../drivers/ui/widget/DriverDataGrid.dart';
+import '../../../drivers/ui/widget/driver_data_grid.dart';
 import '../../bloc/create_redeem_cubit/create_redeem_cubit.dart';
 import '../../bloc/redeems_cubit/redeems_cubit.dart';
 import '../../data/request/redeem_request.dart';
@@ -217,7 +214,7 @@ class _TotalWidget extends StatelessWidget {
           ),
           Expanded(
             child: DrawableText(
-              text: '${text} (متر)',
+              text: '$text (متر)',
               color: Colors.black,
               fontFamily: FontManager.cairoBold,
             ),

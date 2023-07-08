@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
-import 'package:qareeb_dash/core/api_manager/api_service.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 
 import '../../../../core/strings/app_color_manager.dart';
@@ -14,7 +13,6 @@ import '../../../../core/widgets/map_background_widget.dart';
 import '../../../../core/widgets/my_button.dart';
 import '../../../../generated/assets.dart';
 import '../../../../router/app_router.dart';
-import '../../../map/bloc/ather_cubit/ather_cubit.dart';
 import '../../../profile/bloc/profile_info_cubit/profile_info_cubit.dart';
 import '../../../trip/bloc/driver_status_cubit/driver_status_cubit.dart';
 import '../widget/drawer_widget.dart';

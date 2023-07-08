@@ -302,7 +302,11 @@ class MapHelper {
                               borderRadius: BorderRadius.circular(5.0.r),
                             ),
                             alignment: Alignment.center,
-                            child: DrawableText(text: '$nou مقعد', color: Colors.black),
+                            child: DrawableText(
+                              text: '$nou مقعد',
+                              color: Colors.black,
+                              size: 12.0.sp,
+                            ),
                           ),
                         ImageMultiType(
                           url: i.iconPoint,

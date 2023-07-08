@@ -19,8 +19,8 @@ import '../../../points/data/response/points_response.dart';
 import '../../bloc/add_point_cubit/add_point_cubit.dart';
 import '../../bloc/create_shared_trip_cubit/create_shared_trip_cubit.dart';
 import '../../data/request/create_shared_request.dart';
-import '../widget/search_points_widget.dart';
 import '../widget/path_points_widget.dart';
+import '../widget/search_points_widget.dart';
 
 class CreateSharedTripPage extends StatefulWidget {
   const CreateSharedTripPage({Key? key}) : super(key: key);

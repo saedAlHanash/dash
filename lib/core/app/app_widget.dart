@@ -16,6 +16,7 @@ import '../../features/map/bloc/set_point_cubit/map_control_cubit.dart';
 import '../../features/messages/bloc/all_messages/all_messages_cubit.dart';
 import '../../features/points/bloc/get_edged_point_cubit/get_all_points_cubit.dart';
 import '../../features/roles/bloc/all_roles/all_roles_cubit.dart';
+import '../../features/shared_trip/bloc/get_shared_trips_cubit/get_shared_trips_cubit.dart';
 import '../../features/trip/bloc/all_trips_cubit/all_trips_cubit.dart';
 import '../../features/wallet/bloc/providers_cubit/providers_cubit.dart';
 import '../../router/go_route_pages.dart';
@@ -56,14 +57,16 @@ class MyApp extends StatelessWidget {
                 BlocProvider(create: (_) => sl<PolicyCubit>()..getPolicy(_)),
                 BlocProvider(create: (_) => sl<PointsCubit>()..getAllPoints(_)),
                 BlocProvider(create: (_) => sl<AllRolesCubit>()..getAllRoles(_)),
-                BlocProvider(create: (_) => sl<AllClientsCubit>()..getAllClients(_)),
+                BlocProvider(create: (_) => sl<AllTripsCubit>()..getAllTrips(_)),
                 BlocProvider(create: (_) => sl<AllAdminsCubit>()..getAllAdmins(_)),
                 BlocProvider(create: (_) => sl<AllDriversCubit>()..getAllDrivers(_)),
+                BlocProvider(create: (_) => sl<AllClientsCubit>()..getAllClients(_)),
                 BlocProvider(create: (_) => sl<AllTransfersCubit>()..getAllTransfers(_)),
+                BlocProvider(create: (_) => sl<GetSharedTripsCubit>()..getSharesTrip(_)),
                 BlocProvider(create: (_) => sl<ProvidersCubit>()..getAllEpayProviders(_)),
-                BlocProvider(create: (_) => sl<AllTripsCubit>()..getAllTrips(_)),
                 BlocProvider(
-                    create: (_) => sl<AllCarCategoriesCubit>()..getCarCategories(_)),
+                  create: (_) => sl<AllCarCategoriesCubit>()..getCarCategories(_),
+                ),
               ],
               child: Directionality(
                 textDirection: TextDirection.rtl,

@@ -10,7 +10,6 @@ import '../../../../core/strings/enum_manager.dart';
 import '../../../../core/util/note_message.dart';
 import '../../../../core/util/pair_class.dart';
 import '../../../drivers/data/response/drivers_response.dart';
-import '../../data/response/clients_response.dart';
 
 part 'all_clients_state.dart';
 

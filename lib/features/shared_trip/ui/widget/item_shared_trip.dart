@@ -3,6 +3,7 @@ import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/util/launcher_helper.dart';
 import 'package:qareeb_dash/core/util/note_message.dart';
@@ -15,7 +16,7 @@ import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/strings/enum_manager.dart';
 import '../../../../core/widgets/item_info.dart';
 import '../../../../core/widgets/my_card_widget.dart';
-import '../../../../router/app_router.dart';
+import '../../../../router/go_route_pages.dart';
 import '../../bloc/get_shared_trips_cubit/get_shared_trips_cubit.dart';
 
 class ItemSharedTrip extends StatelessWidget {
@@ -131,12 +132,13 @@ class ItemSharedTrip extends StatelessWidget {
         ),
       ],
     );
+
     return InkWell(
       onTap: trip.isEnd
           ? null
           : () async {
-              var result = await Navigator.pushNamed(context, RouteNames.activeSharedTrip,
-                  arguments: trip.id);
+              // await Navigator.pushNamed(context, RouteNames.activeSharedTrip,
+              //      arguments: trip.id);
               if (context.mounted) {
                 context.read<GetSharedTripsCubit>().getSharesTrip(context);
 
@@ -155,6 +157,230 @@ class ItemSharedTrip extends StatelessWidget {
               child: widget,
             )
           : widget,
+    );
+  }
+}
+
+class ItemSharedTrip1 extends StatelessWidget {
+  const ItemSharedTrip1({super.key, required this.item});
+
+  final SharedTrip item;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        context.pushNamed(GoRouteName.sharedTripInfo, queryParams: {'id': item.id.toString()});
+      },
+      child: MyCardWidget(
+        margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0).r,
+        child: Row(
+          children: [
+            Expanded(
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: DrawableText(
+                          size: 18.0.sp,
+                          matchParent: true,
+                          textAlign: TextAlign.center,
+                          text: 'السائق',
+                          color: Colors.black,
+                          fontFamily: FontManager.cairoBold,
+                        ),
+                      ),
+                      Expanded(
+                        child: DrawableText(
+                          size: 18.0.sp,
+                          matchParent: true,
+                          textAlign: TextAlign.center,
+                          text: 'المقاعد المحجوزة',
+                          color: Colors.black,
+                          fontFamily: FontManager.cairoBold,
+                        ),
+                      ),
+                      Expanded(
+                        child: DrawableText(
+                          size: 18.0.sp,
+                          matchParent: true,
+                          textAlign: TextAlign.center,
+                          text: 'كلفة المقعد',
+                          color: Colors.black,
+                          fontFamily: FontManager.cairoBold,
+                        ),
+                      ),
+                      Expanded(
+                        child: DrawableText(
+                          size: 18.0.sp,
+                          matchParent: true,
+                          textAlign: TextAlign.center,
+                          text: 'عدد النقاط',
+                          color: Colors.black,
+                          fontFamily: FontManager.cairoBold,
+                        ),
+                      ),
+                      Expanded(
+                        child: DrawableText(
+                          size: 18.0.sp,
+                          matchParent: true,
+                          textAlign: TextAlign.center,
+                          text: 'تاريخ',
+                          color: Colors.black,
+                          fontFamily: FontManager.cairoBold,
+                        ),
+                      ),
+                      Expanded(
+                        child: DrawableText(
+                          size: 18.0.sp,
+                          matchParent: true,
+                          textAlign: TextAlign.center,
+                          text: 'الحالة',
+                          color: Colors.black,
+                          fontFamily: FontManager.cairoBold,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const Divider(),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: DrawableText(
+                          matchParent: true,
+                          size: 18.0.sp,
+                          textAlign: TextAlign.center,
+                          text: item.driver.name,
+                          color: Colors.black,
+                          fontFamily: FontManager.cairoBold,
+                        ),
+                      ),
+                      Expanded(
+                        child: DrawableText(
+                          matchParent: true,
+                          size: 18.0.sp,
+                          textAlign: TextAlign.center,
+                          text: (item.seatsNumber - item.availableSeats).toString(),
+                          color: Colors.black,
+                          fontFamily: FontManager.cairoBold,
+                        ),
+                      ),
+                      Expanded(
+                        child: DrawableText(
+                          matchParent: true,
+                          size: 18.0.sp,
+                          textAlign: TextAlign.center,
+                          text: (item.seatCost).formatPrice,
+                          color: Colors.black,
+                          fontFamily: FontManager.cairoBold,
+                        ),
+                      ),
+                      Expanded(
+                        child: DrawableText(
+                          matchParent: true,
+                          size: 18.0.sp,
+                          textAlign: TextAlign.center,
+                          text: item.path.edges.length.toString(),
+                          color: Colors.black,
+                          fontFamily: FontManager.cairoBold,
+                        ),
+                      ),
+                      Expanded(
+                        child: DrawableText(
+                          matchParent: true,
+                          size: 18.0.sp,
+                          textAlign: TextAlign.center,
+                          text: item.schedulingDate?.formatDateTime ?? '',
+                          color: Colors.black,
+                          fontFamily: FontManager.cairoBold,
+                        ),
+                      ),
+                      Expanded(
+                        child: DrawableText(
+                          matchParent: true,
+                          size: 18.0.sp,
+                          textAlign: TextAlign.center,
+                          text: SharedTripStatus.values[item.status()].sharedTripName(),
+                          color: Colors.black,
+                          fontFamily: FontManager.cairoBold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                NoteMessage.showCustomBottomSheet(
+                  context,
+                  child: ListView.builder(
+                    itemCount: item.sharedRequests.length,
+                    itemBuilder: (context, index) {
+                      final itemRequest = item.sharedRequests[index].client;
+                      var tripIconId = 0;
+                      item.path.getTripPoints.forEachIndexed((i, e1) {
+                        if (e1.id == item.sharedRequests[index].pickupPoint.id) {
+                          tripIconId = i;
+                        }
+                      });
+                      return MyCardWidget(
+                        elevation: 0.0,
+                        margin: const EdgeInsets.all(20),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: DrawableText(
+                                text:
+                                itemRequest.fullName,
+                                color: Colors.black,
+                                matchParent: true,
+                                drawablePadding: 15.0.w,
+                                drawableAlin:  DrawableAlin.withText,
+                                fontFamily: FontManager.cairoBold,
+                                drawableEnd: DrawableText(
+                                  text:
+                                  'عدد المقاعد:  ${item.sharedRequests[index].seatNumber}',
+                                  color: Colors.black,
+                                  fontFamily: FontManager.cairoBold,
+                                ),
+                              ),
+                            ),
+
+                            Expanded(
+                              child: DrawableText(
+                                text: 'نقطة الركوب: ',
+                                color: Colors.black,
+                                fontFamily: FontManager.cairoBold,
+                                drawableEnd: DrawableText(
+                                  text: item.sharedRequests[index].pickupPoint.arName,
+                                  color: Colors.black,
+                                  drawablePadding: 5.0.w,
+                                  drawableEnd: ImageMultiType(
+                                    url: tripIconId.iconPoint,
+                                    height: 40.0.r,
+                                    width: 40.0.r,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                );
+              },
+              child: const DrawableText(
+                text: 'عرض الزبائن',
+                color: AppColorManager.mainColorDark,
+                fontFamily: FontManager.cairoBold,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

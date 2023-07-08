@@ -26,7 +26,7 @@ class AdminInfoPageState extends State<AdminInfoPage> {
 
   @override
   void initState() {
-    request = CreateAdminRequest.fromAdmin(widget.admin!);
+    request = CreateAdminRequest.fromAdmin(widget.admin);
     super.initState();
   }
 

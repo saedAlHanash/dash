@@ -9,7 +9,6 @@ import 'package:qareeb_dash/core/widgets/my_button.dart';
 import '../../generated/assets.dart';
 import '../widgets/images/image_multi_type.dart';
 import '../widgets/snake_bar_widget.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 
 class NoteMessage {
   static void showSuccessSnackBar(

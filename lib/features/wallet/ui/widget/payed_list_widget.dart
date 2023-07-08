@@ -1,9 +1,9 @@
 import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/strings/app_color_manager.dart';
 import 'package:qareeb_dash/core/util/my_style.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/widgets/not_found_widget.dart';
 import '../../data/response/wallet_response.dart';

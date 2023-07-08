@@ -1,16 +1,13 @@
 import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:qareeb_dash/core/util/note_message.dart';
 import 'package:qareeb_dash/core/widgets/item_info.dart';
 import 'package:qareeb_dash/core/widgets/my_button.dart';
-import 'package:qareeb_dash/features/wallet/ui/widget/courses_screen.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/strings/enum_manager.dart';
-import '../../../../core/widgets/app_bar_widget.dart';
-import '../../../../router/app_router.dart';
 import '../../../../router/go_route_pages.dart';
 import '../../bloc/my_wallet_cubit/my_wallet_cubit.dart';
 import '../widget/charging_list_widget.dart';

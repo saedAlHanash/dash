@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:qareeb_dash/features/map/bloc/map_controller_cubit/map_controller_cubit.dart';
@@ -8,7 +7,6 @@ import 'package:qareeb_dash/features/map/ui/widget/map_widget.dart';
 
 import '../../../../core/util/checker_helper.dart';
 import '../../../../router/go_route_pages.dart';
-import '../../bloc/get_all_points_cubit/get_edged_point_cubit.dart';
 import '../../bloc/get_edged_point_cubit/get_all_points_cubit.dart';
 
 class PointsPage extends StatefulWidget {

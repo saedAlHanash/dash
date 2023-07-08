@@ -13,6 +13,7 @@ import 'package:qareeb_dash/features/car_catigory/bloc/delete_car_cat_cubit/dele
 import 'package:qareeb_dash/features/map/bloc/map_controller_cubit/map_controller_cubit.dart';
 import 'package:qareeb_dash/features/messages/ui/pages/messages_page.dart';
 import 'package:qareeb_dash/features/redeems/bloc/redeems_cubit/redeems_cubit.dart';
+import 'package:qareeb_dash/features/shared_trip/ui/pages/shared_trips_page.dart';
 import 'package:qareeb_dash/features/trip/ui/pages/trips_page.dart';
 
 import '../../../../core/injection/injection_container.dart';
@@ -69,6 +70,7 @@ class _HomePageState extends State<HomePage> {
           appBar: AppBar(
             elevation: 0.0,
             toolbarHeight: 80.0.h,
+            centerTitle: true,
             title: const LogoText(),
             backgroundColor: AppColorManager.f1,
             leading: Navigator.canPop(context)
@@ -222,7 +224,7 @@ class _HomePageState extends State<HomePage> {
                     child: const DriverPage(),
                   );
                 case "/shared_trips":
-                  return Container(color: Colors.green, height: 100.0, width: 100.0);
+                  return const SharedTripsPage();
                 case "/trips":
                   return const TripsPage();
                 case "/sys_admins":

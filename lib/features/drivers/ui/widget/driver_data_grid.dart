@@ -5,15 +5,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/strings/app_color_manager.dart';
 import 'package:qareeb_dash/core/widgets/spinner_widget.dart';
-import 'package:qareeb_dash/core/widgets/spinner_widget.dart';
-import 'package:qareeb_dash/core/widgets/spinner_widget.dart';
-import 'package:qareeb_dash/core/widgets/spinner_widget.dart';
-import 'package:qareeb_dash/core/widgets/spinner_widget.dart';
-import 'package:qareeb_dash/core/widgets/spinner_widget.dart';
-import 'package:qareeb_dash/main.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
-import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/my_style.dart';
 import '../../../auth/bloc/change_user_state_cubit/change_user_state_cubit.dart';
 import '../../bloc/loyalty_cubit/loyalty_cubit.dart';
@@ -54,7 +47,7 @@ class DriveDataSource extends DataGridSource {
               ),
               DataGridCell<SpinnerItem>(
                 columnName: 'city',
-                value: SpinnerItem(name: e.qarebDeviceimei ?? "Empty", item: e),
+                value: SpinnerItem(name: e.qarebDeviceimei, item: e),
               ),
               DataGridCell<SpinnerItem>(
                 columnName: 'loyalty',

@@ -13,10 +13,8 @@ import '../../../../core/network/network_info.dart';
 import '../../../../core/strings/app_string_manager.dart';
 import '../../../../core/util/note_message.dart';
 import '../../../../core/util/pair_class.dart';
-
 import '../../../previous_trips/data/response/trips_response.dart';
 import '../../../trip/data/response/trip_response.dart';
-
 
 part 'all_trips_state.dart';
 

@@ -11,61 +11,6 @@ import '../../../../core/util/my_style.dart';
 import '../../bloc/get_shared_trips_cubit/get_shared_trips_cubit.dart';
 import '../widget/item_shared_trip.dart';
 
-// class MySharedTripsPage extends StatelessWidget {
-//   const MySharedTripsPage({Key? key}) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: const AppBarWidget(),
-//       body: BlocBuilder<GetSharedTripsCubit, GetSharedTripsInitial>(
-//         builder: (context, state) {
-//           if (state.statuses == CubitStatuses.loading) {
-//             return MyStyle.loadingWidget();
-//           }
-//           final list = state.result.reversed.toList();
-//           return ListView.separated(
-//             itemBuilder: (_, i) {
-//               final item = list[i];
-//               final tripStat = SharedTripStatus.values[item.status()];
-//               return MyCardWidget(
-//                 child: Column(
-//                   crossAxisAlignment: CrossAxisAlignment.end,
-//                   children: [
-//                     MyTableWidget(
-//                       title: 'معلومات الرحلة',
-//                       children: {
-//                         'حالة الرحلة': tripStat.name,
-//                         'عدد المقاعد المحجوز': '${item.reservedSeats}',
-//                         'موعد الرحلة': item.schedulingDate?.formatDateTime ?? '',
-//                       },
-//                     ),
-//                     MyButton(
-//                       text: 'عرض الرحلة',
-//                       width: 100.0.w,
-//                       active: (tripStat == SharedTripStatus.pending ||
-//                           tripStat == SharedTripStatus.started),
-//                       onTap: () async {
-//                         var result = await Navigator.pushNamed(
-//                             context, RouteNames.activeSharedTrip,
-//                             arguments: item.id);
-//                         if (context.mounted && result != null) {
-//                           context.read<GetSharedTripsCubit>().getSharesTrip(context);
-//                         }
-//                       },
-//                     ),
-//                   ],
-//                 ),
-//               );
-//             },
-//             separatorBuilder: (_, i) => 10.0.verticalSpace,
-//             itemCount: list.length,
-//           );
-//         },
-//       ),
-//     );
-//   }
-// }
 
 class MySharedTripsPage extends StatefulWidget {
   const MySharedTripsPage({super.key});

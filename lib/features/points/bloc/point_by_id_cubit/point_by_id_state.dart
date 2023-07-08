@@ -35,7 +35,7 @@ class PointByIdInitial extends Equatable {
       statuses: statuses ?? this.statuses,
       result: result ?? this.result,
       error: error ?? this.error,
-      connectedPoints: conecctedPoints ?? this.connectedPoints,
+      connectedPoints: conecctedPoints ?? connectedPoints,
     );
   }
 }

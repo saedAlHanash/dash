@@ -1,4 +1,3 @@
-import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,11 +7,9 @@ import 'package:qareeb_dash/core/util/my_style.dart';
 import 'package:qareeb_dash/core/util/note_message.dart';
 import 'package:qareeb_dash/core/util/shared_preferences.dart';
 import 'package:qareeb_dash/core/widgets/my_button.dart';
-import 'package:qareeb_dash/core/widgets/table_widget.dart';
 import 'package:qareeb_dash/features/map/ui/widget/map_widget.dart';
 import 'package:qareeb_dash/features/shared_trip/ui/widget/item_shared_trip.dart';
 
-import '../../../../core/widgets/images/image_multi_type.dart';
 import '../../../map/bloc/map_controller_cubit/map_controller_cubit.dart';
 import '../../bloc/shared_trip_by_id_cubit/shared_trip_by_id_cubit.dart';
 import '../../bloc/update_shared_cubit/update_shared_cubit.dart';
@@ -30,17 +27,7 @@ class _ActiveSharedPageState extends State<ActiveSharedPage> {
   @override
   void initState() {
     mapCubit = context.read<MapControllerCubit>();
-    AppSharedPreference.cashShared(true);
-    // startSendLocation();
-
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    AppSharedPreference.cashShared(false);
-    // stopSendLocation();
-    super.dispose();
   }
 
   @override
@@ -62,7 +49,7 @@ class _ActiveSharedPageState extends State<ActiveSharedPage> {
                   return MyStyle.loadingWidget();
                 }
                 var trip = state.result;
-                var list = state.result.path.getPointsName;
+
                 return Container(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0).r,
                   color: Colors.white,

@@ -3,21 +3,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_dash/features/shared_trip/ui/widget/shared_trip_info_list_widget.dart';
 
+import '../../../../core/util/my_style.dart';
 import '../../../../core/widgets/app_bar_widget.dart';
 import '../../../map/bloc/map_controller_cubit/map_controller_cubit.dart';
 import '../../../map/ui/widget/map_widget.dart';
-import '../../bloc/trip_by_id/trip_by_id_cubit.dart';
-import '../widget/trip_info_list_widget.dart';
+import '../../bloc/shared_trip_by_id_cubit/shared_trip_by_id_cubit.dart';
 
-class TripInfoPage extends StatefulWidget {
-  const TripInfoPage({Key? key}) : super(key: key);
+
+
+class SharedTripInfoPage extends StatefulWidget {
+  const SharedTripInfoPage({Key? key}) : super(key: key);
 
   @override
-  State<TripInfoPage> createState() => _TripInfoPageState();
+  State<SharedTripInfoPage> createState() => _SharedTripInfoPageState();
 }
 
-class _TripInfoPageState extends State<TripInfoPage> {
+class _SharedTripInfoPageState extends State<SharedTripInfoPage> {
   late final MapControllerCubit mapController;
 
   @override
@@ -28,20 +31,25 @@ class _TripInfoPageState extends State<TripInfoPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<TripByIdCubit, TripByIdInitial>(
+    return BlocListener<SharedTripByIdCubit, SharedTripByIdInitial>(
       listenWhen: (p, c) => c.statuses.done,
       listener: (context, state) {
-        mapController.addTrip(trip: state.result);
+        mapController.addPath(trip: state.result);
       },
       child: Scaffold(
         appBar: const AppBarWidget(),
         body: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0).r,
-                child: BlocBuilder<TripByIdCubit, TripByIdInitial>(
+                child:  BlocBuilder<SharedTripByIdCubit, SharedTripByIdInitial>(
                   builder: (context, state) {
+                    if (state.statuses .loading) {
+                      return MyStyle.loadingWidget();
+                    }
+
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -52,7 +60,7 @@ class _TripInfoPageState extends State<TripInfoPage> {
                           textAlign: TextAlign.center,
                           color: Colors.black,
                         ),
-                        20.0.verticalSpace,
+
                         TripInfoListWidget(trip: state.result),
                       ],
                     );
@@ -68,7 +76,6 @@ class _TripInfoPageState extends State<TripInfoPage> {
     );
   }
 }
-
 // DrawableText(
 //   text: 'رحلة جارية',
 //

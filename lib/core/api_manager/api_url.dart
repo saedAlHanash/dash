@@ -69,6 +69,8 @@ class GetUrl {
   static var getAllTransfers = 'api/services/app/AccountsService/GetAllTransfers';
 
   static var getAllTrips = 'api/services/app/Order/GetAllTrips';
+
+  static var getAllSharedTrips = 'api/services/app/SharedTripService/GetAllSharedTrips';
 }
 
 class PostUrl {

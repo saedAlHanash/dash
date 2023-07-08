@@ -7,7 +7,6 @@ import 'package:http/http.dart' as http;
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:qareeb_dash/core/api_manager/api_service.dart';
 import 'package:qareeb_dash/core/util/shared_preferences.dart';
 import 'package:qareeb_dash/core/widgets/spinner_widget.dart';
 import 'package:qareeb_dash/generated/assets.dart';
