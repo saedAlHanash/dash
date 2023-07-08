@@ -22,6 +22,7 @@ class _PointsPageState extends State<PointsPage> {
   @override
   void initState() {
     mapController = context.read<MapControllerCubit>();
+    context.read<PointsCubit>().getAllPoints(context);
     super.initState();
   }
 
