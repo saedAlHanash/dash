@@ -32,6 +32,8 @@ import '../features/points/bloc/get_all_points_cubit/get_edged_point_cubit.dart'
 import '../features/points/ui/pages/point_info_page.dart';
 import '../features/redeems/bloc/create_redeem_cubit/create_redeem_cubit.dart';
 import '../features/redeems/bloc/redeems_cubit/redeems_cubit.dart';
+import '../features/trip/bloc/trip_by_id/trip_by_id_cubit.dart';
+import '../features/trip/ui/pages/trip_info_page.dart';
 import '../features/wallet/bloc/debt_cubit/debts_cubit.dart';
 import '../features/wallet/bloc/my_wallet_cubit/my_wallet_cubit.dart';
 import '../features/wallet/ui/pages/debts_page.dart';
@@ -252,6 +254,26 @@ final appGoRouter = GoRouter(
       },
     ),
     //endregion
+
+    //region trips
+    ///tripInfo
+    GoRoute(
+      name: GoRouteName.tripInfo,
+      path: _GoRoutePath.tripInfo,
+      builder: (BuildContext context, GoRouterState state) {
+        final id = int.tryParse(state.queryParams['id'] ?? '0') ?? 0;
+
+        final providers = [
+          BlocProvider(create: (_) => di.sl<MapControllerCubit>()),
+          BlocProvider(create: (_) => di.sl<TripByIdCubit>()..tripById(_, tripId: id)),
+        ];
+        return MultiBlocProvider(
+          providers: providers,
+          child: const TripInfoPage(),
+        );
+      },
+    ),
+    //endregion
   ],
 );
 
@@ -267,6 +289,7 @@ class GoRouteName {
   static const adminInfo = 'adminInfo';
   static const clientInfo = 'clientInfo';
   static const pointInfo = 'pointInfo';
+  static const tripInfo = 'tripInfo';
 }
 
 class _GoRoutePath {
@@ -281,4 +304,5 @@ class _GoRoutePath {
   static const adminInfo = '/adminInfo';
   static const clientInfo = '/clientInfo';
   static const pointInfo = '/pointInfo';
+  static const tripInfo = '/tripInfo';
 }

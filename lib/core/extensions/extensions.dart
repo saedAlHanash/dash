@@ -14,8 +14,8 @@ import 'package:qareeb_dash/generated/assets.dart';
 
 import '../../features/map/data/models/my_marker.dart';
 import '../../features/points/data/response/points_response.dart';
-import '../../features/shared_trip/data/response/shared_trip.dart';
 import '../../features/redeems/data/response/redeems_response.dart';
+import '../../features/shared_trip/data/response/shared_trip.dart';
 import '../../features/trip/data/response/trip_response.dart';
 import '../../services/trip_path/data/models/trip_path.dart';
 import '../strings/app_string_manager.dart';
@@ -270,6 +270,36 @@ extension NormalTripMap on TripResult {
 
   String get getTripsCost {
     return '$tripFare ${AppStringManager.currency}';
+  }
+
+  String get tripStateName {
+    //غير موجودة أو منتهية
+    if (isCanceled) return 'ملغية';
+
+    //final
+    if (isDelved) return 'مكتملة';
+    //بدأت
+    if (isStarted || isConfirmed) return 'جارية';
+
+    //تم تأكيدها
+    if (isConfirmed) return 'بحث عن سائق';
+
+    return 'حالة غير معروفة';
+  }
+
+  NavTrip? get tripStateEnum {
+    //غير موجودة أو منتهية
+    if (isCanceled) return null;
+
+    //final
+    if (isDelved) return NavTrip.ended;
+    //بدأت
+    if (isStarted || isConfirmed) return NavTrip.started;
+
+    //تم تأكيدها
+    if (isConfirmed) return NavTrip.waiting;
+
+    return NavTrip.have;
   }
 
   String get getCost {

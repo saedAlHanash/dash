@@ -1,4 +1,3 @@
-
 import '../../../trip/data/response/trip_response.dart';
 
 class TripsResponse {
@@ -12,8 +11,9 @@ class TripsResponse {
     return TripsResponse(
       result: json['result'] == null
           ? []
-          : List<TripResult>.from(
-              json['result']!.map((x) => TripResult.fromJson(x))),
+          : json['result']['items'] == null
+              ? []
+              : List<TripResult>.from(json['result']['items']!.map((x) => TripResult.fromJson(x))),
     );
   }
 

@@ -60,9 +60,15 @@ class GetUrl {
   static var getClientById = 'api/services/app/User/Get';
   static var pointById = 'api/services/app/PointsService/Get';
 
-  static var getAllEdgesPoint ='api/services/app/EdgesService/GetEdgesFromPoint';
+  static var getAllEdgesPoint = 'api/services/app/EdgesService/GetEdgesFromPoint';
 
   static const getAllEpay = 'api/services/app/EpaymentService/GetAll';
+
+  static var getAllMessages = 'api/services/app/Messages/GetAll';
+
+  static var getAllTransfers = 'api/services/app/AccountsService/GetAllTransfers';
+
+  static var getAllTrips = 'api/services/app/Order/GetAllTrips';
 }
 
 class PostUrl {
@@ -122,6 +128,8 @@ class PostUrl {
   static var createPoint = 'api/services/app/PointsService/CreatePoint';
 
   static var createEdge = 'api/services/app/EdgesService/CreateEdge';
+
+  static var createPolicy = 'api/services/app/Settings/Updatesettings';
 }
 
 class PutUrl {
@@ -146,9 +154,9 @@ class DeleteUrl {
   static const deleteCancelReason = 'api/services/app/CancelReasons/Delete';
   static const deleteCarCategory = 'api/services/app/CarCategoriesService/Delete';
 
-  static var deleteEdge ='api/services/app/EdgesService/RemoveEdge';
+  static var deleteEdge = 'api/services/app/EdgesService/RemoveEdge';
 
-  static var deletePoint ='api/services/app/PointsService/Delete';
+  static var deletePoint = 'api/services/app/PointsService/Delete';
 }
 
 class OrsUrl {
@@ -172,6 +180,8 @@ class PathUrl {
       'api/services/app/SharedTripService/UpdateSharedTripStatus';
 
   static const changeLoyalty = 'api/services/app/UserService/ChangeSubscriptionInLoyalty';
+
+  static var changeProviderState = 'api/services/app/EpaymentService/ChangeActiveStatus';
 }
 
 const baseUrl = 'live.qareeb-maas.com';

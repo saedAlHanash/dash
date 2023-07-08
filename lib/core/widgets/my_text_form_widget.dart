@@ -269,7 +269,6 @@ class MyEditTextWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(radios ?? 10.0.r));
     final inputDecoration = InputDecoration(
       hintText: hint,
-      contentPadding: const EdgeInsets.symmetric(horizontal: 10.0).w,
       counter: const SizedBox(),
       enabledBorder: border,
       focusedErrorBorder: border,

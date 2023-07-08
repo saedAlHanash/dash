@@ -1,44 +1,67 @@
 import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/util/shared_preferences.dart';
 import '../../../../core/widgets/app_bar_widget.dart';
+import '../../../map/bloc/map_controller_cubit/map_controller_cubit.dart';
+import '../../../map/ui/widget/map_widget.dart';
+import '../../bloc/trip_by_id/trip_by_id_cubit.dart';
 import '../../data/response/trip_response.dart';
 import '../widget/trip_info_list_widget.dart';
 
-class TripInfoPage extends StatelessWidget {
-  const TripInfoPage({Key? key, this.trip}) : super(key: key);
-  final TripResult? trip;
+class TripInfoPage extends StatefulWidget {
+  const TripInfoPage({Key? key}) : super(key: key);
+
+  @override
+  State<TripInfoPage> createState() => _TripInfoPageState();
+}
+
+class _TripInfoPageState extends State<TripInfoPage> {
+  late final MapControllerCubit mapController;
+
+  @override
+  void initState() {
+    mapController = context.read<MapControllerCubit>();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final trip = this.trip ?? AppSharedPreference.getCashedTrip();
-    return Scaffold(
-      appBar: const AppBarWidget(),
-      body: GestureDetector(
-        onVerticalDragUpdate: (DragUpdateDetails details) {
-          if (details.delta.dy > 0) {
-            Navigator.pop(context);
-          } else if (details.delta.dy < 0) {
-            // Handle slide up event
-          }
-        },
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0).r,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const DrawableText(
-                text: 'تفاصيل الطلب',
-                matchParent: true,
-                underLine: true,
-                color: Colors.black,
+    return BlocListener<TripByIdCubit, TripByIdInitial>(
+      listener: (context, state) {
+        mapController.addTrip(trip: state.result);
+      },
+      child: Scaffold(
+        appBar: const AppBarWidget(),
+        body: Row(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0).r,
+                child: BlocBuilder<TripByIdCubit, TripByIdInitial>(
+                  builder: (context, state) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const DrawableText(
+                          text: 'تفاصيل الطلب',
+                          matchParent: true,
+                          textAlign: TextAlign.center,
+                          color: Colors.black,
+                        ),
+                        20.0.verticalSpace,
+                        TripInfoListWidget(trip: state.result),
+                      ],
+                    );
+                  },
+                ),
               ),
-              20.0.verticalSpace,
-              TripInfoListWidget(trip: trip),
-            ],
-          ),
+            ),
+            20.0.horizontalSpace,
+            const Expanded(child: MapWidget()),
+          ],
         ),
       ),
     );

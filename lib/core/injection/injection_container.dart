@@ -2,12 +2,14 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../features/accounts/bloc/all_transfers_cubit/all_transfers_cubit.dart';
 import '../../features/admins/bloc/all_admins/all_admins_cubit.dart';
 import '../../features/admins/bloc/create_admin_cubit/create_admin_cubit.dart';
 import '../../features/auth/bloc/change_user_state_cubit/change_user_state_cubit.dart';
+import '../../features/auth/bloc/create_policy_cubit/policy_cubit.dart';
 import '../../features/auth/bloc/forgot_password_cubit/forgot_password_cubit.dart';
 import '../../features/auth/bloc/login_cubit/login_cubit.dart';
-import '../../features/auth/bloc/policy_cubit/policy_cubit.dart';
+import '../../features/auth/bloc/policy_cubit/create_policy_cubit.dart';
 import '../../features/auth/bloc/resend_code_cubit/resend_code_cubit.dart';
 import '../../features/auth/bloc/reset_password_cubit/reset_password_cubit.dart';
 import '../../features/auth/bloc/signup_cubit/signup_cubit.dart';
@@ -27,6 +29,7 @@ import '../../features/map/bloc/ather_cubit/ather_cubit.dart';
 import '../../features/map/bloc/map_controller_cubit/map_controller_cubit.dart';
 import '../../features/map/bloc/my_location_cubit/my_location_cubit.dart';
 import '../../features/map/bloc/set_point_cubit/map_control_cubit.dart';
+import '../../features/messages/bloc/all_messages/all_messages_cubit.dart';
 import '../../features/points/bloc/creta_edge_cubit/create_edge_cubit.dart';
 import '../../features/points/bloc/creta_point_cubit/create_point_cubit.dart';
 import '../../features/points/bloc/delete_edge_cubit/delete_edge_cubit.dart';
@@ -54,13 +57,16 @@ import '../../features/shared_trip/bloc/create_shared_trip_cubit/create_shared_t
 import '../../features/shared_trip/bloc/get_shared_trips_cubit/get_shared_trips_cubit.dart';
 import '../../features/shared_trip/bloc/shared_trip_by_id_cubit/shared_trip_by_id_cubit.dart';
 import '../../features/shared_trip/bloc/update_shared_cubit/update_shared_cubit.dart';
+import '../../features/trip/bloc/all_trips_cubit/all_trips_cubit.dart';
 import '../../features/trip/bloc/driver_status_cubit/driver_status_cubit.dart';
 import '../../features/trip/bloc/nav_trip_cubit/nav_trip_cubit.dart';
 import '../../features/trip/bloc/trip_by_id/trip_by_id_cubit.dart';
 import '../../features/trip/bloc/trip_status_cubit/trip_status_cubit.dart';
+import '../../features/wallet/bloc/change_provider_state_cubit/change_provider_state_cubit.dart';
 import '../../features/wallet/bloc/charge_client_cubit/charge_client_cubit.dart';
 import '../../features/wallet/bloc/debt_cubit/debts_cubit.dart';
 import '../../features/wallet/bloc/my_wallet_cubit/my_wallet_cubit.dart';
+import '../../features/wallet/bloc/providers_cubit/providers_cubit.dart';
 import '../../services/osrm/bloc/get_route_point_cubit/get_route_point_cubit.dart';
 import '../../services/osrm/bloc/location_name_cubit/location_name_cubit.dart';
 import '../../services/trip_path/bloc/path_by_id_cubit/path_by_id_cubit.dart';
@@ -76,6 +82,7 @@ Future<void> init() async {
   sl.registerFactory(() => ChangeUserStateCubit());
   sl.registerFactory(() => SignupCubit(network: sl()));
   sl.registerFactory(() => PolicyCubit(network: sl()));
+  sl.registerFactory(() => CreatePolicyCubit(network: sl()));
   sl.registerFactory(() => ForgotPasswordCubit(network: sl()));
   sl.registerFactory(() => ResendCodeCubit(network: sl()));
   sl.registerFactory(() => ResetPasswordCubit(network: sl()));
@@ -152,6 +159,7 @@ Future<void> init() async {
   sl.registerFactory(() => SharedTripByIdCubit());
   sl.registerFactory(() => UpdateSharedCubit());
   sl.registerFactory(() => PathByIdCubit());
+  sl.registerFactory(() => AllTripsCubit());
   //endregion
 
   //region trip
@@ -214,8 +222,16 @@ Future<void> init() async {
 
   //endregion
 
+  //region messages
+  sl.registerFactory(() => AllMessagesCubit());
+
+  //endregion
+
   sl.registerFactory(() => AllClientsCubit());
   sl.registerFactory(() => ClientByIdCubit());
+  sl.registerFactory(() => AllTransfersCubit());
+  sl.registerFactory(() => ProvidersCubit());
+  sl.registerFactory(() => ChangeProviderStateCubit());
 
 //! External
 

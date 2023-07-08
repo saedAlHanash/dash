@@ -10,7 +10,7 @@ import 'package:qareeb_dash/features/wallet/ui/pages/debts_page.dart';
 
 import '../features/auth/bloc/forgot_password_cubit/forgot_password_cubit.dart';
 import '../features/auth/bloc/login_cubit/login_cubit.dart';
-import '../features/auth/bloc/policy_cubit/policy_cubit.dart';
+import '../features/auth/bloc/policy_cubit/create_policy_cubit.dart';
 import '../features/auth/bloc/resend_code_cubit/resend_code_cubit.dart';
 import '../features/auth/bloc/reset_password_cubit/reset_password_cubit.dart';
 import '../features/auth/bloc/signup_cubit/signup_cubit.dart';

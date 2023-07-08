@@ -67,7 +67,7 @@ class EpayItem {
   final bool isWebView;
   final String creationTime;
   final String creatorUserId;
-  final bool isActive;
+   bool isActive;
 
   factory EpayItem.fromJson(Map<String, dynamic> json) {
     return EpayItem(

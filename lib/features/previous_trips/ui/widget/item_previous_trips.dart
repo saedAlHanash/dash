@@ -1,18 +1,14 @@
 import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
+
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/widgets/images/image_multi_type.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/widgets/my_card_widget.dart';
 import '../../../../generated/assets.dart';
-import '../../../../router/app_router.dart';
-import '../../../../router/go_route_pages.dart';
+
 import '../../../trip/data/response/trip_response.dart';
-import '../../bloc/previous_trip/previous_trips_cubit.dart';
 
 class ItemPreviousTrip extends StatelessWidget {
   const ItemPreviousTrip({Key? key, required this.trip}) : super(key: key);

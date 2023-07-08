@@ -8,10 +8,12 @@ import 'package:flutter_admin_scaffold/admin_scaffold.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:qareeb_dash/core/api_manager/api_service.dart';
+import 'package:qareeb_dash/features/accounts/ui/pages/transfers_page.dart';
 import 'package:qareeb_dash/features/car_catigory/bloc/delete_car_cat_cubit/delete_car_cat_cubit.dart';
 import 'package:qareeb_dash/features/map/bloc/map_controller_cubit/map_controller_cubit.dart';
+import 'package:qareeb_dash/features/messages/ui/pages/messages_page.dart';
 import 'package:qareeb_dash/features/redeems/bloc/redeems_cubit/redeems_cubit.dart';
+import 'package:qareeb_dash/features/trip/ui/pages/trips_page.dart';
 
 import '../../../../core/injection/injection_container.dart';
 import '../../../../core/strings/app_color_manager.dart';
@@ -21,16 +23,18 @@ import '../../../../core/widgets/logo_text.dart';
 import '../../../../router/go_route_pages.dart';
 import '../../../admins/ui/pages/admins_page.dart';
 import '../../../auth/bloc/change_user_state_cubit/change_user_state_cubit.dart';
+import '../../../auth/ui/pages/policy_page.dart';
 import '../../../car_catigory/ui/pages/car_categories_page.dart';
 import '../../../clients/ui/pages/clients_page.dart';
 import '../../../drivers/bloc/loyalty_cubit/loyalty_cubit.dart';
 import '../../../drivers/ui/pages/drivers_page.dart';
-import '../../../map/bloc/set_point_cubit/map_control_cubit.dart';
 import '../../../points/ui/pages/points_page.dart';
 import '../../../reasons/bloc/create_cubit/create_cubit.dart';
 import '../../../reasons/bloc/delete_reason_cubit/delete_reason_cubit.dart';
 import '../../../reasons/bloc/get_reasons_cubit/get_reasons_cubit.dart';
 import '../../../reasons/ui/pages/reasons_page.dart';
+import '../../../wallet/bloc/change_provider_state_cubit/change_provider_state_cubit.dart';
+import '../../../wallet/ui/pages/providers_page.dart';
 import '../../bloc/nav_home_cubit/nav_home_cubit.dart';
 import '../screens/dashboard_page.dart';
 
@@ -145,8 +149,6 @@ class _HomePageState extends State<HomePage> {
                     title: 'المعاملات',
                     //   icon:Icons.,
                     route: "/transactions"),
-              const AdminMenuItem(
-                  icon: Icons.settings, title: 'الاعدادات', route: "/settings"),
               if (isAllowed(AppPermissions.SETTINGS))
                 const AdminMenuItem(
                     icon: Icons.privacy_tip_rounded,
@@ -210,8 +212,7 @@ class _HomePageState extends State<HomePage> {
                     child: const DashboardPage(),
                   );
                 case "/policy":
-                  return Container(
-                      color: Colors.yellowAccent, height: 100.0, width: 100.0);
+                  return const PrivacyPolicyPage();
                 case "/drivers":
                   return MultiBlocProvider(
                     providers: [
@@ -223,6 +224,7 @@ class _HomePageState extends State<HomePage> {
                 case "/shared_trips":
                   return Container(color: Colors.green, height: 100.0, width: 100.0);
                 case "/trips":
+                  return const TripsPage();
                 case "/sys_admins":
                   return MultiBlocProvider(
                     providers: [
@@ -230,7 +232,6 @@ class _HomePageState extends State<HomePage> {
                     ],
                     child: const AdminPage(),
                   );
-                case "/settings":
                 case "/customers":
                   return MultiBlocProvider(
                     providers: [
@@ -241,15 +242,21 @@ class _HomePageState extends State<HomePage> {
                 case "/coupons":
                 case "/roles":
                 case "/points":
-                return MultiBlocProvider(
-                  providers: [
-                    BlocProvider(create: (context) => sl<MapControllerCubit>()),
-
-                  ],
-                  child: const PointsPage(),
-                );
+                  return MultiBlocProvider(
+                    providers: [
+                      BlocProvider(create: (context) => sl<MapControllerCubit>()),
+                    ],
+                    child: const PointsPage(),
+                  );
                 case "/epayments_provider":
+                  return MultiBlocProvider(
+                    providers: [
+                      BlocProvider(create: (context) => sl<ChangeProviderStateCubit>()),
+                    ],
+                    child: const ProvidersPage(),
+                  );
                 case "/transactions":
+                  return const TransfersPage();
                 case "/car_categories":
                   return MultiBlocProvider(
                     providers: [
@@ -269,7 +276,7 @@ class _HomePageState extends State<HomePage> {
                     child: const ReasonsPage(),
                   );
                 case "/messages":
-                  return Container(color: Colors.red, height: 100.0, width: 100.0);
+                  return const MessagesPage();
               }
               return SingleChildScrollView(
                 child: Container(
