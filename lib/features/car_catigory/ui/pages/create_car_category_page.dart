@@ -120,6 +120,40 @@ class _CreateCarCategoryPageState extends State<CreateCarCategoryPage> {
                         ),
                       ],
                     ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: MyTextFormNoLabelWidget(
+                            label: 'نسبة ولاء الزيت ',
+                            initialValue: request.sharedOilRatio?.toString(),
+                            onChanged: (p0) {
+                              request.sharedOilRatio = num.tryParse(p0);
+                            },
+                          ),
+                        ),
+                        15.0.horizontalSpace,
+                        Expanded(
+                          child: MyTextFormNoLabelWidget(
+                            label: 'نسبة ولاء الذهب',
+                            initialValue: request.sharedGoldRatio?.toString(),
+                            onChanged: (p0) {
+                              request.sharedGoldRatio = num.tryParse(p0);
+                            },
+                          ),
+                        ),
+                        15.0.horizontalSpace,
+                        Expanded(
+                          child: MyTextFormNoLabelWidget(
+                            label: 'نسبة ولاء الإطارات',
+                            maxLength: 2,
+                            initialValue: request.sharedTiresRatio?.toString(),
+                            onChanged: (p0) {
+                              request.sharedTiresRatio = num.tryParse(p0);
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
                     DrawableText(
                       text: 'الرحلات العادية',
                       size: 25.0.sp,
@@ -159,6 +193,40 @@ class _CreateCarCategoryPageState extends State<CreateCarCategoryPage> {
                             initialValue: request.driverRatio?.toString(),
                             onChanged: (p0) {
                               request.driverRatio = double.tryParse(p0);
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: MyTextFormNoLabelWidget(
+                            label: 'نسبة ولاء الزيت ',
+                            initialValue: request.normalOilRatio?.toString(),
+                            onChanged: (p0) {
+                              request.normalOilRatio = num.tryParse(p0);
+                            },
+                          ),
+                        ),
+                        15.0.horizontalSpace,
+                        Expanded(
+                          child: MyTextFormNoLabelWidget(
+                            label: 'نسبة ولاء الذهب',
+                            initialValue: request.normalGoldRatio?.toString(),
+                            onChanged: (p0) {
+                              request.normalGoldRatio = num.tryParse(p0);
+                            },
+                          ),
+                        ),
+                        15.0.horizontalSpace,
+                        Expanded(
+                          child: MyTextFormNoLabelWidget(
+                            label: 'نسبة ولاء الإطارات',
+                            maxLength: 2,
+                            initialValue: request.normalTiresRatio?.toString(),
+                            onChanged: (p0) {
+                              request.normalTiresRatio = num.tryParse(p0);
                             },
                           ),
                         ),

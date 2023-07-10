@@ -5,6 +5,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/widgets/not_found_widget.dart';
+import 'package:qareeb_dash/features/drivers/data/response/drivers_response.dart';
+import 'package:qareeb_dash/features/drivers/data/response/drivers_response.dart';
+import 'package:qareeb_dash/features/drivers/data/response/drivers_response.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
@@ -51,18 +54,14 @@ class _AdminPageState extends State<AdminPage> {
             return const NotFoundWidget(text: 'لا يوجد مدراء');
           }
           var dataSource = AdminDataSource(
-              admins: state.result,
-              editFunction: (AdminModel admin) {
-                context.pushNamed(GoRouteName.createAdmin, extra: admin);
-              },
-              viewFunction: (AdminModel admin) {
-                context.pushNamed(GoRouteName.adminInfo, extra: admin);
-              },
-              activeFunction: (AdminModel admin) async {
-                context
-                    .read<ChangeUserStateCubit>()
-                    .changeUserState(context, id: admin.id, userState: !admin.isActive);
-              });
+            admins: state.result,
+            editFunction: (DriverModel admin) {
+              context.pushNamed(GoRouteName.createAdmin, extra: admin);
+            },
+            viewFunction: (DriverModel admin) {
+              context.pushNamed(GoRouteName.adminInfo, extra: admin);
+            },
+          );
 
           return Column(
             children: [

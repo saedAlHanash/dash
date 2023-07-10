@@ -43,9 +43,6 @@ class _ClientsPageState extends State<ClientsPage> {
           }
           var dataSource = ClientDataSource(
               clients: state.result,
-              editFunction: (DriverModel user) {
-
-              },
               viewFunction: (DriverModel user) {
                 context.pushNamed(GoRouteName.clientInfo, queryParams: {'id':user.id.toString()});
               },

@@ -18,6 +18,7 @@ import 'package:qareeb_dash/features/points/data/request/create_edg_request.dart
 import 'package:qareeb_dash/features/points/data/response/points_response.dart';
 import 'package:qareeb_dash/features/shared_trip/ui/widget/path_points_widget.dart';
 
+import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/my_style.dart';
 import '../../../map/bloc/map_controller_cubit/map_controller_cubit.dart';
 import '../../bloc/creta_point_cubit/create_point_cubit.dart';
@@ -214,6 +215,7 @@ class _PointInfoPageState extends State<PointInfoPage> {
                           },
                         ),
                         20.0.verticalSpace,
+                        if (isAllowed(AppPermissions.UPDATE))
                         if (!canEdit && !createMode)
                           Row(
                             children: [

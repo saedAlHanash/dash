@@ -1,22 +1,44 @@
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 
+import '../widgets/spinner_widget.dart';
+
 class Command {
   Command({
     this.skipCount,
-    this.maxResultCount,
+    this.totalCount,
   });
 
   int? skipCount;
-  int? maxResultCount;
+  int maxResultCount = 20;
+  int? totalCount;
+
+  int get maxPages => (totalCount ?? 0 / maxResultCount).round();
+
+  int get currentPage => (skipCount ?? 0 / maxResultCount).round();
+
+  List<SpinnerItem> get getSpinnerItems {
+    final list = <SpinnerItem>[];
+    for (var i = 0; i <= maxPages; i++) {
+      // list.add
+    }
+    return list;
+  }
+
+  void goToPage(int pageIndex) {
+    skipCount = pageIndex * maxResultCount;
+  }
 
   factory Command.initial() {
-    return Command(maxResultCount: 4, skipCount: 0);
+    return Command(
+      skipCount: 0,
+      totalCount: 0,
+    );
   }
 
   bool get isInitial => skipCount == 0;
 
   factory Command.noPagination() {
-    return Command(maxResultCount: 1.maxInt, skipCount: 0);
+    return Command(skipCount: 0)..maxResultCount = 1.0.maxInt;
   }
 
   Map<String, dynamic> toJson() {
@@ -29,7 +51,6 @@ class Command {
   factory Command.fromJson(Map<String, dynamic> map) {
     return Command(
       skipCount: map['skipCount'] as int,
-      maxResultCount: map['maxResultCount'] as int,
     );
   }
 }

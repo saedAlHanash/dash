@@ -23,7 +23,7 @@ class DebtsResult {
   });
 
   final List<Debt> items;
-  final num totalCount;
+  final int totalCount;
 
   factory DebtsResult.fromJson(Map<String, dynamic> json) {
     return DebtsResult(

@@ -51,18 +51,15 @@ class _DriverPageState extends State<DriverPage> {
             return const NotFoundWidget(text: 'لا يوجد سائقين');
           }
           var dataSource = DriveDataSource(
-              drivers: state.result,
-              editFunction: (DriverModel driver) {
-                context.pushNamed(GoRouteName.updateDriver, extra: driver);
-              },
-              viewFunction: (DriverModel driver) {
-                context.pushNamed(GoRouteName.driverInfo, queryParams: {'id':driver.id.toString()});
-              },
-              activeFunction: (DriverModel driver) async {
-                context
-                    .read<ChangeUserStateCubit>()
-                    .changeUserState(context, id: driver.id, userState: !driver.isActive);
-              });
+            drivers: state.result,
+            editFunction: (DriverModel driver) {
+              context.pushNamed(GoRouteName.updateDriver, extra: driver);
+            },
+            viewFunction: (DriverModel driver) {
+              context.pushNamed(GoRouteName.driverInfo,
+                  queryParams: {'id': driver.id.toString()});
+            },
+          );
 
           return Column(
             children: [

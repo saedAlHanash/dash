@@ -113,13 +113,15 @@ class PostUrl {
 
   static const login = 'api/TokenAuth/Authenticate';
 
-  static const getPermissions = 'api/services/app/Role/GetAllPermissions';
+  static const getPermissions = 'api/services/app/Role/GetUserPermissions';
 
   static const createRedeem = 'api/services/app/RedeemService/CreateRedeem';
+
   static const createDriver = 'api/services/app/User/CreateDriver';
 
-  static const String activateUser = "api/services/app/User/Activate";
-  static const String deactivateUser = "api/services/app/User/DeActivate";
+  static const activateUser = "api/services/app/User/Activate";
+
+  static const deactivateUser = "api/services/app/User/DeActivate";
 
   static const createReason = 'api/services/app/CancelReasons/Create';
 

@@ -5,6 +5,7 @@ import 'package:qareeb_dash/core/api_manager/api_url.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 
 import '../../../../core/api_manager/api_service.dart';
+import '../../../../core/api_manager/command.dart';
 import '../../../../core/error/error_manager.dart';
 import '../../../../core/injection/injection_container.dart';
 import '../../../../core/network/network_info.dart';
@@ -20,8 +21,8 @@ class DebtsCubit extends Cubit<DebtsInitial> {
   DebtsCubit() : super(DebtsInitial.initial());
   final network = sl<NetworkInfo>();
 
-  Future<void> getDebts(BuildContext context, {required int id}) async {
-    emit(state.copyWith(statuses: CubitStatuses.loading));
+  Future<void> getDebts(BuildContext context, {required int id, Command? command}) async {
+    emit(state.copyWith(statuses: CubitStatuses.loading, command: command));
     final pair = await _getDebtsApi(id: id);
 
     if (pair.first == null) {
@@ -30,17 +31,18 @@ class DebtsCubit extends Cubit<DebtsInitial> {
       }
       emit(state.copyWith(statuses: CubitStatuses.error, error: pair.second));
     } else {
-      emit(state.copyWith(statuses: CubitStatuses.done, result: pair.first));
+      state.command.totalCount = pair.first!.totalCount;
+      emit(state.copyWith(statuses: CubitStatuses.done, result: pair.first?.items));
     }
   }
 
-  Future<Pair<List<Debt>?, String?>> _getDebtsApi({required int id}) async {
+  Future<Pair<DebtsResult?, String?>> _getDebtsApi({required int id}) async {
     if (await network.isConnected) {
       final response =
           await APIService().getApi(url: GetUrl.debt, query: {'driverId': id});
 
       if (response.statusCode == 200) {
-        return Pair(DebtsResponse.fromJson(response.jsonBody).result.items, null);
+        return Pair(DebtsResponse.fromJson(response.jsonBody).result, null);
       } else {
         return Pair(null, ErrorManager.getApiError(response));
       }

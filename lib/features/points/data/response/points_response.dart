@@ -22,7 +22,7 @@ class PointsResult {
     required this.items,
   });
 
-  final num totalCount;
+  final int totalCount;
   final List<TripPoint> items;
 
   factory PointsResult.fromJson(Map<String, dynamic> json) {

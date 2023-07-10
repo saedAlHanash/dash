@@ -22,7 +22,7 @@ class MessagesResult {
     required this.items,
   });
 
-  final num totalCount;
+  final int totalCount;
   final List<MessageModel> items;
 
   factory MessagesResult.fromJson(Map<String, dynamic> json) {

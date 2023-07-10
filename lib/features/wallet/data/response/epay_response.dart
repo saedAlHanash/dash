@@ -25,7 +25,7 @@ class EpayResult {
   });
 
   final List<EpayItem> items;
-  final num totalCount;
+  final int totalCount;
 
   factory EpayResult.fromJson(Map<String, dynamic> json) {
     return EpayResult(

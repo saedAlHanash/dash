@@ -74,12 +74,18 @@ extension SplitByLength on String {
   }
 }
 
-final oCcy = NumberFormat("#,##0.00");
+extension StringHelper on String? {
+  bool get isBlank {
+    return this?.trim().isEmpty ?? true;
+  }
+}
+
+final oCcy = NumberFormat("#,##0");
 
 extension MaxInt on num {
   int get maxInt => 2147483647;
 
-  String get formatPrice => 'spy. ${oCcy.format(this)}';
+  String get formatPrice => 'spy${oCcy.format(this)}';
 
   String get iconPoint {
     switch (toInt()) {
@@ -94,6 +100,10 @@ extension MaxInt on num {
     }
     return Assets.iconsE;
   }
+}
+
+extension NullOrZero on num? {
+  bool get nullOrZero => this == 0;
 }
 
 extension RealName on Enum {

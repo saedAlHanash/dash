@@ -22,7 +22,7 @@ class CancelResult {
     required this.items,
   });
 
-  final num totalCount;
+  final int totalCount;
   final List<Reasons> items;
 
   factory CancelResult.fromJson(Map<String, dynamic> json) {

@@ -25,7 +25,7 @@ class CarCategoriesResult {
     required this.items,
   });
 
-  final num totalCount;
+  final int totalCount;
   final List<CarCategory> items;
 
   factory CarCategoriesResult.fromJson(Map<String, dynamic> json){
@@ -57,6 +57,13 @@ class CarCategory {
     required this.minimumNightPrice,
     required this.companyLoyaltyRatio,
     required this.id,
+    required this.normalOilRatio,
+    required this.normalGoldRatio,
+    required this.normalTiresRatio,
+    required this.sharedOilRatio,
+    required this.sharedGoldRatio,
+    required this.sharedTiresRatio,
+
   });
 
   final String name;
@@ -72,6 +79,13 @@ class CarCategory {
   final num minimumNightPrice;
   final num companyLoyaltyRatio;
   final int id;
+  final num normalOilRatio;
+  final num normalGoldRatio;
+  final num normalTiresRatio;
+  final num sharedOilRatio;
+  final num sharedGoldRatio;
+  final num sharedTiresRatio;
+
 
   factory CarCategory.fromJson(Map<String, dynamic> json){
     return CarCategory(
@@ -88,6 +102,12 @@ class CarCategory {
       minimumNightPrice: json["minimumNightPrice"] ?? 0,
       companyLoyaltyRatio: json["companyLoyaltyRatio"] ?? 0,
       id: json["id"] ?? 0,
+      normalOilRatio: json["normalOilRatio"] ?? 0.0,
+      normalGoldRatio: json["normalGoldRatio"] ?? 0.0,
+      normalTiresRatio: json["normalTiresRatio"] ?? 0.0,
+      sharedOilRatio: json["sharedOilRatio"] ?? 0.0,
+      sharedGoldRatio: json["sharedGoldRatio"] ?? 0.0,
+      sharedTiresRatio: json["sharedTiresRatio"] ?? 0.0,
     );
   }
 
@@ -105,6 +125,12 @@ class CarCategory {
     "minimumNightPrice": minimumNightPrice,
     "companyLoyaltyRatio": companyLoyaltyRatio,
     "id": id,
+    "normalOilRatio": normalOilRatio,
+    "normalGoldRatio": normalGoldRatio,
+    "normalTiresRatio": normalTiresRatio,
+    "sharedOilRatio": sharedOilRatio,
+    "sharedGoldRatio": sharedGoldRatio,
+    "sharedTiresRatio": sharedTiresRatio,
   };
 
 }

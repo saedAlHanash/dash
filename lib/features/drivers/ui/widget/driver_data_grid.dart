@@ -7,8 +7,10 @@ import 'package:qareeb_dash/core/strings/app_color_manager.dart';
 import 'package:qareeb_dash/core/widgets/spinner_widget.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
+import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/my_style.dart';
-import '../../../auth/bloc/change_user_state_cubit/change_user_state_cubit.dart';
+import '../../../../core/widgets/change_user_state_btn.dart';
+
 import '../../bloc/loyalty_cubit/loyalty_cubit.dart';
 import '../../data/response/drivers_response.dart';
 
@@ -16,15 +18,10 @@ class DriveDataSource extends DataGridSource {
   List<DriverModel> drivers;
   Function(DriverModel)? editFunction;
   Function(DriverModel)? viewFunction;
-  Function(DriverModel)? activeFunction;
 
   List<DataGridRow> dataGridRows = [];
 
-  DriveDataSource(
-      {required this.drivers,
-      this.editFunction,
-      this.activeFunction,
-      this.viewFunction}) {
+  DriveDataSource({required this.drivers, this.editFunction, this.viewFunction}) {
     dataGridRows = drivers
         .map<DataGridRow>(
           (e) => DataGridRow(
@@ -80,33 +77,14 @@ class DriveDataSource extends DataGridSource {
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    BlocBuilder<ChangeUserStateCubit, ChangeUserStateInitial>(
-                      buildWhen: (p, c) => c.id == driver.id,
-                      builder: (context, state) {
-                        if (state.statuses.loading) {
-                          return MyStyle.loadingWidget();
-                        }
-                        if (state.statuses.done) driver.isActive = !driver.isActive;
-
-                        return InkWell(
-                          onTap: () {
-                            activeFunction?.call(driver);
-                          },
-                          child: CircleButton(
-                            color: driver.isActive ? Colors.red : Colors.green,
-                            icon: driver.isActive
-                                ? Icons.cancel_outlined
-                                : Icons.check_circle_outline,
-                          ),
-                        );
-                      },
-                    ),
-                    InkWell(
-                      onTap: () {
-                        editFunction?.call(driver);
-                      },
-                      child: const CircleButton(color: Colors.amber, icon: Icons.edit),
-                    ),
+                    ChangeUserStateBtn(user: driver),
+                    if (isAllowed(AppPermissions.UPDATE))
+                      InkWell(
+                        onTap: () {
+                          editFunction?.call(driver);
+                        },
+                        child: const CircleButton(color: Colors.amber, icon: Icons.edit),
+                      ),
                     InkWell(
                       onTap: () {
                         viewFunction?.call(driver);

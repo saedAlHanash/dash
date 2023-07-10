@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_dash/core/widgets/change_user_state_btn.dart';
 import 'package:qareeb_dash/core/widgets/spinner_widget.dart';
 import 'package:qareeb_dash/features/drivers/data/response/drivers_response.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
@@ -12,14 +13,17 @@ import '../../../auth/bloc/change_user_state_cubit/change_user_state_cubit.dart'
 
 class ClientDataSource extends DataGridSource {
   List<DriverModel> clients;
-  Function(DriverModel)? editFunction;
+
   Function(DriverModel)? viewFunction;
   Function(DriverModel)? activeFunction;
 
   List<DataGridRow> dataGridRows = [];
 
   ClientDataSource(
-      {required this.clients, this.editFunction, this.activeFunction, this.viewFunction}) {
+      {required this.clients,
+
+      this.activeFunction,
+      this.viewFunction}) {
     dataGridRows = clients
         .map<DataGridRow>(
           (e) => DataGridRow(
@@ -57,7 +61,7 @@ class ClientDataSource extends DataGridSource {
   DataGridRowAdapter? buildRow(DataGridRow row) {
     return DataGridRowAdapter(
         cells: row.getCells().map((e) {
-      final admin = (e.value as SpinnerItem).item as DriverModel;
+      final user = (e.value as SpinnerItem).item as DriverModel;
 
       return Container(
           alignment: Alignment.center,
@@ -67,31 +71,10 @@ class ClientDataSource extends DataGridSource {
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    BlocBuilder<ChangeUserStateCubit, ChangeUserStateInitial>(
-                      buildWhen: (p, c) => c.id == admin.id,
-                      builder: (context, state) {
-                        if (state.statuses.loading) {
-                          return MyStyle.loadingWidget();
-                        }
-                        if (state.statuses.done) admin.isActive = !admin.isActive;
-
-                        return InkWell(
-                          onTap: () {
-                            activeFunction?.call(admin);
-                          },
-                          child: CircleButton(
-                            color: admin.isActive ? Colors.red : Colors.green,
-                            icon: admin.isActive
-                                ? Icons.cancel_outlined
-                                : Icons.check_circle_outline,
-                          ),
-                        );
-                      },
-                    ),
-
+                    ChangeUserStateBtn(user: user),
                     InkWell(
                       onTap: () {
-                        viewFunction?.call(admin);
+                        viewFunction?.call(user);
                       },
                       child: const CircleButton(
                         color: Colors.grey,

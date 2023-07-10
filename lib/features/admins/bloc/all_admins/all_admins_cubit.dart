@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qareeb_dash/core/api_manager/api_url.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_dash/features/drivers/data/response/drivers_response.dart';
+import 'package:qareeb_dash/features/drivers/data/response/drivers_response.dart';
 
 import '../../../../core/api_manager/api_service.dart';
 import '../../../../core/error/error_manager.dart';
@@ -30,13 +32,13 @@ class AllAdminsCubit extends Cubit<AllAdminsInitial> {
     }
   }
 
-  Future<Pair<List<AdminModel>?, String?>> _getAllAdminsApi() async {
+  Future<Pair<List<DriverModel>?, String?>> _getAllAdminsApi() async {
     final response = await APIService().getApi(
       url: GetUrl.getAllAdmins,
     );
 
     if (response.statusCode == 200) {
-      return Pair(AdminsResponse.fromJson(response.jsonBody).result, null);
+      return Pair(DriversResponse.fromJson(response.jsonBody).result, null);
     } else {
       return Pair(null, ErrorManager.getApiError(response));
     }

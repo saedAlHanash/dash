@@ -40,7 +40,7 @@ class LoginCubit extends Cubit<LoginInitial> {
       AppSharedPreference.cashMyId(pair.first!.userId);
       AppSharedPreference.cashUser(pair.first!);
 
-      var result = await _getPermissions();
+      var result = await _getPermissions(id: pair.first!.userId);
 
       if (result.first == null) {
         if (context.mounted) {
@@ -49,8 +49,8 @@ class LoginCubit extends Cubit<LoginInitial> {
         }
       }
       var s = '';
-      for (var e in result.first!.items) {
-        s += '${e.name},';
+      for (var e in result.first!) {
+        s += '${e},';
       }
       AppSharedPreference.cashPermissions(s);
       emit(state.copyWith(statuses: CubitStatuses.error, error: pair.second));
@@ -75,14 +75,21 @@ class LoginCubit extends Cubit<LoginInitial> {
     }
   }
 
-  Future<Pair<PermissionsResult?, String?>> _getPermissions() async {
+  Future<Pair<List<String>?, String?>> _getPermissions({required int id}) async {
     if (await network.isConnected) {
       final response = await APIService().getApi(
         url: PostUrl.getPermissions,
+        query: {'userId': id},
       );
 
       if (response.statusCode == 200) {
-        return Pair(PermissionsResponse.fromJson(response.jsonBody).result, null);
+        final json = response.jsonBody['result'] ?? <String, dynamic>{};
+
+        return Pair(
+            json == null
+                ? <String>[]
+                : List<String>.from(json!.map((x) => x)),
+            null);
       } else {
         return Pair(null, ErrorManager.getApiError(response));
       }

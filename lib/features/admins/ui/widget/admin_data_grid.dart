@@ -1,25 +1,21 @@
 import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/widgets/spinner_widget.dart';
+import 'package:qareeb_dash/features/drivers/data/response/drivers_response.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
-import '../../../../core/util/my_style.dart';
-import '../../../auth/bloc/change_user_state_cubit/change_user_state_cubit.dart';
-import '../../data/response/admins_response.dart';
+import '../../../../core/util/checker_helper.dart';
+import '../../../../core/widgets/change_user_state_btn.dart';
 
 class AdminDataSource extends DataGridSource {
-  List<AdminModel> admins;
-  Function(AdminModel)? editFunction;
-  Function(AdminModel)? viewFunction;
-  Function(AdminModel)? activeFunction;
+  List<DriverModel> admins;
+  Function(DriverModel)? editFunction;
+  Function(DriverModel)? viewFunction;
 
   List<DataGridRow> dataGridRows = [];
 
-  AdminDataSource(
-      {required this.admins, this.editFunction, this.activeFunction, this.viewFunction}) {
+  AdminDataSource({required this.admins, this.editFunction, this.viewFunction}) {
     dataGridRows = admins
         .map<DataGridRow>(
           (e) => DataGridRow(
@@ -61,7 +57,7 @@ class AdminDataSource extends DataGridSource {
   DataGridRowAdapter? buildRow(DataGridRow row) {
     return DataGridRowAdapter(
         cells: row.getCells().map((e) {
-      final admin = (e.value as SpinnerItem).item as AdminModel;
+      final admin = (e.value as SpinnerItem).item as DriverModel;
 
       return Container(
           alignment: Alignment.center,
@@ -71,35 +67,17 @@ class AdminDataSource extends DataGridSource {
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    if(!admin.emailAddress.contains('info@first-pioneers'))
-                    BlocBuilder<ChangeUserStateCubit, ChangeUserStateInitial>(
-                      buildWhen: (p, c) => c.id == admin.id,
-                      builder: (context, state) {
-                        if (state.statuses.loading) {
-                          return MyStyle.loadingWidget();
-                        }
-                        if (state.statuses.done) admin.isActive = !admin.isActive;
-
-                        return InkWell(
+                    if (!admin.emailAddress.contains('info@first-pioneers'))
+                      ChangeUserStateBtn(user: admin),
+                    if (!admin.emailAddress.contains('info@first-pioneers'))
+                      if (isAllowed(AppPermissions.UPDATE))
+                        InkWell(
                           onTap: () {
-                            activeFunction?.call(admin);
+                            editFunction?.call(admin);
                           },
-                          child: CircleButton(
-                            color: admin.isActive ? Colors.red : Colors.green,
-                            icon: admin.isActive
-                                ? Icons.cancel_outlined
-                                : Icons.check_circle_outline,
-                          ),
-                        );
-                      },
-                    ),
-                    if(!admin.emailAddress.contains('info@first-pioneers'))
-                    InkWell(
-                      onTap: () {
-                        editFunction?.call(admin);
-                      },
-                      child: const CircleButton(color: Colors.amber, icon: Icons.edit),
-                    ),
+                          child:
+                              const CircleButton(color: Colors.amber, icon: Icons.edit),
+                        ),
                     InkWell(
                       onTap: () {
                         viewFunction?.call(admin);

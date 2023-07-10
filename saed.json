@@ -1,58 +1,122 @@
 {
-  "result": [
-    {
-      "startPoint": {
-        "name": "اب تاون المزة ",
-        "arName": "اب تاون المزة ",
-        "latitude": 33.50361628570075,
-        "langitude": 36.25370074411083,
-        "tags": "اب تاون المزة,المزة البلد,saed",
-        "id": 3
+  "result": {
+    "items": [
+      {
+        "name": "Pages.Reason",
+        "displayName": " إدارة اسباب الالغاء",
+        "description": null,
+        "id": 0
       },
-      "startPointId": 3,
-      "endPoint": {
-        "name": "damer",
-        "arName": "دمر - الاب تاون ",
-        "latitude": 33.518165530986856,
-        "langitude": 36.27334619003027,
-        "tags": "الاب تاون,دمر,مشروع دمر",
-        "id": 2
+      {
+        "name": "Pages.Reports",
+        "displayName": " إدارة التقارير",
+        "description": null,
+        "id": 0
       },
-      "endPointId": 2,
-      "distance": 3659.9,
-      "price": 0.0,
-      "steps": "wtnkEkxg|E{HaIw@gBwAc@eToRsDeGmEuOoKhEgDXoDOsIeCgGyGeFkJqCeJqAaAeBgJKqC^cGSkFrBcQdE`AdAbAhCbK",
-      "name": null,
-      "arName": null,
-      "id": 12
-    },
-    {
-      "startPoint": {
-        "name": "اب تاون المزة ",
-        "arName": "اب تاون المزة ",
-        "latitude": 33.50361628570075,
-        "langitude": 36.25370074411083,
-        "tags": "اب تاون المزة,المزة البلد,saed",
-        "id": 3
+      {
+        "name": "Pages.Trips",
+        "displayName": " إدارة الرحلات",
+        "description": null,
+        "id": 0
       },
-      "startPointId": 3,
-      "endPoint": {
-        "name": "البرامكة ",
-        "arName": "البرامكة",
-        "latitude": 33.51144941769543,
-        "langitude": 36.29701104965501,
-        "tags": "سانا,جامعة دمشق",
-        "id": 5
+      {
+        "name": "Pages.Messages",
+        "displayName": " إدارة الرسائل",
+        "description": null,
+        "id": 0
       },
-      "endPointId": 5,
-      "distance": 5674.3,
-      "price": 0.0,
-      "steps": "wtnkEkxg|EsJiL_ZoWmGgRq@iGgAya@~Gss@bP{T{@q_AwA_A{Az@i@wAb@cJdDjDbAa@wAqLaS{A^sRq@`M",
-      "name": null,
-      "arName": null,
-      "id": 22
-    }
-  ],
+      {
+        "name": "Pages.Customers",
+        "displayName": " إدارة الزبائن",
+        "description": null,
+        "id": 0
+      },
+      {
+        "name": "Pages.Drivers",
+        "displayName": " إدارة السائقين",
+        "description": null,
+        "id": 0
+      },
+      {
+        "name": "Pages.Coupon",
+        "displayName": " إدارة الكوبونات",
+        "description": null,
+        "id": 0
+      },
+      {
+        "name": "Create_Permission",
+        "displayName": " انشاء مزود دفع ",
+        "description": null,
+        "id": 0
+      },
+      {
+        "name": "Update_Permission",
+        "displayName": " تعديل مزود دفع ",
+        "description": null,
+        "id": 0
+      },
+      {
+        "name": "Delete_Permission",
+        "displayName": " حذف مزود دفع",
+        "description": null,
+        "id": 0
+      },
+      {
+        "name": "Pages.CarCategory",
+        "displayName": "[Pages.Car category]",
+        "description": null,
+        "id": 0
+      },
+      {
+        "name": "Pages.Epayment",
+        "displayName": "[Pages.Epayments]",
+        "description": null,
+        "id": 0
+      },
+      {
+        "name": "Pages.Points",
+        "displayName": "[Pages.Points]",
+        "description": null,
+        "id": 0
+      },
+      {
+        "name": "Pages.Settings",
+        "displayName": "[Pages.Settings]",
+        "description": null,
+        "id": 0
+      },
+      {
+        "name": "Pages.SharedTrip",
+        "displayName": "[Pages.Shared trips]",
+        "description": null,
+        "id": 0
+      },
+      {
+        "name": "Pages.Roles",
+        "displayName": "إداررة الصلاحيات",
+        "description": null,
+        "id": 0
+      },
+      {
+        "name": "Pages.Users",
+        "displayName": "ادارة المستخدمين",
+        "description": null,
+        "id": 0
+      },
+      {
+        "name": "Pages.Users.Activation",
+        "displayName": "تفعيل المتخدمين ",
+        "description": null,
+        "id": 0
+      },
+      {
+        "name": "Pages.accept_order",
+        "displayName": "قبول طلب ",
+        "description": null,
+        "id": 0
+      }
+    ]
+  },
   "targetUrl": null,
   "success": true,
   "error": null,

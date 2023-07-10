@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/features/car_catigory/data/response/car_categories_response.dart';
 
 import '../../../../core/api_manager/api_service.dart';
@@ -29,6 +30,18 @@ class CreateCarCatRequest {
 
   int? id;
 
+  num? normalOilRatio;
+
+  num? normalGoldRatio;
+
+  num? normalTiresRatio;
+
+  num? sharedOilRatio;
+
+  num? sharedGoldRatio;
+
+  num? sharedTiresRatio;
+
   CreateCarCatRequest({
     this.id,
     this.name,
@@ -42,6 +55,12 @@ class CreateCarCatRequest {
     this.minimumNightPrice,
     this.driverRatio,
     this.companyLoyaltyRatio,
+    this.normalOilRatio,
+    this.normalGoldRatio,
+    this.normalTiresRatio,
+    this.sharedOilRatio,
+    this.sharedGoldRatio,
+    this.sharedTiresRatio,
   });
 
   CreateCarCatRequest copyWith({
@@ -74,17 +93,23 @@ class CreateCarCatRequest {
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
-      'name': name,
-      'driverRatio': driverRatio,
-      'nightKMOverCost': nightKMOverCost,
-      'nightSharedKMOverCost': nightSharedKMOverCost,
-      'dayKMOverCost': dayKMOverCost,
-      'sharedKMOverCost': sharedKMOverCost,
-      'sharedDriverRatio': sharedDriverRatio,
-      'minimumDayPrice': minimumDayPrice,
-      'minimumNightPrice': minimumNightPrice,
-      'companyLoyaltyRatio': companyLoyaltyRatio,
+      'Id': id,
+      'Name': name,
+      'DriverRatio': driverRatio,
+      'NightKMOverCost': nightKMOverCost,
+      'NightSharedKMOverCost': nightSharedKMOverCost,
+      'DayKMOverCost': dayKMOverCost,
+      'SharedKMOverCost': sharedKMOverCost,
+      'SharedDriverRatio': sharedDriverRatio,
+      'MinimumDayPrice': minimumDayPrice,
+      'MinimumNightPrice': minimumNightPrice,
+      'CompanyLoyaltyRatio': companyLoyaltyRatio,
+      'NormalOilRatio': normalOilRatio,
+      'NormalGoldRatio': normalGoldRatio,
+      'NormalTiresRatio': normalTiresRatio,
+      'SharedOilRatio': sharedOilRatio,
+      'SharedGoldRatio': sharedGoldRatio,
+      'SharedTiresRatio': sharedTiresRatio,
     };
   }
 
@@ -101,49 +126,124 @@ class CreateCarCatRequest {
       nightKMOverCost: carCategory.nightKmOverCost,
       driverRatio: carCategory.minimumNightPrice,
       companyLoyaltyRatio: carCategory.driverRatio,
+      normalOilRatio: carCategory.normalOilRatio,
+      normalGoldRatio: carCategory.normalGoldRatio,
+      normalTiresRatio: carCategory.normalTiresRatio,
+      sharedOilRatio: carCategory.sharedOilRatio,
+      sharedGoldRatio: carCategory.sharedGoldRatio,
+      sharedTiresRatio: carCategory.sharedTiresRatio,
     )..file = UploadFile(fileBytes: null, initialImage: carCategory.imageUrl);
   }
 
   bool validateRequest(BuildContext context) {
-    if (name?.isEmpty ?? true) {
+    if (name?.isBlank ?? true) {
       NoteMessage.showErrorSnackBar(message: 'خطأ في الاسم', context: context);
       return false;
     }
-    if (file == null) {
+    if (file == 0) {
       NoteMessage.showErrorSnackBar(message: 'خطأ في صورة التصنيف', context: context);
       return false;
     }
-    if (dayKMOverCost == null) {
+    if (dayKMOverCost == 0) {
       NoteMessage.showErrorSnackBar(
           message: 'خطأ في سعر الكيلو متر للرحلة العادية', context: context);
       return false;
     }
-    if (sharedKMOverCost == null) {
+    if (sharedKMOverCost == 0) {
       NoteMessage.showErrorSnackBar(
           message: 'خطأ في سعر الكيلو متر للرحلة التشاركية', context: context);
       return false;
     }
 
-    if (sharedDriverRatio == null) {
+    if (sharedDriverRatio == 0) {
       NoteMessage.showErrorSnackBar(
           message: 'خطأ في نسبة السائق للرحلة التشاركية', context: context);
       return false;
     }
-    if (minimumDayPrice == null) {
+    if (minimumDayPrice == 0) {
       NoteMessage.showErrorSnackBar(message: 'خطأ في أقل كلفة للرحلة', context: context);
       return false;
     }
 
-    if (driverRatio == null) {
+    if (driverRatio == 0) {
       NoteMessage.showErrorSnackBar(
           message: 'خطأ في نسبة السائق من الرحلة العادية', context: context);
       return false;
     }
-    if (companyLoyaltyRatio == null) {
+
+    if (companyLoyaltyRatio == 0) {
       NoteMessage.showErrorSnackBar(message: 'خطأ في نسبة الولاء', context: context);
       return false;
     }
 
+    if (normalOilRatio == 0) {
+      NoteMessage.showErrorSnackBar(message: 'خطأ في نسبة الولاء', context: context);
+      return false;
+    }
+
+    if (normalGoldRatio == 0) {
+      NoteMessage.showErrorSnackBar(message: 'خطأ في نسبة الولاء', context: context);
+      return false;
+    }
+
+    if (normalTiresRatio == 0) {
+      NoteMessage.showErrorSnackBar(message: 'خطأ في نسبة الولاء', context: context);
+      return false;
+    }
+
+    if (sharedOilRatio == 0) {
+      NoteMessage.showErrorSnackBar(message: 'خطأ في نسبة الولاء', context: context);
+      return false;
+    }
+
+    if (sharedGoldRatio == 0) {
+      NoteMessage.showErrorSnackBar(message: 'خطأ في نسبة الولاء', context: context);
+      return false;
+    }
+
+    if (sharedTiresRatio == 0) {
+      NoteMessage.showErrorSnackBar(message: 'خطأ في نسبة الولاء', context: context);
+      return false;
+    }
+
+
     return true;
   }
 }
+
+/*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ */

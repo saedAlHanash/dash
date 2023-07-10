@@ -22,7 +22,7 @@ class RoleResult {
     required this.items,
   });
 
-  final num totalCount;
+  final int totalCount;
   final List<Role> items;
 
   factory RoleResult.fromJson(Map<String, dynamic> json) {
