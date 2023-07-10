@@ -1,7 +1,9 @@
 import 'package:geolocator/geolocator.dart';
 import 'package:get_it/get_it.dart';
+import 'package:qareeb_dash/features/pay_to_drivers/bloc/pay_to_cubit/pay_to_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../features/accounts/bloc/account_amount_cubit/account_amount_cubit.dart';
 import '../../features/accounts/bloc/all_transfers_cubit/all_transfers_cubit.dart';
 import '../../features/admins/bloc/all_admins/all_admins_cubit.dart';
 import '../../features/admins/bloc/create_admin_cubit/create_admin_cubit.dart';
@@ -231,6 +233,8 @@ Future<void> init() async {
   sl.registerFactory(() => AllTransfersCubit());
   sl.registerFactory(() => ProvidersCubit());
   sl.registerFactory(() => ChangeProviderStateCubit());
+  sl.registerFactory(() => PayToCubit());
+  sl.registerFactory(() => AccountAmountCubit());
 
 //! External
 

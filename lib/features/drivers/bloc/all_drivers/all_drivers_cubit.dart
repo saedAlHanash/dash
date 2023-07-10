@@ -28,12 +28,12 @@ class AllDriversCubit extends Cubit<AllDriversInitial> {
       }
       emit(state.copyWith(statuses: CubitStatuses.error, error: pair.second));
     } else {
-      state.command.totalCount = 5;
-      emit(state.copyWith(statuses: CubitStatuses.done, result: pair.first));
+      state.command.totalCount = pair.first!.totalCount;
+      emit(state.copyWith(statuses: CubitStatuses.done, result: pair.first!.items));
     }
   }
 
-  Future<Pair<List<DriverModel>?, String?>> _getAllDriversApi() async {
+  Future<Pair<DriversResult?, String?>> _getAllDriversApi() async {
     final response = await APIService().getApi(
       url: GetUrl.allDrivers,
       query: state.command.toJson(),

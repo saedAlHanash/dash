@@ -1,9 +1,11 @@
+import 'package:collection/collection.dart';
 import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/widgets/not_found_widget.dart';
+import 'package:qareeb_dash/core/widgets/saed_taple_widget.dart';
 
 import '../../../../core/util/my_style.dart';
 import '../../../../core/widgets/app_bar_widget.dart';
@@ -28,61 +30,91 @@ class DebtsPage extends StatelessWidget {
           if (list.isEmpty) {
             return const NotFoundWidget(text: 'السجل فارغ');
           }
-          return ListView.builder(
-            itemCount: list.length,
-            itemBuilder: (_, i) {
-              final item = list[i];
-              return MyCardWidget(
-                elevation: 0.0,
-                margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0).r,
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: DrawableText(
-                        text: item.sharedRequestId != 0
-                            ? 'رحلة تشاركية (id ${item.sharedRequestId})'
-                            : 'رحلة عادية (id  ${item.tripId})',
-                        color: Colors.black,
-                        matchParent: true,
-                        fontFamily: FontManager.cairoBold,
-                      ),
-                    ),
-                    Expanded(
-                      child: DrawableText(
-                        text: 'الإجمالي: ${item.totalCost.formatPrice}',
-                        color: Colors.black,
-                        matchParent: true,
-                        fontFamily: FontManager.cairoBold,
-                      ),
-                    ),
-                    Expanded(
-                      child: DrawableText(
-                        text: 'للسائق: ${item.driverShare.formatPrice}',
-                        color: Colors.black,
-                        matchParent: true,
-                        fontFamily: FontManager.cairoBold,
-                      ),
-                    ),
-                    if (item.companyLoyaltyShare != 0)
-                      Expanded(
-                        child: DrawableText(
-                          text: 'للولاء: ${item.companyLoyaltyShare.formatPrice}',
-                          color: Colors.black,
-                          matchParent: true,
-                          fontFamily: FontManager.cairoBold,
-                        ),
-                      ),
-                    Expanded(
-                      child: DrawableText(
-                        text: item.date?.formatDateTime ?? '',
-                        color: Colors.grey,
-                      ),
-                    ),
-                  ],
-                ),
-              );
+          return SaedTableWidget(
+            onChangePage: (command) {
+              context.read<DebtsCubit>().getDebts(context, command: command);
             },
+            command: state.command,
+            title: const [
+              'النوع',
+              'الاجمالي',
+              'للسائق',
+              'للزيت',
+              'للذهب',
+              'للإطارات',
+              'تاريخ'
+            ],
+            data: list.mapIndexed(
+              (i, e) {
+                return [
+                  e.sharedRequestId != 0
+                      ? ' تشاركية (id ${e.sharedRequestId})'
+                      : ' عادية (id  ${e.tripId})',
+                  e.totalCost.formatPrice,
+                  e.driverShare.formatPrice,
+                  e.oilShare.formatPrice,
+                  e.goldShare.formatPrice,
+                  e.tiresShare.formatPrice,
+                  e.date?.formatDate ?? '-',
+                ];
+              },
+            ).toList(),
           );
+          // return ListView.builder(
+          //   itemCount: list.length,
+          //   itemBuilder: (_, i) {
+          //     final item = list[i];
+          //     return MyCardWidget(
+          //       elevation: 0.0,
+          //       margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0).r,
+          //       child: Row(
+          //         children: [
+          //           Expanded(
+          //             child: DrawableText(
+          //               text: item.sharedRequestId != 0
+          //                   ? 'رحلة تشاركية (id ${item.sharedRequestId})'
+          //                   : 'رحلة عادية (id  ${item.tripId})',
+          //               color: Colors.black,
+          //               matchParent: true,
+          //               fontFamily: FontManager.cairoBold,
+          //             ),
+          //           ),
+          //           Expanded(
+          //             child: DrawableText(
+          //               text: 'الإجمالي: ${item.totalCost.formatPrice}',
+          //               color: Colors.black,
+          //               matchParent: true,
+          //               fontFamily: FontManager.cairoBold,
+          //             ),
+          //           ),
+          //           Expanded(
+          //             child: DrawableText(
+          //               text: 'للسائق: ${item.driverShare.formatPrice}',
+          //               color: Colors.black,
+          //               matchParent: true,
+          //               fontFamily: FontManager.cairoBold,
+          //             ),
+          //           ),
+          //           if (item.companyLoyaltyShare != 0)
+          //             Expanded(
+          //               child: DrawableText(
+          //                 text: 'للولاء: ${item.companyLoyaltyShare.formatPrice}',
+          //                 color: Colors.black,
+          //                 matchParent: true,
+          //                 fontFamily: FontManager.cairoBold,
+          //               ),
+          //             ),
+          //           Expanded(
+          //             child: DrawableText(
+          //               text: item.date?.formatDateTime ?? '',
+          //               color: Colors.grey,
+          //             ),
+          //           ),
+          //         ],
+          //       ),
+          //     );
+          //   },
+          // );
         },
       ),
     );

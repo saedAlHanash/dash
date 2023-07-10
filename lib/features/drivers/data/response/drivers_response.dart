@@ -6,18 +6,37 @@ class DriversResponse {
     required this.result,
   });
 
-  final List<DriverModel> result;
+  final DriversResult result;
 
   factory DriversResponse.fromJson(Map<String, dynamic> json) {
     return DriversResponse(
-      result: json["result"] == null
+      result: DriversResult.fromJson(json['result'] ?? {}),
+    );
+  }
+
+}
+
+class DriversResult {
+  DriversResult({
+    required this.items,
+    required this.totalCount,
+  });
+
+  final List<DriverModel> items;
+  final int totalCount;
+
+  factory DriversResult.fromJson(Map<String, dynamic> json) {
+    return DriversResult(
+      items: json["items"] == null
           ? []
-          : List<DriverModel>.from(json["result"]!.map((x) => DriverModel.fromJson(x))),
+          : List<DriverModel>.from(json["items"]!.map((x) => DriverModel.fromJson(x))),
+      totalCount: json["totalCount"] ?? 0,
     );
   }
 
   Map<String, dynamic> toJson() => {
-        "result": result.map((x) => x.toJson()).toList(),
+        "items": items.map((x) => x.toJson()).toList(),
+        "totalCount": totalCount,
       };
 }
 

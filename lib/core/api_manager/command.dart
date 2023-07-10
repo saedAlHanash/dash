@@ -13,7 +13,7 @@ class Command {
   int maxResultCount = 20;
   int? totalCount;
 
-  TransferFilterRequest? transferFilterRequest;
+  var transferFilterRequest = TransferFilterRequest();
 
   int get maxPages => ((totalCount ?? 0) / maxResultCount).myRound;
 

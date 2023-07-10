@@ -15,6 +15,7 @@ import 'package:qareeb_dash/features/points/bloc/creta_edge_cubit/create_edge_cu
 import 'package:qareeb_dash/features/points/bloc/point_by_id_cubit/point_by_id_cubit.dart';
 
 import '../core/injection/injection_container.dart' as di;
+import '../features/accounts/bloc/account_amount_cubit/account_amount_cubit.dart';
 import '../features/admins/ui/pages/admin_info_page.dart';
 import '../features/auth/bloc/login_cubit/login_cubit.dart';
 import '../features/auth/ui/pages/login_page.dart';
@@ -92,6 +93,9 @@ final appGoRouter = GoRouter(
               create: (_) => di.sl<DriverBuIdCubit>()..getDriverBuId(context, id: id)),
           BlocProvider(create: (_) => di.sl<CreateRedeemCubit>()),
           BlocProvider(create: (_) => di.sl<WalletCubit>()..getWallet(id: id)),
+          BlocProvider(
+              create: (_) =>
+                  di.sl<AccountAmountCubit>()..getAccountAmount(_, driverId: id)),
           BlocProvider(
             create: (_) => di.sl<RedeemsCubit>()..getRedeems(_, driverId: id),
           ),

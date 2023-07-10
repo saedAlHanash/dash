@@ -71,6 +71,9 @@ class GetUrl {
   static var getAllTrips = 'api/services/app/Order/GetAllTrips';
 
   static var getAllSharedTrips = 'api/services/app/SharedTripService/GetAllSharedTrips';
+
+  static var fromDriver ='api/services/app/AccountsService/RequiredAmountFromDriver';
+  static var fromCompany ='api/services/app/AccountsService/DriverDebtFromCompany';
 }
 
 class PostUrl {
@@ -134,6 +137,9 @@ class PostUrl {
   static var createEdge = 'api/services/app/EdgesService/CreateEdge';
 
   static var createPolicy = 'api/services/app/Settings/Updatesettings';
+
+  static var createFromDriver ='api/services/app/PaymentService/CreatePayOffPayment';
+  static var createFromCompany ='api/services/app/PaymentService/CreateDebtPayment';
 }
 
 class PutUrl {

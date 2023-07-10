@@ -1,107 +1,32 @@
 {
   "result": {
-    "driverId": 16,
-    "pathId": 2,
-    "path": {
-      "name": null,
-      "arName": null,
-      "edges": [
-        {
-          "startPoint": {
-            "name": "البرامكة ",
-            "arName": "البرامكة الفحامة",
-            "latitude": 33.51144941769543,
-            "langitude": 36.29701104965501,
-            "tags": "سانا,جامعة دمشق",
-            "id": 5
-          },
-          "startPointId": 5,
-          "endPoint": {
-            "name": "damer",
-            "arName": "دمر - الاب تاون ",
-            "latitude": 33.518165530986856,
-            "langitude": 36.27334619003027,
-            "tags": "الاب تاون,دمر,مشروع دمر",
-            "id": 2
-          },
-          "endPointId": 2,
-          "distance": 2986.8,
-          "price": 0.0,
-          "steps": "gepkEigp|E}Ale@h@fDO~D{Nb@cBt@}[lYtAzKu@lG}@l@j@xAkApIe@PGh@^d@h@UtE|AiAnNhCbK",
-          "name": null,
-          "arName": null,
-          "id": 5
-        }
-      ],
-      "id": 2
-    },
-    "sharedRequests": [
+    "totalCount": 2,
+    "items": [
       {
-        "id": 4,
-        "sharedTripId": 2,
-        "clientId": 4,
-        "client": {
-          "userName": "Qareeb963964847879@gmail.com",
-          "fullName": "جمانة  null",
-          "name": "جمانة ",
-          "surname": "null",
-          "phoneNumber": "963964847879",
-          "avatar": null
-        },
-        "status": 2,
-        "seatNumber": 2,
-        "dropPointId": 2,
-        "dropPoint": {
-          "name": "damer",
-          "arName": "دمر - الاب تاون ",
-          "latitude": 33.518165530986856,
-          "langitude": 36.27334619003027,
-          "tags": "الاب تاون,دمر,مشروع دمر",
-          "id": 2
-        },
-        "pickupPointId": 5,
-        "pickupPoint": {
-          "name": "البرامكة ",
-          "arName": "البرامكة الفحامة",
-          "latitude": 33.51144941769543,
-          "langitude": 36.29701104965501,
-          "tags": "سانا,جامعة دمشق",
-          "id": 5
-        },
-        "amount": 3000.0
-      }
-    ],
-    "creationDate": "2023-07-06T21:52:33.180855",
-    "schedulingDate": "2023-07-07T20:40:00",
-    "startDate": null,
-    "endDate": null,
-    "tripStatus": 0,
-    "seatCost": 1500,
-    "totalCost": 7500,
-    "distance": 2987,
-    "availableSeats": 3,
-    "reservedSeats": 2,
-    "note": null,
-    "driver": {
-      "userName": "Qareeb963938891523@gmail.com",
-      "fullName": "سعيد الحنش",
-      "name": "سعيد",
-      "surname": "الحنش",
-      "phoneNumber": "963938891523",
-      "imei": "454545",
-      "avatar": "1688665420185pmS0aoMOhV.jpg",
-      "rating": 0.0,
-      "carType": {
-        "userId": 16,
-        "carBrand": "kia",
-        "carModel": "kia",
-        "carColor": "red",
-        "carNumber": "5444",
-        "seatsNumber": 5
+        "driverShare": 2250.0,
+        "totalCost": 3000.0,
+        "sharedRequestId": 4,
+        "tripId": null,
+        "driverId": 16,
+        "date": "2023-07-06T21:54:56.992952",
+        "oilShare": null,
+        "goldShare": null,
+        "tiresShare": null,
+        "id": 4
       },
-      "id": 16
-    },
-    "id": 2
+      {
+        "driverShare": 315000.0,
+        "totalCost": 21000.0,
+        "sharedRequestId": 5,
+        "tripId": null,
+        "driverId": 16,
+        "date": "2023-07-10T15:00:53.828999",
+        "oilShare": 1.4,
+        "goldShare": 3.5,
+        "tiresShare": 0.7,
+        "id": 5
+      }
+    ]
   },
   "targetUrl": null,
   "success": true,

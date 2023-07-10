@@ -86,10 +86,7 @@ class DriverInfoPage extends StatelessWidget {
                 const LoyaltyWidget(),
                 const Divider(),
                 30.0.verticalSpace,
-                SizedBox(
-                  height: 300.0.h,
-                  child: WalletPage(id: driver.id),
-                ),
+                WalletPage(id: driver.id),
                 150.0.verticalSpace,
               ],
             ),

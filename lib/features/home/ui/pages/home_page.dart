@@ -24,6 +24,7 @@ import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/shared_preferences.dart';
 import '../../../../core/widgets/logo_text.dart';
 import '../../../../router/go_route_pages.dart';
+import '../../../accounts/bloc/account_amount_cubit/account_amount_cubit.dart';
 import '../../../accounts/bloc/all_transfers_cubit/all_transfers_cubit.dart';
 import '../../../accounts/data/request/transfer_filter_request.dart';
 import '../../../admins/ui/pages/admins_page.dart';
@@ -33,6 +34,7 @@ import '../../../car_catigory/ui/pages/car_categories_page.dart';
 import '../../../clients/ui/pages/clients_page.dart';
 import '../../../drivers/bloc/loyalty_cubit/loyalty_cubit.dart';
 import '../../../drivers/ui/pages/drivers_page.dart';
+import '../../../pay_to_drivers/bloc/pay_to_cubit/pay_to_cubit.dart';
 import '../../../pay_to_drivers/ui/pages/pay_to_drivers_page.dart';
 import '../../../points/ui/pages/points_page.dart';
 import '../../../reasons/bloc/create_cubit/create_cubit.dart';
@@ -304,6 +306,9 @@ class _HomePageState extends State<HomePage> {
                             command: Command.initial()..transferFilterRequest = request,
                           ),
                       ),
+                      BlocProvider(create: (_) => sl<PayToCubit>()),
+                      BlocProvider(create: (_) => sl<AccountAmountCubit>()),
+
                     ],
                     child: const PayToDriversPage(),
                   );

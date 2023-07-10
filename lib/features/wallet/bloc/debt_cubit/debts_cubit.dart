@@ -19,11 +19,10 @@ part 'debts_state.dart';
 
 class DebtsCubit extends Cubit<DebtsInitial> {
   DebtsCubit() : super(DebtsInitial.initial());
-  final network = sl<NetworkInfo>();
 
-  Future<void> getDebts(BuildContext context, {required int id, Command? command}) async {
-    emit(state.copyWith(statuses: CubitStatuses.loading, command: command));
-    final pair = await _getDebtsApi(id: id);
+  Future<void> getDebts(BuildContext context, {int? id, Command? command}) async {
+    emit(state.copyWith(statuses: CubitStatuses.loading, command: command, id: id));
+    final pair = await _getDebtsApi(id: id ?? state.id);
 
     if (pair.first == null) {
       if (context.mounted) {
@@ -37,17 +36,15 @@ class DebtsCubit extends Cubit<DebtsInitial> {
   }
 
   Future<Pair<DebtsResult?, String?>> _getDebtsApi({required int id}) async {
-    if (await network.isConnected) {
-      final response =
-          await APIService().getApi(url: GetUrl.debt, query: {'driverId': id});
+    final response = await APIService().getApi(
+      url: GetUrl.debt,
+      query: {'driverId': id}..addAll(state.command.toJson()),
+    );
 
-      if (response.statusCode == 200) {
-        return Pair(DebtsResponse.fromJson(response.jsonBody).result, null);
-      } else {
-        return Pair(null, ErrorManager.getApiError(response));
-      }
+    if (response.statusCode == 200) {
+      return Pair(DebtsResponse.fromJson(response.jsonBody).result, null);
     } else {
-      return Pair(null, AppStringManager.noInternet);
+      return Pair(null, ErrorManager.getApiError(response));
     }
   }
 }

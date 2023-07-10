@@ -27,12 +27,12 @@ class AllAdminsCubit extends Cubit<AllAdminsInitial> {
       }
       emit(state.copyWith(statuses: CubitStatuses.error, error: pair.second));
     } else {
-      state.command.totalCount = 5;
-      emit(state.copyWith(statuses: CubitStatuses.done, result: pair.first));
+      state.command.totalCount = pair.first!.totalCount;
+      emit(state.copyWith(statuses: CubitStatuses.done, result: pair.first!.items));
     }
   }
 
-  Future<Pair<List<DriverModel>?, String?>> _getAllAdminsApi() async {
+  Future<Pair<DriversResult?, String?>> _getAllAdminsApi() async {
     final response = await APIService().getApi(
       url: GetUrl.getAllAdmins,
       query: state.command.toJson(),

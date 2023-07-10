@@ -20,16 +20,19 @@ class PayedListWidget extends StatelessWidget {
     if (list.isEmpty) {
       return const NotFoundWidget(text: 'لا يوجد معلومات');
     }
-    return ListView.builder(
-      shrinkWrap: true,
-      itemCount: list.length,
-      itemBuilder: (context, i) {
-        final item = list[i];
-        return ItemPayed(
-          item: item,
-          isClient: isClient,
-        );
-      },
+    return SizedBox(
+      height: 300.0.h,
+      child: ListView.builder(
+        shrinkWrap: true,
+        itemCount: list.length,
+        itemBuilder: (context, i) {
+          final item = list[i];
+          return ItemPayed(
+            item: item,
+            isClient: isClient,
+          );
+        },
+      ),
     );
   }
 }

@@ -5,11 +5,13 @@ class DebtsInitial extends Equatable {
   final List<Debt> result;
   final String error;
   final Command command;
+  final int id;
 
   const DebtsInitial({
     required this.statuses,
     required this.result,
     required this.command,
+    required this.id,
     required this.error,
   });
 
@@ -19,6 +21,7 @@ class DebtsInitial extends Equatable {
       error: '',
       statuses: CubitStatuses.init,
       command: Command.initial(),
+      id: 0,
     );
   }
 
@@ -30,12 +33,14 @@ class DebtsInitial extends Equatable {
     List<Debt>? result,
     String? error,
     Command? command,
+    int? id,
   }) {
     return DebtsInitial(
       statuses: statuses ?? this.statuses,
       result: result ?? this.result,
       error: error ?? this.error,
       command: command ?? this.command,
+      id: id ?? this.id,
     );
   }
 }
