@@ -5,17 +5,22 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qareeb_dash/core/widgets/spinner_widget.dart';
 
 import '../api_manager/command.dart';
-import '../strings/app_color_manager.dart';
 import 'my_card_widget.dart';
 
 class SaedTableWidget extends StatelessWidget {
   const SaedTableWidget(
-      {super.key, required this.title, required this.data, required this.command});
+      {super.key,
+      required this.title,
+      required this.data,
+      required this.command,
+      this.onChangePage});
 
   final List<dynamic> title;
   final List<List<dynamic>> data;
 
   final Command command;
+
+  final Function(Command command)? onChangePage;
 
   @override
   Widget build(BuildContext context) {
@@ -82,8 +87,12 @@ class SaedTableWidget extends StatelessWidget {
               ],
             );
           }).toList(),
-
-          SpinnerWidget(items: )
+          SpinnerWidget(
+            items: command.getSpinnerItems,
+            onChanged: (spinnerItem) {
+              onChangePage?.call(command..goToPage(spinnerItem.id));
+            },
+          ),
         ],
       ),
     );

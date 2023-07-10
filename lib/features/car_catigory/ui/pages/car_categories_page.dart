@@ -58,6 +58,7 @@ class CarCategoriesPage extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 15.0).h,
               ),
               SaedTableWidget(
+                command: state.command,
                 title: _carCatList,
                 data: list
                     .mapIndexed(
@@ -126,7 +127,13 @@ class CarCategoriesPage extends StatelessWidget {
                       ],
                     )
                     .toList(),
+                onChangePage: (command) {
+                  context
+                      .read<AllCarCategoriesCubit>()
+                      .getCarCategories(context, command: command);
+                },
               ),
+
               // Expanded(
               //   child: ListView.builder(
               //     itemCount: list.length,

@@ -19,7 +19,7 @@ class Command {
   List<SpinnerItem> get getSpinnerItems {
     final list = <SpinnerItem>[];
     for (var i = 0; i <= maxPages; i++) {
-      // list.add
+      list.add(SpinnerItem(id: i, name: i.toString(), isSelected: i == currentPage));
     }
     return list;
   }

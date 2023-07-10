@@ -4,17 +4,20 @@ class AllCarCategoriesInitial extends Equatable {
   final CubitStatuses statuses;
   final List<CarCategory> result;
   final String error;
+  final Command command;
 
   const AllCarCategoriesInitial({
     required this.statuses,
     required this.result,
     required this.error,
+    required this.command,
   });
 
   factory AllCarCategoriesInitial.initial() {
-    return const AllCarCategoriesInitial(
-      result: <CarCategory>[],
+    return  AllCarCategoriesInitial(
+      result: const<CarCategory>[],
       error: '',
+      command: Command.initial(),
       statuses: CubitStatuses.init,
     );
   }
@@ -22,15 +25,18 @@ class AllCarCategoriesInitial extends Equatable {
   @override
   List<Object> get props => [statuses, result, error];
 
+
   AllCarCategoriesInitial copyWith({
     CubitStatuses? statuses,
     List<CarCategory>? result,
     String? error,
+    Command? command,
   }) {
     return AllCarCategoriesInitial(
       statuses: statuses ?? this.statuses,
       result: result ?? this.result,
       error: error ?? this.error,
+      command: command ?? this.command,
     );
   }
 
