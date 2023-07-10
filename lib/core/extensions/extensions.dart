@@ -100,6 +100,13 @@ extension MaxInt on num {
     }
     return Assets.iconsE;
   }
+
+  int get myRound {
+    if (toInt() < this) return toInt() + 1;
+    return toInt();
+  }
+
+
 }
 
 extension NullOrZero on num? {
@@ -108,6 +115,21 @@ extension NullOrZero on num? {
 
 extension RealName on Enum {
   String get upperFirst => name.replaceRange(0, 1, name.substring(0, 1).toUpperCase());
+}
+
+extension TransferTypeName on TransferType {
+  String get getArName {
+    switch(this){
+      case TransferType.sharedPay:
+        return 'رحلة تشاركية';
+      case TransferType.tripPay:
+        return 'رحلة عادية';
+      case TransferType.payoff:
+        return 'من السائق للشركة';
+      case TransferType.debit:
+        return 'من الشركة للسائق';
+    }
+  }
 }
 
 extension Redeems on RedeemsResult {
@@ -339,7 +361,7 @@ extension SharedRequestMap on SharedTrip {
 
   List<SpinnerItem> availableRequest() {
     var s = <SpinnerItem>[];
-    var a = seatsNumber - sharedRequests.length;
+    var a = driver.carType.seatsNumber - sharedRequests.length;
     for (var i = 1; i <= a; i++) {
       s.add(SpinnerItem(id: i, name: i.toString()));
     }

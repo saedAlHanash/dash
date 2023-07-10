@@ -170,7 +170,7 @@ class ItemSharedTrip1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        context.pushNamed(GoRouteName.sharedTripInfo, queryParams: {'id': item.id.toString()});
+
       },
       child: MyCardWidget(
         margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0).r,
@@ -261,7 +261,7 @@ class ItemSharedTrip1 extends StatelessWidget {
                           matchParent: true,
                           size: 18.0.sp,
                           textAlign: TextAlign.center,
-                          text: (item.seatsNumber - item.availableSeats).toString(),
+                          text: (item.driver.carType.seatsNumber - item.availableSeats).toString(),
                           color: Colors.black,
                           fontFamily: FontManager.cairoBold,
                         ),
@@ -373,7 +373,7 @@ class ItemSharedTrip1 extends StatelessWidget {
                 );
               },
               child: const DrawableText(
-                text: 'عرض الزبائن',
+                text: 'الزبائن',
                 color: AppColorManager.mainColorDark,
                 fontFamily: FontManager.cairoBold,
               ),

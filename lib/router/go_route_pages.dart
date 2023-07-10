@@ -34,6 +34,7 @@ import '../features/redeems/bloc/redeems_cubit/redeems_cubit.dart';
 import '../features/shared_trip/bloc/shared_trip_by_id_cubit/shared_trip_by_id_cubit.dart';
 import '../features/shared_trip/ui/pages/shared_trip_info_page.dart';
 import '../features/trip/bloc/trip_by_id/trip_by_id_cubit.dart';
+import '../features/trip/bloc/trip_status_cubit/trip_status_cubit.dart';
 import '../features/trip/ui/pages/trip_info_page.dart';
 import '../features/wallet/bloc/debt_cubit/debts_cubit.dart';
 import '../features/wallet/bloc/my_wallet_cubit/my_wallet_cubit.dart';
@@ -266,6 +267,7 @@ final appGoRouter = GoRouter(
 
         final providers = [
           BlocProvider(create: (_) => di.sl<MapControllerCubit>()),
+          BlocProvider(create: (_) => di.sl<TripStatusCubit>()),
           BlocProvider(create: (_) => di.sl<TripByIdCubit>()..tripById(_, tripId: id)),
         ];
         return MultiBlocProvider(

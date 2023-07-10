@@ -52,7 +52,11 @@ class SpinnerWidgetState<T> extends State<SpinnerWidget<T>> {
           child: DrawableText(
             text: item.name ?? '',
             padding: padding,
-            color: (item.id != -1) ? Colors.black : AppColorManager.gray.withOpacity(0.7),
+            color: (item.id != -1)
+                ? (item.enable)
+                    ? Colors.black
+                    : AppColorManager.gray.withOpacity(0.7)
+                : AppColorManager.gray.withOpacity(0.7),
             fontFamily: FontManager.cairoBold,
             drawableStart: item.icon,
             drawablePadding: 15.0.w,
@@ -61,7 +65,7 @@ class SpinnerWidgetState<T> extends State<SpinnerWidget<T>> {
       },
     ).toList();
 
-    if (widget.hint == null) selectedItem ??= widget.items[0];
+    if (widget.hint == null) selectedItem ??= widget.items.firstOrNull;
 
     if ((widget.sendFirstItem ?? false) && selectedItem != null) {
       if (widget.onChanged != null) widget.onChanged!(selectedItem!);
@@ -79,8 +83,9 @@ class SpinnerWidgetState<T> extends State<SpinnerWidget<T>> {
           value: selectedItem,
           hint: widget.hint,
           onChanged: (value) {
-            if (widget.onChanged != null) widget.onChanged!(value! as SpinnerItem);
-            state(() => selectedItem = value! as SpinnerItem);
+            if (!(value! as SpinnerItem).enable) return;
+            if (widget.onChanged != null) widget.onChanged!(value as SpinnerItem);
+            state(() => selectedItem = value as SpinnerItem);
           },
           buttonWidth: widget.width,
           isExpanded: widget.expanded ?? false,

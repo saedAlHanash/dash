@@ -14,7 +14,6 @@ import '../../../../core/strings/app_string_manager.dart';
 import '../../../../core/util/note_message.dart';
 import '../../../../core/util/pair_class.dart';
 import '../../../trip/data/response/trip_response.dart';
-import '../../data/response/trips_response.dart';
 
 part 'previous_trips_state.dart';
 
@@ -42,7 +41,11 @@ class PreviousTripsCubit extends Cubit<PreviousTripsInitial> {
       final response = await APIService().getApi(url: GetUrl.getPreviousTrips);
 
       if (response.statusCode == 200) {
-        return Pair(TripsResponse.fromJson(response.jsonBody).result.reversed.toList(), null);
+        return Pair(TripsResponse
+            .fromJson(response.jsonBody)
+            .items
+            .reversed
+            .toList(), null);
       } else {
         return Pair(null, ErrorManager.getApiError(response));
       }

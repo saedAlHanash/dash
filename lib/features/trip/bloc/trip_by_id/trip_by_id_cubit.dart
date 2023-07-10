@@ -19,7 +19,7 @@ class TripByIdCubit extends Cubit<TripByIdInitial> {
   TripByIdCubit() : super(TripByIdInitial.initial());
 
   Future<void> tripById(BuildContext context, {required int tripId}) async {
-
+    emit(state.copyWith(statuses: CubitStatuses.loading));
     final pair = await tripByIdApi(tripId: tripId);
 
 

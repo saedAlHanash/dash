@@ -35,6 +35,7 @@ class AllCarCategoriesCubit extends Cubit<AllCarCategoriesInitial> {
   Future<Pair<CarCategoriesResult?, String?>> _getCarCategoriesApi() async {
     final response = await APIService().getApi(
       url: GetUrl.carCategories,
+      query: state.command.toJson(),
     );
 
     if (response.statusCode == 200) {

@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,11 +10,23 @@ import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 import '../../../../core/util/my_style.dart';
+import '../../../../core/widgets/change_user_state_btn.dart';
+import '../../../../core/widgets/my_button.dart';
+import '../../../../core/widgets/saed_taple_widget.dart';
 import '../../../../router/go_route_pages.dart';
 import '../../../auth/bloc/change_user_state_cubit/change_user_state_cubit.dart';
 import '../../../drivers/data/response/drivers_response.dart';
 import '../../bloc/all_clients/all_clients_cubit.dart';
-import '../widget/client_data_grid.dart';
+
+
+final clientTableHeader = [
+  "id",
+  "اسم الزبون",
+  "رقم الهاتف",
+  "حالة الزبون",
+  "تاريخ التسجيل",
+  "العمليات",
+];
 
 class ClientsPage extends StatefulWidget {
   const ClientsPage({Key? key}) : super(key: key);
@@ -38,59 +51,48 @@ class _ClientsPageState extends State<ClientsPage> {
           if (state.statuses.loading) {
             return MyStyle.loadingWidget();
           }
+          final list = state.result;
           if (state.result.isEmpty) {
             return const NotFoundWidget(text: 'لا يوجد زبائن');
           }
-          var dataSource = ClientDataSource(
-              clients: state.result,
-              viewFunction: (DriverModel user) {
-                context.pushNamed(GoRouteName.clientInfo, queryParams: {'id':user.id.toString()});
-              },
-              activeFunction: (DriverModel user) async {
-                context
-                    .read<ChangeUserStateCubit>()
-                    .changeUserState(context, id: user.id, userState: !user.isActive);
-              });
 
-          return Column(
-            children: [
-              SfDataGrid(
-                allowSorting: false,
-                allowFiltering: false,
-                rowsPerPage: _rowsPerPage,
-                source: dataSource,
-                columns: getColumns(),
-                columnWidthMode: ColumnWidthMode.auto,
-              ),
-              Container(
-                height: 100.h,
-                decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.surface.withOpacity(0.12),
-                    border: Border(
-                        top: BorderSide(
-                            width: .5,
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onSurface
-                                .withOpacity(0.12)))),
-                child: Align(
-                    child: SfDataPagerTheme(
-                  data: SfDataPagerThemeData(),
-                  child: SfDataPager(
-                    delegate: dataSource,
-                    availableRowsPerPage: const <int>[1, 2, 5, 10, 20],
-                    pageCount: 1,
-                    onRowsPerPageChanged: (int? rowsPerPage) {
-                      setState(() {
-                        _rowsPerPage = rowsPerPage!;
-                        dataSource.updateDataGriDataSource();
-                      });
-                    },
-                  ),
-                )),
-              )
-            ],
+
+          return SaedTableWidget(
+            command: state.command,
+            title: clientTableHeader,
+            data: list
+                .mapIndexed(
+                  (index, e) => [
+                    e.id.toString(),
+                    e.fullName,
+                    e.phoneNumber,
+                    e.isActive ? 'مفعل' : 'غير مفعل',
+                    e.creationTime?.formatDate,
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        ChangeUserStateBtn(user: e),
+                        InkWell(
+                          onTap: () {
+                            context.pushNamed(GoRouteName.clientInfo,
+                                queryParams: {'id': e.id.toString()});
+                          },
+                          child: const CircleButton(
+                            color: Colors.grey,
+                            icon: Icons.info_outline_rounded,
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                )
+                .toList(),
+            onChangePage: (command) {
+              context.read<AllClientsCubit>().getAllClients(context, command: command);
+            },
           );
+
         },
       ),
     );

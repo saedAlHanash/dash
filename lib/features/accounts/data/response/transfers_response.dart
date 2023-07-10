@@ -1,26 +1,49 @@
+import 'package:qareeb_dash/core/strings/enum_manager.dart';
+
 class TransfersResponse {
   TransfersResponse({
     required this.result,
   });
 
-  final List<TransferResult> result;
+  final TransfersResult result;
 
   factory TransfersResponse.fromJson(Map<String, dynamic> json) {
     return TransfersResponse(
-      result: json["result"] == null
-          ? []
-          : List<TransferResult>.from(
-              json["result"]!.map((x) => TransferResult.fromJson(x))),
+      result: TransfersResult.fromJson(json["result"] ?? {}),
     );
   }
 
   Map<String, dynamic> toJson() => {
-        "result": result.map((x) => x.toJson()).toList(),
+        "result": result.toJson(),
       };
 }
 
-class TransferResult {
-  TransferResult({
+class TransfersResult {
+  TransfersResult({
+    required this.items,
+    required this.totalCount,
+  });
+
+  final List<Transfer> items;
+  final int totalCount;
+
+  factory TransfersResult.fromJson(Map<String, dynamic> json) {
+    return TransfersResult(
+      items: json["items"] == null
+          ? []
+          : List<Transfer>.from(json["items"]!.map((x) => Transfer.fromJson(x))),
+      totalCount: json["totalCount"] ?? 0,
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        "items": items.map((x) => x.toJson()).toList(),
+        "totalCount": totalCount,
+      };
+}
+
+class Transfer {
+  Transfer({
     required this.id,
     required this.status,
     required this.transferDate,
@@ -28,7 +51,6 @@ class TransferResult {
     required this.sourceName,
     required this.destinationId,
     required this.destinationName,
-    required this.userName,
     required this.amount,
     required this.type,
     required this.tripId,
@@ -36,30 +58,28 @@ class TransferResult {
   });
 
   final int id;
-  final num status;
+  final TransferStatus? status;
   final DateTime? transferDate;
   final num sourceId;
   final String sourceName;
   final num destinationId;
   final String destinationName;
-  final String userName;
   final num amount;
-  final num type;
+  final TransferType? type;
   final num tripId;
   final num sharedRequestId;
 
-  factory TransferResult.fromJson(Map<String, dynamic> json) {
-    return TransferResult(
+  factory Transfer.fromJson(Map<String, dynamic> json) {
+    return Transfer(
       id: json["id"] ?? 0,
-      status: json["status"] ?? "",
+      status: json["status"] == null ? null : TransferStatus.values[json["status"]],
       transferDate: DateTime.tryParse(json["transferDate"] ?? ""),
       sourceId: json["sourceId"] ?? 0,
       sourceName: json["sourceName"] ?? "",
       destinationId: json["destinationId"] ?? 0,
       destinationName: json["destinationName"] ?? "",
-      userName: json["userName"] ?? "",
       amount: json["amount"] ?? 0,
-      type: json["type"] ?? "",
+      type: json["type"] == null ? null : TransferType.values[json["type"]],
       tripId: json["tripId"] ?? 0,
       sharedRequestId: json["sharedRequestId"] ?? 0,
     );
@@ -73,7 +93,6 @@ class TransferResult {
         "sourceName": sourceName,
         "destinationId": destinationId,
         "destinationName": destinationName,
-        "userName": userName,
         "amount": amount,
         "type": type,
         "tripId": tripId,

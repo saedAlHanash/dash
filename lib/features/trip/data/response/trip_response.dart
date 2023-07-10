@@ -19,6 +19,30 @@ class TripResponse {
       };
 }
 
+class TripsResponse {
+  TripsResponse({
+    required this.totalCount,
+    required this.items,
+  });
+
+  final int totalCount;
+  final List<TripResult> items;
+
+  factory TripsResponse.fromJson(Map<String, dynamic> json) {
+    return TripsResponse(
+      totalCount: json['result']["totalCount"] ?? 0,
+      items: json['result']["items"] == null
+          ? []
+          : List<TripResult>.from(json['result']["items"]!.map((x) => TripResult.fromJson(x))),
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        "totalCount": totalCount,
+        "items": items.map((x) => x.toJson()).toList(),
+      };
+}
+
 class TripResult {
   TripResult({
     required this.id,
@@ -194,7 +218,6 @@ class TripResult {
         'couponsId': couponsId,
         "driver": driver.toJson(),
       };
-
 }
 
 class Coupons {
@@ -284,4 +307,3 @@ class Driver {
         "carType": carType.toJson(),
       };
 }
-

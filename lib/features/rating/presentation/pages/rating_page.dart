@@ -72,7 +72,7 @@ class RatingDriverPage extends StatelessWidget {
                       title: 'معلومات العميل',
                     ),
                     10.0.verticalSpace,
-                    RatingBarWidget(onRatingUpdate: onRatingChange),
+                    RatingBarWidget(onRatingUpdate: onRatingChange,initial: 1.0),
                     10.0.verticalSpace,
                     SizedBox(
                       height: 150.0.h,
@@ -117,8 +117,11 @@ class RatingDriverPage extends StatelessWidget {
 }
 
 class RatingBarWidget extends StatelessWidget {
-  const RatingBarWidget({Key? key, required this.onRatingUpdate}) : super(key: key);
-  final Function(double) onRatingUpdate;
+  const RatingBarWidget({Key? key,  this.onRatingUpdate, required this.initial})
+      : super(key: key);
+  final Function(double)? onRatingUpdate;
+
+  final double initial;
 
   @override
   Widget build(BuildContext context) {
@@ -140,9 +143,14 @@ class RatingBarWidget extends StatelessWidget {
 
     return RatingBar(
       ratingWidget: RatingWidget(full: fullStar, half: fullStar, empty: emptyStar),
-      onRatingUpdate: onRatingUpdate,
+      onRatingUpdate: (value) {
+        onRatingUpdate?.call(value);
+      },
+      itemCount: 5,
+      ignoreGestures: true,
+
       glow: false,
-      initialRating: 1.0,
+      initialRating: initial,
       allowHalfRating: false,
       itemPadding: EdgeInsets.symmetric(horizontal: 5.0.w),
       minRating: 1.0,

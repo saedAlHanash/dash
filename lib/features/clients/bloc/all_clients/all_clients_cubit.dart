@@ -5,6 +5,7 @@ import 'package:qareeb_dash/core/api_manager/api_url.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 
 import '../../../../core/api_manager/api_service.dart';
+import '../../../../core/api_manager/command.dart';
 import '../../../../core/error/error_manager.dart';
 import '../../../../core/strings/enum_manager.dart';
 import '../../../../core/util/note_message.dart';
@@ -16,8 +17,8 @@ part 'all_clients_state.dart';
 class AllClientsCubit extends Cubit<AllClientsInitial> {
   AllClientsCubit() : super(AllClientsInitial.initial());
 
-  Future<void> getAllClients(BuildContext context) async {
-    emit(state.copyWith(statuses: CubitStatuses.loading));
+  Future<void> getAllClients(BuildContext context,{Command? command}) async {
+    emit(state.copyWith(statuses: CubitStatuses.loading, command: command));
     final pair = await _getAllClientsApi();
 
     if (pair.first == null) {
@@ -26,6 +27,7 @@ class AllClientsCubit extends Cubit<AllClientsInitial> {
       }
       emit(state.copyWith(statuses: CubitStatuses.error, error: pair.second));
     } else {
+      state.command.totalCount = 5;
       emit(state.copyWith(statuses: CubitStatuses.done, result: pair.first));
     }
   }
@@ -33,6 +35,7 @@ class AllClientsCubit extends Cubit<AllClientsInitial> {
   Future<Pair<List<DriverModel>?, String?>> _getAllClientsApi() async {
     final response = await APIService().getApi(
       url: GetUrl.getAllClients,
+      query: state.command.toJson(),
     );
 
     if (response.statusCode == 200) {

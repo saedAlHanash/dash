@@ -1,5 +1,6 @@
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 
+import '../../features/accounts/data/request/transfer_filter_request.dart';
 import '../widgets/spinner_widget.dart';
 
 class Command {
@@ -12,20 +13,28 @@ class Command {
   int maxResultCount = 20;
   int? totalCount;
 
-  int get maxPages => (totalCount ?? 0 / maxResultCount).round();
+  TransferFilterRequest? transferFilterRequest;
 
-  int get currentPage => (skipCount ?? 0 / maxResultCount).round();
+  int get maxPages => ((totalCount ?? 0) / maxResultCount).myRound;
+
+  int get currentPage => ((skipCount ?? 0) + 1 / maxResultCount).myRound;
 
   List<SpinnerItem> get getSpinnerItems {
     final list = <SpinnerItem>[];
-    for (var i = 0; i <= maxPages; i++) {
-      list.add(SpinnerItem(id: i, name: i.toString(), isSelected: i == currentPage));
+
+    for (var i = 1; i <= maxPages; i++) {
+      list.add(SpinnerItem(
+        id: i,
+        name: i.toString(),
+        isSelected: i == currentPage,
+        enable: i != currentPage,
+      ));
     }
     return list;
   }
 
   void goToPage(int pageIndex) {
-    skipCount = pageIndex * maxResultCount;
+    skipCount = (pageIndex - 1) * maxResultCount;
   }
 
   factory Command.initial() {

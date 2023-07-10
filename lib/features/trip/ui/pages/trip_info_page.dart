@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_dash/core/widgets/my_button.dart';
 
+import '../../../../core/util/my_style.dart';
 import '../../../../core/widgets/app_bar_widget.dart';
 import '../../../map/bloc/map_controller_cubit/map_controller_cubit.dart';
 import '../../../map/ui/widget/map_widget.dart';
@@ -42,15 +44,30 @@ class _TripInfoPageState extends State<TripInfoPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0).r,
                 child: BlocBuilder<TripByIdCubit, TripByIdInitial>(
                   builder: (context, state) {
+                    if (state.statuses.loading) {
+                      return MyStyle.loadingWidget();
+                    }
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
                       children: [
-                        const DrawableText(
+                        DrawableText(
                           text: 'تفاصيل الطلب',
                           matchParent: true,
                           fontFamily: FontManager.cairoBold,
                           textAlign: TextAlign.center,
                           color: Colors.black,
+                          drawableEnd:
+                              (!state.result.isCanceled && !state.result.isDelved)
+                                  ? MyButton(
+                                      width: 100.0.w,
+                                      text: 'إنهاء الرحلة',
+                                      color: Colors.black,
+                                      textColor: Colors.white,
+                                      onTap: () {},
+                                    )
+                                  : null,
                         ),
                         20.0.verticalSpace,
                         TripInfoListWidget(trip: state.result),

@@ -8,6 +8,8 @@ import 'package:flutter_admin_scaffold/admin_scaffold.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:qareeb_dash/core/api_manager/command.dart';
+import 'package:qareeb_dash/core/strings/enum_manager.dart';
 import 'package:qareeb_dash/features/accounts/ui/pages/transfers_page.dart';
 import 'package:qareeb_dash/features/car_catigory/bloc/delete_car_cat_cubit/delete_car_cat_cubit.dart';
 import 'package:qareeb_dash/features/map/bloc/map_controller_cubit/map_controller_cubit.dart';
@@ -22,6 +24,8 @@ import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/shared_preferences.dart';
 import '../../../../core/widgets/logo_text.dart';
 import '../../../../router/go_route_pages.dart';
+import '../../../accounts/bloc/all_transfers_cubit/all_transfers_cubit.dart';
+import '../../../accounts/data/request/transfer_filter_request.dart';
 import '../../../admins/ui/pages/admins_page.dart';
 import '../../../auth/bloc/change_user_state_cubit/change_user_state_cubit.dart';
 import '../../../auth/ui/pages/policy_page.dart';
@@ -29,6 +33,7 @@ import '../../../car_catigory/ui/pages/car_categories_page.dart';
 import '../../../clients/ui/pages/clients_page.dart';
 import '../../../drivers/bloc/loyalty_cubit/loyalty_cubit.dart';
 import '../../../drivers/ui/pages/drivers_page.dart';
+import '../../../pay_to_drivers/ui/pages/pay_to_drivers_page.dart';
 import '../../../points/ui/pages/points_page.dart';
 import '../../../reasons/bloc/create_cubit/create_cubit.dart';
 import '../../../reasons/bloc/delete_reason_cubit/delete_reason_cubit.dart';
@@ -151,6 +156,11 @@ class _HomePageState extends State<HomePage> {
                     title: 'المعاملات',
                     //   icon:Icons.,
                     route: "/transactions"),
+              if (isAllowed(AppPermissions.SETTINGS))
+                const AdminMenuItem(
+                    icon: Icons.payments_outlined,
+                    title: 'دفعات السائقين',
+                    route: "/payToDrivers"),
               if (isAllowed(AppPermissions.SETTINGS))
                 const AdminMenuItem(
                     icon: Icons.privacy_tip_rounded,
@@ -279,6 +289,24 @@ class _HomePageState extends State<HomePage> {
                   );
                 case "/messages":
                   return const MessagesPage();
+                case "/payToDrivers":
+                  final request = TransferFilterRequest();
+                  request
+                    ..userId = 1
+                    ..type = TransferType.debit;
+
+                  return MultiBlocProvider(
+                    providers: [
+                      BlocProvider(
+                        create: (_) => sl<AllTransfersCubit>()
+                          ..getAllTransfers(
+                            _,
+                            command: Command.initial()..transferFilterRequest = request,
+                          ),
+                      ),
+                    ],
+                    child: const PayToDriversPage(),
+                  );
               }
               return SingleChildScrollView(
                 child: Container(

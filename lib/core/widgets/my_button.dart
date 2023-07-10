@@ -1,7 +1,13 @@
 import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/strings/app_color_manager.dart';
+
+import '../../features/drivers/bloc/loyalty_cubit/loyalty_cubit.dart';
+import '../../features/drivers/data/response/drivers_response.dart';
+import '../util/my_style.dart';
 
 class MyButton extends StatelessWidget {
   const MyButton({
@@ -117,6 +123,70 @@ class GradientContainer extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class CircleButton extends StatelessWidget {
+  const CircleButton({super.key, required this.color, required this.icon, this.size});
+
+  final Color color;
+  final IconData icon;
+  final double? size;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      alignment: Alignment.center,
+      margin: const EdgeInsets.all(3.0).r,
+      padding: const EdgeInsets.all(10.0).r,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: color,
+      ),
+      child: Center(
+        child: Icon(
+          icon,
+          size: size ?? 20.0.r,
+          color: Colors.white,
+        ),
+      ),
+    );
+  }
+}
+
+class LoyalSwitchWidget extends StatelessWidget {
+  const LoyalSwitchWidget({super.key, required this.driver});
+
+  final DriverModel driver;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<LoyaltyCubit, LoyaltyInitial>(
+      buildWhen: (p, c) => c.id == driver.id,
+      builder: (context, state) {
+        if (state.statuses.loading) {
+          return MyStyle.loadingWidget();
+        }
+
+        if (state.statuses.done) {
+          driver.loyalty = !driver.loyalty;
+        }
+
+        return Switch(
+          value: driver.loyalty,
+          activeColor: AppColorManager.mainColor,
+          inactiveTrackColor: Colors.grey,
+          hoverColor: Colors.transparent,
+          onChanged: (value) {
+            context.read<LoyaltyCubit>().changeLoyalty(
+              context,
+              driverId: driver.id,
+              loyalState: !driver.loyalty,
+            );
+          },
+        );
+      },
     );
   }
 }

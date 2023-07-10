@@ -1,23 +1,27 @@
-import 'package:drawable_text/drawable_text.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/widgets/not_found_widget.dart';
-import 'package:qareeb_dash/features/drivers/data/response/drivers_response.dart';
-import 'package:qareeb_dash/features/drivers/data/response/drivers_response.dart';
-import 'package:qareeb_dash/features/drivers/data/response/drivers_response.dart';
-import 'package:syncfusion_flutter_core/theme.dart';
-import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/my_style.dart';
+import '../../../../core/widgets/change_user_state_btn.dart';
+import '../../../../core/widgets/my_button.dart';
+import '../../../../core/widgets/saed_taple_widget.dart';
 import '../../../../router/go_route_pages.dart';
-import '../../../auth/bloc/change_user_state_cubit/change_user_state_cubit.dart';
 import '../../bloc/all_admins/all_admins_cubit.dart';
-import '../../data/response/admins_response.dart';
 import '../widget/admin_data_grid.dart';
+
+final adminsEableHeader = [
+  "id",
+  "اسم المدير",
+  "رقم الهاتف",
+  "حالة المدير",
+  "البريد",
+  "العمليات",
+];
 
 class AdminPage extends StatefulWidget {
   const AdminPage({Key? key}) : super(key: key);
@@ -27,13 +31,6 @@ class AdminPage extends StatefulWidget {
 }
 
 class _AdminPageState extends State<AdminPage> {
-  int _rowsPerPage = 5;
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,87 +50,56 @@ class _AdminPageState extends State<AdminPage> {
           if (state.result.isEmpty) {
             return const NotFoundWidget(text: 'لا يوجد مدراء');
           }
-          var dataSource = AdminDataSource(
-            admins: state.result,
-            editFunction: (DriverModel admin) {
-              context.pushNamed(GoRouteName.createAdmin, extra: admin);
-            },
-            viewFunction: (DriverModel admin) {
-              context.pushNamed(GoRouteName.adminInfo, extra: admin);
+          final list = state.result;
+          return SaedTableWidget(
+            command: state.command,
+            title: adminsEableHeader,
+            fullSizeIndex: const [5],
+            data: list
+                .mapIndexed(
+                  (index, e) => [
+                    e.id.toString(),
+                    e.fullName,
+                    e.phoneNumber,
+                    e.isActive ? 'مفعل' : 'غير مفعل',
+                    e.emailAddress,
+                    e.creationTime?.formatDate,
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        if (!e.emailAddress.contains('info@first-pioneers'))
+                          ChangeUserStateBtn(user: e),
+                        if (!e.emailAddress.contains('info@first-pioneers'))
+                          if (isAllowed(AppPermissions.UPDATE))
+                            InkWell(
+                              onTap: () {
+                                context.pushNamed(GoRouteName.createAdmin, extra: e);
+                              },
+                              child: const CircleButton(
+                                  color: Colors.amber, icon: Icons.edit),
+                            ),
+                        InkWell(
+                          onTap: () {
+                            context.pushNamed(GoRouteName.adminInfo, extra: e);
+                          },
+                          child: const CircleButton(
+                            color: Colors.grey,
+                            icon: Icons.info_outline_rounded,
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                )
+                .toList(),
+            onChangePage: (command) {
+              context.read<AllAdminsCubit>().getAllAdmins(context, command: command);
             },
           );
 
-          return Column(
-            children: [
-              SfDataGrid(
-                allowSorting: false,
-                allowFiltering: false,
-                rowsPerPage: _rowsPerPage,
-                source: dataSource,
-                columns: getColumns(),
-                columnWidthMode: ColumnWidthMode.auto,
-              ),
-              Container(
-                height: 100.h,
-                decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.surface.withOpacity(0.12),
-                    border: Border(
-                        top: BorderSide(
-                            width: .5,
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onSurface
-                                .withOpacity(0.12)))),
-                child: Align(
-                    child: SfDataPagerTheme(
-                  data: SfDataPagerThemeData(),
-                  child: SfDataPager(
-                    delegate: dataSource,
-                    availableRowsPerPage: const <int>[1, 2, 5, 10, 20],
-                    pageCount: 1,
-                    onRowsPerPageChanged: (int? rowsPerPage) {
-                      setState(() {
-                        _rowsPerPage = rowsPerPage!;
-                        dataSource.updateDataGriDataSource();
-                      });
-                    },
-                  ),
-                )),
-              )
-            ],
-          );
         },
       ),
     );
   }
-
-  List<GridColumn> getColumns() {
-    return <GridColumn>[
-      gridColumn(text: "id"),
-      gridColumn(text: "اسم المدير"),
-      gridColumn(text: "رقم الهاتف"),
-      gridColumn(text: "حالة المدير"),
-      gridColumn(text: "البريد"),
-      gridColumn(text: "العمليات"),
-    ];
-  }
-}
-
-GridColumn gridColumn({required String text}) {
-  return GridColumn(
-    columnName: 'admin',
-    width: double.nan,
-    columnWidthMode: ColumnWidthMode.fill,
-    label: Container(
-      alignment: Alignment.centerLeft,
-      padding: const EdgeInsets.all(8.0).r,
-      child: SelectionArea(
-        child: DrawableText(
-          text: text,
-          matchParent: true,
-          textAlign: TextAlign.center,
-        ),
-      ),
-    ),
-  );
 }

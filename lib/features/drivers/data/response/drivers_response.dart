@@ -72,7 +72,7 @@ class DriverModel {
   bool isActive;
   bool loyalty;
   final String emailConfirmationCode;
-  final String creationTime;
+  final DateTime? creationTime;
   final String emailAddress;
   final dynamic imei;
   final String qarebDeviceimei;
@@ -106,7 +106,7 @@ class DriverModel {
       isActive: json["isActive"] ?? false,
       loyalty: json["isLoyaltySupscriper"] ?? false,
       emailConfirmationCode: json["emailConfirmationCode"] ?? "",
-      creationTime: json["creationTime"] ?? "",
+      creationTime: DateTime.tryParse(json["creationTime"] ?? ""),
       emailAddress: json["emailAddress"] ?? "",
       imei: json["imei"] ?? '',
       qarebDeviceimei: json["qarebDeviceimei"] ?? '',

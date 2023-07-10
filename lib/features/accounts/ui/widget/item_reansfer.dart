@@ -9,7 +9,7 @@ import '../../../../core/widgets/my_card_widget.dart';
 class ItemTransfer extends StatelessWidget {
   const ItemTransfer({super.key, required this.item});
 
-  final TransferResult item;
+  final Transfer item;
 
   @override
   Widget build(BuildContext context) {

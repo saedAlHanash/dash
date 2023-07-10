@@ -72,7 +72,7 @@ class AdminModel {
   final num favoritePlacesCount;
   final num discountCouponValue;
   final String fireBaseToken;
-  final String creationTime;
+  final DateTime? creationTime;
   final List<String> roleNames;
   final String phoneNumber;
   final String coupons;
@@ -104,7 +104,7 @@ class AdminModel {
       favoritePlacesCount: json["favoritePlacesCount"] ?? 0,
       discountCouponValue: json["discountCouponValue"] ?? 0,
       fireBaseToken: json["fireBaseToken"] ?? "",
-      creationTime: json["creationTime"] ?? "",
+      creationTime: DateTime.tryParse(json["creationTime"] ?? ""),
       roleNames: json["roleNames"] == null
           ? []
           : List<String>.from(json["roleNames"]!.map((x) => x)),

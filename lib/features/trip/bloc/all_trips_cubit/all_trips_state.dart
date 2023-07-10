@@ -24,7 +24,7 @@ class AllTripsInitial extends Equatable {
   }
 
   @override
-  List<Object> get props => [statuses, result, error, command];
+  List<Object> get props => [statuses, result, error];
 
   AllTripsInitial copyWith({
     CubitStatuses? statuses,

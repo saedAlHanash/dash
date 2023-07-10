@@ -13,8 +13,8 @@ import '../../../../core/network/network_info.dart';
 import '../../../../core/strings/app_string_manager.dart';
 import '../../../../core/util/note_message.dart';
 import '../../../../core/util/pair_class.dart';
-import '../../../previous_trips/data/response/trips_response.dart';
 import '../../../trip/data/response/trip_response.dart';
+import '../../data/request/filter_trip_request.dart';
 
 part 'all_trips_state.dart';
 
@@ -23,8 +23,9 @@ class AllTripsCubit extends Cubit<AllTripsInitial> {
 
   final network = sl<NetworkInfo>();
 
-  Future<void> getAllTrips(BuildContext context) async {
-    emit(state.copyWith(statuses: CubitStatuses.loading));
+  Future<void> getAllTrips(BuildContext context,
+      {FilterTripRequest? filter, Command? command}) async {
+    emit(state.copyWith(statuses: CubitStatuses.loading, command: command));
     final pair = await _getAllTripsApi();
 
     if (pair.first == null) {
@@ -33,16 +34,17 @@ class AllTripsCubit extends Cubit<AllTripsInitial> {
       }
       emit(state.copyWith(statuses: CubitStatuses.error, error: pair.second));
     } else {
-      emit(state.copyWith(statuses: CubitStatuses.done, result: pair.first));
+      state.command.totalCount = pair.first!.totalCount;
+      emit(state.copyWith(statuses: CubitStatuses.done, result: pair.first!.items));
     }
   }
 
-  Future<Pair<List<TripResult>?, String?>> _getAllTripsApi() async {
+  Future<Pair<TripsResponse?, String?>> _getAllTripsApi() async {
     if (await network.isConnected) {
       final response = await APIService().getApi(url: GetUrl.getAllTrips);
 
       if (response.statusCode == 200) {
-        return Pair(TripsResponse.fromJson(response.jsonBody).result.reversed.toList(), null);
+        return Pair(TripsResponse.fromJson(response.jsonBody), null);
       } else {
         return Pair(null, ErrorManager.getApiError(response));
       }

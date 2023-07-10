@@ -6,6 +6,31 @@ import '../../../../services/trip_path/data/models/trip_path.dart';
 import '../../../drivers/data/response/drivers_response.dart';
 import '../../../points/data/response/points_response.dart';
 
+class SharedTripsResponse {
+  SharedTripsResponse({
+    required this.totalCount,
+    required this.items,
+  });
+
+  final int totalCount;
+  final List<SharedTrip> items;
+
+  factory SharedTripsResponse.fromJson(Map<String, dynamic> json) {
+    return SharedTripsResponse(
+      totalCount: json['result']["totalCount"] ?? 0,
+      items: json['result']["items"] == null
+          ? []
+          : List<SharedTrip>.from(json['result']["items"]!.map((x) => SharedTrip.fromJson(x))),
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+    "totalCount": totalCount,
+    "items": items.map((x) => x.toJson()).toList(),
+  };
+}
+
+
 class SharedTripResponse {
   SharedTripResponse({
     required this.result,
@@ -36,7 +61,7 @@ class SharedTrip {
     required this.startDate,
     required this.endDate,
     required this.tripStatus,
-    required this.seatsNumber,
+
     required this.seatCost,
     required this.totalCost,
     required this.note,
@@ -55,7 +80,7 @@ class SharedTrip {
   final DateTime? startDate;
   final DateTime? endDate;
   final dynamic tripStatus;
-  final num seatsNumber;
+
   final num seatCost;
   final num totalCost;
   final String note;
@@ -64,7 +89,7 @@ class SharedTrip {
   final num reservedSeats;
 
   String get cost {
-    return '${seatCost * (myRequest?.seatNumber ?? 0)} ${AppStringManager.currency}';
+    return '${seatCost * reservedSeats} ${AppStringManager.currency}';
   }
 
   bool get isStart => startDate != null;
@@ -114,7 +139,7 @@ class SharedTrip {
       startDate: DateTime.tryParse(json["startDate"] ?? ""),
       endDate: DateTime.tryParse(json["endDate"] ?? ""),
       tripStatus: json["tripStatus"],
-      seatsNumber: json["seatsNumber"] ?? 0,
+
       seatCost: json["seatCost"] ?? 0,
       totalCost: json["totalCost"] ?? 0,
       availableSeats: json["availableSeats"] ?? 0,
@@ -135,7 +160,6 @@ class SharedTrip {
         "startDate": startDate?.toIso8601String(),
         "endDate": endDate?.toIso8601String(),
         "tripStatus": tripStatus,
-        "seatsNumber": seatsNumber,
         "seatCost": seatCost,
         "totalCost": totalCost,
         "availableSeats": availableSeats,
