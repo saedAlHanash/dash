@@ -1,12 +1,9 @@
 workflows:
   firebase_hosting:
-
-environment:
-  groups:
-    -firebase_credentials
-
-
-scripts:
-  - name: Publish to Firebase Hosting
-    script: |
-      firebase deploy --token "1//093WoJowGWRVMCgYIARAAGAkSNwF-L9Ir7SdnuBH8POTjhDGf6lzhvHtxtDvrKuoGTjIenVkvkVrCC_DxCkxSk81Sqb_ghweQDH4"
+    environment:
+      groups:
+        - firebase_credentials
+    scripts:
+      - name: Publish to Firebase Hosting
+        script: |
+          firebase deploy --token "1//093WoJowGWRVMCgYIARAAGAkSNwF-L9Ir7SdnuBH8POTjhDGf6lzhvHtxtDvrKuoGTjIenVkvkVrCC_DxCkxSk81Sqb_ghweQDH4"
