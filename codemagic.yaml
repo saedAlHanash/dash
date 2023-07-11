@@ -1,3 +1,6 @@
+workflows:
+  firebase_hosting:
+
 environment:
   groups:
     -firebase_credentials
