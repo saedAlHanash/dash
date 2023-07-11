@@ -32,7 +32,7 @@ class _CreateCarCategoryPageState extends State<CreateCarCategoryPage> {
 
   @override
   void initState() {
-    loggerObject.wtf(widget.carCat==null);
+    loggerObject.wtf(widget.carCat == null);
     if (widget.carCat != null) {
       request = CreateCarCatRequest().fromCarCategory(widget.carCat!);
     }
@@ -111,7 +111,6 @@ class _CreateCarCategoryPageState extends State<CreateCarCategoryPage> {
                         Expanded(
                           child: MyTextFormNoLabelWidget(
                             label: 'نسبة السائق من الرحلات (1 -> 100) %',
-                            maxLength: 2,
                             initialValue: request.sharedDriverRatio?.toString(),
                             onChanged: (p0) {
                               request.sharedDriverRatio = double.tryParse(p0);
@@ -145,7 +144,6 @@ class _CreateCarCategoryPageState extends State<CreateCarCategoryPage> {
                         Expanded(
                           child: MyTextFormNoLabelWidget(
                             label: 'نسبة ولاء الإطارات',
-                            maxLength: 2,
                             initialValue: request.sharedTiresRatio?.toString(),
                             onChanged: (p0) {
                               request.sharedTiresRatio = num.tryParse(p0);
@@ -189,7 +187,6 @@ class _CreateCarCategoryPageState extends State<CreateCarCategoryPage> {
                         Expanded(
                           child: MyTextFormNoLabelWidget(
                             label: 'نسبة السائق من الرحلات (1 -> 100) %',
-                            maxLength: 2,
                             initialValue: request.driverRatio?.toString(),
                             onChanged: (p0) {
                               request.driverRatio = double.tryParse(p0);
@@ -223,7 +220,6 @@ class _CreateCarCategoryPageState extends State<CreateCarCategoryPage> {
                         Expanded(
                           child: MyTextFormNoLabelWidget(
                             label: 'نسبة ولاء الإطارات',
-                            maxLength: 2,
                             initialValue: request.normalTiresRatio?.toString(),
                             onChanged: (p0) {
                               request.normalTiresRatio = num.tryParse(p0);
@@ -232,24 +228,6 @@ class _CreateCarCategoryPageState extends State<CreateCarCategoryPage> {
                         ),
                       ],
                     ),
-                    const Divider(),
-                    DrawableText(
-                      text: 'نسبة الولاء ',
-                      size: 25.0.sp,
-                      padding: const EdgeInsets.symmetric(vertical: 30.0).h,
-                      matchParent: true,
-                      textAlign: TextAlign.center,
-                      fontFamily: FontManager.cairoBold,
-                    ),
-                    MyTextFormNoLabelWidget(
-                      label: 'نسبة الولاء من أربح السائق (1 -> 100) %',
-                      maxLength: 2,
-                      initialValue: request.companyLoyaltyRatio?.toString(),
-                      onChanged: (p0) {
-                        request.companyLoyaltyRatio = double.tryParse(p0);
-                      },
-                    ),
-                    const Divider(),
                   ],
                 ),
               ),

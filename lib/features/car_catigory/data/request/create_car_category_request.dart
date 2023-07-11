@@ -6,6 +6,8 @@ import '../../../../core/api_manager/api_service.dart';
 import '../../../../core/util/note_message.dart';
 
 class CreateCarCatRequest {
+
+
   String? name;
 
   num? driverRatio;
@@ -26,7 +28,6 @@ class CreateCarCatRequest {
 
   num? minimumNightPrice;
 
-  num? companyLoyaltyRatio;
 
   int? id;
 
@@ -42,6 +43,9 @@ class CreateCarCatRequest {
 
   num? sharedTiresRatio;
 
+
+
+
   CreateCarCatRequest({
     this.id,
     this.name,
@@ -54,7 +58,6 @@ class CreateCarCatRequest {
     this.minimumDayPrice,
     this.minimumNightPrice,
     this.driverRatio,
-    this.companyLoyaltyRatio,
     this.normalOilRatio,
     this.normalGoldRatio,
     this.normalTiresRatio,
@@ -87,7 +90,7 @@ class CreateCarCatRequest {
       sharedDriverRatio: sharedDriverRatio ?? this.sharedDriverRatio,
       minimumDayPrice: minimumDayPrice ?? this.minimumDayPrice,
       minimumNightPrice: minimumNightPrice ?? this.minimumNightPrice,
-      companyLoyaltyRatio: companyLoyaltyRatio ?? this.companyLoyaltyRatio,
+
     );
   }
 
@@ -103,7 +106,7 @@ class CreateCarCatRequest {
       'SharedDriverRatio': sharedDriverRatio,
       'MinimumDayPrice': minimumDayPrice,
       'MinimumNightPrice': minimumNightPrice,
-      'CompanyLoyaltyRatio': companyLoyaltyRatio,
+
       'NormalOilRatio': normalOilRatio,
       'NormalGoldRatio': normalGoldRatio,
       'NormalTiresRatio': normalTiresRatio,
@@ -117,15 +120,14 @@ class CreateCarCatRequest {
     return CreateCarCatRequest(
       id: carCategory.id,
       name: carCategory.name,
-      nightSharedKMOverCost: carCategory.nightKmOverCost,
-      dayKMOverCost: carCategory.nightSharedKmOverCost,
-      sharedKMOverCost: carCategory.dayKmOverCost,
-      sharedDriverRatio: carCategory.sharedKmOverCost,
-      minimumDayPrice: carCategory.sharedDriverRatio,
-      minimumNightPrice: carCategory.minimumDayPrice,
+      nightSharedKMOverCost: carCategory.nightSharedKmOverCost,
+      dayKMOverCost: carCategory.dayKmOverCost,
+      sharedKMOverCost: carCategory.sharedKmOverCost,
+      sharedDriverRatio: carCategory.sharedDriverRatio,
+      minimumDayPrice: carCategory.minimumDayPrice,
+      minimumNightPrice: carCategory.minimumNightPrice,
       nightKMOverCost: carCategory.nightKmOverCost,
-      driverRatio: carCategory.minimumNightPrice,
-      companyLoyaltyRatio: carCategory.driverRatio,
+      driverRatio: carCategory.driverRatio,
       normalOilRatio: carCategory.normalOilRatio,
       normalGoldRatio: carCategory.normalGoldRatio,
       normalTiresRatio: carCategory.normalTiresRatio,
@@ -171,11 +173,6 @@ class CreateCarCatRequest {
       return false;
     }
 
-    if (companyLoyaltyRatio == 0) {
-      NoteMessage.showErrorSnackBar(message: 'خطأ في نسبة الولاء', context: context);
-      return false;
-    }
-
     if (normalOilRatio == 0) {
       NoteMessage.showErrorSnackBar(message: 'خطأ في نسبة الولاء', context: context);
       return false;
@@ -212,38 +209,5 @@ class CreateCarCatRequest {
 }
 
 /*
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
  */
