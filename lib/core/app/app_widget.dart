@@ -10,6 +10,7 @@ import '../../features/auth/bloc/create_policy_cubit/policy_cubit.dart';
 import '../../features/auth/bloc/policy_cubit/create_policy_cubit.dart';
 import '../../features/car_catigory/bloc/all_car_categories_cubit/all_car_categories_cubit.dart';
 import '../../features/clients/bloc/all_clients/all_clients_cubit.dart';
+import '../../features/coupons/bloc/all_coupons_vubit/all_coupons_cubit.dart';
 import '../../features/drivers/bloc/all_drivers/all_drivers_cubit.dart';
 import '../../features/home/bloc/nav_home_cubit/nav_home_cubit.dart';
 import '../../features/map/bloc/set_point_cubit/map_control_cubit.dart';
@@ -61,6 +62,7 @@ class MyApp extends StatelessWidget {
                 BlocProvider(create: (_) => sl<AllAdminsCubit>()..getAllAdmins(_)),
                 BlocProvider(create: (_) => sl<AllDriversCubit>()..getAllDrivers(_)),
                 BlocProvider(create: (_) => sl<AllClientsCubit>()..getAllClients(_)),
+                BlocProvider(create: (_) => sl<AllCouponsCubit>()..getAllCoupons(_)),
                 BlocProvider(create: (_) => sl<AllTransfersCubit>()..getAllTransfers(_)),
                 BlocProvider(create: (_) => sl<GetSharedTripsCubit>()..getSharesTrip(_)),
                 BlocProvider(create: (_) => sl<ProvidersCubit>()..getAllEpayProviders(_)),

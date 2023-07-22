@@ -40,7 +40,7 @@ class ClientInfoPage extends StatelessWidget {
                     'اسم ': client.fullName,
                     'العنوان ': client.address,
                     'رقم هاتف  ': client.phoneNumber,
-                    'تاريخ ميلاد': client.birthdate,
+                    'تاريخ ميلاد': client.birthdate?.formatDate??'-',
                     'الجنس': client.gender == 0 ? 'ذكر' : 'أنثى',
                   },
                   title: 'معلومات الزبون',

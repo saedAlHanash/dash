@@ -135,7 +135,7 @@ class CreateDriverRequest {
     r.phoneNumber = driver.phoneNumber;
     r.gender = Gender.values[driver.gender];
     r.address = driver.address;
-    r.birthdate = DateTime.tryParse(driver.birthdate);
+    r.birthdate = driver.birthdate;
     r.carBrand = driver.carType.carBrand;
     r.carModel = driver.carType.carModel;
     r.carColor = driver.carType.carColor;

@@ -86,7 +86,6 @@ class _MyCheckboxWidgetState extends State<MyCheckboxWidget> {
       buttons: widget.items,
       buttonBuilder: widget.buttonBuilder ??
           (selected, value, context) {
-
             return InkWell(
               child: SizedBox(
                 width: widget.width ?? 0.4.sw,
@@ -158,7 +157,12 @@ class _MyCheckboxWidgetState extends State<MyCheckboxWidget> {
           widget.onSelected!(value, index, isSelected);
         }
         if (widget.onSelectGetListItems != null) {
-          widget.onSelectGetListItems!(widget.items);
+          final selectedList = <SpinnerItem>[];
+          for (var e in widget.items) {
+            if (e.isSelected) selectedList.add(e);
+
+          }
+          widget.onSelectGetListItems!(selectedList);
         }
       },
       enableDeselect: !(widget.isRadio ?? false),

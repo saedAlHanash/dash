@@ -78,7 +78,7 @@ class _DashboardPageState extends State<DashboardPage> {
                           ),
                           Expanded(
                             child: DrawableText(
-                              text: 'عدد الأمتار المقطوعة: ${bestDriver.totalMeters}',
+                              text: 'الكيلومترات: ${(bestDriver.totalMeters/1000).round()}',
                               color: Colors.black,
                               fontFamily: FontManager.cairoBold,
                             ),

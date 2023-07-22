@@ -33,6 +33,17 @@ enum TransferType {
   debit,
 }
 
+enum SummaryPayToEnum {
+  ///السائق يجب أن يدفع للشركة
+  requireDriverPay,
+
+  ///الشركة يجب انت تدفع للسائق
+  requireCompanyPay,
+
+  ///الرصيد متكافئ
+  equal,
+}
+
 enum TransferStatus { pending, closed }
 
 enum TransferPayType { driverToCompany, companyToDriver }

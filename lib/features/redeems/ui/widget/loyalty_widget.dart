@@ -36,7 +36,7 @@ class LoyaltyWidget extends StatelessWidget {
               textAlign: TextAlign.center,
               padding: const EdgeInsets.symmetric(vertical: 15.0).h,
             ),
-            _TotalWidget(text: state.result.totalMeters.toString()),
+            _TotalWidget(text: state.result.totalMeters),
             ItemLoyal(
               driverId: state.driverId,
               text: 'ليرة ذهب',
@@ -88,8 +88,7 @@ class ItemLoyal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var url = '';
-    switch(type){
-
+    switch (type) {
       case RedeemType.gold:
         url = Assets.iconsGold;
         break;
@@ -189,7 +188,7 @@ class _TotalWidget extends StatelessWidget {
     required this.text,
   });
 
-  final String text;
+  final num text;
 
   @override
   Widget build(BuildContext context) {
@@ -198,9 +197,9 @@ class _TotalWidget extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0).r,
       child: Row(
         children: [
-           Expanded(
+          Expanded(
             child: DrawableText(
-              text: ' عدد الأمتار الكلية المقطوعة',
+              text: 'الكيلو مترات',
               color: Colors.black,
               fontFamily: FontManager.cairoBold,
               drawablePadding: 10.0.w,
@@ -213,7 +212,7 @@ class _TotalWidget extends StatelessWidget {
           ),
           Expanded(
             child: DrawableText(
-              text: '$text (متر)',
+              text: '${(text / 1000).round()} (كيلو متر)',
               color: Colors.black,
               fontFamily: FontManager.cairoBold,
             ),

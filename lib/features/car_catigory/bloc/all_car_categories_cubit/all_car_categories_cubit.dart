@@ -10,6 +10,7 @@ import '../../../../core/error/error_manager.dart';
 import '../../../../core/strings/enum_manager.dart';
 import '../../../../core/util/note_message.dart';
 import '../../../../core/util/pair_class.dart';
+import '../../../../core/widgets/spinner_widget.dart';
 import '../../data/response/car_categories_response.dart';
 
 part 'all_car_categories_state.dart';
@@ -43,5 +44,8 @@ class AllCarCategoriesCubit extends Cubit<AllCarCategoriesInitial> {
     } else {
       return Pair(null, ErrorManager.getApiError(response));
     }
+  }
+  void update() {
+    emit(state.copyWith());
   }
 }

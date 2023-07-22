@@ -5,12 +5,14 @@ class AccountAmountInitial extends Equatable {
   final num driverAmount;
   final num companyAmount;
   final String error;
+  final int id;
 
   const AccountAmountInitial({
     required this.statuses,
     required this.driverAmount,
     required this.companyAmount,
     required this.error,
+    required this.id,
   });
 
   factory AccountAmountInitial.initial() {
@@ -18,8 +20,51 @@ class AccountAmountInitial extends Equatable {
       driverAmount: 0,
       companyAmount: 0,
       error: '',
+      id: 0,
       statuses: CubitStatuses.init,
     );
+  }
+
+  String get getMessage {
+    switch (summaryType) {
+      //السائق يجب أن يدفع للشركة
+      case SummaryPayToEnum.requireDriverPay:
+        return 'يستوجب على السائق تسديد مبلغ للشركة وقدره : ';
+
+      //الشركة يجب انت تدفع للسائق
+      case SummaryPayToEnum.requireCompanyPay:
+        return 'يستوجب على الشركة تسديد مبلغ للسائق وقدره : ';
+
+      //الرصيد متكافئ
+      case SummaryPayToEnum.equal:
+        return 'ان مستحقات الشركة من السائق مساوية تماما لمستحقات السائق لدى الشركة';
+    }
+  }
+
+  num get price {
+    switch (summaryType) {
+      //السائق يجب أن يدفع للشركة
+      case SummaryPayToEnum.requireDriverPay:
+        return companyAmount - driverAmount;
+
+      //الشركة يجب انت تدفع للسائق
+      case SummaryPayToEnum.requireCompanyPay:
+        return driverAmount - companyAmount;
+
+      //الرصيد متكافئ
+      case SummaryPayToEnum.equal:
+        return 0;
+    }
+  }
+
+  SummaryPayToEnum get summaryType {
+    if (driverAmount > companyAmount) {
+      return SummaryPayToEnum.requireCompanyPay;
+    } else if (companyAmount > driverAmount) {
+      return SummaryPayToEnum.requireDriverPay;
+    } else {
+      return SummaryPayToEnum.equal;
+    }
   }
 
   @override
@@ -31,13 +76,14 @@ class AccountAmountInitial extends Equatable {
     num? driverAmount,
     num? companyAmount,
     String? error,
+    int? id,
   }) {
     return AccountAmountInitial(
       statuses: statuses ?? this.statuses,
       driverAmount: driverAmount ?? this.driverAmount,
       companyAmount: companyAmount ?? this.companyAmount,
       error: error ?? this.error,
+      id: id ?? this.id,
     );
   }
-
 }

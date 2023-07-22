@@ -16,6 +16,8 @@ class ChangeProviderStateCubit extends Cubit<ChangeProviderStateInitial> {
 
   Future<void> changeProviderState(BuildContext context,
       {required int id, required bool providerState}) async {
+    final r = await NoteMessage.showConfirm(context, text: 'تأكيد العملية');
+    if (!r) return;
     emit(state.copyWith(statuses: CubitStatuses.loading, id: id));
     final pair = await _changeProviderStateApi(providerState: providerState);
 

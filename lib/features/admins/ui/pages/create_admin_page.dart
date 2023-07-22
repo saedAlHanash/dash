@@ -9,6 +9,7 @@ import 'package:qareeb_dash/core/widgets/my_card_widget.dart';
 import 'package:qareeb_dash/core/widgets/my_checkbox_widget.dart';
 import 'package:qareeb_dash/core/widgets/my_text_form_widget.dart';
 import 'package:qareeb_dash/core/widgets/spinner_widget.dart';
+import 'package:qareeb_dash/features/drivers/data/response/drivers_response.dart';
 import 'package:qareeb_dash/router/go_route_pages.dart';
 
 import '../../../../core/strings/app_color_manager.dart';
@@ -23,7 +24,7 @@ import '../../data/response/admins_response.dart';
 class CreateAdminPage extends StatefulWidget {
   const CreateAdminPage({super.key, this.admin});
 
-  final AdminModel? admin;
+  final DriverModel? admin;
 
   @override
   State<CreateAdminPage> createState() => _CreateAdminPageState();

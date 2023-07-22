@@ -9,13 +9,14 @@ import 'package:qareeb_dash/core/widgets/spinner_widget.dart';
 
 import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/widgets/app_bar_widget.dart';
+import '../../../drivers/data/response/drivers_response.dart';
 import '../../data/request/create_admin_request.dart';
 import '../../data/response/admins_response.dart';
 
 class AdminInfoPage extends StatefulWidget {
   const AdminInfoPage({super.key, required this.admin});
 
-  final AdminModel admin;
+  final DriverModel admin;
 
   @override
   State<AdminInfoPage> createState() => AdminInfoPageState();

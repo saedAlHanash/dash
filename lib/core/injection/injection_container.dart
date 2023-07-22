@@ -21,6 +21,8 @@ import '../../features/car_catigory/bloc/delete_car_cat_cubit/delete_car_cat_cub
 import '../../features/clients/bloc/all_clients/all_clients_cubit.dart';
 import '../../features/clients/bloc/clients_by_id_cubit/clients_by_id_cubit.dart';
 import '../../features/contact/bloc/send_note_cubit/send_note_cubit.dart';
+import '../../features/coupons/bloc/all_coupons_vubit/all_coupons_cubit.dart';
+import '../../features/coupons/bloc/create_coupon_cubit/create_coupon_cubit.dart';
 import '../../features/drivers/bloc/all_drivers/all_drivers_cubit.dart';
 import '../../features/drivers/bloc/create_driver_cubit/create_driver_cubit.dart';
 import '../../features/drivers/bloc/driver_by_id_cubit/driver_by_id_cubit.dart';
@@ -52,7 +54,10 @@ import '../../features/reasons/bloc/delete_reason_cubit/delete_reason_cubit.dart
 import '../../features/reasons/bloc/get_reasons_cubit/get_reasons_cubit.dart';
 import '../../features/redeems/bloc/create_redeem_cubit/create_redeem_cubit.dart';
 import '../../features/redeems/bloc/redeems_cubit/redeems_cubit.dart';
+import '../../features/roles/bloc/all_permissions_cubit/all_permissions_cubit.dart';
 import '../../features/roles/bloc/all_roles/all_roles_cubit.dart';
+import '../../features/roles/bloc/create_role_cubit/create_role_cubit.dart';
+import '../../features/roles/bloc/delete_role_cubit/delete_role_cubit.dart';
 import '../../features/shared_trip/bloc/add_point_cubit/add_point_cubit.dart';
 import '../../features/shared_trip/bloc/create_shared_trip_cubit/create_shared_trip_cubit.dart';
 import '../../features/shared_trip/bloc/get_shared_trips_cubit/get_shared_trips_cubit.dart';
@@ -128,6 +133,7 @@ Future<void> init() async {
   sl.registerFactory(() => MyLocationCubit());
   sl.registerFactory(() => MapControlCubit());
   sl.registerFactory(() => MapControllerCubit());
+
   sl.registerFactory(() => LocationNameCubit(network: sl()));
   //endregion
 
@@ -220,6 +226,9 @@ Future<void> init() async {
   sl.registerFactory(() => AllAdminsCubit());
   sl.registerFactory(() => CreateAdminCubit());
   sl.registerFactory(() => AllRolesCubit());
+  sl.registerFactory(() => CreateRoleCubit());
+  sl.registerFactory(() => AllPermissionsCubit());
+  sl.registerFactory(() => DeleteRoleCubit());
 
   //endregion
 
@@ -235,6 +244,8 @@ Future<void> init() async {
   sl.registerFactory(() => ChangeProviderStateCubit());
   sl.registerFactory(() => PayToCubit());
   sl.registerFactory(() => AccountAmountCubit());
+  sl.registerFactory(() => AllCouponsCubit());
+  sl.registerFactory(() => CreateCouponCubit());
 
 //! External
 

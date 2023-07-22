@@ -80,7 +80,7 @@ class DriverModel {
   final String fireBaseToken;
   final num carCategoryId;
   final String surname;
-  final String birthdate;
+  final DateTime? birthdate;
   final String address;
   final String phoneNumber;
   final CarCategories carCategories;
@@ -112,7 +112,7 @@ class DriverModel {
       fireBaseToken: json["fireBaseToken"] ?? "",
       carCategoryId: json["carCategoryID"] ?? 0,
       surname: json["surname"] ?? "",
-      birthdate: json["birthdate"] ?? "",
+      birthdate: DateTime.tryParse(json["birthdate"] ?? ""),
       address: json["address"] ?? "",
       phoneNumber: json["phoneNumber"] ?? "",
       carCategories: CarCategories.fromJson(json["carCategories"] ?? {}),

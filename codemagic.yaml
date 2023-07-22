@@ -1,9 +1,28 @@
 workflows:
-  firebase_hosting:
+  publish-to-firebase:
+    name: Publish to Firebase hosting
+    max_build_duration: 60
     environment:
-      groups:
-        - firebase_credentials
+      vars:
+        FIREBASE_TOKEN: 1//093WoJowGWRVMCgYIARAAGAkSNwF-L9Ir7SdnuBH8POTjhDGf6lzhvHtxtDvrKuoGTjIenVkvkVrCC_DxCkxSk81Sqb_ghweQDH4
+      flutter: beta
+      xcode: latest
+      cocoapods: default
     scripts:
+      - flutter packages pub get
+      - flutter config --enable-web
+      - name: Build Web
+        script: |
+          flutter build web --release
+          cd build/web
+          7z a -r ../web.zip ./*
       - name: Publish to Firebase Hosting
         script: |
-          firebase deploy --token "1//093WoJowGWRVMCgYIARAAGAkSNwF-L9Ir7SdnuBH8POTjhDGf6lzhvHtxtDvrKuoGTjIenVkvkVrCC_DxCkxSk81Sqb_ghweQDH4"
+          firebase deploy --token "$FIREBASE_TOKEN"
+    artifacts:
+      - build/web.zip
+      - flutter_drive.log
+    publishing:
+      email:
+        recipients:
+          - samersame404@gmail.com

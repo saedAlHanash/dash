@@ -16,6 +16,8 @@ class DeleteEdgeCubit extends Cubit<DeleteEdgeInitial> {
 
   Future<void> deleteEdge(BuildContext context,
       {required int start, required int end}) async {
+    final r = await NoteMessage.showConfirm(context, text: 'تأكيد العملية');
+    if (!r) return;
     emit(state.copyWith(statuses: CubitStatuses.loading, id: end));
     final pair = await _deleteEdgeApi(start: start, end: end);
 

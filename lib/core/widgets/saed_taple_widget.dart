@@ -12,7 +12,7 @@ class SaedTableWidget extends StatelessWidget {
       {super.key,
       required this.title,
       required this.data,
-       this.command,
+      this.command,
       this.onChangePage,
       this.fullSizeIndex});
 
@@ -72,7 +72,7 @@ class SaedTableWidget extends StatelessWidget {
                                   size: 16.0.sp,
                                   matchParent: !(fullSizeIndex?.contains(i) ?? true),
                                   textAlign: TextAlign.center,
-                                  text: e.replaceAll('spy', ''),
+                                  text: e.isEmpty ? '-' : e.replaceAll('spy', ''),
                                   color: Colors.black,
                                 ),
                               )
@@ -95,13 +95,15 @@ class SaedTableWidget extends StatelessWidget {
                 ],
               );
             }).toList(),
-            if(command!=null)
-            SpinnerWidget(
-              items: command!.getSpinnerItems,
-              onChanged: (spinnerItem) {
-                onChangePage?.call(command!..goToPage(spinnerItem.id));
-              },
-            ),
+            if (command != null)
+              SpinnerWidget(
+                items: command!.getSpinnerItems,
+                onChanged: (spinnerItem) {
+                  onChangePage?.call(command!..goToPage(spinnerItem.id));
+                },
+              ),
+
+            20.0.verticalSpace,
           ],
         ),
       ),

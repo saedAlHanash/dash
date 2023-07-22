@@ -15,6 +15,10 @@ class DeleteReasonCubit extends Cubit<DeleteReasonInitial> {
   DeleteReasonCubit() : super(DeleteReasonInitial.initial());
 
   Future<void> deleteReason(BuildContext context, {required int id}) async {
+
+    final r = await NoteMessage.showConfirm(context, text: 'تأكيد العملية');
+    if (!r) return;
+
     emit(state.copyWith(statuses: CubitStatuses.loading, id: id));
     final pair = await _deleteReasonApi(id: id);
 

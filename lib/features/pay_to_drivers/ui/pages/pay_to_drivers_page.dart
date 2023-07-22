@@ -10,6 +10,7 @@ import 'package:qareeb_dash/core/widgets/my_button.dart';
 import 'package:qareeb_dash/core/widgets/not_found_widget.dart';
 import 'package:qareeb_dash/core/widgets/saed_taple_widget.dart';
 import 'package:qareeb_dash/features/drivers/bloc/all_drivers/all_drivers_cubit.dart';
+import 'package:qareeb_dash/features/pay_to_drivers/ui/widget/pay_to_driver_widget.dart';
 
 import '../../../../core/strings/enum_manager.dart';
 import '../../../../core/util/checker_helper.dart';
@@ -54,9 +55,6 @@ class _PayToDriversPageState extends State<PayToDriversPage> {
       floatingActionButton: isAllowed(AppPermissions.CREATION)
           ? FloatingActionButton(
               onPressed: () {
-                var driverId = 0;
-                var type = TransferPayType.driverToCompany;
-                num amount = 0;
                 NoteMessage.showCustomBottomSheet(
                   context,
                   child: MultiBlocProvider(
@@ -65,111 +63,7 @@ class _PayToDriversPageState extends State<PayToDriversPage> {
                       BlocProvider.value(value: context.read<PayToCubit>()),
                       BlocProvider.value(value: context.read<AccountAmountCubit>()),
                     ],
-                    child: Padding(
-                      padding: const EdgeInsets.all(40.0).r,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          10.0.verticalSpace,
-                          Row(
-                            children: [
-                              ItemInfoInLine(
-                                title: 'نوع الدفعة',
-                                widget: SpinnerWidget(
-                                  items: [
-                                    SpinnerItem(id: 0, name: 'من السائق للشركة'),
-                                    SpinnerItem(id: 1, name: 'من الشركة للسائق'),
-                                  ],
-                                  onChanged: (spinnerItem) =>
-                                      type = TransferPayType.values[spinnerItem.id],
-                                ),
-                              ),
-                              20.0.horizontalSpace,
-                              ItemInfoInLine(
-                                title: 'السائق',
-                                widget: BlocBuilder<AllDriversCubit, AllDriversInitial>(
-                                  builder: (context, state) {
-                                    if (state.statuses.loading) {
-                                      return MyStyle.loadingWidget();
-                                    }
-                                    return SpinnerWidget(
-                                      items: state.getSpinnerItem
-                                        ..insert(
-                                          0,
-                                          SpinnerItem(
-                                            id: -1,
-                                            enable: false,
-                                            name: 'اختر سائق',
-                                          ),
-                                        ),
-                                      onChanged: (spinnerItem) {
-                                        driverId = spinnerItem.id;
-                                        context
-                                            .read<AccountAmountCubit>()
-                                            .getAccountAmount(
-                                              context,
-                                              driverId: driverId,
-                                            );
-                                      },
-                                    );
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                          BlocBuilder<AccountAmountCubit, AccountAmountInitial>(
-                            builder: (context, state) {
-                              if (state.statuses == CubitStatuses.init) {
-                                return 0.0.verticalSpace;
-                              }
-                              if (state.statuses.loading) {
-                                return MyStyle.loadingWidget();
-                              }
-                              return Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: [
-                                  ItemInfoInLine(
-                                    title: 'رصيد السائق لدى الشركة',
-                                    info: state.driverAmount.formatPrice,
-                                  ),
-
-                                  ItemInfoInLine(
-                                    title: 'رصيد الشركة لدى السائق',
-                                    info: state.companyAmount.formatPrice,
-                                  ),
-                                ],
-                              );
-                            },
-                          ),
-                          MyTextFormNoLabelWidget(
-                            label: 'قيمة الدفعة',
-                            onChanged: (p0) => amount = num.tryParse(p0) ?? 0,
-                          ),
-                          BlocConsumer<PayToCubit, PayToInitial>(
-                            listenWhen: (p, c) => c.statuses.done,
-                            listener: (context, state) => Navigator.pop(context, true),
-                            builder: (context, state) {
-                              if (state.statuses.loading) {
-                                return MyStyle.loadingWidget();
-                              }
-                              return MyButton(
-                                text: 'تسديد',
-                                onTap: () {
-                                  if (amount == 0) return;
-                                  if (driverId == 0) return;
-                                  context.read<PayToCubit>().payPayTo(
-                                        context,
-                                        amount: amount,
-                                        driverId: driverId,
-                                        type: type,
-                                      );
-                                },
-                              );
-                            },
-                          )
-                        ],
-                      ),
-                    ),
+                    child: const PayToDriverWidget(),
                   ),
                   onCancel: (val) {
                     context.read<AllTransfersCubit>().getAllTransfers(context);

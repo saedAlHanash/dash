@@ -25,6 +25,7 @@ class AppSharedPreference {
   static const _wallet = '12';
   static const _myPermission = '13';
   static const _user = '14';
+  static const _email = '15';
 
   static SharedPreferences? _prefs;
 
@@ -242,4 +243,10 @@ class AppSharedPreference {
   static cashShared(bool sh) async {
     _prefs?.setBool('sh', sh);
   }
+
+  static void cashEmail(String email) {
+    _prefs?.setString(_email, email);
+  }
+
+  static String get getEmail => _prefs?.getString(_email) ?? '';
 }

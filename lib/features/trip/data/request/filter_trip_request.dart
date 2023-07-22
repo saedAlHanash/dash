@@ -1,11 +1,20 @@
 class FilterTripRequest {
   int? driverId;
+
   int? customerId;
+
   int? carCategoryId;
+
   DateTime? startTime;
   DateTime? endTime;
-  int? skipCount;
-  int? maxResultCount;
+
+  void reset() {
+    driverId;
+    customerId;
+    carCategoryId;
+    startTime = null;
+    endTime = null;
+  }
 
 //<editor-fold desc="Data Methods">
   FilterTripRequest({
@@ -14,8 +23,6 @@ class FilterTripRequest {
     this.carCategoryId,
     this.startTime,
     this.endTime,
-    this.skipCount,
-    this.maxResultCount,
   });
 
   Map<String, dynamic> toMap() {
@@ -25,8 +32,6 @@ class FilterTripRequest {
       'carCategoryId': carCategoryId,
       'startTime': startTime,
       'endTime': endTime,
-      'skipCount': skipCount,
-      'maxResultCount': maxResultCount,
     };
   }
 

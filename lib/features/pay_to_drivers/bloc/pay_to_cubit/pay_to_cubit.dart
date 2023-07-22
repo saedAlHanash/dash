@@ -8,16 +8,72 @@ import '../../../../core/error/error_manager.dart';
 import '../../../../core/strings/enum_manager.dart';
 import '../../../../core/util/note_message.dart';
 import '../../../../core/util/pair_class.dart';
+import '../../../wallet/data/summary_model.dart';
 
 part 'pay_to_state.dart';
 
 class PayToCubit extends Cubit<PayToInitial> {
   PayToCubit() : super(PayToInitial.initial());
 
-  Future<void> payPayTo(BuildContext context,
-      {required num amount, required int driverId, required TransferPayType type}) async {
+  Future<void> payTo(BuildContext context, {required SummaryModel request}) async {
+    final r = await NoteMessage.showConfirm(context, text: request.message);
+    if (!r) return;
+
+    if (request.type == null) return;
+
     emit(state.copyWith(statuses: CubitStatuses.loading));
-    final pair = await _payPayToApi(amount: amount, driverId: driverId, type: type);
+
+    Pair? pair;
+    switch (request.type!) {
+      case SummaryPayToEnum.requireDriverPay:
+        pair = await _payPayToApi(
+          driverId: request.driverId!,
+          type: TransferPayType.companyToDriver,
+          amount: request.cutAmount!,
+        );
+
+        if (checkResponse(pair)) {
+          pair = await _payPayToApi(
+            driverId: request.driverId!,
+            type: TransferPayType.driverToCompany,
+            amount: request.payAmount!,
+          );
+        }
+
+        break;
+      case SummaryPayToEnum.requireCompanyPay:
+        pair = await _payPayToApi(
+          driverId: request.driverId!,
+          type: TransferPayType.driverToCompany,
+          amount: request.cutAmount!,
+        );
+
+        if (checkResponse(pair)) {
+          pair = await _payPayToApi(
+            driverId: request.driverId!,
+            type: TransferPayType.companyToDriver,
+            amount: request.payAmount!,
+          );
+        }
+
+        break;
+
+      case SummaryPayToEnum.equal:
+        pair = await _payPayToApi(
+          driverId: request.driverId!,
+          type: TransferPayType.driverToCompany,
+          amount: request.cutAmount!,
+        );
+
+        if (checkResponse(pair)) {
+          pair = await _payPayToApi(
+            driverId: request.driverId!,
+            type: TransferPayType.companyToDriver,
+            amount: request.cutAmount!,
+          );
+        }
+        break;
+    }
 
     if (pair.first == null) {
       if (context.mounted) {
@@ -27,6 +83,11 @@ class PayToCubit extends Cubit<PayToInitial> {
     } else {
       emit(state.copyWith(statuses: CubitStatuses.done, result: pair.first));
     }
+  }
+
+  bool checkResponse(Pair<dynamic, dynamic> pair) {
+    if (pair.first != null) return true;
+    return false;
   }
 
   Future<Pair<bool?, String?>> _payPayToApi(

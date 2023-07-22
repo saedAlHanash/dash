@@ -45,4 +45,8 @@ class AllDriversCubit extends Cubit<AllDriversInitial> {
       return Pair(null, ErrorManager.getApiError(response));
     }
   }
+
+  void update() {
+    emit(state.copyWith());
+  }
 }

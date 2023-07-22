@@ -12,6 +12,7 @@ import 'package:qareeb_dash/core/api_manager/command.dart';
 import 'package:qareeb_dash/core/strings/enum_manager.dart';
 import 'package:qareeb_dash/features/accounts/ui/pages/transfers_page.dart';
 import 'package:qareeb_dash/features/car_catigory/bloc/delete_car_cat_cubit/delete_car_cat_cubit.dart';
+import 'package:qareeb_dash/features/coupons/ui/pages/coupons_page.dart';
 import 'package:qareeb_dash/features/map/bloc/map_controller_cubit/map_controller_cubit.dart';
 import 'package:qareeb_dash/features/messages/ui/pages/messages_page.dart';
 import 'package:qareeb_dash/features/redeems/bloc/redeems_cubit/redeems_cubit.dart';
@@ -32,6 +33,7 @@ import '../../../auth/bloc/change_user_state_cubit/change_user_state_cubit.dart'
 import '../../../auth/ui/pages/policy_page.dart';
 import '../../../car_catigory/ui/pages/car_categories_page.dart';
 import '../../../clients/ui/pages/clients_page.dart';
+import '../../../coupons/bloc/create_coupon_cubit/create_coupon_cubit.dart';
 import '../../../drivers/bloc/loyalty_cubit/loyalty_cubit.dart';
 import '../../../drivers/ui/pages/drivers_page.dart';
 import '../../../pay_to_drivers/bloc/pay_to_cubit/pay_to_cubit.dart';
@@ -41,6 +43,9 @@ import '../../../reasons/bloc/create_cubit/create_cubit.dart';
 import '../../../reasons/bloc/delete_reason_cubit/delete_reason_cubit.dart';
 import '../../../reasons/bloc/get_reasons_cubit/get_reasons_cubit.dart';
 import '../../../reasons/ui/pages/reasons_page.dart';
+import '../../../roles/bloc/create_role_cubit/create_role_cubit.dart';
+import '../../../roles/bloc/delete_role_cubit/delete_role_cubit.dart';
+import '../../../roles/ui/pages/roles_page.dart';
 import '../../../wallet/bloc/change_provider_state_cubit/change_provider_state_cubit.dart';
 import '../../../wallet/ui/pages/providers_page.dart';
 import '../../bloc/nav_home_cubit/nav_home_cubit.dart';
@@ -185,7 +190,7 @@ class _HomePageState extends State<HomePage> {
               child: Center(
                 child: DrawableText(
                   color: Colors.white,
-                  text: AppSharedPreference.getUser.userId.toString(),
+                  text: AppSharedPreference.getEmail,
                 ),
               ),
             ),
@@ -254,7 +259,22 @@ class _HomePageState extends State<HomePage> {
                     child: const ClientsPage(),
                   );
                 case "/coupons":
+                  return MultiBlocProvider(
+                  providers: [
+                    BlocProvider(create: (context) => sl<CreateCouponCubit>()),
+                  ],
+                  child: const CouponPage(),
+                );
+
                 case "/roles":
+                  return MultiBlocProvider(
+                    providers: [
+                      BlocProvider(create: (context) => sl<CreateRoleCubit>()),
+                      BlocProvider(create: (context) => sl<DeleteRoleCubit>()),
+                    ],
+                    child: const RolesPage(),
+                  );
+
                 case "/points":
                   return MultiBlocProvider(
                     providers: [
@@ -308,7 +328,6 @@ class _HomePageState extends State<HomePage> {
                       ),
                       BlocProvider(create: (_) => sl<PayToCubit>()),
                       BlocProvider(create: (_) => sl<AccountAmountCubit>()),
-
                     ],
                     child: const PayToDriversPage(),
                   );

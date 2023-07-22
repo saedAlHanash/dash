@@ -73,7 +73,7 @@ class DriverInfoPage extends StatelessWidget {
                           'اسم ': driver.fullName,
                           'العنوان ': driver.address,
                           'رقم هاتف  ': driver.phoneNumber,
-                          'تاريخ ميلاد': driver.birthdate,
+                          'تاريخ ميلاد': driver.birthdate?.formatDate ?? '-',
                           'الجنس': driver.gender == 0 ? 'ذكر' : 'أنثى',
                         },
                         title: 'معلومات السائق',

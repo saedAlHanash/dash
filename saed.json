@@ -1,36 +1,27 @@
 {
-  "result": {
-    "totalCount": 2,
-    "items": [
-      {
-        "driverShare": 2250.0,
-        "totalCost": 3000.0,
-        "sharedRequestId": 4,
-        "tripId": null,
-        "driverId": 16,
-        "date": "2023-07-06T21:54:56.992952",
-        "oilShare": null,
-        "goldShare": null,
-        "tiresShare": null,
-        "id": 4
-      },
-      {
-        "driverShare": 315000.0,
-        "totalCost": 21000.0,
-        "sharedRequestId": 5,
-        "tripId": null,
-        "driverId": 16,
-        "date": "2023-07-10T15:00:53.828999",
-        "oilShare": 1.4,
-        "goldShare": 3.5,
-        "tiresShare": 0.7,
-        "id": 5
-      }
-    ]
-  },
-  "targetUrl": null,
-  "success": true,
-  "error": null,
-  "unAuthorizedRequest": false,
-  "__abp": true
+  "name": "read only",
+  "displayName": "read only",
+  "normalizedName": "read only",
+  "description": "للقراءة فقط",
+  "grantedPermissions": [
+    "Pages.Reason",
+    "Pages.Reports",
+    "Pages.Trips",
+    "Pages.Messages",
+    "Pages.Customers",
+    "Pages.Drivers",
+    "Pages.Coupon",
+    "Create_Permission",
+    "Update_Permission",
+    "Delete_Permission",
+    "Pages.CarCategory",
+    "Pages.Epayment",
+    "Pages.Points",
+    "Pages.Settings",
+    "Pages.SharedTrip",
+    "Pages.Roles",
+    "Pages.Users",
+    "Pages.Users.Activation",
+    "Pages.accept_order"
+  ]
 }

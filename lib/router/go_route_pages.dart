@@ -5,6 +5,7 @@ import 'package:qareeb_dash/features/admins/bloc/create_admin_cubit/create_admin
 import 'package:qareeb_dash/features/admins/data/response/admins_response.dart';
 import 'package:qareeb_dash/features/admins/ui/pages/create_admin_page.dart';
 import 'package:qareeb_dash/features/car_catigory/data/response/car_categories_response.dart';
+import 'package:qareeb_dash/features/coupons/data/response/coupons_response.dart';
 import 'package:qareeb_dash/features/drivers/bloc/create_driver_cubit/create_driver_cubit.dart';
 import 'package:qareeb_dash/features/drivers/bloc/driver_by_id_cubit/driver_by_id_cubit.dart';
 import 'package:qareeb_dash/features/drivers/data/response/drivers_response.dart';
@@ -23,6 +24,8 @@ import '../features/car_catigory/bloc/create_car_category_cubit/create_car_categ
 import '../features/car_catigory/ui/pages/create_car_category_page.dart';
 import '../features/clients/bloc/clients_by_id_cubit/clients_by_id_cubit.dart';
 import '../features/clients/ui/pages/client_info_page.dart';
+import '../features/coupons/bloc/create_coupon_cubit/create_coupon_cubit.dart';
+import '../features/coupons/ui/pages/create_coupon_page.dart';
 import '../features/drivers/ui/pages/driver_info_page.dart';
 import '../features/home/bloc/nav_home_cubit/nav_home_cubit.dart';
 import '../features/points/bloc/creta_point_cubit/create_point_cubit.dart';
@@ -32,6 +35,10 @@ import '../features/points/bloc/get_all_points_cubit/get_edged_point_cubit.dart'
 import '../features/points/ui/pages/point_info_page.dart';
 import '../features/redeems/bloc/create_redeem_cubit/create_redeem_cubit.dart';
 import '../features/redeems/bloc/redeems_cubit/redeems_cubit.dart';
+import '../features/roles/bloc/all_permissions_cubit/all_permissions_cubit.dart';
+import '../features/roles/bloc/create_role_cubit/create_role_cubit.dart';
+import '../features/roles/data/response/roles_response.dart';
+import '../features/roles/ui/pages/create_role_page.dart';
 import '../features/shared_trip/bloc/shared_trip_by_id_cubit/shared_trip_by_id_cubit.dart';
 import '../features/shared_trip/ui/pages/shared_trip_info_page.dart';
 import '../features/trip/bloc/trip_by_id/trip_by_id_cubit.dart';
@@ -169,7 +176,7 @@ final appGoRouter = GoRouter(
       name: GoRouteName.createAdmin,
       path: _GoRoutePath.createAdmin,
       builder: (BuildContext context, GoRouterState state) {
-        final admin = state.extra == null ? null : (state.extra) as AdminModel;
+        final admin = state.extra == null ? null : (state.extra) as DriverModel;
         final providers = [
           BlocProvider(create: (_) => di.sl<CreateAdminCubit>()),
         ];
@@ -186,7 +193,7 @@ final appGoRouter = GoRouter(
       path: _GoRoutePath.adminInfo,
       builder: (BuildContext context, GoRouterState state) {
         final admin =
-            state.extra == null ? AdminModel.fromJson({}) : (state.extra) as AdminModel;
+            state.extra == null ? DriverModel.fromJson({}) : (state.extra) as DriverModel;
         return AdminInfoPage(admin: admin);
       },
     ),
@@ -302,6 +309,39 @@ final appGoRouter = GoRouter(
       },
     ),
     //endregion
+
+    ///createCoupon
+    GoRoute(
+      name: GoRouteName.createCoupon,
+      path: _GoRoutePath.createCoupon,
+      builder: (BuildContext context, GoRouterState state) {
+        final coupon = state.extra == null ? null : (state.extra) as Coupon;
+        final providers = [
+          BlocProvider(create: (_) => di.sl<CreateCouponCubit>()),
+        ];
+        return MultiBlocProvider(
+          providers: providers,
+          child: CreateCouponPage(coupon: coupon),
+        );
+      },
+    ),
+
+    ///createRole
+    GoRoute(
+      name: GoRouteName.createRole,
+      path: _GoRoutePath.createRole,
+      builder: (BuildContext context, GoRouterState state) {
+        final role = state.extra == null ? null : (state.extra) as Role;
+        final providers = [
+          BlocProvider(create: (_) => di.sl<CreateRoleCubit>()),
+          BlocProvider(create: (_) => di.sl<AllPermissionsCubit>()..getAllPermissions(_)),
+        ];
+        return MultiBlocProvider(
+          providers: providers,
+          child: CreateRolePage(role: role),
+        );
+      },
+    ),
   ],
 );
 
@@ -319,6 +359,8 @@ class GoRouteName {
   static const pointInfo = 'pointInfo';
   static const tripInfo = 'tripInfo';
   static const sharedTripInfo = 'sharedTripInfo';
+  static const createCoupon = 'createCoupon';
+  static const createRole = 'createRole';
 }
 
 class _GoRoutePath {
@@ -335,4 +377,6 @@ class _GoRoutePath {
   static const pointInfo = '/pointInfo';
   static const tripInfo = '/tripInfo';
   static const sharedTripInfo = '/sharedTripInfo';
+  static const createCoupon = '/createCoupon';
+  static const createRole = '/createRole';
 }

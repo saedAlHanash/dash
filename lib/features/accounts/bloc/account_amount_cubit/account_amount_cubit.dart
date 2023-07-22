@@ -15,7 +15,7 @@ class AccountAmountCubit extends Cubit<AccountAmountInitial> {
   AccountAmountCubit() : super(AccountAmountInitial.initial());
 
   Future<void> getAccountAmount(BuildContext context, {required int driverId}) async {
-    emit(state.copyWith(statuses: CubitStatuses.loading));
+    emit(state.copyWith(statuses: CubitStatuses.loading, id: driverId));
     final pair = await _getAccountAmountApi(driverId: driverId);
 
     emit(state.copyWith(

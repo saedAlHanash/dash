@@ -16,6 +16,8 @@ class DeletePointCubit extends Cubit<DeletePointInitial> {
 
   Future<void> deletePoint(BuildContext context,
       { required int id}) async {
+    final r = await NoteMessage.showConfirm(context, text: 'تأكيد العملية');
+    if (!r) return;
     emit(state.copyWith(statuses: CubitStatuses.loading, id: id));
     final pair = await _deletePointApi(id: id);
 

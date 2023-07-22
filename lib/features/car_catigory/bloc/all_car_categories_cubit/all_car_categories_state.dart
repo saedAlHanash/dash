@@ -14,17 +14,24 @@ class AllCarCategoriesInitial extends Equatable {
   });
 
   factory AllCarCategoriesInitial.initial() {
-    return  AllCarCategoriesInitial(
-      result: const<CarCategory>[],
+    return AllCarCategoriesInitial(
+      result: const <CarCategory>[],
       error: '',
       command: Command.initial(),
       statuses: CubitStatuses.init,
     );
   }
 
+  List<SpinnerItem> get getSpinnerItem {
+    final list = <SpinnerItem>[];
+    for (var e in result) {
+      list.add(SpinnerItem(id: e.id, name: e.name, item: e));
+    }
+    return list;
+  }
+
   @override
   List<Object> get props => [statuses, result, error];
-
 
   AllCarCategoriesInitial copyWith({
     CubitStatuses? statuses,
@@ -39,5 +46,4 @@ class AllCarCategoriesInitial extends Equatable {
       command: command ?? this.command,
     );
   }
-
 }

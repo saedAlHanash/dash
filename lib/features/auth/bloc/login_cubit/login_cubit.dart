@@ -15,7 +15,7 @@ import '../../../../core/util/note_message.dart';
 import '../../../../core/util/pair_class.dart';
 import '../../data/request/login_request.dart';
 import '../../data/response/login_response.dart';
-import '../../data/response/permission_response.dart';
+import '../../../roles/data/response/permission_response.dart';
 
 part 'login_state.dart';
 
@@ -24,7 +24,8 @@ class LoginCubit extends Cubit<LoginInitial> {
 
   final network = sl<NetworkInfo>();
 
-  Future<void> login(BuildContext context, {required LoginRequest? request}) async {
+  Future<void> login(BuildContext context, {required LoginRequest request}) async {
+    AppSharedPreference.cashEmail(request.email!);
     emit(state.copyWith(statuses: CubitStatuses.loading, request: request));
 
     final pair = await _loginApi();
@@ -39,6 +40,7 @@ class LoginCubit extends Cubit<LoginInitial> {
       AppSharedPreference.cashToken(pair.first!.accessToken);
       AppSharedPreference.cashMyId(pair.first!.userId);
       AppSharedPreference.cashUser(pair.first!);
+      AppSharedPreference.cashEmail(request.email!);
 
       var result = await _getPermissions(id: pair.first!.userId);
 

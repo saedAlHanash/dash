@@ -63,6 +63,14 @@ class Role {
   final List<String> grantedPermissions;
   final int id;
 
+  String get getP {
+    var t = '';
+    for (var e in grantedPermissions) {
+      t += '$e\n';
+    }
+    return t;
+  }
+
   factory Role.fromJson(Map<String, dynamic> json) {
     return Role(
       name: json["name"] ?? "",

@@ -15,6 +15,8 @@ class DeleteCarCatCubit extends Cubit<DeleteCarCatInitial> {
   DeleteCarCatCubit() : super(DeleteCarCatInitial.initial());
 
   Future<void> deleteCarCat(BuildContext context, {required int id}) async {
+    final r = await NoteMessage.showConfirm(context, text: 'تأكيد العملية');
+    if (!r) return;
     emit(state.copyWith(statuses: CubitStatuses.loading, id: id));
     final pair = await _deleteCarCatApi(id: id);
 

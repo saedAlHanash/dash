@@ -72,8 +72,12 @@ class GetUrl {
 
   static var getAllSharedTrips = 'api/services/app/SharedTripService/GetAllSharedTrips';
 
-  static var fromDriver ='api/services/app/AccountsService/RequiredAmountFromDriver';
-  static var fromCompany ='api/services/app/AccountsService/DriverDebtFromCompany';
+  static var fromDriver = 'api/services/app/AccountsService/RequiredAmountFromDriver';
+  static var fromCompany = 'api/services/app/AccountsService/DriverDebtFromCompany';
+
+  static var getAllCoupons = 'api/services/app/Coupons/GetAll';
+
+  static var allPermissions ='api/services/app/Role/GetAllPermissions';
 }
 
 class PostUrl {
@@ -138,8 +142,11 @@ class PostUrl {
 
   static var createPolicy = 'api/services/app/Settings/Updatesettings';
 
-  static var createFromDriver ='api/services/app/PaymentService/CreatePayOffPayment';
-  static var createFromCompany ='api/services/app/PaymentService/CreateDebtPayment';
+  static var createFromDriver = 'api/services/app/PaymentService/CreatePayOffPayment';
+  static var createFromCompany = 'api/services/app/PaymentService/CreateDebtPayment';
+  static var createCoupon = 'api/services/app/Coupons/Create';
+
+  static var createRole = 'api/services/app/Role/Create';
 }
 
 class PutUrl {
@@ -156,6 +163,8 @@ class PutUrl {
   static var updatePoint = 'api/services/app/PointsService/Update';
 
   static var updateEdge = 'api/services/app/EdgesService/Update';
+  static var updateCoupon = 'api/services/app/Coupons/Update';
+  static var updateRole = 'api/services/app/Role/Update';
 }
 
 class DeleteUrl {
@@ -167,6 +176,8 @@ class DeleteUrl {
   static var deleteEdge = 'api/services/app/EdgesService/RemoveEdge';
 
   static var deletePoint = 'api/services/app/PointsService/Delete';
+
+  static var deleteRole ='api/services/app/Role/Delete';
 }
 
 class OrsUrl {

@@ -26,6 +26,8 @@ class TripStatusCubit extends Cubit<TripStatusInitial> {
     required int tripId,
     required TripStatus tripStatus,
   }) async {
+    final r = await NoteMessage.showConfirm(context, text: 'تأكيد العملية');
+    if (!r) return;
     if (tripStatus == TripStatus.non) return;
 
     emit(state.copyWith(

@@ -47,11 +47,12 @@ dependencies:
   flutter_screenutil: any
   #  animated_snack_bar: ^0.3.0
   pinput: ^2.2.21
+  syncfusion_flutter_datepicker: ^22.1.39
   flutter_rating_bar: ^4.0.1
   image_picker: any
   syncfusion_flutter_core: ^22.1.37
   carousel_slider:
-  syncfusion_flutter_charts: ^22.1.37
+#  syncfusion_flutter_charts: ^22.1.37
 #  responsive_table: ^0.2.0+2
   syncfusion_flutter_datagrid: ^22.1.37
   #  flutter_osm_plugin: any

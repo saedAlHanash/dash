@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qareeb_dash/features/admins/data/response/admins_response.dart';
+import 'package:qareeb_dash/features/drivers/data/response/drivers_response.dart';
 
 import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/note_message.dart';
@@ -89,7 +90,7 @@ class CreateAdminRequest {
     return true;
   }
 
-  static CreateAdminRequest fromAdmin(AdminModel adminModel) {
+  static CreateAdminRequest fromAdmin(DriverModel adminModel) {
     return CreateAdminRequest(
       userName: adminModel.userName,
       name: adminModel.name,

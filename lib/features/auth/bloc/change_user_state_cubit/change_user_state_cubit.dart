@@ -16,6 +16,8 @@ class ChangeUserStateCubit extends Cubit<ChangeUserStateInitial> {
 
   Future<void> changeUserState(BuildContext context,
       {required int id, required bool userState}) async {
+    final r = await NoteMessage.showConfirm(context, text: 'تأكيد العملية');
+    if (!r) return;
     emit(state.copyWith(statuses: CubitStatuses.loading, id: id));
     final pair = await _changeUserStateApi(userState: userState);
 

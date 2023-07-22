@@ -16,6 +16,8 @@ class LoyaltyCubit extends Cubit<LoyaltyInitial> {
 
   Future<void> changeLoyalty(BuildContext context,
       {required int driverId, required bool loyalState}) async {
+    final r = await NoteMessage.showConfirm(context, text: 'تأكيد العملية');
+    if (!r) return;
     emit(state.copyWith(statuses: CubitStatuses.loading, id: driverId));
     final pair = await changeLoyaltyApi(
       driverId: driverId,

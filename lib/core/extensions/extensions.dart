@@ -80,7 +80,7 @@ extension StringHelper on String? {
   }
 }
 
-final oCcy = NumberFormat("#,##0");
+final oCcy = NumberFormat("#,##0",'en');
 
 extension MaxInt on num {
   int get maxInt => 2147483647;
@@ -105,8 +105,6 @@ extension MaxInt on num {
     if (toInt() < this) return toInt() + 1;
     return toInt();
   }
-
-
 }
 
 extension NullOrZero on num? {
@@ -119,7 +117,7 @@ extension RealName on Enum {
 
 extension TransferTypeName on TransferType {
   String get getArName {
-    switch(this){
+    switch (this) {
       case TransferType.sharedPay:
         return 'رحلة تشاركية';
       case TransferType.tripPay:
