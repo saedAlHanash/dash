@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_dash/core/widgets/auto_complete_widget.dart';
 
 import '../../../../core/strings/enum_manager.dart';
 import '../../../../core/util/my_style.dart';
@@ -27,7 +28,7 @@ class _PayToDriverWidgetState extends State<PayToDriverWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return SingleChildScrollView(
       padding: const EdgeInsets.all(40.0).r,
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -40,24 +41,45 @@ class _PayToDriverWidgetState extends State<PayToDriverWidget> {
                 if (state.statuses.loading) {
                   return MyStyle.loadingWidget();
                 }
-                return SpinnerWidget(
-                  items: state.getSpinnerItem
-                    ..insert(
-                      0,
-                      SpinnerItem(
-                        id: -1,
-                        enable: false,
-                        name: 'اختر سائق',
-                      ),
-                    ),
-                  onChanged: (spinnerItem) {
-                    request.driverId = spinnerItem.id;
-                    context.read<AccountAmountCubit>().getAccountAmount(
-                          context,
-                          driverId: request.driverId ?? 0,
-                        );
-                  },
+                return SizedBox(
+                  width: 300.0.w,
+                  child: AutoCompleteWidget(
+                      onTap: (item) {
+                        request.driverId = item.id;
+                        context.read<AccountAmountCubit>().getAccountAmount(
+                              context,
+                              driverId: request.driverId ?? 0,
+                            );
+                      },
+                      listItems: state.getSpinnerItem
+                        ..insert(
+                          0,
+                          SpinnerItem(
+                            id: -1,
+                            enable: false,
+                            name: 'اختر سائق',
+                          ),
+                        )),
                 );
+
+                // return SpinnerWidget(
+                //   items: state.getSpinnerItem
+                //     ..insert(
+                //       0,
+                //       SpinnerItem(
+                //         id: -1,
+                //         enable: false,
+                //         name: 'اختر سائق',
+                //       ),
+                //     ),
+                //   onChanged: (spinnerItem) {
+                //     request.driverId = spinnerItem.id;
+                //     context.read<AccountAmountCubit>().getAccountAmount(
+                //           context,
+                //           driverId: request.driverId ?? 0,
+                //         );
+                //   },
+                // );
               },
             ),
           ),

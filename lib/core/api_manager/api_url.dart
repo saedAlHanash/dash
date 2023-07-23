@@ -24,6 +24,7 @@ class GetUrl {
   static const getPointsEdge = 'api/services/app/EdgesService/GetEdgeBetweenTwoPoints';
 
   static const getSharedTripById = 'api/services/app/SharedTripService/GetSharedTripById';
+  static const getSharedTripByRequestId = 'api/services/app/SharedTripService/GetSharedTripByRequestId';
 
   static const getPathById = 'api/services/app/PathService/GetPathById';
 

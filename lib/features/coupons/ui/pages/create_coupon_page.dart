@@ -16,7 +16,7 @@ import '../../bloc/all_coupons_vubit/all_coupons_cubit.dart';
 import '../../bloc/create_coupon_cubit/create_coupon_cubit.dart';
 import '../../data/request/create_coupons_request.dart';
 import '../../data/response/coupons_response.dart';
-
+import 'dart:html';
 class CreateCouponPage extends StatefulWidget {
   const CreateCouponPage({super.key, this.coupon});
 
@@ -40,7 +40,7 @@ class _CreateCouponPageState extends State<CreateCouponPage> {
     return BlocListener<CreateCouponCubit, CreateCouponInitial>(
       listenWhen: (p, c) => c.statuses.done,
       listener: (context, state) {
-        context.pushReplacementNamed(GoRouteName.homePage);
+            window.history.back();
         context.read<AllCouponsCubit>().getAllCoupons(context);
       },
       child: Scaffold(

@@ -80,7 +80,7 @@ extension StringHelper on String? {
   }
 }
 
-final oCcy = NumberFormat("#,##0",'en');
+final oCcy = NumberFormat("#,##0", 'en');
 
 extension MaxInt on num {
   int get maxInt => 2147483647;
@@ -131,29 +131,32 @@ extension TransferTypeName on TransferType {
 }
 
 extension Redeems on RedeemsResult {
-  int get oilCount =>
-      ((totalMeters / systemParameters.oil) - (totals.oil / systemParameters.oil))
-          .floor();
+  double get _oilCount => (((totalMeters / 1000) / systemParameters.oil) -
+      (totals.oil / systemParameters.oil));
 
-  int get goldCount =>
-      ((totalMeters / systemParameters.gold) - (totals.oil / systemParameters.gold))
-          .floor();
+  double get _goldCount => (((totalMeters / 1000) / systemParameters.gold) -
+      (totals.gold / systemParameters.gold));
 
-  int get tiresCount =>
-      ((totalMeters / systemParameters.tire) - (totals.oil / systemParameters.tire))
-          .floor();
+  double get _tiresCount => (((totalMeters / 1000) / systemParameters.tire) -
+      (totals.tire / systemParameters.tire));
+
+  int get oilCount => int.parse((_oilCount).toStringAsFixed(0));
+
+  int get goldCount => int.parse((_goldCount).toStringAsFixed(0));
+
+  int get tiresCount => int.parse((_tiresCount).toStringAsFixed(0));
 
   int get oilOldCount => (totals.oil / systemParameters.oil).floor();
 
-  int get goldOldCount => (totals.oil / systemParameters.gold).floor();
+  int get goldOldCount => (totals.gold / systemParameters.gold).floor();
 
-  int get tiresOldCount => (totals.oil / systemParameters.tire).floor();
+  int get tiresOldCount => (totals.tire / systemParameters.tire).floor();
 
-  double get oilPCount => ((totals.oil * 100) / systemParameters.oil).roundToDouble();
+  double get oilPCount => double.parse((_oilCount * 100).toStringAsFixed(2));
 
-  double get goldPCount => ((totals.oil * 100) / systemParameters.gold).roundToDouble();
+  double get goldPCount => double.parse((_goldCount * 100).toStringAsFixed(2));
 
-  double get tiresPCount => ((totals.oil * 100) / systemParameters.tire).roundToDouble();
+  double get tiresPCount => double.parse((_tiresCount * 100).toStringAsFixed(2));
 }
 
 extension StateName on SharedTripStatus {

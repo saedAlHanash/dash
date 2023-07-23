@@ -23,7 +23,7 @@ import '../../../car_catigory/bloc/all_car_categories_cubit/all_car_categories_c
 import '../../bloc/all_drivers/all_drivers_cubit.dart';
 import '../../bloc/create_driver_cubit/create_driver_cubit.dart';
 import '../widget/item_image_create.dart';
-
+import 'dart:html';import 'dart:html';
 class CreateDriverPage extends StatefulWidget {
   const CreateDriverPage({super.key, this.driver});
 
@@ -47,7 +47,7 @@ class _CreateDriverPageState extends State<CreateDriverPage> {
     return BlocListener<CreateDriverCubit, CreateDriverInitial>(
       listenWhen: (p, c) => c.statuses.done,
       listener: (context, state) {
-       context.pushReplacementNamed(GoRouteName.homePage);
+           window.history.back();
         context.read<AllDriversCubit>().getAllDrivers(context);
       },
       child: Scaffold(

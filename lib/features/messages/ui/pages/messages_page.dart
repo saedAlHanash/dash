@@ -2,11 +2,13 @@ import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/widgets/not_found_widget.dart';
 
 import '../../../../core/util/my_style.dart';
 import '../../../../core/widgets/my_card_widget.dart';
+import '../../../../router/go_route_pages.dart';
 import '../../bloc/all_messages/all_messages_cubit.dart';
 
 class MessagesPage extends StatefulWidget {
@@ -47,6 +49,16 @@ class _MessagesPageState extends State<MessagesPage> {
                       size: 18.0.sp,
                       matchParent: true,
                       drawablePadding: 10.0.w,
+                      drawableStart: IconButton(
+                        onPressed: () {
+                          context.pushNamed(
+                              item.reciverType == 'driver'
+                                  ? GoRouteName.driverInfo
+                                  : GoRouteName.clientInfo,
+                              queryParams: {'id': item.senderId.toString()});
+                        },
+                        icon: const Icon(Icons.info_outline_rounded),
+                      ),
                       drawableAlin: DrawableAlin.withText,
                       text: 'المرسل',
                       color: Colors.black,

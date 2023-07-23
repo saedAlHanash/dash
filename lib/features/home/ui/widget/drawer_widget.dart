@@ -14,7 +14,7 @@ import '../../../../core/widgets/images/image_multi_type.dart';
 import '../../../../generated/assets.dart';
 import '../../../../router/app_router.dart';
 import '../../../profile/bloc/profile_info_cubit/profile_info_cubit.dart';
-
+import 'dart:html';
 class DrawerWidget extends StatefulWidget {
   const DrawerWidget({Key? key}) : super(key: key);
 
@@ -43,7 +43,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
     //region listener
 
     void onItemClick(String itemName) {
-      Navigator.pop(context);
+      window.history.back();
       switch (itemName) {
         case AppStringManager.normalTrips:
           Navigator.pushNamed(context, RouteNames.previousTripsPage);

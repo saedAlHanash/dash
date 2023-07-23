@@ -186,7 +186,6 @@ class EdgesPointWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    loggerObject.wtf('${item.endPoint.arName} ${item.endPoint.name}');
     return MyCardWidget(
       elevation: 0.0,
       margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0).r,

@@ -18,7 +18,7 @@ import '../../bloc/all_permissions_cubit/all_permissions_cubit.dart';
 import '../../bloc/all_roles/all_roles_cubit.dart';
 import '../../bloc/create_role_cubit/create_role_cubit.dart';
 import '../../data/request/create_role_request.dart';
-import '../../data/response/roles_response.dart';
+import '../../data/response/roles_response.dart';import 'dart:html';
 
 class CreateRolePage extends StatefulWidget {
   const CreateRolePage({super.key, this.role});
@@ -43,7 +43,7 @@ class _CreateRolePageState extends State<CreateRolePage> {
     return BlocListener<CreateRoleCubit, CreateRoleInitial>(
       listenWhen: (p, c) => c.statuses.done,
       listener: (context, state) {
-        context.pushReplacementNamed(GoRouteName.homePage);
+            window.history.back();
         context.read<AllRolesCubit>().getAllRoles(context);
       },
       child: Scaffold(

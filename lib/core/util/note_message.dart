@@ -9,7 +9,7 @@ import 'package:qareeb_dash/core/widgets/my_button.dart';
 import '../../generated/assets.dart';
 import '../widgets/images/image_multi_type.dart';
 import '../widgets/snake_bar_widget.dart';
-
+import 'dart:html';
 class NoteMessage {
   static void showSuccessSnackBar(
       {required String message, required BuildContext context}) {
@@ -39,8 +39,9 @@ class NoteMessage {
 
   static void showSnakeBar({
     required String? message,
-    required BuildContext context,
+    required BuildContext? context,
   }) {
+    if (context == null) return;
     final snack = SnackBar(
       elevation: 0.0,
       backgroundColor: Colors.transparent,
@@ -127,7 +128,7 @@ class NoteMessage {
                 padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 15).r,
                 child: MyButton(
                   text: AppStringManager.done,
-                  onTap: () => Navigator.pop(context),
+                  onTap: () => window.history.back(),
                 ),
               ),
             ],

@@ -14,7 +14,7 @@ import '../../../../core/widgets/my_card_widget.dart';
 import '../../bloc/create_redeem_cubit/create_redeem_cubit.dart';
 import '../../bloc/redeems_cubit/redeems_cubit.dart';
 import '../../data/request/redeem_request.dart';
-
+import 'dart:html';
 class LoyaltyWidget extends StatelessWidget {
   const LoyaltyWidget({super.key});
 
@@ -134,10 +134,15 @@ class ItemLoyal extends StatelessWidget {
             ),
           if (driverId != 0)
             Expanded(
-              child: DrawableText(
-                text: '$p %',
-                color: Colors.black,
-                fontFamily: FontManager.cairoBold,
+              child: Directionality(
+                textDirection: TextDirection.ltr,
+                child: DrawableText(
+                  text: '$p %',
+                  textAlign: TextAlign.center,
+                  matchParent: true,
+                  color: Colors.black,
+                  fontFamily: FontManager.cairoBold,
+                ),
               ),
             ),
           if (driverId != 0)
@@ -148,7 +153,7 @@ class ItemLoyal extends StatelessWidget {
                   NoteMessage.showDoneDialog(
                     context,
                     text: 'تم بنجاح',
-                    onCancel: () => Navigator.pop(context),
+                    onCancel: () => window.history.back(),
                   );
                 },
                 buildWhen: (p, c) => c.request.type == type,

@@ -25,10 +25,11 @@ class PointsInitial extends Equatable {
   @override
   List<Object> get props => [statuses, result, error, tempPoint];
 
-  List<SpinnerItem> getSpinnerItems({int? selectedId, int? reject}) {
+  List<SpinnerItem> getSpinnerItems({int? selectedId, List<int?> reject = const []}) {
     if (result.isEmpty) {
       return [SpinnerItem(name: 'لا توجد نقاط', id: 0)];
     }
+    print(reject);
     return result
         .map((e) => SpinnerItem(
               name: e.arName,
@@ -37,7 +38,7 @@ class PointsInitial extends Equatable {
               isSelected: e.id == selectedId,
             ))
         .toList()
-      ..removeWhere((element) => element.id == reject);
+      ..removeWhere((e) => reject.contains(e.id));
   }
 
   PointsInitial copyWith({

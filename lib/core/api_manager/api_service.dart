@@ -101,7 +101,7 @@ class APIService {
 
     final uri = Uri.https(hostName ?? baseUrl, url, query);
     final proxyUri = Uri.https('api.allorigins.win', 'raw', {'url': uri.toString()});
-    loggerObject.wtf(proxyUri.toString());
+
     final response = await http.get(proxyUri, headers: innerHeader).timeout(
           const Duration(seconds: 40),
           onTimeout: () => http.Response('connectionTimeOut', 481),
@@ -342,11 +342,11 @@ DateTime getDateTimeFromHeaders(http.Response response) {
 
   if (headers.containsKey('date')) {
     final dateString = headers['date']!;
-    loggerObject.wtf(dateString);
+
     final dateTime = parseGMTDate(dateString);
     return dateTime.addFromNow();
   } else {
-    loggerObject.wtf('now');
+
     return DateTime.now();
   }
 }

@@ -27,7 +27,9 @@ const _tripsTableHeader = [
 ];
 
 class TripsPage extends StatelessWidget {
-  const TripsPage({super.key});
+  const TripsPage({super.key, this.isClientTrips});
+
+  final bool? isClientTrips;
 
   @override
   Widget build(BuildContext context) {
@@ -41,11 +43,18 @@ class TripsPage extends StatelessWidget {
             textAlign: TextAlign.center,
             padding: const EdgeInsets.symmetric(vertical: 15.0).h,
           ),
-          TripsFilterWidget(
-            onApply: (request) {
-              context.read<AllTripsCubit>().getAllTrips(context, filter: request);
-            },
-          ),
+          if (!(isClientTrips ?? false))
+            TripsFilterWidget(
+              onApply: (request) {
+                context.read<AllTripsCubit>().getAllTrips(context, filter: request);
+              },
+            ),
+          if ((isClientTrips ?? false))
+            BlocBuilder<AllTripsCubit, AllTripsInitial>(
+              builder: (context, state) {
+                return DrawableText(text: 'رحلات  : ${state.filter.clientName}');
+              },
+            ),
           const Divider(),
           Expanded(
             child: BlocBuilder<AllTripsCubit, AllTripsInitial>(
@@ -68,7 +77,7 @@ class TripsPage extends StatelessWidget {
                             e.destinationName,
                             e.getTripsCost,
                             e.clientName,
-                            e.driver.name.isEmpty ? '-' : e.driver.name,
+                            e.driver.fullName.isEmpty ? '-' : e.driver.fullName,
                             e.tripStateName,
                             e.startDate?.formatDateTime ?? '-',
                             InkWell(

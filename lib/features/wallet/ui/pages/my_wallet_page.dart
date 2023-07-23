@@ -10,6 +10,7 @@ import 'package:qareeb_dash/core/widgets/item_info.dart';
 import 'package:qareeb_dash/core/widgets/my_button.dart';
 import 'package:qareeb_dash/core/widgets/saed_taple_widget.dart';
 
+import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/strings/enum_manager.dart';
 import '../../../../core/util/my_style.dart';
 import '../../../../router/go_route_pages.dart';
@@ -66,21 +67,42 @@ class _WalletPageState extends State<WalletPage> {
                         if (state.statuses.loading) {
                           return MyStyle.loadingWidget();
                         }
-                        return Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        return Column(
                           children: [
-                            ItemInfoInLine(
-                              title: 'رصيد السائق لدى الشركة',
-                              info: state.driverAmount.formatPrice,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                ItemInfoInLine(
+                                  title: 'رصيد السائق لدى الشركة',
+                                  info: state.driverAmount.formatPrice,
+                                ),
+                                ItemInfoInLine(
+                                  title: 'رصيد الشركة لدى السائق',
+                                  info: state.companyAmount.formatPrice,
+                                ),
+
+                              ],
                             ),
                             ItemInfoInLine(
-                              title: 'رصيد الشركة لدى السائق',
-                              info: state.companyAmount.formatPrice,
+                              title: 'الملخص: ',
+                              widget: DrawableText(
+                                text: state.getMessage,
+                                drawableEnd: Directionality(
+                                  textDirection: TextDirection.ltr,
+                                  child: DrawableText(
+                                    text: state.price.formatPrice.replaceAll('spy', ''),
+                                    size: 24.0.sp,
+                                    fontFamily: FontManager.cairoBold,
+                                    color: AppColorManager.mainColor,
+                                  ),
+                                ),
+                              ),
                             ),
                           ],
                         );
                       },
                     ),
+
                     TextButton(
                       onPressed: () {
                         context.pushNamed(
@@ -103,56 +125,59 @@ class _WalletPageState extends State<WalletPage> {
                   ],
                 ),
               10.0.verticalSpace,
-              Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      children: [
-                        DrawableText(
-                          text: isClient ? 'مشحونات الزبون' : 'شحنات السائق',
-                        ),
-                        SizedBox(
-                          height: 400.0.h,
-                          child: SaedTableWidget(
-                            title: const ['المرسل', 'المستقبل', 'القيمة', 'التاريخ'],
-                            data: state.result.chargings.mapIndexed((i, e) {
-                              return [
-                                e.chargerName.isEmpty ? e.providerName : e.chargerName,
-                                e.userName,
-                                e.amount.formatPrice,
-                                e.date?.formatDate,
-                              ];
-                            }).toList(),
+              SizedBox(
+                height: 250.0.h,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Column(
+                        children: [
+                          DrawableText(
+                            text: isClient ? 'مشحونات الزبون' : 'شحنات السائق',
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      children: [
-                        DrawableText(
-                          text: isClient ? 'دفعات الزبون' : 'مدفوعات السائق',
-                        ),
-                        SizedBox(
-                          height: 400.0.h,
-                          child: SaedTableWidget(
-                            title: const ['المرسل', 'المستقبل', 'القيمة', 'التاريخ'],
-                            data: state.result.transactions.mapIndexed((i, e) {
-                              return [
-                                e.sourceName,
-                                e.destinationName,
-                                e.amount.formatPrice,
-                                e.transferDate?.formatDate,
-                              ];
-                            }).toList(),
+                          Expanded(
+                            child: SaedTableWidget(
+                              title: const ['المرسل', 'المستقبل', 'القيمة', 'الحالة','التاريخ'],
+                              data: state.result.chargings.mapIndexed((i, e) {
+                                return [
+                                  e.chargerName.isEmpty ? e.providerName : e.chargerName,
+                                  e.userName,
+                                  e.amount.formatPrice,
+                                  e.status==0?'غير مكتمل':'تم',
+                                  e.date?.formatDate,
+                                ];
+                              }).toList(),
+                            ),
                           ),
-                        ),
-                        // PayedListWidget(wallet: state.result, isClient: isClient),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                    Expanded(
+                      child: Column(
+                        children: [
+                          DrawableText(
+                            text: isClient ? 'دفعات الزبون' : 'مدفوعات السائق',
+                          ),
+                          Expanded(
+                            child: SaedTableWidget(
+                              title: const ['المرسل', 'المستقبل', 'القيمة', 'التاريخ'],
+                              data: state.result.transactions.mapIndexed((i, e) {
+                                return [
+                                  e.sourceName,
+                                  e.destinationName,
+                                  e.amount.formatPrice,
+                                  e.transferDate?.formatDate,
+                                ];
+                              }).toList(),
+                            ),
+                          ),
+                          // PayedListWidget(wallet: state.result, isClient: isClient),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           );

@@ -27,7 +27,7 @@ class _TripInfoListWidgetState extends State<TripInfoListWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        ItemInfoInLine(title: 'السائق', info: widget.trip.driver.name),
+        ItemInfoInLine(title: 'السائق', info: widget.trip.driver.fullName),
         ItemInfoInLine(
             title: 'عدد المقاعد',
             info: widget.trip.driver.carType.seatsNumber.toString()),

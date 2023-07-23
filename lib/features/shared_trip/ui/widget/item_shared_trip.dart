@@ -251,7 +251,7 @@ class ItemSharedTrip1 extends StatelessWidget {
                           matchParent: true,
                           size: 18.0.sp,
                           textAlign: TextAlign.center,
-                          text: item.driver.name,
+                          text: item.driver.fullName,
                           color: Colors.black,
                           fontFamily: FontManager.cairoBold,
                         ),

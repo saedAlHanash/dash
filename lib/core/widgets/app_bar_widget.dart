@@ -1,6 +1,9 @@
+import 'dart:html';
+
 import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 import '../strings/app_color_manager.dart';
 import 'logo_text.dart';
@@ -17,12 +20,17 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
       child: AppBar(
         elevation: 0.0,
         toolbarHeight: 80.0.h,
-        title: text == null ? const LogoText() : DrawableText(text: text!,fontFamily: FontManager.cairoBold,),
+        title: text == null
+            ? const LogoText()
+            : DrawableText(
+                text: text!,
+                fontFamily: FontManager.cairoBold,
+              ),
         backgroundColor: AppColorManager.f1,
         actions: actions,
-        leading: Navigator.canPop(context)
+        leading: context.canPop()
             ? IconButton(
-                onPressed: () => Navigator.pop(context),
+                onPressed: () => window.history.back(),
                 icon: const Icon(
                   Icons.arrow_back_ios,
                   color: AppColorManager.mainColorDark,

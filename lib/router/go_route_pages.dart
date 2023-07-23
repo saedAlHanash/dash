@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:qareeb_dash/core/api_manager/api_service.dart';
 import 'package:qareeb_dash/features/admins/bloc/create_admin_cubit/create_admin_cubit.dart';
-import 'package:qareeb_dash/features/admins/data/response/admins_response.dart';
 import 'package:qareeb_dash/features/admins/ui/pages/create_admin_page.dart';
 import 'package:qareeb_dash/features/car_catigory/data/response/car_categories_response.dart';
 import 'package:qareeb_dash/features/coupons/data/response/coupons_response.dart';
@@ -14,6 +14,7 @@ import 'package:qareeb_dash/features/home/ui/pages/home_page.dart';
 import 'package:qareeb_dash/features/map/bloc/map_controller_cubit/map_controller_cubit.dart';
 import 'package:qareeb_dash/features/points/bloc/creta_edge_cubit/create_edge_cubit.dart';
 import 'package:qareeb_dash/features/points/bloc/point_by_id_cubit/point_by_id_cubit.dart';
+import 'package:qareeb_dash/features/trip/ui/pages/trips_page.dart';
 
 import '../core/injection/injection_container.dart' as di;
 import '../features/accounts/bloc/account_amount_cubit/account_amount_cubit.dart';
@@ -39,10 +40,14 @@ import '../features/roles/bloc/all_permissions_cubit/all_permissions_cubit.dart'
 import '../features/roles/bloc/create_role_cubit/create_role_cubit.dart';
 import '../features/roles/data/response/roles_response.dart';
 import '../features/roles/ui/pages/create_role_page.dart';
+import '../features/shared_trip/bloc/get_shared_trips_cubit/get_shared_trips_cubit.dart';
 import '../features/shared_trip/bloc/shared_trip_by_id_cubit/shared_trip_by_id_cubit.dart';
 import '../features/shared_trip/ui/pages/shared_trip_info_page.dart';
+import '../features/shared_trip/ui/pages/shared_trips_page.dart';
+import '../features/trip/bloc/all_trips_cubit/all_trips_cubit.dart';
 import '../features/trip/bloc/trip_by_id/trip_by_id_cubit.dart';
 import '../features/trip/bloc/trip_status_cubit/trip_status_cubit.dart';
+import '../features/trip/data/request/filter_trip_request.dart';
 import '../features/trip/ui/pages/trip_info_page.dart';
 import '../features/wallet/bloc/debt_cubit/debts_cubit.dart';
 import '../features/wallet/bloc/my_wallet_cubit/my_wallet_cubit.dart';
@@ -78,7 +83,7 @@ final appGoRouter = GoRouter(
         context.read<NavHomeCubit>().changePage('/${q ?? ''}');
         return MultiBlocProvider(
           providers: providers,
-          child: HomePage(currentPage: q ?? '/'),
+          child: const HomePage(),
         );
       },
     ),
@@ -269,6 +274,7 @@ final appGoRouter = GoRouter(
     //endregion
 
     //region trips
+
     ///tripInfo
     GoRoute(
       name: GoRouteName.tripInfo,
@@ -287,6 +293,36 @@ final appGoRouter = GoRouter(
         );
       },
     ),
+
+    ///tripsPae
+    GoRoute(
+      name: GoRouteName.tripsPae,
+      path: _GoRoutePath.tripsPae,
+      builder: (BuildContext context, GoRouterState state) {
+        final clientId = int.tryParse(state.queryParams['clientId'] ?? '');
+        final driverId = int.tryParse(state.queryParams['driverId'] ?? '');
+        final name = state.queryParams['name'] ?? '';
+
+        final providers = [
+          BlocProvider(
+            create: (_) => di.sl<AllTripsCubit>()
+              ..getAllTrips(
+                context,
+                filter: FilterTripRequest(
+                  clientName: name,
+                  customerId: clientId,
+                  driverId: driverId,
+                ),
+              ),
+          ),
+        ];
+        return MultiBlocProvider(
+          providers: providers,
+          child: const TripsPage(isClientTrips: true),
+        );
+      },
+    ),
+
     //endregion
 
     //region sharedTripInfo
@@ -296,15 +332,47 @@ final appGoRouter = GoRouter(
       path: _GoRoutePath.sharedTripInfo,
       builder: (BuildContext context, GoRouterState state) {
         final id = int.tryParse(state.queryParams['id'] ?? '0') ?? 0;
+        final requestId = int.tryParse(state.queryParams['requestId'] ?? '0') ?? 0;
 
         final providers = [
           BlocProvider(create: (_) => di.sl<MapControllerCubit>()),
           BlocProvider(
-              create: (_) => di.sl<SharedTripByIdCubit>()..getSharedTripById(_, id: id)),
+            create: (_) => di.sl<SharedTripByIdCubit>()
+              ..getSharedTripById(_, id: id, requestId: requestId),
+          ),
         ];
         return MultiBlocProvider(
           providers: providers,
           child: const SharedTripInfoPage(),
+        );
+      },
+    ),
+
+    ///sharedTripsPae
+    GoRoute(
+      name: GoRouteName.sharedTripsPae,
+      path: _GoRoutePath.sharedTripsPae,
+      builder: (BuildContext context, GoRouterState state) {
+        final clientId = int.tryParse(state.queryParams['clientId'] ?? '');
+        final driverId = int.tryParse(state.queryParams['driverId'] ?? '');
+        final name = state.queryParams['name'] ?? '';
+
+        final providers = [
+          BlocProvider(
+            create: (_) => di.sl<GetSharedTripsCubit>()
+              ..getSharesTrip(
+                context,
+                filter: FilterTripRequest(
+                  clientName: name,
+                  customerId: clientId,
+                  driverId: driverId,
+                ),
+              ),
+          ),
+        ];
+        return MultiBlocProvider(
+          providers: providers,
+          child: const SharedTripsPage(isClientTrips: true),
         );
       },
     ),
@@ -361,6 +429,8 @@ class GoRouteName {
   static const sharedTripInfo = 'sharedTripInfo';
   static const createCoupon = 'createCoupon';
   static const createRole = 'createRole';
+  static const tripsPae = 'tripsPae';
+  static const sharedTripsPae = 'sharedTripsPae';
 }
 
 class _GoRoutePath {
@@ -379,4 +449,6 @@ class _GoRoutePath {
   static const sharedTripInfo = '/sharedTripInfo';
   static const createCoupon = '/createCoupon';
   static const createRole = '/createRole';
+  static const tripsPae = '/tripsPae';
+  static const sharedTripsPae = '/sharedTripsPae';
 }

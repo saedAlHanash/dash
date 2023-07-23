@@ -20,8 +20,9 @@ class SharedTripByIdCubit extends Cubit<SharedTripByIdInitial> {
   SharedTripByIdCubit() : super(SharedTripByIdInitial.initial());
   final network = sl<NetworkInfo>();
 
-  Future<void> getSharedTripById(BuildContext context, {required int id}) async {
-    emit(state.copyWith(statuses: CubitStatuses.loading, id: id));
+  Future<void> getSharedTripById(BuildContext context,
+      {required int id, required requestId}) async {
+    emit(state.copyWith(statuses: CubitStatuses.loading, id: id, requestId: requestId));
 
     final pair = await _getSharedTripByIdApi();
 
@@ -38,8 +39,11 @@ class SharedTripByIdCubit extends Cubit<SharedTripByIdInitial> {
   Future<Pair<SharedTrip?, String?>> _getSharedTripByIdApi() async {
     if (await network.isConnected) {
       final response = await APIService().getApi(
-        url: GetUrl.getSharedTripById,
-        query: {'Id': state.id},
+        url: state.id != 0 ? GetUrl.getSharedTripById : GetUrl.getSharedTripByRequestId,
+        query: {
+          if (state.id != 0) 'Id': state.id,
+          if (state.requestId != 0) 'id': state.requestId,
+        },
       );
 
       if (response.statusCode == 200) {

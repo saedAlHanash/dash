@@ -4,6 +4,7 @@ import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/util/note_message.dart';
 import 'package:qareeb_dash/core/widgets/table_widget.dart';
@@ -13,6 +14,9 @@ import 'package:qareeb_dash/features/wallet/ui/pages/my_wallet_page.dart';
 import '../../../../core/util/my_style.dart';
 import '../../../../core/widgets/app_bar_widget.dart';
 import '../../../../core/widgets/images/round_image_widget.dart';
+import '../../../../core/widgets/item_info.dart';
+import '../../../../core/widgets/my_button.dart';
+import '../../../../router/go_route_pages.dart';
 import '../../bloc/driver_by_id_cubit/driver_by_id_cubit.dart';
 
 const json =
@@ -87,6 +91,39 @@ class DriverInfoPage extends StatelessWidget {
                 const Divider(),
                 30.0.verticalSpace,
                 WalletPage(id: driver.id),
+                const Divider(),
+                ItemInfoInLine(
+                  title: 'رحلات السائق',
+                  widget: Row(
+                    children: [
+                      MyButton(
+                        text: 'الرحلات العادية',
+                        onTap: () {
+                          context.pushNamed(
+                            GoRouteName.tripsPae,
+                            queryParams: {
+                              'driverId': state.result.id.toString(),
+                              'name': state.result.fullName,
+                            },
+                          );
+                        },
+                      ),
+                      20.horizontalSpace,
+                      MyButton(
+                        text: 'الرحلات التشاركية',
+                        onTap: () {
+                          context.pushNamed(
+                            GoRouteName.sharedTripsPae,
+                            queryParams: {
+                              'driverId': state.result.id.toString(),
+                              'name': state.result.fullName,
+                            },
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ),
                 150.0.verticalSpace,
               ],
             ),

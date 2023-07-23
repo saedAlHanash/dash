@@ -6,7 +6,7 @@ import 'package:qareeb_dash/core/util/shared_preferences.dart';
 
 import '../strings/app_string_manager.dart';
 
-String? checkPhoneNumber(BuildContext context, String phone) {
+String? checkPhoneNumber(BuildContext? context, String phone) {
   if (phone.startsWith('963') && phone.length > 10) return phone;
   if (phone.length < 9) {
     NoteMessage.showSnakeBar(context: context, message: AppStringManager.wrongPhone);

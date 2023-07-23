@@ -20,6 +20,7 @@ import 'package:qareeb_dash/features/shared_trip/ui/widget/path_points_widget.da
 
 import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/my_style.dart';
+import '../../../../core/widgets/auto_complete_widget.dart';
 import '../../../map/bloc/map_controller_cubit/map_controller_cubit.dart';
 import '../../bloc/creta_point_cubit/create_point_cubit.dart';
 import '../../bloc/delete_edge_cubit/delete_edge_cubit.dart';
@@ -27,6 +28,9 @@ import '../../bloc/delete_point_cubit/delete_point_cubit.dart';
 import '../../bloc/get_edged_point_cubit/get_all_points_cubit.dart';
 import '../../bloc/point_by_id_cubit/point_by_id_cubit.dart';
 import '../../data/request/create_point_request.dart';
+import 'dart:html';
+
+import '../../data/response/points_edge_response.dart';
 
 class PointInfoPage extends StatefulWidget {
   const PointInfoPage({super.key});
@@ -37,6 +41,8 @@ class PointInfoPage extends StatefulWidget {
 
 class _PointInfoPageState extends State<PointInfoPage> {
   late final MapControllerCubit mapController;
+
+  List<EdgeModel>? edges;
 
   final request = CreatePointRequest();
 
@@ -78,7 +84,7 @@ class _PointInfoPageState extends State<PointInfoPage> {
               setState(() => canEdit = false);
             } else {
               context.read<PointsCubit>().getAllPoints(context);
-              Navigator.pop(context);
+              window.history.back();
             }
           },
         ),
@@ -86,7 +92,7 @@ class _PointInfoPageState extends State<PointInfoPage> {
           listenWhen: (p, c) => c.statuses.done,
           listener: (context, state) {
             context.read<PointsCubit>().getAllPoints(context);
-            Navigator.pop(context);
+            window.history.back();
           },
         ),
         BlocListener<EdgesPointCubit, EdgesPointInitial>(
@@ -200,6 +206,7 @@ class _PointInfoPageState extends State<PointInfoPage> {
                             if (state.statuses.loading) {
                               return MyStyle.loadingWidget();
                             }
+                            edges = state.result;
 
                             return ListView.builder(
                               shrinkWrap: true,
@@ -216,65 +223,91 @@ class _PointInfoPageState extends State<PointInfoPage> {
                         ),
                         20.0.verticalSpace,
                         if (isAllowed(AppPermissions.UPDATE))
-                        if (!canEdit && !createMode)
-                          Row(
-                            children: [
-                              MyButton(
-                                text: 'وضع التعديل؟',
-                                onTap: () => setState(() => canEdit = true),
-                              ),
-                              10.0.horizontalSpace,
-                              MyButton(
-                                text: 'توصيل بنقطة',
-                                onTap: () {
-                                  final createEdgeRequest = CreateEdgeRequest(
-                                    startPointId: tripPoint?.id,
-                                    startPointLatLng: tripPoint?.getLatLng,
-                                  );
-                                  NoteMessage.showCustomBottomSheet(
-                                    context,
-                                    child: BlocProvider.value(
-                                      value: context.read<CreateEdgeCubit>(),
-                                      child: Column(
-                                        children: [
-                                          SpinnerWidget(
-                                            items: context
-                                                .read<PointsCubit>()
-                                                .state
-                                                .getSpinnerItems(reject: tripPoint?.id),
-                                            onChanged: (spinnerItem) {
-                                              createEdgeRequest.endPointId =
-                                                  spinnerItem.id;
-                                              createEdgeRequest.endPointLatLng =
-                                                  (spinnerItem.item as TripPoint)
-                                                      .getLatLng;
-                                            },
-                                          ),
-                                          BlocBuilder<CreateEdgeCubit, CreateEdgeInitial>(
-                                            builder: (context, state) {
-                                              if (state.statuses.loading) {
-                                                return MyStyle.loadingWidget();
-                                              }
-                                              return MyButton(
-                                                onTap: () {
-                                                  context
-                                                      .read<CreateEdgeCubit>()
-                                                      .createEdge(context,
-                                                          request: createEdgeRequest);
+                          if (!canEdit && !createMode)
+                            Row(
+                              children: [
+                                MyButton(
+                                  text: 'وضع التعديل؟',
+                                  onTap: () => setState(() => canEdit = true),
+                                ),
+                                10.0.horizontalSpace,
+                                MyButton(
+                                  text: 'توصيل بنقطة',
+                                  onTap: () {
+                                    if (edges == null) return;
+                                    final createEdgeRequest = CreateEdgeRequest(
+                                      startPointId: tripPoint?.id,
+                                      startPointLatLng: tripPoint?.getLatLng,
+                                    );
+                                    NoteMessage.showCustomBottomSheet(
+                                      context,
+                                      child: BlocProvider.value(
+                                        value: context.read<CreateEdgeCubit>(),
+                                        child: Column(
+                                          children: [
+                                            30.0.verticalSpace,
+                                            SizedBox(
+                                              width: 300.0.w,
+                                              child: AutoCompleteWidget(
+                                                onTap: (spinnerItem) {
+                                                  createEdgeRequest.endPointId =
+                                                      spinnerItem.id;
+                                                  createEdgeRequest.endPointLatLng =
+                                                      (spinnerItem.item as TripPoint)
+                                                          .getLatLng;
                                                 },
-                                                text: 'توصيل',
-                                              );
-                                            },
-                                          )
-                                        ],
+                                                listItems: context
+                                                    .read<PointsCubit>()
+                                                    .state
+                                                    .getSpinnerItems(
+                                                      reject: [
+                                                        tripPoint?.id, ...edges!
+                                                          .map((e) => e.endPointId)
+                                                          .toList(),
+                                                      ],
+                                                    ),
+                                              ),
+                                            ),
+                                            30.0.verticalSpace,
+                                            // SpinnerWidget(
+                                            //   items: context
+                                            //       .read<PointsCubit>()
+                                            //       .state
+                                            //       .getSpinnerItems(reject: tripPoint?.id),
+                                            //   onChanged: (spinnerItem) {
+                                            //     createEdgeRequest.endPointId =
+                                            //         spinnerItem.id;
+                                            //     createEdgeRequest.endPointLatLng =
+                                            //         (spinnerItem.item as TripPoint)
+                                            //             .getLatLng;
+                                            //   },
+                                            // ),
+                                            BlocBuilder<CreateEdgeCubit,
+                                                CreateEdgeInitial>(
+                                              builder: (context, state) {
+                                                if (state.statuses.loading) {
+                                                  return MyStyle.loadingWidget();
+                                                }
+                                                return MyButton(
+                                                  onTap: () {
+                                                    context
+                                                        .read<CreateEdgeCubit>()
+                                                        .createEdge(context,
+                                                            request: createEdgeRequest);
+                                                  },
+                                                  text: 'توصيل',
+                                                );
+                                              },
+                                            )
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                    onCancel: (val) {},
-                                  );
-                                },
-                              ),
-                            ],
-                          ),
+                                      onCancel: (val) {},
+                                    );
+                                  },
+                                ),
+                              ],
+                            ),
                         10.0.verticalSpace,
                         BlocBuilder<CreatePointCubit, CreatePointInitial>(
                           builder: (context, createState) {

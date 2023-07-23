@@ -8,7 +8,7 @@ import 'package:qareeb_dash/features/trip/ui/widget/screen/final_trip.dart';
 import 'package:qareeb_dash/features/trip/ui/widget/screen/have_trip_widget.dart';
 import 'package:qareeb_dash/features/trip/ui/widget/screen/start_trip_widget.dart';
 import 'package:qareeb_dash/features/trip/ui/widget/screen/waiting_widget.dart';
-
+import 'dart:html';
 import '../../../../core/strings/enum_manager.dart';
 import '../../../../core/util/shared_preferences.dart';
 import '../../bloc/nav_trip_cubit/nav_trip_cubit.dart';
@@ -40,7 +40,7 @@ class _TripWidgetState extends State<TripWidget>
           listenWhen: (p, c) => c.statuses.done,
           listener: (context, state) {
             if (state.tripStatus == TripStatus.reject) {
-              Navigator.pop(context);
+              window.history.back();
               return;
             }
             checkTrip();

@@ -129,9 +129,9 @@ class ItemTrip extends StatelessWidget {
                           matchParent: true,
                           size: 18.0.sp,
                           textAlign: TextAlign.center,
-                          text: item.driver.name.isEmpty
+                          text: item.driver.fullName.isEmpty
                               ? 'لم يتم قبولها'
-                              : item.driver.name,
+                              : item.driver.fullName,
                           color: Colors.black,
                           fontFamily: FontManager.cairoBold,
                         ),

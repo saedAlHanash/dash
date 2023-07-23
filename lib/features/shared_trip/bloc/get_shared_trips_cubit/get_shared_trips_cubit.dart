@@ -28,7 +28,13 @@ class GetSharedTripsCubit extends Cubit<GetSharedTripsInitial> {
     FilterTripRequest? filter,
     Command? command,
   }) async {
-    emit(state.copyWith(statuses: CubitStatuses.loading, command: command));
+    emit(
+      state.copyWith(
+        statuses: CubitStatuses.loading,
+        command: command,
+        filter: filter,
+      ),
+    );
     final pair = await getSharesTripApi(tripState: tripState);
 
     if (pair.first == null) {
@@ -48,13 +54,14 @@ class GetSharedTripsCubit extends Cubit<GetSharedTripsInitial> {
     }
   }
 
-  static Future<Pair<SharedTripsResponse?, String?>> getSharesTripApi(
+  Future<Pair<SharedTripsResponse?, String?>> getSharesTripApi(
       {List<SharedTripStatus>? tripState}) async {
     final network = sl<NetworkInfo>();
 
     if (await network.isConnected) {
       final response = await APIService().getApi(
         url: GetUrl.getAllSharedTrips,
+        query: state.filter.toMap(),
       );
 
       if (response.statusCode == 200) {

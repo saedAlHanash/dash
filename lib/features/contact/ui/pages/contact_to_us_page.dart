@@ -20,7 +20,7 @@ import '../../../../core/widgets/map_background_widget.dart';
 import '../../../../core/widgets/my_card_widget.dart';
 import '../../../../core/widgets/top_title_widget.dart';
 import '../../../../generated/assets.dart';
-
+import 'dart:html';
 class ContactToUs extends StatelessWidget {
   const ContactToUs({Key? key}) : super(key: key);
 
@@ -49,7 +49,7 @@ class ContactToUs extends StatelessWidget {
 
     void initListener(BuildContext context, NoteInitial state) {
       if (state.statuses == CubitStatuses.done) {
-        Navigator.pop(context);
+        window.history.back();
         NoteMessage.showDoneDialog(context, text: AppStringManager.doneSendNote);
       }
     }

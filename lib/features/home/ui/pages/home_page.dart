@@ -19,6 +19,7 @@ import 'package:qareeb_dash/features/redeems/bloc/redeems_cubit/redeems_cubit.da
 import 'package:qareeb_dash/features/shared_trip/ui/pages/shared_trips_page.dart';
 import 'package:qareeb_dash/features/trip/ui/pages/trips_page.dart';
 
+import '../../../../core/api_manager/api_service.dart';
 import '../../../../core/injection/injection_container.dart';
 import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/util/checker_helper.dart';
@@ -52,9 +53,7 @@ import '../../bloc/nav_home_cubit/nav_home_cubit.dart';
 import '../screens/dashboard_page.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key, required this.currentPage}) : super(key: key);
-
-  final String currentPage;
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -87,7 +86,7 @@ class _HomePageState extends State<HomePage> {
             backgroundColor: AppColorManager.f1,
             leading: Navigator.canPop(context)
                 ? IconButton(
-                    onPressed: () => Navigator.pop(context),
+                    onPressed: () => window.history.back(),
                     icon: const Icon(
                       Icons.arrow_back_ios,
                       color: AppColorManager.mainColorDark,
@@ -203,7 +202,7 @@ class _HomePageState extends State<HomePage> {
                 onTap: () {
                   AppSharedPreference.logout();
                   while (Navigator.canPop(context)) {
-                    Navigator.pop(context);
+                    window.history.back();
                   }
                   context.pushNamed(GoRouteName.loginPage);
                 },
@@ -260,11 +259,11 @@ class _HomePageState extends State<HomePage> {
                   );
                 case "/coupons":
                   return MultiBlocProvider(
-                  providers: [
-                    BlocProvider(create: (context) => sl<CreateCouponCubit>()),
-                  ],
-                  child: const CouponPage(),
-                );
+                    providers: [
+                      BlocProvider(create: (context) => sl<CreateCouponCubit>()),
+                    ],
+                    child: const CouponPage(),
+                  );
 
                 case "/roles":
                   return MultiBlocProvider(
@@ -351,21 +350,23 @@ class _HomePageState extends State<HomePage> {
       },
     );
   }
-}
 
-void addQueryParameters({required Map<String, dynamic> params}) {
-  final uri = window.location.href;
-  final parsedUri = Uri.parse(uri);
-  if (!parsedUri.toString().contains('Home')) return;
-  final newQuery = Map.from(parsedUri.queryParameters)..addAll(params);
-  final s = <String, String>{};
-  newQuery.forEach((key, value) => s[key.toString()] = value.toString());
-  final newUri = Uri(
-    scheme: parsedUri.scheme,
-    host: parsedUri.host,
-    port: parsedUri.port,
-    path: parsedUri.path,
-    queryParameters: s,
-  );
-  window.history.pushState(null, '', newUri.toString());
+  void addQueryParameters({required Map<String, dynamic> params}) {
+    final uri = window.location.href;
+    final parsedUri = Uri.parse(uri);
+    if (!parsedUri.toString().contains('Home')) return;
+    // context.pushNamed(GoRouteName.homePage, queryParams: params);
+
+    final newQuery = Map.from(parsedUri.queryParameters)..addAll(params);
+    final s = <String, String>{};
+    newQuery.forEach((key, value) => s[key.toString()] = value.toString());
+    final newUri = Uri(
+      scheme: parsedUri.scheme,
+      host: parsedUri.host,
+      port: parsedUri.port,
+      path: parsedUri.path,
+      queryParameters: s,
+    );
+    window.history.pushState(null, '', newUri.toString());
+  }
 }

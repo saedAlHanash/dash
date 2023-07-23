@@ -5,12 +5,14 @@ class SharedTripByIdInitial extends Equatable {
   final SharedTrip result;
   final String error;
   final int id;
+  final int requestId;
 
   const SharedTripByIdInitial({
     required this.statuses,
     required this.result,
     required this.error,
     required this.id,
+    required this.requestId,
   });
 
   factory SharedTripByIdInitial.initial() {
@@ -18,6 +20,7 @@ class SharedTripByIdInitial extends Equatable {
       result: SharedTrip.fromJson({}),
       error: '',
       id: 0,
+      requestId: 0,
       statuses: CubitStatuses.init,
     );
   }
@@ -30,12 +33,14 @@ class SharedTripByIdInitial extends Equatable {
     SharedTrip? result,
     String? error,
     int? id,
+    int? requestId,
   }) {
     return SharedTripByIdInitial(
       statuses: statuses ?? this.statuses,
       result: result ?? this.result,
       error: error ?? this.error,
       id: id ?? this.id,
+      requestId: requestId ?? this.requestId,
     );
   }
 }

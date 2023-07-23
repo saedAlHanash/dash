@@ -118,9 +118,9 @@ class SpinnerWidgetState<T> extends State<SpinnerWidget<T>> {
   }
 }
 
-class SpinnerItem {
+class SpinnerItem<T> {
   SpinnerItem({
-    this.name,
+    this.name ='',
     this.id = 0,
     this.isSelected = false,
     this.item,
@@ -128,11 +128,11 @@ class SpinnerItem {
     this.enable = true,
   });
 
-  String? name;
+  String name;
   int id;
   bool isSelected;
   bool enable;
-  dynamic item;
+  T? item;
   Widget? icon;
 
 //<editor-fold desc="Data Methods">

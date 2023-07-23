@@ -1,84 +1,80 @@
 import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:qareeb_dash/core/api_manager/api_service.dart';
-import 'package:qareeb_dash/core/api_manager/api_service.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/strings/app_color_manager.dart';
 import 'package:qareeb_dash/core/widgets/my_button.dart';
 import 'package:qareeb_dash/core/widgets/spinner_widget.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
-import '../../../../../core/util/my_style.dart';
-import '../../../../car_catigory/bloc/all_car_categories_cubit/all_car_categories_cubit.dart';
-import '../../../../drivers/bloc/all_drivers/all_drivers_cubit.dart';
-import '../../../data/request/filter_trip_request.dart';
+import '../../../../../core/strings/enum_manager.dart';
+import '../../../data/request/transfer_filter_request.dart';
 
-class TripsFilterWidget extends StatefulWidget {
-  const TripsFilterWidget({super.key, this.onApply});
+class TransfersFilterWidget extends StatefulWidget {
+  const TransfersFilterWidget({super.key, this.onApply});
 
-  final Function(FilterTripRequest request)? onApply;
+  final Function(TransferFilterRequest request)? onApply;
 
   @override
-  State<TripsFilterWidget> createState() => _TripsFilterWidgetState();
+  State<TransfersFilterWidget> createState() => _TransfersFilterWidgetState();
 }
 
-class _TripsFilterWidgetState extends State<TripsFilterWidget> {
-  var request = FilterTripRequest();
+class _TransfersFilterWidgetState extends State<TransfersFilterWidget> {
+  var request = TransferFilterRequest();
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        FilterItem(
-          title: 'حسب السائق',
-          child: BlocBuilder<AllDriversCubit, AllDriversInitial>(
-            builder: (context, state) {
-              if (state.statuses.loading) {
-                return MyStyle.loadingWidget();
+        Builder(
+          builder: (context) {
+            final list = <SpinnerItem>[
+              SpinnerItem(
+                item: TransferStatus.closed,
+                name: 'تمت',
+                id: TransferStatus.closed.index,
+              ),
+              SpinnerItem(
+                item: TransferStatus.pending,
+                name: 'غير مكتملة',
+                id: TransferStatus.pending.index,
+              ),
+            ];
+            list.insert(0, SpinnerItem(name: 'اختر الحالة', id: -1));
+
+            for (var e in list) {
+              if (e.id == request.status?.index) {
+                e.isSelected = true;
+                break;
               }
-              final list = <SpinnerItem>[];
-              list.addAll(state.getSpinnerItem);
-              list.insert(0, SpinnerItem(name: 'اختر سائق', id: -1));
-              for (var e in list) {
-                if (e.id == request.driverId) {
-                  e.isSelected = true;
-                  break;
-                }
-              }
-              return SpinnerWidget(
-                items: list,
-                onChanged: (spinnerItem) => request.driverId = spinnerItem.id,
-              );
-            },
-          ),
+            }
+            return SpinnerWidget(
+              items: list,
+              onChanged: (spinnerItem) => request.status = spinnerItem.item,
+            );
+          },
         ),
-        FilterItem(
-          title: 'حسب تصنيف السيارة',
-          child: BlocBuilder<AllCarCategoriesCubit, AllCarCategoriesInitial>(
-            builder: (context, state) {
-              if (state.statuses.loading) {
-                return MyStyle.loadingWidget();
-              }
+        Builder(
+          builder: (context) {
+            final list = TransferType.values
+                .map(
+                  (e) => SpinnerItem(name: e.getArName, id: e.index, item: e),
+                )
+                .toList();
+            list.insert(0, SpinnerItem(name: 'اختر النوع', id: -1));
 
-              final list = <SpinnerItem>[];
-              list.addAll(state.getSpinnerItem);
-              list.insert(0, SpinnerItem(name: 'اختر تصنيف', id: -1));
-
-              for (var e in list) {
-                if (e.id == request.carCategoryId) {
-                  e.isSelected = true;
-                  break;
-                }
+            for (var e in list) {
+              if (e.id == request.type?.index) {
+                e.isSelected = true;
+                break;
               }
-              return SpinnerWidget(
-                items: list,
-                onChanged: (spinnerItem) => request.carCategoryId = spinnerItem.id,
-              );
-            },
-          ),
+            }
+            return SpinnerWidget(
+              items: list,
+              onChanged: (spinnerItem) => request.type = spinnerItem.item,
+            );
+          },
         ),
         FilterItem(
           title: 'حسب مجال من التاريخ',
@@ -106,19 +102,17 @@ class _TripsFilterWidgetState extends State<TripsFilterWidget> {
                       textDirection: TextDirection.ltr,
                       child: SfDateRangePicker(
                         initialSelectedRange:
-                            PickerDateRange(request.startTime, request.endTime),
+                            PickerDateRange(request.fromDateTime, request.toDateTime),
                         maxDate: DateTime.now(),
                         viewSpacing: 0,
                         onSelectionChanged: (DateRangePickerSelectionChangedArgs range) {
                           if (range.value is DateTime) {
-
-                            request.startTime = range.value;
-                            request.endTime = DateTime.now();
+                            request.fromDateTime = range.value;
+                            request.toDateTime = DateTime.now();
                           } else if (range.value is PickerDateRange) {
-
                             var val = range.value as PickerDateRange;
-                            request.startTime = val.startDate;
-                            request.endTime = val.endDate;
+                            request.fromDateTime = val.startDate;
+                            request.toDateTime = val.endDate;
                           }
                         },
                         selectionMode: DateRangePickerSelectionMode.range,

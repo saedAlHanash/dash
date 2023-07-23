@@ -78,6 +78,7 @@ class _LoginPageState extends State<LoginPage> {
                 MyTextFormWidget(
                   liable: AppStringManager.enterPassword,
                   textAlign: TextAlign.left,
+                  obscureText: true,
                   initialValue: password,
                   onChanged: (val) => password = val,
                 ),

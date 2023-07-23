@@ -171,7 +171,7 @@
 //
 //   stream = Geolocator.getPositionStream().listen((Position position) {
 //     if (canSend) {
-//       loggerObject.wtf(position.toString());
+
 //       canSend = false;
 //       Future.delayed(const Duration(seconds: 5), () => canSend = true);
 //       APIService().puttApi(

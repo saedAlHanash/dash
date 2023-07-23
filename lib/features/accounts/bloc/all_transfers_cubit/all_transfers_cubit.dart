@@ -38,7 +38,7 @@ class AllTransfersCubit extends Cubit<AllTransfersInitial> {
       url: GetUrl.getAllTransfers,
       query: state.command.toJson()
         ..addAll(
-          state.command.transferFilterRequest?.toMap() ?? {},
+          state.command.transferFilterRequest.toMap(),
         ),
     );
 

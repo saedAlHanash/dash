@@ -20,6 +20,7 @@ import '../../bloc/all_admins/all_admins_cubit.dart';
 import '../../bloc/create_admin_cubit/create_admin_cubit.dart';
 import '../../data/request/create_admin_request.dart';
 import '../../data/response/admins_response.dart';
+import 'dart:html';
 
 class CreateAdminPage extends StatefulWidget {
   const CreateAdminPage({super.key, this.admin});
@@ -44,7 +45,7 @@ class _CreateAdminPageState extends State<CreateAdminPage> {
     return BlocListener<CreateAdminCubit, CreateAdminInitial>(
       listenWhen: (p, c) => c.statuses.done,
       listener: (context, state) {
-        context.pushReplacementNamed(GoRouteName.homePage);
+        window.history.back();
         context.read<AllAdminsCubit>().getAllAdmins(context);
       },
       child: Scaffold(

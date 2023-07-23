@@ -32,7 +32,7 @@ class _CreateCarCategoryPageState extends State<CreateCarCategoryPage> {
 
   @override
   void initState() {
-    loggerObject.wtf(widget.carCat == null);
+
     if (widget.carCat != null) {
       request = CreateCarCatRequest().fromCarCategory(widget.carCat!);
     }
