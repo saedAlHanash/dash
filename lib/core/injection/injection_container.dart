@@ -56,6 +56,10 @@ import '../../features/roles/bloc/delete_role_cubit/delete_role_cubit.dart';
 import '../../features/super_user/bloc/all_super_users_cubit/all_super_users_cubit.dart';
 import '../../features/super_user/bloc/create_super_user_cubit/create_super_user_cubit.dart';
 import '../../features/super_user/bloc/delete_super_user_cubit/delete_super_user_cubit.dart';
+import '../../features/temp_trips/bloc/add_point_cubit/add_point_cubit.dart';
+import '../../features/temp_trips/bloc/all_temp_trips_cubit/all_temp_trips_cubit.dart';
+import '../../features/temp_trips/bloc/create_temp_trip_cubit/create_temp_trip_cubit.dart';
+import '../../features/temp_trips/bloc/delete_temp_trip_cubit/delete_temp_trip_cubit.dart';
 import '../../features/trip/bloc/all_trips_cubit/all_trips_cubit.dart';
 import '../../features/trip/bloc/driver_status_cubit/driver_status_cubit.dart';
 import '../../features/trip/bloc/nav_trip_cubit/nav_trip_cubit.dart';
@@ -204,6 +208,13 @@ Future<void> init() async {
   sl.registerFactory(() => AllTransfersCubit());
 
   sl.registerFactory(() => AccountAmountCubit());
+
+  sl.registerFactory(() => AddPointCubit());
+
+  sl.registerFactory(() => CreateTempTripCubit());
+  sl.registerFactory(() => AllTempTripsCubit());
+  sl.registerFactory(() => DeleteTempTripCubit());
+
 
 //! External
 

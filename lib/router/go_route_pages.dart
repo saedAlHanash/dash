@@ -14,6 +14,7 @@ import 'package:qareeb_dash/features/map/bloc/map_controller_cubit/map_controlle
 import 'package:qareeb_dash/features/points/bloc/creta_edge_cubit/create_edge_cubit.dart';
 import 'package:qareeb_dash/features/points/bloc/point_by_id_cubit/point_by_id_cubit.dart';
 import 'package:qareeb_dash/features/super_user/ui/pages/create_super_user_page.dart';
+import 'package:qareeb_dash/features/temp_trips/data/response/temp_trips_response.dart';
 import 'package:qareeb_dash/features/trip/ui/pages/trips_page.dart';
 
 import '../core/injection/injection_container.dart' as di;
@@ -32,10 +33,13 @@ import '../features/home/bloc/nav_home_cubit/nav_home_cubit.dart';
 import '../features/institutions/bloc/create_institution_cubit/create_institution_cubit.dart';
 import '../features/institutions/data/response/institutions_response.dart';
 import '../features/institutions/ui/pages/create_institution_page.dart';
+import '../features/map/bloc/set_point_cubit/map_control_cubit.dart';
 import '../features/points/bloc/creta_point_cubit/create_point_cubit.dart';
 import '../features/points/bloc/delete_edge_cubit/delete_edge_cubit.dart';
 import '../features/points/bloc/delete_point_cubit/delete_point_cubit.dart';
 import '../features/points/bloc/get_all_points_cubit/get_edged_point_cubit.dart';
+import '../features/points/bloc/get_edged_point_cubit/get_all_points_cubit.dart';
+import '../features/points/bloc/get_points_edge_cubit/get_points_edge_cubit.dart';
 import '../features/points/ui/pages/point_info_page.dart';
 import '../features/roles/bloc/all_permissions_cubit/all_permissions_cubit.dart';
 import '../features/roles/bloc/create_role_cubit/create_role_cubit.dart';
@@ -43,6 +47,9 @@ import '../features/roles/data/response/roles_response.dart';
 import '../features/roles/ui/pages/create_role_page.dart';
 import '../features/super_user/bloc/create_super_user_cubit/create_super_user_cubit.dart';
 import '../features/super_user/data/response/super_users_response.dart';
+import '../features/temp_trips/bloc/add_point_cubit/add_point_cubit.dart';
+import '../features/temp_trips/bloc/create_temp_trip_cubit/create_temp_trip_cubit.dart';
+import '../features/temp_trips/ui/pages/create_temp_trip_page.dart';
 import '../features/trip/bloc/all_trips_cubit/all_trips_cubit.dart';
 import '../features/trip/bloc/trip_by_id/trip_by_id_cubit.dart';
 import '../features/trip/bloc/trip_status_cubit/trip_status_cubit.dart';
@@ -334,6 +341,29 @@ final appGoRouter = GoRouter(
     ),
     //endregion
 
+    //region temp trips
+
+    ///createTempTrip
+    GoRoute(
+      name: GoRouteName.createTempTrip,
+      path: _GoRoutePath.createTempTrip,
+      builder: (BuildContext context, GoRouterState state) {
+        final tempTrip = state.extra == null ? null : (state.extra) as TempTripModel;
+        final providers = [
+          BlocProvider(create: (_) => di.sl<MapControlCubit>()),
+          BlocProvider(create: (_) => di.sl<AddPointCubit>()),
+          BlocProvider(create: (_) => di.sl<MapControllerCubit>()),
+          BlocProvider(create: (_) => di.sl<PointsEdgeCubit>()),
+          BlocProvider(create: (_) => di.sl<CreateTempTripCubit>()),
+          BlocProvider(create: (_) => di.sl<PointsCubit>()..getAllPoints(_)),
+        ];
+        return MultiBlocProvider(
+          providers: providers,
+          child: CreateTempTripPage(tempTrip: tempTrip),
+        );
+      },
+    ),
+    //endregion
 
     //region superUser
     ///createSuperUsers
@@ -398,6 +428,7 @@ class GoRouteName {
   static const createBus = 'createBus';
 
   static const createSuperUsers = 'createSuperUsers';
+  static const createTempTrip = 'createTempTrip';
 
 }
 
@@ -422,4 +453,5 @@ class _GoRoutePath {
   static const createInstitution = '/createInstitution';
   static const createBus = '/createBus';
   static const createSuperUsers = '/createSuperUsers';
+  static const createTempTrip = '/createTempTrip';
 }

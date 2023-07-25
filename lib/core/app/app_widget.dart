@@ -20,6 +20,7 @@ import '../../features/messages/bloc/all_messages/all_messages_cubit.dart';
 import '../../features/points/bloc/get_edged_point_cubit/get_all_points_cubit.dart';
 import '../../features/roles/bloc/all_roles/all_roles_cubit.dart';
 import '../../features/super_user/bloc/all_super_users_cubit/all_super_users_cubit.dart';
+import '../../features/temp_trips/bloc/all_temp_trips_cubit/all_temp_trips_cubit.dart';
 import '../../features/trip/bloc/all_trips_cubit/all_trips_cubit.dart';
 import '../../router/go_route_pages.dart';
 import '../app_theme.dart';
@@ -64,6 +65,7 @@ class MyApp extends StatelessWidget {
                 BlocProvider(create: (_) => sl<AllAdminsCubit>()..getAllAdmins(_)),
                 BlocProvider(create: (_) => sl<AllDriversCubit>()..getAllDrivers(_)),
                 BlocProvider(create: (_) => sl<AllClientsCubit>()..getAllClients(_)),
+                BlocProvider(create: (_) => sl<AllTempTripsCubit>()..getTempTrips(_)),
                 BlocProvider(create: (_) => sl<AllSuperUsersCubit>()..getSuperUsers(_)),
                 BlocProvider(create: (_) => sl<AllTransfersCubit>()..getAllTransfers(_)),
                 BlocProvider(

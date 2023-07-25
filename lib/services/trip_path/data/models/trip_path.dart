@@ -48,9 +48,9 @@ class Edge {
 
   final int id;
   final TripPoint startPoint;
-  final num startPointId;
+  final int startPointId;
   final TripPoint endPoint;
-  final num endPointId;
+  final int endPointId;
   final num distance;
   final num price;
   final String steps;

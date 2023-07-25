@@ -164,6 +164,9 @@ extension WeekDaysName on WeekDays {
   }
 }
 
+
+
+
 extension InstitutionTypeName on InstitutionType {
   String get getArName {
     switch (this) {

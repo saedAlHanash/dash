@@ -86,6 +86,8 @@ class GetUrl {
   static var buses = 'api/services/app/InstitutionBusesService/GetAll';
 
   static var superUsers = 'api/services/app/InstitutionSupervisorsService/GetAll';
+
+  static var tempTrips ='api/services/app/InstitutionTripTemplatesService/GetAll';
 }
 
 class PostUrl {
@@ -161,6 +163,8 @@ class PostUrl {
   static var createBus = 'api/services/app/InstitutionBusesService/Create';
 
   static var createSuperUsers = 'api/services/app/InstitutionSupervisorsService/Create';
+
+  static var createTempTrip='api/services/app/InstitutionTripTemplatesService/Create';
 }
 
 class PutUrl {
@@ -185,6 +189,8 @@ class PutUrl {
   static var updateBus = 'api/services/app/InstitutionBusesService/Update';
 
   static var updateSuperUsers = 'api/services/app/InstitutionSupervisorsService/Update';
+
+  static var updateTempTrip='api/services/app/InstitutionTripTemplatesService/Update';
 }
 
 class DeleteUrl {
@@ -204,6 +210,8 @@ class DeleteUrl {
   static var deleteBus = 'api/services/app/InstitutionBusesService/Delete';
 
   static var deleteSuperUsers = 'api/services/app/InstitutionSupervisorsService/Delete';
+
+  static var deleteTempTrip='api/services/app/InstitutionTripTemplatesService/Delete';
 }
 
 class OrsUrl {

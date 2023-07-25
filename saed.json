@@ -1,8 +1,47 @@
 {
-  "fullName": "saed member",
-  "phone": "0938891523",
-  "userName": "saed123",
-  "password": "123qwe",
-  "busId": 1,
-  "institutionId": 3
+  "result": {
+    "totalCount": 1,
+    "items": [
+      {
+        "id": 0,
+        "institutionId": 0,
+        "pathId": 0,
+        "path": {
+          "id": 0,
+          "name": "string",
+          "arName": "string",
+          "edges": [
+            {
+              "id": 0,
+              "startPoint": {
+                "id": 0,
+                "name": "string",
+                "arName": "string",
+                "latitude": 0,
+                "langitude": 0,
+                "tags": "string"
+              },
+              "startPointId": 0,
+              "endPoint": {
+                "id": 0,
+                "name": "string",
+                "arName": "string",
+                "latitude": 0,
+                "langitude": 0,
+                "tags": "string"
+              },
+              "endPointId": 0,
+              "distance": 0,
+              "price": 0,
+              "steps": "string",
+              "name": "string",
+              "arName": "string"
+            }
+          ]
+        },
+        "description": "string",
+        "distance": 0
+      }
+    ]
+  }
 }

@@ -21,6 +21,8 @@ import '../../../drivers/bloc/loyalty_cubit/loyalty_cubit.dart';
 import '../../../drivers/ui/pages/drivers_page.dart';
 import '../../../super_user/bloc/delete_super_user_cubit/delete_super_user_cubit.dart';
 import '../../../super_user/ui/pages/super_users_page.dart';
+import '../../../temp_trips/bloc/delete_temp_trip_cubit/delete_temp_trip_cubit.dart';
+import '../../../temp_trips/ui/pages/temp_trips_page.dart';
 import '../../bloc/nav_home_cubit/nav_home_cubit.dart';
 import '../screens/dashboard_page.dart';
 
@@ -168,7 +170,12 @@ class _HomePageState extends State<HomePage> {
                     child: const SuperUsersPage(),
                   );
                 case NamePaths.tempTrips:
-                  return const TripsPage();
+                  return MultiBlocProvider(
+                    providers: [
+                      BlocProvider(create: (context) => sl<DeleteTempTripCubit>()),
+                    ],
+                    child: const TempTripsPage(),
+                  );
                 case NamePaths.trips:
                   return const TripsPage();
               }
