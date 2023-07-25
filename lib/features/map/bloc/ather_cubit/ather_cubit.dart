@@ -117,6 +117,28 @@ class AtherCubit extends Cubit<AtherInitial> {
       return 0;
     }
   }
+
+  static Future<void> getAll() async {
+    final response = await APIService().getApi(
+        url: 'api/api.php',
+        query: {
+          'api': 'user',
+          'ver': '1.0',
+          'key': '135890C8CF4DBE10B0E33F89B03770F1',
+          'cmd': 'USER_GET_OBJECTS',
+        },
+        header: {'Access-Control-Allow-Origin': '*'},
+        hostName: 'admin.alather.net');
+    loggerObject.w('saed');
+    if (response.statusCode == 200) {
+      final list = response.jsonBody;
+      final x = <Ime>[];
+      for (var e in list) {
+        x.add(Ime.fromJson(e));
+      }
+      loggerObject.w(x.length);
+    }
+  }
 }
 
 double calculateDistance(List<LatLng> points) {

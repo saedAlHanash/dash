@@ -16,7 +16,7 @@ import 'package:qareeb_dash/features/points/bloc/creta_edge_cubit/create_edge_cu
 import 'package:qareeb_dash/features/points/bloc/get_all_points_cubit/get_edged_point_cubit.dart';
 import 'package:qareeb_dash/features/points/data/request/create_edg_request.dart';
 import 'package:qareeb_dash/features/points/data/response/points_response.dart';
-import 'package:qareeb_dash/features/shared_trip/ui/widget/path_points_widget.dart';
+
 
 import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/my_style.dart';
@@ -213,10 +213,11 @@ class _PointInfoPageState extends State<PointInfoPage> {
                               physics: const NeverScrollableScrollPhysics(),
                               itemCount: state.result.length,
                               itemBuilder: (context, i) {
-                                return EdgesPointWidget(
-                                  item: state.result[i],
-                                  color: AppColorManager.getPolyLineColor(i),
-                                );
+                              return  0.0.verticalSpace;
+                                // return EdgesPointWidget(
+                                //   item: state.result[i],
+                                //   color: AppColorManager.getPolyLineColor(i),
+                                // );
                               },
                             );
                           },

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:qareeb_dash/core/api_manager/api_service.dart';
 import 'package:qareeb_dash/features/admins/bloc/create_admin_cubit/create_admin_cubit.dart';
 import 'package:qareeb_dash/features/admins/ui/pages/create_admin_page.dart';
+import 'package:qareeb_dash/features/buses/data/response/buses_response.dart';
 import 'package:qareeb_dash/features/car_catigory/data/response/car_categories_response.dart';
-import 'package:qareeb_dash/features/coupons/data/response/coupons_response.dart';
 import 'package:qareeb_dash/features/drivers/bloc/create_driver_cubit/create_driver_cubit.dart';
 import 'package:qareeb_dash/features/drivers/bloc/driver_by_id_cubit/driver_by_id_cubit.dart';
 import 'package:qareeb_dash/features/drivers/data/response/drivers_response.dart';
@@ -14,6 +13,7 @@ import 'package:qareeb_dash/features/home/ui/pages/home_page.dart';
 import 'package:qareeb_dash/features/map/bloc/map_controller_cubit/map_controller_cubit.dart';
 import 'package:qareeb_dash/features/points/bloc/creta_edge_cubit/create_edge_cubit.dart';
 import 'package:qareeb_dash/features/points/bloc/point_by_id_cubit/point_by_id_cubit.dart';
+import 'package:qareeb_dash/features/super_user/ui/pages/create_super_user_page.dart';
 import 'package:qareeb_dash/features/trip/ui/pages/trips_page.dart';
 
 import '../core/injection/injection_container.dart' as di;
@@ -21,37 +21,33 @@ import '../features/accounts/bloc/account_amount_cubit/account_amount_cubit.dart
 import '../features/admins/ui/pages/admin_info_page.dart';
 import '../features/auth/bloc/login_cubit/login_cubit.dart';
 import '../features/auth/ui/pages/login_page.dart';
+import '../features/buses/bloc/create_bus_cubit/create_bus_cubit.dart';
+import '../features/buses/ui/pages/create_bus_page.dart';
 import '../features/car_catigory/bloc/create_car_category_cubit/create_car_category_cubit.dart';
 import '../features/car_catigory/ui/pages/create_car_category_page.dart';
 import '../features/clients/bloc/clients_by_id_cubit/clients_by_id_cubit.dart';
 import '../features/clients/ui/pages/client_info_page.dart';
-import '../features/coupons/bloc/create_coupon_cubit/create_coupon_cubit.dart';
-import '../features/coupons/ui/pages/create_coupon_page.dart';
 import '../features/drivers/ui/pages/driver_info_page.dart';
 import '../features/home/bloc/nav_home_cubit/nav_home_cubit.dart';
+import '../features/institutions/bloc/create_institution_cubit/create_institution_cubit.dart';
+import '../features/institutions/data/response/institutions_response.dart';
+import '../features/institutions/ui/pages/create_institution_page.dart';
 import '../features/points/bloc/creta_point_cubit/create_point_cubit.dart';
 import '../features/points/bloc/delete_edge_cubit/delete_edge_cubit.dart';
 import '../features/points/bloc/delete_point_cubit/delete_point_cubit.dart';
 import '../features/points/bloc/get_all_points_cubit/get_edged_point_cubit.dart';
 import '../features/points/ui/pages/point_info_page.dart';
-import '../features/redeems/bloc/create_redeem_cubit/create_redeem_cubit.dart';
-import '../features/redeems/bloc/redeems_cubit/redeems_cubit.dart';
 import '../features/roles/bloc/all_permissions_cubit/all_permissions_cubit.dart';
 import '../features/roles/bloc/create_role_cubit/create_role_cubit.dart';
 import '../features/roles/data/response/roles_response.dart';
 import '../features/roles/ui/pages/create_role_page.dart';
-import '../features/shared_trip/bloc/get_shared_trips_cubit/get_shared_trips_cubit.dart';
-import '../features/shared_trip/bloc/shared_trip_by_id_cubit/shared_trip_by_id_cubit.dart';
-import '../features/shared_trip/ui/pages/shared_trip_info_page.dart';
-import '../features/shared_trip/ui/pages/shared_trips_page.dart';
+import '../features/super_user/bloc/create_super_user_cubit/create_super_user_cubit.dart';
+import '../features/super_user/data/response/super_users_response.dart';
 import '../features/trip/bloc/all_trips_cubit/all_trips_cubit.dart';
 import '../features/trip/bloc/trip_by_id/trip_by_id_cubit.dart';
 import '../features/trip/bloc/trip_status_cubit/trip_status_cubit.dart';
 import '../features/trip/data/request/filter_trip_request.dart';
 import '../features/trip/ui/pages/trip_info_page.dart';
-import '../features/wallet/bloc/debt_cubit/debts_cubit.dart';
-import '../features/wallet/bloc/my_wallet_cubit/my_wallet_cubit.dart';
-import '../features/wallet/ui/pages/debts_page.dart';
 
 final appGoRouter = GoRouter(
   routes: <GoRoute>[
@@ -103,14 +99,9 @@ final appGoRouter = GoRouter(
         final providers = [
           BlocProvider(
               create: (_) => di.sl<DriverBuIdCubit>()..getDriverBuId(context, id: id)),
-          BlocProvider(create: (_) => di.sl<CreateRedeemCubit>()),
-          BlocProvider(create: (_) => di.sl<WalletCubit>()..getWallet(id: id)),
           BlocProvider(
               create: (_) =>
                   di.sl<AccountAmountCubit>()..getAccountAmount(_, driverId: id)),
-          BlocProvider(
-            create: (_) => di.sl<RedeemsCubit>()..getRedeems(_, driverId: id),
-          ),
         ];
         return MultiBlocProvider(
           providers: providers,
@@ -149,26 +140,6 @@ final appGoRouter = GoRouter(
         return MultiBlocProvider(
           providers: providers,
           child: CreateDriverPage(driver: driver),
-        );
-      },
-    ),
-
-    ///debts
-    GoRoute(
-      name: GoRouteName.debts,
-      path: _GoRoutePath.debts,
-      builder: (BuildContext context, GoRouterState state) {
-        // final driver  = (state.extra ?? DriverModel.fromJson({})) as DriverModel;
-        final q = state.queryParams['id'] ?? '0';
-        final providers = [
-          BlocProvider(
-            create: (_) =>
-                di.sl<DebtsCubit>()..getDebts(context, id: int.tryParse(q) ?? 0),
-          ),
-        ];
-        return MultiBlocProvider(
-          providers: providers,
-          child: const DebtsPage(),
         );
       },
     ),
@@ -216,7 +187,6 @@ final appGoRouter = GoRouter(
         final providers = [
           BlocProvider(
               create: (_) => di.sl<ClientByIdCubit>()..getClientBuId(context, id: id)),
-          BlocProvider(create: (_) => di.sl<WalletCubit>()..getWallet(id: id)),
         ];
         return MultiBlocProvider(
           providers: providers,
@@ -325,74 +295,64 @@ final appGoRouter = GoRouter(
 
     //endregion
 
-    //region sharedTripInfo
-    ///sharedTripInfo
-    GoRoute(
-      name: GoRouteName.sharedTripInfo,
-      path: _GoRoutePath.sharedTripInfo,
-      builder: (BuildContext context, GoRouterState state) {
-        final id = int.tryParse(state.queryParams['id'] ?? '0') ?? 0;
-        final requestId = int.tryParse(state.queryParams['requestId'] ?? '0') ?? 0;
+    //region institutions
 
+    ///createInstitution
+    GoRoute(
+      name: GoRouteName.createInstitution,
+      path: _GoRoutePath.createInstitution,
+      builder: (BuildContext context, GoRouterState state) {
+        final institution =
+            state.extra == null ? null : (state.extra) as InstitutionModel;
         final providers = [
-          BlocProvider(create: (_) => di.sl<MapControllerCubit>()),
-          BlocProvider(
-            create: (_) => di.sl<SharedTripByIdCubit>()
-              ..getSharedTripById(_, id: id, requestId: requestId),
-          ),
+          BlocProvider(create: (_) => di.sl<CreateInstitutionCubit>()),
         ];
         return MultiBlocProvider(
           providers: providers,
-          child: const SharedTripInfoPage(),
-        );
-      },
-    ),
-
-    ///sharedTripsPae
-    GoRoute(
-      name: GoRouteName.sharedTripsPae,
-      path: _GoRoutePath.sharedTripsPae,
-      builder: (BuildContext context, GoRouterState state) {
-        final clientId = int.tryParse(state.queryParams['clientId'] ?? '');
-        final driverId = int.tryParse(state.queryParams['driverId'] ?? '');
-        final name = state.queryParams['name'] ?? '';
-
-        final providers = [
-          BlocProvider(
-            create: (_) => di.sl<GetSharedTripsCubit>()
-              ..getSharesTrip(
-                context,
-                filter: FilterTripRequest(
-                  clientName: name,
-                  customerId: clientId,
-                  driverId: driverId,
-                ),
-              ),
-          ),
-        ];
-        return MultiBlocProvider(
-          providers: providers,
-          child: const SharedTripsPage(isClientTrips: true),
+          child: CreateInstitutionPage(institution: institution),
         );
       },
     ),
     //endregion
 
-    ///createCoupon
+    //region buses
+
+    ///createBus
     GoRoute(
-      name: GoRouteName.createCoupon,
-      path: _GoRoutePath.createCoupon,
+      name: GoRouteName.createBus,
+      path: _GoRoutePath.createBus,
       builder: (BuildContext context, GoRouterState state) {
-        final coupon = state.extra == null ? null : (state.extra) as Coupon;
+        final role = state.extra == null ? null : (state.extra) as BusModel;
         final providers = [
-          BlocProvider(create: (_) => di.sl<CreateCouponCubit>()),
+          BlocProvider(create: (_) => di.sl<CreateBusCubit>()),
         ];
         return MultiBlocProvider(
           providers: providers,
-          child: CreateCouponPage(coupon: coupon),
+          child: CreateBusPage(bus: role),
         );
       },
     ),
+    //endregion
+
+
+    //region superUser
+    ///createSuperUsers
+    GoRoute(
+      name: GoRouteName.createSuperUsers,
+      path: _GoRoutePath.createSuperUsers,
+      builder: (BuildContext context, GoRouterState state) {
+        final user = state.extra == null ? null : (state.extra) as SuperUserModel;
+        final providers = [
+          BlocProvider(create: (_) => di.sl<CreateSuperUsersCubit>()),
+        ];
+        return MultiBlocProvider(
+          providers: providers,
+          child: CreateSuperUserPage(superUser: user),
+        );
+      },
+    ),
+    //endregion
+
 
     ///createRole
     GoRoute(
@@ -413,6 +373,8 @@ final appGoRouter = GoRouter(
   ],
 );
 
+
+
 class GoRouteName {
   static const homePage = 'Home Page';
   static const loginPage = 'Login Page';
@@ -431,6 +393,12 @@ class GoRouteName {
   static const createRole = 'createRole';
   static const tripsPae = 'tripsPae';
   static const sharedTripsPae = 'sharedTripsPae';
+  static const createInstitution = 'createInstitution';
+
+  static const createBus = 'createBus';
+
+  static const createSuperUsers = 'createSuperUsers';
+
 }
 
 class _GoRoutePath {
@@ -451,4 +419,7 @@ class _GoRoutePath {
   static const createRole = '/createRole';
   static const tripsPae = '/tripsPae';
   static const sharedTripsPae = '/sharedTripsPae';
+  static const createInstitution = '/createInstitution';
+  static const createBus = '/createBus';
+  static const createSuperUsers = '/createSuperUsers';
 }

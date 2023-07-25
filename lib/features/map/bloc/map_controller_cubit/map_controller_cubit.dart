@@ -16,7 +16,7 @@ import '../../../../core/network/network_info.dart';
 import '../../../../core/strings/app_string_manager.dart';
 import '../../../../core/util/pair_class.dart';
 import '../../../../services/osrm/data/response/osrm_model.dart';
-import '../../../shared_trip/data/response/shared_trip.dart';
+
 import '../../../trip/data/response/trip_response.dart';
 import '../../data/models/my_marker.dart';
 
@@ -59,17 +59,17 @@ class MapControllerCubit extends Cubit<MapControllerInitial> {
     if (update) emit(state.copyWith(markerNotifier: state.markerNotifier + 1));
   }
 
-  void addPath({required SharedTrip trip}) {
-    addMarkers(marker: trip.path.getMarkers(), update: false);
-    addEncodedPolyLines(myPolyLines: trip.path.getPolyLines(), update: false);
-    var f = trip.path.getPoints();
-    emit(state.copyWith(
-        zoom: getZoomLevel(f.first, f.last, mapWidth),
-        point: trip.path.startPoint,
-        additional: trip,
-        markerNotifier: state.markerNotifier + 1,
-        polylineNotifier: state.polylineNotifier + 1));
-  }
+  // void addPath({required SharedTrip trip}) {
+  //   addMarkers(marker: trip.path.getMarkers(), update: false);
+  //   addEncodedPolyLines(myPolyLines: trip.path.getPolyLines(), update: false);
+  //   var f = trip.path.getPoints();
+  //   emit(state.copyWith(
+  //       zoom: getZoomLevel(f.first, f.last, mapWidth),
+  //       point: trip.path.startPoint,
+  //       additional: trip,
+  //       markerNotifier: state.markerNotifier + 1,
+  //       polylineNotifier: state.polylineNotifier + 1));
+  // }
 
   void addTrip({required TripResult trip}) {
     addMarkers(marker: trip.getMarkers);

@@ -12,7 +12,6 @@ import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/widgets/images/image_multi_type.dart';
 import 'package:qareeb_dash/features/map/data/models/my_marker.dart';
 import 'package:qareeb_dash/features/points/data/response/points_response.dart';
-import 'package:qareeb_dash/features/shared_trip/data/response/shared_trip.dart';
 
 import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/strings/enum_manager.dart';
@@ -20,6 +19,9 @@ import '../../../../core/widgets/my_card_widget.dart';
 import '../../../../core/widgets/spinner_widget.dart';
 import '../../../../generated/assets.dart';
 import '../../../../router/go_route_pages.dart';
+import '../../animate_marker/animated_marker_layer.dart';
+import '../../animate_marker/animated_marker_layer_options.dart';
+import '../../bloc/ather_cubit/ather_cubit.dart';
 import '../../bloc/map_controller_cubit/map_controller_cubit.dart';
 import '../../bloc/set_point_cubit/map_control_cubit.dart';
 
@@ -38,7 +40,8 @@ class MapWidget extends StatefulWidget {
     Key? key,
     this.onMapReady,
     this.initialPoint,
-    this.onMapClick, this.ime,
+    this.onMapClick,
+    this.ime,
   }) : super(key: key);
 
   final Function(MapController controller)? onMapReady;
@@ -160,6 +163,32 @@ class MapWidgetState extends State<MapWidget> {
             builder: (context, state) {
               return MarkerLayer(
                 markers: MapHelper.initMarker(state),
+              );
+            },
+          ),
+          BlocBuilder<AtherCubit, AtherInitial>(
+            builder: (context, state) {
+              return AnimatedMarkerLayer(
+                options: AnimatedMarkerLayerOptions(
+                  duration: const Duration(seconds: 6),
+                  marker: Marker(
+                    width: 75.0.spMin,
+                    height: 75.0.spMin,
+                    point: state.result.getLatLng(),
+                    builder: (_) {
+                      return Center(
+                        child: Transform.rotate(
+                          angle: -bearing,
+                          child: ImageMultiType(
+                            url: Assets.iconsCarTopView,
+                            height: 200.0.spMin,
+                            width: 200.0.spMin,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
               );
             },
           ),
@@ -288,9 +317,9 @@ class MapHelper {
             return (e.type == MyMarkerType.sharedPint)
                 ? Builder(builder: (context) {
                     var nou = 0;
-                    if (state.additional != null && state.additional is SharedTrip) {
-                      nou = (state.additional as SharedTrip).nou(e.point);
-                    }
+                    // if (state.additional != null && state.additional is SharedTrip) {
+                    //   nou = (state.additional as SharedTrip).nou(e.point);
+                    // }
                     return Column(
                       children: [
                         if (nou != 0)

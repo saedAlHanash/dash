@@ -1,5 +1,4 @@
 import 'dart:html';
-import 'dart:math';
 
 import 'package:drawable_text/drawable_text.dart';
 import 'package:easy_sidemenu/easy_sidemenu.dart';
@@ -8,47 +7,20 @@ import 'package:flutter_admin_scaffold/admin_scaffold.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:qareeb_dash/core/api_manager/command.dart';
-import 'package:qareeb_dash/core/strings/enum_manager.dart';
-import 'package:qareeb_dash/features/accounts/ui/pages/transfers_page.dart';
-import 'package:qareeb_dash/features/car_catigory/bloc/delete_car_cat_cubit/delete_car_cat_cubit.dart';
-import 'package:qareeb_dash/features/coupons/ui/pages/coupons_page.dart';
-import 'package:qareeb_dash/features/map/bloc/map_controller_cubit/map_controller_cubit.dart';
-import 'package:qareeb_dash/features/messages/ui/pages/messages_page.dart';
-import 'package:qareeb_dash/features/redeems/bloc/redeems_cubit/redeems_cubit.dart';
-import 'package:qareeb_dash/features/shared_trip/ui/pages/shared_trips_page.dart';
 import 'package:qareeb_dash/features/trip/ui/pages/trips_page.dart';
 
-import '../../../../core/api_manager/api_service.dart';
 import '../../../../core/injection/injection_container.dart';
 import '../../../../core/strings/app_color_manager.dart';
-import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/shared_preferences.dart';
 import '../../../../core/widgets/logo_text.dart';
 import '../../../../router/go_route_pages.dart';
-import '../../../accounts/bloc/account_amount_cubit/account_amount_cubit.dart';
-import '../../../accounts/bloc/all_transfers_cubit/all_transfers_cubit.dart';
-import '../../../accounts/data/request/transfer_filter_request.dart';
-import '../../../admins/ui/pages/admins_page.dart';
 import '../../../auth/bloc/change_user_state_cubit/change_user_state_cubit.dart';
-import '../../../auth/ui/pages/policy_page.dart';
-import '../../../car_catigory/ui/pages/car_categories_page.dart';
-import '../../../clients/ui/pages/clients_page.dart';
-import '../../../coupons/bloc/create_coupon_cubit/create_coupon_cubit.dart';
+import '../../../buses/bloc/delete_buss_cubit/delete_buss_cubit.dart';
+import '../../../buses/ui/pages/buses_page.dart';
 import '../../../drivers/bloc/loyalty_cubit/loyalty_cubit.dart';
 import '../../../drivers/ui/pages/drivers_page.dart';
-import '../../../pay_to_drivers/bloc/pay_to_cubit/pay_to_cubit.dart';
-import '../../../pay_to_drivers/ui/pages/pay_to_drivers_page.dart';
-import '../../../points/ui/pages/points_page.dart';
-import '../../../reasons/bloc/create_cubit/create_cubit.dart';
-import '../../../reasons/bloc/delete_reason_cubit/delete_reason_cubit.dart';
-import '../../../reasons/bloc/get_reasons_cubit/get_reasons_cubit.dart';
-import '../../../reasons/ui/pages/reasons_page.dart';
-import '../../../roles/bloc/create_role_cubit/create_role_cubit.dart';
-import '../../../roles/bloc/delete_role_cubit/delete_role_cubit.dart';
-import '../../../roles/ui/pages/roles_page.dart';
-import '../../../wallet/bloc/change_provider_state_cubit/change_provider_state_cubit.dart';
-import '../../../wallet/ui/pages/providers_page.dart';
+import '../../../super_user/bloc/delete_super_user_cubit/delete_super_user_cubit.dart';
+import '../../../super_user/ui/pages/super_users_page.dart';
 import '../../bloc/nav_home_cubit/nav_home_cubit.dart';
 import '../screens/dashboard_page.dart';
 
@@ -94,7 +66,7 @@ class _HomePageState extends State<HomePage> {
                 : 0.0.verticalSpace,
           ),
           sideBar: SideBar(
-            key: (Key(Random().nextInt(100000).toString())),
+            key: UniqueKey(),
             activeTextStyle: TextStyle(
               color: Theme.of(context).primaryColor,
               fontFamily: FontManager.cairoBold.name,
@@ -106,75 +78,29 @@ class _HomePageState extends State<HomePage> {
               fontFamily: FontManager.cairoBold.name,
               fontSize: 20.0.sp,
             ),
-            items: [
-              const AdminMenuItem(
+            items: const [
+              AdminMenuItem(
                 title: 'الرئيسية',
-                route: '/',
+                route: NamePaths.home,
                 icon: Icons.dashboard,
               ),
-              if (isAllowed(AppPermissions.TRIPS))
-                AdminMenuItem(
-                  title: 'الرحلات',
-                  icon: Icons.turn_right_sharp,
-                  children: [
-                    if (isAllowed(AppPermissions.SHARED_TRIP))
-                      const AdminMenuItem(
-                          title: 'الرحلات التشاركية', route: '/shared_trips'),
-                    if (isAllowed(AppPermissions.TRIPS))
-                      const AdminMenuItem(title: 'الرحلات العادية', route: '/trips'),
-                  ],
-                ),
               AdminMenuItem(
-                title: 'المستخدمين',
+                title: 'الباصات',
+                icon: Icons.bus_alert_sharp,
+                children: [
+                  AdminMenuItem(title: 'قائمة الباصات', route: NamePaths.buses),
+                  AdminMenuItem(title: 'المشرفين', route: NamePaths.superUser),
+                ],
+              ),
+              AdminMenuItem(
+                title: 'الرحلات',
                 icon: Icons.supervised_user_circle_sharp,
-                route: "/drivers",
                 children: [
-                  if (isAllowed(AppPermissions.CUSTOMERS))
-                    const AdminMenuItem(title: 'الزبائن', route: '/customers'),
-                  if (isAllowed(AppPermissions.DRIVERS))
-                    const AdminMenuItem(title: 'السائقين', route: '/drivers'),
-                  if (isAllowed(AppPermissions.USERS))
-                    const AdminMenuItem(title: 'مسؤولي النظام', route: '/sys_admins'),
+                  AdminMenuItem(title: 'نماذج الرحلات', route: NamePaths.tempTrips),
+                  AdminMenuItem(title: 'جدول الرحلات', route: NamePaths.trips),
                 ],
               ),
-              AdminMenuItem(
-                title: 'الطلبات',
-                route: "/epayments",
-                children: [
-                  if (isAllowed(AppPermissions.POINTS))
-                    const AdminMenuItem(title: 'النقاط', route: '/points'),
-                  if (isAllowed(AppPermissions.REASON))
-                    const AdminMenuItem(title: 'أسباب الإلغاء', route: '/cancel_reasons'),
-                  if (isAllowed(AppPermissions.EPAYMENT))
-                    const AdminMenuItem(
-                        title: 'مزودي الدفع', route: '/epayments_provider'),
-                  if (isAllowed(AppPermissions.COUPON))
-                    const AdminMenuItem(title: 'قسائم الحسم', route: '/coupons'),
-                  if (isAllowed(AppPermissions.CAR_CATEGORY))
-                    const AdminMenuItem(
-                        title: 'أصناف السيارات', route: '/car_categories'),
-                  if (isAllowed(AppPermissions.ROLES))
-                    const AdminMenuItem(title: 'الأدوار', route: '/roles'),
-                ],
-              ),
-              if (isAllowed(AppPermissions.REPORTS))
-                const AdminMenuItem(
-                    title: 'المعاملات',
-                    //   icon:Icons.,
-                    route: "/transactions"),
-              if (isAllowed(AppPermissions.SETTINGS))
-                const AdminMenuItem(
-                    icon: Icons.payments_outlined,
-                    title: 'دفعات السائقين',
-                    route: "/payToDrivers"),
-              if (isAllowed(AppPermissions.SETTINGS))
-                const AdminMenuItem(
-                    icon: Icons.privacy_tip_rounded,
-                    title: 'سياسة الخصوصية',
-                    route: "/policy"),
-              if (isAllowed(AppPermissions.MESSAGES))
-                const AdminMenuItem(
-                    icon: Icons.message, title: 'الرسائل', route: "/messages"),
+              AdminMenuItem(title: 'الطلاب', route: NamePaths.members),
             ],
             selectedRoute: state.page,
             onSelected: (item) {
@@ -220,116 +146,31 @@ class _HomePageState extends State<HomePage> {
             child: Builder(builder: (context) {
               addQueryParameters(params: {'key': state.page.replaceAll('/', '')});
               switch (state.page) {
-                case "/":
+                case NamePaths.home:
                   return MultiBlocProvider(
                     providers: [
-                      BlocProvider(
-                          create: (context) => sl<RedeemsCubit>()..getRedeems(context)),
                       BlocProvider(create: (context) => sl<LoyaltyCubit>()),
                     ],
                     child: const DashboardPage(),
                   );
-                case "/policy":
-                  return const PrivacyPolicyPage();
-                case "/drivers":
+                case NamePaths.buses:
                   return MultiBlocProvider(
                     providers: [
-                      BlocProvider(create: (context) => sl<LoyaltyCubit>()),
-                      BlocProvider(create: (context) => sl<ChangeUserStateCubit>()),
+                      BlocProvider(create: (context) => sl<DeleteBusCubit>()),
                     ],
-                    child: const DriverPage(),
+                    child: const BusesPage(),
                   );
-                case "/shared_trips":
-                  return const SharedTripsPage();
-                case "/trips":
+                case NamePaths.superUser:
+                  return MultiBlocProvider(
+                    providers: [
+                      BlocProvider(create: (context) => sl<DeleteSuperUserCubit>()),
+                    ],
+                    child: const SuperUsersPage(),
+                  );
+                case NamePaths.tempTrips:
                   return const TripsPage();
-                case "/sys_admins":
-                  return MultiBlocProvider(
-                    providers: [
-                      BlocProvider(create: (context) => sl<ChangeUserStateCubit>()),
-                    ],
-                    child: const AdminPage(),
-                  );
-                case "/customers":
-                  return MultiBlocProvider(
-                    providers: [
-                      BlocProvider(create: (context) => sl<ChangeUserStateCubit>()),
-                    ],
-                    child: const ClientsPage(),
-                  );
-                case "/coupons":
-                  return MultiBlocProvider(
-                    providers: [
-                      BlocProvider(create: (context) => sl<CreateCouponCubit>()),
-                    ],
-                    child: const CouponPage(),
-                  );
-
-                case "/roles":
-                  return MultiBlocProvider(
-                    providers: [
-                      BlocProvider(create: (context) => sl<CreateRoleCubit>()),
-                      BlocProvider(create: (context) => sl<DeleteRoleCubit>()),
-                    ],
-                    child: const RolesPage(),
-                  );
-
-                case "/points":
-                  return MultiBlocProvider(
-                    providers: [
-                      BlocProvider(create: (context) => sl<MapControllerCubit>()),
-                    ],
-                    child: const PointsPage(),
-                  );
-                case "/epayments_provider":
-                  return MultiBlocProvider(
-                    providers: [
-                      BlocProvider(create: (context) => sl<ChangeProviderStateCubit>()),
-                    ],
-                    child: const ProvidersPage(),
-                  );
-                case "/transactions":
-                  return const TransfersPage();
-                case "/car_categories":
-                  return MultiBlocProvider(
-                    providers: [
-                      BlocProvider(create: (context) => sl<DeleteCarCatCubit>()),
-                    ],
-                    child: const CarCategoriesPage(),
-                  );
-                case "/cancel_reasons":
-                  return MultiBlocProvider(
-                    providers: [
-                      BlocProvider(create: (context) => sl<DeleteReasonCubit>()),
-                      BlocProvider(create: (context) => sl<CreateReasonCubit>()),
-                      BlocProvider(
-                        create: (context) => sl<GetReasonsCubit>()..getReasons(context),
-                      ),
-                    ],
-                    child: const ReasonsPage(),
-                  );
-                case "/messages":
-                  return const MessagesPage();
-                case "/payToDrivers":
-                  final request = TransferFilterRequest();
-                  request
-                    ..userId = 1
-                    ..type = TransferType.debit;
-
-                  return MultiBlocProvider(
-                    providers: [
-                      BlocProvider(
-                        create: (_) => sl<AllTransfersCubit>()
-                          ..getAllTransfers(
-                            _,
-                            command: Command.initial()..transferFilterRequest = request,
-                          ),
-                      ),
-                      BlocProvider(create: (_) => sl<PayToCubit>()),
-                      BlocProvider(create: (_) => sl<AccountAmountCubit>()),
-                    ],
-                    child: const PayToDriversPage(),
-                  );
+                case NamePaths.trips:
+                  return const TripsPage();
               }
               return SingleChildScrollView(
                 child: Container(
@@ -369,4 +210,13 @@ class _HomePageState extends State<HomePage> {
     );
     window.history.pushState(null, '', newUri.toString());
   }
+}
+
+class NamePaths {
+  static const home = '/';
+  static const buses = '/buses';
+  static const superUser = '/superUser';
+  static const tempTrips = '/tempTrips';
+  static const trips = '/trips';
+  static const members = '/members';
 }

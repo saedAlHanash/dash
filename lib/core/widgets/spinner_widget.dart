@@ -118,9 +118,66 @@ class SpinnerWidgetState<T> extends State<SpinnerWidget<T>> {
   }
 }
 
+class SpinnerOutlineTitle extends StatelessWidget {
+  const SpinnerOutlineTitle({
+    super.key,
+    required this.items,
+    this.hint,
+    this.onChanged,
+    this.customButton,
+    this.width,
+    this.dropdownWidth,
+    this.sendFirstItem,
+    this.expanded,
+    this.decoration,
+    this.label = '',
+  });
+
+  final List<SpinnerItem> items;
+  final Widget? hint;
+  final Widget? customButton;
+  final Function(SpinnerItem spinnerItem)? onChanged;
+  final double? width;
+  final double? dropdownWidth;
+  final bool? sendFirstItem;
+  final bool? expanded;
+  final BoxDecoration? decoration;
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        DrawableText(
+          text: label,
+          color: AppColorManager.black,
+          padding: const EdgeInsets.symmetric(horizontal: 10.0).w,
+          size: 18.0.sp,
+        ),
+        3.0.verticalSpace,
+        SpinnerWidget(
+          items: items,
+          hint: hint,
+          onChanged: onChanged,
+          customButton: customButton,
+          width: width,
+          dropdownWidth: dropdownWidth,
+          sendFirstItem: sendFirstItem,
+          expanded: expanded,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12.0.r),
+            border: Border.all(color: AppColorManager.gray, width: 1.0.r),
+          ),
+        )
+      ],
+    );
+  }
+}
+
 class SpinnerItem<T> {
   SpinnerItem({
-    this.name ='',
+    this.name = '',
     this.id = 0,
     this.isSelected = false,
     this.item,

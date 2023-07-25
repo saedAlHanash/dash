@@ -47,3 +47,13 @@ enum SummaryPayToEnum {
 enum TransferStatus { pending, closed }
 
 enum TransferPayType { driverToCompany, companyToDriver }
+
+enum Government { damascus, rifDimashq }
+
+enum BusTripType { go, back }
+
+enum WeekDays { sunday, monday, tuesday, wednesday, thursday, friday, saturday }
+
+enum InstitutionType { school, college, transportation }
+
+

@@ -8,8 +8,6 @@ import 'package:go_router/go_router.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/util/note_message.dart';
 import 'package:qareeb_dash/core/widgets/table_widget.dart';
-import 'package:qareeb_dash/features/redeems/ui/widget/loyalty_widget.dart';
-import 'package:qareeb_dash/features/wallet/ui/pages/my_wallet_page.dart';
 
 import '../../../../core/util/my_style.dart';
 import '../../../../core/widgets/app_bar_widget.dart';
@@ -87,10 +85,9 @@ class DriverInfoPage extends StatelessWidget {
                 ),
                 const Divider(),
                 30.0.verticalSpace,
-                const LoyaltyWidget(),
                 const Divider(),
                 30.0.verticalSpace,
-                WalletPage(id: driver.id),
+
                 const Divider(),
                 ItemInfoInLine(
                   title: 'رحلات السائق',

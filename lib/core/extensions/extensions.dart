@@ -13,8 +13,7 @@ import 'package:qareeb_dash/generated/assets.dart';
 
 import '../../features/map/data/models/my_marker.dart';
 import '../../features/points/data/response/points_response.dart';
-import '../../features/redeems/data/response/redeems_response.dart';
-import '../../features/shared_trip/data/response/shared_trip.dart';
+
 import '../../features/trip/data/response/trip_response.dart';
 import '../../services/trip_path/data/models/trip_path.dart';
 import '../strings/app_string_manager.dart';
@@ -115,6 +114,14 @@ extension RealName on Enum {
   String get upperFirst => name.replaceRange(0, 1, name.substring(0, 1).toUpperCase());
 }
 
+extension EnumSpinner on List<Enum> {
+  List<SpinnerItem> spinnerItems({Enum? selected}) {
+    return map((e) =>
+            SpinnerItem(name: e.name, id: e.index, item: e, isSelected: e == selected))
+        .toList();
+  }
+}
+
 extension TransferTypeName on TransferType {
   String get getArName {
     switch (this) {
@@ -130,34 +137,60 @@ extension TransferTypeName on TransferType {
   }
 }
 
-extension Redeems on RedeemsResult {
-  double get _oilCount => (((totalMeters / 1000) / systemParameters.oil) -
-      (totals.oil / systemParameters.oil));
+extension WeekDaysName on WeekDays {
+  String get getArName {
+    switch (this) {
+      case WeekDays.sunday:
+        return 'أحد';
 
-  double get _goldCount => (((totalMeters / 1000) / systemParameters.gold) -
-      (totals.gold / systemParameters.gold));
+      case WeekDays.monday:
+        return 'إثنين';
 
-  double get _tiresCount => (((totalMeters / 1000) / systemParameters.tire) -
-      (totals.tire / systemParameters.tire));
+      case WeekDays.tuesday:
+        return 'ثلاثاء';
 
-  int get oilCount => int.parse((_oilCount).toStringAsFixed(0));
+      case WeekDays.wednesday:
+        return 'أربعاء';
 
-  int get goldCount => int.parse((_goldCount).toStringAsFixed(0));
+      case WeekDays.thursday:
+        return 'خميس';
 
-  int get tiresCount => int.parse((_tiresCount).toStringAsFixed(0));
+      case WeekDays.friday:
+        return 'جمعة';
 
-  int get oilOldCount => (totals.oil / systemParameters.oil).floor();
-
-  int get goldOldCount => (totals.gold / systemParameters.gold).floor();
-
-  int get tiresOldCount => (totals.tire / systemParameters.tire).floor();
-
-  double get oilPCount => double.parse((_oilCount * 100).toStringAsFixed(2));
-
-  double get goldPCount => double.parse((_goldCount * 100).toStringAsFixed(2));
-
-  double get tiresPCount => double.parse((_tiresCount * 100).toStringAsFixed(2));
+      case WeekDays.saturday:
+        return 'سبت';
+    }
+  }
 }
+
+extension InstitutionTypeName on InstitutionType {
+  String get getArName {
+    switch (this) {
+      case InstitutionType.school:
+        return 'مدرسة';
+
+      case InstitutionType.college:
+        return 'جامعة';
+
+      case InstitutionType.transportation:
+        return 'نقل';
+    }
+  }
+}
+
+extension GovernmentName on Government {
+  String get getArName {
+    switch (this) {
+      case Government.damascus:
+        return 'دمشق';
+
+      case Government.rifDimashq:
+        return 'ريف دمشق';
+    }
+  }
+}
+
 
 extension StateName on SharedTripStatus {
   String sharedTripName() {
@@ -351,24 +384,24 @@ extension NormalTripMap on TripResult {
   }
 }
 
-extension SharedRequestMap on SharedTrip {
-  int nou(LatLng point) {
-    for (var e in sharedRequests) {
-      if (e.status == SharedRequestStatus.pending.index) return 0;
-      if (e.pickupPoint.getLatLng.hashCode == point.hashCode) return e.seatNumber;
-    }
-    return 0;
-  }
-
-  List<SpinnerItem> availableRequest() {
-    var s = <SpinnerItem>[];
-    var a = driver.carType.seatsNumber - sharedRequests.length;
-    for (var i = 1; i <= a; i++) {
-      s.add(SpinnerItem(id: i, name: i.toString()));
-    }
-    return s;
-  }
-}
+// extension SharedRequestMap on SharedTrip {
+//   int nou(LatLng point) {
+//     for (var e in sharedRequests) {
+//       if (e.status == SharedRequestStatus.pending.index) return 0;
+//       if (e.pickupPoint.getLatLng.hashCode == point.hashCode) return e.seatNumber;
+//     }
+//     return 0;
+//   }
+//
+//   List<SpinnerItem> availableRequest() {
+//     var s = <SpinnerItem>[];
+//     var a = driver.carType.seatsNumber - sharedRequests.length;
+//     for (var i = 1; i <= a; i++) {
+//       s.add(SpinnerItem(id: i, name: i.toString()));
+//     }
+//     return s;
+//   }
+// }
 
 extension CubitStateHelper on CubitStatuses {
   bool get loading => this == CubitStatuses.loading;
