@@ -77,7 +77,7 @@ class TripStatusCubit extends Cubit<TripStatusInitial> {
               end: await APIService().getServerTime(),
             );
           } on Exception {
-            loggerObject.e('error');
+
           }
           url = PostUrl.endTrip;
           break;

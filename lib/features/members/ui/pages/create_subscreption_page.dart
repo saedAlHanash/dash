@@ -1,5 +1,6 @@
 import 'dart:html';
 
+import 'package:collection/collection.dart';
 import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -48,10 +49,9 @@ class _CreateSubscriptionPageState extends State<CreateSubscriptionPage> {
         BlocListener<MemberBuIdCubit, MemberBuIdInitial>(
           listenWhen: (p, c) => c.statuses.done,
           listener: (context, state) {
-            request = CreateSubscriptionRequest.fromJson(
-              state.result.subscriptions.lastOrNull?.toJson() ?? {},
-            );
+            request = CreateSubscriptionRequest.fromMember(state.result);
 
+            if (!request.isNotExpired) request.id = null;
             startDateC.text = request.supscriptionDate?.formatDate ?? '';
             endDateC.text = request.expirationDate?.formatDate ?? '';
           },
@@ -70,7 +70,21 @@ class _CreateSubscriptionPageState extends State<CreateSubscriptionPage> {
               padding: const EdgeInsets.symmetric(horizontal: 120.0, vertical: 20.0).r,
               child: Column(
                 children: [
-                  SaedTableWidget(title: ['ID','بداية','نهاية','الفعالية'], data: []),
+                  SaedTableWidget(
+                      title: const ['ID', 'بداية', 'نهاية', 'الفعالية'],
+                      data: state.result.subscriptions
+                          .mapIndexed(
+                            (i, e) => [
+                              e.id.toString(),
+                              e.supscriptionDate?.formatDate,
+                              e.expirationDate?.formatDate,
+                              (e.expirationDate?.isAfter(getServerDate) ?? false)
+                                  ? 'فعال'
+                                  : 'منتهي'
+                            ],
+                          )
+                          .toList()),
+                  10.0.verticalSpace,
                   MyCardWidget(
                     cardColor: AppColorManager.f1,
                     margin: const EdgeInsets.only(top: 30.0, bottom: 130.0).h,
@@ -102,6 +116,7 @@ class _CreateSubscriptionPageState extends State<CreateSubscriptionPage> {
                             },
                           ),
                         ),
+                        if (request.isActive)
                           Row(
                             children: [
                               Expanded(
@@ -128,7 +143,7 @@ class _CreateSubscriptionPageState extends State<CreateSubscriptionPage> {
                                   disableAndKeepIcon: true,
                                   enable: request.isActive,
                                   iconWidget: SelectSingeDateWidget(
-                                    initial: request.supscriptionDate,
+                                    initial: request.expirationDate,
                                     minDate: DateTime.now(),
                                     onSelect: (selected) {
                                       endDateC.text = selected?.formatDate ?? '';
@@ -145,11 +160,13 @@ class _CreateSubscriptionPageState extends State<CreateSubscriptionPage> {
                               return MyStyle.loadingWidget();
                             }
                             return MyButton(
-                              text: request.id != null ? 'تعديل' : 'إنشاء الطالب',
+                              text: request.isNotExpired ? 'تعديل' : 'إنشاء اشتراك',
                               onTap: () {
                                 if (request.validateRequest(context)) {
-                                  context.read<CreateSubscriptionCubit>().createSubscription(context,
-                                      request: request);
+
+                                  context
+                                      .read<CreateSubscriptionCubit>()
+                                      .createSubscription(context, request: request);
                                 }
                               },
                             );
@@ -194,7 +211,9 @@ class SelectSingeDateWidget extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20.0.r),
       ),
-      itemBuilder: (context) => [
+      itemBuilder: (context) {
+
+        return [
         // PopupMenuItem 1
         PopupMenuItem(
           value: 1,
@@ -210,8 +229,9 @@ class SelectSingeDateWidget extends StatelessWidget {
                   initialSelectedDate: initial,
                   maxDate: maxDate,
                   minDate: minDate,
+
                   onSelectionChanged: (DateRangePickerSelectionChangedArgs range) {
-                    loggerObject.w(range.value);
+
                     if (range.value is DateTime) {
                       onSelect?.call(range.value);
                       Navigator.pop(context);
@@ -223,7 +243,8 @@ class SelectSingeDateWidget extends StatelessWidget {
             ),
           ),
         ),
-      ],
+      ];
+      },
       child: Container(
         padding: const EdgeInsets.all(15.0).r,
         decoration: BoxDecoration(

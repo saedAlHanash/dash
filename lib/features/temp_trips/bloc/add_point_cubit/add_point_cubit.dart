@@ -43,7 +43,7 @@ class AddPointCubit extends Cubit<AddPointInitial> {
       }
       addEdge(edgeId: e.id, pointId: e.endPointId);
     });
-    loggerObject.v(state.addedPoints.length);
+
   }
 
   TripPoint? removePoint({required int id}) {

@@ -101,7 +101,7 @@ class ImageMultiTypeState extends State<ImageMultiType> {
           },
           alignment: Alignment.center,
           errorWidget: (context, url, error) {
-            loggerObject.e(error);
+
             return Image.asset(
               Assets.iconsLogoWithoutText,
               color: AppColorManager.mainColor.withOpacity(0.6),

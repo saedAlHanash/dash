@@ -15,6 +15,8 @@ import '../../../../core/util/shared_preferences.dart';
 import '../../../../core/widgets/logo_text.dart';
 import '../../../../router/go_route_pages.dart';
 import '../../../auth/bloc/change_user_state_cubit/change_user_state_cubit.dart';
+import '../../../bus_trips/bloc/delete_bus_trip_cubit/delete_bus_trip_cubit.dart';
+import '../../../bus_trips/ui/pages/bus_trips_page.dart';
 import '../../../buses/bloc/delete_buss_cubit/delete_buss_cubit.dart';
 import '../../../buses/ui/pages/buses_page.dart';
 import '../../../drivers/bloc/loyalty_cubit/loyalty_cubit.dart';
@@ -179,7 +181,13 @@ class _HomePageState extends State<HomePage> {
                   );
 
                 case NamePaths.trips:
-                  return const TripsPage();
+
+                  return MultiBlocProvider(
+                  providers: [
+                    BlocProvider(create: (context) => sl<DeleteBusTripCubit>()),
+                  ],
+                  child: const BusTripsPage(),
+                );
 
                 case NamePaths.members:
                   return const MembersPage();

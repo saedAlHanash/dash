@@ -13,7 +13,7 @@ class AppColorManager {
   static const offWhit = Color(0xFFF1F1F1);
   static const whit = Color(0xFFFFFFFF);
   static const red = Color(0xFFC60000);
-  static const f1 = Color(0xFFF1F1F1);
+  static const f1 = Color(0xFFF9F9F9);
   static const cardColor = Color(0xFFEFEFEF);
 
   static Color getPolyLineColor(int i) {

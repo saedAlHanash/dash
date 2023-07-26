@@ -93,6 +93,10 @@ class GetUrl {
   static var members = 'api/services/app/InstitutionMembersService/getMembers';
 
   static var getMemberById = 'api/services/app/InstitutionMembersService/Get';
+
+  static var busTrips='api/services/app/InstitutionBusTripsService/GetAll';
+
+  static var busTripById='api/services/app/InstitutionBusTripsService/Get';
 }
 
 class PostUrl {
@@ -175,6 +179,8 @@ class PostUrl {
 
   static var createSubscription =
       'api/services/app/InstitutionSubscriptionsService/Create';
+
+  static var createBusTrip='api/services/app/InstitutionBusTripsService/Create';
 }
 
 class PutUrl {
@@ -206,6 +212,8 @@ class PutUrl {
 
   static var updateSubscription =
       'api/services/app/InstitutionSubscriptionsService/Update';
+
+  static var updateBusTrip='api/services/app/InstitutionBusTripsService/Update';
 }
 
 class DeleteUrl {
@@ -227,6 +235,8 @@ class DeleteUrl {
   static var deleteSuperUsers = 'api/services/app/InstitutionSupervisorsService/Delete';
 
   static var deleteTempTrip = 'api/services/app/InstitutionTripTemplatesService/Delete';
+
+  static var deleteBusTrip='api/services/app/InstitutionBusTripsService/Delete';
 }
 
 class OrsUrl {
@@ -255,3 +265,16 @@ class PathUrl {
 }
 
 const baseUrl = 'live.qareeb-maas.com';
+
+/*
+POST
+api/services/app/InstitutionBusTripsService/Participate
+
+DELETE
+api/services/app/InstitutionBusTripsService/DeleteParticipation
+
+GET
+api/services/app/InstitutionBusTripsService/GetMemberParticipations
+
+
+ */

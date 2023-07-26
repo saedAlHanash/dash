@@ -35,7 +35,6 @@ extension PolylineExt on List<List<num>> {
       map((p) => LatLng(p[0].toDouble(), p[1].toDouble())).toList();
 }
 
-
 extension SplitByLength on String {
   List<String> splitByLength1(int length, {bool ignoreEmpty = false}) {
     List<String> pieces = [];
@@ -129,10 +128,18 @@ extension RealName on Enum {
 }
 
 extension EnumSpinner on List<Enum> {
-  List<SpinnerItem> spinnerItems({Enum? selected}) {
-    return map((e) =>
-            SpinnerItem(name: e.name, id: e.index, item: e, isSelected: e == selected))
-        .toList();
+  List<SpinnerItem> spinnerItems({List<Enum>? selected}) {
+    return map(
+      (e) => SpinnerItem(
+          name: (e is WeekDays)
+              ? e.getArName
+              : (e is BusTripType)
+                  ? e.getArName
+                  : e.name,
+          id: e.index,
+          item: e,
+          isSelected: selected?.contains(e) ?? false),
+    ).toList();
   }
 }
 
@@ -147,6 +154,17 @@ extension TransferTypeName on TransferType {
         return 'من السائق للشركة';
       case TransferType.debit:
         return 'من الشركة للسائق';
+    }
+  }
+}
+
+extension BusTripTypeName on BusTripType {
+  String get getArName {
+    switch (this) {
+      case BusTripType.go:
+        return 'ذهاب';
+      case BusTripType.back:
+        return 'إياب';
     }
   }
 }
@@ -178,9 +196,6 @@ extension WeekDaysName on WeekDays {
   }
 }
 
-
-
-
 extension InstitutionTypeName on InstitutionType {
   String get getArName {
     switch (this) {
@@ -207,7 +222,6 @@ extension GovernmentName on Government {
     }
   }
 }
-
 
 extension StateName on SharedTripStatus {
   String sharedTripName() {

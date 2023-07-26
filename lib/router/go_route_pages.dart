@@ -24,6 +24,9 @@ import '../features/accounts/bloc/account_amount_cubit/account_amount_cubit.dart
 import '../features/admins/ui/pages/admin_info_page.dart';
 import '../features/auth/bloc/login_cubit/login_cubit.dart';
 import '../features/auth/ui/pages/login_page.dart';
+import '../features/bus_trips/bloc/bus_trip_by_id_cubit/bus_trip_by_id_cubit.dart';
+import '../features/bus_trips/bloc/create_bus_trip_cubit/create_bus_trip_cubit.dart';
+import '../features/bus_trips/ui/pages/create_bus_trip_page.dart';
 import '../features/buses/bloc/create_bus_cubit/create_bus_cubit.dart';
 import '../features/buses/ui/pages/create_bus_page.dart';
 import '../features/car_catigory/bloc/create_car_category_cubit/create_car_category_cubit.dart';
@@ -376,6 +379,28 @@ final appGoRouter = GoRouter(
     ),
     //endregion
 
+    //region bus trips
+
+    ///createBusTrip
+    GoRoute(
+      name: GoRouteName.createBusTrip,
+      path: _GoRoutePath.createBusTrip,
+      builder: (BuildContext context, GoRouterState state) {
+        final id = int.tryParse(state.queryParams['id'] ?? '') ?? 0;
+        final providers = [
+          BlocProvider(create: (_) => di.sl<CreateBusTripCubit>()),
+          BlocProvider(
+            create: (_) => di.sl<BusTripBuIdCubit>()..getBusTripBuId(context, id: id),
+          ),
+        ];
+        return MultiBlocProvider(
+          providers: providers,
+          child: const CreateBusTripPage(),
+        );
+      },
+    ),
+    //endregion
+
     //region members
 
     ///createMember
@@ -490,6 +515,8 @@ class GoRouteName {
   static const createTempTrip = 'createTempTrip';
 
   static const createMember = 'createMember';
+
+  static const createBusTrip ='createBusTrip';
 }
 
 class _GoRoutePath {
@@ -515,4 +542,5 @@ class _GoRoutePath {
   static const createSuperUsers = '/createSuperUsers';
   static const createTempTrip = '/createTempTrip';
   static const createMember = '/createMember';
+  static const createBusTrip ='/createBusTrip';
 }

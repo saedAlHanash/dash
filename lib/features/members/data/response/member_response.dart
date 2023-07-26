@@ -1,5 +1,7 @@
 import 'package:qareeb_dash/core/strings/fix_url.dart';
 
+import '../../../../core/api_manager/api_service.dart';
+
 class MembersResponse {
   MembersResponse({
     required this.result,
@@ -68,6 +70,7 @@ class Member {
   final List<Subscription> subscriptions;
 
   factory Member.fromJson(Map<String, dynamic> json) {
+
     return Member(
       id: json["id"] ?? 0,
       fullName: json["fullName"] ?? "",
@@ -116,6 +119,7 @@ class Subscription {
   final DateTime? expirationDate;
   final bool isActive;
 
+  bool get isNotExpired => expirationDate?.isAfter(getServerDate) ?? false;
   factory Subscription.fromJson(Map<String, dynamic> json) {
     return Subscription(
       id: json["id"] ?? 0,

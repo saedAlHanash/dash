@@ -26,7 +26,7 @@ class AppSharedPreference {
   static const _myPermission = '13';
   static const _user = '14';
   static const _email = '15';
-  static const _institutionId = '16';
+  static const _institutionId = 'iid';
 
   static SharedPreferences? _prefs;
 
@@ -68,13 +68,14 @@ class AppSharedPreference {
   static int get getMyId => _prefs?.getInt(_myId) ?? 0;
 
   static cashInstitutionId(int id) {
-    loggerObject.wtf('changeed ');
-    _prefs?.setInt(_institutionId, id);
+
+
+    _prefs?.setString('_institutionId', id.toString());
   }
 
   static int get getInstitutionId {
-    loggerObject.wtf(_prefs?.getInt(_institutionId));
-    return _prefs?.getInt(_institutionId) ?? 0;
+
+    return int.parse(_prefs?.getString('_institutionId') ?? '0');
   }
 
   static cashUser(LoginResult user) {
@@ -128,9 +129,7 @@ class AppSharedPreference {
     return result;
   }
 
-  static void clear() {
-    _prefs?.clear();
-  }
+
 
   static void logout() {
     _prefs?.clear();

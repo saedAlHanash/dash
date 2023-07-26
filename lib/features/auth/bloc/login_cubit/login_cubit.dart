@@ -15,7 +15,6 @@ import '../../../../core/util/note_message.dart';
 import '../../../../core/util/pair_class.dart';
 import '../../data/request/login_request.dart';
 import '../../data/response/login_response.dart';
-import '../../../roles/data/response/permission_response.dart';
 
 part 'login_state.dart';
 
@@ -37,13 +36,12 @@ class LoginCubit extends Cubit<LoginInitial> {
 
       emit(state.copyWith(statuses: CubitStatuses.error, error: pair.second));
     } else {
-      AppSharedPreference.cashToken(pair.first!.accessToken);
       AppSharedPreference.cashMyId(pair.first!.userId);
       AppSharedPreference.cashInstitutionId(pair.first!.institutionId);
       AppSharedPreference.cashUser(pair.first!);
       AppSharedPreference.cashEmail(request.email!);
 
-      loggerObject.e(AppSharedPreference.getInstitutionId);
+      AppSharedPreference.cashToken(pair.first!.accessToken);
       var result = await _getPermissions(id: pair.first!.userId);
 
       if (result.first == null) {

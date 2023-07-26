@@ -3,12 +3,14 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:qareeb_dash/core/api_manager/api_service.dart';
 
 import '../../features/accounts/bloc/all_transfers_cubit/all_transfers_cubit.dart';
 import '../../features/admins/bloc/all_admins/all_admins_cubit.dart';
 import '../../features/auth/bloc/create_policy_cubit/policy_cubit.dart';
 import '../../features/auth/bloc/policy_cubit/create_policy_cubit.dart';
 
+import '../../features/bus_trips/bloc/all_bus_trips_cubit/all_bus_trips_cubit.dart';
 import '../../features/buses/bloc/all_buses_cubit/all_buses_cubit.dart';
 import '../../features/car_catigory/bloc/all_car_categories_cubit/all_car_categories_cubit.dart';
 import '../../features/drivers/bloc/all_drivers/all_drivers_cubit.dart';
@@ -27,8 +29,19 @@ import '../app_theme.dart';
 import '../injection/injection_container.dart';
 import '../strings/app_color_manager.dart';
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    APIService().getServerTime();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +71,7 @@ class MyApp extends StatelessWidget {
                 BlocProvider(create: (_) => sl<CreatePolicyCubit>()),
                 BlocProvider(create: (_) => sl<AllMessagesCubit>()),
                 BlocProvider(create: (_) => sl<PolicyCubit>()..getPolicy(_)),
+                BlocProvider(create: (_) => sl<AllBusTripsCubit>()..getBusTrips(_)),
                 BlocProvider(create: (_) => sl<AllBusesCubit>()..getBuses(_)),
                 BlocProvider(create: (_) => sl<PointsCubit>()..getAllPoints(_)),
                 BlocProvider(create: (_) => sl<AllRolesCubit>()..getAllRoles(_)),

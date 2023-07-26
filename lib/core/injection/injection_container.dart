@@ -15,6 +15,10 @@ import '../../features/auth/bloc/policy_cubit/create_policy_cubit.dart';
 import '../../features/auth/bloc/resend_code_cubit/resend_code_cubit.dart';
 import '../../features/auth/bloc/reset_password_cubit/reset_password_cubit.dart';
 import '../../features/auth/bloc/signup_cubit/signup_cubit.dart';
+import '../../features/bus_trips/bloc/all_bus_trips_cubit/all_bus_trips_cubit.dart';
+import '../../features/bus_trips/bloc/bus_trip_by_id_cubit/bus_trip_by_id_cubit.dart';
+import '../../features/bus_trips/bloc/create_bus_trip_cubit/create_bus_trip_cubit.dart';
+import '../../features/bus_trips/bloc/delete_bus_trip_cubit/delete_bus_trip_cubit.dart';
 import '../../features/buses/bloc/all_buses_cubit/all_buses_cubit.dart';
 
 import '../../features/buses/bloc/create_bus_cubit/create_bus_cubit.dart';
@@ -212,6 +216,13 @@ Future<void> init() async {
   sl.registerFactory(() => AllTempTripsCubit());
   sl.registerFactory(() => DeleteTempTripCubit());
   sl.registerFactory(() => TempTripBuIdCubit());
+  //endregion
+
+  //region busTrip
+  sl.registerFactory(() => CreateBusTripCubit());
+  sl.registerFactory(() => AllBusTripsCubit());
+  sl.registerFactory(() => DeleteBusTripCubit());
+  sl.registerFactory(() => BusTripBuIdCubit());
   //endregion
 
   //region member

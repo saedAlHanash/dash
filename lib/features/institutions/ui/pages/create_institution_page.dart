@@ -181,7 +181,7 @@ class _CreateInstitutionPageState extends State<CreateInstitutionPage> {
                           child: SpinnerOutlineTitle(
                             label: 'المحافظة',
                             items: Government.values.spinnerItems(
-                              selected: request.government,
+                              selected: [request.government],
                             ),
                             onChanged: (p0) => request.government = p0.item,
                           ),
@@ -191,7 +191,7 @@ class _CreateInstitutionPageState extends State<CreateInstitutionPage> {
                           child: SpinnerOutlineTitle(
                             label: 'نوع المؤسسة',
                             items: InstitutionType.values.spinnerItems(
-                              selected: request.type,
+                              selected: [request.type],
                             ),
                             onChanged: (p0) => request.type = p0.item,
                           ),

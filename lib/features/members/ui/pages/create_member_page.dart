@@ -11,6 +11,7 @@ import 'package:qareeb_dash/core/widgets/my_button.dart';
 import 'package:qareeb_dash/core/widgets/my_card_widget.dart';
 import 'package:qareeb_dash/core/widgets/my_text_form_widget.dart';
 import 'package:qareeb_dash/core/widgets/spinner_widget.dart';
+import 'package:qareeb_dash/features/map/data/models/my_marker.dart';
 import 'package:qareeb_dash/features/map/ui/widget/map_widget.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
@@ -54,7 +55,12 @@ class _CreateMemberPageState extends State<CreateMemberPage> {
         BlocListener<MemberBuIdCubit, MemberBuIdInitial>(
           listenWhen: (p, c) => c.statuses.done,
           listener: (context, state) {
-            request.fromMember(state.result);
+            request = request.fromMember(state.result);
+            if (request.latLng != null) {
+              context
+                  .read<MapControllerCubit>()
+                  .addSingleMarker(marker: MyMarker(point: request.latLng!));
+            }
           },
         ),
       ],
@@ -67,6 +73,7 @@ class _CreateMemberPageState extends State<CreateMemberPage> {
             if (state.statuses.loading) {
               return MyStyle.loadingWidget();
             }
+            loggerObject.w(request.toJson());
             return SingleChildScrollView(
               padding: const EdgeInsets.symmetric(horizontal: 120.0, vertical: 20.0).r,
               child: MyCardWidget(
@@ -77,10 +84,7 @@ class _CreateMemberPageState extends State<CreateMemberPage> {
                     ItemImageCreate(
                       onLoad: (bytes) {
                         setState(() {
-                          request.file = UploadFile(
-                            fileBytes: bytes,
-                            nameField: 'ImageFile',
-                          );
+                          request.file = UploadFile(fileBytes: bytes);
                         });
                       },
                       image: request.file?.initialImage != null
@@ -205,7 +209,6 @@ class SelectSingeDateWidget extends StatelessWidget {
                   maxDate: maxDate,
                   minDate: minDate,
                   onSelectionChanged: (DateRangePickerSelectionChangedArgs range) {
-                    loggerObject.w(range.value);
                     if (range.value is DateTime) {
                       onSelect?.call(range.value);
                       Navigator.pop(context);

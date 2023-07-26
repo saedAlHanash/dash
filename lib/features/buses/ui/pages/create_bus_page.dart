@@ -102,7 +102,7 @@ class _CreateBusPageState extends State<CreateBusPage> {
                       children: [
                         Expanded(
                           child: MyTextFormNoLabelWidget(
-                            label: 'busModel',
+                            label: 'موديل الباص',
                             initialValue: request.busModel,
                             onChanged: (p0) => request.busModel = p0,
                           ),
@@ -110,7 +110,7 @@ class _CreateBusPageState extends State<CreateBusPage> {
                         15.0.horizontalSpace,
                         Expanded(
                           child: MyTextFormNoLabelWidget(
-                            label: 'busColor',
+                            label: 'لون الباص',
                             initialValue: request.busColor,
                             onChanged: (p0) => request.busColor = p0,
                           ),
@@ -118,7 +118,7 @@ class _CreateBusPageState extends State<CreateBusPage> {
                         15.0.horizontalSpace,
                         Expanded(
                           child: MyTextFormNoLabelWidget(
-                            label: 'busNumber',
+                            label: 'رقم لوحة الباص',
                             initialValue: request.busNumber,
                             onChanged: (p0) => request.busNumber = p0,
                           ),
@@ -129,7 +129,7 @@ class _CreateBusPageState extends State<CreateBusPage> {
                       children: [
                         Expanded(
                           child: MyTextFormNoLabelWidget(
-                            label: 'ime',
+                            label: 'IME',
                             initialValue: request.ime,
                             onChanged: (p0) => request.ime = p0,
                           ),
@@ -137,7 +137,7 @@ class _CreateBusPageState extends State<CreateBusPage> {
                         15.0.horizontalSpace,
                         Expanded(
                           child: MyTextFormNoLabelWidget(
-                            label: 'seatsNumber',
+                            label: 'عدد المقاعد',
                             initialValue: request.seatsNumber?.toString(),
                             onChanged: (p0) => request.seatsNumber = num.tryParse(p0),
                           ),

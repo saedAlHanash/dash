@@ -1,16 +1,32 @@
 {
   "result": {
-    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjMxIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6InNhZWRBbEhhbmFzaCIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6InNhZWRBZG1pbkBnbWFpbC5jb20iLCJBc3BOZXQuSWRlbnRpdHkuU2VjdXJpdHlTdGFtcCI6IldRWUxFRVBKVTZXS1VJQU5DR1VWU1FORUtRTUFFNlVSIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiSW5zdGl0dXRpb25BZG1pbiIsInN1YiI6IjMxIiwianRpIjoiNTI4Y2NmZGEtNDJhZS00YzYwLTk2YmItNWMyNjljZjMzY2Q2IiwiaWF0IjoxNjkwMzc0MDkxLCJpZCI6IjMxIiwiZnVsbE5hbWUiOiJzYWVkIEFsSGFuYXNoIiwiUGVybWlzc2lvbnMiOiJbXCJQYWdlcy5Vc2Vyc1wiLFwiUGFnZXMuVXNlcnMuQWN0aXZhdGlvblwiLFwiUGFnZXMuUm9sZXNcIixcIlBhZ2VzLmFjY2VwdF9vcmRlclwiLFwiUGFnZXMuQ291cG9uXCIsXCJQYWdlcy5SZWFzb25cIixcIlBhZ2VzLlJlcG9ydHNcIixcIlBhZ2VzLkN1c3RvbWVyc1wiLFwiUGFnZXMuTWVzc2FnZXNcIixcIlBhZ2VzLkRyaXZlcnNcIixcIlBhZ2VzLlRyaXBzXCIsXCJQYWdlcy5TaGFyZWRUcmlwXCIsXCJQYWdlcy5Qb2ludHNcIixcIlBhZ2VzLkVwYXltZW50XCIsXCJQYWdlcy5DYXJDYXRlZ29yeVwiLFwiUGFnZXMuU2V0dGluZ3NcIixcIkNyZWF0ZV9QZXJtaXNzaW9uXCIsXCJVcGRhdGVfUGVybWlzc2lvblwiLFwiRGVsZXRlX1Blcm1pc3Npb25cIl0iLCJQaG9uZU51bWJlciI6Ijk2MzkzMzYzNTI0NSIsIm5iZiI6MTY5MDM3NDA5MSwiZXhwIjoxNjk5MDE0MDkxLCJpc3MiOiJodHRwczovL2FkbWluLnFhcmVlYi1tYWFzLmNvbS8iLCJhdWQiOiJodHRwczovL2FkbWluLnFhcmVlYi1tYWFzLmNvbS8ifQ.Lx8b0o434ZaWo0wee0UXOsg5u5iCIt0elnBkZh3jvWI",
-    "encryptedAccessToken": "JHlZWlp0h2BIJPr0vkBKS3KjS0sWmPpQLTm1W3k4U/1K2Ux65UrZbObxVv8lcW+0N15M7+V50caXJf8l/4JVYSGOoSQ+Cxp+FHBpMIh7Yba+/Ou8dLwI9GVZ3XccToyRgEAXHqbDVdIzFT4/adDEtI88YvGrKZQxVGCaUycHJeBI99W7PhSPHFvPgNVEjPEK3bUxPUmaARdRCKQnNzL06xrxtObp14E3Yma+8rSAuto5cdwPcBKA7AxQdr4ADu2chhbPK/YUPbaBg7c3LTuCi/HZ8p5aWDwhtoPuUEU7IcHtcdgr4Jn7TzwzeJtbjqhkfl9dt1IvkIMy8csq5vb5zQsuAjiklamvqLUzx8+W9FKJErQvYX6Rmk61vCD6ZBDHF/mSt6qXyw2oN0vP841M7OOUAo2LZzEZuI6wfzUNpk5dgVnV4Gr9lBc4FyP0h5nAOsjRmVQtf4Uqo2FbM6pUst7rjq5GnjCVxx7bJsJtxj/kNtp5ZMGm7gIzhoVjBvglLESoBZkGfd8nQkqR5kah7jereFrSMWoKJ1G0UpoZYGfGtN3xG2PgKV8Kkl2FSJ7J7KM+T9d5l8k8G9Hf9wgBZFeR6D/vIoXZTFsQpTox8J6H913E/X2YrFbZ5V+Q7f1F4YS9y0IohoIKPt/IQRlB074JpuVpukBzmyAlEwjKFgNKu8eB0P2+4TcNyyBRA317diXP7nW/5PTbWAdJLXf7mDFoSF2aGpVz41WBqGbt1iW08kzn9P7zw3yuL2ytDdDhmGpisaNlh779ZIhVM1QE8DgD8hE8TLHa9UFPvsBm8xD2PhYv03ewEhmMWcBF5Mz+ynOgBsQ6PSVStbhNqTQaK/6LA9bxSVNROjGy9CpUrmjCZfnhJ8mpcSbE3gAhz+AzufHQGUmGd92kKnvoSYtywvUArgsxhCplAQz9rB3c8Q3GNiYEZS4VcCZag4JV8dMOOTVg8S5Ohgpt2ZdQZsla6rWO+aTSVd3DYqdEpLZgvD0Gxk9L/DM5JO8BK+1SJv2ZTnBClRrbCYjcFW88zGPnqEgnpz3NQI/PhqW5vYhDi5jz0bkrAh1iKEgc/DXk3O0mMq3+b8ebSXm5atk0hp+lEDhhhX2V1riByzXuDNTt8k0o+lvo1YJOZtc3KBuH45NE3XvyjQppe7GzPkiU+0+fi5MpPSJCuPo1A+7JOD+D8rJTLphyUtJl4wnYlcOWpbSU/17rVe0w4wn8MB8+Tj8JYf8GwNhut8DjKgCKsBRegveNwhRT34CGGIneTP8qCUo0wQ+rAVfgnfBa56YrNpoQZ9LfVGe9wX8HnlPMaJ/WGyY0qXuoYxYCYNqelMzjM14UkxymErUG7pSxBfIjsM2pSMGgHFox45J2VcxCIGEwOxnuUK4bN95XVu/J8SQogCWDyq1M4O03p9FrbzwjdFTCbq/RHKDi0RqhwNbeWBi/PZqbNtAIwxoTNjG4fN+aOE4YAuZHE7fE7ESjkdIvF1RLqgVMDCE/tJ9xGBG04opFew9YiBNsYOk78MjMt5h26NF+PgAmLUsPjDlUAZs5grGrCbKfyHfVQEMQl47+uJ7zNVFI4yE7Z6YGv5HH1x6HhCAVVR60qVMbD+RKKRXj7J8DJ0fhxqBcOj42xkL0qJ/zhaG4cXHh1Ezmm+I6ewb/zTENhfnavlphz06MeyiJiJFTj0t6WinJivUknCxDbT1yG9xN1lgp3O10bS45tumSUUaI3JZehK30NP98yRI1r/464m5w3QasDOVyMl4pTmBAWxj7dZiC8qd1PP1/kf7UWsD693CW40qcz20EPaEd+HPw6IGLTIpR1Bvu/bN+sEL0v08eunLybRUqq1mDvD+PFKDxAMltgus6yE/KRBzs1BKqqp21Tc+Mia9NRacaTjMsV+DIKVLV8Kc3sZArqPLi6LCcKGjbAysLtYOrFlb9zUQ1lXNYrBh/EqNJ7e2FwY6r0aY=",
-    "expireInSeconds": 8640000,
-    "userId": 31,
-    "userTrip": "institutionAdmin",
-    "accepctPolicy": false,
-    "institutionId": 4
-  },
-  "targetUrl": null,
-  "success": true,
-  "error": null,
-  "unAuthorizedRequest": false,
-  "__abp": true
+    "totalCount": 2,
+    "items": [
+      {
+        "name": "dfads",
+        "tripTemplateId": 4,
+        "institutionId": 4,
+        "pathId": 12,
+        "path": {
+          "sa": 0
+        },
+        "description": "fasdf",
+        "distance": 14376,
+        "busId": 7,
+        "bus": {
+          "ime": "51651656"
+        },
+        "creationDate": "2023-07-27T02:45:09.102215",
+        "startDate": "2023-07-27T03:15:58.371",
+        "endDate": "2023-07-27T04:20:01.758",
+        "busTripType": 0,
+        "days": [
+          0,
+          2,
+          4
+        ],
+        "id": 2
+      }
+    ]
+  }
 }

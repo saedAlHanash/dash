@@ -12,6 +12,8 @@ import '../util/shared_preferences.dart';
 
 const baseUrl = 'live.qareeb-maas.com';
 
+DateTime? _serverDate;
+
 var loggerObject = Logger(
   printer: PrettyPrinter(
     methodCount: 0,
@@ -128,13 +130,11 @@ class APIService {
 
     final uri = Uri.https('proxy.cors.sh', url, query);
 
-    final response = await http
-        .get(uri, headers: innerHeader)
-        .timeout(const Duration(seconds: 40));
+    final response =
+        await http.get(uri, headers: innerHeader).timeout(const Duration(seconds: 40));
 
     return response;
   }
-
 
   Future<http.Response> postApi({
     required String url,
@@ -305,6 +305,7 @@ class APIService {
   }
 
   Future<DateTime> getServerTime() async {
+    if (_serverDate != null) return _serverDate!;
     var uri = Uri.https(baseUrl);
 
     final response = await http.get(uri, headers: innerHeader).timeout(
@@ -312,9 +313,13 @@ class APIService {
           onTimeout: () => http.Response('connectionTimeOut', 481),
         );
 
-    return getDateTimeFromHeaders(response);
+    _serverDate = getDateTimeFromHeaders(response);
+
+    return _serverDate!;
   }
+
 }
+  DateTime get getServerDate => _serverDate ?? DateTime.now();
 
 void logRequest(String url, Map<String, dynamic>? q, {String? additional}) {
   if (url.contains('api.php')) return;
@@ -346,7 +351,6 @@ DateTime getDateTimeFromHeaders(http.Response response) {
     final dateTime = parseGMTDate(dateString);
     return dateTime.addFromNow();
   } else {
-
     return DateTime.now();
   }
 }
@@ -362,7 +366,7 @@ class UploadFile {
   final String? initialImage;
 
   UploadFile({
-     this.fileBytes,
+    this.fileBytes,
     this.initialImage,
     this.nameField = 'File',
   });

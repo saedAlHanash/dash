@@ -129,14 +129,14 @@ class AtherCubit extends Cubit<AtherInitial> {
         },
         header: {'Access-Control-Allow-Origin': '*'},
         hostName: 'admin.alather.net');
-    loggerObject.w('saed');
+
     if (response.statusCode == 200) {
       final list = response.jsonBody;
       final x = <Ime>[];
       for (var e in list) {
         x.add(Ime.fromJson(e));
       }
-      loggerObject.w(x.length);
+
     }
   }
 }

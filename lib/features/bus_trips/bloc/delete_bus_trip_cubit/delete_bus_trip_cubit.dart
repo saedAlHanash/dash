@@ -2,24 +2,23 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:qareeb_dash/core/api_manager/api_url.dart';
-import 'package:qareeb_dash/core/extensions/extensions.dart';
 
 import '../../../../core/api_manager/api_service.dart';
 import '../../../../core/error/error_manager.dart';
 import '../../../../core/strings/enum_manager.dart';
 import '../../../../core/util/note_message.dart';
 import '../../../../core/util/pair_class.dart';
-import '../../data/response/member_response.dart';
 
-part 'member_by_id_state.dart';
+part 'delete_bus_trip_state.dart';
 
-class MemberBuIdCubit extends Cubit<MemberBuIdInitial> {
-  MemberBuIdCubit() : super(MemberBuIdInitial.initial());
+class DeleteBusTripCubit extends Cubit<DeleteBusTripInitial> {
+  DeleteBusTripCubit() : super(DeleteBusTripInitial.initial());
 
-  Future<void> getMemberBuId(BuildContext context, {required int id}) async {
-    if (id == 0) return;
-    emit(state.copyWith(statuses: CubitStatuses.loading));
-    final pair = await _getMemberBuIdApi(id: id);
+  Future<void> deleteBusTrip(BuildContext context, {required int id}) async {
+    final r = await NoteMessage.showConfirm(context, text: 'تأكيد العملية');
+    if (!r) return;
+    emit(state.copyWith(statuses: CubitStatuses.loading, id: id));
+    final pair = await _deleteBusTripApi(id: id);
 
     if (pair.first == null) {
       if (context.mounted) {
@@ -31,12 +30,12 @@ class MemberBuIdCubit extends Cubit<MemberBuIdInitial> {
     }
   }
 
-  Future<Pair<Member?, String?>> _getMemberBuIdApi({required int id}) async {
+  Future<Pair<bool?, String?>> _deleteBusTripApi({required int id}) async {
     final response =
-        await APIService().getApi(url: GetUrl.getMemberById, query: {'memberId': id});
+        await APIService().deleteApi(url: DeleteUrl.deleteBusTrip, query: {'Id': id});
 
     if (response.statusCode == 200) {
-      return Pair(Member.fromJson(response.jsonBody['result'] ?? {}), null);
+      return Pair(true, null);
     } else {
       return Pair(null, ErrorManager.getApiError(response));
     }

@@ -77,7 +77,7 @@ class _CreateTempTripWidgetState extends State<CreateTempTripWidget> {
         BlocListener<PointsEdgeCubit, PointsEdgeInitial>(
           listenWhen: (p, c) => c.statuses.done,
           listener: (context, state) {
-            loggerObject.wtf('message');
+
             addPointCubit.addEdge(
                 edgeId: state.result.id, pointId: state.result.endPointId);
           },
