@@ -62,10 +62,10 @@ class PathPointsWidget1 extends StatelessWidget {
                 height: 25.0.spMin,
                 width: 25.0.spMin,
               ),
-              drawableEnd: i == list.length - 1
+              drawableEnd: (i == list.length - 1)
                   ? Icon(
                       Icons.cancel_outlined,
-                      size: 12.0.r,
+                      size: 25.0.r,
                       color: Colors.red,
                     )
                   : null,

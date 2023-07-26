@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:qareeb_dash/core/api_manager/api_service.dart';
 
 import '../../../points/data/response/points_response.dart';
 import '../../data/response/temp_trips_response.dart';
@@ -36,11 +37,13 @@ class AddPointCubit extends Cubit<AddPointInitial> {
     model.path.edges.forEachIndexed((i, e) {
       if (i == 0) {
         state.addedPoints.add(e.startPoint);
+        state.addedPoints.add(e.endPoint);
       } else {
         state.addedPoints.add(e.endPoint);
       }
       addEdge(edgeId: e.id, pointId: e.endPointId);
     });
+    loggerObject.v(state.addedPoints.length);
   }
 
   TripPoint? removePoint({required int id}) {

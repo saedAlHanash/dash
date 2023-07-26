@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/services.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -132,6 +133,16 @@ class LocationSqf {
   final String location;
   final String name;
 
+  LatLng get getLatLng {
+    final s = location.split(',');
+    try {
+      var lat = double.parse(s[0]);
+      var lng = double.parse(s[1]);
+      return LatLng(lat, lng);
+    } on Exception {
+      return LatLng(0, 0);
+    }
+  }
 //<editor-fold desc="Data Methods">
 
   LocationSqf copyWith({

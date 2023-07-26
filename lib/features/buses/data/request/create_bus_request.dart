@@ -1,4 +1,5 @@
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:qareeb_dash/core/util/shared_preferences.dart';
 
 import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/note_message.dart';
@@ -51,7 +52,7 @@ class CreateBusRequest {
         "busColor": busColor,
         "busNumber": busNumber,
         "seatsNumber": seatsNumber,
-        "institutionId": myInstitutionId,
+        "institutionId": AppSharedPreference.getInstitutionId,
       };
 
   bool validateRequest(BuildContext context) {

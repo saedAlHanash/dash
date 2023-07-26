@@ -10,7 +10,9 @@ import 'package:qareeb_dash/features/drivers/bloc/driver_by_id_cubit/driver_by_i
 import 'package:qareeb_dash/features/drivers/data/response/drivers_response.dart';
 import 'package:qareeb_dash/features/drivers/ui/pages/create_driver_page.dart';
 import 'package:qareeb_dash/features/home/ui/pages/home_page.dart';
+import 'package:qareeb_dash/features/map/bloc/ather_cubit/ather_cubit.dart';
 import 'package:qareeb_dash/features/map/bloc/map_controller_cubit/map_controller_cubit.dart';
+import 'package:qareeb_dash/features/members/bloc/create_subscreption_cubit/create_subscreption_cubit.dart';
 import 'package:qareeb_dash/features/points/bloc/creta_edge_cubit/create_edge_cubit.dart';
 import 'package:qareeb_dash/features/points/bloc/point_by_id_cubit/point_by_id_cubit.dart';
 import 'package:qareeb_dash/features/super_user/ui/pages/create_super_user_page.dart';
@@ -33,7 +35,12 @@ import '../features/home/bloc/nav_home_cubit/nav_home_cubit.dart';
 import '../features/institutions/bloc/create_institution_cubit/create_institution_cubit.dart';
 import '../features/institutions/data/response/institutions_response.dart';
 import '../features/institutions/ui/pages/create_institution_page.dart';
+import '../features/map/bloc/search_location/search_location_cubit.dart';
 import '../features/map/bloc/set_point_cubit/map_control_cubit.dart';
+import '../features/members/bloc/create_member_cubit/create_member_cubit.dart';
+import '../features/members/bloc/member_by_id_cubit/member_by_id_cubit.dart';
+import '../features/members/ui/pages/create_member_page.dart';
+import '../features/members/ui/pages/create_subscreption_page.dart';
 import '../features/points/bloc/creta_point_cubit/create_point_cubit.dart';
 import '../features/points/bloc/delete_edge_cubit/delete_edge_cubit.dart';
 import '../features/points/bloc/delete_point_cubit/delete_point_cubit.dart';
@@ -49,6 +56,7 @@ import '../features/super_user/bloc/create_super_user_cubit/create_super_user_cu
 import '../features/super_user/data/response/super_users_response.dart';
 import '../features/temp_trips/bloc/add_point_cubit/add_point_cubit.dart';
 import '../features/temp_trips/bloc/create_temp_trip_cubit/create_temp_trip_cubit.dart';
+import '../features/temp_trips/bloc/temp_trip_by_id_cubit/temp_trip_by_id_cubit.dart';
 import '../features/temp_trips/ui/pages/create_temp_trip_page.dart';
 import '../features/trip/bloc/all_trips_cubit/all_trips_cubit.dart';
 import '../features/trip/bloc/trip_by_id/trip_by_id_cubit.dart';
@@ -348,7 +356,7 @@ final appGoRouter = GoRouter(
       name: GoRouteName.createTempTrip,
       path: _GoRoutePath.createTempTrip,
       builder: (BuildContext context, GoRouterState state) {
-        final tempTrip = state.extra == null ? null : (state.extra) as TempTripModel;
+        final id = int.tryParse(state.queryParams['id'] ?? '') ?? 0;
         final providers = [
           BlocProvider(create: (_) => di.sl<MapControlCubit>()),
           BlocProvider(create: (_) => di.sl<AddPointCubit>()),
@@ -356,10 +364,64 @@ final appGoRouter = GoRouter(
           BlocProvider(create: (_) => di.sl<PointsEdgeCubit>()),
           BlocProvider(create: (_) => di.sl<CreateTempTripCubit>()),
           BlocProvider(create: (_) => di.sl<PointsCubit>()..getAllPoints(_)),
+          BlocProvider(
+            create: (_) => di.sl<TempTripBuIdCubit>()..getTempTripBuId(context, id: id),
+          ),
         ];
         return MultiBlocProvider(
           providers: providers,
-          child: CreateTempTripPage(tempTrip: tempTrip),
+          child: const CreateTempTripPage(),
+        );
+      },
+    ),
+    //endregion
+
+    //region members
+
+    ///createMember
+    GoRoute(
+      name: GoRouteName.createMember,
+      path: _GoRoutePath.createMember,
+      builder: (BuildContext context, GoRouterState state) {
+        final id = int.tryParse(state.queryParams['id'] ?? '') ?? 0;
+        final providers = [
+          BlocProvider(create: (_) => di.sl<MapControlCubit>()),
+          BlocProvider(create: (_) => di.sl<MapControllerCubit>()),
+          BlocProvider(create: (_) => di.sl<AtherCubit>()),
+          BlocProvider(create: (_) => di.sl<CreateMemberCubit>()),
+          BlocProvider(create: (_) => di.sl<SearchLocationCubit>()),
+          BlocProvider(create: (_) => di.sl<PointsCubit>()..getAllPoints(_)),
+          BlocProvider(
+            create: (_) => di.sl<MemberBuIdCubit>()..getMemberBuId(context, id: id),
+          ),
+        ];
+        return MultiBlocProvider(
+          providers: providers,
+          child: const CreateMemberPage(),
+        );
+      },
+    ),
+    //endregion
+
+    //region Subscription
+
+    ///createSubscription
+    GoRoute(
+      name: GoRouteName.createSubscription,
+      path: _GoRoutePath.createSubscription,
+      builder: (BuildContext context, GoRouterState state) {
+        final id = int.tryParse(state.queryParams['id'] ?? '') ?? 0;
+        final providers = [
+
+          BlocProvider(create: (_) => di.sl<CreateSubscriptionCubit>()),
+
+          BlocProvider(
+            create: (_) => di.sl<MemberBuIdCubit>()..getMemberBuId(context, id: id),
+          ),
+        ];
+        return MultiBlocProvider(
+          providers: providers,
+          child: const CreateSubscriptionPage(),
         );
       },
     ),
@@ -383,7 +445,6 @@ final appGoRouter = GoRouter(
     ),
     //endregion
 
-
     ///createRole
     GoRoute(
       name: GoRouteName.createRole,
@@ -403,8 +464,6 @@ final appGoRouter = GoRouter(
   ],
 );
 
-
-
 class GoRouteName {
   static const homePage = 'Home Page';
   static const loginPage = 'Login Page';
@@ -422,7 +481,7 @@ class GoRouteName {
   static const createCoupon = 'createCoupon';
   static const createRole = 'createRole';
   static const tripsPae = 'tripsPae';
-  static const sharedTripsPae = 'sharedTripsPae';
+  static const createSubscription = 'createSubscription';
   static const createInstitution = 'createInstitution';
 
   static const createBus = 'createBus';
@@ -430,6 +489,7 @@ class GoRouteName {
   static const createSuperUsers = 'createSuperUsers';
   static const createTempTrip = 'createTempTrip';
 
+  static const createMember = 'createMember';
 }
 
 class _GoRoutePath {
@@ -449,9 +509,10 @@ class _GoRoutePath {
   static const createCoupon = '/createCoupon';
   static const createRole = '/createRole';
   static const tripsPae = '/tripsPae';
-  static const sharedTripsPae = '/sharedTripsPae';
+  static const createSubscription = '/createSubscription';
   static const createInstitution = '/createInstitution';
   static const createBus = '/createBus';
   static const createSuperUsers = '/createSuperUsers';
   static const createTempTrip = '/createTempTrip';
+  static const createMember = '/createMember';
 }

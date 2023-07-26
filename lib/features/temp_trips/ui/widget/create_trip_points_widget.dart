@@ -2,6 +2,7 @@ import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:qareeb_dash/core/api_manager/api_service.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 
 import '../../../../core/strings/app_color_manager.dart';
@@ -21,8 +22,8 @@ import '../../bloc/add_point_cubit/add_point_cubit.dart';
 
 import '../../bloc/create_temp_trip_cubit/create_temp_trip_cubit.dart';
 
-import '../widget/search_points_widget.dart';
-import '../widget/path_points_widget.dart';
+import 'search_points_widget.dart';
+import 'path_points_widget.dart';
 
 class CreateTempTripWidget extends StatefulWidget {
   const CreateTempTripWidget({Key? key}) : super(key: key);
@@ -76,6 +77,7 @@ class _CreateTempTripWidgetState extends State<CreateTempTripWidget> {
         BlocListener<PointsEdgeCubit, PointsEdgeInitial>(
           listenWhen: (p, c) => c.statuses.done,
           listener: (context, state) {
+            loggerObject.wtf('message');
             addPointCubit.addEdge(
                 edgeId: state.result.id, pointId: state.result.endPointId);
           },

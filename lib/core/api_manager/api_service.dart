@@ -362,7 +362,7 @@ class UploadFile {
   final String? initialImage;
 
   UploadFile({
-    required this.fileBytes,
+     this.fileBytes,
     this.initialImage,
     this.nameField = 'File',
   });

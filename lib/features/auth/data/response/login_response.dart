@@ -20,7 +20,7 @@ class LoginResult {
   LoginResult({
     required this.accessToken,
     required this.encryptedAccessToken,
-    required this.expireInSeconds,
+    required this.institutionId,
     required this.userId,
     required this.userTrip,
     required this.accepctPolicy,
@@ -28,7 +28,7 @@ class LoginResult {
 
   final String accessToken;
   final String encryptedAccessToken;
-  final int expireInSeconds;
+  final int institutionId;
   final int userId;
   final String userTrip;
   final bool accepctPolicy;
@@ -41,7 +41,7 @@ class LoginResult {
     return LoginResult(
       accessToken: json["accessToken"] ?? "",
       encryptedAccessToken: json["encryptedAccessToken"] ?? "",
-      expireInSeconds: json["expireInSeconds"] ?? 0,
+      institutionId: json["institutionId"] ?? 0,
       userId: json["userId"] ?? 0,
       userTrip: json["userTrip"] ?? "",
       accepctPolicy: json["accepctPolicy"] ?? false,
@@ -51,7 +51,7 @@ class LoginResult {
   Map<String, dynamic> toJson() => {
         "accessToken": accessToken,
         "encryptedAccessToken": encryptedAccessToken,
-        "expireInSeconds": expireInSeconds,
+        "institutionId": institutionId,
         "userId": userId,
         "userTrip": userTrip,
         "accepctPolicy": accepctPolicy,

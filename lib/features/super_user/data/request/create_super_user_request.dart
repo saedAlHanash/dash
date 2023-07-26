@@ -2,6 +2,7 @@ import 'package:flutter/src/widgets/framework.dart';
 
 import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/note_message.dart';
+import '../../../../core/util/shared_preferences.dart';
 import '../response/super_users_response.dart';
 
 
@@ -44,7 +45,7 @@ class CreateSuperUserRequest {
     "userName": userName,
     "password": password,
     "busId": busId,
-    "institutionId": myInstitutionId,
+    "institutionId": AppSharedPreference.getInstitutionId,
   };
 
 
@@ -90,4 +91,3 @@ class CreateSuperUserRequest {
   }
 
 }
-const myInstitutionId = 3;

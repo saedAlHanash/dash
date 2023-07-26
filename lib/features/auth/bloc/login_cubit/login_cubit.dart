@@ -39,9 +39,11 @@ class LoginCubit extends Cubit<LoginInitial> {
     } else {
       AppSharedPreference.cashToken(pair.first!.accessToken);
       AppSharedPreference.cashMyId(pair.first!.userId);
+      AppSharedPreference.cashInstitutionId(pair.first!.institutionId);
       AppSharedPreference.cashUser(pair.first!);
       AppSharedPreference.cashEmail(request.email!);
 
+      loggerObject.e(AppSharedPreference.getInstitutionId);
       var result = await _getPermissions(id: pair.first!.userId);
 
       if (result.first == null) {

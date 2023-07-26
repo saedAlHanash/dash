@@ -12,31 +12,30 @@ import 'package:qareeb_dash/router/go_route_pages.dart';
 
 import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/my_style.dart';
-
-import '../../../buses/bloc/delete_buss_cubit/delete_buss_cubit.dart';
-import '../../bloc/all_temp_trips_cubit/all_temp_trips_cubit.dart';
-import '../../bloc/delete_temp_trip_cubit/delete_temp_trip_cubit.dart';
+import '../../bloc/all_member_cubit/all_member_cubit.dart';
 
 final _super_userList = [
-  'ID',
-  'اسم النموذج',
-  'المسافة الكلية',
   'عمليات',
+  'ID',
+  'اسم الطالب',
+  'عنوان الطالب',
+  'حالة الاشتراك في النقل',
+  'عمليات الاشتراكات',
 ];
 
-class TempTripsPage extends StatelessWidget {
-  const TempTripsPage({super.key});
+class MembersPage extends StatelessWidget {
+  const MembersPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: isAllowed(AppPermissions.CREATION)
           ? FloatingActionButton(
-              onPressed: () => context.pushNamed(GoRouteName.createTempTrip),
+              onPressed: () => context.pushNamed(GoRouteName.createMember),
               child: const Icon(Icons.add, color: Colors.white),
             )
           : null,
-      body: BlocBuilder<AllTempTripsCubit, AllTempTripsInitial>(
+      body: BlocBuilder<AllMembersCubit, AllMembersInitial>(
         builder: (context, state) {
           if (state.statuses.loading) {
             return MyStyle.loadingWidget();
@@ -46,7 +45,7 @@ class TempTripsPage extends StatelessWidget {
           return Column(
             children: [
               DrawableText(
-                text: 'الباصات',
+                text: 'الطلاب',
                 matchParent: true,
                 size: 28.0.sp,
                 textAlign: TextAlign.center,
@@ -57,10 +56,7 @@ class TempTripsPage extends StatelessWidget {
                 title: _super_userList,
                 data: list
                     .mapIndexed(
-                      (i, e) => [
-                        e.id.toString(),
-                        e.description,
-                        e.distance.toString(),
+                      (index, e) => [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
@@ -68,52 +64,56 @@ class TempTripsPage extends StatelessWidget {
                               onTap: !isAllowed(AppPermissions.UPDATE)
                                   ? null
                                   : () {
-                                      context.pushNamed(
-                                        GoRouteName.createTempTrip,
-                                        queryParams: {'id': e.id.toString()},
-                                      );
+                                context.pushNamed(GoRouteName.createMember,
+                                    queryParams: {'id': e.id.toString()});
                                     },
                               child: const Icon(
                                 Icons.edit,
                                 color: Colors.amber,
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: BlocConsumer<DeleteTempTripCubit,
-                                  DeleteTempTripInitial>(
-                                listener: (context, state) {
-                                  context.read<AllTempTripsCubit>().getTempTrips(context);
-                                },
-                                listenWhen: (p, c) => c.statuses.done,
-                                buildWhen: (p, c) => c.id == e.id,
-                                builder: (context, state) {
-                                  if (state.statuses.loading) {
-                                    return MyStyle.loadingWidget();
-                                  }
-                                  return InkWell(
-                                    onTap: () {
-                                      context
-                                          .read<DeleteTempTripCubit>()
-                                          .deleteTempTrip(context, id: e.id);
+                          ],
+                        ),
+                        e.id.toString(),
+                        e.fullName,
+                        e.address,
+                        (e.subscriptions.isEmpty)
+                            ? 'غير مشترك'
+                            : e.subscriptions.lastOrNull!.isActive
+                                ? 'مشترك'
+                                : 'اشتراك منتهي',
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            InkWell(
+                              onTap: !isAllowed(AppPermissions.UPDATE)
+                                  ? null
+                                  : () {
+                                      context.pushNamed(GoRouteName.createSubscription,
+                                          queryParams: {'id': e.id.toString()});
                                     },
-                                    child: const Icon(
-                                      Icons.delete_forever,
-                                      color: Colors.red,
-                                    ),
-                                  );
-                                },
+                              child: const Icon(
+                                Icons.edit_calendar,
+                                color: Colors.black,
+                              ),
+                            ),
+                            InkWell(
+                              onTap: !isAllowed(AppPermissions.CREATION) ? null : () {
+                                context.pushNamed(GoRouteName.createSubscription,
+                                    queryParams: {'id': e.id.toString()});
+                              },
+                              child: const Icon(
+                                Icons.add,
+                                color: Colors.green,
                               ),
                             ),
                           ],
-                        )
+                        ),
                       ],
                     )
                     .toList(),
                 onChangePage: (command) {
-                  context
-                      .read<AllTempTripsCubit>()
-                      .getTempTrips(context, command: command);
+                  context.read<AllMembersCubit>().getMembers(context, command: command);
                 },
               ),
 
@@ -122,7 +122,7 @@ class TempTripsPage extends StatelessWidget {
               //     itemCount: list.length,
               //     itemBuilder: (context, i) {
               //       final item = list[i];
-              //       return ItemTempTrip(item: item);
+              //       return ItemMember(item: item);
               //     },
               //   ),
               // ),

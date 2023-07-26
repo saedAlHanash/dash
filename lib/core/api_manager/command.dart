@@ -1,4 +1,5 @@
 import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_dash/core/util/shared_preferences.dart';
 
 import '../../features/accounts/data/request/transfer_filter_request.dart';
 import '../widgets/spinner_widget.dart';
@@ -54,7 +55,7 @@ class Command {
     return {
       'skipCount': skipCount,
       'maxResultCount': maxResultCount,
-      'InstitutionId': 3,
+      'InstitutionId': AppSharedPreference.getInstitutionId,
     };
   }
 

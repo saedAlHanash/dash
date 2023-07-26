@@ -35,6 +35,7 @@ extension PolylineExt on List<List<num>> {
       map((p) => LatLng(p[0].toDouble(), p[1].toDouble())).toList();
 }
 
+
 extension SplitByLength on String {
   List<String> splitByLength1(int length, {bool ignoreEmpty = false}) {
     List<String> pieces = [];
@@ -60,16 +61,29 @@ extension SplitByLength on String {
 
   String get formatPrice => '${oCcy.format(this)} ل.س';
 
+  String get removeSpace => replaceAll(' ', '');
+
   int get numberOnly {
-    final regex = RegExp(r'\d+');
-
-    final numbers = regex.allMatches(this).map((match) => match.group(0)).join();
-
     try {
-      return int.parse(numbers);
+      return int.parse(this);
     } on Exception {
       return 0;
     }
+  }
+
+  double get getCost {
+    RegExp regExp = RegExp(r"(\d+\.\d+)");
+    String? match = regExp.stringMatch(this);
+    double number = double.parse(match ?? '0');
+    return number;
+  }
+
+  String get removeDuplicates {
+    List<String> words = split(' ');
+    Set<String> uniqueWords = Set<String>.from(words);
+    List<String> uniqueList = uniqueWords.toList();
+    String output = uniqueList.join(' ');
+    return output;
   }
 }
 

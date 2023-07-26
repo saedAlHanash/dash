@@ -23,8 +23,6 @@ import '../../features/buses/bloc/delete_buss_cubit/delete_buss_cubit.dart';
 import '../../features/car_catigory/bloc/all_car_categories_cubit/all_car_categories_cubit.dart';
 import '../../features/car_catigory/bloc/create_car_category_cubit/create_car_category_cubit.dart';
 import '../../features/car_catigory/bloc/delete_car_cat_cubit/delete_car_cat_cubit.dart';
-import '../../features/clients/bloc/all_clients/all_clients_cubit.dart';
-import '../../features/clients/bloc/clients_by_id_cubit/clients_by_id_cubit.dart';
 import '../../features/drivers/bloc/all_drivers/all_drivers_cubit.dart';
 import '../../features/drivers/bloc/create_driver_cubit/create_driver_cubit.dart';
 import '../../features/drivers/bloc/driver_by_id_cubit/driver_by_id_cubit.dart';
@@ -36,7 +34,12 @@ import '../../features/institutions/bloc/delete_institution_cubit/delete_institu
 import '../../features/map/bloc/ather_cubit/ather_cubit.dart';
 import '../../features/map/bloc/map_controller_cubit/map_controller_cubit.dart';
 import '../../features/map/bloc/my_location_cubit/my_location_cubit.dart';
+import '../../features/map/bloc/search_location/search_location_cubit.dart';
 import '../../features/map/bloc/set_point_cubit/map_control_cubit.dart';
+import '../../features/members/bloc/all_member_cubit/all_member_cubit.dart';
+import '../../features/members/bloc/create_member_cubit/create_member_cubit.dart';
+import '../../features/members/bloc/create_subscreption_cubit/create_subscreption_cubit.dart';
+import '../../features/members/bloc/member_by_id_cubit/member_by_id_cubit.dart';
 import '../../features/messages/bloc/all_messages/all_messages_cubit.dart';
 import '../../features/points/bloc/creta_edge_cubit/create_edge_cubit.dart';
 import '../../features/points/bloc/creta_point_cubit/create_point_cubit.dart';
@@ -60,6 +63,7 @@ import '../../features/temp_trips/bloc/add_point_cubit/add_point_cubit.dart';
 import '../../features/temp_trips/bloc/all_temp_trips_cubit/all_temp_trips_cubit.dart';
 import '../../features/temp_trips/bloc/create_temp_trip_cubit/create_temp_trip_cubit.dart';
 import '../../features/temp_trips/bloc/delete_temp_trip_cubit/delete_temp_trip_cubit.dart';
+import '../../features/temp_trips/bloc/temp_trip_by_id_cubit/temp_trip_by_id_cubit.dart';
 import '../../features/trip/bloc/all_trips_cubit/all_trips_cubit.dart';
 import '../../features/trip/bloc/driver_status_cubit/driver_status_cubit.dart';
 import '../../features/trip/bloc/nav_trip_cubit/nav_trip_cubit.dart';
@@ -111,7 +115,7 @@ Future<void> init() async {
   sl.registerFactory(() => MyLocationCubit());
   sl.registerFactory(() => MapControlCubit());
   sl.registerFactory(() => MapControllerCubit());
-
+  sl.registerFactory(() => SearchLocationCubit());
   sl.registerFactory(() => LocationNameCubit(network: sl()));
   //endregion
 
@@ -203,18 +207,26 @@ Future<void> init() async {
   sl.registerFactory(() => DeleteSuperUserCubit());
   //endregion
 
-  sl.registerFactory(() => AllClientsCubit());
-  sl.registerFactory(() => ClientByIdCubit());
+  //region tempTrip
+  sl.registerFactory(() => CreateTempTripCubit());
+  sl.registerFactory(() => AllTempTripsCubit());
+  sl.registerFactory(() => DeleteTempTripCubit());
+  sl.registerFactory(() => TempTripBuIdCubit());
+  //endregion
+
+  //region member
+
+  sl.registerFactory(() => CreateMemberCubit());
+  sl.registerFactory(() => AllMembersCubit());
+  sl.registerFactory(() => MemberBuIdCubit());
+  //endregion
+
   sl.registerFactory(() => AllTransfersCubit());
 
   sl.registerFactory(() => AccountAmountCubit());
 
   sl.registerFactory(() => AddPointCubit());
-
-  sl.registerFactory(() => CreateTempTripCubit());
-  sl.registerFactory(() => AllTempTripsCubit());
-  sl.registerFactory(() => DeleteTempTripCubit());
-
+  sl.registerFactory(() => CreateSubscriptionCubit());
 
 //! External
 

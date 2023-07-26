@@ -26,6 +26,7 @@ class AppSharedPreference {
   static const _myPermission = '13';
   static const _user = '14';
   static const _email = '15';
+  static const _institutionId = '16';
 
   static SharedPreferences? _prefs;
 
@@ -64,6 +65,18 @@ class AppSharedPreference {
     _prefs?.setInt(_myId, id);
   }
 
+  static int get getMyId => _prefs?.getInt(_myId) ?? 0;
+
+  static cashInstitutionId(int id) {
+    loggerObject.wtf('changeed ');
+    _prefs?.setInt(_institutionId, id);
+  }
+
+  static int get getInstitutionId {
+    loggerObject.wtf(_prefs?.getInt(_institutionId));
+    return _prefs?.getInt(_institutionId) ?? 0;
+  }
+
   static cashUser(LoginResult user) {
     final string = jsonEncode(user);
     _prefs?.setString(_user, string);
@@ -82,8 +95,6 @@ class AppSharedPreference {
   static String getPhoneNumber() {
     return _prefs?.getString(_phoneNumber) ?? '';
   }
-
-  static int get getMyId => _prefs?.getInt(_myId) ?? 0;
 
   static cashStateScreen(StateScreen appState) {
     _prefs?.setInt(_toScreen, appState.index);

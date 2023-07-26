@@ -4,6 +4,7 @@ import 'package:qareeb_dash/core/extensions/extensions.dart';
 import '../../../../core/api_manager/api_service.dart';
 import '../../../../core/strings/enum_manager.dart';
 import '../../../../core/util/note_message.dart';
+import '../../../../core/util/shared_preferences.dart';
 import '../../../super_user/data/request/create_super_user_request.dart';
 import '../response/temp_trips_response.dart';
 
@@ -36,14 +37,14 @@ class CreateTempTripRequest {
       return false;
     }
     if (pathEdgesIds.length <= 1) {
-      NoteMessage.showErrorSnackBar(message: 'خطأ في صورة النقاط', context: context);
+      NoteMessage.showErrorSnackBar(message: 'خطأ في  النقاط', context: context);
       return false;
     }
     return true;
   }
 
   Map<String, dynamic> toJson() => {
-        "institutionId": myInstitutionId,
+        "institutionId": AppSharedPreference.getInstitutionId,
         "pathEdgesIds": pathEdgesIds.map((x) => x).toList(),
         "description": description,
         "id": id,

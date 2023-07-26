@@ -74,13 +74,7 @@ class ClientInfoPage extends StatelessWidget {
                       MyButton(
                         text: 'الرحلات التشاركية',
                         onTap: () {
-                          context.pushNamed(
-                            GoRouteName.sharedTripsPae,
-                            queryParams: {
-                              'clientId': state.result.id.toString(),
-                              'name': state.result.fullName,
-                            },
-                          );
+
                         },
                       ),
                     ],

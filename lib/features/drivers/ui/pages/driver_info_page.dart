@@ -109,13 +109,7 @@ class DriverInfoPage extends StatelessWidget {
                       MyButton(
                         text: 'الرحلات التشاركية',
                         onTap: () {
-                          context.pushNamed(
-                            GoRouteName.sharedTripsPae,
-                            queryParams: {
-                              'driverId': state.result.id.toString(),
-                              'name': state.result.fullName,
-                            },
-                          );
+
                         },
                       ),
                     ],

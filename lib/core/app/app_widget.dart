@@ -11,11 +11,11 @@ import '../../features/auth/bloc/policy_cubit/create_policy_cubit.dart';
 
 import '../../features/buses/bloc/all_buses_cubit/all_buses_cubit.dart';
 import '../../features/car_catigory/bloc/all_car_categories_cubit/all_car_categories_cubit.dart';
-import '../../features/clients/bloc/all_clients/all_clients_cubit.dart';
 import '../../features/drivers/bloc/all_drivers/all_drivers_cubit.dart';
 import '../../features/home/bloc/nav_home_cubit/nav_home_cubit.dart';
 import '../../features/institutions/bloc/all_institutions_cubit/all_institutions_cubit.dart';
 import '../../features/map/bloc/set_point_cubit/map_control_cubit.dart';
+import '../../features/members/bloc/all_member_cubit/all_member_cubit.dart';
 import '../../features/messages/bloc/all_messages/all_messages_cubit.dart';
 import '../../features/points/bloc/get_edged_point_cubit/get_all_points_cubit.dart';
 import '../../features/roles/bloc/all_roles/all_roles_cubit.dart';
@@ -60,11 +60,11 @@ class MyApp extends StatelessWidget {
                 BlocProvider(create: (_) => sl<PolicyCubit>()..getPolicy(_)),
                 BlocProvider(create: (_) => sl<AllBusesCubit>()..getBuses(_)),
                 BlocProvider(create: (_) => sl<PointsCubit>()..getAllPoints(_)),
-                BlocProvider(create: (_) => sl<AllTripsCubit>()..getAllTrips(_)),
                 BlocProvider(create: (_) => sl<AllRolesCubit>()..getAllRoles(_)),
+                BlocProvider(create: (_) => sl<AllTripsCubit>()..getAllTrips(_)),
+                BlocProvider(create: (_) => sl<AllMembersCubit>()..getMembers(_)),
                 BlocProvider(create: (_) => sl<AllAdminsCubit>()..getAllAdmins(_)),
                 BlocProvider(create: (_) => sl<AllDriversCubit>()..getAllDrivers(_)),
-                BlocProvider(create: (_) => sl<AllClientsCubit>()..getAllClients(_)),
                 BlocProvider(create: (_) => sl<AllTempTripsCubit>()..getTempTrips(_)),
                 BlocProvider(create: (_) => sl<AllSuperUsersCubit>()..getSuperUsers(_)),
                 BlocProvider(create: (_) => sl<AllTransfersCubit>()..getAllTransfers(_)),

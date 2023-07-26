@@ -19,6 +19,7 @@ import '../../../buses/bloc/delete_buss_cubit/delete_buss_cubit.dart';
 import '../../../buses/ui/pages/buses_page.dart';
 import '../../../drivers/bloc/loyalty_cubit/loyalty_cubit.dart';
 import '../../../drivers/ui/pages/drivers_page.dart';
+import '../../../members/ui/pages/memberss_page.dart';
 import '../../../super_user/bloc/delete_super_user_cubit/delete_super_user_cubit.dart';
 import '../../../super_user/ui/pages/super_users_page.dart';
 import '../../../temp_trips/bloc/delete_temp_trip_cubit/delete_temp_trip_cubit.dart';
@@ -176,8 +177,12 @@ class _HomePageState extends State<HomePage> {
                     ],
                     child: const TempTripsPage(),
                   );
+
                 case NamePaths.trips:
                   return const TripsPage();
+
+                case NamePaths.members:
+                  return const MembersPage();
               }
               return SingleChildScrollView(
                 child: Container(
