@@ -173,9 +173,11 @@ class AppStringManager {
 
   static const selectPoint = 'الرجاء اختيار نقطة من الخريطة';
 
-  static var search = 'بحث';
+  static const search = 'بحث';
 
   static const wallet = 'رصيدي';
 
-  static var editProfile = 'تعديل الملف الشخصي';
+  static const editProfile = 'تعديل الملف الشخصي';
+
+  static const institutions = 'نظام الإشعارات';
 }

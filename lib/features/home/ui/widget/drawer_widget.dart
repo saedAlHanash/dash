@@ -160,6 +160,11 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                     ),
                     spaceItem,
                     itemString(
+                      AppStringManager.institutions,
+                      Assets.iconsHistory,
+                    ),
+                    spaceItem,
+                    itemString(
                       AppStringManager.sharedTrips,
                       Assets.iconsHistory,
                     ),
