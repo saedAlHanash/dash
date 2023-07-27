@@ -15,6 +15,7 @@ import '../../../../core/util/my_style.dart';
 import '../../../../core/widgets/app_bar_widget.dart';
 import '../../../../core/widgets/my_button.dart';
 import '../../../buses/bloc/all_buses_cubit/all_buses_cubit.dart';
+import '../../../members/ui/pages/create_member_page.dart';
 import '../../../temp_trips/bloc/all_temp_trips_cubit/all_temp_trips_cubit.dart';
 import '../../../temp_trips/data/response/temp_trips_response.dart';
 import '../../bloc/all_bus_trips_cubit/all_bus_trips_cubit.dart';
@@ -34,6 +35,8 @@ class _CreateBusTripPageState extends State<CreateBusTripPage> {
 
   final startDateC = TextEditingController();
   final endDateC = TextEditingController();
+  final startTimeC = TextEditingController();
+  final endTimeC = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +53,11 @@ class _CreateBusTripPageState extends State<CreateBusTripPage> {
           listenWhen: (p, c) => c.statuses.done,
           listener: (context, state) {
             request = CreateBusTripRequest().fromBusTrip(state.result);
+
+            startDateC.text = request.startDate?.formatDate ?? '';
+            endDateC.text = request.endDate?.formatDate ?? '';
+            startTimeC.text = request.startDate?.formatTime ?? '';
+            endTimeC.text = request.endDate?.formatTime ?? '';
           },
         ),
       ],
@@ -88,23 +96,64 @@ class _CreateBusTripPageState extends State<CreateBusTripPage> {
                         ),
                       ],
                     ),
+                    30.0.verticalSpace,
+                    Row(
+                      children: [
+                        Expanded(
+                          child: MyTextFormNoLabelWidget(
+                            label: 'تاريخ بداية الرحلة',
+                            controller: startDateC,
+                            disableAndKeepIcon: true,
+                            textDirection: TextDirection.ltr,
+                            iconWidget: SelectSingeDateWidget(
+                              initial: request.startDate,
+                              minDate: DateTime.now(),
+                              onSelect: (selected) {
+                                startDateC.text = selected?.formatDate ?? '';
+                                request.startDate = selected;
+                              },
+                            ),
+                          ),
+                        ),
+                        15.0.horizontalSpace,
+                        Expanded(
+                          child: MyTextFormNoLabelWidget(
+                            label: 'تاريخ نهاية الرحلة',
+                            controller: endDateC,
+                            disableAndKeepIcon: true,
+                            textDirection: TextDirection.ltr,
+                            iconWidget: SelectSingeDateWidget(
+                              initial: request.endDate,
+                              minDate: DateTime.now(),
+                              onSelect: (selected) {
+                                endDateC.text = selected?.formatDate ?? '';
+                                request.endDate = selected;
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    30.0.verticalSpace,
                     Row(
                       children: [
                         Expanded(
                           child: MyTextFormNoLabelWidget(
                             label: 'وقت بداية الرحلة',
-                            controller: startDateC,
+                            controller: startTimeC,
                             disableAndKeepIcon: true,
+                            textDirection: TextDirection.ltr,
                             iconWidget: IconButton(
                                 onPressed: () async {
                                   var s = await showTimePicker(
                                     context: context,
-                                    initialTime: TimeOfDay.now(),
+                                    initialTime: TimeOfDay.fromDateTime(
+                                        request.startDate ?? DateTime.now()),
                                   );
                                   setState(() {
-                                    startDateC.text = '${s?.minute}:${s?.hour}';
-                                    request.startDate = DateTime.now()
-                                        .copyWith(hour: s?.hour, minute: s?.minute);
+                                    request.startDate = request.startDate
+                                        ?.copyWith(hour: s?.hour, minute: s?.minute);
+                                    startTimeC.text = request.startDate?.formatTime ?? '';
                                   });
                                 },
                                 icon: const Icon(Icons.timer_outlined)),
@@ -114,18 +163,20 @@ class _CreateBusTripPageState extends State<CreateBusTripPage> {
                         Expanded(
                           child: MyTextFormNoLabelWidget(
                             label: 'وقت نهاية الرحلة',
-                            controller: endDateC,
+                            controller: endTimeC,
                             disableAndKeepIcon: true,
+                            textDirection: TextDirection.ltr,
                             iconWidget: IconButton(
                                 onPressed: () async {
                                   var s = await showTimePicker(
                                     context: context,
-                                    initialTime: TimeOfDay.now(),
+                                    initialTime: TimeOfDay.fromDateTime(
+                                        request.endDate ?? DateTime.now()),
                                   );
                                   setState(() {
-                                    endDateC.text = '${s?.minute}:${s?.hour}';
-                                    request.endDate = DateTime.now()
-                                        .copyWith(hour: s?.hour, minute: s?.minute);
+                                    request.endDate = request.endDate
+                                        ?.copyWith(hour: s?.hour, minute: s?.minute);
+                                    endTimeC.text = request.endDate?.formatTime ?? '';
                                   });
                                 },
                                 icon: const Icon(Icons.timer_outlined)),
