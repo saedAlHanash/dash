@@ -29,6 +29,10 @@ import '../features/coupons/bloc/create_coupon_cubit/create_coupon_cubit.dart';
 import '../features/coupons/ui/pages/create_coupon_page.dart';
 import '../features/drivers/ui/pages/driver_info_page.dart';
 import '../features/home/bloc/nav_home_cubit/nav_home_cubit.dart';
+import '../features/institutions/bloc/create_institution_cubit/create_institution_cubit.dart';
+import '../features/institutions/bloc/delete_institution_cubit/delete_institution_cubit.dart';
+import '../features/institutions/data/response/institutions_response.dart';
+import '../features/institutions/ui/pages/create_institution_page.dart';
 import '../features/points/bloc/creta_point_cubit/create_point_cubit.dart';
 import '../features/points/bloc/delete_edge_cubit/delete_edge_cubit.dart';
 import '../features/points/bloc/delete_point_cubit/delete_point_cubit.dart';
@@ -378,6 +382,26 @@ final appGoRouter = GoRouter(
     ),
     //endregion
 
+    //region institutions
+
+    ///createInstitution
+    GoRoute(
+      name: GoRouteName.createInstitution,
+      path: _GoRoutePath.createInstitution,
+      builder: (BuildContext context, GoRouterState state) {
+        final institution =
+            state.extra == null ? null : (state.extra) as InstitutionModel;
+        final providers = [
+          BlocProvider(create: (_) => di.sl<CreateInstitutionCubit>()),
+        ];
+        return MultiBlocProvider(
+          providers: providers,
+          child: CreateInstitutionPage(institution: institution),
+        );
+      },
+    ),
+    //endregion
+
     ///createCoupon
     GoRoute(
       name: GoRouteName.createCoupon,
@@ -431,6 +455,7 @@ class GoRouteName {
   static const createRole = 'createRole';
   static const tripsPae = 'tripsPae';
   static const sharedTripsPae = 'sharedTripsPae';
+  static const createInstitution = 'createInstitution';
 }
 
 class _GoRoutePath {
@@ -451,4 +476,5 @@ class _GoRoutePath {
   static const createRole = '/createRole';
   static const tripsPae = '/tripsPae';
   static const sharedTripsPae = '/sharedTripsPae';
+  static const createInstitution = '/createInstitution';
 }

@@ -24,7 +24,8 @@ class GetUrl {
   static const getPointsEdge = 'api/services/app/EdgesService/GetEdgeBetweenTwoPoints';
 
   static const getSharedTripById = 'api/services/app/SharedTripService/GetSharedTripById';
-  static const getSharedTripByRequestId = 'api/services/app/SharedTripService/GetSharedTripByRequestId';
+  static const getSharedTripByRequestId =
+      'api/services/app/SharedTripService/GetSharedTripByRequestId';
 
   static const getPathById = 'api/services/app/PathService/GetPathById';
 
@@ -78,7 +79,9 @@ class GetUrl {
 
   static var getAllCoupons = 'api/services/app/Coupons/GetAll';
 
-  static var allPermissions ='api/services/app/Role/GetAllPermissions';
+  static var allPermissions = 'api/services/app/Role/GetAllPermissions';
+
+  static var institutions = 'api/services/app/InstitutiosnsService/GetAll';
 }
 
 class PostUrl {
@@ -148,6 +151,8 @@ class PostUrl {
   static var createCoupon = 'api/services/app/Coupons/Create';
 
   static var createRole = 'api/services/app/Role/Create';
+
+  static var createInstitution = 'api/services/app/InstitutiosnsService/Create';
 }
 
 class PutUrl {
@@ -166,6 +171,8 @@ class PutUrl {
   static var updateEdge = 'api/services/app/EdgesService/Update';
   static var updateCoupon = 'api/services/app/Coupons/Update';
   static var updateRole = 'api/services/app/Role/Update';
+
+  static var updateInstitution = 'api/services/app/InstitutiosnsService/Update';
 }
 
 class DeleteUrl {
@@ -178,7 +185,9 @@ class DeleteUrl {
 
   static var deletePoint = 'api/services/app/PointsService/Delete';
 
-  static var deleteRole ='api/services/app/Role/Delete';
+  static var deleteRole = 'api/services/app/Role/Delete';
+
+  static var deleteInstitution = 'api/services/app/InstitutiosnsService/Delete';
 }
 
 class OrsUrl {

@@ -33,6 +33,7 @@ class _MessagesPageState extends State<MessagesPage> {
           if (state.statuses.loading) {
             return MyStyle.loadingWidget();
           }
+          //institution
 
           if (state.result.isEmpty) {
             return const NotFoundWidget(text: 'لا يوجد رسائل');

@@ -115,6 +115,14 @@ extension RealName on Enum {
   String get upperFirst => name.replaceRange(0, 1, name.substring(0, 1).toUpperCase());
 }
 
+extension EnumSpinner on List<Enum> {
+  List<SpinnerItem> spinnerItems({Enum? selected}) {
+    return map((e) =>
+            SpinnerItem(name: e.name, id: e.index, item: e, isSelected: e == selected))
+        .toList();
+  }
+}
+
 extension TransferTypeName on TransferType {
   String get getArName {
     switch (this) {
@@ -126,6 +134,60 @@ extension TransferTypeName on TransferType {
         return 'من السائق للشركة';
       case TransferType.debit:
         return 'من الشركة للسائق';
+    }
+  }
+}
+
+extension WeekDaysName on WeekDays {
+  String get getArName {
+    switch (this) {
+      case WeekDays.sunday:
+        return 'أحد';
+
+      case WeekDays.monday:
+        return 'إثنين';
+
+      case WeekDays.tuesday:
+        return 'ثلاثاء';
+
+      case WeekDays.wednesday:
+        return 'أربعاء';
+
+      case WeekDays.thursday:
+        return 'خميس';
+
+      case WeekDays.friday:
+        return 'جمعة';
+
+      case WeekDays.saturday:
+        return 'سبت';
+    }
+  }
+}
+
+extension InstitutionTypeName on InstitutionType {
+  String get getArName {
+    switch (this) {
+      case InstitutionType.school:
+        return 'مدرسة';
+
+      case InstitutionType.college:
+        return 'جامعة';
+
+      case InstitutionType.transportation:
+        return 'نقل';
+    }
+  }
+}
+
+extension GovernmentName on Government {
+  String get getArName {
+    switch (this) {
+      case Government.damascus:
+        return 'دمشق';
+
+      case Government.rifDimashq:
+        return 'ريف دمشق';
     }
   }
 }

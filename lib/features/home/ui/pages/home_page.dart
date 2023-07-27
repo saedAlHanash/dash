@@ -37,6 +37,8 @@ import '../../../clients/ui/pages/clients_page.dart';
 import '../../../coupons/bloc/create_coupon_cubit/create_coupon_cubit.dart';
 import '../../../drivers/bloc/loyalty_cubit/loyalty_cubit.dart';
 import '../../../drivers/ui/pages/drivers_page.dart';
+import '../../../institutions/bloc/delete_institution_cubit/delete_institution_cubit.dart';
+import '../../../institutions/ui/pages/institutions_page.dart';
 import '../../../pay_to_drivers/bloc/pay_to_cubit/pay_to_cubit.dart';
 import '../../../pay_to_drivers/ui/pages/pay_to_drivers_page.dart';
 import '../../../points/ui/pages/points_page.dart';
@@ -153,6 +155,8 @@ class _HomePageState extends State<HomePage> {
                   if (isAllowed(AppPermissions.CAR_CATEGORY))
                     const AdminMenuItem(
                         title: 'أصناف السيارات', route: '/car_categories'),
+                  if (isAllowed(AppPermissions.CAR_CATEGORY))
+                    const AdminMenuItem(title: 'المؤسسات', route: '/institutions'),
                   if (isAllowed(AppPermissions.ROLES))
                     const AdminMenuItem(title: 'الأدوار', route: '/roles'),
                 ],
@@ -290,6 +294,7 @@ class _HomePageState extends State<HomePage> {
                   );
                 case "/transactions":
                   return const TransfersPage();
+
                 case "/car_categories":
                   return MultiBlocProvider(
                     providers: [
@@ -297,6 +302,14 @@ class _HomePageState extends State<HomePage> {
                     ],
                     child: const CarCategoriesPage(),
                   );
+                case "/institutions":
+                  return MultiBlocProvider(
+                    providers: [
+                      BlocProvider(create: (_) => sl<DeleteInstitutionCubit>()),
+                    ],
+                    child: const InstitutionsPage(),
+                  );
+
                 case "/cancel_reasons":
                   return MultiBlocProvider(
                     providers: [

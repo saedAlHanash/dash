@@ -13,6 +13,7 @@ import '../../features/clients/bloc/all_clients/all_clients_cubit.dart';
 import '../../features/coupons/bloc/all_coupons_vubit/all_coupons_cubit.dart';
 import '../../features/drivers/bloc/all_drivers/all_drivers_cubit.dart';
 import '../../features/home/bloc/nav_home_cubit/nav_home_cubit.dart';
+import '../../features/institutions/bloc/all_institutions_cubit/all_institutions_cubit.dart';
 import '../../features/map/bloc/set_point_cubit/map_control_cubit.dart';
 import '../../features/messages/bloc/all_messages/all_messages_cubit.dart';
 import '../../features/points/bloc/get_edged_point_cubit/get_all_points_cubit.dart';
@@ -66,6 +67,9 @@ class MyApp extends StatelessWidget {
                 BlocProvider(create: (_) => sl<AllTransfersCubit>()..getAllTransfers(_)),
                 BlocProvider(create: (_) => sl<GetSharedTripsCubit>()..getSharesTrip(_)),
                 BlocProvider(create: (_) => sl<ProvidersCubit>()..getAllEpayProviders(_)),
+                BlocProvider(
+                  create: (_) => sl<AllInstitutionsCubit>()..getInstitutions(_),
+                ),
                 BlocProvider(
                   create: (_) => sl<AllCarCategoriesCubit>()..getCarCategories(_),
                 ),

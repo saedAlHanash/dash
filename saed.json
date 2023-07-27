@@ -1,27 +1,13 @@
 {
-  "name": "read only",
-  "displayName": "read only",
-  "normalizedName": "read only",
-  "description": "للقراءة فقط",
-  "grantedPermissions": [
-    "Pages.Reason",
-    "Pages.Reports",
-    "Pages.Trips",
-    "Pages.Messages",
-    "Pages.Customers",
-    "Pages.Drivers",
-    "Pages.Coupon",
-    "Create_Permission",
-    "Update_Permission",
-    "Delete_Permission",
-    "Pages.CarCategory",
-    "Pages.Epayment",
-    "Pages.Points",
-    "Pages.Settings",
-    "Pages.SharedTrip",
-    "Pages.Roles",
-    "Pages.Users",
-    "Pages.Users.Activation",
-    "Pages.accept_order"
-  ]
+  "Name": "جامعة خاصة",
+  "Government": "0",
+  "Type": "0",
+  "AtharKey": "135890C8CF4DBE10B0E33F89B03770F1",
+  "AdminFirstName": "saed",
+  "AdminSurname": "Hanash",
+  "EmailAddress": "saed@adminIns.com",
+  "Address": "khadam",
+  "PhoneNumber": "0938891523",
+  "Password": "123qwe",
+  "Id": null
 }

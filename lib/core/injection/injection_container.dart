@@ -28,6 +28,9 @@ import '../../features/drivers/bloc/create_driver_cubit/create_driver_cubit.dart
 import '../../features/drivers/bloc/driver_by_id_cubit/driver_by_id_cubit.dart';
 import '../../features/drivers/bloc/loyalty_cubit/loyalty_cubit.dart';
 import '../../features/home/bloc/nav_home_cubit/nav_home_cubit.dart';
+import '../../features/institutions/bloc/all_institutions_cubit/all_institutions_cubit.dart';
+import '../../features/institutions/bloc/create_institution_cubit/create_institution_cubit.dart';
+import '../../features/institutions/bloc/delete_institution_cubit/delete_institution_cubit.dart';
 import '../../features/map/bloc/ather_cubit/ather_cubit.dart';
 import '../../features/map/bloc/map_controller_cubit/map_controller_cubit.dart';
 import '../../features/map/bloc/my_location_cubit/my_location_cubit.dart';
@@ -234,6 +237,13 @@ Future<void> init() async {
 
   //region messages
   sl.registerFactory(() => AllMessagesCubit());
+
+  //endregion
+
+  //region institution
+  sl.registerFactory(() => AllInstitutionsCubit());
+  sl.registerFactory(() => CreateInstitutionCubit());
+  sl.registerFactory(() => DeleteInstitutionCubit());
 
   //endregion
 
