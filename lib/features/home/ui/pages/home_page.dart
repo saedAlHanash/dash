@@ -213,6 +213,7 @@ class _HomePageState extends State<HomePage> {
                 },
                 child: const DrawableText(
                   text: 'تسجيل الخروج',
+                  selectable: false,
                   matchParent: true,
                   color: Colors.white,
                   textAlign: TextAlign.center,

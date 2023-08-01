@@ -48,6 +48,7 @@ class MyCheckboxWidget extends StatefulWidget {
             ),
           ),
           child: DrawableText(
+            selectable: false,
             text: value.name ?? '',
             maxLines: 1,
             color: selected ? AppColorManager.whit : AppColorManager.black,
@@ -91,6 +92,8 @@ class _MyCheckboxWidgetState extends State<MyCheckboxWidget> {
                 width: widget.width ?? 0.4.sw,
                 height: 40.0.h,
                 child: DrawableText(
+
+                  selectable: false,
                   text: value.name ?? '',
                   maxLines: 1,
                   color: selected

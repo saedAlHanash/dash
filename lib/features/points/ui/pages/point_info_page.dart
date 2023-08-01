@@ -222,7 +222,9 @@ class _PointInfoPageState extends State<PointInfoPage> {
                               }
                             }
                           },
-                          initialValue: request.name,
+                          initialValue: request.lat == null
+                              ? null
+                              : '${request.lat},${request.lng}',
                         ),
                         20.0.verticalSpace,
                         MyTextFormNoLabelWidget(

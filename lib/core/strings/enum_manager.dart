@@ -16,7 +16,7 @@ enum MtnState { init, pay, otp }
 
 enum TripStatus { non, reject, accept, start, end }
 
-enum MyMarkerType { location, driver, point, sharedPint }
+enum MyMarkerType { location, driver, point, sharedPint,bus }
 
 enum SharedTripStatus { pending, started, closed, canceled }
 

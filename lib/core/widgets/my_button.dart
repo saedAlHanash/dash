@@ -38,6 +38,7 @@ class MyButton extends StatelessWidget {
     final child = this.child ??
         DrawableText(
           text: text,
+          selectable: false,
           color: textColor ?? AppColorManager.whit,
           fontFamily: FontManager.cairoBold,
           size: 17.0.sp,

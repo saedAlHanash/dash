@@ -42,6 +42,7 @@ class MyApp extends StatelessWidget {
           headerSizeText: 30.0.sp,
           initialSize: 22.0.sp,
           initialHeightText: 2.0.h,
+          selectable: true,
           renderHtml: true,
         );
 

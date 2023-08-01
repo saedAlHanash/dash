@@ -75,7 +75,7 @@ class MyTextFormWidget extends StatelessWidget {
 
     final textStyle = TextStyle(
       fontFamily: FontManager.cairoSemiBold.name,
-      fontSize: 16.0.sp,
+      fontSize: 18.0.sp,
       color: AppColorManager.gray,
     );
 
@@ -174,7 +174,7 @@ class MyTextFormOutLineWidget extends StatelessWidget {
 
     final textStyle = TextStyle(
       fontFamily: FontManager.cairoSemiBold.name,
-      fontSize: 16.0.sp,
+      fontSize: 18.0.sp,
       color: AppColorManager.black,
     );
 
@@ -399,7 +399,7 @@ class MyTextFormNoLabelWidget extends StatelessWidget {
 
     final textStyle = TextStyle(
       fontFamily: FontManager.cairoSemiBold.name,
-      fontSize: 20.0.sp,
+      fontSize: 18.0.sp,
       color: AppColorManager.mainColor,
     );
 
