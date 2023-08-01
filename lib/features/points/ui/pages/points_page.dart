@@ -87,6 +87,7 @@ class _PointsPageState extends State<PointsPage> {
             : null,
         body: MapWidget(
           initialPoint: LatLng(33.30, 36.16),
+            updateMarkerWithZoom:true,
           search: () async {
             NoteMessage.showCustomBottomSheet(
               context,

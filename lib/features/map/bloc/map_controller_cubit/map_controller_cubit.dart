@@ -184,6 +184,11 @@ class MapControllerCubit extends Cubit<MapControllerInitial> {
       },
     ).toList());
   }
+
+  void updateMarkersWithZoom(double zoom) {
+    loggerObject.v(zoom);
+    emit(state.copyWith(markerNotifier: state.markerNotifier + 1, mapZoom: zoom));
+  }
 }
 
 double distanceBetween(LatLng point1, LatLng point2) {

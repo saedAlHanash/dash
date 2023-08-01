@@ -42,7 +42,7 @@ class ItemPreviousTrip extends StatelessWidget {
               drawableAlin: DrawableAlin.between,
               matchParent: true,
               drawableEnd: DrawableText(
-                text: trip.getCost,
+                text: trip.getCostPrevTrip,
                 fontFamily: FontManager.cairoBold,
                 color: AppColorManager.gray,
               ),

@@ -52,6 +52,7 @@ extension SplitByLength on String {
     }
     return pieces;
   }
+
   String get removeSpace => replaceAll(' ', '');
 
   String get removeDuplicates {
@@ -113,6 +114,18 @@ extension MaxInt on num {
   int get myRound {
     if (toInt() < this) return toInt() + 1;
     return toInt();
+  }
+}
+
+extension DoubleHealper on double {
+  int get getZoomMarkerCount {
+    if (this >= 10 && this < 13) return 10;
+    if (this >= 13 && this < 14) return 15;
+    if (this >= 14 && this < 15) return 30;
+    if (this >= 15 && this < 16) return 40;
+    if (this >16) return 1.0.maxInt;
+
+    return 1.0.maxInt;
   }
 }
 
@@ -407,6 +420,10 @@ extension NormalTripMap on TripResult {
 
   String get getCost {
     return '${tripFare - paidAmount} ${AppStringManager.currency}';
+  }
+
+  String get getCostPrevTrip {
+    return '$tripFare  ${AppStringManager.currency}';
   }
 
   String get getDuration {

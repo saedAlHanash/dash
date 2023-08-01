@@ -58,8 +58,8 @@ class MyMarker {
       case MyMarkerType.point:
         return Marker(
           point: point,
-          height: 70.0.spMin,
-          width: 70.0.spMin,
+          height: 90.0.spMin,
+          width: 150.0.spMin,
           builder: (context) {
             return InkWell(
               onTap: () {
@@ -90,14 +90,15 @@ class MyMarker {
                   ),
                   if (item is TripPoint)
                     Container(
-                      width: 70.0.spMin,
+                      width: 150.0.spMin,
                       color: Colors.white,
                       padding: const EdgeInsets.all(3.0).r,
                       child: DrawableText(
                         selectable: false,
                         text: (item as TripPoint).arName,
-                        size: 12.0.sp,
-                        maxLines: 1,
+                        size: 15.0.sp,
+                        maxLines: 2,
+                        fontFamily: FontManager.cairoBold,
                         matchParent: true,
                         textAlign: TextAlign.center,
                       ),

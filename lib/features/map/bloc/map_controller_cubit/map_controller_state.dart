@@ -14,6 +14,8 @@ class MapControllerInitial {
   ///Camera Zoom
   final double zoom;
 
+  final double mapZoom;
+
   ///all markers that set over map
   final Map<num, MyMarker> markers = {};
 
@@ -31,6 +33,7 @@ class MapControllerInitial {
     this.markerNotifier = 0,
     this.polylineNotifier = 0,
     this.zoom = 15,
+    this.mapZoom = 11,
     required this.initialPoint,
     this.oldPoint,
     this.additional,
@@ -62,6 +65,7 @@ class MapControllerInitial {
     LatLng? oldPoint,
     double? bearing,
     double? zoom,
+    double? mapZoom,
     int? markerNotifier,
     int? polylineNotifier,
     dynamic additional,
@@ -69,6 +73,7 @@ class MapControllerInitial {
     return MapControllerInitial(
         point: point,
         initialPoint: initialPoint ?? this.initialPoint,
+        mapZoom: mapZoom ?? this.mapZoom,
         markerNotifier: markerNotifier ?? this.markerNotifier,
         polylineNotifier: polylineNotifier ?? this.polylineNotifier,
         oldPoint: oldPoint ?? this.oldPoint,

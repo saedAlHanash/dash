@@ -1,25 +1,19 @@
+import 'dart:async';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:collection/collection.dart';
-import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/plugin_api.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
-
 import 'package:qareeb_dash/core/extensions/extensions.dart';
-import 'package:qareeb_dash/core/widgets/images/image_multi_type.dart';
 import 'package:qareeb_dash/features/map/data/models/my_marker.dart';
-import 'package:qareeb_dash/features/points/data/response/points_response.dart';
-import 'package:qareeb_dash/features/shared_trip/data/response/shared_trip.dart';
 
 import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/strings/enum_manager.dart';
 import '../../../../core/widgets/my_card_widget.dart';
 import '../../../../core/widgets/spinner_widget.dart';
-import '../../../../generated/assets.dart';
-import '../../../../router/go_route_pages.dart';
 import '../../bloc/map_controller_cubit/map_controller_cubit.dart';
 import '../../bloc/set_point_cubit/map_control_cubit.dart';
 
@@ -41,6 +35,7 @@ class MapWidget extends StatefulWidget {
     this.onMapClick,
     this.ime,
     this.search,
+    this.updateMarkerWithZoom,
   }) : super(key: key);
 
   final Function(MapController controller)? onMapReady;
@@ -48,6 +43,7 @@ class MapWidget extends StatefulWidget {
   final Function()? search;
   final LatLng? initialPoint;
   final String? ime;
+  final bool? updateMarkerWithZoom;
 
   GlobalKey<MapWidgetState> getKey() {
     return GlobalKey<MapWidgetState>();
@@ -97,6 +93,11 @@ class MapWidgetState extends State<MapWidget> {
 
   final mapWidgetKey = GlobalKey();
 
+  // Create your stream
+  final _streamController = StreamController<double>();
+
+  Stream<double> get onZoomChanged => _streamController.stream;
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocListener(
@@ -116,6 +117,13 @@ class MapWidgetState extends State<MapWidget> {
         mapController: controller,
         options: MapOptions(
           maxZoom: maxZoom,
+          onPositionChanged: (position, hasGesture) {
+            // Fill your stream when your position changes
+            final zoom = position.zoom;
+            if (zoom != null) {
+              _streamController.sink.add(zoom);
+            }
+          },
           interactiveFlags: InteractiveFlag.pinchZoom | InteractiveFlag.drag,
           onMapReady: () {
             if (widget.initialPoint != null && widget.initialPoint!.latitude != 0) {
@@ -178,8 +186,10 @@ class MapWidgetState extends State<MapWidget> {
           BlocBuilder<MapControllerCubit, MapControllerInitial>(
             buildWhen: (p, c) => p.markerNotifier != c.markerNotifier,
             builder: (context, state) {
+              final markers =MapHelper.initMarker(state);
+              print(markers.length);
               return MarkerLayer(
-                markers: MapHelper.initMarker(state),
+                markers: markers,
               );
             },
           ),
@@ -195,6 +205,13 @@ class MapWidgetState extends State<MapWidget> {
     mapControllerCubit = context.read<MapControllerCubit>();
     controller = MapControllerImpl();
 
+    // Add your listener
+    onZoomChanged.listen((event) {
+      if (widget.updateMarkerWithZoom ?? false) {
+        mapControllerCubit.updateMarkersWithZoom(event);
+      }
+    });
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       mapControllerCubit.mapHeight = mapWidgetKey.currentContext?.size?.height ?? 640.0;
       mapControllerCubit.mapWidth = mapWidgetKey.currentContext?.size?.width ?? 360.0;
@@ -204,6 +221,7 @@ class MapWidgetState extends State<MapWidget> {
   @override
   void dispose() {
     controller.dispose();
+    _streamController.close();
     super.dispose();
   }
 }
@@ -248,104 +266,12 @@ class MapTypeSpinner extends StatelessWidget {
 
 class MapHelper {
   static List<Marker> initMarker(MapControllerInitial state) {
-    return state.markers.values.mapIndexed(
-      (i, e) {
-        if (e.type == MyMarkerType.point) {
-          return Marker(
-            point: e.point,
-            height: 70.0.spMin,
-            width: 70.0.spMin,
-            builder: (context) {
-              return InkWell(
-                onTap: () {
-                  context.pushNamed(
-                    GoRouteName.pointInfo,
-                    queryParams: {'id': e.item.id.toString()},
-                  );
-                },
-                child: Column(
-                  children: [
-                    Container(
-                      height: 40.spMin,
-                      width: 40.spMin,
-                      padding: const EdgeInsets.all(5.0).r,
-                      decoration: const BoxDecoration(
-                        color: AppColorManager.black,
-                        shape: BoxShape.circle,
-                      ),
-                      child: ImageMultiType(
-                        url: Assets.iconsLogoWithoutText,
-                        color: Colors.white,
-                        height: 30.0.spMin,
-                        width: 30.0.spMin,
-                      ),
-                    ),
-                    if (e.item is TripPoint)
-                      Container(
-                        width: 70.0.spMin,
-                        color: Colors.white,
-                        padding: const EdgeInsets.all(3.0).r,
-                        child: DrawableText(
-                          text: (e.item as TripPoint).arName,
-                          size: 12.0.sp,
-                          maxLines: 1,
-                          matchParent: true,
-                          textAlign: TextAlign.center,
-                        ),
-                      )
-                  ],
-                ),
-              );
-            },
-          );
-        }
-        var isPoint = e.type == MyMarkerType.sharedPint;
-        return Marker(
-          point: e.point,
-          height: !isPoint ? 40.0.spMin : 150.0.spMin,
-          width: !isPoint ? 40.0.spMin : 150.0.spMin,
-          builder: (context) {
-            return (e.type == MyMarkerType.sharedPint)
-                ? Builder(builder: (context) {
-                    var nou = 0;
-                    if (state.additional != null && state.additional is SharedTrip) {
-                      nou = (state.additional as SharedTrip).nou(e.point);
-                    }
-                    return Column(
-                      children: [
-                        if (nou != 0)
-                          Container(
-                            height: 35.0.spMin,
-                            width: 70.0.spMin,
-                            margin: EdgeInsets.only(bottom: 5.0.spMin),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(5.0.r),
-                            ),
-                            alignment: Alignment.center,
-                            child: DrawableText(
-                              text: '$nou مقعد',
-                              color: Colors.black,
-                              size: 12.0.sp,
-                            ),
-                          ),
-                        ImageMultiType(
-                          url: i.iconPoint,
-                          height: 50.0.spMin,
-                          width: 50.0.spMin,
-                        ),
-                      ],
-                    );
-                  })
-                : ImageMultiType(
-                    url: Assets.iconsMainColorMarker,
-                    height: 40.0.spMin,
-                    width: 40.0.spMin,
-                  );
-          },
-        );
-      },
-    ).toList();
+    return state.markers.values
+        .mapIndexed(
+          (i, e) => e.getWidget(i),
+        )
+        .take(state.mapZoom.getZoomMarkerCount)
+        .toList();
   }
 
   static List<Polyline> initPolyline(MapControllerInitial state) {
