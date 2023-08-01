@@ -107,7 +107,7 @@ class _PointInfoPageState extends State<PointInfoPage> {
                   .mapIndexed(
                     (i, e) => MyPolyLine(
                       encodedPolyLine: e.steps,
-                      endPoint: e.endPoint.getLatLng,
+                      endPoint: e.endPoint,
                       color: AppColorManager.getPolyLineColor(i),
                     ),
                   )

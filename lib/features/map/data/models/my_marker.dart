@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 
 import '../../../../core/strings/enum_manager.dart';
+import '../../../points/data/response/points_response.dart';
 
 class MyMarker {
   LatLng point;
@@ -27,7 +28,7 @@ class MyMarker {
 }
 
 class MyPolyLine {
-  LatLng? endPoint;
+  TripPoint? endPoint;
   num? key;
   String encodedPolyLine;
   Color? color;

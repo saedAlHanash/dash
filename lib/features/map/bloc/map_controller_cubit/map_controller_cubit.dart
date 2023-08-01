@@ -136,7 +136,12 @@ class MapControllerCubit extends Cubit<MapControllerInitial> {
     state.polyLines.clear();
     for (var e in myPolyLines) {
       if (e.endPoint != null) {
-        addMarker(marker: MyMarker(point: e.endPoint!, type: MyMarkerType.point,item: e.endPoint));
+        addMarker(
+            marker: MyMarker(
+          point: e.endPoint!.getLatLng,
+          type: MyMarkerType.point,
+          item: e.endPoint,
+        ));
       }
       if (e.key == null && e.endPoint == null) return;
       var list = decodePolyline(e.encodedPolyLine).unpackPolyline();

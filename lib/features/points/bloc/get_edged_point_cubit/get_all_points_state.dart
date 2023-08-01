@@ -29,7 +29,6 @@ class PointsInitial extends Equatable {
     if (result.isEmpty) {
       return [SpinnerItem(name: 'لا توجد نقاط', id: 0)];
     }
-    print(reject);
     return result
         .map((e) => SpinnerItem(
               name: e.arName,

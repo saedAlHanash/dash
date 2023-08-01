@@ -38,13 +38,14 @@ class MapWidget extends StatefulWidget {
     Key? key,
     this.onMapReady,
     this.initialPoint,
-    this.onMapClick, this.ime,
-        this.search,
+    this.onMapClick,
+    this.ime,
+    this.search,
   }) : super(key: key);
 
   final Function(MapController controller)? onMapReady;
   final Function(LatLng latLng)? onMapClick;
-    final Function()? search;
+  final Function()? search;
   final LatLng? initialPoint;
   final String? ime;
 
