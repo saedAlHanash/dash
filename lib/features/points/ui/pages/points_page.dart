@@ -6,7 +6,11 @@ import 'package:qareeb_dash/features/map/bloc/map_controller_cubit/map_controlle
 import 'package:qareeb_dash/features/map/ui/widget/map_widget.dart';
 
 import '../../../../core/util/checker_helper.dart';
+import '../../../../core/util/note_message.dart';
 import '../../../../router/go_route_pages.dart';
+import '../../../map/bloc/search_location/search_location_cubit.dart';
+import '../../../map/ui/widget/search_location_widget.dart';
+import '../../../map/ui/widget/search_widget.dart';
 import '../../bloc/get_edged_point_cubit/get_all_points_cubit.dart';
 
 class PointsPage extends StatefulWidget {
@@ -41,7 +45,22 @@ class _PointsPageState extends State<PointsPage> {
           child: const Icon(Icons.add, color: Colors.white),
         )
             : null,
-        body: MapWidget(initialPoint: LatLng(33.30, 36.16)),
+        body: MapWidget(initialPoint: LatLng(33.30, 36.16), search: () async {
+          NoteMessage.showCustomBottomSheet(
+            context,
+            child: BlocProvider.value(
+              value: context.read<SearchLocationCubit>(),
+              child: SearchWidget(
+                onTap: (SearchLocationItem location) {
+                  Navigator.pop(context);
+                  context
+                      .read<MapControllerCubit>()
+                      .movingCamera(point: location.point, zoom: 15.0);
+                },
+              ),
+            ),
+          );
+        },),
       ),
     );
   }

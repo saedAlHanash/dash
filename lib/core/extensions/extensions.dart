@@ -52,6 +52,15 @@ extension SplitByLength on String {
     }
     return pieces;
   }
+  String get removeSpace => replaceAll(' ', '');
+
+  String get removeDuplicates {
+    List<String> words = split(' ');
+    Set<String> uniqueWords = Set<String>.from(words);
+    List<String> uniqueList = uniqueWords.toList();
+    String output = uniqueList.join(' ');
+    return output;
+  }
 
   bool get canSendToSearch {
     if (isEmpty) false;

@@ -39,10 +39,12 @@ class MapWidget extends StatefulWidget {
     this.onMapReady,
     this.initialPoint,
     this.onMapClick, this.ime,
+        this.search,
   }) : super(key: key);
 
   final Function(MapController controller)? onMapReady;
   final Function(LatLng latLng)? onMapClick;
+    final Function()? search;
   final LatLng? initialPoint;
   final String? ime;
 
@@ -139,6 +141,23 @@ class MapWidgetState extends State<MapWidget> {
           MapTypeSpinner(
             controller: controller,
           ),
+          if (widget.search != null)
+            Positioned(
+              top: 100.0.h,
+              right: 10.0.w,
+              child: MyCardWidget(
+                elevation: 10.0,
+                padding: const EdgeInsets.all(10.0).r,
+                cardColor: AppColorManager.lightGray,
+                child: InkWell(
+                  onTap: widget.search,
+                  child: const Icon(
+                    Icons.search,
+                    color: AppColorManager.mainColor,
+                  ),
+                ),
+              ),
+            ),
         ],
         children: [
           TileLayer(

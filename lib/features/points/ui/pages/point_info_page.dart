@@ -23,6 +23,9 @@ import '../../../../core/util/my_style.dart';
 import '../../../../core/widgets/auto_complete_widget.dart';
 import '../../../../services/osrm/bloc/location_name_cubit/location_name_cubit.dart';
 import '../../../map/bloc/map_controller_cubit/map_controller_cubit.dart';
+import '../../../map/bloc/search_location/search_location_cubit.dart';
+import '../../../map/ui/widget/search_location_widget.dart';
+import '../../../map/ui/widget/search_widget.dart';
 import '../../bloc/creta_point_cubit/create_point_cubit.dart';
 import '../../bloc/delete_edge_cubit/delete_edge_cubit.dart';
 import '../../bloc/delete_point_cubit/delete_point_cubit.dart';
@@ -116,7 +119,7 @@ class _PointInfoPageState extends State<PointInfoPage> {
           listenWhen: (p, c) => c.statuses.done,
           listener: (context, state) {
             tripPoint = state.result;
-            pointNameC.text = tripPoint?.arName ?? '';
+            pointNameC.text = tripPoint?.name ?? '';
             mapController.addMarker(
                 marker: MyMarker(
               point: state.result.getLatLng,
@@ -182,15 +185,15 @@ class _PointInfoPageState extends State<PointInfoPage> {
                           enable: canEdit || createMode,
                           label: ' اسم النقطة (AR)',
                           onChanged: (val) => request.arName = val,
-                          controller: pointNameC,
+                          initialValue: request.arName,
                         ),
                         20.0.verticalSpace,
                         MyTextFormNoLabelWidget(
+                          controller: pointNameC,
                           enable: canEdit || createMode,
                           label: ' اسم النقطة (en)',
                           textDirection: TextDirection.ltr,
                           onChanged: (val) => request.name = val,
-                          initialValue: request.name,
                         ),
                         20.0.verticalSpace,
                         MyTextFormNoLabelWidget(
@@ -356,6 +359,22 @@ class _PointInfoPageState extends State<PointInfoPage> {
                 Expanded(
                   child: MapWidget(
                     initialPoint: request.getLatLng,
+                    search: () async {
+                      NoteMessage.showCustomBottomSheet(
+                        context,
+                        child: BlocProvider.value(
+                          value: context.read<SearchLocationCubit>(),
+                          child: SearchWidget(
+                            onTap: (SearchLocationItem location) {
+                              Navigator.pop(context);
+                              context
+                                  .read<MapControllerCubit>()
+                                  .movingCamera(point: location.point, zoom: 15.0);
+                            },
+                          ),
+                        ),
+                      );
+                    },
                     onMapClick: !createMode
                         ? null
                         : (latLng) {

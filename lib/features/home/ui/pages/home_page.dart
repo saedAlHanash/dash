@@ -39,6 +39,7 @@ import '../../../drivers/bloc/loyalty_cubit/loyalty_cubit.dart';
 import '../../../drivers/ui/pages/drivers_page.dart';
 import '../../../institutions/bloc/delete_institution_cubit/delete_institution_cubit.dart';
 import '../../../institutions/ui/pages/institutions_page.dart';
+import '../../../map/bloc/search_location/search_location_cubit.dart';
 import '../../../pay_to_drivers/bloc/pay_to_cubit/pay_to_cubit.dart';
 import '../../../pay_to_drivers/ui/pages/pay_to_drivers_page.dart';
 import '../../../points/ui/pages/points_page.dart';
@@ -282,6 +283,7 @@ class _HomePageState extends State<HomePage> {
                   return MultiBlocProvider(
                     providers: [
                       BlocProvider(create: (context) => sl<MapControllerCubit>()),
+                      BlocProvider(create: (context) => sl<SearchLocationCubit>()),
                     ],
                     child: const PointsPage(),
                   );

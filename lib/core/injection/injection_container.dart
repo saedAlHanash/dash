@@ -34,6 +34,7 @@ import '../../features/institutions/bloc/delete_institution_cubit/delete_institu
 import '../../features/map/bloc/ather_cubit/ather_cubit.dart';
 import '../../features/map/bloc/map_controller_cubit/map_controller_cubit.dart';
 import '../../features/map/bloc/my_location_cubit/my_location_cubit.dart';
+import '../../features/map/bloc/search_location/search_location_cubit.dart';
 import '../../features/map/bloc/set_point_cubit/map_control_cubit.dart';
 import '../../features/messages/bloc/all_messages/all_messages_cubit.dart';
 import '../../features/points/bloc/creta_edge_cubit/create_edge_cubit.dart';
@@ -136,6 +137,7 @@ Future<void> init() async {
   sl.registerFactory(() => MyLocationCubit());
   sl.registerFactory(() => MapControlCubit());
   sl.registerFactory(() => MapControllerCubit());
+  sl.registerFactory(() => SearchLocationCubit());
 
   sl.registerFactory(() => LocationNameCubit(network: sl()));
   //endregion

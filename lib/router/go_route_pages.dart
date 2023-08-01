@@ -33,6 +33,7 @@ import '../features/institutions/bloc/create_institution_cubit/create_institutio
 import '../features/institutions/bloc/delete_institution_cubit/delete_institution_cubit.dart';
 import '../features/institutions/data/response/institutions_response.dart';
 import '../features/institutions/ui/pages/create_institution_page.dart';
+import '../features/map/bloc/search_location/search_location_cubit.dart';
 import '../features/points/bloc/creta_point_cubit/create_point_cubit.dart';
 import '../features/points/bloc/delete_edge_cubit/delete_edge_cubit.dart';
 import '../features/points/bloc/delete_point_cubit/delete_point_cubit.dart';
@@ -270,6 +271,7 @@ final appGoRouter = GoRouter(
           BlocProvider(create: (_) => di.sl<CreatePointCubit>()),
           BlocProvider(create: (_) => di.sl<CreateEdgeCubit>()),
           BlocProvider(create: (_) => di.sl<DeletePointCubit>()),
+          BlocProvider(create: (_) => di.sl<SearchLocationCubit>()),
         ];
         return MultiBlocProvider(
           providers: providers,
