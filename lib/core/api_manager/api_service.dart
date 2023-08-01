@@ -48,6 +48,32 @@ class APIService {
 
   APIService._internal();
 
+  Uri getUri({
+    required String url,
+    Map<String, dynamic>? query,
+    Map<String, String>? header,
+    String? path,
+    String? hostName,
+  })  {
+    if (query != null) query.removeWhere((key, value) => value == null);
+
+    innerHeader.addAll(header ?? {});
+
+    if (path != null) url = '$url/$path';
+
+    if (query != null) {
+      query.removeWhere((key, value) => value == null);
+      query.forEach((key, value) => query[key] = value.toString());
+    }
+
+    logRequest('${hostName ?? ''}$url', query);
+
+    final uri = Uri.https(hostName ?? baseUrl, url, query);
+
+    return uri;
+  }
+
+
   Future<http.Response> getApi({
     required String url,
     Map<String, dynamic>? query,
@@ -70,6 +96,7 @@ class APIService {
 
     final uri = Uri.https(hostName ?? baseUrl, url, query);
 
+    loggerObject.v(uri.toString());
     final response = await http.get(uri, headers: innerHeader).timeout(
           const Duration(seconds: 40),
           onTimeout: () => http.Response('connectionTimeOut', 481),

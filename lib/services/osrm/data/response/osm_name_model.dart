@@ -1,9 +1,5 @@
 class OsmNameModel {
   OsmNameModel({
-    required this.placeId,
-    required this.licence,
-    required this.osmType,
-    required this.osmId,
     required this.lat,
     required this.lon,
     required this.displayName,
@@ -11,24 +7,16 @@ class OsmNameModel {
     required this.boundingbox,
   });
 
-  final int placeId;
-  final String licence;
-  final String osmType;
-  final int osmId;
-  final String lat;
-  final String lon;
+  final double lat;
+  final double lon;
   final String displayName;
   final Address address;
   final List<String> boundingbox;
 
   factory OsmNameModel.fromJson(Map<String, dynamic> json) {
     return OsmNameModel(
-      placeId: json["place_id"] ?? 0,
-      licence: json["licence"] ?? "",
-      osmType: json["osm_type"] ?? "",
-      osmId: json["osm_id"] ?? 0,
-      lat: json["lat"] ?? "",
-      lon: json["lon"] ?? "",
+      lat: double.tryParse(json["lat"]?.toString() ?? "0.0") ?? 0.0,
+      lon: double.tryParse(json["lon"]?.toString() ?? "0.0") ?? 0.0,
       displayName: json["display_name"] ?? "",
       address: Address.fromJson(json["address"] ?? {}),
       boundingbox: json["boundingbox"] == null
@@ -38,10 +26,6 @@ class OsmNameModel {
   }
 
   Map<String, dynamic> toJson() => {
-        "place_id": placeId,
-        "licence": licence,
-        "osm_type": osmType,
-        "osm_id": osmId,
         "lat": lat,
         "lon": lon,
         "display_name": displayName,
@@ -71,7 +55,7 @@ class Address {
   final String country;
   final String countryCode;
 
-  String getName(){
+  String getName() {
     return '$road $county $stateDistrict $shop';
   }
 

@@ -21,6 +21,7 @@ import 'package:qareeb_dash/features/shared_trip/ui/widget/path_points_widget.da
 import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/my_style.dart';
 import '../../../../core/widgets/auto_complete_widget.dart';
+import '../../../../services/osrm/bloc/location_name_cubit/location_name_cubit.dart';
 import '../../../map/bloc/map_controller_cubit/map_controller_cubit.dart';
 import '../../bloc/creta_point_cubit/create_point_cubit.dart';
 import '../../bloc/delete_edge_cubit/delete_edge_cubit.dart';
@@ -43,15 +44,16 @@ class _PointInfoPageState extends State<PointInfoPage> {
   late final MapControllerCubit mapController;
 
   List<EdgeModel>? edges;
-
   final request = CreatePointRequest();
 
   TripPoint? tripPoint;
+  final pointNameC = TextEditingController();
   var canEdit = false;
 
   @override
   void initState() {
     mapController = context.read<MapControllerCubit>();
+
     super.initState();
   }
 
@@ -114,6 +116,7 @@ class _PointInfoPageState extends State<PointInfoPage> {
           listenWhen: (p, c) => c.statuses.done,
           listener: (context, state) {
             tripPoint = state.result;
+            pointNameC.text = tripPoint?.arName ?? '';
             mapController.addMarker(
                 marker: MyMarker(
               point: state.result.getLatLng,
@@ -179,13 +182,43 @@ class _PointInfoPageState extends State<PointInfoPage> {
                           enable: canEdit || createMode,
                           label: ' اسم النقطة (AR)',
                           onChanged: (val) => request.arName = val,
-                          initialValue: request.arName,
+                          controller: pointNameC,
                         ),
                         20.0.verticalSpace,
                         MyTextFormNoLabelWidget(
                           enable: canEdit || createMode,
                           label: ' اسم النقطة (en)',
+                          textDirection: TextDirection.ltr,
                           onChanged: (val) => request.name = val,
+                          initialValue: request.name,
+                        ),
+                        20.0.verticalSpace,
+                        MyTextFormNoLabelWidget(
+                          enable: canEdit || createMode,
+                          label: 'خطوط الطول والعرض ( 0.00,0.00 )',
+                          onChanged: (val) async {
+                            final listNum = val.split(',');
+                            if (listNum.length <= 2) {
+                              var lat = double.tryParse(listNum.first);
+                              var lng = double.tryParse(listNum.last);
+                              request.lat = lat;
+                              request.lng = lng;
+                              var l = request.getLatLng;
+                              if (l != null) {
+                                mapController.addSingleMarker(
+                                    marker: MyMarker(point: l), moveTo: true);
+                                setState(() {});
+                                if (pointNameC.text.isEmpty) {
+                                  final name = await LocationNameCubit.getLocationNameApi(
+                                      latLng: l);
+
+                                  request.name = name.first;
+
+                                  pointNameC.text = request.name ?? '';
+                                }
+                              }
+                            }
+                          },
                           initialValue: request.name,
                         ),
                         20.0.verticalSpace,
@@ -260,28 +293,16 @@ class _PointInfoPageState extends State<PointInfoPage> {
                                                     .read<PointsCubit>()
                                                     .state
                                                     .getSpinnerItems(
-                                                      reject: [
-                                                        tripPoint?.id, ...edges!
-                                                          .map((e) => e.endPointId)
-                                                          .toList(),
-                                                      ],
-                                                    ),
+                                                  reject: [
+                                                    tripPoint?.id,
+                                                    ...edges!
+                                                        .map((e) => e.endPointId)
+                                                        .toList(),
+                                                  ],
+                                                ),
                                               ),
                                             ),
                                             30.0.verticalSpace,
-                                            // SpinnerWidget(
-                                            //   items: context
-                                            //       .read<PointsCubit>()
-                                            //       .state
-                                            //       .getSpinnerItems(reject: tripPoint?.id),
-                                            //   onChanged: (spinnerItem) {
-                                            //     createEdgeRequest.endPointId =
-                                            //         spinnerItem.id;
-                                            //     createEdgeRequest.endPointLatLng =
-                                            //         (spinnerItem.item as TripPoint)
-                                            //             .getLatLng;
-                                            //   },
-                                            // ),
                                             BlocBuilder<CreateEdgeCubit,
                                                 CreateEdgeInitial>(
                                               builder: (context, state) {

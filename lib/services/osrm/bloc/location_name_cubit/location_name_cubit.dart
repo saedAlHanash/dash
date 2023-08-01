@@ -28,7 +28,7 @@ class LocationNameCubit extends Cubit<LocationNameInitial> {
     required bool isStart,
   }) async {
 
-    final pair = await _getLocationNameApi(latLng: latLng);
+    final pair = await getLocationNameApi(latLng: latLng);
 
 
 
@@ -53,10 +53,9 @@ class LocationNameCubit extends Cubit<LocationNameInitial> {
 
 
 
-  Future<Pair<String?, String?>> _getLocationNameApi({
+static  Future<Pair<String?, String?>> getLocationNameApi({
     required LatLng latLng,
   }) async {
-    if (await network.isConnected) {
       final response = await APIService().getApi(
           url: OsrmUrl.getLocationName,
           hostName: OsrmUrl.hostOsmName,
@@ -73,8 +72,6 @@ class LocationNameCubit extends Cubit<LocationNameInitial> {
       } else {
         return Pair(null, 'Error Map Server  code: ${response.statusCode}');
       }
-    } else {
-      return Pair(null, AppStringManager.noInternet);
-    }
+
   }
 }

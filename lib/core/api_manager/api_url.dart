@@ -85,6 +85,7 @@ class GetUrl {
 }
 
 class PostUrl {
+  static const serverProxy = 'api/services/app/HttpRequestService/ExecuteRequest';
   static const requestOtp = 'api/Auth/RequestOTP';
   static const signup = 'api/services/app/Account/Register';
   static const acceptPolicy = 'api/services/app/AcceptPolicy/Create';
@@ -199,8 +200,7 @@ class OrsUrl {
 
 class OsrmUrl {
   static const getRoutePoints = 'route/v1/driving';
-  static const getLocationName =
-      'reverse/?lat=33.50189625951751&lon=36.25612735748291&format=json';
+  static const getLocationName = 'reverse';
   static const hostName = 'router.project-osrm.org';
   static const hostOsmName = 'nominatim.openstreetmap.org';
   static const key = '5b3ce3597851110001cf6248989ba286fa3c483496378107c01120f3';

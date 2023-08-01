@@ -56,6 +56,7 @@ import '../features/trip/ui/pages/trip_info_page.dart';
 import '../features/wallet/bloc/debt_cubit/debts_cubit.dart';
 import '../features/wallet/bloc/my_wallet_cubit/my_wallet_cubit.dart';
 import '../features/wallet/ui/pages/debts_page.dart';
+import '../services/osrm/bloc/location_name_cubit/location_name_cubit.dart';
 
 final appGoRouter = GoRouter(
   routes: <GoRoute>[
@@ -264,6 +265,7 @@ final appGoRouter = GoRouter(
           BlocProvider(
               create: (_) => di.sl<EdgesPointCubit>()..getAllEdgesPoint(context, id: id)),
           BlocProvider(create: (_) => di.sl<DeleteEdgeCubit>()),
+          BlocProvider(create: (_) => di.sl<LocationNameCubit>()),
           BlocProvider(create: (_) => di.sl<MapControllerCubit>()),
           BlocProvider(create: (_) => di.sl<CreatePointCubit>()),
           BlocProvider(create: (_) => di.sl<CreateEdgeCubit>()),

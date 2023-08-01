@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:qareeb_dash/core/api_manager/api_url.dart';
-import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_dash/core/api_manager/server_proxy/server_proxy_request.dart';
+import 'package:qareeb_dash/core/api_manager/server_proxy/server_proxy_service.dart';
 
 import '../../../../core/api_manager/api_service.dart';
 import '../../../../core/error/error_manager.dart';
@@ -24,14 +27,29 @@ class CreateEdgeCubit extends Cubit<CreateEdgeInitial> {
   }) async {
     emit(state.copyWith(statuses: CubitStatuses.loading));
 
-    final saed = await APIService().getApiProxyPayed(
-        url: 'https://router.project-osrm.org/route/v1/driving',
-        path:
-            '${request.startPointLatLng?.longitude},${request.startPointLatLng?.latitude};'
-            '${request.endPointLatLng?.longitude},${request.endPointLatLng?.latitude}');
+    final saed = await getServerProxyApi(
+      request: ApiServerRequest(
+        url: APIService()
+            .getUri(
+              url: 'route/v1/driving',
+              hostName: 'router.project-osrm.org',
+              path:
+                  '${request.startPointLatLng?.longitude},${request.startPointLatLng?.latitude};'
+                  '${request.endPointLatLng?.longitude},${request.endPointLatLng?.latitude}',
+            )
+            .toString(),
+      ),
+    );
 
-    if (saed.statusCode == 200) {
-      final osrm = OsrmModel.fromJson(saed.jsonBody);
+    // final saed = await APIService().getApiProxyPayed(
+    //   url: 'https://router.project-osrm.org/route/v1/driving',
+    //   path:
+    //       '${request.startPointLatLng?.longitude},${request.startPointLatLng?.latitude};'
+    //       '${request.endPointLatLng?.longitude},${request.endPointLatLng?.latitude}',
+    // );
+
+    if (saed.first !=null) {
+      final osrm = OsrmModel.fromJson(jsonDecode(saed.first));
 
       request.distance = osrm.routes.first.distance;
       request.steps = osrm.routes.first.geometry;
