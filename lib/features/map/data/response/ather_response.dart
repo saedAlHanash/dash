@@ -21,6 +21,7 @@ class AtherResponse {
 class Ime {
   Ime({
     required this.name,
+    required this.imei,
     required this.dtServer,
     required this.dtTracker,
     required this.lat,
@@ -32,6 +33,7 @@ class Ime {
   });
 
   final String name;
+  final String imei;
   final DateTime? dtServer;
   final DateTime? dtTracker;
   final double lat;
@@ -46,6 +48,7 @@ class Ime {
   factory Ime.fromJson(Map<String, dynamic> json) {
     return Ime(
       name: json["name"] ?? "",
+      imei: json["imei"] ?? "",
       dtServer: DateTime.tryParse(json["dt_server"] ?? ""),
       dtTracker: DateTime.tryParse(json["dt_tracker"] ?? ""),
       lat: double.parse(json["lat"] ?? '0.0'),
@@ -59,6 +62,7 @@ class Ime {
 
   Map<String, dynamic> toJson() => {
         "name": name,
+        "imei": imei,
         "dt_server": dtServer?.toIso8601String(),
         "dt_tracker": dtTracker?.toIso8601String(),
         "lat": lat,

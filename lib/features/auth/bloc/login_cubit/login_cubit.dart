@@ -38,7 +38,7 @@ class LoginCubit extends Cubit<LoginInitial> {
     } else {
       AppSharedPreference.cashMyId(pair.first!.userId);
       AppSharedPreference.cashInstitutionId(pair.first!.institutionId);
-      AppSharedPreference.cashUser(pair.first!);
+      // AppSharedPreference.cashUser(pair.first!);
       AppSharedPreference.cashEmail(request.email!);
 
       AppSharedPreference.cashToken(pair.first!.accessToken);
@@ -68,7 +68,11 @@ class LoginCubit extends Cubit<LoginInitial> {
       );
 
       if (response.statusCode == 200) {
-        return Pair(LoginResponse.fromJson(response.jsonBody).result, null);
+        final result = LoginResponse.fromJson(response.jsonBody).result;
+        if (result.userType != UserType.institutionAdmin) {
+          return Pair(null, 'الحساب المدخل ليس حساب مؤسسة');
+        }
+        return Pair(result, null);
       } else {
         return Pair(null, ErrorManager.getApiError(response));
       }
@@ -88,10 +92,7 @@ class LoginCubit extends Cubit<LoginInitial> {
         final json = response.jsonBody['result'] ?? <String, dynamic>{};
 
         return Pair(
-            json == null
-                ? <String>[]
-                : List<String>.from(json!.map((x) => x)),
-            null);
+            json == null ? <String>[] : List<String>.from(json!.map((x) => x)), null);
       } else {
         return Pair(null, ErrorManager.getApiError(response));
       }

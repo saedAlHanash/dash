@@ -1,5 +1,6 @@
 import 'dart:html';
 
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -22,6 +23,7 @@ import '../../bloc/all_bus_trips_cubit/all_bus_trips_cubit.dart';
 import '../../bloc/bus_trip_by_id_cubit/bus_trip_by_id_cubit.dart';
 import '../../bloc/create_bus_trip_cubit/create_bus_trip_cubit.dart';
 import '../../data/request/create_bus_trip_request.dart';
+import 'package:multi_select_flutter/multi_select_flutter.dart';
 
 class CreateBusTripPage extends StatefulWidget {
   const CreateBusTripPage({super.key});
@@ -37,6 +39,7 @@ class _CreateBusTripPageState extends State<CreateBusTripPage> {
   final endDateC = TextEditingController();
   final startTimeC = TextEditingController();
   final endTimeC = TextEditingController();
+  final bussesC = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -193,13 +196,49 @@ class _CreateBusTripPageState extends State<CreateBusTripPage> {
                               if (state.statuses.loading) {
                                 return MyStyle.loadingWidget();
                               }
-                              return SpinnerOutlineTitle(
-                                sendFirstItem: true,
-                                width: double.infinity,
-                                items: state.getSpinnerItem,
-                                label: 'الباص',
-                                onChanged: (spinnerItem) =>
-                                    request.busId = spinnerItem.id,
+                              bussesC.text =
+                                  state.getNames(request.busesId).toString();
+
+                              void showMultiSelect() async {
+                                await showModalBottomSheet(
+                                  isScrollControlled: true,
+                                  // required for min/max child size
+                                  context: context,
+                                  builder: (ctx) {
+                                    return Padding(
+                                      padding:
+                                          const EdgeInsets.symmetric(horizontal: 200.0).r,
+                                      child: MultiSelectBottomSheet<int>(
+                                        searchable: true,
+                                        items: state.getSpinnerItem.mapIndexed(
+                                          (i, e) {
+                                            return MultiSelectItem<int>(e.id, e.name);
+                                          },
+                                        ).toList(),
+                                        initialValue: request.busesId,
+                                        onConfirm: (values) {
+                                          request.busesId
+                                            ..clear()
+                                            ..addAll(values);
+                                          bussesC.text =
+                                              state.getNames(request.busesId).toString();
+                                        },
+                                      ),
+                                    );
+                                  },
+                                );
+                              }
+
+                              return MyTextFormNoLabelWidget(
+                                label: 'وقت نهاية الرحلة',
+                                controller: bussesC,
+                                disableAndKeepIcon: true,
+                                textDirection: TextDirection.ltr,
+                                iconWidget: IconButton(
+                                    onPressed: () async {
+                                      showMultiSelect();
+                                    },
+                                    icon: const Icon(Icons.bus_alert_rounded)),
                               );
                             },
                           ),

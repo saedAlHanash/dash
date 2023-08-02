@@ -69,7 +69,6 @@ class AppSharedPreference {
 
   static cashInstitutionId(int id) {
 
-
     _prefs?.setString('_institutionId', id.toString());
   }
 
@@ -77,17 +76,17 @@ class AppSharedPreference {
 
     return int.parse(_prefs?.getString('_institutionId') ?? '0');
   }
-
-  static cashUser(LoginResult user) {
-    final string = jsonEncode(user);
-    _prefs?.setString(_user, string);
-  }
-
-  static LoginResult get getUser {
-    final string = _prefs?.getString(_user) ?? '{}';
-
-    return LoginResult.fromJson(jsonDecode(string));
-  }
+  //
+  // static cashUser(LoginResult user) {
+  //   final string = jsonEncode(user);
+  //   _prefs?.setString(_user, string);
+  // }
+  //
+  // static LoginResult get getUser {
+  //   final string = _prefs?.getString(_user) ?? '{}';
+  //
+  //   return LoginResult.fromJson(jsonDecode(string));
+  // }
 
   static String getToken() {
     return _prefs?.getString(_token) ?? '';

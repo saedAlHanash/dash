@@ -47,8 +47,8 @@ class SearchLocationCubit extends Cubit<SearchLocationInitial> {
         query: {
           'q': state.request,
           'dedupe': 0,
-          'accept-language': 'ar',
-          'countrycodes': 'sy',
+          // 'accept-language': 'ar',
+          // 'countrycodes': 'sy',
           'format': 'jsonv2'
         },
       );

@@ -32,8 +32,8 @@ class SearchLocationResult {
 
   factory SearchLocationResult.fromJson(Map<String, dynamic> json) {
     return SearchLocationResult(
-      lat: double.parse(json["lat"] ?? "0.0"),
-      lon: double.parse(json["lon"] ?? "0.0"),
+      lat: double.parse(json["lat"]?.toString() ?? "0.0"),
+      lon: double.parse(json["lon"]?.toString() ?? "0.0"),
       displayName: json["display_name"] ?? "",
       icon: json["icon"] ?? "",
     );

@@ -35,6 +35,7 @@ class Assets {
   static const String iconsInstagram = 'assets/icons/instagram.svg';
   static const String iconsLicence = 'assets/icons/licence.png';
   static const String iconsLinkedin = 'assets/icons/linkedin.svg';
+  static const String iconsLocator = 'assets/icons/locator.svg';
   static const String iconsLogoWithText = 'assets/icons/logo_with_text.svg';
   static const String iconsLogoWithoutText = 'assets/icons/logo_without_text.svg';
   static const String iconsMadarat = 'assets/icons/madarat.jpg';

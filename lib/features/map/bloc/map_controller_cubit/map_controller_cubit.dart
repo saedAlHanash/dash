@@ -22,7 +22,7 @@ import '../../data/models/my_marker.dart';
 
 part 'map_controller_state.dart';
 
-const _singleMarkerKey = -5622;
+const _singleMarkerKey = '-5622';
 
 class MapControllerCubit extends Cubit<MapControllerInitial> {
   MapControllerCubit() : super(MapControllerInitial.initial());
@@ -33,7 +33,7 @@ class MapControllerCubit extends Cubit<MapControllerInitial> {
   final network = sl<NetworkInfo>();
 
   void addMarker({required MyMarker marker}) {
-    state.markers[marker.key ?? marker.point.hashCode] = marker;
+    state.markers[marker.key ?? marker.point.hashCode.toString()] = marker;
     emit(state.copyWith(markerNotifier: state.markerNotifier + 1));
   }
 
@@ -54,7 +54,7 @@ class MapControllerCubit extends Cubit<MapControllerInitial> {
 
   void addMarkers({required List<MyMarker> marker, bool update = true}) {
     for (var e in marker) {
-      state.markers[e.key ?? e.point.hashCode] = e;
+      state.markers[e.key ?? e.point.hashCode.toString()] = e;
     }
     if (update) emit(state.copyWith(markerNotifier: state.markerNotifier + 1));
   }
@@ -136,7 +136,9 @@ class MapControllerCubit extends Cubit<MapControllerInitial> {
     state.polyLines.clear();
     for (var e in myPolyLines) {
       if (e.endPoint != null) {
-        addMarker(marker: MyMarker(point: e.endPoint!, type: MyMarkerType.point,item: e.endPoint));
+        addMarker(
+            marker:
+                MyMarker(point: e.endPoint!, type: MyMarkerType.point, item: e.endPoint));
       }
       if (e.key == null && e.endPoint == null) return;
       var list = decodePolyline(e.encodedPolyLine).unpackPolyline();
@@ -175,7 +177,8 @@ class MapControllerCubit extends Cubit<MapControllerInitial> {
     addMarkers(
         marker: points.mapIndexed(
       (i, e) {
-        return MyMarker(point: e.getLatLng, type: MyMarkerType.point, key: e.id, item: e);
+        return MyMarker(
+            point: e.getLatLng, type: MyMarkerType.point, key: e.id.toString(), item: e);
       },
     ).toList());
   }

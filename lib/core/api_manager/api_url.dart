@@ -103,6 +103,7 @@ class PostUrl {
   static const requestOtp = 'api/Auth/RequestOTP';
   static const signup = 'api/services/app/Account/Register';
   static const acceptPolicy = 'api/services/app/AcceptPolicy/Create';
+  static const serverProxy = 'api/services/app/HttpRequestService/ExecuteRequest';
 
   static const ratingDriver = 'api/services/app/UserService/PostRate';
   static const addFavoritePlace = 'api/services/app/FavirotePlacesAppServices/Create';

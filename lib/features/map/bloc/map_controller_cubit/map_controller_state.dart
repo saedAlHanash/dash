@@ -15,7 +15,7 @@ class MapControllerInitial {
   final double zoom;
 
   ///all markers that set over map
-  final Map<num, MyMarker> markers = {};
+  final Map<String, MyMarker> markers = {};
 
   ///all poly lines that drawn over Map,
   ///Key is hash is : end point hashing (for find and delete )

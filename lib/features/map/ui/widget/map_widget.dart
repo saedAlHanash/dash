@@ -41,14 +41,14 @@ class MapWidget extends StatefulWidget {
     this.onMapReady,
     this.initialPoint,
     this.onMapClick,
-        this.search,
+    this.search,
     this.ime,
   }) : super(key: key);
 
   final Function(MapController controller)? onMapReady;
   final Function(LatLng latLng)? onMapClick;
   final LatLng? initialPoint;
-    final Function()? search;
+  final Function()? search;
   final String? ime;
 
   GlobalKey<MapWidgetState> getKey() {
@@ -185,32 +185,6 @@ class MapWidgetState extends State<MapWidget> {
               );
             },
           ),
-          BlocBuilder<AtherCubit, AtherInitial>(
-            builder: (context, state) {
-              return AnimatedMarkerLayer(
-                options: AnimatedMarkerLayerOptions(
-                  duration: const Duration(seconds: 6),
-                  marker: Marker(
-                    width: 75.0.spMin,
-                    height: 75.0.spMin,
-                    point: state.result.getLatLng(),
-                    builder: (_) {
-                      return Center(
-                        child: Transform.rotate(
-                          angle: -bearing,
-                          child: ImageMultiType(
-                            url: Assets.iconsCarTopView,
-                            height: 200.0.spMin,
-                            width: 200.0.spMin,
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              );
-            },
-          ),
         ],
       ),
     );
@@ -276,104 +250,7 @@ class MapTypeSpinner extends StatelessWidget {
 
 class MapHelper {
   static List<Marker> initMarker(MapControllerInitial state) {
-    return state.markers.values.mapIndexed(
-      (i, e) {
-        if (e.type == MyMarkerType.point) {
-          return Marker(
-            point: e.point,
-            height: 70.0.spMin,
-            width: 70.0.spMin,
-            builder: (context) {
-              return InkWell(
-                onTap: () {
-                  context.pushNamed(
-                    GoRouteName.pointInfo,
-                    queryParams: {'id': e.item.id.toString()},
-                  );
-                },
-                child: Column(
-                  children: [
-                    Container(
-                      height: 40.spMin,
-                      width: 40.spMin,
-                      padding: const EdgeInsets.all(5.0).r,
-                      decoration: const BoxDecoration(
-                        color: AppColorManager.black,
-                        shape: BoxShape.circle,
-                      ),
-                      child: ImageMultiType(
-                        url: Assets.iconsLogoWithoutText,
-                        color: Colors.white,
-                        height: 30.0.spMin,
-                        width: 30.0.spMin,
-                      ),
-                    ),
-                    if (e.item is TripPoint)
-                      Container(
-                        width: 70.0.spMin,
-                        color: Colors.white,
-                        padding: const EdgeInsets.all(3.0).r,
-                        child: DrawableText(
-                          text: (e.item as TripPoint).arName,
-                          size: 12.0.sp,
-                          maxLines: 1,
-                          matchParent: true,
-                          textAlign: TextAlign.center,
-                        ),
-                      )
-                  ],
-                ),
-              );
-            },
-          );
-        }
-        var isPoint = e.type == MyMarkerType.sharedPint;
-        return Marker(
-          point: e.point,
-          height: !isPoint ? 40.0.spMin : 150.0.spMin,
-          width: !isPoint ? 40.0.spMin : 150.0.spMin,
-          builder: (context) {
-            return (e.type == MyMarkerType.sharedPint)
-                ? Builder(builder: (context) {
-                    var nou = 0;
-                    // if (state.additional != null && state.additional is SharedTrip) {
-                    //   nou = (state.additional as SharedTrip).nou(e.point);
-                    // }
-                    return Column(
-                      children: [
-                        if (nou != 0)
-                          Container(
-                            height: 35.0.spMin,
-                            width: 70.0.spMin,
-                            margin: EdgeInsets.only(bottom: 5.0.spMin),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(5.0.r),
-                            ),
-                            alignment: Alignment.center,
-                            child: DrawableText(
-                              text: '$nou مقعد',
-                              color: Colors.black,
-                              size: 12.0.sp,
-                            ),
-                          ),
-                        ImageMultiType(
-                          url: i.iconPoint,
-                          height: 50.0.spMin,
-                          width: 50.0.spMin,
-                        ),
-                      ],
-                    );
-                  })
-                : ImageMultiType(
-                    url: Assets.iconsMainColorMarker,
-                    height: 40.0.spMin,
-                    width: 40.0.spMin,
-                  );
-          },
-        );
-      },
-    ).toList();
+    return state.markers.values.mapIndexed((i, e) => e.getWidget(i)).toList();
   }
 
   static List<Polyline> initPolyline(MapControllerInitial state) {

@@ -23,7 +23,7 @@ class CreateSuperUserRequest {
    String? phone;
    String? userName;
    String? password;
-   num? busId;
+   int? busId;
    num? institutionId;
 
   factory CreateSuperUserRequest.fromJson(Map<String, dynamic> json){

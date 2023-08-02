@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/widgets/images/round_image_widget.dart';
+import 'package:qareeb_dash/core/widgets/my_text_form_widget.dart';
 import 'package:qareeb_dash/core/widgets/not_found_widget.dart';
 import 'package:qareeb_dash/core/widgets/saed_taple_widget.dart';
 
@@ -17,9 +18,10 @@ import '../../bloc/all_member_cubit/all_member_cubit.dart';
 
 final _super_userList = [
   'ID',
-  'صورة',
+
   'اسم الطالب',
-  'عنوان الطالب',
+  'اسم المستخدم',
+  'كلمة المرور',
   'حالة الاشتراك في النقل',
   'عمليات الاشتراكات',
   'عمليات',
@@ -60,15 +62,12 @@ class MembersPage extends StatelessWidget {
                     .mapIndexed(
                       (index, e) => [
                         e.id.toString(),
-                        Center(
-                          child: RoundImageWidget(
-                            url: e.imageUrl,
-                            height: 40.0.r,
-                            width: 40.0.r,
-                          ),
-                        ),
                         e.fullName,
-                        e.address,
+                        e.userName,
+                        MyTextFormWidget(
+                          initialValue: e.password,
+                          obscureText: true,
+                        ),
                         (e.subscriptions.isEmpty || !e.subscriptions.last.isActive)
                             ? 'غير مشترك'
                             : (e.subscriptions.last.isNotExpired)

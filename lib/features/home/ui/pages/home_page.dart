@@ -21,6 +21,9 @@ import '../../../buses/bloc/delete_buss_cubit/delete_buss_cubit.dart';
 import '../../../buses/ui/pages/buses_page.dart';
 import '../../../drivers/bloc/loyalty_cubit/loyalty_cubit.dart';
 import '../../../drivers/ui/pages/drivers_page.dart';
+import '../../../map/bloc/ather_cubit/ather_cubit.dart';
+import '../../../map/bloc/map_controller_cubit/map_controller_cubit.dart';
+import '../../../map/bloc/set_point_cubit/map_control_cubit.dart';
 import '../../../members/ui/pages/memberss_page.dart';
 import '../../../super_user/bloc/delete_super_user_cubit/delete_super_user_cubit.dart';
 import '../../../super_user/ui/pages/super_users_page.dart';
@@ -154,7 +157,9 @@ class _HomePageState extends State<HomePage> {
                 case NamePaths.home:
                   return MultiBlocProvider(
                     providers: [
-                      BlocProvider(create: (context) => sl<LoyaltyCubit>()),
+                      BlocProvider(create: (context) => sl<AtherCubit>()),
+                      BlocProvider(create: (context) => sl<MapControlCubit>()),
+                      BlocProvider(create: (context) => sl<MapControllerCubit>()),
                     ],
                     child: const DashboardPage(),
                   );

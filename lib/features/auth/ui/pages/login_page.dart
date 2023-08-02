@@ -57,9 +57,10 @@ class _LoginPageState extends State<LoginPage> {
           height: double.infinity,
           width: double.infinity,
           padding: MyStyle.pagePadding,
-          margin: EdgeInsets.symmetric(horizontal: 0.2.sw),
           alignment: Alignment.center,
           child: MyCardWidget(
+            elevation: 10.0,
+            margin: EdgeInsets.symmetric(horizontal: 0.3.sw),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [

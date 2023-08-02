@@ -60,7 +60,7 @@ class SuperUserModel {
   final String phone;
   final String userName;
   final String password;
-  final num busId;
+  final int busId;
   final BusModel bus;
   final num institutionId;
   final int id;

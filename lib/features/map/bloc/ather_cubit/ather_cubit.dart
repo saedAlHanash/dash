@@ -1,8 +1,11 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:qareeb_dash/core/api_manager/server_proxy/server_proxy_request.dart';
+import 'package:qareeb_dash/core/api_manager/server_proxy/server_proxy_service.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/util/shared_preferences.dart';
 import 'package:qareeb_dash/features/map/bloc/map_controller_cubit/map_controller_cubit.dart';
@@ -22,61 +25,6 @@ class AtherCubit extends Cubit<AtherInitial> {
   AtherCubit() : super(AtherInitial.initial());
 
   final network = sl<NetworkInfo>();
-
-  Future<void> getDriverLocation() async {
-    if (isClosed) return;
-    //
-    // final p = await Geolocator.getCurrentPosition();
-    //
-    // emit(
-    //   state.copyWith(
-    //     statuses: CubitStatuses.done,
-    //     result: Ime.fromJson(
-    //       {
-    //         'lat': p.latitude.toString(),
-    //         'lng': p.longitude.toString(),
-    //       },
-    //     ),
-    //   ),
-    // );
-    // return;
-
-    var ime = AppSharedPreference.ime;
-
-    if (ime.isEmpty) return;
-
-    final pair = await _getDriverLocationApi(ime);
-
-    if (pair.first != null) {
-      if (isClosed) return;
-      emit(state.copyWith(statuses: CubitStatuses.done, result: pair.first));
-    }
-  }
-
-  void trackCar(bool track) => emit(state.copyWith(trackCar: track));
-
-  Future<Pair<Ime?, String?>> _getDriverLocationApi(String ime) async {
-    // var ime = '359632104211708';
-    if (await network.isConnected) {
-      final response = await APIService().getApi(
-          url: 'api/api.php',
-          query: {
-            'api': 'user',
-            'ver': '1.0',
-            'key': '5BE3080722588655FE55B8E89B765827',
-            'cmd': 'OBJECT_GET_LOCATIONS,$ime',
-          },
-          hostName: 'admin.alather.net');
-
-      if (response.statusCode == 200) {
-        return Pair(AtherResponse.fromJson(response.jsonBody, ime).ime, null);
-      } else {
-        return Pair(null, ErrorManager.getApiError(response));
-      }
-    } else {
-      return Pair(null, AppStringManager.noInternet);
-    }
-  }
 
   static Future<num> getDriverDistance({
     required String ime,
@@ -118,25 +66,33 @@ class AtherCubit extends Cubit<AtherInitial> {
     }
   }
 
-  static Future<void> getAll() async {
-    final response = await APIService().getApi(
-        url: 'api/api.php',
-        query: {
-          'api': 'user',
-          'ver': '1.0',
-          'key': '135890C8CF4DBE10B0E33F89B03770F1',
-          'cmd': 'USER_GET_OBJECTS',
-        },
-        header: {'Access-Control-Allow-Origin': '*'},
-        hostName: 'admin.alather.net');
+  Future<void> getAll({String? ime}) async {
+    final pair = await getServerProxyApi(
+      printResponse: false,
+      request: ApiServerRequest(
+        url: APIService()
+            .getUri(
+              url: 'api/api.php',
+              query: {
+                'api': 'user',
+                'ver': '1.0',
+                'key': '135890C8CF4DBE10B0E33F89B03770F1',
+                'cmd': 'USER_GET_OBJECTS',
+              },
+              header: {'Access-Control-Allow-Origin': '*'},
+              hostName: 'admin.alather.net',
+            )
+            .toString(),
+      ),
+    );
 
-    if (response.statusCode == 200) {
-      final list = response.jsonBody;
+    if (pair.first != null) {
+      final list = jsonDecode(pair.first);
       final x = <Ime>[];
       for (var e in list) {
         x.add(Ime.fromJson(e));
       }
-
+      emit(state.copyWith(allCars: x));
     }
   }
 }

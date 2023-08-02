@@ -50,6 +50,31 @@ class APIService {
 
   APIService._internal();
 
+  Uri getUri({
+    required String url,
+    Map<String, dynamic>? query,
+    Map<String, String>? header,
+    String? path,
+    String? hostName,
+  }) {
+    if (query != null) query.removeWhere((key, value) => value == null);
+
+    innerHeader.addAll(header ?? {});
+
+    if (path != null) url = '$url/$path';
+
+    if (query != null) {
+      query.removeWhere((key, value) => value == null);
+      query.forEach((key, value) => query[key] = value.toString());
+    }
+
+    logRequest('${hostName ?? ''}$url', query);
+
+    final uri = Uri.https(hostName ?? baseUrl, url, query);
+
+    return uri;
+  }
+
   Future<http.Response> getApi({
     required String url,
     Map<String, dynamic>? query,
@@ -142,6 +167,7 @@ class APIService {
     Map<String, dynamic>? query,
     Map<String, String>? header,
     String? hostName,
+    bool printResponse = true,
   }) async {
     if (body != null) body.removeWhere((key, value) => value == null);
 
@@ -162,7 +188,11 @@ class APIService {
               onTimeout: () => http.Response('connectionTimeOut', 481),
             );
 
-    logResponse(url, response);
+    if (printResponse) {
+      logResponse(url, response);
+    } else {
+      logResponse(url, http.Response('', response.statusCode));
+    }
 
     return response;
   }
@@ -317,10 +347,9 @@ class APIService {
 
     return _serverDate!;
   }
-
 }
 
-  DateTime get getServerDate => _serverDate ?? DateTime.now();
+DateTime get getServerDate => _serverDate ?? DateTime.now();
 
 void logRequest(String url, Map<String, dynamic>? q, {String? additional}) {
   if (url.contains('api.php')) return;

@@ -30,6 +30,28 @@ class AllBusesInitial extends Equatable {
     return list;
   }
 
+  List<String> getNames(List<int> selected) {
+    final list = <String>[];
+    for (var e in result) {
+      if (!selected.contains(e.id)) continue;
+      list.add(e.driverName);
+    }
+    return list;
+  }
+
+  List<SpinnerItem> getSpinnerSuperUser({int? selected}) {
+    final list = <SpinnerItem>[];
+    for (var e in result) {
+      list.add(SpinnerItem(
+          id: e.id,
+          name: e.driverName,
+          item: e,
+          enable: e.supervisors.isEmpty,
+          isSelected: selected == e.id));
+    }
+    return list;
+  }
+
   @override
   List<Object> get props => [statuses, result, error];
 

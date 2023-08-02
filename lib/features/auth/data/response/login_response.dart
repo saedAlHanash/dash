@@ -1,3 +1,5 @@
+import '../../../../core/strings/enum_manager.dart';
+
 class LoginResponse {
   LoginResponse({
     required this.result,
@@ -22,7 +24,7 @@ class LoginResult {
     required this.encryptedAccessToken,
     required this.institutionId,
     required this.userId,
-    required this.userTrip,
+    required this.userType,
     required this.accepctPolicy,
   });
 
@@ -30,7 +32,7 @@ class LoginResult {
   final String encryptedAccessToken;
   final int institutionId;
   final int userId;
-  final String userTrip;
+  final UserType userType;
   final bool accepctPolicy;
 
   factory LoginResult.initial() {
@@ -43,7 +45,7 @@ class LoginResult {
       encryptedAccessToken: json["encryptedAccessToken"] ?? "",
       institutionId: json["institutionId"] ?? 0,
       userId: json["userId"] ?? 0,
-      userTrip: json["userTrip"] ?? "",
+      userType: UserType.values[json["userType"] ?? 0],
       accepctPolicy: json["accepctPolicy"] ?? false,
     );
   }
@@ -53,7 +55,7 @@ class LoginResult {
         "encryptedAccessToken": encryptedAccessToken,
         "institutionId": institutionId,
         "userId": userId,
-        "userTrip": userTrip,
+        "userType": userType,
         "accepctPolicy": accepctPolicy,
       };
 }

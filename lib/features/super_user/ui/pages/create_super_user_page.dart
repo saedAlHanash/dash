@@ -119,7 +119,7 @@ class _CreateSuperUserPageState extends State<CreateSuperUserPage> {
                             return MyStyle.loadingWidget();
                           }
                           return SpinnerOutlineTitle(
-                            items: state.getSpinnerItem,
+                            items: state.getSpinnerSuperUser(selected: request.busId),
                             label: 'الباص',
                             onChanged: (spinnerItem) => request.busId = spinnerItem.id,
                           );

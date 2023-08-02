@@ -1,32 +1,46 @@
 {
-  "result": {
-    "totalCount": 2,
-    "items": [
-      {
-        "name": "dfads",
-        "tripTemplateId": 4,
-        "institutionId": 4,
-        "pathId": 12,
-        "path": {
-          "sa": 0
-        },
-        "description": "fasdf",
-        "distance": 14376,
-        "busId": 7,
-        "bus": {
-          "ime": "51651656"
-        },
-        "creationDate": "2023-07-27T02:45:09.102215",
-        "startDate": "2023-07-27T03:15:58.371",
-        "endDate": "2023-07-27T04:20:01.758",
-        "busTripType": 0,
-        "days": [
-          0,
-          2,
-          4
-        ],
-        "id": 2
-      }
-    ]
-  }
+  "result": [
+    {
+      "name": "الخط الثاني",
+      "tripTemplateId": 4,
+      "institutionId": 4,
+      "pathId": 12,
+      "path": null,
+      "description": "لا يوجد",
+      "distance": 14376,
+      "buses": [
+        {
+          "ime": "32165165",
+          "driverName": "محمود المس",
+          "driverPhone": "9639388915222",
+          "busModel": "كيا ",
+          "busColor": "أبيض",
+          "busNumber": "1351813",
+          "seatsNumber": 30,
+          "institutionId": 4,
+          "institution": null,
+          "supervisors": null,
+          "id": 9
+        }
+      ],
+      "creationDate": "2023-07-31T16:02:50.694179",
+      "startDate": "2023-07-31T16:00:00",
+      "endDate": "2023-08-23T17:17:00",
+      "busTripType": 0,
+      "days": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "attendances": [],
+      "id": 8
+    }
+  ],
+  "targetUrl": null,
+  "success": true,
+  "error": null,
+  "unAuthorizedRequest": false,
+  "__abp": true
 }

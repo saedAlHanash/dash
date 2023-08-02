@@ -15,7 +15,7 @@ class CreateBusTripRequest {
     this.tripTemplateId,
     this.pathId,
     this.distance,
-    this.busId,
+
     this.startDate,
     this.endDate,
     this.busTripType = BusTripType.go,
@@ -28,7 +28,7 @@ class CreateBusTripRequest {
   num? pathId;
   String? description;
   num? distance;
-  num? busId;
+  List<int> busesId = [];
   DateTime? startDate;
   DateTime? endDate;
   BusTripType busTripType;
@@ -47,7 +47,7 @@ class CreateBusTripRequest {
       pathId: json["pathId"] ?? 0,
       description: json["description"] ?? "",
       distance: json["distance"] ?? 0,
-      busId: json["busId"] ?? 0,
+
       startDate: DateTime.tryParse(json["startDate"] ?? ""),
       endDate: DateTime.tryParse(json["endDate"] ?? ""),
       busTripType: json["busTripType"] ?? "",
@@ -62,7 +62,7 @@ class CreateBusTripRequest {
         "pathId": pathId,
         "description": description,
         "distance": distance,
-        "busId": busId,
+        "busIds": busesId,
         "startDate": startDate?.toIso8601String(),
         "endDate": endDate?.toIso8601String(),
         "busTripType": busTripType.index,
@@ -70,20 +70,18 @@ class CreateBusTripRequest {
       };
 
   CreateBusTripRequest fromBusTrip(BusTripModel model) {
-   return CreateBusTripRequest(
-        id:model.id,
-        name:model.name,
-        description:model.description,
-        tripTemplateId:model.tripTemplateId,
-        pathId:model.pathId,
-        distance:model.distance,
-        busId:model.busId,
-        startDate:model.startDate,
-        endDate:model.endDate,
-        busTripType:model.busTripType,
-        days:model.days,
-    );
-
+    return CreateBusTripRequest(
+      id: model.id,
+      name: model.name,
+      description: model.description,
+      tripTemplateId: model.tripTemplateId,
+      pathId: model.pathId,
+      distance: model.distance,
+      startDate: model.startDate,
+      endDate: model.endDate,
+      busTripType: model.busTripType,
+      days: model.days,
+    )..busesId = model.buses.map((e) => e.id).toList();
   }
 
   bool validateRequest(BuildContext context) {
@@ -101,7 +99,7 @@ class CreateBusTripRequest {
       return false;
     }
 
-    if (busId == null) {
+    if (busesId .isEmpty) {
       NoteMessage.showErrorSnackBar(message: 'خطأ في الباص', context: context);
       return false;
     }
