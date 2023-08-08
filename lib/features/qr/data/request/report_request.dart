@@ -1,29 +1,24 @@
+import 'package:qareeb_super_user/core/util/shared_preferences.dart';
+
 class ReportRequest {
   ReportRequest({
-    this.busTripId,
-    this.busMemberId,
-    this.date,
-    this.attendanceType,
+    required this.busMemberId,
+    required this.date,
   });
 
-  num? busTripId;
-  num? busMemberId;
-  DateTime? date;
-  String? attendanceType;
+  num busMemberId;
+  DateTime date;
 
   factory ReportRequest.fromJson(Map<String, dynamic> json) {
     return ReportRequest(
-      busTripId: json["busTripId"] ?? 0,
       busMemberId: json["busMemberId"] ?? 0,
-      date: DateTime.tryParse(json["date"] ?? ""),
-      attendanceType: json["attendanceType"] ?? "",
+      date: DateTime.parse(json["date"] ?? ""),
     );
   }
 
   Map<String, dynamic> toJson() => {
-        "busTripId": busTripId,
+        "busId": AppSharedPreference.getBusId,
         "busMemberId": busMemberId,
-        "date": date?.toIso8601String(),
-        "attendanceType": attendanceType,
+        "date": date.toIso8601String(),
       };
 }

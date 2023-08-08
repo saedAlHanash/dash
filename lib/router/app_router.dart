@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qareeb_super_user/core/util/shared_preferences.dart';
@@ -10,15 +8,16 @@ import '../features/auth/bloc/policy_cubit/policy_cubit.dart';
 import '../features/auth/ui/pages/auth_page.dart';
 import '../features/auth/ui/pages/login_page.dart';
 import '../features/auth/ui/pages/policy_page.dart';
+import '../features/qr/bloc/send_report_cubit/send_report_cubit.dart';
 import '../features/qr/ui/pages/qr_page.dart';
 import '../features/splash_page/splash_page.dart';
+import '../features/super_user/bloc/all_super_users_cubit/all_super_users_cubit.dart';
 
 class AppRoutes {
   static Route<dynamic> routes(RouteSettings settings) {
     var screenName = settings.name;
 
-
-    if(AppSharedPreference.getUser.id==0){
+    if (AppSharedPreference.getUser.id == 0) {
       final providers = [
         BlocProvider(create: (_) => sl<LoginCubit>()),
       ];
@@ -28,17 +27,22 @@ class AppRoutes {
           child: const LoginPage(),
         );
       });
-
     }
 
     switch (screenName) {
-
       //region splash
 
       case RouteNames.scanPage:
-        return MaterialPageRoute(
-          builder: (context) => const QrPage(),
-        );
+        final providers = [
+          BlocProvider(create: (_) => sl<AllSuperUsersCubit>()..getSuperUsers(_)),
+          BlocProvider(create: (_) => sl<SendReportCubit>()),
+        ];
+        return MaterialPageRoute(builder: (context) {
+          return MultiBlocProvider(
+            providers: providers,
+            child: const QRViewExample(),
+          );
+        });
 
       //endregion
 
@@ -47,7 +51,6 @@ class AppRoutes {
       // case RouteNames.authPage:
       //   return MaterialPageRoute(builder: (context) => const AuthPage());
       //
-
 
       case RouteNames.loginScreen:
         final providers = [
@@ -72,7 +75,6 @@ class AppRoutes {
       //   });
 
       //endregion
-
     }
 
     return MaterialPageRoute(builder: (context) => const Scaffold());
@@ -119,7 +121,7 @@ class RouteNames {
 
   static const myWalletPage = '/34';
 
-  static const institutionsPage='/35';
+  static const institutionsPage = '/35';
 
 // static const payFromWallet = '/34';
 }

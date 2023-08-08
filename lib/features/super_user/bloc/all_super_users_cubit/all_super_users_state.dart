@@ -2,7 +2,7 @@ part of 'all_super_users_cubit.dart';
 
 class AllSuperUsersInitial extends Equatable {
   final CubitStatuses statuses;
-  final List<SuperUserModel> result;
+  final List<Member> result;
   final String error;
   final Command command;
 
@@ -15,9 +15,9 @@ class AllSuperUsersInitial extends Equatable {
 
   factory AllSuperUsersInitial.initial() {
     return AllSuperUsersInitial(
-      result: const <SuperUserModel>[],
+      result: const <Member>[],
       error: '',
-      command: Command.initial(),
+      command: Command.noPagination(),
       statuses: CubitStatuses.init,
     );
   }
@@ -35,7 +35,7 @@ class AllSuperUsersInitial extends Equatable {
 
   AllSuperUsersInitial copyWith({
     CubitStatuses? statuses,
-    List<SuperUserModel>? result,
+    List<Member>? result,
     String? error,
     Command? command,
   }) {

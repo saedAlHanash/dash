@@ -19,6 +19,8 @@ class AppSharedPreference {
   static const _sendFireToken = '10';
   static const _acceptorIme = '11';
   static const _wallet = '12';
+  static const _cart = '13';
+  static const _requests = '14';
 
   static SharedPreferences? _prefs;
 
@@ -133,6 +135,7 @@ class AppSharedPreference {
 
   static void cashUser(SuperUserModel? first) {
     if (first == null) return;
+    cashBusId(first.busId);
     cashInstitutionId(first.institutionId);
     _prefs?.setString(_profileInfo, jsonEncode(first));
   }
@@ -141,4 +144,24 @@ class AppSharedPreference {
     var json = _prefs?.getString(_profileInfo) ?? '{}';
     return SuperUserModel.fromJson(jsonDecode(json));
   }
+
+  static void cashBusId(int busId) {
+    _prefs?.setInt('bussId', busId);
+  }
+
+  static int get getBusId {
+    return _prefs?.getInt('bussId') ?? 0;
+  }
+
+  static void updateMembers(List<String> jsonCart) {
+    _prefs?.setStringList(_cart, jsonCart);
+  }
+
+  static List<String> getJsonListCart() => _prefs?.getStringList(_cart) ?? <String>[];
+
+  static void updateRequests(List<String> jsonCart) {
+    _prefs?.setStringList(_requests, jsonCart);
+  }
+
+  static List<String> getJsonListRequest() => _prefs?.getStringList(_requests) ?? <String>[];
 }

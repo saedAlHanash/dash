@@ -1,5 +1,5 @@
 class GetUrl {
-  static var superUsers = 'api/services/app/InstitutionSupervisorsService/GetAll';
+  static var superUsers = 'api/services/app/InstitutionMembersService/getMembers';
   static const getPolicy = 'api/services/app/Settings/Getsettings';
   static const getReport = 'api/services/app/InstitutionAttendancesService/GetAll';
 

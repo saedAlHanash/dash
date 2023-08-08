@@ -11,6 +11,7 @@ import 'package:path/path.dart';
 import '../util/shared_preferences.dart';
 import 'api_url.dart';
 import 'package:http_parser/http_parser.dart';
+
 var loggerObject = Logger(
   printer: PrettyPrinter(
     methodCount: 0,
@@ -30,7 +31,6 @@ var loggerObject = Logger(
 DateTime? _serverDate;
 
 DateTime get getServerDate => _serverDate ?? DateTime.now();
-
 
 DateTime getDateTimeFromHeaders(http.Response response) {
   final headers = response.headers;
@@ -72,9 +72,9 @@ class APIService {
     var uri = Uri.https(baseUrl);
 
     final response = await http.get(uri, headers: innerHeader).timeout(
-      const Duration(seconds: 40),
-      onTimeout: () => http.Response('connectionTimeOut', 481),
-    );
+          const Duration(seconds: 40),
+          onTimeout: () => http.Response('connectionTimeOut', 481),
+        );
 
     _serverDate = getDateTimeFromHeaders(response);
 
@@ -128,15 +128,18 @@ class APIService {
 
     innerHeader.addAll(header ?? {});
 
+    var listBody = body?['asList'];
+
     final uri = Uri.https(hostName ?? baseUrl, url, query);
 
     logRequest(url, (body ?? {})..addAll(query ?? {}));
 
-    final response =
-        await http.post(uri, body: jsonEncode(body), headers: innerHeader).timeout(
-              const Duration(seconds: 400),
-              onTimeout: () => http.Response('connectionTimeOut', 481),
-            );
+    final response = await http
+        .post(uri, body: jsonEncode(listBody ?? body), headers: innerHeader)
+        .timeout(
+          const Duration(seconds: 400),
+          onTimeout: () => http.Response('connectionTimeOut', 481),
+        );
 
     logResponse(url, response);
 
@@ -228,11 +231,8 @@ class APIService {
       if (file == null) continue;
 
       final multipartFile = http.MultipartFile.fromBytes(
-        nameFile,
-        await file.readAsBytes(),
-        filename: basename(file.path),
-        contentType:MediaType('image', 'jpeg')
-      );
+          nameFile, await file.readAsBytes(),
+          filename: basename(file.path), contentType: MediaType('image', 'jpeg'));
 
       request.files.add(multipartFile);
     }

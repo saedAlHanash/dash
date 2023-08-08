@@ -17,3 +17,5 @@ enum MyMarkerType { location, driver, point, sharedPint }
 enum SharedTripStatus { pending, started, closed, canceled }
 
 enum SharedRequestStatus { pending, accepted, payed, pickedup, dropped, closed }
+
+enum MemberSubscriptionState { notSubscribe, active, expired }
