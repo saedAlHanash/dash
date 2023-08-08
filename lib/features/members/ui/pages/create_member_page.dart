@@ -73,7 +73,7 @@ class _CreateMemberPageState extends State<CreateMemberPage> {
             if (state.statuses.loading) {
               return MyStyle.loadingWidget();
             }
-            loggerObject.w(request.toJson());
+
             return SingleChildScrollView(
               padding: const EdgeInsets.symmetric(horizontal: 120.0, vertical: 20.0).r,
               child: MyCardWidget(

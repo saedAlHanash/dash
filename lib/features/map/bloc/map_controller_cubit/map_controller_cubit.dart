@@ -17,6 +17,7 @@ import '../../../../core/strings/app_string_manager.dart';
 import '../../../../core/util/pair_class.dart';
 import '../../../../services/osrm/data/response/osrm_model.dart';
 
+import '../../../../services/trip_path/data/models/trip_path.dart';
 import '../../../trip/data/response/trip_response.dart';
 import '../../data/models/my_marker.dart';
 
@@ -52,11 +53,50 @@ class MapControllerCubit extends Cubit<MapControllerInitial> {
     emit(state.copyWith(point: point, zoom: zoom));
   }
 
-  void addMarkers({required List<MyMarker> marker, bool update = true}) {
+  void addMarkers(
+      {required List<MyMarker> marker, bool update = true, bool center = false}) {
     for (var e in marker) {
       state.markers[e.key ?? e.point.hashCode.toString()] = e;
     }
+
+    if (center) {
+      centerPointMarkers();
+    }
     if (update) emit(state.copyWith(markerNotifier: state.markerNotifier + 1));
+  }
+
+  void clearMap(bool update) {
+    state.markers.clear();
+    state.polyLines.clear();
+    if (update) {
+      emit(state.copyWith(
+        markerNotifier: state.markerNotifier + 1,
+        polylineNotifier: state.polylineNotifier + 1,
+      ));
+    }
+  }
+
+  void addPath({required TripPath path}) {
+    clearMap(false);
+    addMarkers(marker: path.getMarkers(), update: false);
+    addEncodedPolyLines(myPolyLines: path.getPolyLines(), update: false);
+    centerPointMarkers();
+    emit(
+      state.copyWith(
+        markerNotifier: state.markerNotifier + 2,
+        polylineNotifier: state.polylineNotifier + 2,
+      ),
+    );
+  }
+
+  void centerPointMarkers() {
+    state.centerZoomPoints.clear();
+
+    for (var e in state.markers.values) {
+      if (e.type != MyMarkerType.driver) {
+        state.centerZoomPoints.add(e.point);
+      }
+    }
   }
 
   // void addPath({required SharedTrip trip}) {

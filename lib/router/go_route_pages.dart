@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:qareeb_dash/core/util/shared_preferences.dart';
 import 'package:qareeb_dash/features/admins/bloc/create_admin_cubit/create_admin_cubit.dart';
 import 'package:qareeb_dash/features/admins/ui/pages/create_admin_page.dart';
 import 'package:qareeb_dash/features/buses/data/response/buses_response.dart';
@@ -61,6 +62,7 @@ import '../features/temp_trips/bloc/add_point_cubit/add_point_cubit.dart';
 import '../features/temp_trips/bloc/create_temp_trip_cubit/create_temp_trip_cubit.dart';
 import '../features/temp_trips/bloc/temp_trip_by_id_cubit/temp_trip_by_id_cubit.dart';
 import '../features/temp_trips/ui/pages/create_temp_trip_page.dart';
+import '../features/temp_trips/ui/pages/temp_trip_info_page.dart';
 import '../features/trip/bloc/all_trips_cubit/all_trips_cubit.dart';
 import '../features/trip/bloc/trip_by_id/trip_by_id_cubit.dart';
 import '../features/trip/bloc/trip_status_cubit/trip_status_cubit.dart';
@@ -68,6 +70,18 @@ import '../features/trip/data/request/filter_trip_request.dart';
 import '../features/trip/ui/pages/trip_info_page.dart';
 
 final appGoRouter = GoRouter(
+  redirect: (BuildContext context, GoRouterState state) {
+    //Replace this method depends on how you are managing your user's
+    //Sign in status, then return the appropriate route you want to redirect to,
+    //make sure your login/authentication bloc is provided at the top level
+    //of your app
+    if (!AppSharedPreference.isLogin) {
+      return _GoRoutePath.loginPage;
+    } else {
+      //else, remain at login page
+      return null;
+    }
+  },
   routes: <GoRoute>[
     //region auth
     ///login
@@ -377,6 +391,27 @@ final appGoRouter = GoRouter(
         );
       },
     ),
+
+    ///tempTripInfo
+    GoRoute(
+      name: GoRouteName.tempTripInfo,
+      path: _GoRoutePath.tempTripInfo,
+      builder: (BuildContext context, GoRouterState state) {
+        final id = int.tryParse(state.queryParams['id'] ?? '') ?? 0;
+        final providers = [
+          BlocProvider(create: (_) => di.sl<MapControlCubit>()),
+          BlocProvider(create: (_) => di.sl<MapControllerCubit>()),
+          BlocProvider(create: (_) => di.sl<AtherCubit>()),
+          BlocProvider(
+            create: (_) => di.sl<TempTripBuIdCubit>()..getTempTripBuId(context, id: id),
+          ),
+        ];
+        return MultiBlocProvider(
+          providers: providers,
+          child: const TempTripInfoPage(),
+        );
+      },
+    ),
     //endregion
 
     //region bus trips
@@ -437,9 +472,7 @@ final appGoRouter = GoRouter(
       builder: (BuildContext context, GoRouterState state) {
         final id = int.tryParse(state.queryParams['id'] ?? '') ?? 0;
         final providers = [
-
           BlocProvider(create: (_) => di.sl<CreateSubscriptionCubit>()),
-
           BlocProvider(
             create: (_) => di.sl<MemberBuIdCubit>()..getMemberBuId(context, id: id),
           ),
@@ -516,7 +549,8 @@ class GoRouteName {
 
   static const createMember = 'createMember';
 
-  static const createBusTrip ='createBusTrip';
+  static const createBusTrip = 'createBusTrip';
+  static const tempTripInfo = 'tempTripInfo';
 }
 
 class _GoRoutePath {
@@ -542,5 +576,6 @@ class _GoRoutePath {
   static const createSuperUsers = '/createSuperUsers';
   static const createTempTrip = '/createTempTrip';
   static const createMember = '/createMember';
-  static const createBusTrip ='/createBusTrip';
+  static const createBusTrip = '/createBusTrip';
+  static const tempTripInfo = '/tempTripInfo';
 }

@@ -2,26 +2,25 @@ import 'package:latlong2/latlong.dart';
 
 class AtherResponse {
   AtherResponse({
-    required this.ime,
+    required this.imes,
   });
 
-  final Ime ime;
+  final List<Ime> imes;
 
-  factory AtherResponse.fromJson(Map<String, dynamic> json, String ime) {
+  factory AtherResponse.fromJson(Map<String, dynamic> json, List<String> ime) {
     return AtherResponse(
-      ime: Ime.fromJson(json[ime] ?? {}),
+      imes: ime
+          .map(
+            (e) => Ime.fromJson(json[e] ?? {})..ime = e,
+      )
+          .toList(),
     );
   }
-
-  Map<String, dynamic> toJson() => {
-        "ime": ime.toJson(),
-      };
 }
 
 class Ime {
   Ime({
     required this.name,
-    required this.imei,
     required this.dtServer,
     required this.dtTracker,
     required this.lat,
@@ -33,7 +32,6 @@ class Ime {
   });
 
   final String name;
-  final String imei;
   final DateTime? dtServer;
   final DateTime? dtTracker;
   final double lat;
@@ -42,13 +40,13 @@ class Ime {
   final double angle;
   final String speed;
   final String locValid;
+  String ime = '';
 
   LatLng getLatLng() => LatLng(lat, lng);
 
   factory Ime.fromJson(Map<String, dynamic> json) {
     return Ime(
       name: json["name"] ?? "",
-      imei: json["imei"] ?? "",
       dtServer: DateTime.tryParse(json["dt_server"] ?? ""),
       dtTracker: DateTime.tryParse(json["dt_tracker"] ?? ""),
       lat: double.parse(json["lat"] ?? '0.0'),
@@ -61,15 +59,14 @@ class Ime {
   }
 
   Map<String, dynamic> toJson() => {
-        "name": name,
-        "imei": imei,
-        "dt_server": dtServer?.toIso8601String(),
-        "dt_tracker": dtTracker?.toIso8601String(),
-        "lat": lat,
-        "lng": lng,
-        "altitude": altitude,
-        "angle": angle,
-        "speed": speed,
-        "loc_valid": locValid,
-      };
+    "name": name,
+    "dt_server": dtServer?.toIso8601String(),
+    "dt_tracker": dtTracker?.toIso8601String(),
+    "lat": lat,
+    "lng": lng,
+    "altitude": altitude,
+    "angle": angle,
+    "speed": speed,
+    "loc_valid": locValid,
+  };
 }

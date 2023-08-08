@@ -23,7 +23,6 @@ class CreateSubscriptionRequest {
 
   bool get isNotExpired {
     final r= expirationDate?.isAfter(getServerDate) ?? false;
-    loggerObject.w(r);
     return r;
   }
 

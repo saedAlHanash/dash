@@ -97,7 +97,7 @@ class _CreateTempTripPageState extends State<CreateTempTripPage> {
                                   return MyButton(
                                     text: request.id != null ? 'تعديل' : 'إنشاء',
                                     onTap: () {
-   addPointCubit.state.edgeIds.forEach((key, value) {
+                                      addPointCubit.state.edgeIds.forEach((key, value) {
                                         request.pathEdgesIds.add(value);
                                       });
 

@@ -42,11 +42,11 @@ class TempTripsPage extends StatelessWidget {
             return MyStyle.loadingWidget();
           }
           final list = state.result;
-          if (list.isEmpty) return const NotFoundWidget(text: 'لا يوجد تصنيفات');
+          if (list.isEmpty) return const NotFoundWidget(text: 'لا يوجد نماذج');
           return Column(
             children: [
               DrawableText(
-                text: 'الباصات',
+                text: 'نماذج الرحلات',
                 matchParent: true,
                 size: 28.0.sp,
                 textAlign: TextAlign.center,
@@ -69,13 +69,13 @@ class TempTripsPage extends StatelessWidget {
                                   ? null
                                   : () {
                                       context.pushNamed(
-                                        GoRouteName.createTempTrip,
+                                        GoRouteName.tempTripInfo,
                                         queryParams: {'id': e.id.toString()},
                                       );
                                     },
                               child: const Icon(
-                                Icons.edit,
-                                color: Colors.amber,
+                                Icons.info_outline_rounded,
+                                color: Colors.grey,
                               ),
                             ),
                             Padding(

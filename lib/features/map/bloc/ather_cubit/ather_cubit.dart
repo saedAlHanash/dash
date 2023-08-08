@@ -21,19 +21,27 @@ import '../../data/response/ather_response.dart';
 
 part 'ather_state.dart';
 
+
 class AtherCubit extends Cubit<AtherInitial> {
   AtherCubit() : super(AtherInitial.initial());
 
   final network = sl<NetworkInfo>();
 
-  static Future<num> getDriverDistance({
-    required String ime,
-    required DateTime? start,
-    required DateTime? end,
-  }) async {
-    final network = sl<NetworkInfo>();
-    if (start == null) return 0;
-    if (end == null) return 0;
+  Future<void> getDriverLocation() async {
+    if (isClosed) return;
+    var ime = AppSharedPreference.getIme();
+
+    if (ime.isEmpty) return;
+
+    final pair = await _getDriverLocationApi(ime);
+
+    if (pair.first != null) {
+      if (isClosed) return;
+      emit(state.copyWith(statuses: CubitStatuses.done, result: pair.first));
+    }
+  }
+
+  Future<Pair<List<Ime>?, String?>> _getDriverLocationApi(List<String> ime) async {
     // var ime = '359632104211708';
     if (await network.isConnected) {
       final response = await APIService().getApi(
@@ -41,58 +49,18 @@ class AtherCubit extends Cubit<AtherInitial> {
           query: {
             'api': 'user',
             'ver': '1.0',
-            'key': '5BE3080722588655FE55B8E89B765827',
-            'cmd':
-                'OBJECT_GET_MESSAGES,$ime,${start.formatDateAther},${end.formatDateAther}',
+            'key': '719FE559BD77F2F3461C0D29D305FA6E',
+            'cmd': 'OBJECT_GET_LOCATIONS,${ime.join(';')}',
           },
           hostName: 'admin.alather.net');
 
       if (response.statusCode == 200) {
-        final list = <LatLng>[];
-        var f1 = response.jsonBody;
-        for (var e in f1) {
-          list.add(LatLng(double.parse(e[1]), double.parse(e[2])));
-        }
-        var d = 0.0;
-        for (var i = 1; i < list.length; i++) {
-          d += distanceBetween(list[i - 1], list[i]) * 1000;
-        }
-        return d.roundToDouble();
+        return Pair(AtherResponse.fromJson(response.jsonBody, ime).imes, null);
       } else {
-        return 0;
+        return Pair(null, ErrorManager.getApiError(response));
       }
     } else {
-      return 0;
-    }
-  }
-
-  Future<void> getAll({String? ime}) async {
-    final pair = await getServerProxyApi(
-      printResponse: false,
-      request: ApiServerRequest(
-        url: APIService()
-            .getUri(
-              url: 'api/api.php',
-              query: {
-                'api': 'user',
-                'ver': '1.0',
-                'key': '135890C8CF4DBE10B0E33F89B03770F1',
-                'cmd': 'USER_GET_OBJECTS',
-              },
-              header: {'Access-Control-Allow-Origin': '*'},
-              hostName: 'admin.alather.net',
-            )
-            .toString(),
-      ),
-    );
-
-    if (pair.first != null) {
-      final list = jsonDecode(pair.first);
-      final x = <Ime>[];
-      for (var e in list) {
-        x.add(Ime.fromJson(e));
-      }
-      emit(state.copyWith(allCars: x));
+      return Pair(null, AppStringManager.noInternet);
     }
   }
 }

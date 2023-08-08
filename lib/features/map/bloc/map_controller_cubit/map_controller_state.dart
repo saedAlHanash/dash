@@ -24,6 +24,9 @@ class MapControllerInitial {
   final int markerNotifier;
   final int polylineNotifier;
 
+
+  final centerZoomPoints = <LatLng>[];
+
   final dynamic additional;
 
   MapControllerInitial({
@@ -76,6 +79,7 @@ class MapControllerInitial {
         zoom: zoom ?? this.zoom,
         additional: additional ?? this.additional)
       ..markers.addAll(markers)
-      ..polyLines.addAll(polyLines);
+      ..polyLines.addAll(polyLines)
+      ..centerZoomPoints.addAll(centerZoomPoints);
   }
 }

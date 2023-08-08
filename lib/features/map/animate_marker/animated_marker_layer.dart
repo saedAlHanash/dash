@@ -1,14 +1,12 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_map/plugin_api.dart';
 import 'package:latlong2/latlong.dart';
 
-import 'animated_marker_layer_options.dart';
 
-
-class AnimatedMarkerLayer<T> extends ImplicitlyAnimatedWidget {
+class MyAnimatedMarkerLayer<T> extends ImplicitlyAnimatedWidget {
   final AnimatedMarkerLayerOptions<T> options;
-  AnimatedMarkerLayer({
+
+  MyAnimatedMarkerLayer({
     Key? key,
     required this.options,
   }) : super(
@@ -18,33 +16,30 @@ class AnimatedMarkerLayer<T> extends ImplicitlyAnimatedWidget {
         );
 
   @override
-  AnimatedWidgetBaseState createState() => _AnimatedMarkerLayerState();
+  AnimatedWidgetBaseState createState() => _MyAnimatedMarkerLayerState();
 }
 
-class _AnimatedMarkerLayerState
-    extends AnimatedWidgetBaseState<AnimatedMarkerLayer>
+class _MyAnimatedMarkerLayerState extends AnimatedWidgetBaseState<MyAnimatedMarkerLayer>
     with AutomaticKeepAliveClientMixin {
   Tween<double>? _latitude;
   Tween<double>? _longitude;
 
   Marker get marker => widget.options.marker;
-  double get latitude =>
-      _latitude?.evaluate(animation) ?? marker.point.latitude;
-  double get longitude =>
-      _longitude?.evaluate(animation) ?? marker.point.longitude;
+
+  double get latitude => _latitude?.evaluate(animation) ?? marker.point.latitude;
+
+  double get longitude => _longitude?.evaluate(animation) ?? marker.point.longitude;
 
   @override
   void forEachTween(TweenVisitor<dynamic> visitor) {
     _latitude = visitor(_latitude, widget.options.marker.point.latitude,
-            (dynamic value) => Tween<double>(begin: value as double))
-        as Tween<double>?;
+        (dynamic value) => Tween<double>(begin: value as double)) as Tween<double>?;
     _longitude = visitor(_longitude, widget.options.marker.point.longitude,
-            (dynamic value) => Tween<double>(begin: value as double))
-        as Tween<double>?;
+        (dynamic value) => Tween<double>(begin: value as double)) as Tween<double>?;
   }
 
   @override
-  void didUpdateWidget(covariant AnimatedMarkerLayer oldWidget) {
+  void didUpdateWidget(covariant MyAnimatedMarkerLayer oldWidget) {
     super.didUpdateWidget(oldWidget);
     setState(() {});
   }
@@ -83,4 +78,24 @@ class _AnimatedMarkerLayerState
 
   @override
   bool get wantKeepAlive => true;
+}
+
+class AnimatedMarkerLayerOptions<T> {
+  final Duration duration;
+  final Curve curve;
+  final Marker marker;
+  final bool? rotate;
+  final Offset? rotateOrigin;
+  final AlignmentGeometry? rotateAlignment;
+  final Stream<T>? stream;
+
+  AnimatedMarkerLayerOptions({
+    this.duration = const Duration(milliseconds: 300),
+    this.curve = Curves.linear,
+    required this.marker,
+    this.rotate,
+    this.rotateOrigin,
+    this.rotateAlignment,
+    this.stream,
+  });
 }

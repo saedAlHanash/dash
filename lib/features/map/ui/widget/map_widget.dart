@@ -1,27 +1,18 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:collection/collection.dart';
-import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/plugin_api.dart';
+import 'package:flutter_map_animations/flutter_map_animations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
-
-import 'package:qareeb_dash/core/extensions/extensions.dart';
-import 'package:qareeb_dash/core/widgets/images/image_multi_type.dart';
 import 'package:qareeb_dash/features/map/data/models/my_marker.dart';
-import 'package:qareeb_dash/features/points/data/response/points_response.dart';
 
+import '../../../../core/api_manager/api_service.dart';
 import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/strings/enum_manager.dart';
 import '../../../../core/widgets/my_card_widget.dart';
 import '../../../../core/widgets/spinner_widget.dart';
-import '../../../../generated/assets.dart';
-import '../../../../router/go_route_pages.dart';
-import '../../animate_marker/animated_marker_layer.dart';
-import '../../animate_marker/animated_marker_layer_options.dart';
-import '../../bloc/ather_cubit/ather_cubit.dart';
 import '../../bloc/map_controller_cubit/map_controller_cubit.dart';
 import '../../bloc/set_point_cubit/map_control_cubit.dart';
 
@@ -59,8 +50,8 @@ class MapWidget extends StatefulWidget {
   State<MapWidget> createState() => MapWidgetState();
 }
 
-class MapWidgetState extends State<MapWidget> {
-  late MapController controller;
+class MapWidgetState extends State<MapWidget> with TickerProviderStateMixin {
+  late final controller = AnimatedMapController(vsync: this);
 
   String tile = 'https://maps.almobtakiroon.com/osm/tile/{z}/{x}/{y}.png';
 
@@ -70,7 +61,7 @@ class MapWidgetState extends State<MapWidget> {
   var trackCar = true;
 
   controlMarkersListener(_, MapControlInitial state) async {
-    if (state.moveCamera) controller.move(state.point, controller.zoom);
+    if (state.moveCamera) controller.animateTo(dest: state.point, zoom: controller.zoom);
 
     if (state.state == 'mt') {
       switch (state.type) {
@@ -103,14 +94,25 @@ class MapWidgetState extends State<MapWidget> {
   Widget build(BuildContext context) {
     return MultiBlocListener(
       listeners: [
+        BlocListener<MapControllerCubit, MapControllerInitial>(
+          listener: (context, state) async {
+
+            if (state.point != null) {
+              controller.animateTo(dest: state.point!, zoom: state.zoom);
+            }
+
+            if (state.centerZoomPoints.isNotEmpty) {
+              await controller.centerOnPoints(
+                state.centerZoomPoints,
+                options: const FitBoundsOptions(forceIntegerZoomLevel: true),
+              );
+
+              mapControllerCubit.state.centerZoomPoints.clear();
+            }
+          },
+        ),
         BlocListener<MapControlCubit, MapControlInitial>(
           listener: controlMarkersListener,
-        ),
-        BlocListener<MapControllerCubit, MapControllerInitial>(
-          listenWhen: (p, c) => c.point != null,
-          listener: (context, state) {
-            controller.move(state.point!, state.zoom);
-          },
         ),
       ],
       child: FlutterMap(
@@ -121,8 +123,14 @@ class MapWidgetState extends State<MapWidget> {
           interactiveFlags: InteractiveFlag.pinchZoom | InteractiveFlag.drag,
           onMapReady: () {
             if (widget.initialPoint != null && widget.initialPoint!.latitude != 0) {
-              controller.move(widget.initialPoint!, 11);
+              controller.animateTo(dest: widget.initialPoint!, zoom: 15);
+              mapControllerCubit.addSingleMarker(
+                  marker: MyMarker(point: widget.initialPoint!));
             } else {
+              if (mapControllerCubit.state.centerZoomPoints.isNotEmpty) return;
+              if (mapControllerCubit.state.point == null) return;
+              if (mapControllerCubit.state.markers.isNotEmpty) return;
+
               controller.move(LatLng(33.16, 36.16), 9);
             }
 
@@ -195,7 +203,6 @@ class MapWidgetState extends State<MapWidget> {
     super.initState();
 
     mapControllerCubit = context.read<MapControllerCubit>();
-    controller = MapControllerImpl();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       mapControllerCubit.mapHeight = mapWidgetKey.currentContext?.size?.height ?? 640.0;

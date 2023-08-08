@@ -170,13 +170,10 @@ class AppSharedPreference {
     _prefs?.setString(_fireToken, token);
   }
 
-  static void cashIme(String ime) => _prefs?.setString(_ime, ime);
-
   static String getFireToken() {
     return _prefs?.getString(_fireToken) ?? '';
   }
 
-  static String get ime => _prefs?.getString(_ime) ?? '';
 
   static Future<NavTrip> getTripStateAsync() async {
     await _prefs?.reload();
@@ -258,4 +255,14 @@ class AppSharedPreference {
   }
 
   static String get getEmail => _prefs?.getString(_email) ?? '';
+
+
+  static List<String> getIme() {
+    return _prefs?.getStringList(_ime) ?? [];
+  }
+
+  static cashIme(List<String> ime) {
+    _prefs?.setStringList(_ime, ime);
+  }
+
 }

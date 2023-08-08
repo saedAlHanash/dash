@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:qareeb_dash/core/api_manager/api_url.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_dash/core/util/shared_preferences.dart';
 
 import '../../../../core/api_manager/api_service.dart';
 import '../../../../core/api_manager/command.dart';
@@ -29,8 +30,17 @@ class AllBusesCubit extends Cubit<AllBusesInitial> {
       emit(state.copyWith(statuses: CubitStatuses.error, error: pair.second));
     } else {
       state.command.totalCount = pair.first!.totalCount;
+      cashImeis();
       emit(state.copyWith(statuses: CubitStatuses.done, result: pair.first?.items));
     }
+  }
+
+  void cashImeis(){
+    final list =<String>[];
+    for (var element in state.result) {
+      list.add(element.ime);
+    }
+    AppSharedPreference.cashIme(list);
   }
 
   Future<Pair<BusResult?, String?>> _getBusesApi() async {

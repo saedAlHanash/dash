@@ -11,8 +11,6 @@ import '../../../../core/strings/app_string_manager.dart';
 import '../../../../core/strings/enum_manager.dart';
 import '../../../../core/util/note_message.dart';
 import '../../../../core/util/pair_class.dart';
-import '../../../../core/util/shared_preferences.dart';
-import '../../../map/bloc/ather_cubit/ather_cubit.dart';
 
 part 'trip_status_state.dart';
 
@@ -70,15 +68,6 @@ class TripStatusCubit extends Cubit<TripStatusInitial> {
           url = PostUrl.startTrip;
           break;
         case TripStatus.end:
-          try {
-            distance = await AtherCubit.getDriverDistance(
-              ime: '359632107579978',
-              start: AppSharedPreference.getCashedTrip().startDate,
-              end: await APIService().getServerTime(),
-            );
-          } on Exception {
-
-          }
           url = PostUrl.endTrip;
           break;
       }
