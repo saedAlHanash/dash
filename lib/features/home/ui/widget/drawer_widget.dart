@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qareeb_dash/core/util/shared_preferences.dart';
 import 'package:qareeb_dash/features/profile/data/response/profile_info_response.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/strings/app_string_manager.dart';
@@ -192,6 +193,19 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                   iconMedia(Assets.iconsFacebook),
                 ],
               ),
+              FutureBuilder(
+                future: PackageInfo.fromPlatform(),
+                builder: (context, snapshot) {
+
+                  if (snapshot.hasData) {
+                    return DrawableText(
+                      text: snapshot.requireData.version,
+                      color: Colors.white,
+                    );
+                  }
+                  return 0.0.verticalSpace;
+                },
+              )
             ],
           ),
         ),

@@ -56,7 +56,6 @@ class _DashboardPageState extends State<DashboardPage> {
       listeners: [
         BlocListener<AtherCubit, AtherInitial>(
           listener: (context, state) {
-
             mapControllerCubit.addMarkers(
               marker: state.result
                   .mapIndexed(
