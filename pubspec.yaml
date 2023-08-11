@@ -31,7 +31,17 @@ dependencies:
       url: https://github.com/saedAlHanash/drawable_text
       ref: html
 
-  flutter_bloc: any
+  qareeb_models:
+    git:
+      url: https://github.com/saedAlHanash/qareeb_models
+
+
+  map_package:
+    git:
+      url: https://github.com/saedAlHanash/map_qareeb
+      ref: html
+
+  flutter_bloc: ^8.1.3
   dartz: ^0.10.1
   equatable: ^2.0.5
   get_it: any
@@ -51,7 +61,7 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   image_picker: any
   syncfusion_flutter_core: ^22.1.37
-  carousel_slider:
+  carousel_slider: any
   #  syncfusion_flutter_charts: ^22.1.37
   #  responsive_table: ^0.2.0+2
   syncfusion_flutter_datagrid: ^22.1.37

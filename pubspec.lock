@@ -335,6 +335,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
+  flutter_async_autocomplete:
+    dependency: transitive
+    description:
+      name: flutter_async_autocomplete
+      sha256: "573c1480c8430ced699199c7a6fa9a4f3876ee908ee947bc7b9b5b0bf6c42bc0"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.1"
   flutter_bloc:
     dependency: "direct main"
     description:
@@ -447,6 +455,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.0"
+  flutter_map_animations:
+    dependency: transitive
+    description:
+      name: flutter_map_animations
+      sha256: "69ef62c754b09824cd9531c5f63091a9d91fc0d4ba4cefceda59788c04fbdebd"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.0"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -665,6 +681,15 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.2"
+  image_multi_type:
+    dependency: transitive
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: "7478f62fb3c0f1a907f960c547ae61918c1b4248"
+      url: "https://github.com/saedAlHanash/image_multi_type"
+    source: git
+    version: "0.0.1"
   image_picker:
     dependency: "direct main"
     description:
@@ -729,6 +754,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.1"
+  internet_connection_checker:
+    dependency: transitive
+    description:
+      name: internet_connection_checker
+      sha256: "1c683e63e89c9ac66a40748b1b20889fd9804980da732bf2b58d6d5456c8e876"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0+1"
   intl:
     dependency: "direct main"
     description:
@@ -817,6 +850,15 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.4.0"
+  map_package:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: html
+      resolved-ref: "2a0cc8a6a5115f76eba9157c07d5bda55284cedf"
+      url: "https://github.com/saedAlHanash/map_qareeb"
+    source: git
+    version: "0.0.5"
   matcher:
     dependency: transitive
     description:
@@ -1025,6 +1067,15 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.0.5"
+  qareeb_models:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: "5ae4449752737c9e2f0c218b2cff49148c7f9a10"
+      url: "https://github.com/saedAlHanash/qareeb_models"
+    source: git
+    version: "0.0.7"
   rxdart:
     dependency: transitive
     description:
@@ -1033,6 +1084,15 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.27.7"
+  saed_http:
+    dependency: transitive
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: ce508ae414aa635516f25bc808b4a287cb291747
+      url: "https://github.com/saedAlHanash/saed_http"
+    source: git
+    version: "0.0.1"
   seo_renderer:
     dependency: transitive
     description:
@@ -1487,5 +1547,5 @@ packages:
     source: hosted
     version: "6.3.0"
 sdks:
-  dart: ">=3.0.3 <4.0.0"
+  dart: ">=3.0.5 <4.0.0"
   flutter: ">=3.10.0"
