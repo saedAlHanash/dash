@@ -4,16 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:map_package/map/data/models/my_marker.dart';
+import 'package:qareeb_models/extensions.dart';  import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/util/launcher_helper.dart';
 import 'package:qareeb_dash/core/util/note_message.dart';
 import 'package:qareeb_dash/core/widgets/images/image_multi_type.dart';
 import 'package:qareeb_dash/features/shared_trip/data/response/shared_trip.dart';
 import 'package:qareeb_dash/features/shared_trip/ui/widget/path_points_widget.dart';
+import 'package:qareeb_models/shared_trip/data/response/shared_trip.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 
 import '../../../../core/strings/app_color_manager.dart';
-import '../../../../core/strings/enum_manager.dart';
+import 'package:qareeb_models/global.dart'; import '../../../../core/strings/enum_manager.dart';
 import '../../../../core/widgets/item_info.dart';
 import '../../../../core/widgets/my_card_widget.dart';
 import '../../../../router/go_route_pages.dart';
@@ -124,6 +126,7 @@ class ItemSharedTrip extends StatelessWidget {
               },
               child: const DrawableText(
                 text: 'عرض الزبائن',
+                selectable: false ,
                 color: AppColorManager.mainColorDark,
                 fontFamily: FontManager.cairoBold,
               ),
@@ -301,7 +304,7 @@ class ItemSharedTrip1 extends StatelessWidget {
                           matchParent: true,
                           size: 18.0.sp,
                           textAlign: TextAlign.center,
-                          text: SharedTripStatus.values[item.status()].sharedTripName(),
+                          text: item.tripStatus.sharedTripName(),
                           color: Colors.black,
                           fontFamily: FontManager.cairoBold,
                         ),

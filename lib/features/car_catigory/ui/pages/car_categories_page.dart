@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_models/extensions.dart';  import 'package:qareeb_models/extensions.dart';  import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/widgets/not_found_widget.dart';
 import 'package:qareeb_dash/core/widgets/saed_taple_widget.dart';
 import 'package:qareeb_dash/features/car_catigory/ui/widget/item_car_category.dart';
@@ -43,7 +43,7 @@ class CarCategoriesPage extends StatelessWidget {
           : null,
       body: BlocBuilder<AllCarCategoriesCubit, AllCarCategoriesInitial>(
         builder: (context, state) {
-          if (state.statuses.loading) {
+          if (state.statuses.isLoading) {
             return MyStyle.loadingWidget();
           }
           final list = state.result;
@@ -105,7 +105,7 @@ class CarCategoriesPage extends StatelessWidget {
                                 listenWhen: (p, c) => c.statuses.done,
                                 buildWhen: (p, c) => c.id == e.id,
                                 builder: (context, state) {
-                                  if (state.statuses.loading) {
+                                  if (state.statuses.isLoading) {
                                     return MyStyle.loadingWidget();
                                   }
                                   return InkWell(

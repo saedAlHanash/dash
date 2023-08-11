@@ -1,73 +1,73 @@
-import 'package:qareeb_dash/features/points/data/response/points_response.dart';
-
-class PointsEdgeResponse {
-  PointsEdgeResponse({
-    required this.result,
-  });
-
-  final EdgeModel result;
-
-  factory PointsEdgeResponse.fromJson(Map<String, dynamic> json) {
-    return PointsEdgeResponse(
-      result: EdgeModel.fromJson(json["result"] ?? {}),
-    );
-  }
-
-  Map<String, dynamic> toJson() => {
-        "result": result.toJson(),
-      };
-}
-
-class EdgeModel {
-  EdgeModel({
-    required this.startPoint,
-    required this.startPointId,
-    required this.endPoint,
-    required this.endPointId,
-    required this.distance,
-    required this.price,
-    required this.steps,
-    required this.name,
-    required this.arName,
-    required this.id,
-  });
-
-  final TripPoint startPoint;
-  final TripPoint endPoint;
-  final int startPointId;
-  final int endPointId;
-  final num distance;
-  final num price;
-  final String steps;
-  final String name;
-  final String arName;
-  final int id;
-
-  factory EdgeModel.fromJson(Map<String, dynamic> json) {
-    return EdgeModel(
-      startPoint: TripPoint.fromJson(json["startPoint"] ?? {}),
-      endPoint: TripPoint.fromJson(json["endPoint"] ?? {}),
-      startPointId: json["startPointId"] ?? 0,
-      endPointId: json["endPointId"] ?? 0,
-      distance: json["distance"] ?? 0,
-      price: json["price"] ?? 0,
-      steps: json["steps"] ?? "",
-      name: json["name"] ?? "",
-      arName: json["arName"] ?? "",
-      id: json["id"] ?? 0,
-    );
-  }
-
-  Map<String, dynamic> toJson() => {
-        "startPoint": startPoint.toJson(),
-        "startPointId": startPointId,
-        "endPoint": endPoint.toJson(),
-        "endPointId": endPointId,
-        "distance": distance,
-        "price": price,
-        "steps": steps,
-        "name": name,
-        "arName": arName,
-        "id": id,
-      };
-}
+// import 'package:qareeb_dash/features/points/data/response/points_response.dart';
+//
+// class PointsEdgeResponse {
+//   PointsEdgeResponse({
+//     required this.result,
+//   });
+//
+//   final Edge result;
+//
+//   factory PointsEdgeResponse.fromJson(Map<String, dynamic> json) {
+//     return PointsEdgeResponse(
+//       result: Edge.fromJson(json["result"] ?? {}),
+//     );
+//   }
+//
+//   Map<String, dynamic> toJson() => {
+//         "result": result.toJson(),
+//       };
+// }
+//
+// class Edge {
+//   Edge({
+//     required this.startPoint,
+//     required this.startPointId,
+//     required this.endPoint,
+//     required this.endPointId,
+//     required this.distance,
+//     required this.price,
+//     required this.steps,
+//     required this.name,
+//     required this.arName,
+//     required this.id,
+//   });
+//
+//   final TripPoint startPoint;
+//   final TripPoint endPoint;
+//   final int startPointId;
+//   final int endPointId;
+//   final num distance;
+//   final num price;
+//   final String steps;
+//   final String name;
+//   final String arName;
+//   final int id;
+//
+//   factory Edge.fromJson(Map<String, dynamic> json) {
+//     return Edge(
+//       startPoint: TripPoint.fromJson(json["startPoint"] ?? {}),
+//       endPoint: TripPoint.fromJson(json["endPoint"] ?? {}),
+//       startPointId: json["startPointId"] ?? 0,
+//       endPointId: json["endPointId"] ?? 0,
+//       distance: json["distance"] ?? 0,
+//       price: json["price"] ?? 0,
+//       steps: json["steps"] ?? "",
+//       name: json["name"] ?? "",
+//       arName: json["arName"] ?? "",
+//       id: json["id"] ?? 0,
+//     );
+//   }
+//
+//   Map<String, dynamic> toJson() => {
+//         "startPoint": startPoint.toJson(),
+//         "startPointId": startPointId,
+//         "endPoint": endPoint.toJson(),
+//         "endPointId": endPointId,
+//         "distance": distance,
+//         "price": price,
+//         "steps": steps,
+//         "name": name,
+//         "arName": arName,
+//         "id": id,
+//       };
+// }

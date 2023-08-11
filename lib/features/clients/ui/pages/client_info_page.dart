@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_models/extensions.dart';  import 'package:qareeb_models/extensions.dart';  import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/widgets/my_button.dart';
 import 'package:qareeb_dash/core/widgets/table_widget.dart';
 import 'package:qareeb_dash/features/wallet/ui/pages/my_wallet_page.dart';
@@ -26,7 +26,7 @@ class ClientInfoPage extends StatelessWidget {
       ),
       body: BlocBuilder<ClientByIdCubit, ClientByIdInitial>(
         builder: (context, state) {
-          if (state.statuses.loading) {
+          if (state.statuses.isLoading) {
             return MyStyle.loadingWidget();
           }
           final client = state.result;

@@ -2,7 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:qareeb_dash/core/widgets/spinner_widget.dart';
+ import 'package:qareeb_dash/core/widgets/spinner_widget.dart'; import 'package:qareeb_models/global.dart';
 
 import '../api_manager/command.dart';
 import 'my_card_widget.dart';

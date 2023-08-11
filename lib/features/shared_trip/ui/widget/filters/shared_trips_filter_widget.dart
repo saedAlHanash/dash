@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_models/extensions.dart';  import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/strings/app_color_manager.dart';
 import 'package:qareeb_dash/core/widgets/my_button.dart';
 import 'package:qareeb_dash/core/widgets/my_text_form_widget.dart';
-import 'package:qareeb_dash/core/widgets/spinner_widget.dart';
+ import 'package:qareeb_dash/core/widgets/spinner_widget.dart'; import 'package:qareeb_models/global.dart';
 
 import '../../../../../core/util/checker_helper.dart';
 import '../../../../../core/util/my_style.dart';
@@ -33,7 +33,7 @@ class _SharedTripsFilterWidgetState extends State<SharedTripsFilterWidget> {
           title: 'حسب السائق',
           child: BlocBuilder<AllDriversCubit, AllDriversInitial>(
             builder: (context, state) {
-              if (state.statuses.loading) {
+              if (state.statuses.isLoading) {
                 return MyStyle.loadingWidget();
               }
               final list = <SpinnerItem>[];

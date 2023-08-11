@@ -1,8 +1,10 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_models/extensions.dart';  import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/features/points/data/response/points_edge_response.dart';
+import 'package:qareeb_models/points/data/response/points_edge_response.dart';
+import 'package:qareeb_models/trip_path/data/models/trip_path.dart';
 
 import '../../../../core/api_manager/api_service.dart';
 import '../../../../core/api_manager/api_url.dart';
@@ -10,10 +12,10 @@ import '../../../../core/error/error_manager.dart';
 import '../../../../core/injection/injection_container.dart';
 import '../../../../core/network/network_info.dart';
 import '../../../../core/strings/app_string_manager.dart';
-import '../../../../core/strings/enum_manager.dart';
+import 'package:qareeb_models/global.dart'; import '../../../../core/strings/enum_manager.dart';
 import '../../../../core/util/note_message.dart';
 import '../../../../core/util/pair_class.dart';
-import '../../../../core/widgets/spinner_widget.dart';
+import '../../../../core/widgets/spinner_widget.dart';import '../../../../core/widgets/spinner_widget.dart'; import 'package:qareeb_models/global.dart';
 
 part 'get_edged_point_state.dart';
 
@@ -37,7 +39,7 @@ class EdgesPointCubit extends Cubit<EdgesPointInitial> {
     }
   }
 
-  Future<Pair<List<EdgeModel>?, String?>> _getAllEdgesPointApi({required int id}) async {
+  Future<Pair<List<PointsEdgeResult>?, String?>> _getAllEdgesPointApi({required int id}) async {
     if (await network.isConnected) {
       final response = await APIService()
           .getApi(url: GetUrl.getAllEdgesPoint, query: {'sourcePointId': id});
@@ -46,8 +48,8 @@ class EdgesPointCubit extends Cubit<EdgesPointInitial> {
         final json = response.jsonBody;
         return Pair(
             json['result'] == null
-                ? <EdgeModel>[]
-                : List<EdgeModel>.from(json['result'].map((e) => EdgeModel.fromJson(e))),
+                ? <PointsEdgeResult>[]
+                : List<PointsEdgeResult>.from(json['result'].map((e) => PointsEdgeResult.fromJson(e))),
             null);
       } else {
         return Pair(null, ErrorManager.getApiError(response));

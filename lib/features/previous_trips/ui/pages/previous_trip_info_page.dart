@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../core/widgets/app_bar_widget.dart';
-import '../../../trip/data/response/trip_response.dart';
+import 'package:qareeb_models/trip_process/data/response/trip_response.dart';
 import '../../../trip/ui/widget/trip_info_list_widget.dart';
 
 

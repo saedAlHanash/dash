@@ -19,6 +19,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
     return SafeArea(
       child: AppBar(
         elevation: 0.0,
+        iconTheme: const IconThemeData(color: Colors.green),
         toolbarHeight: 80.0.h,
         title: text == null
             ? const LogoText()

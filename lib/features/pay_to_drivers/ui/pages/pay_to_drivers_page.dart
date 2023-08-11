@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qareeb_dash/core/api_manager/command.dart';
-import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_models/extensions.dart';  import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/widgets/item_info.dart';
 import 'package:qareeb_dash/core/widgets/my_button.dart';
 import 'package:qareeb_dash/core/widgets/not_found_widget.dart';
@@ -12,12 +12,12 @@ import 'package:qareeb_dash/core/widgets/saed_taple_widget.dart';
 import 'package:qareeb_dash/features/drivers/bloc/all_drivers/all_drivers_cubit.dart';
 import 'package:qareeb_dash/features/pay_to_drivers/ui/widget/pay_to_driver_widget.dart';
 
-import '../../../../core/strings/enum_manager.dart';
+import 'package:qareeb_models/global.dart'; import '../../../../core/strings/enum_manager.dart';
 import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/my_style.dart';
 import '../../../../core/util/note_message.dart';
 import '../../../../core/widgets/my_text_form_widget.dart';
-import '../../../../core/widgets/spinner_widget.dart';
+import '../../../../core/widgets/spinner_widget.dart';import '../../../../core/widgets/spinner_widget.dart'; import 'package:qareeb_models/global.dart';
 import '../../../accounts/bloc/account_amount_cubit/account_amount_cubit.dart';
 import '../../../accounts/bloc/all_transfers_cubit/all_transfers_cubit.dart';
 
@@ -75,7 +75,7 @@ class _PayToDriversPageState extends State<PayToDriversPage> {
           : null,
       body: BlocBuilder<AllTransfersCubit, AllTransfersInitial>(
         builder: (context, state) {
-          if (state.statuses.loading) {
+          if (state.statuses.isLoading) {
             return MyStyle.loadingWidget();
           }
           return Column(
@@ -117,7 +117,7 @@ class _PayToDriversPageState extends State<PayToDriversPage> {
                   data: state.result.mapIndexed((index, e) {
                     return [
                       e.id.toString(),
-                      e.type?.getArName ?? '-',
+                      e.type?.arabicName ?? '-',
                       e.sourceName,
                       e.destinationName,
                       e.amount.formatPrice,

@@ -26,6 +26,7 @@
 // POSSIBILITY OF SUCH DAMAGE.
 
 import 'package:flutter/material.dart';
+import 'package:qareeb_models/global.dart';
 
 import '../../spinner_widget.dart';
 
@@ -96,7 +97,7 @@ class FilterableList extends StatelessWidget {
                       child: Container(
                           width: double.infinity,
                           padding: const EdgeInsets.all(5),
-                          child: Text(items[index].name, style: suggestionTextStyle)),
+                          child: Text(items[index].name??'', style: suggestionTextStyle)),
                       onTap: () => onItemTapped.call(items[index],),),);
             },
           ),

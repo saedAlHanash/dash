@@ -2,7 +2,8 @@ import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_models/extensions.dart';  import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_models/points/data/model/trip_point.dart';
 
 import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/strings/app_string_manager.dart';
@@ -12,10 +13,11 @@ import '../../../../core/widgets/app_bar_widget.dart';
 import '../../../../core/widgets/my_button.dart';
 import '../../../../core/widgets/my_text_form_widget.dart';
 import '../../../../router/app_router.dart';
-import '../../../map/bloc/map_controller_cubit/map_controller_cubit.dart';
+import 'package:map_package/map/bloc/map_controller_cubit/map_controller_cubit.dart';
+
+import 'package:qareeb_models/points/data/response/points_response.dart';
 import '../../../points/bloc/get_edged_point_cubit/get_all_points_cubit.dart';
 import '../../../points/bloc/get_points_edge_cubit/get_points_edge_cubit.dart';
-import '../../../points/data/response/points_response.dart';
 import '../../bloc/add_point_cubit/add_point_cubit.dart';
 import '../../bloc/create_shared_trip_cubit/create_shared_trip_cubit.dart';
 import '../../data/request/create_shared_request.dart';
@@ -139,7 +141,7 @@ class _CreateSharedTripPageState extends State<CreateSharedTripPage> {
                 Expanded(
                   child: BlocBuilder<PointsCubit, PointsInitial>(
                     builder: (context, state) {
-                      if (state.statuses.loading) {
+                      if (state.statuses.isLoading) {
                         return MyStyle.loadingWidget();
                       }
 
@@ -164,7 +166,7 @@ class _CreateSharedTripPageState extends State<CreateSharedTripPage> {
                 ),
                 BlocBuilder<CreateSharedTripCubit, CreateSharedTripInitial>(
                   builder: (context, state) {
-                    if (state.statuses.loading) {
+                    if (state.statuses.isLoading) {
                       return MyStyle.loadingWidget();
                     }
                     return MyButton(

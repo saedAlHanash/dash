@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:qareeb_dash/core/widgets/spinner_widget.dart';
+ import 'package:qareeb_dash/core/widgets/spinner_widget.dart'; import 'package:qareeb_models/global.dart';
 
 import 'auto_complete/easy_autocomplete.dart';
 

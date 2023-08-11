@@ -1,10 +1,11 @@
 import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:qareeb_dash/core/widgets/not_found_widget.dart';
+import 'package:qareeb_models/points/data/model/trip_point.dart';
 
 import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/widgets/text_with_list_dote.dart';
-import '../../../points/data/response/points_response.dart';
+import 'package:qareeb_models/points/data/response/points_response.dart';
 
 class SearchLocationWidget extends StatelessWidget {
   const SearchLocationWidget({Key? key, required this.items, this.onItemClick})

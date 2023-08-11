@@ -2,16 +2,16 @@ import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/features/shared_trip/ui/widget/shared_trip_info_list_widget.dart';
+import 'package:qareeb_models/global.dart';
 
 import '../../../../core/util/my_style.dart';
 import '../../../../core/widgets/app_bar_widget.dart';
-import '../../../map/bloc/map_controller_cubit/map_controller_cubit.dart';
-import '../../../map/ui/widget/map_widget.dart';
+import 'package:map_package/map/bloc/map_controller_cubit/map_controller_cubit.dart';
+import 'package:map_package/map/ui/widget/map_widget.dart';
 import '../../bloc/shared_trip_by_id_cubit/shared_trip_by_id_cubit.dart';
-
-
 
 class SharedTripInfoPage extends StatefulWidget {
   const SharedTripInfoPage({Key? key}) : super(key: key);
@@ -30,11 +30,20 @@ class _SharedTripInfoPageState extends State<SharedTripInfoPage> {
   }
 
   @override
+  void dispose() {
+    MapWidget.initImeis([]);
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocListener<SharedTripByIdCubit, SharedTripByIdInitial>(
       listenWhen: (p, c) => c.statuses.done,
       listener: (context, state) {
-        mapController.addPath(trip: state.result);
+        mapController.addPath(path: state.result.path);
+        if (state.result.tripStatus == SharedTripStatus.started) {
+          MapWidget.initImeis([state.result.driver.imei]);
+        }
       },
       child: Scaffold(
         appBar: const AppBarWidget(),
@@ -44,9 +53,9 @@ class _SharedTripInfoPageState extends State<SharedTripInfoPage> {
             Expanded(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0).r,
-                child:  BlocBuilder<SharedTripByIdCubit, SharedTripByIdInitial>(
+                child: BlocBuilder<SharedTripByIdCubit, SharedTripByIdInitial>(
                   builder: (context, state) {
-                    if (state.statuses .loading) {
+                    if (state.statuses.loading) {
                       return MyStyle.loadingWidget();
                     }
 
@@ -60,7 +69,6 @@ class _SharedTripInfoPageState extends State<SharedTripInfoPage> {
                           textAlign: TextAlign.center,
                           color: Colors.black,
                         ),
-
                         TripInfoListWidget(trip: state.result),
                       ],
                     );
@@ -69,7 +77,9 @@ class _SharedTripInfoPageState extends State<SharedTripInfoPage> {
               ),
             ),
             20.0.horizontalSpace,
-            const Expanded(child: MapWidget()),
+            const Expanded(
+              child: MapWidget(),
+            ),
           ],
         ),
       ),

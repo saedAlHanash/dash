@@ -2,13 +2,13 @@ import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_models/extensions.dart';  import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/util/note_message.dart';
 import 'package:qareeb_dash/core/widgets/images/image_multi_type.dart';
 import 'package:qareeb_dash/core/widgets/my_button.dart';
 import 'package:qareeb_dash/generated/assets.dart';
 
-import '../../../../core/strings/enum_manager.dart';
+import 'package:qareeb_models/global.dart'; import '../../../../core/strings/enum_manager.dart';
 import '../../../../core/util/my_style.dart';
 import '../../../../core/widgets/my_card_widget.dart';
 import '../../bloc/create_redeem_cubit/create_redeem_cubit.dart';
@@ -22,7 +22,7 @@ class LoyaltyWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<RedeemsCubit, RedeemsInitial>(
       builder: (context, state) {
-        if (state.statuses.loading) {
+        if (state.statuses.isLoading) {
           return MyStyle.loadingWidget();
         }
 
@@ -39,7 +39,7 @@ class LoyaltyWidget extends StatelessWidget {
             _TotalWidget(text: state.result.totalMeters),
             ItemLoyal(
               driverId: state.driverId,
-              text: 'ليرة ذهب',
+              text: 'المليون',
               count: state.result.goldCount,
               type: RedeemType.gold,
               oldCount: state.result.goldOldCount,
@@ -158,10 +158,10 @@ class ItemLoyal extends StatelessWidget {
                 },
                 buildWhen: (p, c) => c.request.type == type,
                 builder: (context, state) {
-                  if (state.statuses.loading) {
+                  if (state.statuses.isLoading) {
                     return MyStyle.loadingWidget();
                   }
-                  if (state.statuses.done) {
+                  if (state.statuses.isDone) {
                     return CircleButton(
                       color: Colors.green,
                       size: 30.0.spMin,

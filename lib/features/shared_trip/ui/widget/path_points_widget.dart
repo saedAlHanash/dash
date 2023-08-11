@@ -3,18 +3,23 @@ import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:map_package/map/data/models/my_marker.dart';
 import 'package:qareeb_dash/core/api_manager/api_service.dart';
-import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_models/extensions.dart';  import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/features/points/data/response/points_edge_response.dart';
+import 'package:qareeb_models/points/data/model/trip_point.dart';
+import 'package:qareeb_models/points/data/response/points_edge_response.dart';
+import 'package:qareeb_models/trip_path/data/models/trip_path.dart';
 
 import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/util/my_style.dart';
 import '../../../../core/widgets/images/image_multi_type.dart';
 import '../../../../core/widgets/my_card_widget.dart';
 import '../../../../generated/assets.dart';
+
+import 'package:qareeb_models/points/data/response/points_response.dart';
 import '../../../points/bloc/delete_edge_cubit/delete_edge_cubit.dart';
 import '../../../points/bloc/get_edged_point_cubit/get_all_points_cubit.dart';
-import '../../../points/data/response/points_response.dart';
 import '../../bloc/add_point_cubit/add_point_cubit.dart';
 
 class PathPointsWidget extends StatelessWidget {
@@ -181,7 +186,7 @@ class PathPointsWidgetWrap1 extends StatelessWidget {
 class EdgesPointWidget extends StatelessWidget {
   const EdgesPointWidget({super.key, required this.item, required this.color});
 
-  final EdgeModel item;
+  final PointsEdgeResult item;
   final Color color;
 
   @override
@@ -214,7 +219,7 @@ class EdgesPointWidget extends StatelessWidget {
           BlocBuilder<DeleteEdgeCubit, DeleteEdgeInitial>(
             buildWhen: (p, c) => c.id == item.endPointId,
             builder: (context, state) {
-              if (state.statuses.loading) {
+              if (state.statuses.isLoading) {
                 return MyStyle.loadingWidget();
               }
               return IconButton(

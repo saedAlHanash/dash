@@ -4,11 +4,12 @@ import 'package:qareeb_dash/core/api_manager/api_service.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/features/auth/data/response/login_response.dart';
 import 'package:qareeb_dash/features/trip/bloc/trip_by_id/trip_by_id_cubit.dart';
+import 'package:qareeb_models/extensions.dart';
+import 'package:qareeb_models/trip_process/data/response/trip_response.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../features/profile/data/response/profile_info_response.dart';
-import '../../features/trip/data/response/trip_response.dart';
-import '../strings/enum_manager.dart';
+import 'package:qareeb_models/global.dart'; import '../strings/enum_manager.dart';
 
 class AppSharedPreference {
   static const _token = '1';
@@ -187,11 +188,11 @@ class AppSharedPreference {
     }
 
     //final
-    if (trip.isDelved) return NavTrip.ended;
+    if (trip.isDelved) return NavTrip.end;
     //بدأت
-    if (trip.isStarted) return NavTrip.started;
+    if (trip.isStarted) return NavTrip.start;
     //تم قبولها
-    if (trip.isAccepted) return NavTrip.accepted;
+    if (trip.isAccepted) return NavTrip.acceptor;
     //تم تأكيدها
     if (trip.isConfirmed) return NavTrip.have;
 
@@ -207,11 +208,11 @@ class AppSharedPreference {
       return NavTrip.waiting;
     }
     //final
-    if (trip.isDelved) return NavTrip.ended;
+    if (trip.isDelved) return NavTrip.end;
     //بدأت
-    if (trip.isStarted) return NavTrip.started;
+    if (trip.isStarted) return NavTrip.start;
     //تم قبولها
-    if (trip.isAccepted) return NavTrip.accepted;
+    if (trip.isAccepted) return NavTrip.acceptor;
     //تم تأكيدها
     if (trip.isConfirmed) return NavTrip.have;
 

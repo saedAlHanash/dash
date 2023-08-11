@@ -1,4 +1,5 @@
 import 'package:qareeb_dash/core/strings/enum_manager.dart';
+import 'package:qareeb_models/global.dart';
 
 class TransfersResponse {
   TransfersResponse({

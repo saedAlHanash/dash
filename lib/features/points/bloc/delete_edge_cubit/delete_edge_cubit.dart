@@ -5,7 +5,7 @@ import 'package:qareeb_dash/core/api_manager/api_url.dart';
 
 import '../../../../core/api_manager/api_service.dart';
 import '../../../../core/error/error_manager.dart';
-import '../../../../core/strings/enum_manager.dart';
+import 'package:qareeb_models/global.dart'; import '../../../../core/strings/enum_manager.dart';
 import '../../../../core/util/note_message.dart';
 import '../../../../core/util/pair_class.dart';
 
@@ -15,7 +15,7 @@ class DeleteEdgeCubit extends Cubit<DeleteEdgeInitial> {
   DeleteEdgeCubit() : super(DeleteEdgeInitial.initial());
 
   Future<void> deleteEdge(BuildContext context,
-      {required int start, required int end}) async {
+      {required num start, required num end}) async {
     final r = await NoteMessage.showConfirm(context, text: 'تأكيد العملية');
     if (!r) return;
     emit(state.copyWith(statuses: CubitStatuses.loading, id: end));
@@ -32,7 +32,7 @@ class DeleteEdgeCubit extends Cubit<DeleteEdgeInitial> {
   }
 
   Future<Pair<bool?, String?>> _deleteEdgeApi(
-      {required int start, required int end}) async {
+      {required num start, required num end}) async {
     final response = await APIService().deleteApi(
       url: DeleteUrl.deleteEdge,
       query: {

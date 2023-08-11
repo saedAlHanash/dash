@@ -7,7 +7,7 @@ import 'package:qareeb_dash/features/profile/data/response/profile_info_response
 
 import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/strings/app_string_manager.dart';
-import '../../../../core/strings/enum_manager.dart';
+import 'package:qareeb_models/global.dart'; import '../../../../core/strings/enum_manager.dart';
 import '../../../../core/util/my_style.dart';
 import '../../../../core/widgets/images/circle_image_widget.dart';
 import '../../../../core/widgets/images/image_multi_type.dart';

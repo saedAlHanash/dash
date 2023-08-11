@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_models/extensions.dart';  import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/strings/enum_manager.dart';
 import 'package:qareeb_dash/core/util/my_style.dart';
 import 'package:qareeb_dash/core/util/note_message.dart';
 import 'package:qareeb_dash/core/util/shared_preferences.dart';
 import 'package:qareeb_dash/core/widgets/my_button.dart';
-import 'package:qareeb_dash/features/map/ui/widget/map_widget.dart';
+import 'package:map_package/map/ui/widget/map_widget.dart';
 import 'package:qareeb_dash/features/shared_trip/ui/widget/item_shared_trip.dart';
 
-import '../../../map/bloc/map_controller_cubit/map_controller_cubit.dart';
+import 'package:map_package/map/bloc/map_controller_cubit/map_controller_cubit.dart';
+import 'package:qareeb_models/global.dart';
 import '../../bloc/shared_trip_by_id_cubit/shared_trip_by_id_cubit.dart';
 import '../../bloc/update_shared_cubit/update_shared_cubit.dart';
 
@@ -36,7 +37,7 @@ class _ActiveSharedPageState extends State<ActiveSharedPage> {
       listeners: [
         BlocListener<SharedTripByIdCubit, SharedTripByIdInitial>(
           listenWhen: (p, c) => c.statuses == CubitStatuses.done,
-          listener: (context, state) => mapCubit.addPath(trip: state.result),
+          listener: (context, state) => mapCubit.addPath(path: state.result.path),
         ),
       ],
       child: Scaffold(
@@ -64,11 +65,10 @@ class _ActiveSharedPageState extends State<ActiveSharedPage> {
                           if (state.statuses == CubitStatuses.done) {
                             trip = state.result;
                           }
-                          final tStateIndex = trip.status();
 
                           return MyButton(
                             margin: const EdgeInsets.symmetric(vertical: 20.0).h,
-                            text: SharedTripStatus.values[tStateIndex].sharedTripName(),
+                            text: trip.tripStatus.sharedTripName(),
                             onTap: () {
                               if (DateTime.now()
                                       .compareTo(trip.schedulingDate ?? DateTime(2030)) <
@@ -78,14 +78,16 @@ class _ActiveSharedPageState extends State<ActiveSharedPage> {
                                     context: context);
                                 return;
                               }
-                              if (tStateIndex == SharedTripStatus.closed.index) {
+
+                              if (trip.tripStatus == SharedTripStatus.closed) {
                                 Navigator.pop(context, true);
                                 return;
                               }
+
                               context.read<UpdateSharedCubit>().updateSharedTrip(
                                     context,
                                     trip: trip,
-                                    tState: SharedTripStatus.values[tStateIndex + 1],
+                                    tState: SharedTripStatus.values[trip.tripStatus.index + 1],
                                   );
                             },
                           );

@@ -1,13 +1,13 @@
 import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_models/extensions.dart';  import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/strings/app_color_manager.dart';
 import 'package:qareeb_dash/core/widgets/my_button.dart';
-import 'package:qareeb_dash/core/widgets/spinner_widget.dart';
+ import 'package:qareeb_dash/core/widgets/spinner_widget.dart'; import 'package:qareeb_models/global.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
-import '../../../../../core/strings/enum_manager.dart';
+import 'package:qareeb_models/global.dart'; import '../../../../../core/strings/enum_manager.dart';
 import '../../../data/request/transfer_filter_request.dart';
 
 class TransfersFilterWidget extends StatefulWidget {
@@ -59,7 +59,7 @@ class _TransfersFilterWidgetState extends State<TransfersFilterWidget> {
           builder: (context) {
             final list = TransferType.values
                 .map(
-                  (e) => SpinnerItem(name: e.getArName, id: e.index, item: e),
+                  (e) => SpinnerItem(name: e.arabicName, id: e.index, item: e),
                 )
                 .toList();
             list.insert(0, SpinnerItem(name: 'اختر النوع', id: -1));

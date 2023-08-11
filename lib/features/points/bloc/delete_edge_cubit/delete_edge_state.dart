@@ -4,7 +4,7 @@ part of 'delete_edge_cubit.dart';
 class DeleteEdgeInitial extends Equatable {
   final CubitStatuses statuses;
   final bool result;
-  final int id;
+  final num id;
   final String error;
 
   const DeleteEdgeInitial({
@@ -29,7 +29,7 @@ class DeleteEdgeInitial extends Equatable {
   DeleteEdgeInitial copyWith({
     CubitStatuses? statuses,
     bool? result,
-    int? id,
+    num? id,
     String? error,
   }) {
     return DeleteEdgeInitial(

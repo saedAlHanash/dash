@@ -2,10 +2,10 @@ import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_models/extensions.dart';  import 'package:qareeb_dash/core/extensions/extensions.dart';
 
 import '../../../../core/strings/app_color_manager.dart';
-import '../../../../core/strings/enum_manager.dart';
+import 'package:qareeb_models/global.dart'; import '../../../../core/strings/enum_manager.dart';
 import '../../../../core/util/my_style.dart';
 import '../../../../core/widgets/item_info.dart';
 import '../../../accounts/bloc/account_amount_cubit/account_amount_cubit.dart';
@@ -41,7 +41,7 @@ class SummaryPayToWidget extends StatelessWidget {
         if (state.statuses == CubitStatuses.init) {
           return 0.0.verticalSpace;
         }
-        if (state.statuses.loading) {
+        if (state.statuses.isLoading) {
           return MyStyle.loadingWidget();
         }
         return SizedBox(

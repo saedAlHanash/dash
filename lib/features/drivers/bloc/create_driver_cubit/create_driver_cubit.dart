@@ -5,7 +5,7 @@ import 'package:qareeb_dash/core/api_manager/api_url.dart';
 
 import '../../../../core/api_manager/api_service.dart';
 import '../../../../core/error/error_manager.dart';
-import '../../../../core/strings/enum_manager.dart';
+import 'package:qareeb_models/global.dart'; import '../../../../core/strings/enum_manager.dart';
 import '../../../../core/util/note_message.dart';
 import '../../../../core/util/pair_class.dart';
 import '../../data/request/cretae_driver_request.dart';

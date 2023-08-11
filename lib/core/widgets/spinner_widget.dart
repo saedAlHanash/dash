@@ -2,6 +2,7 @@ import 'package:drawable_text/drawable_text.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:qareeb_models/global.dart';
 
 import '../strings/app_color_manager.dart';
 
@@ -174,61 +175,61 @@ class SpinnerOutlineTitle extends StatelessWidget {
     );
   }
 }
-
-class SpinnerItem<T> {
-  SpinnerItem({
-    this.name = '',
-    this.id = 0,
-    this.isSelected = false,
-    this.item,
-    this.icon,
-    this.enable = true,
-  });
-
-  String name;
-  int id;
-  bool isSelected;
-  bool enable;
-  T? item;
-  Widget? icon;
-
-//<editor-fold desc="Data Methods">
-
-  SpinnerItem copyWith({
-    String? name,
-    int? id,
-    bool? isSelected,
-    bool? enable,
-    dynamic item,
-  }) {
-    return SpinnerItem(
-      name: name ?? this.name,
-      id: id ?? this.id,
-      isSelected: isSelected ?? this.isSelected,
-      enable: enable ?? this.enable,
-      item: item ?? this.item,
-    );
-  }
-
-  Map<String, dynamic> toMap() {
-    return {
-      'name': name,
-      'id': id,
-      'isSelected': isSelected,
-      'enable': enable,
-      'item': item,
-    };
-  }
-
-  factory SpinnerItem.fromMap(Map<String, dynamic> map) {
-    return SpinnerItem(
-      name: map['name'] as String,
-      id: map['id'] as int,
-      isSelected: map['isSelected'] as bool,
-      enable: map['enable'] as bool,
-      item: map['item'] as dynamic,
-    );
-  }
-
-//</editor-fold>
-}
+//
+// class SpinnerItem<T> {
+//   SpinnerItem({
+//     this.name = '',
+//     this.id = 0,
+//     this.isSelected = false,
+//     this.item,
+//     this.icon,
+//     this.enable = true,
+//   });
+//
+//   String name;
+//   int id;
+//   bool isSelected;
+//   bool enable;
+//   T? item;
+//   Widget? icon;
+//
+// //<editor-fold desc="Data Methods">
+//
+//   SpinnerItem copyWith({
+//     String? name,
+//     int? id,
+//     bool? isSelected,
+//     bool? enable,
+//     dynamic item,
+//   }) {
+//     return SpinnerItem(
+//       name: name ?? this.name,
+//       id: id ?? this.id,
+//       isSelected: isSelected ?? this.isSelected,
+//       enable: enable ?? this.enable,
+//       item: item ?? this.item,
+//     );
+//   }
+//
+//   Map<String, dynamic> toMap() {
+//     return {
+//       'name': name,
+//       'id': id,
+//       'isSelected': isSelected,
+//       'enable': enable,
+//       'item': item,
+//     };
+//   }
+//
+//   factory SpinnerItem.fromMap(Map<String, dynamic> map) {
+//     return SpinnerItem(
+//       name: map['name'] as String,
+//       id: map['id'] as int,
+//       isSelected: map['isSelected'] as bool,
+//       enable: map['enable'] as bool,
+//       item: map['item'] as dynamic,
+//     );
+//   }
+//
+// //</editor-fold>
+// }

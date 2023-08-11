@@ -2,7 +2,7 @@ import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_models/extensions.dart';  import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/widgets/images/round_image_widget.dart';
 
 import '../../../../core/util/my_style.dart';
@@ -134,10 +134,10 @@ class ItemProvider extends StatelessWidget {
                           ChangeProviderStateInitial>(
                         buildWhen: (p, c) => c.id == item.id,
                         builder: (context, state) {
-                          if (state.statuses.loading) {
+                          if (state.statuses.isLoading) {
                             return MyStyle.loadingWidget();
                           }
-                          if (state.statuses.done) item.isActive = !item.isActive;
+                          if (state.statuses.isDone) item.isActive = !item.isActive;
 
                           return InkWell(
                             onTap: () {

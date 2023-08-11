@@ -8,12 +8,15 @@ import 'package:flutter_admin_scaffold/admin_scaffold.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:map_package/map/bloc/ather_cubit/ather_cubit.dart';
+import 'package:map_package/map/bloc/map_controller_cubit/map_controller_cubit.dart';
+import 'package:map_package/map/bloc/search_location/search_location_cubit.dart';
 import 'package:qareeb_dash/core/api_manager/command.dart';
 import 'package:qareeb_dash/core/strings/enum_manager.dart';
 import 'package:qareeb_dash/features/accounts/ui/pages/transfers_page.dart';
 import 'package:qareeb_dash/features/car_catigory/bloc/delete_car_cat_cubit/delete_car_cat_cubit.dart';
 import 'package:qareeb_dash/features/coupons/ui/pages/coupons_page.dart';
-import 'package:qareeb_dash/features/map/bloc/map_controller_cubit/map_controller_cubit.dart';
+
 import 'package:qareeb_dash/features/messages/ui/pages/messages_page.dart';
 import 'package:qareeb_dash/features/redeems/bloc/redeems_cubit/redeems_cubit.dart';
 import 'package:qareeb_dash/features/shared_trip/ui/pages/shared_trips_page.dart';
@@ -39,9 +42,10 @@ import '../../../drivers/bloc/loyalty_cubit/loyalty_cubit.dart';
 import '../../../drivers/ui/pages/drivers_page.dart';
 import '../../../institutions/bloc/delete_institution_cubit/delete_institution_cubit.dart';
 import '../../../institutions/ui/pages/institutions_page.dart';
-import '../../../map/bloc/search_location/search_location_cubit.dart';
+
 import '../../../pay_to_drivers/bloc/pay_to_cubit/pay_to_cubit.dart';
 import '../../../pay_to_drivers/ui/pages/pay_to_drivers_page.dart';
+
 import '../../../points/ui/pages/points_page.dart';
 import '../../../reasons/bloc/create_cubit/create_cubit.dart';
 import '../../../reasons/bloc/delete_reason_cubit/delete_reason_cubit.dart';
@@ -285,6 +289,7 @@ class _HomePageState extends State<HomePage> {
                     providers: [
                       BlocProvider(create: (context) => sl<MapControllerCubit>()),
                       BlocProvider(create: (context) => sl<SearchLocationCubit>()),
+                      BlocProvider(create: (context) => sl<AtherCubit>()),
                     ],
                     child: const PointsPage(),
                   );

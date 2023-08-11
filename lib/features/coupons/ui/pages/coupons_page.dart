@@ -2,7 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_models/extensions.dart';  import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/widgets/not_found_widget.dart';
 
 import '../../../../core/util/checker_helper.dart';
@@ -44,7 +44,7 @@ class _CouponPageState extends State<CouponPage> {
           : null,
       body: BlocBuilder<AllCouponsCubit, AllCouponsInitial>(
         builder: (_, state) {
-          if (state.statuses.loading) {
+          if (state.statuses.isLoading) {
             return MyStyle.loadingWidget();
           }
           if (state.result.isEmpty) {

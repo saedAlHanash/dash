@@ -2,7 +2,7 @@ import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_models/extensions.dart';  import 'package:qareeb_models/extensions.dart';  import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/strings/enum_manager.dart';
 import 'package:qareeb_dash/core/util/note_message.dart';
 import 'package:qareeb_dash/core/util/shared_preferences.dart';
@@ -10,6 +10,7 @@ import 'package:qareeb_dash/core/widgets/my_button.dart';
 import 'package:qareeb_dash/core/widgets/my_text_form_widget.dart';
 import 'package:qareeb_dash/features/contact/bloc/send_note_cubit/send_note_cubit.dart';
 import 'package:qareeb_dash/features/contact/data/request/note_request.dart';
+import 'package:qareeb_models/global.dart';
 
 import '../../../../core/app/bloc/loading_cubit.dart';
 import '../../../../core/strings/app_color_manager.dart';
@@ -98,7 +99,7 @@ class ContactToUs extends StatelessWidget {
                             15.0.verticalSpace,
                             BlocBuilder<SendNoteCubit, NoteInitial>(
                               builder: (context, state) {
-                                if (state.statuses.loading) {
+                                if (state.statuses.isLoading) {
                                   return MyStyle.loadingWidget();
                                 }
                                 return MyButton(

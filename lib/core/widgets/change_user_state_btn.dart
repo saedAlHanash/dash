@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/util/checker_helper.dart';
+import 'package:qareeb_models/extensions.dart';
 
 import '../../features/admins/ui/widget/admin_data_grid.dart';
 import '../../features/auth/bloc/change_user_state_cubit/change_user_state_cubit.dart';
@@ -22,11 +22,11 @@ class ChangeUserStateBtn extends StatelessWidget {
     return BlocBuilder<ChangeUserStateCubit, ChangeUserStateInitial>(
       buildWhen: (p, c) => c.id == user.id,
       builder: (context, state) {
-        if (state.statuses.loading) {
+        if (state.statuses.isLoading) {
           return MyStyle.loadingWidget();
         }
 
-        if (state.statuses.done) user.isActive = !user.isActive;
+        if (state.statuses.isDone) user.isActive = !user.isActive;
 
         return InkWell(
           onTap: () {

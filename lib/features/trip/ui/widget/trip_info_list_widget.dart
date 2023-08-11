@@ -2,13 +2,13 @@ import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_models/extensions.dart';  import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/strings/app_string_manager.dart';
 import 'package:qareeb_dash/features/rating/presentation/pages/rating_page.dart';
 
 import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/widgets/item_info.dart';
-import '../../data/response/trip_response.dart';
+import 'package:qareeb_models/trip_process/data/response/trip_response.dart';
 
 class TripInfoListWidget extends StatelessWidget {
   const TripInfoListWidget({Key? key, required this.trip}) : super(key: key);

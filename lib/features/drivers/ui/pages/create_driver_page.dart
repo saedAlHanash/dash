@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_models/extensions.dart';  import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/strings/enum_manager.dart';
 import 'package:qareeb_dash/core/widgets/my_button.dart';
 import 'package:qareeb_dash/core/widgets/my_card_widget.dart';
 import 'package:qareeb_dash/core/widgets/my_text_form_widget.dart';
-import 'package:qareeb_dash/core/widgets/spinner_widget.dart';
+ import 'package:qareeb_dash/core/widgets/spinner_widget.dart'; import 'package:qareeb_models/global.dart';
 import 'package:qareeb_dash/features/drivers/data/request/cretae_driver_request.dart';
 import 'package:qareeb_dash/features/drivers/data/response/drivers_response.dart';
 import 'package:qareeb_dash/generated/assets.dart';
@@ -328,7 +328,7 @@ class _CreateDriverPageState extends State<CreateDriverPage> {
                           child:
                               BlocBuilder<AllCarCategoriesCubit, AllCarCategoriesInitial>(
                             builder: (context, state) {
-                              if (state.statuses.loading) {
+                              if (state.statuses.isLoading) {
                                 return MyStyle.loadingWidget();
                               }
                               final list = state.result.mapIndexed(
@@ -393,7 +393,7 @@ class _CreateDriverPageState extends State<CreateDriverPage> {
               ),
               BlocBuilder<CreateDriverCubit, CreateDriverInitial>(
                 builder: (context, state) {
-                  if (state.statuses.loading) {
+                  if (state.statuses.isLoading) {
                     return MyStyle.loadingWidget();
                   }
                   return MyButton(

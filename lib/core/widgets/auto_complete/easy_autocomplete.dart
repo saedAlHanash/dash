@@ -7,7 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:qareeb_dash/core/api_manager/api_service.dart';
 import 'package:qareeb_dash/core/widgets/auto_complete/widgets/filterable_list.dart';
 
-import 'package:qareeb_dash/core/widgets/spinner_widget.dart';
+ import 'package:qareeb_dash/core/widgets/spinner_widget.dart'; import 'package:qareeb_models/global.dart';
 
 class EasyAutocomplete<T> extends StatefulWidget {
   /// The list of suggestions to be displayed
@@ -159,12 +159,12 @@ class _EasyAutocompleteState extends State<EasyAutocomplete> {
                 onItemTapped: (value) {
 
                   _controller.value = TextEditingValue(
-                      text: value.name,
-                      selection: TextSelection.collapsed(offset: value.name.length));
+                      text: value.name??'',
+                      selection: TextSelection.collapsed(offset: value.name?.length??0));
                   widget.onSubmitted?.call(value);
                   closeOverlay();
                   _focusNode.unfocus();
-                  _controller.text = value.name;
+                  _controller.text = value.name??'';
                 }),
           ),
         ),
@@ -195,9 +195,9 @@ class _EasyAutocompleteState extends State<EasyAutocomplete> {
         ..clear()
         ..addAll(widget.suggestions!.where((e) {
           if (e.isSelected) {
-            _controller.text = e.name;
+            _controller.text = e.name??'';
           }
-          return e.name.toLowerCase().contains(input.name.toLowerCase());
+          return (e.name?.toLowerCase().contains(input.name?.toLowerCase()??'')??false);
         }).toList());
 
       rebuildOverlay();
@@ -206,8 +206,8 @@ class _EasyAutocompleteState extends State<EasyAutocomplete> {
       if (_debounce != null && _debounce!.isActive) _debounce!.cancel();
       _debounce = Timer(widget.debounceDuration, () async {
         if (_previousAsyncSearchText.hashCode != input.hashCode ||
-            _previousAsyncSearchText.name.isEmpty ||
-            input.name.isEmpty) {
+            (_previousAsyncSearchText.name?.isEmpty??false) ||
+            (input.name?.isEmpty??false)) {
           _suggestions = await widget.asyncSuggestions!(input);
           setState(() {
             _isLoading = false;

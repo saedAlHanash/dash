@@ -1,4 +1,5 @@
 import 'package:latlong2/latlong.dart';
+import 'package:qareeb_models/points/data/response/points_edge_response.dart';
 
 import '../response/points_edge_response.dart';
 
@@ -52,7 +53,7 @@ class CreateEdgeRequest {
         "arName": arName,
       };
 
-  void initFromEdge(EdgeModel result) {
+  void initFromEdge(PointsEdgeResult result) {
     id = result.id;
     startPointId = result.startPointId;
     endPointId = result.endPointId;

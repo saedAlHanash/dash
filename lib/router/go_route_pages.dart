@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:map_package/map/bloc/ather_cubit/ather_cubit.dart';
+import 'package:map_package/map/bloc/search_location/search_location_cubit.dart';
 import 'package:qareeb_dash/core/api_manager/api_service.dart';
 import 'package:qareeb_dash/features/admins/bloc/create_admin_cubit/create_admin_cubit.dart';
 import 'package:qareeb_dash/features/admins/ui/pages/create_admin_page.dart';
@@ -11,7 +13,7 @@ import 'package:qareeb_dash/features/drivers/bloc/driver_by_id_cubit/driver_by_i
 import 'package:qareeb_dash/features/drivers/data/response/drivers_response.dart';
 import 'package:qareeb_dash/features/drivers/ui/pages/create_driver_page.dart';
 import 'package:qareeb_dash/features/home/ui/pages/home_page.dart';
-import 'package:qareeb_dash/features/map/bloc/map_controller_cubit/map_controller_cubit.dart';
+import 'package:map_package/map/bloc/map_controller_cubit/map_controller_cubit.dart';
 import 'package:qareeb_dash/features/points/bloc/creta_edge_cubit/create_edge_cubit.dart';
 import 'package:qareeb_dash/features/points/bloc/point_by_id_cubit/point_by_id_cubit.dart';
 import 'package:qareeb_dash/features/trip/ui/pages/trips_page.dart';
@@ -33,7 +35,7 @@ import '../features/institutions/bloc/create_institution_cubit/create_institutio
 import '../features/institutions/bloc/delete_institution_cubit/delete_institution_cubit.dart';
 import '../features/institutions/data/response/institutions_response.dart';
 import '../features/institutions/ui/pages/create_institution_page.dart';
-import '../features/map/bloc/search_location/search_location_cubit.dart';
+
 import '../features/points/bloc/creta_point_cubit/create_point_cubit.dart';
 import '../features/points/bloc/delete_edge_cubit/delete_edge_cubit.dart';
 import '../features/points/bloc/delete_point_cubit/delete_point_cubit.dart';
@@ -268,6 +270,7 @@ final appGoRouter = GoRouter(
           BlocProvider(create: (_) => di.sl<DeleteEdgeCubit>()),
           BlocProvider(create: (_) => di.sl<LocationNameCubit>()),
           BlocProvider(create: (_) => di.sl<MapControllerCubit>()),
+          BlocProvider(create: (_) => di.sl<AtherCubit>()),
           BlocProvider(create: (_) => di.sl<CreatePointCubit>()),
           BlocProvider(create: (_) => di.sl<CreateEdgeCubit>()),
           BlocProvider(create: (_) => di.sl<DeletePointCubit>()),
@@ -293,6 +296,7 @@ final appGoRouter = GoRouter(
         final providers = [
           BlocProvider(create: (_) => di.sl<MapControllerCubit>()),
           BlocProvider(create: (_) => di.sl<TripStatusCubit>()),
+          BlocProvider(create: (_) => di.sl<AtherCubit>()),
           BlocProvider(create: (_) => di.sl<TripByIdCubit>()..tripById(_, tripId: id)),
         ];
         return MultiBlocProvider(
@@ -344,6 +348,7 @@ final appGoRouter = GoRouter(
 
         final providers = [
           BlocProvider(create: (_) => di.sl<MapControllerCubit>()),
+          BlocProvider(create: (_) => di.sl<AtherCubit>()),
           BlocProvider(
             create: (_) => di.sl<SharedTripByIdCubit>()
               ..getSharedTripById(_, id: id, requestId: requestId),

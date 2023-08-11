@@ -3,7 +3,7 @@ import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_models/extensions.dart';  import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/widgets/not_found_widget.dart';
 
 import '../../../../core/util/checker_helper.dart';
@@ -45,7 +45,7 @@ class _RolesPageState extends State<RolesPage> {
           : null,
       body: BlocBuilder<AllRolesCubit, AllRolesInitial>(
         builder: (_, state) {
-          if (state.statuses.loading) {
+          if (state.statuses.isLoading) {
             return MyStyle.loadingWidget();
           }
           if (state.result.isEmpty) {
@@ -83,7 +83,7 @@ class _RolesPageState extends State<RolesPage> {
                             listenWhen: (p, c) => c.statuses.done,
                             buildWhen: (p, c) => c.id == e.id,
                             builder: (context, state) {
-                              if (state.statuses.loading) {
+                              if (state.statuses.isLoading) {
                                 return MyStyle.loadingWidget();
                               }
                               return InkWell(

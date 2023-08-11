@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_models/extensions.dart';  import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/widgets/my_button.dart';
 import 'package:qareeb_dash/core/widgets/my_card_widget.dart';
 import 'package:qareeb_dash/core/widgets/my_text_form_widget.dart';
@@ -13,7 +13,7 @@ import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/util/my_style.dart';
 import '../../../../core/widgets/app_bar_widget.dart';
 import '../../../../core/widgets/my_checkbox_widget.dart';
-import '../../../../core/widgets/spinner_widget.dart';
+import '../../../../core/widgets/spinner_widget.dart';import '../../../../core/widgets/spinner_widget.dart'; import 'package:qareeb_models/global.dart';
 import '../../bloc/all_permissions_cubit/all_permissions_cubit.dart';
 import '../../bloc/all_roles/all_roles_cubit.dart';
 import '../../bloc/create_role_cubit/create_role_cubit.dart';
@@ -107,7 +107,7 @@ class _CreateRolePageState extends State<CreateRolePage> {
 
               BlocBuilder<AllPermissionsCubit, AllPermissionsInitial>(
                 builder: (context, state) {
-                  if (state.statuses.loading) {
+                  if (state.statuses.isLoading) {
                     return MyStyle.loadingWidget();
                   }
 
@@ -131,7 +131,7 @@ class _CreateRolePageState extends State<CreateRolePage> {
               ),
               BlocBuilder<CreateRoleCubit, CreateRoleInitial>(
                 builder: (context, state) {
-                  if (state.statuses.loading) {
+                  if (state.statuses.isLoading) {
                     return MyStyle.loadingWidget();
                   }
                   return MyButton(

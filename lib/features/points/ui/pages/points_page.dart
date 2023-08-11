@@ -2,20 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:latlong2/latlong.dart';
-import 'package:qareeb_dash/core/extensions/extensions.dart';
-import 'package:qareeb_dash/features/map/bloc/map_controller_cubit/map_controller_cubit.dart';
-import 'package:qareeb_dash/features/map/ui/widget/map_widget.dart';
+import 'package:map_package/map/bloc/map_controller_cubit/map_controller_cubit.dart';
+import 'package:map_package/map/bloc/search_location/search_location_cubit.dart';
+import 'package:map_package/map/ui/widget/map_widget.dart';
 
 import '../../../../core/util/checker_helper.dart';
-import '../../../../core/util/my_style.dart';
 import '../../../../core/util/note_message.dart';
 import '../../../../core/widgets/auto_complete_widget.dart';
-import '../../../../core/widgets/my_button.dart';
 import '../../../../router/go_route_pages.dart';
-import '../../../map/bloc/search_location/search_location_cubit.dart';
-import '../../../map/ui/widget/search_location_widget.dart';
-import '../../../map/ui/widget/search_widget.dart';
+import '../../../map/search_location_widget.dart';
+import '../../../map/search_widget.dart';
 import '../../bloc/get_edged_point_cubit/get_all_points_cubit.dart';
 
 class PointsPage extends StatefulWidget {
@@ -86,8 +82,7 @@ class _PointsPageState extends State<PointsPage> {
               )
             : null,
         body: MapWidget(
-          initialPoint: LatLng(33.30, 36.16),
-            updateMarkerWithZoom:true,
+          updateMarkerWithZoom: true,
           search: () async {
             NoteMessage.showCustomBottomSheet(
               context,
@@ -102,6 +97,12 @@ class _PointsPageState extends State<PointsPage> {
                   },
                 ),
               ),
+            );
+          },
+          onTapMarker: (marker) {
+            context.pushNamed(
+              GoRouteName.pointInfo,
+              queryParams: {'id': marker.item.id.toString()},
             );
           },
         ),

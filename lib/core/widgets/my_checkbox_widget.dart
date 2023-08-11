@@ -2,9 +2,10 @@ import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:group_button/group_button.dart';
+import 'package:qareeb_models/global.dart';
 
 import '../strings/app_color_manager.dart';
-import '../widgets/spinner_widget.dart';
+
 
 class MyCheckboxWidget extends StatefulWidget {
   const MyCheckboxWidget({

@@ -2,15 +2,19 @@ import 'package:collection/collection.dart';
 import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:map_package/map/data/models/my_marker.dart';
+import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/features/shared_trip/data/response/shared_trip.dart';
 import 'package:qareeb_dash/features/shared_trip/ui/widget/path_points_widget.dart';
+import 'package:qareeb_models/shared_trip/data/response/shared_trip.dart';
 
 import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/util/note_message.dart';
 import '../../../../core/widgets/images/image_multi_type.dart';
 import '../../../../core/widgets/item_info.dart';
 import '../../../../core/widgets/saed_taple_widget.dart';
+import 'package:qareeb_models/extensions.dart';
 
 class TripInfoListWidget extends StatefulWidget {
   const TripInfoListWidget({Key? key, required this.trip}) : super(key: key);
@@ -29,12 +33,28 @@ class _TripInfoListWidgetState extends State<TripInfoListWidget> {
       children: [
         ItemInfoInLine(title: 'السائق', info: widget.trip.driver.fullName),
         ItemInfoInLine(
-            title: 'عدد المقاعد',
-            info: widget.trip.driver.carType.seatsNumber.toString()),
+          title: 'عدد المقاعد',
+          info: widget.trip.driver.carType.seatsNumber.toString(),
+        ),
         ItemInfoInLine(title: 'سعر المقعد', info: widget.trip.seatCost.formatPrice),
         ItemInfoInLine(
-            title: 'المقاعد المحجوزة', info: widget.trip.reservedSeats.toString()),
-        ItemInfoInLine(title: 'التكلفة الكلية', info: widget.trip.cost),
+          title: 'المقاعد المحجوزة',
+          info: widget.trip.reservedSeats.toString(),
+        ),
+        ItemInfoInLine(
+          title: 'التكلفة الكلية',
+          info: (widget.trip.seatsNumber * widget.trip.seatCost).toString(),
+        ),
+        Builder(builder: (context) {
+          var x = 0.0;
+          for (var e in widget.trip.path.edges) {
+            x += e.distance;
+          }
+          return ItemInfoInLine(
+            title: 'المسافة المقدرة',
+            info: '${(x / 1000).toString()} km',
+          );
+        }),
         ItemInfoInLine(
             title: 'تاريخ الإنشاء',
             info: widget.trip.creationDate?.formatDateTime ?? '-'),
@@ -48,6 +68,7 @@ class _TripInfoListWidgetState extends State<TripInfoListWidget> {
             onPressed: () => showSharedRequest(widget.trip),
             child: const DrawableText(
               text: 'عرض',
+              selectable: false,
               color: AppColorManager.mainColorDark,
               fontFamily: FontManager.cairoBold,
             ),

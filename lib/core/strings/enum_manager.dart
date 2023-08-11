@@ -1,24 +1,24 @@
-enum CubitStatuses { init, done, loading, error }
+// enum CubitStatuses { init, done, loading, error }
 
 enum BookingPages { selectLocation, trip, booking }
 
-enum StateScreen { non, confirmCode, policy, main, passwordCode }
+// enum StateScreen { non, confirmCode, policy, main, passwordCode }
 
-enum NavTrip { waiting, have, accepted, started, ended }
-
-enum MapType { normal, word, mix }
-
+// enum NavTrip { waiting, have, accepted, started, end }
+//
+// enum MapType { normal, word, mix }
+//
 enum Gender { mail, female }
-
+//
 enum RedeemType { gold, oil, tire }
+//
+// enum MtnState { init, pay, otp }
+//
+// enum TripStatus { non, reject, accept, start, end }
 
-enum MtnState { init, pay, otp }
+// enum MyMarkerType { location, driver, point, sharedPint,bus }
 
-enum TripStatus { non, reject, accept, start, end }
-
-enum MyMarkerType { location, driver, point, sharedPint,bus }
-
-enum SharedTripStatus { pending, started, closed, canceled }
+// enum SharedTripStatus { pending, started, closed, canceled }
 
 enum SharedRequestStatus { pending, accepted, payed, pickedup, dropped, closed }
 
@@ -44,16 +44,16 @@ enum SummaryPayToEnum {
   equal,
 }
 
-enum TransferStatus { pending, closed }
+// enum TransferStatus { pending, closed }
 
-enum TransferPayType { driverToCompany, companyToDriver }
+// enum TransferPayType { driverToCompany, companyToDriver }
 
-enum Government { damascus, rifDimashq }
+// enum Government { damascus, rifDimashq }
 
 enum BusTripType { go, back }
 
-enum WeekDays { sunday, monday, tuesday, wednesday, thursday, friday, saturday }
+// enum WeekDays { sunday, monday, tuesday, wednesday, thursday, friday, saturday }
 
-enum InstitutionType { school, college, transportation }
+// enum InstitutionType { school, college, transportation }
 
 

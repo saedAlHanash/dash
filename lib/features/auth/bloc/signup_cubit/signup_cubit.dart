@@ -7,7 +7,7 @@ import '../../../../core/api_manager/api_url.dart';
 import '../../../../core/error/error_manager.dart';
 import '../../../../core/network/network_info.dart';
 import '../../../../core/strings/app_string_manager.dart';
-import '../../../../core/strings/enum_manager.dart';
+import 'package:qareeb_models/global.dart'; import '../../../../core/strings/enum_manager.dart';
 import '../../../../core/util/note_message.dart';
 import '../../../../core/util/pair_class.dart';
 import '../../../../core/util/shared_preferences.dart';

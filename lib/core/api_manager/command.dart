@@ -1,7 +1,7 @@
-import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_models/extensions.dart';  import 'package:qareeb_models/extensions.dart';  import 'package:qareeb_dash/core/extensions/extensions.dart';
 
 import '../../features/accounts/data/request/transfer_filter_request.dart';
-import '../widgets/spinner_widget.dart';
+import 'package:qareeb_models/global.dart';
 
 class Command {
   Command({

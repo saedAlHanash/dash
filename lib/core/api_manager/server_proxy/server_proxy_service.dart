@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qareeb_dash/core/api_manager/api_url.dart';
 import 'package:qareeb_dash/core/api_manager/server_proxy/server_proxy_request.dart';
-import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_models/extensions.dart';  import 'package:qareeb_dash/core/extensions/extensions.dart';
 
 import '../../error/error_manager.dart';
 import '../../injection/injection_container.dart';

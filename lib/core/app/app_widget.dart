@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:map_package/map/bloc/set_point_cubit/map_control_cubit.dart';
 
 import '../../features/accounts/bloc/all_transfers_cubit/all_transfers_cubit.dart';
 import '../../features/admins/bloc/all_admins/all_admins_cubit.dart';
@@ -14,7 +15,7 @@ import '../../features/coupons/bloc/all_coupons_vubit/all_coupons_cubit.dart';
 import '../../features/drivers/bloc/all_drivers/all_drivers_cubit.dart';
 import '../../features/home/bloc/nav_home_cubit/nav_home_cubit.dart';
 import '../../features/institutions/bloc/all_institutions_cubit/all_institutions_cubit.dart';
-import '../../features/map/bloc/set_point_cubit/map_control_cubit.dart';
+import 'package:map_package/map/bloc/set_point_cubit/map_control_cubit.dart';
 import '../../features/messages/bloc/all_messages/all_messages_cubit.dart';
 import '../../features/points/bloc/get_edged_point_cubit/get_all_points_cubit.dart';
 import '../../features/roles/bloc/all_roles/all_roles_cubit.dart';

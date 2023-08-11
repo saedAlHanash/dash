@@ -1,7 +1,8 @@
 import 'package:collection/collection.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:qareeb_models/points/data/model/trip_point.dart';
 
-import '../../../points/data/response/points_response.dart';
+import 'package:qareeb_models/points/data/response/points_response.dart';
 
 part 'add_point_state.dart';
 

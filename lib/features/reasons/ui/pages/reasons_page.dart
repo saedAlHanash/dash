@@ -2,7 +2,7 @@ import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_models/extensions.dart';  import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/util/note_message.dart';
 import 'package:qareeb_dash/core/widgets/my_button.dart';
 import 'package:qareeb_dash/core/widgets/my_text_form_widget.dart';
@@ -41,7 +41,7 @@ class ReasonsPage extends StatelessWidget {
                           listener: (context, state) => Navigator.pop(context, true),
                           listenWhen: (p, c) => c.statuses.done,
                           builder: (context, state) {
-                            if (state.statuses.loading) {
+                            if (state.statuses.isLoading) {
                               return MyStyle.loadingWidget();
                             }
                             return MyButton(
@@ -68,7 +68,7 @@ class ReasonsPage extends StatelessWidget {
           : null,
       body: BlocBuilder<GetReasonsCubit, GetReasonsInitial>(
         builder: (context, state) {
-          if (state.statuses.loading) {
+          if (state.statuses.isLoading) {
             return MyStyle.loadingWidget();
           }
           final list = state.result;
@@ -106,7 +106,7 @@ class ReasonsPage extends StatelessWidget {
                             listenWhen: (p, c) => c.statuses.done,
                             buildWhen: (p, c) => c.id == item.id,
                             builder: (context, state) {
-                              if (state.statuses.loading) {
+                              if (state.statuses.isLoading) {
                                 return MyStyle.loadingWidget();
                               }
                               return IconButton(

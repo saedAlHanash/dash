@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_models/extensions.dart';  import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/widgets/not_found_widget.dart';
 import 'package:qareeb_dash/core/widgets/saed_taple_widget.dart';
 
 import 'package:qareeb_dash/router/go_route_pages.dart';
 
-import '../../../../core/strings/enum_manager.dart';
+import 'package:qareeb_models/global.dart'; import '../../../../core/strings/enum_manager.dart';
 import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/my_style.dart';
 import '../../../../core/widgets/images/round_image_widget.dart';
@@ -41,7 +41,7 @@ class InstitutionsPage extends StatelessWidget {
           : null,
       body: BlocBuilder<AllInstitutionsCubit, AllInstitutionsInitial>(
         builder: (context, state) {
-          if (state.statuses.loading) {
+          if (state.statuses.isLoading) {
             return MyStyle.loadingWidget();
           }
           final list = state.result;
@@ -69,8 +69,8 @@ class InstitutionsPage extends StatelessWidget {
                           ),
                         ),
                         e.name,
-                        Government.values[e.government].getArName,
-                        InstitutionType.values[e.type].getArName,
+                        Government.values[e.government].arabicName,
+                        InstitutionType.values[e.type].arabicName,
                         e.atharKey,
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -99,7 +99,7 @@ class InstitutionsPage extends StatelessWidget {
                             //     listenWhen: (p, c) => c.statuses.done,
                             //     buildWhen: (p, c) => c.id == e.id,
                             //     builder: (context, state) {
-                            //       if (state.statuses.loading) {
+                            //       if (state.statuses.isLoading) {
                             //         return MyStyle.loadingWidget();
                             //       }
                             //       return InkWell(

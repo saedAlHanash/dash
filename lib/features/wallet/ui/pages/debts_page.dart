@@ -3,7 +3,7 @@ import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_models/extensions.dart';  import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/widgets/not_found_widget.dart';
 import 'package:qareeb_dash/core/widgets/saed_taple_widget.dart';
 
@@ -23,7 +23,7 @@ class DebtsPage extends StatelessWidget {
       ),
       body: BlocBuilder<DebtsCubit, DebtsInitial>(
         builder: (context, state) {
-          if (state.statuses.loading) {
+          if (state.statuses.isLoading) {
             return MyStyle.loadingWidget();
           }
           final list = state.result;

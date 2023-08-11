@@ -6,7 +6,7 @@ import 'package:collection/collection.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
-import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_models/extensions.dart';
 
 import '../util/shared_preferences.dart';
 
@@ -42,7 +42,8 @@ class APIService {
   final innerHeader = {
     'Content-Type': 'application/json',
     'origin': 'x-requested-with',
-    'x-cors-api-key': 'temp_ddc55961defc6c4343f28eec36c009da',
+    'X-Frame-Options': 'SAMEORIGIN',
+    // 'x-cors-api-key': 'temp_ddc55961defc6c4343f28eec36c009da',
     'Authorization': 'Bearer ${AppSharedPreference.getToken()}',
   };
 
@@ -96,7 +97,7 @@ class APIService {
 
     final uri = Uri.https(hostName ?? baseUrl, url, query);
 
-    loggerObject.v(uri.toString());
+
     final response = await http.get(uri, headers: innerHeader).timeout(
           const Duration(seconds: 40),
           onTimeout: () => http.Response('connectionTimeOut', 481),

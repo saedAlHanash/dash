@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qareeb_dash/core/api_manager/api_url.dart';
 import 'package:qareeb_dash/core/util/shared_preferences.dart';
 
-import '../../../../../core/strings/enum_manager.dart';
+import 'package:qareeb_models/global.dart'; import '../../../../../core/strings/enum_manager.dart';
 import '../../../../core/api_manager/api_service.dart';
 import '../../../../core/error/error_manager.dart';
 import '../../../../core/injection/injection_container.dart';

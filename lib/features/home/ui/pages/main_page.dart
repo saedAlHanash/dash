@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
-import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_models/extensions.dart';  import 'package:qareeb_dash/core/extensions/extensions.dart';
 
 import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/strings/app_string_manager.dart';
@@ -73,7 +73,7 @@ class MainPage extends StatelessWidget {
                 children: [
                   BlocBuilder<DriverStatusCubit, DriverStatusInitial>(
                     builder: (context, state) {
-                      if (state.statuses.loading) {
+                      if (state.statuses.isLoading) {
                         return MyStyle.loadingWidget();
                       }
                       return MyButton(

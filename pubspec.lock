@@ -855,10 +855,10 @@ packages:
     description:
       path: "."
       ref: html
-      resolved-ref: "2a0cc8a6a5115f76eba9157c07d5bda55284cedf"
+      resolved-ref: "0568b92ceeb15e900ed52f539c44cc79faa47aff"
       url: "https://github.com/saedAlHanash/map_qareeb"
     source: git
-    version: "0.0.5"
+    version: "0.0.8"
   matcher:
     dependency: transitive
     description:
@@ -1072,10 +1072,10 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "5ae4449752737c9e2f0c218b2cff49148c7f9a10"
+      resolved-ref: "191a073dfb75fa358fe966ca7bb67626afa8f4ef"
       url: "https://github.com/saedAlHanash/qareeb_models"
     source: git
-    version: "0.0.7"
+    version: "0.1.0"
   rxdart:
     dependency: transitive
     description:
