@@ -19,6 +19,7 @@ import 'package:qareeb_dash/features/points/bloc/point_by_id_cubit/point_by_id_c
 import 'package:qareeb_dash/features/trip/ui/pages/trips_page.dart';
 
 import '../core/injection/injection_container.dart' as di;
+import '../core/util/shared_preferences.dart';
 import '../features/accounts/bloc/account_amount_cubit/account_amount_cubit.dart';
 import '../features/admins/ui/pages/admin_info_page.dart';
 import '../features/auth/bloc/login_cubit/login_cubit.dart';
@@ -62,6 +63,18 @@ import '../features/wallet/ui/pages/debts_page.dart';
 import '../services/osrm/bloc/location_name_cubit/location_name_cubit.dart';
 
 final appGoRouter = GoRouter(
+  redirect: (BuildContext context, GoRouterState state) {
+    //Replace this method depends on how you are managing your user's
+    //Sign in status, then return the appropriate route you want to redirect to,
+    //make sure your login/authentication bloc is provided at the top level
+    //of your app
+    if (!AppSharedPreference.isLogin) {
+      return _GoRoutePath.loginPage;
+    } else {
+      //else, remain at login page
+      return null;
+    }
+  },
   routes: <GoRoute>[
     //region auth
     ///login
