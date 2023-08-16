@@ -15,7 +15,6 @@ class CreateBusTripRequest {
     this.tripTemplateId,
     this.pathId,
     this.distance,
-
     this.startDate,
     this.endDate,
     this.busTripType = BusTripType.go,

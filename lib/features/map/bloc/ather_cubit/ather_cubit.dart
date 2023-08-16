@@ -21,11 +21,10 @@ import '../../data/response/ather_response.dart';
 
 part 'ather_state.dart';
 
+const atherKey = '5BE3080722588655FE55B8E89B765827';
 
 class AtherCubit extends Cubit<AtherInitial> {
   AtherCubit() : super(AtherInitial.initial());
-
-  final network = sl<NetworkInfo>();
 
   Future<void> getDriverLocation() async {
     if (isClosed) return;
@@ -43,24 +42,71 @@ class AtherCubit extends Cubit<AtherInitial> {
 
   Future<Pair<List<Ime>?, String?>> _getDriverLocationApi(List<String> ime) async {
     // var ime = '359632104211708';
-    if (await network.isConnected) {
-      final response = await APIService().getApi(
-          url: 'api/api.php',
-          query: {
-            'api': 'user',
-            'ver': '1.0',
-            'key': '719FE559BD77F2F3461C0D29D305FA6E',
-            'cmd': 'OBJECT_GET_LOCATIONS,${ime.join(';')}',
-          },
-          hostName: 'admin.alather.net');
+    final pair = await getServerProxyApi(
+      request: ApiServerRequest(
+        url: APIService()
+            .getUri(
+              url: 'api/api.php',
+              query: {
+                'api': 'user',
+                'ver': '1.0',
+                'key': atherKey,
+                'cmd': 'OBJECT_GET_LOCATIONS,${ime.join(';')}',
+              },
+              hostName: 'admin.alather.net',
+            )
+            .toString(),
+      ),
+    );
 
-      if (response.statusCode == 200) {
-        return Pair(AtherResponse.fromJson(response.jsonBody, ime).imes, null);
-      } else {
-        return Pair(null, ErrorManager.getApiError(response));
-      }
+    if (pair.first != null) {
+      return Pair(AtherResponse.fromJson(jsonDecode(pair.first), ime).imes, null);
     } else {
-      return Pair(null, AppStringManager.noInternet);
+      return Pair(null, pair.second ?? '');
+    }
+  }
+
+  static Future<num> getDriverDistance({
+    required String ime,
+    required DateTime? start,
+    required DateTime? end,
+  }) async {
+    if (start == null) return 0;
+    if (end == null) return 0;
+    if (ime.isEmpty) return 0;
+    // var ime = '359632104211708';
+
+    final pair = await getServerProxyApi(
+      request: ApiServerRequest(
+        url: APIService()
+            .getUri(
+              url: 'api/api.php',
+              query: {
+                'api': 'user',
+                'ver': '1.0',
+                'key': atherKey,
+                'cmd':
+                    'OBJECT_GET_MESSAGES,$ime,${start.formatDateAther},${end.formatDateAther}',
+              },
+              hostName: 'admin.alather.net',
+            )
+            .toString(),
+      ),
+    );
+
+    if (pair.first != null) {
+      final list = <LatLng>[];
+      var f1 = jsonDecode(pair.first);
+      for (var e in f1) {
+        list.add(LatLng(double.parse(e[1]), double.parse(e[2])));
+      }
+      var d = 0.0;
+      for (var i = 1; i < list.length; i++) {
+        d += distanceBetween(list[i - 1], list[i]) * 1000;
+      }
+      return d.roundToDouble();
+    } else {
+      return 0;
     }
   }
 }

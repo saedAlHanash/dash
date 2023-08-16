@@ -4,6 +4,7 @@ import 'package:qareeb_dash/features/drivers/data/response/drivers_response.dart
 
 import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/note_message.dart';
+import '../../../../core/util/shared_preferences.dart';
 
 class CreateAdminRequest {
   CreateAdminRequest({
@@ -43,6 +44,7 @@ class CreateAdminRequest {
         "phoneNumber": phoneNumber,
         "roleNames": roleNames.map((x) => x).toList(),
         "password": password,
+        'InstitutionId': AppSharedPreference.getInstitutionId,
       };
 
   bool validateRequest(BuildContext context) {

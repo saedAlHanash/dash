@@ -20,7 +20,7 @@ final adminsEableHeader = [
   "رقم الهاتف",
   "حالة المدير",
   "البريد",
-  "العمليات",
+
 ];
 
 class AdminPage extends StatefulWidget {
@@ -50,7 +50,9 @@ class _AdminPageState extends State<AdminPage> {
           if (state.result.isEmpty) {
             return const NotFoundWidget(text: 'لا يوجد مدراء');
           }
+          
           final list = state.result;
+
           return SaedTableWidget(
             command: state.command,
             title: adminsEableHeader,
@@ -68,17 +70,6 @@ class _AdminPageState extends State<AdminPage> {
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        if (!e.emailAddress.contains('info@first-pioneers'))
-                          ChangeUserStateBtn(user: e),
-                        if (!e.emailAddress.contains('info@first-pioneers'))
-                          if (isAllowed(AppPermissions.UPDATE))
-                            InkWell(
-                              onTap: () {
-                                context.pushNamed(GoRouteName.createAdmin, extra: e);
-                              },
-                              child: const CircleButton(
-                                  color: Colors.amber, icon: Icons.edit),
-                            ),
                         InkWell(
                           onTap: () {
                             context.pushNamed(GoRouteName.adminInfo, extra: e);

@@ -175,7 +175,7 @@ class SpinnerOutlineTitle extends StatelessWidget {
   }
 }
 
-class SpinnerItem<T> {
+class SpinnerItem {
   SpinnerItem({
     this.name = '',
     this.id = 0,
@@ -189,7 +189,7 @@ class SpinnerItem<T> {
   int id;
   bool isSelected;
   bool enable;
-  T? item;
+  dynamic item;
   Widget? icon;
 
 //<editor-fold desc="Data Methods">

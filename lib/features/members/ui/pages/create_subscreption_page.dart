@@ -1,7 +1,6 @@
 import 'dart:html';
 
 import 'package:collection/collection.dart';
-import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,25 +10,23 @@ import 'package:qareeb_dash/core/widgets/my_button.dart';
 import 'package:qareeb_dash/core/widgets/my_card_widget.dart';
 import 'package:qareeb_dash/core/widgets/my_text_form_widget.dart';
 import 'package:qareeb_dash/core/widgets/saed_taple_widget.dart';
-import 'package:qareeb_dash/core/widgets/spinner_widget.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/util/my_style.dart';
-import '../../../../core/widgets/app_bar_widget.dart';
 import '../../bloc/all_member_cubit/all_member_cubit.dart';
 import '../../bloc/create_subscreption_cubit/create_subscreption_cubit.dart';
 import '../../bloc/member_by_id_cubit/member_by_id_cubit.dart';
 import '../../data/request/create_subcription_request.dart';
 
-class CreateSubscriptionPage extends StatefulWidget {
-  const CreateSubscriptionPage({super.key});
+class CreateSubscriptionPage1 extends StatefulWidget {
+  const CreateSubscriptionPage1({super.key});
 
   @override
-  State<CreateSubscriptionPage> createState() => _CreateSubscriptionPageState();
+  State<CreateSubscriptionPage1> createState() => _CreateSubscriptionPage1State();
 }
 
-class _CreateSubscriptionPageState extends State<CreateSubscriptionPage> {
+class _CreateSubscriptionPage1State extends State<CreateSubscriptionPage1> {
   var request = CreateSubscriptionRequest();
 
   final startDateC = TextEditingController();
@@ -39,7 +36,7 @@ class _CreateSubscriptionPageState extends State<CreateSubscriptionPage> {
   Widget build(BuildContext context) {
     return MultiBlocListener(
       listeners: [
-        BlocListener<CreateSubscriptionCubit, CreateSubscriptionInitial>(
+        BlocListener<CreateSubscriptionCubit1, CreateSubscriptionInitial1>(
           listenWhen: (p, c) => c.statuses.done,
           listener: (context, state) {
             context.read<AllMembersCubit>().getMembers(context);
@@ -57,129 +54,119 @@ class _CreateSubscriptionPageState extends State<CreateSubscriptionPage> {
           },
         ),
       ],
-      child: Scaffold(
-        appBar: const AppBarWidget(
-          text: 'الطلاب',
-        ),
-        body: BlocBuilder<MemberBuIdCubit, MemberBuIdInitial>(
-          builder: (context, state) {
-            if (state.statuses.loading) {
-              return MyStyle.loadingWidget();
-            }
-            return SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 120.0, vertical: 20.0).r,
-              child: Column(
-                children: [
-                  SaedTableWidget(
-                      title: const ['ID', 'بداية', 'نهاية', 'الفعالية'],
-                      data: state.result.subscriptions
-                          .mapIndexed(
-                            (i, e) => [
-                              e.id.toString(),
-                              e.supscriptionDate?.formatDate,
-                              e.expirationDate?.formatDate,
-                              (e.expirationDate?.isAfter(getServerDate) ?? false)
-                                  ? 'فعال'
-                                  : 'منتهي'
-                            ],
-                          )
-                          .toList()),
-                  10.0.verticalSpace,
-                  MyCardWidget(
-                    cardColor: AppColorManager.f1,
-                    margin: const EdgeInsets.only(top: 30.0, bottom: 130.0).h,
-                    child: Column(
-                      children: [
-                        DrawableText(
-                          text: 'معلومات الاشتراك',
-                          size: 25.0.sp,
-                          padding: const EdgeInsets.symmetric(vertical: 30.0).h,
-                          matchParent: true,
-                          drawableAlin: DrawableAlin.withText,
-                          textAlign: TextAlign.start,
-                          fontFamily: FontManager.cairoBold,
-                          drawableEnd: SpinnerWidget(
-                            items: [
-                              SpinnerItem(
-                                name: 'مشترك',
-                                isSelected: request.isActive,
-                                item: true,
+      child: BlocBuilder<MemberBuIdCubit, MemberBuIdInitial>(
+        builder: (context, state) {
+          if (state.statuses.loading) {
+            return MyStyle.loadingWidget();
+          }
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 128.0, vertical: 20.0).r,
+            child: Column(
+              children: [
+                SaedTableWidget(
+                    fullHeight: 0.4.sh,
+                    title: const ['ID', 'بداية', 'نهاية', 'الفعالية'],
+                    data: state.result.subscriptions
+                        .mapIndexed(
+                          (i, e) => [
+                            e.id.toString(),
+                            e.supscriptionDate?.formatDate,
+                            e.expirationDate?.formatDate,
+                            e.isActive
+                                ? (e.expirationDate?.isAfter(getServerDate) ?? false)
+                                    ? 'فعال'
+                                    : 'منتهي'
+                                : 'ملغي'
+                          ],
+                        )
+                        .toList()),
+                10.0.verticalSpace,
+                MyCardWidget(
+                  cardColor: AppColorManager.f1,
+                  margin: const EdgeInsets.only(top: 30.0, bottom: 30.0).h,
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: MyTextFormNoLabelWidget(
+                              label: 'تاريخ بداية الاشتراك',
+                              controller: startDateC,
+                              disableAndKeepIcon: true,
+                              enable: request.isActive,
+                              iconWidget: SelectSingeDateWidget(
+                                initial: request.supscriptionDate,
+                                minDate: DateTime.now(),
+                                onSelect: (selected) {
+                                  startDateC.text = selected?.formatDate ?? '';
+                                  request.supscriptionDate = selected;
+                                },
                               ),
-                              SpinnerItem(
-                                name: 'غير مشترك',
-                                isSelected: !request.isActive,
-                                item: false,
-                              ),
-                            ],
-                            onChanged: (spinnerItem) {
-                              setState(() => request.isActive = spinnerItem.item);
-                            },
+                            ),
                           ),
-                        ),
-                        if (request.isActive)
-                          Row(
+                          15.0.horizontalSpace,
+                          Expanded(
+                            child: MyTextFormNoLabelWidget(
+                              label: 'تاريخ نهاية الاشتراك',
+                              controller: endDateC,
+                              disableAndKeepIcon: true,
+                              enable: request.isActive,
+                              iconWidget: SelectSingeDateWidget(
+                                initial: request.expirationDate,
+                                minDate: DateTime.now(),
+                                onSelect: (selected) {
+                                  endDateC.text = selected?.formatDate ?? '';
+                                  request.expirationDate = selected;
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      BlocBuilder<CreateSubscriptionCubit1, CreateSubscriptionInitial1>(
+                        builder: (context, state) {
+                          if (state.statuses.loading) {
+                            return MyStyle.loadingWidget();
+                          }
+                          return Row(
+                            mainAxisSize: MainAxisSize.min,
                             children: [
-                              Expanded(
-                                child: MyTextFormNoLabelWidget(
-                                  label: 'تاريخ بداية الاشتراك',
-                                  controller: startDateC,
-                                  disableAndKeepIcon: true,
-                                  enable: request.isActive,
-                                  iconWidget: SelectSingeDateWidget(
-                                    initial: request.supscriptionDate,
-                                    minDate: DateTime.now(),
-                                    onSelect: (selected) {
-                                      startDateC.text = selected?.formatDate ?? '';
-                                      request.supscriptionDate = selected;
-                                    },
-                                  ),
-                                ),
+                              MyButton(
+                                text: request.isNotExpired ? 'تعديل' : 'إنشاء',
+                                onTap: () {
+                                  if (request.validateRequest(context)) {
+                                    context
+                                        .read<CreateSubscriptionCubit1>()
+                                        .createSubscription(context, request: request);
+                                  }
+                                },
                               ),
-                              15.0.horizontalSpace,
-                              Expanded(
-                                child: MyTextFormNoLabelWidget(
-                                  label: 'تاريخ نهاية الاشتراك',
-                                  controller: endDateC,
-                                  disableAndKeepIcon: true,
-                                  enable: request.isActive,
-                                  iconWidget: SelectSingeDateWidget(
-                                    initial: request.expirationDate,
-                                    minDate: DateTime.now(),
-                                    onSelect: (selected) {
-                                      endDateC.text = selected?.formatDate ?? '';
-                                      request.expirationDate = selected;
-                                    },
-                                  ),
+                              20.0.horizontalSpace,
+                              if (request.isNotExpired)
+                                MyButton(
+                                  textColor: Colors.white,
+                                  color: Colors.black,
+                                  text: 'إلغاء الاشتراك',
+                                  onTap: () {
+                                    context
+                                        .read<CreateSubscriptionCubit1>()
+                                        .createSubscription(
+                                          context,
+                                          request: request..isActive = false,
+                                        );
+                                  },
                                 ),
-                              ),
                             ],
-                          ),
-                        BlocBuilder<CreateSubscriptionCubit, CreateSubscriptionInitial>(
-                          builder: (context, state) {
-                            if (state.statuses.loading) {
-                              return MyStyle.loadingWidget();
-                            }
-                            return MyButton(
-                              text: request.isNotExpired ? 'تعديل' : 'إنشاء اشتراك',
-                              onTap: () {
-                                if (request.validateRequest(context)) {
-
-                                  context
-                                      .read<CreateSubscriptionCubit>()
-                                      .createSubscription(context, request: request);
-                                }
-                              },
-                            );
-                          },
-                        ),
-                      ],
-                    ),
+                          );
+                        },
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            );
-          },
-        ),
+                ),
+              ],
+            ),
+          );
+        },
       ),
     );
   }
@@ -212,38 +199,35 @@ class SelectSingeDateWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(20.0.r),
       ),
       itemBuilder: (context) {
-
         return [
-        // PopupMenuItem 1
-        PopupMenuItem(
-          value: 1,
-          enabled: false,
-          // row with 2 children
-          child: SizedBox(
-            height: 400.0.spMin,
-            width: 300.0.spMin,
-            child: Center(
-              child: Directionality(
-                textDirection: TextDirection.ltr,
-                child: SfDateRangePicker(
-                  initialSelectedDate: initial,
-                  maxDate: maxDate,
-                  minDate: minDate,
-
-                  onSelectionChanged: (DateRangePickerSelectionChangedArgs range) {
-
-                    if (range.value is DateTime) {
-                      onSelect?.call(range.value);
-                      Navigator.pop(context);
-                    } else if (range.value is PickerDateRange) {}
-                  },
-                  selectionMode: DateRangePickerSelectionMode.single,
+          // PopupMenuItem 1
+          PopupMenuItem(
+            value: 1,
+            enabled: false,
+            // row with 2 children
+            child: SizedBox(
+              height: 400.0.spMin,
+              width: 300.0.spMin,
+              child: Center(
+                child: Directionality(
+                  textDirection: TextDirection.ltr,
+                  child: SfDateRangePicker(
+                    initialSelectedDate: initial,
+                    maxDate: maxDate,
+                    minDate: minDate,
+                    onSelectionChanged: (DateRangePickerSelectionChangedArgs range) {
+                      if (range.value is DateTime) {
+                        onSelect?.call(range.value);
+                        window.history.back();
+                      } else if (range.value is PickerDateRange) {}
+                    },
+                    selectionMode: DateRangePickerSelectionMode.single,
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-      ];
+        ];
       },
       child: Container(
         padding: const EdgeInsets.all(15.0).r,

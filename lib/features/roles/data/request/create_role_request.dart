@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:qareeb_dash/core/util/shared_preferences.dart';
 
 import '../../../../core/util/note_message.dart';
 import '../response/roles_response.dart';
@@ -35,6 +36,7 @@ class CreateRoleRequest {
         "displayName": displayName,
         "normalizedName": normalizedName,
         "description": description,
+        "institutionId": AppSharedPreference.getInstitutionId,
         "grantedPermissions": grantedPermissions.map((x) => x).toList(),
       };
 

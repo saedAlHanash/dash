@@ -13,6 +13,7 @@ import '../../../../core/strings/app_string_manager.dart';
 import '../../../../core/strings/enum_manager.dart';
 import '../../../../core/util/note_message.dart';
 import '../../../../core/util/pair_class.dart';
+import '../../../home/bloc/home1_cubit/home1_cubit.dart';
 import '../../data/request/login_request.dart';
 import '../../data/response/login_response.dart';
 
@@ -40,7 +41,6 @@ class LoginCubit extends Cubit<LoginInitial> {
       AppSharedPreference.cashInstitutionId(pair.first!.institutionId);
       // AppSharedPreference.cashUser(pair.first!);
       AppSharedPreference.cashEmail(request.email!);
-
       AppSharedPreference.cashToken(pair.first!.accessToken);
       var result = await _getPermissions(id: pair.first!.userId);
 

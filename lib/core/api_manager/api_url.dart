@@ -55,7 +55,7 @@ class GetUrl {
   static const bestDriver = 'api/services/app/User/GetBestDriver';
   static const getAllAdmins = 'api/services/app/User/getAllAdmins';
 
-  static var allRoles = 'api/services/app/Role/GetAll';
+  static var allRoles = 'api/services/app/Role/GetRoles';
 
   static var getAllClients = 'api/services/app/User/GetAllCustomars';
 
@@ -94,9 +94,30 @@ class GetUrl {
 
   static var getMemberById = 'api/services/app/InstitutionMembersService/Get';
 
-  static var busTrips='api/services/app/InstitutionBusTripsService/GetAll';
+  static var busTrips = 'api/services/app/InstitutionBusTripsService/GetAll';
 
-  static var busTripById='api/services/app/InstitutionBusTripsService/Get';
+  static var busTripById = 'api/services/app/InstitutionBusTripsService/Get';
+
+  static var home = 'api/services/app/InstitutionHomeService/index';
+  static var home1 = 'api/services/app/InstitutionHomeService/Get';
+
+  static var subscriptions =
+      'api/services/app/InstituionSubscriptionTemplateService/GetAll';
+
+  static var subscriptionById =
+      'api/services/app/InstituionSubscriptionTemplateService/Get';
+
+  static var tripHistory = 'api/services/app/InstitutionAttendancesService/GetAll';
+
+  static var allTickets = 'api/services/app/InstitutionTicketsService/GetAll';
+
+  static const getAllSubscriber =
+      'api/services/app/InstituionSubscriptionTemplateService/GetAllSubscriper';
+
+  static const memberWithoutSubscription =
+      'api/services/app/InstitutionMembersService/getMembersWithoutSubscription';
+//GET
+//
 }
 
 class PostUrl {
@@ -179,9 +200,15 @@ class PostUrl {
   static var createMember = 'api/services/app/InstitutionMembersService/Create';
 
   static var createSubscription =
+      'api/services/app/InstituionSubscriptionTemplateService/Create';
+  static var createSubscription1 =
       'api/services/app/InstitutionSubscriptionsService/Create';
+  static var createBusTrip = 'api/services/app/InstitutionBusTripsService/Create';
 
-  static var createBusTrip='api/services/app/InstitutionBusTripsService/Create';
+  static var replayTicket = 'api/services/app/InstitutionTicketsService/AddReplyToTicket';
+
+  static var createSubscriptionFromTemplate =
+      'api/services/app/InstitutionSubscriptionsService/CreateFromTemplate';
 }
 
 class PutUrl {
@@ -212,9 +239,11 @@ class PutUrl {
   static var updateMember = 'api/services/app/InstitutionMembersService/Update';
 
   static var updateSubscription =
-      'api/services/app/InstitutionSubscriptionsService/Update';
-
-  static var updateBusTrip='api/services/app/InstitutionBusTripsService/Update';
+      'api/services/app/InstituionSubscriptionTemplateService/Update';
+  static var updateSubscription1 = 'api/services/app/InstitutionSubscriptionsService/Update';
+//PUT
+//
+  static var updateBusTrip = 'api/services/app/InstitutionBusTripsService/Update';
 }
 
 class DeleteUrl {
@@ -237,7 +266,10 @@ class DeleteUrl {
 
   static var deleteTempTrip = 'api/services/app/InstitutionTripTemplatesService/Delete';
 
-  static var deleteBusTrip='api/services/app/InstitutionBusTripsService/Delete';
+  static var deleteBusTrip = 'api/services/app/InstitutionBusTripsService/Delete';
+
+  static var deleteSubscription =
+      'api/services/app/InstituionSubscriptionTemplateService/Delete';
 }
 
 class OrsUrl {

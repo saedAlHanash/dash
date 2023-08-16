@@ -22,8 +22,8 @@ class CreateSubscriptionRequest {
   bool isActive;
 
   bool get isNotExpired {
-    final r= expirationDate?.isAfter(getServerDate) ?? false;
-    return r;
+    final r = expirationDate?.isAfter(getServerDate) ?? false;
+    return r && isActive;
   }
 
   factory CreateSubscriptionRequest.fromJson(Map<String, dynamic> json) {

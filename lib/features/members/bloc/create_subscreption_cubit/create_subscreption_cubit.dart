@@ -11,14 +11,17 @@ import '../../../../core/util/note_message.dart';
 import '../../../../core/util/pair_class.dart';
 import '../../data/request/create_subcription_request.dart';
 
-
 part 'create_subscription_state.dart';
 
-class CreateSubscriptionCubit extends Cubit<CreateSubscriptionInitial> {
-  CreateSubscriptionCubit() : super(CreateSubscriptionInitial.initial());
+class CreateSubscriptionCubit1 extends Cubit<CreateSubscriptionInitial1> {
+  CreateSubscriptionCubit1() : super(CreateSubscriptionInitial1.initial());
 
   Future<void> createSubscription(BuildContext context,
       {required CreateSubscriptionRequest request}) async {
+    if (!request.isActive) {
+      final r = await NoteMessage.showConfirm(context, text: 'تأكيد العملية');
+      if (!r) return;
+    }
     emit(state.copyWith(statuses: CubitStatuses.loading, request: request));
     final pair = await _createSubscriptionApi();
 
@@ -37,12 +40,12 @@ class CreateSubscriptionCubit extends Cubit<CreateSubscriptionInitial> {
 
     if (state.request.id != null) {
       response = await APIService().puttApi(
-        url: PutUrl.updateSubscription,
+        url: PutUrl.updateSubscription1,
         body: state.request.toJson(),
       );
     } else {
       response = await APIService().postApi(
-        url: PostUrl.createSubscription,
+        url: PostUrl.createSubscription1,
         body: state.request.toJson(),
       );
     }

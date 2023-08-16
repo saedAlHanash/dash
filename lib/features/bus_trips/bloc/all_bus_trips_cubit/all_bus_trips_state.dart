@@ -25,7 +25,7 @@ class AllBusTripsInitial extends Equatable {
   List<SpinnerItem> get getSpinnerItem {
     final list = <SpinnerItem>[];
     for (var e in result) {
-      list.add(SpinnerItem(id: e.id, name: e.description, item: e));
+      list.add(SpinnerItem(id: e.id, name: e.name, item: e));
     }
     return list;
   }

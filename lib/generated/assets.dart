@@ -11,6 +11,7 @@ class Assets {
   static const String iconsAlphaLogoBackground = 'assets/icons/alpha_logo_background.svg';
   static const String iconsB = 'assets/icons/b.svg';
   static const String iconsBlackMarker = 'assets/icons/black_marker.svg';
+  static const String iconsBuses = 'assets/icons/buses.svg';
   static const String iconsC = 'assets/icons/c.svg';
   static const String iconsCallDriver = 'assets/icons/call_driver.svg';
   static const String iconsCarPlaceHolder = 'assets/icons/car_place_holder.svg';
@@ -56,6 +57,7 @@ class Assets {
   static const String iconsQuastion = 'assets/icons/quastion.svg';
   static const String iconsSavePalce = 'assets/icons/save_palce.svg';
   static const String iconsStar = 'assets/icons/star.svg';
+  static const String iconsStudents = 'assets/icons/students.svg';
   static const String iconsTaxi = 'assets/icons/taxi.png';
   static const String iconsTextLogo = 'assets/icons/text_logo.svg';
   static const String iconsTires = 'assets/icons/tires.svg';

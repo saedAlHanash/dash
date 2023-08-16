@@ -1,16 +1,13 @@
 import 'dart:html';
 
-import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qareeb_dash/core/api_manager/api_service.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
-
 import 'package:qareeb_dash/core/widgets/my_button.dart';
 import 'package:qareeb_dash/core/widgets/my_card_widget.dart';
 import 'package:qareeb_dash/core/widgets/my_text_form_widget.dart';
-import 'package:qareeb_dash/core/widgets/spinner_widget.dart';
 import 'package:qareeb_dash/features/map/data/models/my_marker.dart';
 import 'package:qareeb_dash/features/map/ui/widget/map_widget.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
@@ -29,7 +26,6 @@ import '../../bloc/all_member_cubit/all_member_cubit.dart';
 import '../../bloc/create_member_cubit/create_member_cubit.dart';
 import '../../bloc/member_by_id_cubit/member_by_id_cubit.dart';
 import '../../data/request/create_member_request.dart';
-import '../../data/request/create_subcription_request.dart';
 
 class CreateMemberPage extends StatefulWidget {
   const CreateMemberPage({super.key});
@@ -76,46 +72,113 @@ class _CreateMemberPageState extends State<CreateMemberPage> {
 
             return SingleChildScrollView(
               padding: const EdgeInsets.symmetric(horizontal: 120.0, vertical: 20.0).r,
-              child: MyCardWidget(
-                cardColor: AppColorManager.f1,
-                margin: const EdgeInsets.only(top: 30.0, bottom: 130.0).h,
-                child: Column(
-                  children: [
-                    ItemImageCreate(
-                      onLoad: (bytes) {
-                        setState(() {
-                          request.file = UploadFile(fileBytes: bytes);
-                        });
-                      },
-                      image: request.file?.initialImage != null
-                          ? request.file!.initialImage!
-                          : Assets.iconsUser,
-                      text: 'الصورة الشخصية',
-                      fileBytes: request.file?.fileBytes,
-                    ),
-                    10.0.verticalSpace,
-                    Row(
-                      children: [
-                        Expanded(
-                          child: MyTextFormNoLabelWidget(
-                            label: 'اسم الطالب',
-                            initialValue: request.fullName,
-                            onChanged: (p0) => request.fullName = p0,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: MyCardWidget(
+                      cardColor: AppColorManager.f1,
+                      margin: const EdgeInsets.only(top: 30.0, bottom: 130.0).h,
+                      child: Column(
+                        children: [
+                          ItemImageCreate(
+                            onLoad: (bytes) {
+                              setState(() {
+                                request.file = UploadFile(fileBytes: bytes);
+                              });
+                            },
+                            image: request.file?.initialImage != null
+                                ? request.file!.initialImage!
+                                : Assets.iconsUser,
+                            text: 'الصورة الشخصية',
+                            fileBytes: request.file?.fileBytes,
                           ),
-                        ),
-                        15.0.horizontalSpace,
-                        Expanded(
-                          child: MyTextFormNoLabelWidget(
-                            label: 'عنوان الطالب التفصيلي',
-                            initialValue: request.address,
-                            onChanged: (p0) => request.address = p0,
+                          10.0.verticalSpace,
+                          Row(
+                            children: [
+                              Expanded(
+                                child: MyTextFormNoLabelWidget(
+                                  label: 'اسم الطالب',
+                                  initialValue: request.fullName,
+                                  onChanged: (p0) => request.fullName = p0,
+                                ),
+                              ),
+                              15.0.horizontalSpace,
+                              Expanded(
+                                child: MyTextFormNoLabelWidget(
+                                  label: 'عنوان الطالب التفصيلي',
+                                  initialValue: request.address,
+                                  onChanged: (p0) => request.address = p0,
+                                ),
+                              ),
+
+                            ],
                           ),
-                        ),
-                      ],
+                          Row(
+                            children: [
+                              Expanded(
+                                child: MyTextFormNoLabelWidget(
+                                  label: 'رقم الهاتف',
+                                  initialValue: request.phoneNo,
+                                  onChanged: (p0) => request.phoneNo = p0,
+                                ),
+                              ),
+                              15.0.horizontalSpace,
+                              Expanded(
+                                child: MyTextFormNoLabelWidget(
+                                  label: 'الكلية',
+                                  initialValue: request.facility,
+                                  onChanged: (p0) => request.facility = p0,
+                                ),
+                              ),
+
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: MyTextFormNoLabelWidget(
+                                  label: 'الرقم الوطني',
+                                  initialValue: request.idNumber,
+                                  onChanged: (p0) => request.idNumber = p0,
+                                ),
+                              ),
+                              15.0.horizontalSpace,
+                              Expanded(
+                                child: MyTextFormNoLabelWidget(
+                                  label: 'الرقم الجامعي',
+                                  initialValue: request.collegeIdNumber,
+                                  onChanged: (p0) => request.collegeIdNumber = p0,
+                                ),
+                              ),
+
+                            ],
+                          ),
+                          const Divider(),
+                          BlocBuilder<CreateMemberCubit, CreateMemberInitial>(
+                            builder: (context, state) {
+                              if (state.statuses.loading) {
+                                return MyStyle.loadingWidget();
+                              }
+                              return MyButton(
+                                text: request.id != null ? 'تعديل' : 'إنشاء الطالب',
+                                onTap: () {
+                                  if (request.validateRequest(context)) {
+                                    context
+                                        .read<CreateMemberCubit>()
+                                        .createMember(context, request: request);
+                                  }
+                                },
+                              );
+                            },
+                          ),
+                        ],
+                      ),
                     ),
-                    Container(
-                      margin: const EdgeInsets.all(20.0).r,
-                      height: 500.0.h,
+                  ),
+                  Expanded(
+                    child: Container(
+                      margin: const EdgeInsets.all(10.0).r,
+                      height: 800.0.h,
                       child: MapWidget(
                         onMapClick: (latLng) => request.latLng = latLng,
                         search: () async {
@@ -125,7 +188,7 @@ class _CreateMemberPageState extends State<CreateMemberPage> {
                               value: context.read<SearchLocationCubit>(),
                               child: SearchWidget(
                                 onTap: (SearchLocationItem location) {
-                                  Navigator.pop(context);
+                                  window.history.back();
                                   context
                                       .read<MapControllerCubit>()
                                       .movingCamera(point: location.point, zoom: 15.0);
@@ -137,26 +200,8 @@ class _CreateMemberPageState extends State<CreateMemberPage> {
                         initialPoint: request.latLng,
                       ),
                     ),
-                    const Divider(),
-                    BlocBuilder<CreateMemberCubit, CreateMemberInitial>(
-                      builder: (context, state) {
-                        if (state.statuses.loading) {
-                          return MyStyle.loadingWidget();
-                        }
-                        return MyButton(
-                          text: request.id != null ? 'تعديل' : 'إنشاء الطالب',
-                          onTap: () {
-                            if (request.validateRequest(context)) {
-                              context
-                                  .read<CreateMemberCubit>()
-                                  .createMember(context, request: request);
-                            }
-                          },
-                        );
-                      },
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             );
           },
@@ -211,7 +256,7 @@ class SelectSingeDateWidget extends StatelessWidget {
                   onSelectionChanged: (DateRangePickerSelectionChangedArgs range) {
                     if (range.value is DateTime) {
                       onSelect?.call(range.value);
-                      Navigator.pop(context);
+                      window.history.back();
                     } else if (range.value is PickerDateRange) {}
                   },
                   selectionMode: DateRangePickerSelectionMode.single,

@@ -10,6 +10,7 @@ import '../../generated/assets.dart';
 import '../widgets/images/image_multi_type.dart';
 import '../widgets/snake_bar_widget.dart';
 import 'dart:html';
+
 class NoteMessage {
   static void showSuccessSnackBar(
       {required String message, required BuildContext context}) {
@@ -188,7 +189,11 @@ class NoteMessage {
     return (result ?? false);
   }
 
-  static Future<bool> showMyDialog(BuildContext context, {required Widget child}) async {
+  static Future<bool> showMyDialog(
+    BuildContext context, {
+    required Widget child,
+    Function(bool val)? onCancel,
+  }) async {
     // show the dialog
     final result = await showDialog(
       context: context,
@@ -210,6 +215,7 @@ class NoteMessage {
         );
       },
     );
+    onCancel?.call(result ?? false);
     return (result ?? false);
   }
 

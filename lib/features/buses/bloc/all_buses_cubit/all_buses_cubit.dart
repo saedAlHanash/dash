@@ -30,18 +30,10 @@ class AllBusesCubit extends Cubit<AllBusesInitial> {
       emit(state.copyWith(statuses: CubitStatuses.error, error: pair.second));
     } else {
       state.command.totalCount = pair.first!.totalCount;
-      cashImeis();
       emit(state.copyWith(statuses: CubitStatuses.done, result: pair.first?.items));
     }
   }
 
-  void cashImeis(){
-    final list =<String>[];
-    for (var element in state.result) {
-      list.add(element.ime);
-    }
-    AppSharedPreference.cashIme(list);
-  }
 
   Future<Pair<BusResult?, String?>> _getBusesApi() async {
     final response = await APIService().getApi(

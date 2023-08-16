@@ -16,7 +16,7 @@ enum MtnState { init, pay, otp }
 
 enum TripStatus { non, reject, accept, start, end }
 
-enum MyMarkerType { location, driver, point, sharedPint, bus }
+enum MyMarkerType { location, driver, point, sharedPint, bus, tooltip }
 
 enum SharedTripStatus { pending, started, closed, canceled }
 
@@ -52,7 +52,9 @@ enum Government { damascus, rifDimashq }
 
 enum BusTripType { go, back }
 
-enum UserType { client, driver, admin ,institutionAdmin}
+enum AttendanceType { up, down, unknown }
+
+enum UserType { client, driver, admin, institutionAdmin }
 
 enum WeekDays { sunday, monday, tuesday, wednesday, thursday, friday, saturday }
 

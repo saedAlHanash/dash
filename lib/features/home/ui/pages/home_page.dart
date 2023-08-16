@@ -7,28 +7,35 @@ import 'package:flutter_admin_scaffold/admin_scaffold.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:qareeb_dash/features/trip/ui/pages/trips_page.dart';
+import 'package:qareeb_dash/core/widgets/images/image_multi_type.dart';
 
 import '../../../../core/injection/injection_container.dart';
 import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/util/shared_preferences.dart';
-import '../../../../core/widgets/logo_text.dart';
 import '../../../../router/go_route_pages.dart';
+import '../../../admins/ui/pages/admins_page.dart';
 import '../../../auth/bloc/change_user_state_cubit/change_user_state_cubit.dart';
 import '../../../bus_trips/bloc/delete_bus_trip_cubit/delete_bus_trip_cubit.dart';
 import '../../../bus_trips/ui/pages/bus_trips_page.dart';
+import '../../../bus_trips/ui/pages/trip_history_page.dart';
 import '../../../buses/bloc/delete_buss_cubit/delete_buss_cubit.dart';
 import '../../../buses/ui/pages/buses_page.dart';
-import '../../../drivers/bloc/loyalty_cubit/loyalty_cubit.dart';
-import '../../../drivers/ui/pages/drivers_page.dart';
 import '../../../map/bloc/ather_cubit/ather_cubit.dart';
 import '../../../map/bloc/map_controller_cubit/map_controller_cubit.dart';
 import '../../../map/bloc/set_point_cubit/map_control_cubit.dart';
 import '../../../members/ui/pages/memberss_page.dart';
+import '../../../roles/bloc/create_role_cubit/create_role_cubit.dart';
+import '../../../roles/bloc/delete_role_cubit/delete_role_cubit.dart';
+import '../../../roles/ui/pages/roles_page.dart';
+import '../../../subscriptions/bloc/delete_subscription_cubit/delete_subscription_cubit.dart';
+import '../../../subscriptions/ui/pages/subscriptions_page.dart';
 import '../../../super_user/bloc/delete_super_user_cubit/delete_super_user_cubit.dart';
 import '../../../super_user/ui/pages/super_users_page.dart';
 import '../../../temp_trips/bloc/delete_temp_trip_cubit/delete_temp_trip_cubit.dart';
 import '../../../temp_trips/ui/pages/temp_trips_page.dart';
+import '../../../ticket/bloc/replay_ticket_cubit/replay_ticket_cubit.dart';
+import '../../../ticket/ui/pages/tickets_page.dart';
+import '../../bloc/home1_cubit/home1_cubit.dart';
 import '../../bloc/nav_home_cubit/nav_home_cubit.dart';
 import '../screens/dashboard_page.dart';
 
@@ -49,6 +56,7 @@ class _HomePageState extends State<HomePage> {
     sideMenu.addListener((p0) {
       page.jumpToPage(p0);
     });
+    context.read<Home1Cubit>().getHome1(context);
     super.initState();
   }
 
@@ -60,17 +68,38 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: Colors.white,
           appBar: AppBar(
             elevation: 0.0,
+            actionsIconTheme: const IconThemeData(color: AppColorManager.mainColor),
             toolbarHeight: 80.0.h,
             centerTitle: true,
-            title: const LogoText(),
+            title: BlocBuilder<Home1Cubit, Home1Initial>(
+              builder: (context, state1) {
+                return DrawableText(
+                  text: state1.result.name,
+                  fontFamily: FontManager.cairoBold,
+                );
+              },
+            ),
             backgroundColor: AppColorManager.f1,
-            leading: Navigator.canPop(context)
+            actions: [
+              BlocBuilder<Home1Cubit, Home1Initial>(
+                builder: (context, state1) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0).w,
+                    child: ImageMultiType(
+                      url: state1.result.imageUrl,
+                    ),
+                  );
+                },
+              )
+            ],
+            leading: context.canPop()
                 ? IconButton(
                     onPressed: () => window.history.back(),
                     icon: const Icon(
                       Icons.arrow_back_ios,
                       color: AppColorManager.mainColorDark,
-                    ))
+                    ),
+                  )
                 : 0.0.verticalSpace,
           ),
           sideBar: SideBar(
@@ -106,9 +135,27 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   AdminMenuItem(title: 'نماذج الرحلات', route: NamePaths.tempTrips),
                   AdminMenuItem(title: 'جدول الرحلات', route: NamePaths.trips),
+                  AdminMenuItem(title: 'سجل الرحلات', route: NamePaths.tripHistory),
                 ],
               ),
-              AdminMenuItem(title: 'الطلاب', route: NamePaths.members),
+              AdminMenuItem(
+                title: 'الطلاب',
+                icon: Icons.group,
+                children: [
+                  AdminMenuItem(
+                      title: 'نماذج الاشتراكات', route: NamePaths.subscriptions),
+                  AdminMenuItem(title: 'الطلاب', route: NamePaths.members),
+                ],
+              ),
+              AdminMenuItem(
+                title: 'مستخدمي لوحة التحكم',
+                icon: Icons.admin_panel_settings,
+                children: [
+                  AdminMenuItem(title: 'الأدوار', route: NamePaths.roles),
+                  AdminMenuItem(title: 'مسؤولي النظام', route: '/sys_admins'),
+                ],
+              ),
+              AdminMenuItem(title: 'الشكاوى', route: '/ticket'),
             ],
             selectedRoute: state.page,
             onSelected: (item) {
@@ -186,16 +233,51 @@ class _HomePageState extends State<HomePage> {
                   );
 
                 case NamePaths.trips:
-
                   return MultiBlocProvider(
-                  providers: [
-                    BlocProvider(create: (context) => sl<DeleteBusTripCubit>()),
-                  ],
-                  child: const BusTripsPage(),
-                );
+                    providers: [
+                      BlocProvider(create: (context) => sl<DeleteBusTripCubit>()),
+                    ],
+                    child: const BusTripsPage(),
+                  );
+
+                case NamePaths.tripHistory:
+                  return MultiBlocProvider(
+                    providers: [
+                      BlocProvider(create: (context) => sl<DeleteBusTripCubit>()),
+                    ],
+                    child: const TripHistoryPage(),
+                  );
 
                 case NamePaths.members:
                   return const MembersPage();
+
+                case NamePaths.subscriptions:
+                  return BlocProvider(
+                    create: (context) => DeleteSubscriptionCubit(),
+                    child: const SubscriptionsPage(),
+                  );
+                case "/roles":
+                  return MultiBlocProvider(
+                    providers: [
+                      BlocProvider(create: (context) => sl<CreateRoleCubit>()),
+                      BlocProvider(create: (context) => sl<DeleteRoleCubit>()),
+                    ],
+                    child: const RolesPage(),
+                  );
+                case "/sys_admins":
+                  return MultiBlocProvider(
+                    providers: [
+                      BlocProvider(create: (context) => sl<ChangeUserStateCubit>()),
+                    ],
+                    child: const AdminPage(),
+                  );
+                case "/ticket":
+                  return MultiBlocProvider(
+                    providers: [
+                      BlocProvider(create: (context) => sl<ReplayTicketCubit>()),
+                    ],
+                    child: const TicketsPage(),
+                  );
               }
               return SingleChildScrollView(
                 child: Container(
@@ -244,4 +326,7 @@ class NamePaths {
   static const tempTrips = '/tempTrips';
   static const trips = '/trips';
   static const members = '/members';
+  static const subscriptions = '/subscriptions';
+  static const tripHistory = '/tripHistory';
+  static const roles = '/roles';
 }

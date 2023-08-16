@@ -18,12 +18,13 @@ import '../../../../core/util/pair_class.dart';
 import '../../../../services/osrm/data/response/osrm_model.dart';
 
 import '../../../../services/trip_path/data/models/trip_path.dart';
-import '../../../trip/data/response/trip_response.dart';
+
 import '../../data/models/my_marker.dart';
 
 part 'map_controller_state.dart';
 
 const _singleMarkerKey = '-5622';
+const tooltipMarkerKey = '-6215';
 
 class MapControllerCubit extends Cubit<MapControllerInitial> {
   MapControllerCubit() : super(MapControllerInitial.initial());
@@ -43,6 +44,16 @@ class MapControllerCubit extends Cubit<MapControllerInitial> {
       state.markers.remove(_singleMarkerKey);
     } else {
       state.markers[_singleMarkerKey] = marker;
+      if (moveTo ?? false) movingCamera(point: marker.point);
+    }
+
+    emit(state.copyWith(markerNotifier: state.markerNotifier + 1));
+  }
+  void addTooltipMarker({required MyMarker? marker, bool? moveTo}) {
+    if (marker == null) {
+      state.markers.remove(tooltipMarkerKey);
+    } else {
+      state.markers[tooltipMarkerKey] = marker;
       if (moveTo ?? false) movingCamera(point: marker.point);
     }
 
@@ -110,17 +121,6 @@ class MapControllerCubit extends Cubit<MapControllerInitial> {
   //       markerNotifier: state.markerNotifier + 1,
   //       polylineNotifier: state.polylineNotifier + 1));
   // }
-
-  void addTrip({required TripResult trip}) {
-    addMarkers(marker: trip.getMarkers);
-    addPolyLine(start: trip.startPoint, end: trip.endPoint);
-    emit(state.copyWith(
-      zoom: getZoomLevel(trip.currentLocation.latLng, trip.destination.latLng, mapWidth),
-      point: trip.startPoint,
-      markerNotifier: state.markerNotifier + 1,
-      polylineNotifier: state.polylineNotifier + 1,
-    ));
-  }
 
   void removeMarker({LatLng? point, int? key}) {
     if (point == null && key == null) return;

@@ -1,5 +1,4 @@
 import '../../../../core/strings/fix_url.dart';
-import '../../../trip/data/shared/location_model.dart';
 
 class DriversResponse {
   DriversResponse({
@@ -53,7 +52,7 @@ class DriverModel {
     required this.address,
     required this.phoneNumber,
     required this.carCategories,
-    required this.currentLocation,
+    // required this.currentLocation,
     required this.carType,
     required this.userType,
     required this.roleNames,
@@ -84,7 +83,7 @@ class DriverModel {
   final String address;
   final String phoneNumber;
   final CarCategories carCategories;
-  final LocationModel currentLocation;
+
   final CarType carType;
   final int userType;
   final List<String> roleNames;
@@ -116,7 +115,7 @@ class DriverModel {
       address: json["address"] ?? "",
       phoneNumber: json["phoneNumber"] ?? "",
       carCategories: CarCategories.fromJson(json["carCategories"] ?? {}),
-      currentLocation: LocationModel.fromJson(json["currentLocation"] ?? {}),
+
       carType: CarType.fromJson(json["carType"] ?? {}),
       userType: json["userType"] ?? 0,
       roleNames: json["roleNames"] == null
@@ -151,7 +150,7 @@ class DriverModel {
         "address": address,
         "phoneNumber": phoneNumber,
         "carCategories": carCategories.toJson(),
-        "currentLocation": currentLocation.toJson(),
+        // "currentLocation": currentLocation.toJson(),
         "carType": carType.toJson(),
         "userType": userType,
         "roleNames": roleNames.map((x) => x).toList(),

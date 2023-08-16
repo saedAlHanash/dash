@@ -1,20 +1,20 @@
 part of 'create_subscreption_cubit.dart';
 
-class CreateSubscriptionInitial extends Equatable {
+class CreateSubscriptionInitial1 extends Equatable {
   final CubitStatuses statuses;
   final bool result;
   final CreateSubscriptionRequest request;
   final String error;
 
-  const CreateSubscriptionInitial({
+  const CreateSubscriptionInitial1({
     required this.statuses,
     required this.result,
     required this.request,
     required this.error,
   });
 
-  factory CreateSubscriptionInitial.initial() {
-    return CreateSubscriptionInitial(
+  factory CreateSubscriptionInitial1.initial() {
+    return CreateSubscriptionInitial1(
       result: false,
       request: CreateSubscriptionRequest(),
       error: '',
@@ -25,13 +25,13 @@ class CreateSubscriptionInitial extends Equatable {
   @override
   List<Object> get props => [statuses, result, error];
 
-  CreateSubscriptionInitial copyWith({
+  CreateSubscriptionInitial1 copyWith({
     CubitStatuses? statuses,
     bool? result,
     CreateSubscriptionRequest? request,
     String? error,
   }) {
-    return CreateSubscriptionInitial(
+    return CreateSubscriptionInitial1(
       statuses: statuses ?? this.statuses,
       result: result ?? this.result,
       request: request ?? this.request,

@@ -2,19 +2,21 @@ import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/util/shared_preferences.dart';
 
 import '../../features/accounts/data/request/transfer_filter_request.dart';
+import '../../features/bus_trips/data/request/filter_trip_history_request.dart';
 import '../widgets/spinner_widget.dart';
 
 class Command {
   Command({
     this.skipCount,
     this.totalCount,
+    this.historyRequest,
   });
 
   int? skipCount;
   int maxResultCount = 20;
   int? totalCount;
+  FilterTripHistoryRequest? historyRequest;
 
-  var transferFilterRequest = TransferFilterRequest();
 
   int get maxPages => ((totalCount ?? 0) / maxResultCount).myRound;
 
@@ -56,12 +58,24 @@ class Command {
       'skipCount': skipCount,
       'maxResultCount': maxResultCount,
       'InstitutionId': AppSharedPreference.getInstitutionId,
-    };
+    }..addAll(historyRequest?.toMap() ?? {});
   }
 
   factory Command.fromJson(Map<String, dynamic> map) {
     return Command(
       skipCount: map['skipCount'] as int,
+    );
+  }
+
+  Command copyWith({
+    int? skipCount,
+    int? totalCount,
+    FilterTripHistoryRequest? historyRequest,
+  }) {
+    return Command(
+      skipCount: skipCount ?? this.skipCount,
+      totalCount: totalCount ?? this.totalCount,
+      historyRequest: historyRequest ?? this.historyRequest,
     );
   }
 }

@@ -43,19 +43,21 @@ class ItemInfoInLine extends StatelessWidget {
     Key? key,
     required this.title,
     this.info,
-    this.widget,
+    this.widget, this.small = false,
   }) : super(key: key);
 
   final String title;
   final String? info;
   final Widget? widget;
+  final bool small;
 
   @override
   Widget build(BuildContext context) {
     return DrawableText(
       text: '$title:  ',
       color: Colors.black,
-      size: 22.0.sp,
+      selectable: true,
+      size:small ?14.0.sp:22.0.sp,
       padding: const EdgeInsets.only(right: 10.0, bottom: 15.0, top: 3.0).r,
       drawablePadding: 5.0.w,
       fontFamily: FontManager.cairoBold,
@@ -64,7 +66,8 @@ class ItemInfoInLine extends StatelessWidget {
             textDirection: TextDirection.ltr,
             child: DrawableText(
                 text: info?.replaceAll('spy', '') ?? '',
-                size: 24.0.sp,
+                size:small ?14.0.sp: 24.0.sp,
+                selectable: true,
                 fontFamily: FontManager.cairoBold,
                 color: AppColorManager.mainColor,
               ),

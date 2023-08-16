@@ -8,7 +8,6 @@ class NavHomeCubit extends Cubit<NavHomeInitial> {
   NavHomeCubit() : super(NavHomeInitial.initial());
 
   changePage(String pageRoute) {
-
     emit(state.copyWith(page: pageRoute));
   }
 }

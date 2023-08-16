@@ -14,7 +14,6 @@ import 'package:qareeb_dash/generated/assets.dart';
 import '../../features/map/data/models/my_marker.dart';
 import '../../features/points/data/response/points_response.dart';
 
-import '../../features/trip/data/response/trip_response.dart';
 import '../../services/trip_path/data/models/trip_path.dart';
 import '../strings/app_string_manager.dart';
 import '../strings/enum_manager.dart';
@@ -125,101 +124,97 @@ extension NullOrZero on num? {
 
 extension RealName on Enum {
   String get upperFirst => name.replaceRange(0, 1, name.substring(0, 1).toUpperCase());
+
+  String get arabicName {
+    if (this is AttendanceType) {
+      switch (this as AttendanceType) {
+        case AttendanceType.up:
+          return 'صعود';
+        case AttendanceType.down:
+          return 'نزول';
+        case AttendanceType.unknown:
+          return 'غير معروف';
+      }
+    }
+    if (this is TransferType) {
+      switch (this) {
+        case TransferType.sharedPay:
+          return 'رحلة تشاركية';
+        case TransferType.tripPay:
+          return 'رحلة عادية';
+        case TransferType.payoff:
+          return 'من السائق للشركة';
+        case TransferType.debit:
+          return 'من الشركة للسائق';
+      }
+    }
+    if (this is BusTripType) {
+      switch (this) {
+        case BusTripType.go:
+          return 'ذهاب';
+        case BusTripType.back:
+          return 'إياب';
+      }
+    }
+    if (this is InstitutionType) {
+      switch (this) {
+        case InstitutionType.school:
+          return 'مدرسة';
+
+        case InstitutionType.college:
+          return 'جامعة';
+
+        case InstitutionType.transportation:
+          return 'نقل';
+      }
+    }
+    if (this is Government) {
+      switch (this) {
+        case Government.damascus:
+          return 'دمشق';
+
+        case Government.rifDimashq:
+          return 'ريف دمشق';
+      }
+    }
+    if (this is WeekDays) {
+      switch (this) {
+        case WeekDays.sunday:
+          return 'أحد';
+
+        case WeekDays.monday:
+          return 'إثنين';
+
+        case WeekDays.tuesday:
+          return 'ثلاثاء';
+
+        case WeekDays.wednesday:
+          return 'أربعاء';
+
+        case WeekDays.thursday:
+          return 'خميس';
+
+        case WeekDays.friday:
+          return 'جمعة';
+
+        case WeekDays.saturday:
+          return 'سبت';
+      }
+    }
+    return '';
+  }
 }
 
 extension EnumSpinner on List<Enum> {
-  List<SpinnerItem> spinnerItems({List<Enum>? selected}) {
+  List<SpinnerItem> spinnerItems({List<Enum?>? selected}) {
     return map(
       (e) => SpinnerItem(
-          name: (e is WeekDays)
-              ? e.getArName
-              : (e is BusTripType)
-                  ? e.getArName
-                  : e.name,
-          id: e.index,
-          item: e,
-          isSelected: selected?.contains(e) ?? false),
+        name: (e.arabicName.isEmpty) ? e.name : e.arabicName,
+        id: e.index,
+        item: e,
+        isSelected: selected?.contains(e) ?? false,
+      ),
     ).toList();
-  }
-}
-
-extension TransferTypeName on TransferType {
-  String get getArName {
-    switch (this) {
-      case TransferType.sharedPay:
-        return 'رحلة تشاركية';
-      case TransferType.tripPay:
-        return 'رحلة عادية';
-      case TransferType.payoff:
-        return 'من السائق للشركة';
-      case TransferType.debit:
-        return 'من الشركة للسائق';
-    }
-  }
-}
-
-extension BusTripTypeName on BusTripType {
-  String get getArName {
-    switch (this) {
-      case BusTripType.go:
-        return 'ذهاب';
-      case BusTripType.back:
-        return 'إياب';
-    }
-  }
-}
-
-extension WeekDaysName on WeekDays {
-  String get getArName {
-    switch (this) {
-      case WeekDays.sunday:
-        return 'أحد';
-
-      case WeekDays.monday:
-        return 'إثنين';
-
-      case WeekDays.tuesday:
-        return 'ثلاثاء';
-
-      case WeekDays.wednesday:
-        return 'أربعاء';
-
-      case WeekDays.thursday:
-        return 'خميس';
-
-      case WeekDays.friday:
-        return 'جمعة';
-
-      case WeekDays.saturday:
-        return 'سبت';
-    }
-  }
-}
-
-extension InstitutionTypeName on InstitutionType {
-  String get getArName {
-    switch (this) {
-      case InstitutionType.school:
-        return 'مدرسة';
-
-      case InstitutionType.college:
-        return 'جامعة';
-
-      case InstitutionType.transportation:
-        return 'نقل';
-    }
-  }
-}
-
-extension GovernmentName on Government {
-  String get getArName {
-    switch (this) {
-      case Government.damascus:
-        return 'دمشق';
-
-      case Government.rifDimashq:
-        return 'ريف دمشق';
-    }
   }
 }
 
@@ -342,97 +337,6 @@ extension PathMap on TripPath {
 
   LatLng? get startPoint => edges.firstOrNull?.startPoint.getLatLng;
 }
-
-extension NormalTripMap on TripResult {
-  List<MyMarker> get getMarkers {
-    return [
-      MyMarker(point: startPoint, type: MyMarkerType.sharedPint),
-      MyMarker(point: endPoint, type: MyMarkerType.sharedPint),
-    ];
-  }
-
-  LatLng get startPoint => currentLocation.latLng;
-
-  LatLng get endPoint => destination.latLng;
-
-  String get dateTrip {
-    if (startDate != null) {
-      return startDate!.formatFullDate;
-    } else if (endDate != null) {
-      return endDate!.formatFullDate;
-    }
-    return 'لم تبدأ';
-  }
-
-  String get getTripsCost {
-    return '$tripFare ${AppStringManager.currency}';
-  }
-
-  String get tripStateName {
-    //غير موجودة أو منتهية
-    if (isCanceled) return 'ملغية';
-
-    //final
-    if (isDelved) return 'مكتملة';
-    //بدأت
-    if (isStarted || isConfirmed) return 'جارية';
-
-    //تم تأكيدها
-    if (isConfirmed) return 'بحث عن سائق';
-
-    return 'حالة غير معروفة';
-  }
-
-  NavTrip? get tripStateEnum {
-    //غير موجودة أو منتهية
-    if (isCanceled) return null;
-
-    //final
-    if (isDelved) return NavTrip.ended;
-    //بدأت
-    if (isStarted || isConfirmed) return NavTrip.started;
-
-    //تم تأكيدها
-    if (isConfirmed) return NavTrip.waiting;
-
-    return NavTrip.have;
-  }
-
-  String get getCost {
-    return '${tripFare - paidAmount} ${AppStringManager.currency}';
-  }
-
-  String get getDuration {
-    return ' ${duration.numberOnly ~/ 60} ${AppStringManager.minute}';
-  }
-
-  String get getDistance {
-    return ' $distance ${AppStringManager.km}';
-  }
-
-  bool get iamDriver {
-    return (driver.id == 0) || (driver.id == AppSharedPreference.getMyId);
-  }
-}
-
-// extension SharedRequestMap on SharedTrip {
-//   int nou(LatLng point) {
-//     for (var e in sharedRequests) {
-//       if (e.status == SharedRequestStatus.pending.index) return 0;
-//       if (e.pickupPoint.getLatLng.hashCode == point.hashCode) return e.seatNumber;
-//     }
-//     return 0;
-//   }
-//
-//   List<SpinnerItem> availableRequest() {
-//     var s = <SpinnerItem>[];
-//     var a = driver.carType.seatsNumber - sharedRequests.length;
-//     for (var i = 1; i <= a; i++) {
-//       s.add(SpinnerItem(id: i, name: i.toString()));
-//     }
-//     return s;
-//   }
-// }
 
 extension CubitStateHelper on CubitStatuses {
   bool get loading => this == CubitStatuses.loading;

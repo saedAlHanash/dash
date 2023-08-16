@@ -28,7 +28,6 @@ class AllRolesCubit extends Cubit<AllRolesInitial> {
       }
       emit(state.copyWith(statuses: CubitStatuses.error, error: pair.second));
     } else {
-      state.command.totalCount = pair.first!.totalCount;
       emit(state.copyWith(statuses: CubitStatuses.done, result: pair.first!.items));
     }
   }

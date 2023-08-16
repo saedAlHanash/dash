@@ -2,12 +2,9 @@ import 'dart:convert';
 
 import 'package:qareeb_dash/core/api_manager/api_service.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
-import 'package:qareeb_dash/features/auth/data/response/login_response.dart';
-import 'package:qareeb_dash/features/trip/bloc/trip_by_id/trip_by_id_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../features/profile/data/response/profile_info_response.dart';
-import '../../features/trip/data/response/trip_response.dart';
 import '../strings/enum_manager.dart';
 
 class AppSharedPreference {
@@ -115,21 +112,6 @@ class AppSharedPreference {
     return _prefs?.getBool(_policy) ?? false;
   }
 
-  static void cashPreviousTrips(List<TripResult> result) {
-    var json = jsonEncode(result);
-    _prefs?.setString(_previousTrips, json);
-  }
-
-  static List<TripResult> getPreviousTrips() {
-    var json = _prefs?.getString(_previousTrips);
-    if (json == null || json.isEmpty) return [];
-    dynamic f = jsonDecode(json);
-    var result = List<TripResult>.from(f.map((x) => TripResult.fromJson(x)));
-    return result;
-  }
-
-
-
   static void logout() {
     _prefs?.clear();
     APIService.reInitial();
@@ -148,19 +130,10 @@ class AppSharedPreference {
     return result;
   }
 
-  static void cashTrip(TripResult? trip) {
-    if (trip == null) return;
-    _prefs?.setString(_trip, jsonEncode(trip));
-  }
 
   static Future<void> reload() async => await _prefs?.reload();
 
-  static TripResult getCashedTrip() {
-    var json = _prefs?.getString(_trip);
-    if (json == null || json.isEmpty) return TripResult.fromJson({});
 
-    return TripResult.fromJson(jsonDecode(json));
-  }
 
   static void removeCashedTrip() {
     _prefs?.remove(_trip);
@@ -175,70 +148,10 @@ class AppSharedPreference {
   }
 
 
-  static Future<NavTrip> getTripStateAsync() async {
-    await _prefs?.reload();
-    var trip = getCashedTrip();
 
-    if (trip.id == 0) {
-      return NavTrip.waiting;
-    }
-    await TripByIdCubit.tripByIdApi(tripId: trip.id);
-
-    trip = getCashedTrip();
-
-    //غير موجودة أو منتهية
-    if (!trip.iamDriver || trip.isCanceled) {
-      removeCashedTrip();
-      return NavTrip.waiting;
-    }
-
-    //final
-    if (trip.isDelved) return NavTrip.ended;
-    //بدأت
-    if (trip.isStarted) return NavTrip.started;
-    //تم قبولها
-    if (trip.isAccepted) return NavTrip.accepted;
-    //تم تأكيدها
-    if (trip.isConfirmed) return NavTrip.have;
-
-    return NavTrip.waiting;
-  }
-
-  static NavTrip getTripState() {
-    var trip = getCashedTrip();
-
-    //غير موجودة أو منتهية
-    if (!trip.iamDriver || trip.id == 0 || trip.isCanceled) {
-      removeCashedTrip();
-      return NavTrip.waiting;
-    }
-    //final
-    if (trip.isDelved) return NavTrip.ended;
-    //بدأت
-    if (trip.isStarted) return NavTrip.started;
-    //تم قبولها
-    if (trip.isAccepted) return NavTrip.accepted;
-    //تم تأكيدها
-    if (trip.isConfirmed) return NavTrip.have;
-
-    return NavTrip.waiting;
-  }
 
   static void cashDriverAvailable(bool isAvailable) {
     _prefs?.setBool(_driverAvailable, isAvailable);
-  }
-
-  static Future<bool> get isDriverAvailable async {
-    var isAvailable = _prefs?.getBool(_driverAvailable) ?? false;
-
-    final trip = getCashedTrip();
-
-    if (trip.id != 0) {
-      await TripByIdCubit.tripByIdApi(tripId: trip.id);
-      if (getTripState() != NavTrip.waiting) isAvailable = true;
-    }
-
-    return isAvailable;
   }
 
   static bool isShared() {

@@ -54,5 +54,4 @@ class CreateMemberCubit extends Cubit<CreateMemberInitial> {
       return Pair(null, ErrorManager.getApiError(response));
     }
   }
-
 }

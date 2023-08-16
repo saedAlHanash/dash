@@ -18,7 +18,6 @@ import 'package:qareeb_dash/features/points/bloc/creta_edge_cubit/create_edge_cu
 import 'package:qareeb_dash/features/points/bloc/point_by_id_cubit/point_by_id_cubit.dart';
 import 'package:qareeb_dash/features/super_user/ui/pages/create_super_user_page.dart';
 import 'package:qareeb_dash/features/temp_trips/data/response/temp_trips_response.dart';
-import 'package:qareeb_dash/features/trip/ui/pages/trips_page.dart';
 
 import '../core/injection/injection_container.dart' as di;
 import '../features/accounts/bloc/account_amount_cubit/account_amount_cubit.dart';
@@ -56,6 +55,13 @@ import '../features/roles/bloc/all_permissions_cubit/all_permissions_cubit.dart'
 import '../features/roles/bloc/create_role_cubit/create_role_cubit.dart';
 import '../features/roles/data/response/roles_response.dart';
 import '../features/roles/ui/pages/create_role_page.dart';
+import '../features/subscriptions/bloc/add_from_template_cubit/add_from_template_cubit.dart';
+import '../features/subscriptions/bloc/all_member_without_subscription_cubit/all_member_without_subscription_cubit.dart';
+import '../features/subscriptions/bloc/all_subscriber_cubit/all_subscriber_cubit.dart';
+import '../features/subscriptions/bloc/create_subscriptions_cubit/create_subscriptions_cubit.dart';
+import '../features/subscriptions/bloc/subscriptions_by_id_cubit/subscriptions_by_id_cubit.dart';
+import '../features/subscriptions/ui/pages/create_subscription_page.dart';
+import '../features/subscriptions/ui/pages/subscription_info_page.dart';
 import '../features/super_user/bloc/create_super_user_cubit/create_super_user_cubit.dart';
 import '../features/super_user/data/response/super_users_response.dart';
 import '../features/temp_trips/bloc/add_point_cubit/add_point_cubit.dart';
@@ -63,11 +69,6 @@ import '../features/temp_trips/bloc/create_temp_trip_cubit/create_temp_trip_cubi
 import '../features/temp_trips/bloc/temp_trip_by_id_cubit/temp_trip_by_id_cubit.dart';
 import '../features/temp_trips/ui/pages/create_temp_trip_page.dart';
 import '../features/temp_trips/ui/pages/temp_trip_info_page.dart';
-import '../features/trip/bloc/all_trips_cubit/all_trips_cubit.dart';
-import '../features/trip/bloc/trip_by_id/trip_by_id_cubit.dart';
-import '../features/trip/bloc/trip_status_cubit/trip_status_cubit.dart';
-import '../features/trip/data/request/filter_trip_request.dart';
-import '../features/trip/ui/pages/trip_info_page.dart';
 
 final appGoRouter = GoRouter(
   redirect: (BuildContext context, GoRouterState state) {
@@ -275,58 +276,6 @@ final appGoRouter = GoRouter(
     ),
     //endregion
 
-    //region trips
-
-    ///tripInfo
-    GoRoute(
-      name: GoRouteName.tripInfo,
-      path: _GoRoutePath.tripInfo,
-      builder: (BuildContext context, GoRouterState state) {
-        final id = int.tryParse(state.queryParams['id'] ?? '0') ?? 0;
-
-        final providers = [
-          BlocProvider(create: (_) => di.sl<MapControllerCubit>()),
-          BlocProvider(create: (_) => di.sl<TripStatusCubit>()),
-          BlocProvider(create: (_) => di.sl<TripByIdCubit>()..tripById(_, tripId: id)),
-        ];
-        return MultiBlocProvider(
-          providers: providers,
-          child: const TripInfoPage(),
-        );
-      },
-    ),
-
-    ///tripsPae
-    GoRoute(
-      name: GoRouteName.tripsPae,
-      path: _GoRoutePath.tripsPae,
-      builder: (BuildContext context, GoRouterState state) {
-        final clientId = int.tryParse(state.queryParams['clientId'] ?? '');
-        final driverId = int.tryParse(state.queryParams['driverId'] ?? '');
-        final name = state.queryParams['name'] ?? '';
-
-        final providers = [
-          BlocProvider(
-            create: (_) => di.sl<AllTripsCubit>()
-              ..getAllTrips(
-                context,
-                filter: FilterTripRequest(
-                  clientName: name,
-                  customerId: clientId,
-                  driverId: driverId,
-                ),
-              ),
-          ),
-        ];
-        return MultiBlocProvider(
-          providers: providers,
-          child: const TripsPage(isClientTrips: true),
-        );
-      },
-    ),
-
-    //endregion
-
     //region institutions
 
     ///createInstitution
@@ -474,12 +423,37 @@ final appGoRouter = GoRouter(
         final providers = [
           BlocProvider(create: (_) => di.sl<CreateSubscriptionCubit>()),
           BlocProvider(
-            create: (_) => di.sl<MemberBuIdCubit>()..getMemberBuId(context, id: id),
+            create: (_) =>
+                di.sl<SubscriptionBuIdCubit>()..getSubscriptionBuId(context, id: id),
           ),
         ];
         return MultiBlocProvider(
           providers: providers,
           child: const CreateSubscriptionPage(),
+        );
+      },
+    ),
+    //endregion
+
+    ///subscriptionInfo
+    GoRoute(
+      name: GoRouteName.subscriptionInfo,
+      path: _GoRoutePath.subscriptionInfo,
+      builder: (BuildContext context, GoRouterState state) {
+        final id = int.tryParse(state.queryParams['id'] ?? '') ?? 0;
+        final providers = [
+          BlocProvider(create: (_) => di.sl<AddFromTemplateCubit>()),
+          BlocProvider(
+            create: (_) => di.sl<AllSubscriberCubit>()..getSubscriber(_, tId: id),
+          ),
+          BlocProvider(
+            create: (_) => di.sl<AllMemberWithoutSubscriptionCubit>()
+              ..getMemberWithoutSubscription(_),
+          ),
+        ];
+        return MultiBlocProvider(
+          providers: providers,
+          child: SubscriptionInfoPage(id: id),
         );
       },
     ),
@@ -540,6 +514,7 @@ class GoRouteName {
   static const createRole = 'createRole';
   static const tripsPae = 'tripsPae';
   static const createSubscription = 'createSubscription';
+  static const subscription = 'subscription';
   static const createInstitution = 'createInstitution';
 
   static const createBus = 'createBus';
@@ -551,6 +526,7 @@ class GoRouteName {
 
   static const createBusTrip = 'createBusTrip';
   static const tempTripInfo = 'tempTripInfo';
+  static const subscriptionInfo = 'subscriptionInfo';
 }
 
 class _GoRoutePath {
@@ -571,6 +547,7 @@ class _GoRoutePath {
   static const createRole = '/createRole';
   static const tripsPae = '/tripsPae';
   static const createSubscription = '/createSubscription';
+  static const subscription = '/subscription';
   static const createInstitution = '/createInstitution';
   static const createBus = '/createBus';
   static const createSuperUsers = '/createSuperUsers';
@@ -578,4 +555,5 @@ class _GoRoutePath {
   static const createMember = '/createMember';
   static const createBusTrip = '/createBusTrip';
   static const tempTripInfo = '/tempTripInfo';
+  static const subscriptionInfo = '/subscriptionInfo';
 }

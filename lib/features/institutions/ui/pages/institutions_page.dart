@@ -69,8 +69,8 @@ class InstitutionsPage extends StatelessWidget {
                           ),
                         ),
                         e.name,
-                        Government.values[e.government].getArName,
-                        InstitutionType.values[e.type].getArName,
+                        Government.values[e.government].arabicName,
+                        InstitutionType.values[e.type].arabicName,
                         e.atharKey,
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,

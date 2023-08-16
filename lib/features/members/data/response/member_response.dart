@@ -56,6 +56,10 @@ class Member {
     required this.password,
     required this.institutionId,
     required this.subscriptions,
+    required this.phoneNo,
+    required this.facility,
+    required this.idNumber,
+    required this.collegeIdNumber,
   });
 
   final int id;
@@ -66,6 +70,10 @@ class Member {
   final double longe;
   final String userName;
   final String password;
+  final String phoneNo;
+  final String facility;
+  final String idNumber;
+  final String collegeIdNumber;
   final num institutionId;
   final List<Subscription> subscriptions;
 
@@ -80,6 +88,10 @@ class Member {
       longe: json["longe"] ?? 0,
       userName: json["userName"] ?? "",
       password: json["password"] ?? "",
+      phoneNo: json["phoneNo"] ?? "",
+      facility: json["facility"] ?? "",
+      idNumber: json["idNumber"] ?? "",
+      collegeIdNumber: json["collegeIdNumber"] ?? "",
       institutionId: json["institutionId"] ?? 0,
       subscriptions: json["subscriptions"] == null
           ? []
@@ -120,6 +132,7 @@ class Subscription {
   final bool isActive;
 
   bool get isNotExpired => expirationDate?.isAfter(getServerDate) ?? false;
+
   factory Subscription.fromJson(Map<String, dynamic> json) {
     return Subscription(
       id: json["id"] ?? 0,

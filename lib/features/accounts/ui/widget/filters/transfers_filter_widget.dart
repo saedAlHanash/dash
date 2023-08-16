@@ -59,7 +59,7 @@ class _TransfersFilterWidgetState extends State<TransfersFilterWidget> {
           builder: (context) {
             final list = TransferType.values
                 .map(
-                  (e) => SpinnerItem(name: e.getArName, id: e.index, item: e),
+                  (e) => SpinnerItem(name: e.arabicName, id: e.index, item: e),
                 )
                 .toList();
             list.insert(0, SpinnerItem(name: 'اختر النوع', id: -1));
