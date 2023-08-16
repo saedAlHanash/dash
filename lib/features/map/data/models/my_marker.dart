@@ -116,33 +116,32 @@ class MyMarker {
       case MyMarkerType.sharedPint:
         return Marker(
           point: point,
-          height: 150.0.spMin,
+          height: 100.0.spMin,
           width: 150.0.spMin,
           builder: (context) {
             return Builder(builder: (context) {
-              var nou = 0;
+              var nou = item as int;
               return Column(
                 children: [
-                  if (nou != 0)
-                    Container(
-                      height: 35.0.spMin,
-                      width: 70.0.spMin,
-                      margin: EdgeInsets.only(bottom: 5.0.spMin),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(5.0.r),
-                      ),
-                      alignment: Alignment.center,
-                      child: DrawableText(
-                        text: '$nou مقعد',
-                        color: Colors.black,
-                        size: 12.0.sp,
-                      ),
-                    ),
                   ImageMultiType(
                     url: index.iconPoint,
                     height: 50.0.spMin,
                     width: 50.0.spMin,
+                  ),
+                  Container(
+                    height: 100.0.spMin,
+                    width: 150.0.spMin,
+                    margin: EdgeInsets.only(bottom: 5.0.spMin),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(5.0.r),
+                    ),
+                    alignment: Alignment.center,
+                    child: DrawableText(
+                      text: '$nou مشترك',
+                      color: Colors.black,
+                      size: 12.0.sp,
+                    ),
                   ),
                 ],
               );
@@ -155,6 +154,7 @@ class MyMarker {
           height: 40.0.spMin,
           width: 40.0.spMin,
           builder: (context) {
+            final imei = item as Ime;
             return InkWell(
               onTap: () {
                 context.read<MapControllerCubit>().addTooltipMarker(
@@ -175,6 +175,7 @@ class MyMarker {
                   url: Assets.iconsLocator,
                   height: 40.0.spMin,
                   width: 40.0.spMin,
+                  color: imei.speed == '0' ? Colors.red : AppColorManager.mainColor,
                 ),
               ),
             );
@@ -195,7 +196,6 @@ class MyMarker {
 
                 return MyCardWidget(
                   cardColor: Colors.white,
-
                   child: SizedBox(
                     height: 250.0,
                     width: 250.0,
@@ -259,13 +259,13 @@ class MyPolyLine {
   MyPolyLine({this.endPoint, this.key, this.encodedPolyLine = '', this.color});
 }
 
-
 class ItemInfoInLineSmall extends StatelessWidget {
   const ItemInfoInLineSmall({
     Key? key,
     required this.title,
     this.info,
-    this.widget, this.small = false,
+    this.widget,
+    this.small = false,
   }) : super(key: key);
 
   final String title;
@@ -278,21 +278,20 @@ class ItemInfoInLineSmall extends StatelessWidget {
     return DrawableText(
       text: '$title:  ',
       color: Colors.black,
-
       size: 16.0.sp,
       padding: const EdgeInsets.only(right: 10.0, bottom: 15.0, top: 3.0).r,
       drawablePadding: 5.0.w,
       fontFamily: FontManager.cairoBold,
       drawableEnd: widget == null
           ? Expanded(
-            child: DrawableText(
-              text: info??'',
-              size: 16.0.sp,
-              selectable: true,
-              fontFamily: FontManager.cairoBold,
-              color: AppColorManager.mainColor,
-            ),
-          )
+              child: DrawableText(
+                text: info ?? '',
+                size: 16.0.sp,
+                selectable: true,
+                fontFamily: FontManager.cairoBold,
+                color: AppColorManager.mainColor,
+              ),
+            )
           : widget!,
     );
   }

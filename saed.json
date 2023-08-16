@@ -1,34 +1,16 @@
 {
-  "result": [
-    {
-      "fullName": "saed",
-      "imageUrl": "1690405573325mhmxLZsKN2.jpg",
-      "address": "sassas",
-      "late": 33.498436822851204,
-      "longe": 36.30624236495111,
-      "userName": "QareebVZE96",
-      "password": "e@Tub#ud",
-      "phoneNo": null,
-      "facility": null,
-      "idNumber": null,
-      "collegeIdNumber": null,
-      "institutionId": 4,
-      "id": 5
-    },
-    {
-      "fullName": "saed",
-      "imageUrl": "1690406130096ViHu7I1RKV.jpg",
-      "address": "2",
-      "late": 33.476186267855184,
-      "longe": 36.2896503311818,
-      "userName": "QareebNSP51",
-      "password": "n%+3zQ)&",
-      "phoneNo": null,
-      "facility": null,
-      "idNumber": null,
-      "collegeIdNumber": null,
-      "institutionId": 4,
-      "id": 6
-    }
-  ]
+  "result": {
+    "membersCount": 2,
+    "imeis": [
+      "354017115678225",
+      "354017116595949",
+      "354018112674167"
+    ],
+    "notificationPoints": []
+  },
+  "targetUrl": null,
+  "success": true,
+  "error": null,
+  "unAuthorizedRequest": false,
+  "__abp": true
 }

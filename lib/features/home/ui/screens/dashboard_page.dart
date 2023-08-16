@@ -37,6 +37,7 @@ class _DashboardPageState extends State<DashboardPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(horizontal: 128.0).w,
         child: BlocConsumer<HomeCubit, HomeInitial>(
           listenWhen: (p, c) => c.statuses.done,
           listener: (context, state) {},
@@ -45,7 +46,7 @@ class _DashboardPageState extends State<DashboardPage> {
               return MyStyle.loadingWidget();
             }
             return Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 20.0.verticalSpace,
                 _TotalWidget(
@@ -59,39 +60,33 @@ class _DashboardPageState extends State<DashboardPage> {
                   number: state.result.membersCount,
                 ),
                 16.0.verticalSpace,
-                Row(
-                  children: [
-                    const Expanded(
-                      child: DrawableText(text: 'نقاط الطلاب'),
-                    ),
-                    50.0.horizontalSpace,
-                    const Expanded(
-                      child: DrawableText(text: 'التتبع المباشر'),
-                    ),
-                  ],
+                DrawableText(
+                  text: 'نقاط الطلاب',
+                  size: 24.0.sp,
+                  fontFamily: FontManager.cairoBold,
                 ),
-                10.0.verticalSpace,
                 SizedBox(
                   height: 500.0.h,
-                  child: Row(
-                    children: [
-                      const Expanded(
-                        child: MapWidget(),
-                      ),
-                      50.0.horizontalSpace,
-                      Expanded(
-                        child: MultiBlocProvider(
-                          providers: [
-                            BlocProvider(create: (_) => sl<MapControllerCubit>()),
-                            BlocProvider(create: (_) => sl<MapControlCubit>()),
-                            BlocProvider(create: (_) => sl<AtherCubit>()),
-                          ],
-                          child: const BusesMap(),
-                        ),
-                      ),
+                  child: const MapWidget(),
+                ),
+                50.0.verticalSpace,
+                DrawableText(
+                  text: 'التتبع المباشر',
+                  size: 24.0.sp,
+                  fontFamily: FontManager.cairoBold,
+                ),
+                SizedBox(
+                  height: 500.0.h,
+                  child: MultiBlocProvider(
+                    providers: [
+                      BlocProvider(create: (_) => sl<MapControllerCubit>()),
+                      BlocProvider(create: (_) => sl<MapControlCubit>()),
+                      BlocProvider(create: (_) => sl<AtherCubit>()),
                     ],
+                    child: const BusesMap(),
                   ),
                 ),
+                100.0.verticalSpace,
               ],
             );
           },
