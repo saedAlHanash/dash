@@ -59,7 +59,7 @@ class _PointsPageState extends State<PointsPage> {
                             30.0.verticalSpace,
                             SizedBox(
                               width: 300.0.w,
-                              child: AutoCompleteWidget(
+                                child: AutoCompleteWidget(
                                 onTap: (spinnerItem) {
                                   context.pushNamed(
                                     GoRouteName.pointInfo,

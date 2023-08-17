@@ -52,11 +52,6 @@ class SplashScreen extends StatelessWidget {
 
   void timer(BuildContext context) {
     Timer(const Duration(milliseconds: 1500), () async {
-      await AtherCubit.getDriverDistance(
-          ime: '359632107579978',
-          start: DateTime.now().addFromNow(day: -1),
-          end: DateTime.now());
-
       if (AppSharedPreference.isLogin) {
         if (await AppSharedPreference.isDriverAvailable) {
           if (context.mounted) {

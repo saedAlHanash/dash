@@ -26,6 +26,7 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.2
+
   drawable_text:
     git:
       url: https://github.com/saedAlHanash/drawable_text
