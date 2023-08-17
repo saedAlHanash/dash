@@ -31,7 +31,7 @@ class Ime {
     required this.locValid,
   });
 
-  final String name;
+   String name;
   final DateTime? dtServer;
   final DateTime? dtTracker;
   final double lat;

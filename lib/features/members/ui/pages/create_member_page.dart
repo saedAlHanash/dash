@@ -52,7 +52,7 @@ class _CreateMemberPageState extends State<CreateMemberPage> {
           listenWhen: (p, c) => c.statuses.done,
           listener: (context, state) {
             request = request.fromMember(state.result);
-            if (request.latLng != null) {
+            if (request.latLng != null && request.latLng.hashCode > 0) {
               context
                   .read<MapControllerCubit>()
                   .addSingleMarker(marker: MyMarker(point: request.latLng!));
@@ -110,7 +110,6 @@ class _CreateMemberPageState extends State<CreateMemberPage> {
                                   onChanged: (p0) => request.address = p0,
                                 ),
                               ),
-
                             ],
                           ),
                           Row(
@@ -130,7 +129,6 @@ class _CreateMemberPageState extends State<CreateMemberPage> {
                                   onChanged: (p0) => request.facility = p0,
                                 ),
                               ),
-
                             ],
                           ),
                           Row(
@@ -150,7 +148,6 @@ class _CreateMemberPageState extends State<CreateMemberPage> {
                                   onChanged: (p0) => request.collegeIdNumber = p0,
                                 ),
                               ),
-
                             ],
                           ),
                           const Divider(),
@@ -197,7 +194,8 @@ class _CreateMemberPageState extends State<CreateMemberPage> {
                             ),
                           );
                         },
-                        initialPoint: request.latLng,
+                        initialPoint:
+                            request.latLng.hashCode == 0 ? null : request.latLng,
                       ),
                     ),
                   ),

@@ -1,3 +1,7 @@
+import 'dart:html';
+import 'dart:ui';
+import 'package:qareeb_dash/core/widgets/my_button.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:collection/collection.dart';
 import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
@@ -6,22 +10,20 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/util/note_message.dart';
-import 'package:qareeb_dash/core/widgets/images/round_image_widget.dart';
 import 'package:qareeb_dash/core/widgets/item_info.dart';
-import 'package:qareeb_dash/core/widgets/my_text_form_widget.dart';
 import 'package:qareeb_dash/core/widgets/not_found_widget.dart';
 import 'package:qareeb_dash/core/widgets/saed_taple_widget.dart';
 import 'package:qareeb_dash/features/members/ui/pages/create_subscreption_page.dart';
-
 import 'package:qareeb_dash/router/go_route_pages.dart';
+import 'package:qr_flutter/qr_flutter.dart';
+import 'package:screenshot/screenshot.dart';
 
+import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/my_style.dart';
-import '../../../subscriptions/bloc/create_subscriptions_cubit/create_subscriptions_cubit.dart';
 import '../../bloc/all_member_cubit/all_member_cubit.dart';
 import '../../bloc/create_subscreption_cubit/create_subscreption_cubit.dart';
 import '../../bloc/member_by_id_cubit/member_by_id_cubit.dart';
-import '../../data/response/member_response.dart';
 
 final _super_userList = [
   'ID',
@@ -50,23 +52,16 @@ class _MembersPageState extends State<MembersPage> {
               child: const Icon(Icons.add, color: Colors.white),
             )
           : null,
-      body: BlocBuilder<AllMembersCubit, AllMembersInitial>(
-        builder: (context, state) {
-          if (state.statuses.loading) {
-            return MyStyle.loadingWidget();
-          }
-          final list = state.result;
-          if (list.isEmpty) return const NotFoundWidget(text: 'لا يوجد تصنيفات');
-          return Column(
-            children: [
-              DrawableText(
-                text: 'الطلاب',
-                matchParent: true,
-                size: 28.0.sp,
-                textAlign: TextAlign.center,
-                padding: const EdgeInsets.symmetric(vertical: 15.0).h,
-              ),
-              SaedTableWidget(
+      body: Column(
+        children: [
+          BlocBuilder<AllMembersCubit, AllMembersInitial>(
+            builder: (context, state) {
+              if (state.statuses.loading) {
+                return MyStyle.loadingWidget();
+              }
+              final list = state.result;
+              if (list.isEmpty) return const NotFoundWidget(text: 'لا يوجد تصنيفات');
+              return SaedTableWidget(
                 command: state.command,
                 title: _super_userList,
                 data: list
@@ -76,11 +71,6 @@ class _MembersPageState extends State<MembersPage> {
                         e.fullName,
                         e.collegeIdNumber,
                         e.facility,
-                        // e.userName,
-                        // MyTextFormWidget(
-                        //   initialValue: e.password,
-                        //   obscureText: true,
-                        // ),
                         (e.subscriptions.isEmpty || !e.subscriptions.last.isActive)
                             ? 'غير مشترك'
                             : (e.subscriptions.last.isNotExpired)
@@ -89,7 +79,7 @@ class _MembersPageState extends State<MembersPage> {
                         InkWell(
                           onTap: !isAllowed(AppPermissions.UPDATE)
                               ? null
-                              : () => dialogSubscription(context,e.id),
+                              : () => dialogSubscription(context, e.id),
                           child: const Icon(
                             Icons.edit_calendar,
                             color: Colors.green,
@@ -122,6 +112,13 @@ class _MembersPageState extends State<MembersPage> {
                                 },
                                 icon: const Icon(Icons.key),
                               ),
+                              IconButton(
+                                onPressed: () {
+
+                                  downloadImage(e.id,e.collegeIdNumber);
+                                },
+                                icon: const Icon(Icons.qr_code, color: Colors.black),
+                              ),
                               InkWell(
                                 onTap: !isAllowed(AppPermissions.UPDATE)
                                     ? null
@@ -143,39 +140,52 @@ class _MembersPageState extends State<MembersPage> {
                 onChangePage: (command) {
                   context.read<AllMembersCubit>().getMembers(context, command: command);
                 },
-              ),
-
-              // Expanded(
-              //   child: ListView.builder(
-              //     itemCount: list.length,
-              //     itemBuilder: (context, i) {
-              //       final item = list[i];
-              //       return ItemMember(item: item);
-              //     },
-              //   ),
-              // ),
-            ],
-          );
-        },
+              );
+            },
+          ),
+        ],
       ),
     );
   }
 }
 
-  void dialogSubscription(BuildContext context,int memberId) {
-    NoteMessage.showMyDialog(
-      context,
-      child: MultiBlocProvider(
-        providers: [
-          BlocProvider(create: (context) => CreateSubscriptionCubit1()),
-          BlocProvider(
-            create: (context) => MemberBuIdCubit()..getMemberBuId(context, id: memberId),
-          ),
-        ],
-        child: Padding(
-          padding: const EdgeInsets.all(20.0).r,
-          child: const CreateSubscriptionPage1(),
+void dialogSubscription(BuildContext context, int memberId) {
+  NoteMessage.showMyDialog(
+    context,
+    child: MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => CreateSubscriptionCubit1()),
+        BlocProvider(
+          create: (context) => MemberBuIdCubit()..getMemberBuId(context, id: memberId),
         ),
+      ],
+      child: Padding(
+        padding: const EdgeInsets.all(20.0).r,
+        child: const CreateSubscriptionPage1(),
       ),
-    );
-  }
+    ),
+  );
+}
+
+Future<void> downloadImage(int id,String name) async {
+  final painter = QrPainter(
+    data: id.toString(),
+    version: QrVersions.auto,
+    eyeStyle: const QrEyeStyle(
+      color: AppColorManager.black,
+      eyeShape: QrEyeShape.square,
+    ),
+    dataModuleStyle: const QrDataModuleStyle(
+      color: AppColorManager.black,
+      dataModuleShape: QrDataModuleShape.square,
+    ),
+
+  );
+  final image = await painter.toImage(600);
+  final pngBytes = await image.toByteData(format: ImageByteFormat.png);
+  final blob = Blob([pngBytes!.buffer.asUint8List()], 'image/png');
+  final url = Url.createObjectUrlFromBlob(blob);
+  final anchor = AnchorElement(href: url)
+    ..setAttribute('download', '$name.png')
+    ..click();
+}

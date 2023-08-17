@@ -178,7 +178,7 @@ class MapControllerCubit extends Cubit<MapControllerInitial> {
       if (e.endPoint != null) {
         addMarker(
             marker:
-                MyMarker(point: e.endPoint!, type: MyMarkerType.point, item: e.endPoint));
+                MyMarker(point: e.endPoint!, type: MyMarkerType.sharedPint, item: e.endPoint));
       }
       if (e.key == null && e.endPoint == null) return;
       var list = decodePolyline(e.encodedPolyLine).unpackPolyline();
@@ -218,7 +218,7 @@ class MapControllerCubit extends Cubit<MapControllerInitial> {
         marker: points.mapIndexed(
       (i, e) {
         return MyMarker(
-            point: e.getLatLng, type: MyMarkerType.point, key: e.id.toString(), item: e);
+            point: e.getLatLng, type: MyMarkerType.sharedPint, key: e.id.toString(), item: e);
       },
     ).toList());
   }

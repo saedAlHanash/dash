@@ -159,7 +159,7 @@ class _CreateDriverPageState extends State<CreateDriverPage> {
                       children: [
                         Expanded(
                           child: MyTextFormNoLabelWidget(
-                            label: 'اسم السائق',
+                            label: 'اسم الباص',
                             initialValue: request.name,
                             onChanged: (p0) {
                               request.name = p0;

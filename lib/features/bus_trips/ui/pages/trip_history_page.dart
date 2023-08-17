@@ -11,6 +11,7 @@ import 'package:qareeb_dash/features/bus_trips/ui/widget/trips_history_filter_wi
 
 import 'package:qareeb_dash/router/go_route_pages.dart';
 
+import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/my_style.dart';
 
@@ -22,7 +23,7 @@ final _super_userList = [
   'ID',
   'اسم الطالب',
   'اسم الرحلة',
-  'رقم الباص',
+  'اسم الباص',
   'نوع العملية',
   'حالة اشتراك الطالب',
   'تاريخ العملية',
@@ -54,7 +55,7 @@ class TripHistoryPage extends StatelessWidget {
                 return MyStyle.loadingWidget();
               }
               final list = state.result;
-              if (list.isEmpty) return const NotFoundWidget(text: 'لا يوجد سجل');
+              if (list.isEmpty) return const NotFoundWidget(text: 'يرجى إضافة رحلات');
               return SaedTableWidget(
                 command: state.command,
                 title: _super_userList,
@@ -64,9 +65,21 @@ class TripHistoryPage extends StatelessWidget {
                         e.id.toString(),
                         e.busMember.fullName,
                         e.busTrip.name,
-                        e.busTrip.name,
+                        e.bus.driverName,
                         e.attendanceType.arabicName,
-                        e.isParticipated ? 'مشترك' : 'غير مشترك',
+                        e.isSubscribed
+                            ? const DrawableText(
+                                text: 'مشترك',
+                                matchParent: true,
+                                color: AppColorManager.mainColor,
+                                textAlign: TextAlign.center,
+                              )
+                            : const DrawableText(
+                                text: 'غير مشترك',
+                                color: Colors.red,
+                                matchParent: true,
+                                textAlign: TextAlign.center,
+                              ),
                         e.date?.formatDateTime,
                       ],
                     )

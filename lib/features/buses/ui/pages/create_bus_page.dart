@@ -74,7 +74,7 @@ class _CreateBusPageState extends State<CreateBusPage> {
                       children: [
                         Expanded(
                           child: MyTextFormNoLabelWidget(
-                            label: 'اسم السائق',
+                            label: 'اسم الباص',
                             initialValue: request.driverName,
                             onChanged: (p0) => request.driverName = p0,
                           ),

@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qareeb_dash/core/widgets/spinner_widget.dart';
 
 import '../api_manager/command.dart';
+import '../strings/app_color_manager.dart';
 import 'my_card_widget.dart';
 
 class SaedTableWidget extends StatelessWidget {
@@ -69,11 +70,25 @@ class SaedTableWidget extends StatelessWidget {
             ),
           ),
           if (command != null)
-            SpinnerWidget(
-              items: command!.getSpinnerItems,
-              onChanged: (spinnerItem) {
-                onChangePage?.call(command!..goToPage(spinnerItem.id));
-              },
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SpinnerWidget(
+                  items: command!.getSpinnerItems,
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                    color: AppColorManager.mainColor,
+                  ),
+                    borderRadius: BorderRadius.circular(12.0),
+                  ),
+
+                  onChanged: (spinnerItem) {
+                    onChangePage?.call(command!..goToPage(spinnerItem.id));
+                  },
+                ),
+                15.0.horizontalSpace,
+                DrawableText(text: 'عدد الصفحات الكلي: ${command?.maxPages}')
+              ],
             ),
           20.0.verticalSpace,
         ],
@@ -97,11 +112,9 @@ class CellWidget extends StatelessWidget {
             (i, e) {
               final widget = e is String
                   ? Directionality(
-                      textDirection:
-                          e.contains('spy') ? TextDirection.ltr : TextDirection.rtl,
+                      textDirection: TextDirection.ltr,
                       child: DrawableText(
                         selectable: true,
-
                         size: 16.0.sp,
                         matchParent: true,
                         textAlign: TextAlign.center,

@@ -66,64 +66,13 @@ class MyMarker {
       case MyMarkerType.point:
         return Marker(
           point: point,
-          height: 70.0.spMin,
-          width: 70.0.spMin,
-          builder: (context) {
-            return InkWell(
-              onTap: () {
-                context.pushNamed(
-                  GoRouteName.pointInfo,
-                  queryParams: {'id': item.id.toString()},
-                );
-              },
-              child: Column(
-                children: [
-                  Transform.rotate(
-                    angle: bearing ?? 0.0,
-                    child: Container(
-                      height: 40.spMin,
-                      width: 40.spMin,
-                      padding: const EdgeInsets.all(5.0).r,
-                      decoration: const BoxDecoration(
-                        color: AppColorManager.black,
-                        shape: BoxShape.circle,
-                      ),
-                      child: ImageMultiType(
-                        url: Assets.iconsLogoWithoutText,
-                        color: Colors.white,
-                        height: 30.0.spMin,
-                        width: 30.0.spMin,
-                      ),
-                    ),
-                  ),
-                  if (item is TripPoint)
-                    Container(
-                      width: 70.0.spMin,
-                      color: Colors.white,
-                      padding: const EdgeInsets.all(3.0).r,
-                      child: DrawableText(
-                        text: (item as TripPoint).arName,
-                        size: 12.0.sp,
-                        maxLines: 1,
-                        matchParent: true,
-                        textAlign: TextAlign.center,
-                      ),
-                    )
-                ],
-              ),
-            );
-          },
-        );
-      case MyMarkerType.sharedPint:
-        return Marker(
-          point: point,
           height: 150.0.spMin,
           width: 150.0.spMin,
           builder: (context) {
             return Builder(builder: (context) {
               NotificationPoint? e;
-              if(item is NotificationPoint){
-               e = item as NotificationPoint;
+              if (item is NotificationPoint) {
+                e = item as NotificationPoint;
               }
               return Column(
                 children: [
@@ -144,14 +93,33 @@ class MyMarker {
                           color: Colors.black,
                           size: 18.0.sp,
                         ),
-                        if(e!=null)
-                        DrawableText(
-                          text: e.pointArName,
-                          color: Colors.black,
-                          size: 18.0.sp,
-                        ),
+                        if (e != null)
+                          DrawableText(
+                            text: e.pointArName,
+                            color: Colors.black,
+                            size: 18.0.sp,
+                          ),
                       ],
                     ),
+                  ),
+                ],
+              );
+            });
+          },
+        );
+      case MyMarkerType.sharedPint:
+        return Marker(
+          point: point,
+          height: 100.0.spMin,
+          width: 150.0.spMin,
+          builder: (context) {
+            return Builder(builder: (context) {
+              return Column(
+                children: [
+                  ImageMultiType(
+                    url: index.iconPoint,
+                    height: 50.0.spMin,
+                    width: 50.0.spMin,
                   ),
                 ],
               );
@@ -205,7 +173,7 @@ class MyMarker {
                 }
 
                 return Container(
-                  constraints: BoxConstraints(maxHeight: 100.0.r,maxWidth: 250.0.r),
+                  constraints: BoxConstraints(maxHeight: 100.0.r, maxWidth: 250.0.r),
                   padding: const EdgeInsets.all(10.0).r,
                   color: Colors.white,
                   child: Column(
@@ -228,14 +196,12 @@ class MyMarker {
                         matchParent: true,
                         size: 16.0.sp,
                       ),
-
                       DrawableText(
                         text: 'السرعة: ${(item as Ime).speed}',
                         color: Colors.black,
                         matchParent: true,
                         size: 16.0.sp,
                       ),
-
                       DrawableText(
                         text: 'معرف الباص: ${(item as Ime).ime}',
                         color: Colors.black,

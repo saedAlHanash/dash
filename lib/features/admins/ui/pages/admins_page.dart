@@ -20,6 +20,7 @@ final adminsEableHeader = [
   "رقم الهاتف",
   "حالة المدير",
   "البريد",
+  "تفاصيل",
 
 ];
 
@@ -42,54 +43,58 @@ class _AdminPageState extends State<AdminPage> {
               child: const Icon(Icons.add, color: Colors.white),
             )
           : null,
-      body: BlocBuilder<AllAdminsCubit, AllAdminsInitial>(
-        builder: (_, state) {
-          if (state.statuses.loading) {
-            return MyStyle.loadingWidget();
-          }
-          if (state.result.isEmpty) {
-            return const NotFoundWidget(text: 'لا يوجد مدراء');
-          }
-          
-          final list = state.result;
+      body: Column(
+        children: [
+          BlocBuilder<AllAdminsCubit, AllAdminsInitial>(
+            builder: (_, state) {
+              if (state.statuses.loading) {
+                return MyStyle.loadingWidget();
+              }
+              if (state.result.isEmpty) {
+                return const NotFoundWidget(text: 'لا يوجد مدراء');
+              }
 
-          return SaedTableWidget(
-            command: state.command,
-            title: adminsEableHeader,
-            fullSizeIndex: const [5],
-            data: list
-                .mapIndexed(
-                  (index, e) => [
-                    e.id.toString(),
-                    e.fullName,
-                    e.phoneNumber,
-                    e.isActive ? 'مفعل' : 'غير مفعل',
-                    e.emailAddress,
-                    e.creationTime?.formatDate,
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            context.pushNamed(GoRouteName.adminInfo, extra: e);
-                          },
-                          child: const CircleButton(
-                            color: Colors.grey,
-                            icon: Icons.info_outline_rounded,
-                          ),
-                        ),
+              final list = state.result;
+
+              return SaedTableWidget(
+                command: state.command,
+                title: adminsEableHeader,
+                fullSizeIndex: const [5],
+                data: list
+                    .mapIndexed(
+                      (index, e) => [
+                        e.id.toString(),
+                        e.fullName,
+                        e.phoneNumber,
+                        e.isActive ? 'مفعل' : 'غير مفعل',
+                        e.emailAddress,
+
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                context.pushNamed(GoRouteName.adminInfo, extra: e);
+                              },
+                              child: const CircleButton(
+                                color: Colors.grey,
+                                icon: Icons.info_outline_rounded,
+                              ),
+                            ),
+                          ],
+                        )
                       ],
                     )
-                  ],
-                )
-                .toList(),
-            onChangePage: (command) {
-              context.read<AllAdminsCubit>().getAllAdmins(context, command: command);
-            },
-          );
+                    .toList(),
+                onChangePage: (command) {
+                  context.read<AllAdminsCubit>().getAllAdmins(context, command: command);
+                },
+              );
 
-        },
+            },
+          ),
+        ],
       ),
     );
   }

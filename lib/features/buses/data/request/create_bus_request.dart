@@ -62,7 +62,7 @@ class CreateBusRequest {
     }
 
     if (driverName?.isEmpty ?? true) {
-      NoteMessage.showErrorSnackBar(message: 'خطأ في الاسم السائق', context: context);
+      NoteMessage.showErrorSnackBar(message: 'خطأ في الاسم الباص', context: context);
       return false;
     }
     if (driverPhone?.isEmpty ?? true) {

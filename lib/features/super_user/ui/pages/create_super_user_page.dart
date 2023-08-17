@@ -49,9 +49,6 @@ class _CreateSuperUserPageState extends State<CreateSuperUserPage> {
         window.history.back();
       },
       child: Scaffold(
-        appBar: const AppBarWidget(
-          text: 'الأجهزة اللوحية',
-        ),
         body: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 120.0).w,
           child: Column(

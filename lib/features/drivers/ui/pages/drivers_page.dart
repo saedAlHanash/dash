@@ -16,7 +16,7 @@ import '../../bloc/all_drivers/all_drivers_cubit.dart';
 
 final clientTableHeader = [
   "id",
-  "اسم السائق",
+  "اسم الباص",
   "رقم الهاتف",
   "حالة السائق",
   "IMEI",

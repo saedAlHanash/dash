@@ -16,14 +16,11 @@ import '../../../../core/util/my_style.dart';
 import '../../bloc/all_super_users_cubit/all_super_users_cubit.dart';
 import '../../bloc/delete_super_user_cubit/delete_super_user_cubit.dart';
 
-
-
-
 final _super_userList = [
   'ID',
-  'اسم المشرف',
-  'رقم هاتف المشرف',
-  'باص المشرف',
+  'اسم الجهاز',
+  'IMEI الباص',
+  'باص الجهاز',
   'عمليات',
 ];
 
@@ -39,23 +36,16 @@ class SuperUsersPage extends StatelessWidget {
               child: const Icon(Icons.add, color: Colors.white),
             )
           : null,
-      body: BlocBuilder<AllSuperUsersCubit, AllSuperUsersInitial>(
-        builder: (context, state) {
-          if (state.statuses.loading) {
-            return MyStyle.loadingWidget();
-          }
-          final list = state.result;
-          if (list.isEmpty) return const NotFoundWidget(text: 'لا يوجد تصنيفات');
-          return Column(
-            children: [
-              DrawableText(
-                text: 'الأجهزة اللوحية',
-                matchParent: true,
-                size: 28.0.sp,
-                textAlign: TextAlign.center,
-                padding: const EdgeInsets.symmetric(vertical: 15.0).h,
-              ),
-              SaedTableWidget(
+      body: Column(
+        children: [
+          BlocBuilder<AllSuperUsersCubit, AllSuperUsersInitial>(
+            builder: (context, state) {
+              if (state.statuses.loading) {
+                return MyStyle.loadingWidget();
+              }
+              final list = state.result;
+              if (list.isEmpty) return const NotFoundWidget(text: 'يرجى إضافة جهاز لوحي جديد');
+              return SaedTableWidget(
                 command: state.command,
                 title: _super_userList,
                 data: list
@@ -63,9 +53,8 @@ class SuperUsersPage extends StatelessWidget {
                       (index, e) => [
                         e.id.toString(),
                         e.fullName,
-                        e.phone,
+                        e.bus.ime,
                         e.bus.driverName,
-
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
@@ -120,20 +109,10 @@ class SuperUsersPage extends StatelessWidget {
                       .read<AllSuperUsersCubit>()
                       .getSuperUsers(context, command: command);
                 },
-              ),
-
-              // Expanded(
-              //   child: ListView.builder(
-              //     itemCount: list.length,
-              //     itemBuilder: (context, i) {
-              //       final item = list[i];
-              //       return ItemSuperUsers(item: item);
-              //     },
-              //   ),
-              // ),
-            ],
-          );
-        },
+              );
+            },
+          ),
+        ],
       ),
     );
   }

@@ -14,7 +14,7 @@ class Home1Response {
   }
 
   Map<String, dynamic> toJson() => {
-        "result": result?.toJson(),
+        "result": result.toJson(),
       };
 }
 

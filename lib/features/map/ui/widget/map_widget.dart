@@ -120,35 +120,36 @@ class MapWidgetState extends State<MapWidget> with TickerProviderStateMixin {
         key: mapWidgetKey,
         mapController: controller,
         options: MapOptions(
-            maxZoom: maxZoom,
-            interactiveFlags: InteractiveFlag.pinchZoom | InteractiveFlag.drag,
-            onMapReady: () {
-              if (widget.initialPoint != null && widget.initialPoint!.latitude != 0) {
-                controller.animateTo(dest: widget.initialPoint!, zoom: 15);
-                mapControllerCubit.addSingleMarker(
-                    marker: MyMarker(point: widget.initialPoint!));
-              } else {
-                if (mapControllerCubit.state.centerZoomPoints.isNotEmpty) return;
-                if (mapControllerCubit.state.point == null) return;
-                if (mapControllerCubit.state.markers.isNotEmpty) return;
+          maxZoom: maxZoom,
+          interactiveFlags: InteractiveFlag.pinchZoom | InteractiveFlag.drag,
+          onMapReady: () {
+            if (widget.initialPoint != null && widget.initialPoint!.latitude != 0) {
+              controller.animateTo(dest: widget.initialPoint!, zoom: 15);
+              mapControllerCubit.addSingleMarker(
+                  marker: MyMarker(point: widget.initialPoint!));
+            } else {
+              if (mapControllerCubit.state.centerZoomPoints.isNotEmpty) return;
+              if (mapControllerCubit.state.point == null) return;
+              if (mapControllerCubit.state.markers.isNotEmpty) return;
 
-                controller.move(LatLng(33.16, 36.16), 9);
-              }
+              controller.move(LatLng(33.16, 36.16), 9);
+            }
 
-              if (widget.onMapReady != null) {
-                widget.onMapReady!(controller);
-              }
-            },
-            onTap: widget.onMapClick == null
-                ? null
-                : (tapPosition, point) {
-                    mapControllerCubit.addSingleMarker(
-                      marker: MyMarker(point: point),
-                    );
-                    widget.onMapClick!.call(point);
-                  },
-            zoom: 12.0,
-            center: widget.initialPoint ?? initialPoint),
+            if (widget.onMapReady != null) {
+              widget.onMapReady!(controller);
+            }
+          },
+          onTap: widget.onMapClick == null
+              ? null
+              : (tapPosition, point) {
+                  mapControllerCubit.addSingleMarker(
+                    marker: MyMarker(point: point),
+                  );
+                  widget.onMapClick!.call(point);
+                },
+          zoom: 12.0,
+          center: widget.initialPoint ?? initialPoint,
+        ),
         nonRotatedChildren: [
           MapTypeSpinner(
             controller: controller,

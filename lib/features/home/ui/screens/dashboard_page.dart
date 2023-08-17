@@ -2,12 +2,9 @@ import 'package:collection/collection.dart';
 import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:qareeb_dash/core/api_manager/api_service.dart';
 import 'package:qareeb_dash/core/api_manager/command.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
-import 'package:qareeb_dash/core/widgets/my_button.dart';
 import 'package:qareeb_dash/features/map/bloc/set_point_cubit/map_control_cubit.dart';
 import 'package:qareeb_dash/features/map/ui/widget/map_widget.dart';
 import 'package:qareeb_dash/generated/assets.dart';
@@ -21,6 +18,7 @@ import '../../../buses/bloc/all_buses_cubit/all_buses_cubit.dart';
 import '../../../map/bloc/ather_cubit/ather_cubit.dart';
 import '../../../map/bloc/map_controller_cubit/map_controller_cubit.dart';
 import '../../../map/data/models/my_marker.dart';
+import '../../bloc/home1_cubit/home1_cubit.dart';
 import '../../bloc/home_cubit/home_cubit.dart';
 
 class DashboardPage extends StatefulWidget {
@@ -38,6 +36,7 @@ class _DashboardPageState extends State<DashboardPage> {
     mapControllerCubit = context.read<MapControllerCubit>();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,7 +51,7 @@ class _DashboardPageState extends State<DashboardPage> {
                     (e) => MyMarker(
                       point: e.getLatLng,
                       item: e,
-                      type: MyMarkerType.sharedPint,
+                      type: MyMarkerType.point,
                       nou: e.subscriperCount as int,
                     ),
                   )
@@ -70,15 +69,23 @@ class _DashboardPageState extends State<DashboardPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 20.0.verticalSpace,
-                _TotalWidget(
-                  text: 'عدد باصاتك',
-                  icon: Assets.iconsBuses,
-                  number: state.result.imeis.length,
-                ),
-                _TotalWidget(
-                  text: 'عدد طلابك',
-                  icon: Assets.iconsStudents,
-                  number: state.result.membersCount,
+                BlocBuilder<Home1Cubit, Home1Initial>(
+                  builder: (context, state1) {
+                    return Column(
+                      children: [
+                        _TotalWidget(
+                          text: 'عدد باصات ${state1.result.name}',
+                          icon: Assets.iconsBuses,
+                          number: state.result.imeis.length,
+                        ),
+                        _TotalWidget(
+                          text: 'عدد طلاب ${state1.result.name}',
+                          icon: Assets.iconsStudents,
+                          number: state.result.membersCount,
+                        ),
+                      ],
+                    );
+                  },
                 ),
                 16.0.verticalSpace,
                 DrawableText(
@@ -210,7 +217,7 @@ class _BusesMapState extends State<BusesMap> {
                   .mapIndexed(
                     (i, e) => MyMarker(
                       point: e.getLatLng(),
-                      item: e,
+                      item: context.read<AllBusesCubit>().getBusByImei(e),
                       bearing: -e.angle,
                       type: MyMarkerType.bus,
                       key: e.ime,

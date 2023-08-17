@@ -21,7 +21,7 @@ import '../../bloc/delete_buss_cubit/delete_buss_cubit.dart';
 
 final _super_userList = [
   'ID',
-  'اسم السائق',
+  'اسم الباص',
   'رقم هاتف السائق',
   'IME',
   'عمليات',
