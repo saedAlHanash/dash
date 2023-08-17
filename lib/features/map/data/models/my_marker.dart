@@ -17,6 +17,7 @@ import '../../../../core/widgets/images/image_multi_type.dart';
 import '../../../../generated/assets.dart';
 import '../../../../router/go_route_pages.dart';
 import '../../../buses/bloc/bus_by_imei_cubti/bus_by_imei_cubit.dart';
+import '../../../home/data/response/home_response.dart';
 import '../../../points/data/response/points_response.dart';
 import '../response/ather_response.dart';
 
@@ -116,31 +117,40 @@ class MyMarker {
       case MyMarkerType.sharedPint:
         return Marker(
           point: point,
-          height: 100.0.spMin,
+          height: 150.0.spMin,
           width: 150.0.spMin,
           builder: (context) {
             return Builder(builder: (context) {
-              var nou = item as int;
+              NotificationPoint? e;
+              if(item is NotificationPoint){
+               e = item as NotificationPoint;
+              }
               return Column(
                 children: [
                   ImageMultiType(
-                    url: index.iconPoint,
+                    url: Assets.iconsBlackMarker,
                     height: 50.0.spMin,
                     width: 50.0.spMin,
                   ),
                   Container(
-                    height: 100.0.spMin,
-                    width: 150.0.spMin,
                     margin: EdgeInsets.only(bottom: 5.0.spMin),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(5.0.r),
-                    ),
+                    color: Colors.white,
                     alignment: Alignment.center,
-                    child: DrawableText(
-                      text: '$nou مشترك',
-                      color: Colors.black,
-                      size: 12.0.sp,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        DrawableText(
+                          text: '$nou مشترك',
+                          color: Colors.black,
+                          size: 18.0.sp,
+                        ),
+                        if(e!=null)
+                        DrawableText(
+                          text: e.pointArName,
+                          color: Colors.black,
+                          size: 18.0.sp,
+                        ),
+                      ],
                     ),
                   ),
                 ],
@@ -185,7 +195,7 @@ class MyMarker {
       case MyMarkerType.tooltip:
         return Marker(
           point: point,
-          height: 200.0.r,
+          height: 150.0.r,
           width: 250.0.r,
           builder: (context) {
             return BlocBuilder<BusByImeiCubit, BusByImeiInitial>(
@@ -194,47 +204,45 @@ class MyMarker {
                   return MyStyle.loadingWidget();
                 }
 
-                return MyCardWidget(
-                  cardColor: Colors.white,
-                  child: SizedBox(
-                    height: 250.0,
-                    width: 250.0,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            const Spacer(),
-                            InkWell(
-                              onTap: () {
-                                context.read<MapControllerCubit>().addTooltipMarker(
-                                      marker: null,
-                                    );
-                              },
-                              child: Icon(
-                                size: 15.0.r,
-                                Icons.cancel_outlined,
-                              ),
-                            ),
-                          ],
+                return Container(
+                  constraints: BoxConstraints(maxHeight: 100.0.r,maxWidth: 250.0.r),
+                  padding: const EdgeInsets.all(10.0).r,
+                  color: Colors.white,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          context.read<MapControllerCubit>().addTooltipMarker(
+                                marker: null,
+                              );
+                        },
+                        child: Icon(
+                          size: 25.r,
+                          Icons.cancel_outlined,
                         ),
-                        ItemInfoInLineSmall(
-                          title: 'اسم الباص',
-                          info: (item as Ime).name,
-                          small: true,
-                        ),
-                        ItemInfoInLineSmall(
-                          title: 'السرعة',
-                          info: (item as Ime).speed,
-                          small: true,
-                        ),
-                        ItemInfoInLineSmall(
-                          title: 'IMEI',
-                          info: (item as Ime).ime,
-                          small: true,
-                        ),
-                      ],
-                    ),
+                      ),
+                      DrawableText(
+                        text: 'اسم: ${(item as Ime).name}',
+                        color: Colors.black,
+                        matchParent: true,
+                        size: 16.0.sp,
+                      ),
+
+                      DrawableText(
+                        text: 'السرعة: ${(item as Ime).speed}',
+                        color: Colors.black,
+                        matchParent: true,
+                        size: 16.0.sp,
+                      ),
+
+                      DrawableText(
+                        text: 'معرف الباص: ${(item as Ime).ime}',
+                        color: Colors.black,
+                        matchParent: true,
+                        size: 16.0.sp,
+                      ),
+                    ],
                   ),
                 );
               },

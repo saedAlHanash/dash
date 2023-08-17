@@ -256,7 +256,7 @@ class SelectSingeDateWidget extends StatelessWidget {
                   onSelectionChanged: (DateRangePickerSelectionChangedArgs range) {
                     if (range.value is DateTime) {
                       onSelect?.call(range.value);
-                      window.history.back();
+                      Navigator.pop(context);
                     } else if (range.value is PickerDateRange) {}
                   },
                   selectionMode: DateRangePickerSelectionMode.single,

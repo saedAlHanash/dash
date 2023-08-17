@@ -401,7 +401,9 @@ extension DateUtcHelper on DateTime {
 
   String get formatDateAther => DateFormat('yyyy/MM/dd HH:MM').format(this);
 
-  String get formatTime => DateFormat('h:mm a').format(this);
+  String get formatTime => DateFormat('h:mm a',).format(this)
+    .replaceAll('AM', 'ص')
+    .replaceAll('PM', 'م');
 
   String get formatDateTime => '$formatTime $formatDate';
 

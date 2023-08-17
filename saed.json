@@ -1,12 +1,236 @@
 {
   "result": {
-    "membersCount": 2,
-    "imeis": [
-      "354017115678225",
-      "354017116595949",
-      "354018112674167"
-    ],
-    "notificationPoints": []
+    "totalCount": 4,
+    "items": [
+      {
+        "busId": 7,
+        "bus": {
+          "ime": "354017115678225",
+          "driverName": "سعيد الحنش ",
+          "driverPhone": "963933635246",
+          "busModel": "مارسيدي",
+          "busColor": "أبيض",
+          "busNumber": "357073299579843",
+          "busName": null,
+          "seatsNumber": 40,
+          "institutionId": 4,
+          "institution": null,
+          "supervisors": null,
+          "id": 7
+        },
+        "busTripId": 12,
+        "busTrip": {
+          "name": "تجربة ",
+          "description": "تجريب صباحا ",
+          "distance": 7096,
+          "creationDate": "2023-08-17T10:27:32.636148",
+          "startDate": "2023-08-18T08:00:00",
+          "endDate": "2023-08-31T15:00:00",
+          "busTripType": 0,
+          "days": [
+            0,
+            4,
+            6
+          ],
+          "category": 0,
+          "id": 12
+        },
+        "busMemberId": 13,
+        "busMember": {
+          "fullName": "محمود",
+          "imageUrl": "16922263125707TDS7w5D5j.jpg",
+          "address": "المزة",
+          "late": 0.0,
+          "longe": 0.0,
+          "userName": "29891511",
+          "password": "%1urr2w0",
+          "phoneNo": "963938891236",
+          "facility": "الهندشة",
+          "idNumber": "21651321",
+          "collegeIdNumber": "3251323",
+          "institutionId": 4,
+          "subscriptions": [],
+          "tickets": [],
+          "pickupPoints": [],
+          "id": 13
+        },
+        "date": "2023-08-17T11:31:33.08305",
+        "attendanceType": 0,
+        "isParticipated": true,
+        "id": 12
+      },
+      {
+        "busId": 7,
+        "bus": {
+          "ime": "354017115678225",
+          "driverName": "سعيد الحنش ",
+          "driverPhone": "963933635246",
+          "busModel": "مارسيدي",
+          "busColor": "أبيض",
+          "busNumber": "357073299579843",
+          "busName": null,
+          "seatsNumber": 40,
+          "institutionId": 4,
+          "institution": null,
+          "supervisors": null,
+          "id": 7
+        },
+        "busTripId": 12,
+        "busTrip": {
+          "name": "تجربة ",
+          "description": "تجريب صباحا ",
+          "distance": 7096,
+          "creationDate": "2023-08-17T10:27:32.636148",
+          "startDate": "2023-08-18T08:00:00",
+          "endDate": "2023-08-31T15:00:00",
+          "busTripType": 0,
+          "days": [
+            0,
+            4,
+            6
+          ],
+          "category": 0,
+          "id": 12
+        },
+        "busMemberId": 13,
+        "busMember": {
+          "fullName": "محمود",
+          "imageUrl": "16922263125707TDS7w5D5j.jpg",
+          "address": "المزة",
+          "late": 0.0,
+          "longe": 0.0,
+          "userName": "29891511",
+          "password": "%1urr2w0",
+          "phoneNo": "963938891236",
+          "facility": "الهندشة",
+          "idNumber": "21651321",
+          "collegeIdNumber": "3251323",
+          "institutionId": 4,
+          "subscriptions": [],
+          "tickets": [],
+          "pickupPoints": [],
+          "id": 13
+        },
+        "date": "2023-08-17T11:35:24.726037",
+        "attendanceType": 1,
+        "isParticipated": true,
+        "id": 13
+      },
+      {
+        "busId": 7,
+        "bus": {
+          "ime": "354017115678225",
+          "driverName": "سعيد الحنش ",
+          "driverPhone": "963933635246",
+          "busModel": "مارسيدي",
+          "busColor": "أبيض",
+          "busNumber": "357073299579843",
+          "busName": null,
+          "seatsNumber": 40,
+          "institutionId": 4,
+          "institution": null,
+          "supervisors": null,
+          "id": 7
+        },
+        "busTripId": 12,
+        "busTrip": {
+          "name": "تجربة ",
+          "description": "تجريب صباحا ",
+          "distance": 7096,
+          "creationDate": "2023-08-17T10:27:32.636148",
+          "startDate": "2023-08-18T08:00:00",
+          "endDate": "2023-08-31T15:00:00",
+          "busTripType": 0,
+          "days": [
+            0,
+            4,
+            6
+          ],
+          "category": 0,
+          "id": 12
+        },
+        "busMemberId": 13,
+        "busMember": {
+          "fullName": "محمود",
+          "imageUrl": "16922263125707TDS7w5D5j.jpg",
+          "address": "المزة",
+          "late": 0.0,
+          "longe": 0.0,
+          "userName": "29891511",
+          "password": "%1urr2w0",
+          "phoneNo": "963938891236",
+          "facility": "الهندشة",
+          "idNumber": "21651321",
+          "collegeIdNumber": "3251323",
+          "institutionId": 4,
+          "subscriptions": [],
+          "tickets": [],
+          "pickupPoints": [],
+          "id": 13
+        },
+        "date": "2023-08-17T11:35:50.359872",
+        "attendanceType": 1,
+        "isParticipated": true,
+        "id": 14
+      },
+      {
+        "busId": 7,
+        "bus": {
+          "ime": "354017115678225",
+          "driverName": "سعيد الحنش ",
+          "driverPhone": "963933635246",
+          "busModel": "مارسيدي",
+          "busColor": "أبيض",
+          "busNumber": "357073299579843",
+          "busName": null,
+          "seatsNumber": 40,
+          "institutionId": 4,
+          "institution": null,
+          "supervisors": null,
+          "id": 7
+        },
+        "busTripId": 12,
+        "busTrip": {
+          "name": "تجربة ",
+          "description": "تجريبصباحا ",
+          "distance": 7096,
+          "creationDate": "2023-08-17T10:27:32.636148",
+          "startDate": "2023-08-18T08:00:00",
+          "endDate": "2023-08-31T15:00:00",
+          "busTripType": 0,
+          "days": [
+            0,
+            4,
+            6
+          ],
+          "category": 0,
+          "id": 12
+        },
+        "busMemberId": 12,
+        "busMember": {
+          "fullName": "سعيد",
+          "imageUrl": "16921831004728fQaa8HAaf.jpg",
+          "address": "القدم شارع الجلاء",
+          "late": null,
+          "longe": null,
+          "userName": "35894717",
+          "password": "wkftwisn",
+          "phoneNo": "963938891523",
+          "facility": "الهندسة المعلوماتية",
+          "idNumber": "01030242155",
+          "collegeIdNumber": "2154512",
+          "institutionId": 4,
+          "subscriptions": [],
+          "tickets": [],
+          "pickupPoints": [],
+          "id": 12
+        },
+        "date": "2023-08-17T11:40:59.049701",
+        "attendanceType": 0,
+        "isParticipated": false,
+        "id": 15
+      }
+    ]
   },
   "targetUrl": null,
   "success": true,

@@ -49,7 +49,7 @@ class SuperUsersPage extends StatelessWidget {
           return Column(
             children: [
               DrawableText(
-                text: 'المشرفين',
+                text: 'الأجهزة اللوحية',
                 matchParent: true,
                 size: 28.0.sp,
                 textAlign: TextAlign.center,

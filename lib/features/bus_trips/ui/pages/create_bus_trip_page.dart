@@ -230,7 +230,7 @@ class _CreateBusTripPageState extends State<CreateBusTripPage> {
                               }
 
                               return MyTextFormNoLabelWidget(
-                                label: 'وقت نهاية الرحلة',
+                                label: 'باصات الرحلة',
                                 controller: bussesC,
                                 disableAndKeepIcon: true,
                                 textDirection: TextDirection.ltr,

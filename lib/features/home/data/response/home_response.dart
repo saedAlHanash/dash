@@ -1,3 +1,5 @@
+
+import 'package:latlong2/latlong.dart';
 class HomeResponse {
   HomeResponse({
     required this.result,
@@ -58,10 +60,11 @@ class NotificationPoint {
   final num pointId;
   final String pointName;
   final String pointArName;
-  final num latitude;
-  final num longitude;
+  final double latitude;
+  final double longitude;
   final num subscriperCount;
 
+  LatLng get getLatLng => LatLng(latitude, longitude);
   factory NotificationPoint.fromJson(Map<String, dynamic> json) {
     return NotificationPoint(
       pointId: json["pointId"] ?? 0,

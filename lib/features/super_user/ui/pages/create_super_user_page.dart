@@ -50,7 +50,7 @@ class _CreateSuperUserPageState extends State<CreateSuperUserPage> {
       },
       child: Scaffold(
         appBar: const AppBarWidget(
-          text: 'المشرفين',
+          text: 'الأجهزة اللوحية',
         ),
         body: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 120.0).w,

@@ -126,7 +126,7 @@ class _HomePageState extends State<HomePage> {
                 icon: Icons.bus_alert_sharp,
                 children: [
                   AdminMenuItem(title: 'قائمة الباصات', route: NamePaths.buses),
-                  AdminMenuItem(title: 'المشرفين', route: NamePaths.superUser),
+                  AdminMenuItem(title: 'الأجهزة اللوحية', route: NamePaths.superUser),
                 ],
               ),
               AdminMenuItem(

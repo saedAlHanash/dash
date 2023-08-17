@@ -13,14 +13,17 @@ import 'package:qareeb_dash/router/go_route_pages.dart';
 import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/my_style.dart';
 
-
 import '../../bloc/all_bus_trips_cubit/all_bus_trips_cubit.dart';
 import '../../bloc/delete_bus_trip_cubit/delete_bus_trip_cubit.dart';
 
 final _super_userList = [
   'ID',
-  'اسم النموذج',
-  'المسافة الكلية',
+  'اسم',
+  'وصف',
+  'الباصات',
+  'تاريخ الرحلة',
+  'وقت الرحلة',
+  // 'عدد الركاب الحالي',
   'عمليات',
 ];
 
@@ -42,78 +45,77 @@ class BusTripsPage extends StatelessWidget {
             return MyStyle.loadingWidget();
           }
           final list = state.result;
+
           if (list.isEmpty) return const NotFoundWidget(text: 'لا يوجد تصنيفات');
           return Column(
             children: [
-              DrawableText(
-                text: 'الباصات',
-                matchParent: true,
-                size: 28.0.sp,
-                textAlign: TextAlign.center,
-                padding: const EdgeInsets.symmetric(vertical: 15.0).h,
-              ),
               SaedTableWidget(
                 command: state.command,
                 title: _super_userList,
-                data: list
-                    .mapIndexed(
-                      (i, e) => [
-                        e.id.toString(),
-                        e.description,
-                        e.distance.toString(),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            InkWell(
-                              onTap: !isAllowed(AppPermissions.UPDATE)
-                                  ? null
-                                  : () {
-                                      context.pushNamed(
-                                        GoRouteName.createBusTrip,
-                                        queryParams: {'id': e.id.toString()},
-                                      );
-                                    },
-                              child: const Icon(
-                                Icons.edit,
-                                color: Colors.amber,
-                              ),
+                data: list.mapIndexed(
+                  (i, e) {
+                    var busesS = '';
+                    for (var e in e.buses) {
+                      busesS+='${e.driverName}\n';
+                    }
+                    return [
+                      e.id.toString(),
+                      e.name,
+                      e.description,
+                      busesS,
+                      '${e.startDate?.formatDate} \n\n ${e.endDate?.formatDate}spy',
+
+                      '${e.startDate?.formatTime} \n\n ${e.endDate?.formatTime}spy',
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          InkWell(
+                            onTap: !isAllowed(AppPermissions.UPDATE)
+                                ? null
+                                : () {
+                                    context.pushNamed(
+                                      GoRouteName.createBusTrip,
+                                      queryParams: {'id': e.id.toString()},
+                                    );
+                                  },
+                            child: const Icon(
+                              Icons.edit,
+                              color: Colors.amber,
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: BlocConsumer<DeleteBusTripCubit,
-                                  DeleteBusTripInitial>(
-                                listener: (context, state) {
-                                  context.read<AllBusTripsCubit>().getBusTrips(context);
-                                },
-                                listenWhen: (p, c) => c.statuses.done,
-                                buildWhen: (p, c) => c.id == e.id,
-                                builder: (context, state) {
-                                  if (state.statuses.loading) {
-                                    return MyStyle.loadingWidget();
-                                  }
-                                  return InkWell(
-                                    onTap: () {
-                                      context
-                                          .read<DeleteBusTripCubit>()
-                                          .deleteBusTrip(context, id: e.id);
-                                    },
-                                    child: const Icon(
-                                      Icons.delete_forever,
-                                      color: Colors.red,
-                                    ),
-                                  );
-                                },
-                              ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: BlocConsumer<DeleteBusTripCubit, DeleteBusTripInitial>(
+                              listener: (context, state) {
+                                context.read<AllBusTripsCubit>().getBusTrips(context);
+                              },
+                              listenWhen: (p, c) => c.statuses.done,
+                              buildWhen: (p, c) => c.id == e.id,
+                              builder: (context, state) {
+                                if (state.statuses.loading) {
+                                  return MyStyle.loadingWidget();
+                                }
+                                return InkWell(
+                                  onTap: () {
+                                    context
+                                        .read<DeleteBusTripCubit>()
+                                        .deleteBusTrip(context, id: e.id);
+                                  },
+                                  child: const Icon(
+                                    Icons.delete_forever,
+                                    color: Colors.red,
+                                  ),
+                                );
+                              },
                             ),
-                          ],
-                        )
-                      ],
-                    )
-                    .toList(),
+                          ),
+                        ],
+                      )
+                    ];
+                  },
+                ).toList(),
                 onChangePage: (command) {
-                  context
-                      .read<AllBusTripsCubit>()
-                      .getBusTrips(context, command: command);
+                  context.read<AllBusTripsCubit>().getBusTrips(context, command: command);
                 },
               ),
 

@@ -34,13 +34,34 @@ class _DashboardPageState extends State<DashboardPage> {
   late MapControllerCubit mapControllerCubit;
 
   @override
+  void initState() {
+    mapControllerCubit = context.read<MapControllerCubit>();
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 128.0).w,
         child: BlocConsumer<HomeCubit, HomeInitial>(
           listenWhen: (p, c) => c.statuses.done,
-          listener: (context, state) {},
+          listener: (context, state) {
+            mapControllerCubit.addMarkers(
+              marker: state.result.notificationPoints
+                  .map(
+                    (e) => MyMarker(
+                      point: e.getLatLng,
+                      item: e,
+                      type: MyMarkerType.sharedPint,
+                      nou: e.subscriperCount as int,
+                    ),
+                  )
+                  .toList(),
+              center: true,
+              update: true,
+            );
+            // mapControllerCubit.addHome();
+          },
           builder: (context, state) {
             if (state.statuses.loading) {
               return MyStyle.loadingWidget();
@@ -61,20 +82,11 @@ class _DashboardPageState extends State<DashboardPage> {
                 ),
                 16.0.verticalSpace,
                 DrawableText(
-                  text: 'نقاط الطلاب',
-                  size: 24.0.sp,
-                  fontFamily: FontManager.cairoBold,
-                ),
-                SizedBox(
-                  height: 500.0.h,
-                  child: const MapWidget(),
-                ),
-                50.0.verticalSpace,
-                DrawableText(
                   text: 'التتبع المباشر',
                   size: 24.0.sp,
                   fontFamily: FontManager.cairoBold,
                 ),
+                10.0.verticalSpace,
                 SizedBox(
                   height: 500.0.h,
                   child: MultiBlocProvider(
@@ -85,6 +97,17 @@ class _DashboardPageState extends State<DashboardPage> {
                     ],
                     child: const BusesMap(),
                   ),
+                ),
+                50.0.verticalSpace,
+                DrawableText(
+                  text: 'نقاط الطلاب',
+                  size: 24.0.sp,
+                  fontFamily: FontManager.cairoBold,
+                ),
+                10.0.verticalSpace,
+                SizedBox(
+                  height: 500.0.h,
+                  child: const MapWidget(),
                 ),
                 100.0.verticalSpace,
               ],

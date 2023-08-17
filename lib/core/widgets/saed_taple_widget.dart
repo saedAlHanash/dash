@@ -101,6 +101,7 @@ class CellWidget extends StatelessWidget {
                           e.contains('spy') ? TextDirection.ltr : TextDirection.rtl,
                       child: DrawableText(
                         selectable: true,
+
                         size: 16.0.sp,
                         matchParent: true,
                         textAlign: TextAlign.center,
