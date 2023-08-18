@@ -21,6 +21,10 @@ import 'package:screenshot/screenshot.dart';
 import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/my_style.dart';
+import '../../../../generated/assets.dart';
+import '../../../home/bloc/home1_cubit/home1_cubit.dart';
+import '../../../home/bloc/home_cubit/home_cubit.dart';
+import '../../../home/ui/screens/dashboard_page.dart';
 import '../../bloc/all_member_cubit/all_member_cubit.dart';
 import '../../bloc/create_subscreption_cubit/create_subscreption_cubit.dart';
 import '../../bloc/member_by_id_cubit/member_by_id_cubit.dart';
@@ -32,8 +36,7 @@ final _super_userList = [
   'الكلية',
   'حالة الاشتراك في النقل',
   'عمليات الاشتراكات',
-  if(isAllowed(AppPermissions.members))
-  'عمليات',
+  if (isAllowed(AppPermissions.members)) 'عمليات',
 ];
 
 class MembersPage extends StatefulWidget {
@@ -55,6 +58,27 @@ class _MembersPageState extends State<MembersPage> {
           : null,
       body: Column(
         children: [
+          BlocBuilder<HomeCubit, HomeInitial>(
+            builder: (context, state) {
+              if (state.statuses.loading) {
+                return MyStyle.loadingWidget();
+              }
+              return Column(
+                children: [
+                  TotalWidget(
+                    text: 'عدد الطلاب المشتركين في النقل',
+                    icon: Assets.iconsCheckCircle,
+                    number: state.result.membersWithSubscription,
+                  ),
+                  TotalWidget(
+                    text: 'عدد الطلاب الغير مشتركين في النقل',
+                    icon: Assets.iconsReject,
+                    number: state.result.membersWithoutSubscription,
+                  ),
+                ],
+              );
+            },
+          ),
           BlocBuilder<AllMembersCubit, AllMembersInitial>(
             builder: (context, state) {
               if (state.statuses.loading) {
@@ -77,7 +101,6 @@ class _MembersPageState extends State<MembersPage> {
                             : (e.subscriptions.last.isNotExpired)
                                 ? 'مشترك'
                                 : 'اشتراك منتهي',
-
                         InkWell(
                           onTap: () => dialogSubscription(context, e.id),
                           child: const Icon(
@@ -85,55 +108,53 @@ class _MembersPageState extends State<MembersPage> {
                             color: Colors.green,
                           ),
                         ),
-
-                        if(isAllowed(AppPermissions.members))
-                        Center(
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              IconButton(
-                                onPressed: () {
-                                  NoteMessage.showMyDialog(
-                                    context,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(20.0).r,
-                                      child: Column(
-                                        children: [
-                                          ItemInfoInLine(
-                                            title: 'UserName',
-                                            info: e.userName,
-                                          ),
-                                          ItemInfoInLine(
-                                            title: 'Password',
-                                            info: e.password,
-                                          ),
-                                        ],
+                        if (isAllowed(AppPermissions.members))
+                          Center(
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                IconButton(
+                                  onPressed: () {
+                                    NoteMessage.showMyDialog(
+                                      context,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(20.0).r,
+                                        child: Column(
+                                          children: [
+                                            ItemInfoInLine(
+                                              title: 'UserName',
+                                              info: e.userName,
+                                            ),
+                                            ItemInfoInLine(
+                                              title: 'Password',
+                                              info: e.password,
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                },
-                                icon: const Icon(Icons.key),
-                              ),
-                              IconButton(
-                                onPressed: () {
-
-                                  downloadImage(e.id,e.collegeIdNumber);
-                                },
-                                icon: const Icon(Icons.qr_code, color: Colors.black),
-                              ),
-                              InkWell(
-                                onTap:() {
-                                        context.pushNamed(GoRouteName.createMember,
-                                            queryParams: {'id': e.id.toString()});
-                                      },
-                                child: const Icon(
-                                  Icons.edit,
-                                  color: Colors.amber,
+                                    );
+                                  },
+                                  icon: const Icon(Icons.key),
                                 ),
-                              ),
-                            ],
-                          ),
-                        )
+                                IconButton(
+                                  onPressed: () {
+                                    downloadImage(e.id, e.collegeIdNumber);
+                                  },
+                                  icon: const Icon(Icons.qr_code, color: Colors.black),
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    context.pushNamed(GoRouteName.createMember,
+                                        queryParams: {'id': e.id.toString()});
+                                  },
+                                  child: const Icon(
+                                    Icons.edit,
+                                    color: Colors.amber,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
                       ],
                     )
                     .toList(),
@@ -167,7 +188,7 @@ void dialogSubscription(BuildContext context, int memberId) {
   );
 }
 
-Future<void> downloadImage(int id,String name) async {
+Future<void> downloadImage(int id, String name) async {
   final painter = QrPainter(
     data: id.toString(),
     version: QrVersions.auto,
@@ -179,7 +200,6 @@ Future<void> downloadImage(int id,String name) async {
       color: AppColorManager.black,
       dataModuleShape: QrDataModuleShape.square,
     ),
-
   );
   final image = await painter.toImage(600);
   final pngBytes = await image.toByteData(format: ImageByteFormat.png);

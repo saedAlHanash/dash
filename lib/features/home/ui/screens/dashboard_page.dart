@@ -75,15 +75,25 @@ class _DashboardPageState extends State<DashboardPage> {
                   builder: (context, state1) {
                     return Column(
                       children: [
-                        _TotalWidget(
+                        TotalWidget(
                           text: 'عدد باصات ${state1.result.name}',
                           icon: Assets.iconsBuses,
                           number: state.result.imeis.length,
                         ),
-                        _TotalWidget(
+                        TotalWidget(
                           text: 'عدد طلاب ${state1.result.name}',
                           icon: Assets.iconsStudents,
                           number: state.result.membersCount,
+                        ),
+                        TotalWidget(
+                          text: 'عدد طلاب ${state1.result.name} المشتركين في النقل',
+                          icon: Assets.iconsCheckCircle,
+                          number: state.result.membersWithSubscription,
+                        ),
+                        TotalWidget(
+                          text: 'عدد طلاب ${state1.result.name} الغير مشتركين في النقل',
+                          icon: Assets.iconsReject,
+                          number: state.result.membersWithoutSubscription,
                         ),
                       ],
                     );
@@ -132,8 +142,8 @@ class _DashboardPageState extends State<DashboardPage> {
   }
 }
 
-class _TotalWidget extends StatelessWidget {
-  const _TotalWidget({
+class TotalWidget extends StatelessWidget {
+  const TotalWidget({
     required this.text,
     required this.icon,
     required this.number,
@@ -226,7 +236,6 @@ class _BusesMapState extends State<BusesMap> {
             mapControllerCubit.addMarkers(
               marker: state.result.mapIndexed(
                 (i, e) {
-
                   return MyMarker(
                     point: e.getLatLng(),
                     item: context.read<AllBusesCubit>().getBusByImei(e),

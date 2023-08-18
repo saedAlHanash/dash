@@ -55,6 +55,7 @@ class Assets {
   static const String iconsPickerMarker = 'assets/icons/picker_marker.svg';
   static const String iconsPin = 'assets/icons/pin.png';
   static const String iconsQuastion = 'assets/icons/quastion.svg';
+  static const String iconsReject = 'assets/icons/reject.svg';
   static const String iconsSavePalce = 'assets/icons/save_palce.svg';
   static const String iconsStar = 'assets/icons/star.svg';
   static const String iconsStudents = 'assets/icons/students.svg';
