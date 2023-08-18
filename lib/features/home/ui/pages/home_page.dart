@@ -122,6 +122,8 @@ class _HomePageState extends State<HomePage> {
                 route: NamePaths.home,
                 icon: Icons.dashboard,
               ),
+              if (isAllowed(AppPermissions.tapBuses) &&
+                  isAllowed(AppPermissions.tapSuberUser))
               AdminMenuItem(
                 title: 'الباصات',
                 icon: Icons.bus_alert_sharp,
@@ -145,6 +147,8 @@ class _HomePageState extends State<HomePage> {
                         title: 'سجل الرحلات', route: NamePaths.tripHistory),
                 ],
               ),
+              if (isAllowed(AppPermissions.tapSubscriptions) &&
+                  isAllowed(AppPermissions.tapMember))
               AdminMenuItem(
                 title: 'الطلاب',
                 icon: Icons.group,
@@ -156,16 +160,18 @@ class _HomePageState extends State<HomePage> {
                     const AdminMenuItem(title: 'الطلاب', route: NamePaths.members),
                 ],
               ),
-              AdminMenuItem(
-                title: 'مستخدمي لوحة التحكم',
-                icon: Icons.admin_panel_settings,
-                children: [
-                  if (isAllowed(AppPermissions.tapRoles))
-                    const AdminMenuItem(title: 'الأدوار', route: NamePaths.roles),
-                  if (isAllowed(AppPermissions.tapAdmins))
-                    const AdminMenuItem(title: 'مسؤولي النظام', route: '/sys_admins'),
-                ],
-              ),
+              if (isAllowed(AppPermissions.tapRoles) &&
+                  isAllowed(AppPermissions.tapAdmins))
+                AdminMenuItem(
+                  title: 'مستخدمي لوحة التحكم',
+                  icon: Icons.admin_panel_settings,
+                  children: [
+                    if (isAllowed(AppPermissions.tapRoles))
+                      const AdminMenuItem(title: 'الأدوار', route: NamePaths.roles),
+                    if (isAllowed(AppPermissions.tapAdmins))
+                      const AdminMenuItem(title: 'مسؤولي النظام', route: '/sys_admins'),
+                  ],
+                ),
               if (isAllowed(AppPermissions.tapTicket))
                 const AdminMenuItem(title: 'الشكاوى', route: '/ticket'),
             ],

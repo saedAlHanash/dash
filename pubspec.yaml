@@ -2,9 +2,10 @@ name: qareeb_dash
 
 description: A new Flutter project.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+#GET
+#api/services/app/InstitutionBusTripsService/
 
-
-version: 1.0.3+4
+version: 1.0.6+5
 
 environment:
   sdk: ">=3.0.0 <4.0.0"

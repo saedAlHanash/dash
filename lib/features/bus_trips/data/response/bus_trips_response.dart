@@ -1,4 +1,5 @@
 import 'package:collection/collection.dart';
+import 'package:qareeb_dash/features/bus_trips/data/response/trip_history_response.dart';
 import 'package:qareeb_dash/features/buses/data/response/buses_response.dart';
 import 'package:qareeb_dash/services/trip_path/data/models/trip_path.dart';
 
@@ -54,6 +55,11 @@ class BusTripModel {
     required this.pathId,
     required this.path,
     required this.description,
+    required this.category,
+    required this.numberOfParticipation,
+    required this.isActive,
+    required this.attendances,
+    required this.participations,
     required this.distance,
     required this.busId,
     required this.buses,
@@ -81,6 +87,12 @@ class BusTripModel {
   final List<WeekDays> days;
   final int id;
 
+  final dynamic category;
+  final num numberOfParticipation;
+  final bool isActive;
+  final List<TripHistoryItem> attendances;
+  final List<Participation> participations;
+
   factory BusTripModel.fromJson(Map<String, dynamic> json) {
     return BusTripModel(
       name: json["name"] ?? "",
@@ -102,6 +114,17 @@ class BusTripModel {
           ? []
           : List<WeekDays>.from(json["days"]!.map((x) => WeekDays.values[x])),
       id: json["id"] ?? 0,
+      category: json["category"] ?? "",
+      numberOfParticipation: json["numberOfParticipation"] ?? 0,
+      isActive: json["isActive"] ?? false,
+      attendances: json["attendances"] == null
+          ? []
+          : List<TripHistoryItem>.from(
+              json["attendances"]!.map((x) => TripHistoryItem.fromJson(x))),
+      participations: json["participations"] == null
+          ? []
+          : List<Participation>.from(
+              json["participations"]!.map((x) => Participation.fromJson(x))),
     );
   }
 
@@ -124,3 +147,28 @@ class BusTripModel {
       };
 }
 
+class Participation {
+  Participation({
+    required this.id,
+    required this.busTripId,
+    required this.busMemberId,
+  });
+
+  final int id;
+  final num busTripId;
+  final num busMemberId;
+
+  factory Participation.fromJson(Map<String, dynamic> json) {
+    return Participation(
+      id: json["id"] ?? 0,
+      busTripId: json["busTripId"] ?? 0,
+      busMemberId: json["busMemberId"] ?? 0,
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "busTripId": busTripId,
+        "busMemberId": busMemberId,
+      };
+}

@@ -23,8 +23,9 @@ final _super_userList = [
   'الباصات',
   'تاريخ الرحلة',
   'وقت الرحلة',
-  if(isAllowed(AppPermissions.busTrips))
-  'عمليات',
+  'حالة الرحلة الآن',
+  'عدد اشتراكات الطلاب',
+  if (isAllowed(AppPermissions.busTrips)) 'عمليات',
 ];
 
 class BusTripsPage extends StatelessWidget {
@@ -56,62 +57,64 @@ class BusTripsPage extends StatelessWidget {
                   (i, e) {
                     var busesS = '';
                     for (var e in e.buses) {
-                      busesS+='${e.driverName}\n';
+                      busesS += '${e.driverName}\n';
                     }
                     return [
                       e.id.toString(),
                       e.name,
                       e.description,
                       busesS,
-                      '${e.startDate?.formatDate} \n\n ${e.endDate?.formatDate}spy',
-
-                      '${e.startDate?.formatTime} \n\n ${e.endDate?.formatTime}spy',
-                      if(isAllowed(AppPermissions.busTrips))
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          InkWell(
-                            onTap: !isAllowed(AppPermissions.busTrips)
-                                ? null
-                                : () {
-                                    context.pushNamed(
-                                      GoRouteName.createBusTrip,
-                                      queryParams: {'id': e.id.toString()},
-                                    );
-                                  },
-                            child: const Icon(
-                              Icons.edit,
-                              color: Colors.amber,
+                      '${e.startDate?.formatDate} \n\n ${e.endDate?.formatDate}',
+                      '${e.startDate?.formatTime} \n\n ${e.endDate?.formatTime}',
+                      e.numberOfParticipation.toString(),
+                      e.isActive ? 'جارية' : 'مؤجلة',
+                      if (isAllowed(AppPermissions.busTrips))
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            InkWell(
+                              onTap: !isAllowed(AppPermissions.busTrips)
+                                  ? null
+                                  : () {
+                                      context.pushNamed(
+                                        GoRouteName.createBusTrip,
+                                        queryParams: {'id': e.id.toString()},
+                                      );
+                                    },
+                              child: const Icon(
+                                Icons.edit,
+                                color: Colors.amber,
+                              ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: BlocConsumer<DeleteBusTripCubit, DeleteBusTripInitial>(
-                              listener: (context, state) {
-                                context.read<AllBusTripsCubit>().getBusTrips(context);
-                              },
-                              listenWhen: (p, c) => c.statuses.done,
-                              buildWhen: (p, c) => c.id == e.id,
-                              builder: (context, state) {
-                                if (state.statuses.loading) {
-                                  return MyStyle.loadingWidget();
-                                }
-                                return InkWell(
-                                  onTap: () {
-                                    context
-                                        .read<DeleteBusTripCubit>()
-                                        .deleteBusTrip(context, id: e.id);
-                                  },
-                                  child: const Icon(
-                                    Icons.delete_forever,
-                                    color: Colors.red,
-                                  ),
-                                );
-                              },
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child:
+                                  BlocConsumer<DeleteBusTripCubit, DeleteBusTripInitial>(
+                                listener: (context, state) {
+                                  context.read<AllBusTripsCubit>().getBusTrips(context);
+                                },
+                                listenWhen: (p, c) => c.statuses.done,
+                                buildWhen: (p, c) => c.id == e.id,
+                                builder: (context, state) {
+                                  if (state.statuses.loading) {
+                                    return MyStyle.loadingWidget();
+                                  }
+                                  return InkWell(
+                                    onTap: () {
+                                      context
+                                          .read<DeleteBusTripCubit>()
+                                          .deleteBusTrip(context, id: e.id);
+                                    },
+                                    child: const Icon(
+                                      Icons.delete_forever,
+                                      color: Colors.red,
+                                    ),
+                                  );
+                                },
+                              ),
                             ),
-                          ),
-                        ],
-                      )
+                          ],
+                        )
                     ];
                   },
                 ).toList(),

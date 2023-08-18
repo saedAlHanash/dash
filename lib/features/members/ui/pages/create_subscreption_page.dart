@@ -129,36 +129,37 @@ class _CreateSubscriptionPage1State extends State<CreateSubscriptionPage1> {
                           if (state.statuses.loading) {
                             return MyStyle.loadingWidget();
                           }
-                          return  Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    // MyButton(
-                                    //   text: request.isNotExpired ? 'تعديل' : 'إنشاء',
-                                    //   onTap: () {
-                                    //     if (request.validateRequest(context)) {
-                                    //       context
-                                    //           .read<CreateSubscriptionCubit1>()
-                                    //           .createSubscription(context, request: request);
-                                    //     }
-                                    //   },
-                                    // ),
-                                    // 20.0.horizontalSpace,
-                                    if (request.isNotExpired)
-                                      MyButton(
-                                        textColor: Colors.white,
-                                        color: Colors.black,
-                                        text: 'إلغاء الاشتراك',
-                                        onTap: () {
-                                          context
-                                              .read<CreateSubscriptionCubit1>()
-                                              .createSubscription(
-                                                context,
-                                                request: request..isActive = false,
-                                              );
-                                        },
-                                      ),
-                                  ],
-                                );
+                          return Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              // MyButton(
+                              //   text: request.isNotExpired ? 'تعديل' : 'إنشاء',
+                              //   onTap: () {
+                              //     if (request.validateRequest(context)) {
+                              //       context
+                              //           .read<CreateSubscriptionCubit1>()
+                              //           .createSubscription(context, request: request);
+                              //     }
+                              //   },
+                              // ),
+                              // 20.0.horizontalSpace,
+                              if (isAllowed(AppPermissions.subscriptions))
+                              if (request.isNotExpired)
+                                MyButton(
+                                  textColor: Colors.white,
+                                  color: Colors.black,
+                                  text: 'إلغاء الاشتراك',
+                                  onTap: () {
+                                    context
+                                        .read<CreateSubscriptionCubit1>()
+                                        .createSubscription(
+                                          context,
+                                          request: request..isActive = false,
+                                        );
+                                  },
+                                ),
+                            ],
+                          );
                         },
                       ),
                     ],

@@ -94,7 +94,7 @@ class GetUrl {
 
   static var getMemberById = 'api/services/app/InstitutionMembersService/Get';
 
-  static var busTrips = 'api/services/app/InstitutionBusTripsService/GetAll';
+  static var busTrips = 'api/services/app/InstitutionBusTripsService/GetAllWithData';
 
   static var busTripById = 'api/services/app/InstitutionBusTripsService/Get';
 

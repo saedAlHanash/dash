@@ -69,19 +69,13 @@ class SaedTableWidget extends StatelessWidget {
               },
             ),
           ),
+          if (command != null) 30.0.verticalSpace,
           if (command != null)
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 SpinnerWidget(
                   items: command!.getSpinnerItems,
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                    color: AppColorManager.mainColor,
-                  ),
-                    borderRadius: BorderRadius.circular(12.0),
-                  ),
-
                   onChanged: (spinnerItem) {
                     onChangePage?.call(command!..goToPage(spinnerItem.id));
                   },
