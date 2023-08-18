@@ -91,7 +91,6 @@ class _MyAppState extends State<MyApp> {
                 BlocProvider(create: (_) => sl<AllDriversCubit>()..getAllDrivers(_)),
                 BlocProvider(create: (_) => sl<AllTempTripsCubit>()..getTempTrips(_)),
                 BlocProvider(create: (_) => sl<AllSuperUsersCubit>()..getSuperUsers(_)),
-                // BlocProvider(create: (_) => sl<AllTransfersCubit>()..getAllTransfers(_)),
                 BlocProvider(create: (_) => sl<AllTripHistoryCubit>()..getTripHistory(_)),
                 BlocProvider(create: (_) => sl<AllSubscriberCubit>()),
                 BlocProvider(create: (_) => sl<AllMemberWithoutSubscriptionCubit>()),

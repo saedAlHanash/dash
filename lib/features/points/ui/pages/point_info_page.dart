@@ -223,7 +223,7 @@ class _PointInfoPageState extends State<PointInfoPage> {
                           },
                         ),
                         20.0.verticalSpace,
-                        if (isAllowed(AppPermissions.UPDATE))
+                        if (isAllowed(AppPermissions.roles))
                           if (!canEdit && !createMode)
                             Row(
                               children: [

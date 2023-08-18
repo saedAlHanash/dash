@@ -32,6 +32,7 @@ final _super_userList = [
   'الكلية',
   'حالة الاشتراك في النقل',
   'عمليات الاشتراكات',
+  if(isAllowed(AppPermissions.members))
   'عمليات',
 ];
 
@@ -46,7 +47,7 @@ class _MembersPageState extends State<MembersPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: isAllowed(AppPermissions.CREATION)
+      floatingActionButton: isAllowed(AppPermissions.members)
           ? FloatingActionButton(
               onPressed: () => context.pushNamed(GoRouteName.createMember),
               child: const Icon(Icons.add, color: Colors.white),
@@ -76,15 +77,16 @@ class _MembersPageState extends State<MembersPage> {
                             : (e.subscriptions.last.isNotExpired)
                                 ? 'مشترك'
                                 : 'اشتراك منتهي',
+
                         InkWell(
-                          onTap: !isAllowed(AppPermissions.UPDATE)
-                              ? null
-                              : () => dialogSubscription(context, e.id),
+                          onTap: () => dialogSubscription(context, e.id),
                           child: const Icon(
                             Icons.edit_calendar,
                             color: Colors.green,
                           ),
                         ),
+
+                        if(isAllowed(AppPermissions.members))
                         Center(
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
@@ -120,9 +122,7 @@ class _MembersPageState extends State<MembersPage> {
                                 icon: const Icon(Icons.qr_code, color: Colors.black),
                               ),
                               InkWell(
-                                onTap: !isAllowed(AppPermissions.UPDATE)
-                                    ? null
-                                    : () {
+                                onTap:() {
                                         context.pushNamed(GoRouteName.createMember,
                                             queryParams: {'id': e.id.toString()});
                                       },

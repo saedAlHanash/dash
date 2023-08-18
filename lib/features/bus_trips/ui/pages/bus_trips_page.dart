@@ -23,7 +23,7 @@ final _super_userList = [
   'الباصات',
   'تاريخ الرحلة',
   'وقت الرحلة',
-  // 'عدد الركاب الحالي',
+  if(isAllowed(AppPermissions.busTrips))
   'عمليات',
 ];
 
@@ -33,7 +33,7 @@ class BusTripsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: isAllowed(AppPermissions.CREATION)
+      floatingActionButton: isAllowed(AppPermissions.busTrips)
           ? FloatingActionButton(
               onPressed: () => context.pushNamed(GoRouteName.createBusTrip),
               child: const Icon(Icons.add, color: Colors.white),
@@ -66,11 +66,12 @@ class BusTripsPage extends StatelessWidget {
                       '${e.startDate?.formatDate} \n\n ${e.endDate?.formatDate}spy',
 
                       '${e.startDate?.formatTime} \n\n ${e.endDate?.formatTime}spy',
+                      if(isAllowed(AppPermissions.busTrips))
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           InkWell(
-                            onTap: !isAllowed(AppPermissions.UPDATE)
+                            onTap: !isAllowed(AppPermissions.busTrips)
                                 ? null
                                 : () {
                                     context.pushNamed(

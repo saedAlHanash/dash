@@ -10,6 +10,7 @@ import 'package:qareeb_dash/core/widgets/my_text_form_widget.dart';
 import 'package:qareeb_dash/router/go_route_pages.dart';
 
 import '../../../../core/strings/app_color_manager.dart';
+import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/my_style.dart';
 import '../../../../core/widgets/app_bar_widget.dart';
 import '../../../../core/widgets/my_checkbox_widget.dart';
@@ -18,7 +19,8 @@ import '../../bloc/all_permissions_cubit/all_permissions_cubit.dart';
 import '../../bloc/all_roles/all_roles_cubit.dart';
 import '../../bloc/create_role_cubit/create_role_cubit.dart';
 import '../../data/request/create_role_request.dart';
-import '../../data/response/roles_response.dart';import 'dart:html';
+import '../../data/response/roles_response.dart';
+import 'dart:html';
 
 class CreateRolePage extends StatefulWidget {
   const CreateRolePage({super.key, this.role});
@@ -43,7 +45,7 @@ class _CreateRolePageState extends State<CreateRolePage> {
     return BlocListener<CreateRoleCubit, CreateRoleInitial>(
       listenWhen: (p, c) => c.statuses.done,
       listener: (context, state) {
-            window.history.back();
+        window.history.back();
         context.read<AllRolesCubit>().getAllRoles(context);
       },
       child: Scaffold(
@@ -104,7 +106,6 @@ class _CreateRolePageState extends State<CreateRolePage> {
                 textAlign: TextAlign.center,
                 fontFamily: FontManager.cairoBold,
               ),
-
               BlocBuilder<AllPermissionsCubit, AllPermissionsInitial>(
                 builder: (context, state) {
                   if (state.statuses.loading) {
@@ -114,21 +115,23 @@ class _CreateRolePageState extends State<CreateRolePage> {
                   final list = state.result
                       .map((e) => SpinnerItem(
                           id: e.id,
-                          name: e.name,
+                          name: tranzlatePermition(e.name),
                           item: e,
                           isSelected: request.grantedPermissions.contains(e.name)))
                       .toList();
-                  return MyCheckboxWidget(
-                    items: list,
-                    onSelectGetListItems: (list) {
-
-                      request.grantedPermissions
-                        ..clear()
-                        ..addAll(list.map((e) => e.name!).toList());
-                    },
+                  return Center(
+                    child: MyCheckboxWidget(
+                      items: list,
+                      onSelectGetListItems: (list) {
+                        request.grantedPermissions
+                          ..clear()
+                          ..addAll(list.map((e) => e.item.name as String).toList());
+                      },
+                    ),
                   );
                 },
               ),
+              30.0.verticalSpace,
               BlocBuilder<CreateRoleCubit, CreateRoleInitial>(
                 builder: (context, state) {
                   if (state.statuses.loading) {

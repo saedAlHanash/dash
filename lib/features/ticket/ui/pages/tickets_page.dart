@@ -11,6 +11,7 @@ import 'package:qareeb_dash/core/widgets/my_text_form_widget.dart';
 import 'package:qareeb_dash/core/widgets/not_found_widget.dart';
 import 'package:qareeb_dash/core/widgets/saed_taple_widget.dart';
 
+import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/my_style.dart';
 import '../../bloc/all_ticket_cubit/all_ticket_cubit.dart';
 import '../../bloc/replay_ticket_cubit/replay_ticket_cubit.dart';
@@ -21,6 +22,7 @@ final _super_userList = [
   'اسم الطالب',
   'تاريخ الإرسال',
   'عدد الردود',
+  if(isAllowed(AppPermissions.ticket))
   'المحتوى',
 ];
 
@@ -49,6 +51,7 @@ class TicketsPage extends StatelessWidget {
                         e.member.fullName,
                         e.date?.formatDateTime,
                         e.replies.length.toString(),
+                        if(isAllowed(AppPermissions.ticket))
                         IconButton(
                           onPressed: () {
                             var s = TextEditingController();

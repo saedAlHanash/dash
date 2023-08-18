@@ -24,6 +24,7 @@ final _super_userList = [
   'اسم الباص',
   'رقم هاتف السائق',
   'IME',
+  if(isAllowed(AppPermissions.buses))
   'عمليات',
 ];
 
@@ -33,7 +34,7 @@ class BusesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: isAllowed(AppPermissions.CREATION)
+      floatingActionButton: isAllowed(AppPermissions.buses)
           ? FloatingActionButton(
               onPressed: () => context.pushNamed(GoRouteName.createBus),
               child: const Icon(Icons.add, color: Colors.white),
@@ -65,13 +66,12 @@ class BusesPage extends StatelessWidget {
                         e.driverName,
                         e.driverPhone,
                         e.ime,
+                        if(isAllowed(AppPermissions.buses))
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             InkWell(
-                              onTap: !isAllowed(AppPermissions.UPDATE)
-                                  ? null
-                                  : () {
+                              onTap: () {
                                       context.pushNamed(GoRouteName.createBus,
                                           extra: e);
                                     },

@@ -21,6 +21,7 @@ final rolesEableHeader = [
   "وصف",
   "تاريخ الإنشاء",
   "الصلاحيات",
+  if(isAllowed(AppPermissions.roles))
   "العمليات",
 ];
 
@@ -35,7 +36,7 @@ class _RolesPageState extends State<RolesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: isAllowed(AppPermissions.CREATION)
+      floatingActionButton: isAllowed(AppPermissions.roles)
           ? FloatingActionButton(
               onPressed: () {
                 context.pushNamed(GoRouteName.createRole);
@@ -43,81 +44,86 @@ class _RolesPageState extends State<RolesPage> {
               child: const Icon(Icons.add, color: Colors.white),
             )
           : null,
-      body: BlocBuilder<AllRolesCubit, AllRolesInitial>(
-        builder: (_, state) {
-          if (state.statuses.loading) {
-            return MyStyle.loadingWidget();
-          }
-          if (state.result.isEmpty) {
-            return const NotFoundWidget(text: 'لا يوجد أدوار');
-          }
-          final list = state.result;
-          return SaedTableWidget(
-            command: state.command,
-            title: rolesEableHeader,
-            data: list
-                .mapIndexed(
-                  (index, e) => [
-                    e.id.toString(),
-                    e.name,
-                    e.description,
-                    e.creationTime?.formatDate,
-                    Wrap(
-                      children: e.grantedPermissions.mapIndexed((i, permission) {
-                        return DrawableText(
-                          text: permission,
-                          textAlign: TextAlign.start,
-                        );
-                      }).toList(),
-                    ),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: BlocConsumer<DeleteRoleCubit, DeleteRoleInitial>(
-                            listener: (context, state) {
-                              context.read<AllRolesCubit>().getAllRoles(context);
-                            },
-                            listenWhen: (p, c) => c.statuses.done,
-                            buildWhen: (p, c) => c.id == e.id,
-                            builder: (context, state) {
-                              if (state.statuses.loading) {
-                                return MyStyle.loadingWidget();
-                              }
-                              return InkWell(
-                                onTap: () {
-                                  context
-                                      .read<DeleteRoleCubit>()
-                                      .deleteRole(context, id: e.id);
-                                },
-                                child: const Icon(
-                                  Icons.delete_forever,
-                                  color: Colors.red,
-                                ),
-                              );
-                            },
-                          ),
+      body: Column(
+        children: [
+          BlocBuilder<AllRolesCubit, AllRolesInitial>(
+            builder: (_, state) {
+              if (state.statuses.loading) {
+                return MyStyle.loadingWidget();
+              }
+              if (state.result.isEmpty) {
+                return const NotFoundWidget(text: 'يرجى إضافة أدوار');
+              }
+              final list = state.result;
+              return SaedTableWidget(
+                command: state.command,
+                title: rolesEableHeader,
+                data: list
+                    .mapIndexed(
+                      (index, e) => [
+                        e.id.toString(),
+                        e.name,
+                        e.description,
+                        e.creationTime?.formatDate,
+                        Wrap(
+                          children: e.grantedPermissions.mapIndexed((i, permission) {
+                            return DrawableText(
+                              text: permission,
+                              textAlign: TextAlign.start,
+                            );
+                          }).toList(),
                         ),
-                        if (isAllowed(AppPermissions.UPDATE))
-                          InkWell(
-                            onTap: () {
-                              context.pushNamed(GoRouteName.createRole, extra: e);
-                            },
-                            child:
-                                const CircleButton(color: Colors.amber, icon: Icons.edit),
-                          ),
+                        if(isAllowed(AppPermissions.roles))
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: BlocConsumer<DeleteRoleCubit, DeleteRoleInitial>(
+                                listener: (context, state) {
+                                  context.read<AllRolesCubit>().getAllRoles(context);
+                                },
+                                listenWhen: (p, c) => c.statuses.done,
+                                buildWhen: (p, c) => c.id == e.id,
+                                builder: (context, state) {
+                                  if (state.statuses.loading) {
+                                    return MyStyle.loadingWidget();
+                                  }
+                                  return InkWell(
+                                    onTap: () {
+                                      context
+                                          .read<DeleteRoleCubit>()
+                                          .deleteRole(context, id: e.id);
+                                    },
+                                    child: const Icon(
+                                      Icons.delete_forever,
+                                      color: Colors.red,
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                            if (isAllowed(AppPermissions.roles))
+                              InkWell(
+                                onTap: () {
+                                  context.pushNamed(GoRouteName.createRole, extra: e);
+                                },
+                                child:
+                                    const CircleButton(color: Colors.amber, icon: Icons.edit),
+                              ),
+                          ],
+                        )
                       ],
                     )
-                  ],
-                )
-                .toList(),
-            onChangePage: (command) {
-              context.read<AllRolesCubit>().getAllRoles(context, command: command);
+                    .toList(),
+                onChangePage: (command) {
+                  context.read<AllRolesCubit>().getAllRoles(context, command: command);
+                },
+              );
             },
-          );
-        },
+          ),
+        ],
       ),
     );
   }

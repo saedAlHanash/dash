@@ -20,8 +20,7 @@ final adminsEableHeader = [
   "رقم الهاتف",
   "حالة المدير",
   "البريد",
-  "تفاصيل",
-
+  if (isAllowed(AppPermissions.admins)) "تفاصيل",
 ];
 
 class AdminPage extends StatefulWidget {
@@ -35,7 +34,7 @@ class _AdminPageState extends State<AdminPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: isAllowed(AppPermissions.CREATION)
+      floatingActionButton: isAllowed(AppPermissions.admins)
           ? FloatingActionButton(
               onPressed: () {
                 context.pushNamed(GoRouteName.createAdmin);
@@ -51,7 +50,7 @@ class _AdminPageState extends State<AdminPage> {
                 return MyStyle.loadingWidget();
               }
               if (state.result.isEmpty) {
-                return const NotFoundWidget(text: 'لا يوجد مدراء');
+                return const NotFoundWidget(text: 'يرجى إضافة مسؤولين');
               }
 
               final list = state.result;
@@ -68,22 +67,22 @@ class _AdminPageState extends State<AdminPage> {
                         e.phoneNumber,
                         e.isActive ? 'مفعل' : 'غير مفعل',
                         e.emailAddress,
-
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                context.pushNamed(GoRouteName.adminInfo, extra: e);
-                              },
-                              child: const CircleButton(
-                                color: Colors.grey,
-                                icon: Icons.info_outline_rounded,
+                        if (isAllowed(AppPermissions.admins))
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  context.pushNamed(GoRouteName.adminInfo, extra: e);
+                                },
+                                child: const CircleButton(
+                                  color: Colors.grey,
+                                  icon: Icons.info_outline_rounded,
+                                ),
                               ),
-                            ),
-                          ],
-                        )
+                            ],
+                          )
                       ],
                     )
                     .toList(),
@@ -91,7 +90,6 @@ class _AdminPageState extends State<AdminPage> {
                   context.read<AllAdminsCubit>().getAllAdmins(context, command: command);
                 },
               );
-
             },
           ),
         ],

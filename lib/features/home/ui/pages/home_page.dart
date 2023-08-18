@@ -11,6 +11,7 @@ import 'package:qareeb_dash/core/widgets/images/image_multi_type.dart';
 
 import '../../../../core/injection/injection_container.dart';
 import '../../../../core/strings/app_color_manager.dart';
+import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/shared_preferences.dart';
 import '../../../../router/go_route_pages.dart';
 import '../../../admins/ui/pages/admins_page.dart';
@@ -115,8 +116,8 @@ class _HomePageState extends State<HomePage> {
               fontFamily: FontManager.cairoBold.name,
               fontSize: 20.0.sp,
             ),
-            items: const [
-              AdminMenuItem(
+            items: [
+              const AdminMenuItem(
                 title: 'الرئيسية',
                 route: NamePaths.home,
                 icon: Icons.dashboard,
@@ -125,37 +126,48 @@ class _HomePageState extends State<HomePage> {
                 title: 'الباصات',
                 icon: Icons.bus_alert_sharp,
                 children: [
-                  AdminMenuItem(title: 'قائمة الباصات', route: NamePaths.buses),
-                  AdminMenuItem(title: 'الأجهزة اللوحية', route: NamePaths.superUser),
+                  if (isAllowed(AppPermissions.tapBuses))
+                    const AdminMenuItem(title: 'قائمة الباصات', route: NamePaths.buses),
+                  if (isAllowed(AppPermissions.tapSuberUser))
+                    const AdminMenuItem(
+                        title: 'الأجهزة اللوحية', route: NamePaths.superUser),
                 ],
               ),
               AdminMenuItem(
                 title: 'الرحلات',
                 icon: Icons.supervised_user_circle_sharp,
                 children: [
-                  AdminMenuItem(title: 'نماذج الرحلات', route: NamePaths.tempTrips),
-                  AdminMenuItem(title: 'جدول الرحلات', route: NamePaths.trips),
-                  AdminMenuItem(title: 'سجل الرحلات', route: NamePaths.tripHistory),
+                  const AdminMenuItem(title: 'نماذج الرحلات', route: NamePaths.tempTrips),
+                  if (isAllowed(AppPermissions.tapTripsTable))
+                    const AdminMenuItem(title: 'جدول الرحلات', route: NamePaths.trips),
+                  if (isAllowed(AppPermissions.tapTripsHistory))
+                    const AdminMenuItem(
+                        title: 'سجل الرحلات', route: NamePaths.tripHistory),
                 ],
               ),
               AdminMenuItem(
                 title: 'الطلاب',
                 icon: Icons.group,
                 children: [
-                  AdminMenuItem(
-                      title: 'نماذج الاشتراكات', route: NamePaths.subscriptions),
-                  AdminMenuItem(title: 'الطلاب', route: NamePaths.members),
+                  if (isAllowed(AppPermissions.tapSubscriptions))
+                    const AdminMenuItem(
+                        title: 'نماذج الاشتراكات', route: NamePaths.subscriptions),
+                  if (isAllowed(AppPermissions.tapMember))
+                    const AdminMenuItem(title: 'الطلاب', route: NamePaths.members),
                 ],
               ),
               AdminMenuItem(
                 title: 'مستخدمي لوحة التحكم',
                 icon: Icons.admin_panel_settings,
                 children: [
-                  AdminMenuItem(title: 'الأدوار', route: NamePaths.roles),
-                  AdminMenuItem(title: 'مسؤولي النظام', route: '/sys_admins'),
+                  if (isAllowed(AppPermissions.tapRoles))
+                    const AdminMenuItem(title: 'الأدوار', route: NamePaths.roles),
+                  if (isAllowed(AppPermissions.tapAdmins))
+                    const AdminMenuItem(title: 'مسؤولي النظام', route: '/sys_admins'),
                 ],
               ),
-              AdminMenuItem(title: 'الشكاوى', route: '/ticket'),
+              if (isAllowed(AppPermissions.tapTicket))
+                const AdminMenuItem(title: 'الشكاوى', route: '/ticket'),
             ],
             selectedRoute: state.page,
             onSelected: (item) {
@@ -182,10 +194,14 @@ class _HomePageState extends State<HomePage> {
               child: InkWell(
                 onTap: () {
                   AppSharedPreference.logout();
-                  while (Navigator.canPop(context)) {
-                    window.history.back();
-                  }
-                  context.pushNamed(GoRouteName.loginPage);
+
+                  // while (Navigator.canPop(context)) {
+                  //   window.history.back();
+                  // }
+
+                  window.location.reload();
+
+                  // context.pushNamed(GoRouteName.loginPage);
                 },
                 child: const DrawableText(
                   text: 'تسجيل الخروج',

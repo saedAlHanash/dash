@@ -33,7 +33,7 @@ class InstitutionsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: isAllowed(AppPermissions.CREATION)
+      floatingActionButton: isAllowed(AppPermissions.admins)
           ? FloatingActionButton(
               onPressed: () => context.pushNamed(GoRouteName.createInstitution),
               child: const Icon(Icons.add, color: Colors.white),
@@ -76,9 +76,7 @@ class InstitutionsPage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             InkWell(
-                              onTap: !isAllowed(AppPermissions.UPDATE)
-                                  ? null
-                                  : () {
+                              onTap: () {
                                       context.pushNamed(GoRouteName.createInstitution,
                                           extra: e);
                                     },

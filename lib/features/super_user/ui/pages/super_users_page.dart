@@ -21,6 +21,7 @@ final _super_userList = [
   'اسم الجهاز',
   'IMEI الباص',
   'باص الجهاز',
+  if(isAllowed(AppPermissions.suberUsers))
   'عمليات',
 ];
 
@@ -30,7 +31,7 @@ class SuperUsersPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: isAllowed(AppPermissions.CREATION)
+      floatingActionButton: isAllowed(AppPermissions.suberUsers)
           ? FloatingActionButton(
               onPressed: () => context.pushNamed(GoRouteName.createSuperUsers),
               child: const Icon(Icons.add, color: Colors.white),
@@ -55,13 +56,12 @@ class SuperUsersPage extends StatelessWidget {
                         e.fullName,
                         e.bus.ime,
                         e.bus.driverName,
+                        if(isAllowed(AppPermissions.suberUsers))
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             InkWell(
-                              onTap: !isAllowed(AppPermissions.UPDATE)
-                                  ? null
-                                  : () {
+                              onTap: () {
                                       context.pushNamed(GoRouteName.createSuperUsers,
                                           extra: e);
                                     },

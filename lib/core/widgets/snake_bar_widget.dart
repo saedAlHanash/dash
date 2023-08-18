@@ -11,19 +11,19 @@ class SnakeBarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final padding =
-        EdgeInsets.symmetric(vertical: 0.01.sh, horizontal: 0.02.sw);
+    final padding = EdgeInsets.symmetric(vertical: 0.01.sh, horizontal: 0.02.sw);
 
     const icon = Icon(
       Icons.cancel,
       color: Colors.white,
     );
 
-    final textWidget = DrawableText(
-      text: text,
-      fontFamily: FontManager.cairoBold,
-      size: 14.0.sp,
-      color: Colors.white,
+    final textWidget = Text(
+      text,
+      style: TextStyle(
+        fontSize: 20.0.sp,
+        color: Colors.white,
+      ),
     );
 
     return GradientContainer(
@@ -34,7 +34,14 @@ class SnakeBarWidget extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [textWidget, icon],
+          children: [
+            textWidget,
+            IconButton(
+                onPressed: () {
+                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                },
+                icon: icon)
+          ],
         ),
       ),
     );

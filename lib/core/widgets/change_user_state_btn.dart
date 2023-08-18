@@ -18,7 +18,7 @@ class ChangeUserStateBtn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (!isAllowed(AppPermissions.UPDATE)) return 0.0.verticalSpace;
+
     return BlocBuilder<ChangeUserStateCubit, ChangeUserStateInitial>(
       buildWhen: (p, c) => c.id == user.id,
       builder: (context, state) {

@@ -5,12 +5,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qareeb_dash/core/api_manager/command.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_dash/features/home/data/response/home_response.dart';
 import 'package:qareeb_dash/features/map/bloc/set_point_cubit/map_control_cubit.dart';
 import 'package:qareeb_dash/features/map/ui/widget/map_widget.dart';
 import 'package:qareeb_dash/generated/assets.dart';
 
 import '../../../../core/injection/injection_container.dart';
 import '../../../../core/strings/enum_manager.dart';
+import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/my_style.dart';
 import '../../../../core/widgets/images/image_multi_type.dart';
 import '../../../../core/widgets/my_card_widget.dart';
@@ -88,34 +90,38 @@ class _DashboardPageState extends State<DashboardPage> {
                   },
                 ),
                 16.0.verticalSpace,
-                DrawableText(
-                  text: 'التتبع المباشر',
-                  size: 24.0.sp,
-                  fontFamily: FontManager.cairoBold,
-                ),
-                10.0.verticalSpace,
-                SizedBox(
-                  height: 500.0.h,
-                  child: MultiBlocProvider(
-                    providers: [
-                      BlocProvider(create: (_) => sl<MapControllerCubit>()),
-                      BlocProvider(create: (_) => sl<MapControlCubit>()),
-                      BlocProvider(create: (_) => sl<AtherCubit>()),
-                    ],
-                    child: const BusesMap(),
+                if (isAllowed(AppPermissions.liveTracking))
+                  DrawableText(
+                    text: 'التتبع المباشر',
+                    size: 24.0.sp,
+                    fontFamily: FontManager.cairoBold,
                   ),
-                ),
-                50.0.verticalSpace,
-                DrawableText(
-                  text: 'نقاط الطلاب',
-                  size: 24.0.sp,
-                  fontFamily: FontManager.cairoBold,
-                ),
                 10.0.verticalSpace,
-                SizedBox(
-                  height: 500.0.h,
-                  child: const MapWidget(),
-                ),
+                if (isAllowed(AppPermissions.liveTracking))
+                  SizedBox(
+                    height: 500.0.h,
+                    child: MultiBlocProvider(
+                      providers: [
+                        BlocProvider(create: (_) => sl<MapControllerCubit>()),
+                        BlocProvider(create: (_) => sl<MapControlCubit>()),
+                        BlocProvider(create: (_) => sl<AtherCubit>()),
+                      ],
+                      child: BusesMap(data: state.result),
+                    ),
+                  ),
+                50.0.verticalSpace,
+                if (isAllowed(AppPermissions.membersPoints))
+                  DrawableText(
+                    text: 'نقاط الطلاب',
+                    size: 24.0.sp,
+                    fontFamily: FontManager.cairoBold,
+                  ),
+                10.0.verticalSpace,
+                if (isAllowed(AppPermissions.membersPoints))
+                  SizedBox(
+                    height: 500.0.h,
+                    child: const MapWidget(),
+                  ),
                 100.0.verticalSpace,
               ],
             );
@@ -170,7 +176,9 @@ class _TotalWidget extends StatelessWidget {
 }
 
 class BusesMap extends StatefulWidget {
-  const BusesMap({super.key});
+  const BusesMap({super.key, required this.data});
+
+  final HomeResult data;
 
   @override
   State<BusesMap> createState() => _BusesMapState();
@@ -203,8 +211,11 @@ class _BusesMapState extends State<BusesMap> {
       });
     });
 
+    listString = widget.data.getCurrentTripIme;
     super.initState();
   }
+
+  var listString = <String>[];
 
   @override
   Widget build(BuildContext context) {
@@ -213,17 +224,19 @@ class _BusesMapState extends State<BusesMap> {
         BlocListener<AtherCubit, AtherInitial>(
           listener: (context, state) {
             mapControllerCubit.addMarkers(
-              marker: state.result
-                  .mapIndexed(
-                    (i, e) => MyMarker(
-                      point: e.getLatLng(),
-                      item: context.read<AllBusesCubit>().getBusByImei(e),
-                      bearing: -e.angle,
-                      type: MyMarkerType.bus,
-                      key: e.ime,
-                    ),
-                  )
-                  .toList()
+              marker: state.result.mapIndexed(
+                (i, e) {
+
+                  return MyMarker(
+                    point: e.getLatLng(),
+                    item: context.read<AllBusesCubit>().getBusByImei(e),
+                    bearing: -e.angle,
+                    type: MyMarkerType.bus,
+                    nou: widget.data.getCountByImei(e.ime),
+                    key: e.ime,
+                  );
+                },
+              ).toList()
                 ..removeWhere((element) => element.point.latitude == 0),
               update: true,
               center: centerMarkers,

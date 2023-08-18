@@ -31,7 +31,7 @@ class DriverPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: isAllowed(AppPermissions.CREATION)
+      floatingActionButton: isAllowed(AppPermissions.admins)
           ? FloatingActionButton(
               onPressed: () {
                 context.pushNamed(GoRouteName.createDriver);
@@ -67,7 +67,7 @@ class DriverPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         ChangeUserStateBtn(user: e),
-                        if (isAllowed(AppPermissions.UPDATE))
+                        if (isAllowed(AppPermissions.roles))
                           InkWell(
                             onTap: () {
                               context.pushNamed(GoRouteName.updateDriver, extra: e);

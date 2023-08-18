@@ -33,7 +33,7 @@ class _PointsPageState extends State<PointsPage> {
         mapController.addAllPoints(points: state.result);
       },
       child: Scaffold(
-        floatingActionButton: isAllowed(AppPermissions.CREATION)
+        floatingActionButton: isAllowed(AppPermissions.admins)
             ? FloatingActionButton(
           onPressed: () {
             context.pushNamed(GoRouteName.pointInfo);

@@ -38,69 +38,88 @@ bool isAllowed(String permission) {
 }
 
 class AppPermissions {
-  static const CREATION = "Create_Permission";
-  static const UPDATE = "Update_Permission";
-  static const DELETE = "Delete_Permission";
-  static const EPAYMENT = "Pages.Epayment";
-  static const CAR_CATEGORY = "Pages.CarCategory";
-  static const TENANTS = "Pages.Tenants";
-  static const USERS = "Pages.Users";
-  static const USERS_ACTIVATION = "Pages.Users.Activation";
-  static const ROLES = "Pages.Roles";
-  static const COUPON = "Pages.Coupon";
-  static const REASON = "Pages.Reason";
-  static const REPORTS = "Pages.Reports";
-  static const CUSTOMERS = "Pages.Customers";
-  static const MESSAGES = "Pages.Messages";
-  static const DRIVERS = "Pages.Drivers";
-  static const TRIPS = "Pages.Trips";
-  static const POINTS = "Pages.Points";
-  static const SHARED_TRIP = "Pages.SharedTrip";
-  static const ACCEPT_ORDER = "Pages.accept_order";
-  static const SETTINGS = "Pages.Settings";
+  static const admins = "Create_Permission";
+  static const roles = "Update_Permission";
+  static const ticket = "Delete_Permission";
+  static const buses = "Pages.Epayment";
+  static const suberUsers = "Pages.CarCategory";
+  static const subscriptions = "Pages.Tenants";
+  static const busTrips = "Pages.Users";
+  static const tempTrips = "Pages.Users.Activation";
+  static const tapTripsTable = "Pages.Roles";
+  static const tapTripsHistory = "Pages.Coupon";
+  static const tapSubscriptions = "Pages.Reason";
+  static const members = "Pages.Reports";
+  static const tapMember = "Pages.Customers";
+  static const liveTracking = "Pages.Messages";
+  static const tapBuses = "Pages.Drivers";
+  static const tapSuberUser = "Pages.Trips";
+  static const tapTicket = "Pages.Points";
+  static const tapRoles = "Pages.SharedTrip";
+  static const tapAdmins = "Pages.accept_order";
+  static const membersPoints = "Pages.Settings";
 }
 
 String tranzlatePermition(String p) {
-  if (p == AppPermissions.CREATION) {
-    return 'عمليات مسرولي لوحة التحكم';
-  } else if (p == AppPermissions.UPDATE) {
+  if (p == AppPermissions.admins) {
+    return 'عمليات مسؤولي لوحة التحكم';
+  } else if (p == AppPermissions.roles) {
+    //
     return 'عمليات الأدوار';
-  } else if (p == AppPermissions.DELETE) {
-    return 'الشكاوى';
-  } else if (p == AppPermissions.EPAYMENT) {
+  } else if (p == AppPermissions.ticket) {
+    //
+    return 'عمليات الشكاوى';
+  } else if (p == AppPermissions.buses) {
+    //
     return 'عمليات الباصات';
-  } else if (p == AppPermissions.CAR_CATEGORY) {
+  } else if (p == AppPermissions.suberUsers) {
+    //
     return 'عمليات الأجهزة اللوحية';
-  } else if (p == AppPermissions.TENANTS) {
+  } else if (p == AppPermissions.subscriptions) {
+    //
     return 'عمليات الاشتراكات';
-  } else if (p == AppPermissions.USERS) {
+  } else if (p == AppPermissions.busTrips) {
+    //
     return 'عمليات الرحلات';
-  } else if (p == AppPermissions.USERS_ACTIVATION) {
+  } else if (p == AppPermissions.tempTrips) {
+    //
     return 'عمليات نماذج الرحلات';
-  } else if (p == AppPermissions.ROLES) {
-    return 'عمليات الأدوار';
-  } else if (p == AppPermissions.COUPON) {
-    return 'عرض سجب الرحلات';
-  } else if (p == AppPermissions.REASON) {
-    return 'عمليات الاشتراكات';
-  } else if (p == AppPermissions.REPORTS) {
-    return '';
-  } else if (p == AppPermissions.CUSTOMERS) {
-    return '';
-  } else if (p == AppPermissions.MESSAGES) {
-    return '';
-  } else if (p == AppPermissions.DRIVERS) {
-    return '';
-  } else if (p == AppPermissions.TRIPS) {
-    return '';
-  } else if (p == AppPermissions.POINTS) {
-    return '';
-  } else if (p == AppPermissions.SHARED_TRIP) {
-    return '';
-  } else if (p == AppPermissions.ACCEPT_ORDER) {
-    return '';
-  } else if (p == AppPermissions.SETTINGS) {
-    return '';
-  }
-  return '';
+  } else if (p == AppPermissions.tapTripsTable) {
+    //
+    return 'عرض جدول الرحلات';
+  } else if (p == AppPermissions.tapTripsHistory) {
+    //
+    return 'سجل الرحلات';
+  } else if (p == AppPermissions.tapSubscriptions) {
+    //
+    return 'عرض الاشتراكات';
+  } else if (p == AppPermissions.members) {
+    //
+    return 'عمليات الطلاب';
+  } else if (p == AppPermissions.tapMember) {
+    //
+    return ' عرض جدول الطلاب';
+  } else if (p == AppPermissions.liveTracking) {
+    //
+    return 'التتبع المباشر';
+  } else if (p == AppPermissions.tapBuses) {
+  //
+    return 'عرض جدول الباصات';
+  } else if (p == AppPermissions.tapSuberUser) {
+    //
+    return 'عرض جدول الأجهزة اللوحية';
+  } else if (p == AppPermissions.tapTicket) {
+    //
+    return 'عرض جدول الشكاوى';
+  } else if (p == AppPermissions.tapRoles) {
+    //
+    return 'عرض جدول الأدوار';
+  } else if (p == AppPermissions.tapAdmins) {
+    //
+    return 'عرض جدول مسؤولي المؤسسة';
+  } else if (p == AppPermissions.membersPoints) {
+    //
+    return 'نقاط الطلاب';
+  } //
+  return p;
 }

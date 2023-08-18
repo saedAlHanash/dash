@@ -3,7 +3,7 @@ part of 'ather_cubit.dart';
 
 class AtherInitial extends Equatable {
   final CubitStatuses statuses;
-  final List<Ime> result;
+  final List<Ime>   result;
   final String error;
 
   const AtherInitial({

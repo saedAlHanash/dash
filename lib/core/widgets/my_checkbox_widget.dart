@@ -167,8 +167,8 @@ class _MyCheckboxWidgetState extends State<MyCheckboxWidget> {
       },
       enableDeselect: !(widget.isRadio ?? false),
       options: const GroupButtonOptions(
-        crossGroupAlignment: CrossGroupAlignment.center,
-        mainGroupAlignment: MainGroupAlignment.center,
+        crossGroupAlignment: CrossGroupAlignment.start,
+        mainGroupAlignment: MainGroupAlignment.start,
       ),
       controller: controller,
       isRadio: widget.isRadio ?? false,

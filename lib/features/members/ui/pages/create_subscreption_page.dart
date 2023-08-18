@@ -13,6 +13,7 @@ import 'package:qareeb_dash/core/widgets/saed_taple_widget.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 import '../../../../core/strings/app_color_manager.dart';
+import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/my_style.dart';
 import '../../bloc/all_member_cubit/all_member_cubit.dart';
 import '../../bloc/create_subscreption_cubit/create_subscreption_cubit.dart';
@@ -128,36 +129,36 @@ class _CreateSubscriptionPage1State extends State<CreateSubscriptionPage1> {
                           if (state.statuses.loading) {
                             return MyStyle.loadingWidget();
                           }
-                          return Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              // MyButton(
-                              //   text: request.isNotExpired ? 'تعديل' : 'إنشاء',
-                              //   onTap: () {
-                              //     if (request.validateRequest(context)) {
-                              //       context
-                              //           .read<CreateSubscriptionCubit1>()
-                              //           .createSubscription(context, request: request);
-                              //     }
-                              //   },
-                              // ),
-                              // 20.0.horizontalSpace,
-                              if (request.isNotExpired)
-                                MyButton(
-                                  textColor: Colors.white,
-                                  color: Colors.black,
-                                  text: 'إلغاء الاشتراك',
-                                  onTap: () {
-                                    context
-                                        .read<CreateSubscriptionCubit1>()
-                                        .createSubscription(
-                                          context,
-                                          request: request..isActive = false,
-                                        );
-                                  },
-                                ),
-                            ],
-                          );
+                          return  Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    // MyButton(
+                                    //   text: request.isNotExpired ? 'تعديل' : 'إنشاء',
+                                    //   onTap: () {
+                                    //     if (request.validateRequest(context)) {
+                                    //       context
+                                    //           .read<CreateSubscriptionCubit1>()
+                                    //           .createSubscription(context, request: request);
+                                    //     }
+                                    //   },
+                                    // ),
+                                    // 20.0.horizontalSpace,
+                                    if (request.isNotExpired)
+                                      MyButton(
+                                        textColor: Colors.white,
+                                        color: Colors.black,
+                                        text: 'إلغاء الاشتراك',
+                                        onTap: () {
+                                          context
+                                              .read<CreateSubscriptionCubit1>()
+                                              .createSubscription(
+                                                context,
+                                                request: request..isActive = false,
+                                              );
+                                        },
+                                      ),
+                                  ],
+                                );
                         },
                       ),
                     ],

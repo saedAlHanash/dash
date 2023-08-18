@@ -21,6 +21,7 @@ final _super_userList = [
   'ID',
   'اسم النموذج',
   'المسافة الكلية',
+  if(isAllowed(AppPermissions.tempTrips))
   'عمليات',
 ];
 
@@ -30,7 +31,7 @@ class TempTripsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: isAllowed(AppPermissions.CREATION)
+      floatingActionButton:  (isAllowed(AppPermissions.tempTrips))
           ? FloatingActionButton(
               onPressed: () => context.pushNamed(GoRouteName.createTempTrip),
               child: const Icon(Icons.add, color: Colors.white),
@@ -61,13 +62,12 @@ class TempTripsPage extends StatelessWidget {
                         e.id.toString(),
                         e.description,
                         e.distance.toString(),
+                        if(isAllowed(AppPermissions.tempTrips))
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             InkWell(
-                              onTap: !isAllowed(AppPermissions.UPDATE)
-                                  ? null
-                                  : () {
+                              onTap: () {
                                       context.pushNamed(
                                         GoRouteName.tempTripInfo,
                                         queryParams: {'id': e.id.toString()},

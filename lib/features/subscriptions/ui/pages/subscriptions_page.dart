@@ -23,7 +23,7 @@ final _super_userList = [
   'اسم الاشتراك',
   'تاريخ البداية',
   'تاريخ النهاية',
-  'عمليات',
+  if (isAllowed(AppPermissions.subscriptions)) 'عمليات',
 ];
 
 class SubscriptionsPage extends StatelessWidget {
@@ -32,7 +32,7 @@ class SubscriptionsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: isAllowed(AppPermissions.CREATION)
+      floatingActionButton: isAllowed(AppPermissions.subscriptions)
           ? FloatingActionButton(
               onPressed: () => context.pushNamed(GoRouteName.createSubscription),
               child: const Icon(Icons.add, color: Colors.white),
@@ -64,71 +64,68 @@ class SubscriptionsPage extends StatelessWidget {
                         e.name,
                         e.supscriptionDate?.formatDate,
                         e.expirationDate?.formatDate,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            InkWell(
-                              onTap: !isAllowed(AppPermissions.UPDATE)
-                                  ? null
-                                  : () {
-                                      context.pushNamed(
-                                        GoRouteName.createSubscription,
-                                        queryParams: {'id': e.id.toString()},
-                                      );
-                                    },
-                              child: const Icon(
-                                Icons.edit,
-                                color: Colors.amber,
+                        if (isAllowed(AppPermissions.subscriptions))
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              InkWell(
+                                onTap:  () {
+                                        context.pushNamed(
+                                          GoRouteName.createSubscription,
+                                          queryParams: {'id': e.id.toString()},
+                                        );
+                                      },
+                                child: const Icon(
+                                  Icons.edit,
+                                  color: Colors.amber,
+                                ),
                               ),
-                            ),
-                            InkWell(
-                              onTap: !isAllowed(AppPermissions.UPDATE)
-                                  ? null
-                                  : () {
-                                      context.pushNamed(
-                                        GoRouteName.subscriptionInfo,
-                                        queryParams: {'id': e.id.toString()},
-                                      );
-                                    },
-                              child: const Icon(
-                                Icons.group_add,
-                                color: AppColorManager.mainColor,
+                              InkWell(
+                                onTap:  () {
+                                        context.pushNamed(
+                                          GoRouteName.subscriptionInfo,
+                                          queryParams: {'id': e.id.toString()},
+                                        );
+                                      },
+                                child: const Icon(
+                                  Icons.group_add,
+                                  color: AppColorManager.mainColor,
+                                ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: BlocConsumer<DeleteSubscriptionCubit,
-                                  DeleteSubscriptionInitial>(
-                                listener: (context, state) {
-                                  context
-                                      .read<AllSubscriptionsCubit>()
-                                      .getSubscriptions(context);
-                                },
-                                listenWhen: (p, c) => c.statuses.done,
-                                buildWhen: (p, c) => c.id == e.id,
-                                builder: (context, state) {
-                                  if (state.statuses.loading) {
-                                    return MyStyle.loadingWidget();
-                                  }
-                                  return InkWell(
-                                    onTap: () {
-                                      context
-                                          .read<DeleteSubscriptionCubit>()
-                                          .deleteSubscription(
-                                            context,
-                                            id: e.id ?? -1,
-                                          );
-                                    },
-                                    child: const Icon(
-                                      Icons.delete_forever,
-                                      color: Colors.red,
-                                    ),
-                                  );
-                                },
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: BlocConsumer<DeleteSubscriptionCubit,
+                                    DeleteSubscriptionInitial>(
+                                  listener: (context, state) {
+                                    context
+                                        .read<AllSubscriptionsCubit>()
+                                        .getSubscriptions(context);
+                                  },
+                                  listenWhen: (p, c) => c.statuses.done,
+                                  buildWhen: (p, c) => c.id == e.id,
+                                  builder: (context, state) {
+                                    if (state.statuses.loading) {
+                                      return MyStyle.loadingWidget();
+                                    }
+                                    return InkWell(
+                                      onTap: () {
+                                        context
+                                            .read<DeleteSubscriptionCubit>()
+                                            .deleteSubscription(
+                                              context,
+                                              id: e.id ?? -1,
+                                            );
+                                      },
+                                      child: const Icon(
+                                        Icons.delete_forever,
+                                        color: Colors.red,
+                                      ),
+                                    );
+                                  },
+                                ),
                               ),
-                            ),
-                          ],
-                        )
+                            ],
+                          )
                       ],
                     )
                     .toList(),

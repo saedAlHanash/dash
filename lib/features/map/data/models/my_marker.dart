@@ -129,8 +129,8 @@ class MyMarker {
       case MyMarkerType.bus:
         return Marker(
           point: point,
-          height: 40.0.spMin,
-          width: 40.0.spMin,
+          height: 150.0.spMin,
+          width: 150.0.spMin,
           builder: (context) {
             final imei = item as Ime;
             return InkWell(
@@ -142,19 +142,35 @@ class MyMarker {
                         item: item,
                       ),
                     );
-                // context.read<BusByImeiCubit>().getBusByIme(
-                //       context,
-                //       ime: (item as Ime).ime,
-                //     );
               },
-              child: Transform.rotate(
-                angle: bearing ?? 0.0,
-                child: ImageMultiType(
-                  url: Assets.iconsLocator,
-                  height: 40.0.spMin,
-                  width: 40.0.spMin,
-                  color: imei.speed == '0' ? Colors.red : AppColorManager.mainColor,
-                ),
+              child: Column(
+                children: [
+                  Transform.rotate(
+                    angle: bearing ?? 0.0,
+                    child: ImageMultiType(
+                      url: Assets.iconsLocator,
+                      height: 40.0.spMin,
+                      width: 40.0.spMin,
+                      color: imei.speed == '0' ? Colors.red : AppColorManager.mainColor,
+                    ),
+                  ),
+                  if (nou >= 0)
+                    Container(
+                      margin: EdgeInsets.only(bottom: 5.0.spMin),
+                      color: Colors.white,
+                      alignment: Alignment.center,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          DrawableText(
+                            text: '$nou طالب',
+                            color: Colors.black,
+                            size: 18.0.sp,
+                          ),
+                        ],
+                      ),
+                    ),
+                ],
               ),
             );
           },

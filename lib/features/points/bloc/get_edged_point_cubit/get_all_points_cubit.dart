@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:qareeb_dash/core/api_manager/command.dart';
 import 'package:qareeb_dash/features/points/data/response/points_response.dart';
 
 import '../../../../core/api_manager/api_service.dart';
@@ -37,7 +38,8 @@ class PointsCubit extends Cubit<PointsInitial> {
     }
   }
 
-  Future<void> getConnectedPoints(BuildContext context, {required TripPoint? point}) async {
+  Future<void> getConnectedPoints(BuildContext context,
+      {required TripPoint? point}) async {
     if (point == null) {
       getAllPoints(context);
       return;
@@ -59,7 +61,8 @@ class PointsCubit extends Cubit<PointsInitial> {
 
   Future<Pair<PointsResult?, String?>> _getAllPointsApi() async {
     if (await network.isConnected) {
-      final response = await APIService().getApi(url: GetUrl.getAllPoints);
+      final response = await APIService()
+          .getApi(url: GetUrl.getAllPoints, query: Command.noPagination().toJson());
 
       if (response.statusCode == 200) {
         return Pair(PointsResponse.fromJson(jsonDecode(response.body)).result, null);
