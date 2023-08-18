@@ -124,17 +124,17 @@ class _HomePageState extends State<HomePage> {
               ),
               if (isAllowed(AppPermissions.tapBuses) &&
                   isAllowed(AppPermissions.tapSuberUser))
-              AdminMenuItem(
-                title: 'الباصات',
-                icon: Icons.bus_alert_sharp,
-                children: [
-                  if (isAllowed(AppPermissions.tapBuses))
-                    const AdminMenuItem(title: 'قائمة الباصات', route: NamePaths.buses),
-                  if (isAllowed(AppPermissions.tapSuberUser))
-                    const AdminMenuItem(
-                        title: 'الأجهزة اللوحية', route: NamePaths.superUser),
-                ],
-              ),
+                AdminMenuItem(
+                  title: 'الباصات',
+                  icon: Icons.bus_alert_sharp,
+                  children: [
+                    if (isAllowed(AppPermissions.tapBuses))
+                      const AdminMenuItem(title: 'قائمة الباصات', route: NamePaths.buses),
+                    if (isAllowed(AppPermissions.tapSuberUser))
+                      const AdminMenuItem(
+                          title: 'الأجهزة اللوحية', route: NamePaths.superUser),
+                  ],
+                ),
               AdminMenuItem(
                 title: 'الرحلات',
                 icon: Icons.supervised_user_circle_sharp,
@@ -149,17 +149,17 @@ class _HomePageState extends State<HomePage> {
               ),
               if (isAllowed(AppPermissions.tapSubscriptions) &&
                   isAllowed(AppPermissions.tapMember))
-              AdminMenuItem(
-                title: 'الطلاب',
-                icon: Icons.group,
-                children: [
-                  if (isAllowed(AppPermissions.tapSubscriptions))
-                    const AdminMenuItem(
-                        title: 'نماذج الاشتراكات', route: NamePaths.subscriptions),
-                  if (isAllowed(AppPermissions.tapMember))
-                    const AdminMenuItem(title: 'الطلاب', route: NamePaths.members),
-                ],
-              ),
+                AdminMenuItem(
+                  title: 'الطلاب',
+                  icon: Icons.group,
+                  children: [
+                    if (isAllowed(AppPermissions.tapSubscriptions))
+                      const AdminMenuItem(
+                          title: 'نماذج الاشتراكات', route: NamePaths.subscriptions),
+                    if (isAllowed(AppPermissions.tapMember))
+                      const AdminMenuItem(title: 'الطلاب', route: NamePaths.members),
+                  ],
+                ),
               if (isAllowed(AppPermissions.tapRoles) &&
                   isAllowed(AppPermissions.tapAdmins))
                 AdminMenuItem(
@@ -172,8 +172,7 @@ class _HomePageState extends State<HomePage> {
                       const AdminMenuItem(title: 'مسؤولي النظام', route: '/sys_admins'),
                   ],
                 ),
-              if (isAllowed(AppPermissions.tapTicket))
-                const AdminMenuItem(title: 'الشكاوى', route: '/ticket'),
+              const AdminMenuItem(title: 'الشكاوى', route: '/ticket'),
             ],
             selectedRoute: state.page,
             onSelected: (item) {

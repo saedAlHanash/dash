@@ -54,7 +54,7 @@ class AppPermissions {
   static const liveTracking = "Pages.Messages";
   static const tapBuses = "Pages.Drivers";
   static const tapSuberUser = "Pages.Trips";
-  static const tapTicket = "Pages.Points";
+  static const suberUserAdmin = "Pages.Points";
   static const tapRoles = "Pages.SharedTrip";
   static const tapAdmins = "Pages.accept_order";
   static const membersPoints = "Pages.Settings";
@@ -108,9 +108,9 @@ String tranzlatePermition(String p) {
   } else if (p == AppPermissions.tapSuberUser) {
     //
     return 'عرض جدول الأجهزة اللوحية';
-  } else if (p == AppPermissions.tapTicket) {
+  } else if (p == AppPermissions.suberUserAdmin) {
     //
-    return 'عرض جدول الشكاوى';
+    return 'مفتش الباصات';
   } else if (p == AppPermissions.tapRoles) {
     //
     return 'عرض جدول الأدوار';
