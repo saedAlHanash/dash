@@ -21,8 +21,7 @@ final rolesEableHeader = [
   "وصف",
   "تاريخ الإنشاء",
   "الصلاحيات",
-  if(isAllowed(AppPermissions.roles))
-  "العمليات",
+  if (isAllowed(AppPermissions.roles)) "العمليات",
 ];
 
 class RolesPage extends StatefulWidget {
@@ -68,52 +67,52 @@ class _RolesPageState extends State<RolesPage> {
                         Wrap(
                           children: e.grantedPermissions.mapIndexed((i, permission) {
                             return DrawableText(
-                              text: permission,
+                              text: tranzlatePermition(permission),
                               textAlign: TextAlign.start,
                             );
                           }).toList(),
                         ),
-                        if(isAllowed(AppPermissions.roles))
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: BlocConsumer<DeleteRoleCubit, DeleteRoleInitial>(
-                                listener: (context, state) {
-                                  context.read<AllRolesCubit>().getAllRoles(context);
-                                },
-                                listenWhen: (p, c) => c.statuses.done,
-                                buildWhen: (p, c) => c.id == e.id,
-                                builder: (context, state) {
-                                  if (state.statuses.loading) {
-                                    return MyStyle.loadingWidget();
-                                  }
-                                  return InkWell(
-                                    onTap: () {
-                                      context
-                                          .read<DeleteRoleCubit>()
-                                          .deleteRole(context, id: e.id);
-                                    },
-                                    child: const Icon(
-                                      Icons.delete_forever,
-                                      color: Colors.red,
-                                    ),
-                                  );
-                                },
+                        if (isAllowed(AppPermissions.roles))
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: BlocConsumer<DeleteRoleCubit, DeleteRoleInitial>(
+                                  listener: (context, state) {
+                                    context.read<AllRolesCubit>().getAllRoles(context);
+                                  },
+                                  listenWhen: (p, c) => c.statuses.done,
+                                  buildWhen: (p, c) => c.id == e.id,
+                                  builder: (context, state) {
+                                    if (state.statuses.loading) {
+                                      return MyStyle.loadingWidget();
+                                    }
+                                    return InkWell(
+                                      onTap: () {
+                                        context
+                                            .read<DeleteRoleCubit>()
+                                            .deleteRole(context, id: e.id);
+                                      },
+                                      child: const Icon(
+                                        Icons.delete_forever,
+                                        color: Colors.red,
+                                      ),
+                                    );
+                                  },
+                                ),
                               ),
-                            ),
-                            if (isAllowed(AppPermissions.roles))
-                              InkWell(
-                                onTap: () {
-                                  context.pushNamed(GoRouteName.createRole, extra: e);
-                                },
-                                child:
-                                    const CircleButton(color: Colors.amber, icon: Icons.edit),
-                              ),
-                          ],
-                        )
+                              if (isAllowed(AppPermissions.roles))
+                                InkWell(
+                                  onTap: () {
+                                    context.pushNamed(GoRouteName.createRole, extra: e);
+                                  },
+                                  child: const CircleButton(
+                                      color: Colors.amber, icon: Icons.edit),
+                                ),
+                            ],
+                          )
                       ],
                     )
                     .toList(),
