@@ -43,7 +43,6 @@ class AppPermissions {
   static const ticket = "Delete_Permission";
   static const buses = "Pages.Epayment";
   static const suberUsers = "Pages.CarCategory";
-  static const subscriptions = "Pages.Tenants";
   static const busTrips = "Pages.Users";
   static const tempTrips = "Pages.Users.Activation";
   static const tapTripsTable = "Pages.Roles";
@@ -51,7 +50,7 @@ class AppPermissions {
   static const tapSubscriptions = "Pages.Reason";
   static const members = "Pages.Reports";
   static const tapMember = "Pages.Customers";
-  static const liveTracking = "Pages.Messages";
+  static const subscriptions = "Pages.Messages";
   static const tapBuses = "Pages.Drivers";
   static const tapSuberUser = "Pages.Trips";
   static const suberUserAdmin = "Pages.Points";
@@ -99,9 +98,6 @@ String tranzlatePermition(String p) {
   } else if (p == AppPermissions.tapMember) {
     //
     return ' عرض جدول الطلاب';
-  } else if (p == AppPermissions.liveTracking) {
-    //
-    return 'التتبع المباشر';
   } else if (p == AppPermissions.tapBuses) {
   //
     return 'عرض جدول الباصات';

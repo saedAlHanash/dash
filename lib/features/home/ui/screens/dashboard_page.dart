@@ -100,25 +100,23 @@ class _DashboardPageState extends State<DashboardPage> {
                   },
                 ),
                 16.0.verticalSpace,
-                if (isAllowed(AppPermissions.liveTracking))
-                  DrawableText(
-                    text: 'التتبع المباشر',
-                    size: 24.0.sp,
-                    fontFamily: FontManager.cairoBold,
-                  ),
+                DrawableText(
+                  text: 'التتبع المباشر',
+                  size: 24.0.sp,
+                  fontFamily: FontManager.cairoBold,
+                ),
                 10.0.verticalSpace,
-                if (isAllowed(AppPermissions.liveTracking))
-                  SizedBox(
-                    height: 500.0.h,
-                    child: MultiBlocProvider(
-                      providers: [
-                        BlocProvider(create: (_) => sl<MapControllerCubit>()),
-                        BlocProvider(create: (_) => sl<MapControlCubit>()),
-                        BlocProvider(create: (_) => sl<AtherCubit>()),
-                      ],
-                      child: BusesMap(data: state.result),
-                    ),
+                SizedBox(
+                  height: 500.0.h,
+                  child: MultiBlocProvider(
+                    providers: [
+                      BlocProvider(create: (_) => sl<MapControllerCubit>()),
+                      BlocProvider(create: (_) => sl<MapControlCubit>()),
+                      BlocProvider(create: (_) => sl<AtherCubit>()),
+                    ],
+                    child: BusesMap(data: state.result),
                   ),
+                ),
                 50.0.verticalSpace,
                 if (isAllowed(AppPermissions.membersPoints))
                   DrawableText(
