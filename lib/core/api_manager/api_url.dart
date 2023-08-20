@@ -45,7 +45,7 @@ class GetUrl {
 
   static const allDrivers = 'api/services/app/User/GetAllDrivers';
 
-  static const getDriverById = 'api/services/app/User/GetDriverById';
+  static const getDriverById = 'api/services/app/User/Get';
 
   static const driverRedeems = 'api/services/app/RedeemService/GetRedeems';
   static const allRedeems = 'api/services/app/RedeemService/GetAllRedeems';

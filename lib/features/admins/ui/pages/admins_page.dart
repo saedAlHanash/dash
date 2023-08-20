@@ -74,11 +74,21 @@ class _AdminPageState extends State<AdminPage> {
                             children: [
                               InkWell(
                                 onTap: () {
-                                  context.pushNamed(GoRouteName.adminInfo, extra: e);
+                                  context.pushNamed(GoRouteName.adminInfo,
+                                      extra: e, queryParams: {'id': e.id.toString()});
                                 },
                                 child: const CircleButton(
                                   color: Colors.grey,
                                   icon: Icons.info_outline_rounded,
+                                ),
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  context.pushNamed(GoRouteName.createAdmin, extra: e);
+                                },
+                                child: const CircleButton(
+                                  color: Colors.amber,
+                                  icon: Icons.edit,
                                 ),
                               ),
                             ],

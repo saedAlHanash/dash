@@ -201,9 +201,13 @@ final appGoRouter = GoRouter(
       name: GoRouteName.adminInfo,
       path: _GoRoutePath.adminInfo,
       builder: (BuildContext context, GoRouterState state) {
+        final id = int.tryParse(state.queryParams['id'] ?? '0') ?? 0;
         final admin =
             state.extra == null ? DriverModel.fromJson({}) : (state.extra) as DriverModel;
-        return AdminInfoPage(admin: admin);
+        return BlocProvider(
+          create: (context) => DriverBuIdCubit()..getDriverBuId(context, id: id),
+          child: AdminInfoPage(admin: admin),
+        );
       },
     ),
     //endregion
