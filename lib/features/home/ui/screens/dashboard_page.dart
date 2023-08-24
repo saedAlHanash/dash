@@ -4,7 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:qareeb_dash/core/api_manager/api_service.dart';
 import 'package:qareeb_dash/core/api_manager/api_url.dart';
-import 'package:qareeb_models/extensions.dart';  import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_dash/core/util/shared_preferences.dart';
+import 'package:qareeb_models/extensions.dart';
+import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/widgets/my_card_widget.dart';
 import 'package:qareeb_dash/features/redeems/ui/widget/loyalty_widget.dart';
 import 'package:qareeb_dash/router/go_route_pages.dart';
@@ -26,12 +28,14 @@ class _DashboardPageState extends State<DashboardPage> {
 
   @override
   Widget build(BuildContext context) {
+    loggerObject.w(AppSharedPreference.getRole.toLowerCase());
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           children: [
             16.0.verticalSpace,
-            const LoyaltyWidget(),
+            if (AppSharedPreference.getUser.roleName.toLowerCase() == 'admin')
+              const LoyaltyWidget(),
             FutureBuilder(
               future: getBestDriver(),
               builder: (context, snapShot) {
@@ -78,7 +82,8 @@ class _DashboardPageState extends State<DashboardPage> {
                           ),
                           Expanded(
                             child: DrawableText(
-                              text: 'الكيلومترات: ${(bestDriver.totalMeters/1000).round()}',
+                              text:
+                                  'الكيلومترات: ${(bestDriver.totalMeters / 1000).round()}',
                               color: Colors.black,
                               fontFamily: FontManager.cairoBold,
                             ),

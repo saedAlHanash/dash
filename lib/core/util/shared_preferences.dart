@@ -9,7 +9,8 @@ import 'package:qareeb_models/trip_process/data/response/trip_response.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../features/profile/data/response/profile_info_response.dart';
-import 'package:qareeb_models/global.dart'; import '../strings/enum_manager.dart';
+import 'package:qareeb_models/global.dart';
+import '../strings/enum_manager.dart';
 
 class AppSharedPreference {
   static const _token = '1';
@@ -27,6 +28,7 @@ class AppSharedPreference {
   static const _myPermission = '13';
   static const _user = '14';
   static const _email = '15';
+  static const _role = '16';
 
   static SharedPreferences? _prefs;
 
@@ -65,14 +67,26 @@ class AppSharedPreference {
     _prefs?.setInt(_myId, id);
   }
 
-  static cashUser(LoginResult user) {
+  static cashUser(LoginResult user) async {
     final string = jsonEncode(user);
-    _prefs?.setString(_user, string);
+    await _prefs?.setString(_user, string);
+  }
+
+  static cashRole(String id) {
+    _prefs?.setString(_role, id);
+  }
+
+  static String get getRole {
+    _prefs?.getString(_role) ?? 'saed';
+    _prefs?.getString(_role) ?? 'saed';
+    final s  = _prefs?.getString(_role) ?? 'saed';
+    return s;
   }
 
   static LoginResult get getUser {
     final string = _prefs?.getString(_user) ?? '{}';
 
+    loggerObject.w(string);
     return LoginResult.fromJson(jsonDecode(string));
   }
 

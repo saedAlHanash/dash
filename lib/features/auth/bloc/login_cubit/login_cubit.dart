@@ -1,7 +1,9 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:qareeb_models/extensions.dart';  import 'package:qareeb_models/extensions.dart';  import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_models/extensions.dart';
+import 'package:qareeb_models/extensions.dart';
+import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/util/shared_preferences.dart';
 
 import '../../../../core/api_manager/api_service.dart';
@@ -10,7 +12,8 @@ import '../../../../core/error/error_manager.dart';
 import '../../../../core/injection/injection_container.dart';
 import '../../../../core/network/network_info.dart';
 import '../../../../core/strings/app_string_manager.dart';
-import 'package:qareeb_models/global.dart'; import '../../../../core/strings/enum_manager.dart';
+import 'package:qareeb_models/global.dart';
+import '../../../../core/strings/enum_manager.dart';
 import '../../../../core/util/note_message.dart';
 import '../../../../core/util/pair_class.dart';
 import '../../data/request/login_request.dart';
@@ -40,6 +43,7 @@ class LoginCubit extends Cubit<LoginInitial> {
       AppSharedPreference.cashToken(pair.first!.accessToken);
       AppSharedPreference.cashMyId(pair.first!.userId);
       AppSharedPreference.cashUser(pair.first!);
+      AppSharedPreference.cashRole(pair.first!.roleName);
       AppSharedPreference.cashEmail(request.email!);
 
       var result = await _getPermissions(id: pair.first!.userId);
@@ -88,10 +92,7 @@ class LoginCubit extends Cubit<LoginInitial> {
         final json = response.jsonBody['result'] ?? <String, dynamic>{};
 
         return Pair(
-            json == null
-                ? <String>[]
-                : List<String>.from(json!.map((x) => x)),
-            null);
+            json == null ? <String>[] : List<String>.from(json!.map((x) => x)), null);
       } else {
         return Pair(null, ErrorManager.getApiError(response));
       }

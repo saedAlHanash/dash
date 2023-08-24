@@ -23,6 +23,7 @@ class LoginResult {
     required this.expireInSeconds,
     required this.userId,
     required this.userTrip,
+    required this.roleName,
     required this.accepctPolicy,
   });
 
@@ -31,6 +32,7 @@ class LoginResult {
   final int expireInSeconds;
   final int userId;
   final String userTrip;
+  final String roleName;
   final bool accepctPolicy;
 
   factory LoginResult.initial() {
@@ -44,6 +46,7 @@ class LoginResult {
       expireInSeconds: json["expireInSeconds"] ?? 0,
       userId: json["userId"] ?? 0,
       userTrip: json["userTrip"] ?? "",
+      roleName: json["roleName"] ?? "",
       accepctPolicy: json["accepctPolicy"] ?? false,
     );
   }
@@ -54,6 +57,7 @@ class LoginResult {
         "expireInSeconds": expireInSeconds,
         "userId": userId,
         "userTrip": userTrip,
+        "roleName": roleName,
         "accepctPolicy": accepctPolicy,
       };
 }
