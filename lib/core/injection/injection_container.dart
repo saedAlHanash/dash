@@ -67,6 +67,10 @@ import '../../features/shared_trip/bloc/create_shared_trip_cubit/create_shared_t
 import '../../features/shared_trip/bloc/get_shared_trips_cubit/get_shared_trips_cubit.dart';
 import '../../features/shared_trip/bloc/shared_trip_by_id_cubit/shared_trip_by_id_cubit.dart';
 import '../../features/shared_trip/bloc/update_shared_cubit/update_shared_cubit.dart';
+import '../../features/system_params/bloc/system_params_cubit/system_params_cubit.dart';
+import '../../features/system_params/bloc/update_system_params_cubit/update_system_params_cubit.dart';
+import '../../features/system_settings/bloc/system_settings_cubit/system_settings_cubit.dart';
+import '../../features/system_settings/bloc/update_system_params_cubit/update_system_settings_cubit.dart';
 import '../../features/trip/bloc/all_trips_cubit/all_trips_cubit.dart';
 import '../../features/trip/bloc/driver_status_cubit/driver_status_cubit.dart';
 import '../../features/trip/bloc/nav_trip_cubit/nav_trip_cubit.dart';
@@ -258,6 +262,10 @@ Future<void> init() async {
   sl.registerFactory(() => AccountAmountCubit());
   sl.registerFactory(() => AllCouponsCubit());
   sl.registerFactory(() => CreateCouponCubit());
+  sl.registerFactory(() => SystemParamsCubit());
+  sl.registerFactory(() => UpdateParamsCubit());
+  sl.registerFactory(() => UpdateSettingCubit());
+  sl.registerFactory(() => SystemSettingsCubit());
 
 //! External
 

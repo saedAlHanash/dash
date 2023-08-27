@@ -54,6 +54,10 @@ import '../../../reasons/ui/pages/reasons_page.dart';
 import '../../../roles/bloc/create_role_cubit/create_role_cubit.dart';
 import '../../../roles/bloc/delete_role_cubit/delete_role_cubit.dart';
 import '../../../roles/ui/pages/roles_page.dart';
+import '../../../system_params/bloc/update_system_params_cubit/update_system_params_cubit.dart';
+import '../../../system_params/ui/pages/system_params_page.dart';
+import '../../../system_settings/bloc/update_system_params_cubit/update_system_settings_cubit.dart';
+import '../../../system_settings/ui/pages/system_settings_page.dart';
 import '../../../wallet/bloc/change_provider_state_cubit/change_provider_state_cubit.dart';
 import '../../../wallet/ui/pages/providers_page.dart';
 import '../../bloc/nav_home_cubit/nav_home_cubit.dart';
@@ -164,6 +168,8 @@ class _HomePageState extends State<HomePage> {
                     const AdminMenuItem(title: 'المؤسسات', route: '/institutions'),
                   if (isAllowed(AppPermissions.ROLES))
                     const AdminMenuItem(title: 'الأدوار', route: '/roles'),
+                  const AdminMenuItem(title: 'متغيرات الولاء', route: '/systemParams'),
+                  const AdminMenuItem(title: 'إدارة الإصدارات', route: '/systemVersion'),
                 ],
               ),
               if (isAllowed(AppPermissions.REPORTS))
@@ -266,6 +272,20 @@ class _HomePageState extends State<HomePage> {
                       BlocProvider(create: (context) => sl<ChangeUserStateCubit>()),
                     ],
                     child: const ClientsPage(),
+                  );
+                case "/systemParams":
+                  return MultiBlocProvider(
+                    providers: [
+                      BlocProvider(create: (context) => sl<UpdateParamsCubit>()),
+                    ],
+                    child: const ParamsPage(),
+                  );
+                case "/systemVersion":
+                  return MultiBlocProvider(
+                    providers: [
+                      BlocProvider(create: (context) => sl<UpdateSettingCubit>()),
+                    ],
+                    child: const SettingPage(),
                   );
                 case "/coupons":
                   return MultiBlocProvider(

@@ -56,7 +56,7 @@ class APIService {
     Map<String, String>? header,
     String? path,
     String? hostName,
-  })  {
+  }) {
     if (query != null) query.removeWhere((key, value) => value == null);
 
     innerHeader.addAll(header ?? {});
@@ -100,9 +100,9 @@ class APIService {
 
 
     final response = await http.get(uri, headers: innerHeader).timeout(
-          const Duration(seconds: 40),
-          onTimeout: () => http.Response('connectionTimeOut', 481),
-        );
+      const Duration(seconds: 40),
+      onTimeout: () => http.Response('connectionTimeOut', 481),
+    );
 
     logResponse(url, response);
     return response;
@@ -132,9 +132,9 @@ class APIService {
     final proxyUri = Uri.https('api.allorigins.win', 'raw', {'url': uri.toString()});
 
     final response = await http.get(proxyUri, headers: innerHeader).timeout(
-          const Duration(seconds: 40),
-          onTimeout: () => http.Response('connectionTimeOut', 481),
-        );
+      const Duration(seconds: 40),
+      onTimeout: () => http.Response('connectionTimeOut', 481),
+    );
 
     logResponse(url, response);
     return response;
@@ -183,13 +183,14 @@ class APIService {
 
     final uri = Uri.https(hostName ?? baseUrl, url, query);
 
-    logRequest(url, (body ?? {})..addAll(query ?? {}));
+    logRequest(url, (body ?? {})
+      ..addAll(query ?? {}));
 
     final response =
-        await http.post(uri, body: jsonEncode(body), headers: innerHeader).timeout(
-              const Duration(seconds: 40),
-              onTimeout: () => http.Response('connectionTimeOut', 481),
-            );
+    await http.post(uri, body: jsonEncode(body), headers: innerHeader).timeout(
+      const Duration(seconds: 40),
+      onTimeout: () => http.Response('connectionTimeOut', 481),
+    );
 
     logResponse(url, response);
 
@@ -217,10 +218,10 @@ class APIService {
     logRequest(url, body);
 
     final response =
-        await http.put(uri, body: jsonEncode(body), headers: innerHeader).timeout(
-              const Duration(seconds: 40),
-              onTimeout: () => http.Response('connectionTimeOut', 481),
-            );
+    await http.put(uri, body: jsonEncode(body), headers: innerHeader).timeout(
+      const Duration(seconds: 40),
+      onTimeout: () => http.Response('connectionTimeOut', 481),
+    );
 
     logResponse(url, response);
 
@@ -248,10 +249,10 @@ class APIService {
     logRequest(url, body);
 
     final response =
-        await http.patch(uri, body: jsonEncode(body), headers: innerHeader).timeout(
-              const Duration(seconds: 40),
-              onTimeout: () => http.Response('connectionTimeOut', 481),
-            );
+    await http.patch(uri, body: jsonEncode(body), headers: innerHeader).timeout(
+      const Duration(seconds: 40),
+      onTimeout: () => http.Response('connectionTimeOut', 481),
+    );
 
     logResponse(url, response);
 
@@ -278,10 +279,10 @@ class APIService {
     logRequest(url, body);
 
     final response =
-        await http.delete(uri, body: jsonEncode(body), headers: innerHeader).timeout(
-              const Duration(seconds: 40),
-              onTimeout: () => http.Response('connectionTimeOut', 481),
-            );
+    await http.delete(uri, body: jsonEncode(body), headers: innerHeader).timeout(
+      const Duration(seconds: 40),
+      onTimeout: () => http.Response('connectionTimeOut', 481),
+    );
 
     logResponse(url, response);
 
@@ -337,9 +338,9 @@ class APIService {
     var uri = Uri.https(baseUrl);
 
     final response = await http.get(uri, headers: innerHeader).timeout(
-          const Duration(seconds: 40),
-          onTimeout: () => http.Response('connectionTimeOut', 481),
-        );
+      const Duration(seconds: 40),
+      onTimeout: () => http.Response('connectionTimeOut', 481),
+    );
 
     return getDateTimeFromHeaders(response);
   }
@@ -375,7 +376,6 @@ DateTime getDateTimeFromHeaders(http.Response response) {
     final dateTime = parseGMTDate(dateString);
     return dateTime.addFromNow();
   } else {
-
     return DateTime.now();
   }
 }
@@ -468,5 +468,6 @@ android {
 const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
 final _rnd = Random();
 
-String getRandomString(int length) => String.fromCharCodes(
-    Iterable.generate(length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
+String getRandomString(int length) =>
+    String.fromCharCodes(
+        Iterable.generate(length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));

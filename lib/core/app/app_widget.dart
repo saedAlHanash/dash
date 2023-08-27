@@ -20,6 +20,8 @@ import '../../features/messages/bloc/all_messages/all_messages_cubit.dart';
 import '../../features/points/bloc/get_edged_point_cubit/get_all_points_cubit.dart';
 import '../../features/roles/bloc/all_roles/all_roles_cubit.dart';
 import '../../features/shared_trip/bloc/get_shared_trips_cubit/get_shared_trips_cubit.dart';
+import '../../features/system_params/bloc/system_params_cubit/system_params_cubit.dart';
+import '../../features/system_settings/bloc/system_settings_cubit/system_settings_cubit.dart';
 import '../../features/trip/bloc/all_trips_cubit/all_trips_cubit.dart';
 import '../../features/wallet/bloc/providers_cubit/providers_cubit.dart';
 import '../../router/go_route_pages.dart';
@@ -69,6 +71,10 @@ class MyApp extends StatelessWidget {
                 BlocProvider(create: (_) => sl<AllTransfersCubit>()..getAllTransfers(_)),
                 BlocProvider(create: (_) => sl<GetSharedTripsCubit>()..getSharesTrip(_)),
                 BlocProvider(create: (_) => sl<ProvidersCubit>()..getAllEpayProviders(_)),
+                BlocProvider(create: (_) => sl<SystemParamsCubit>()..getSystemParams(_)),
+                BlocProvider(
+                  create: (_) => sl<SystemSettingsCubit>()..getSystemSettings(_),
+                ),
                 BlocProvider(
                   create: (_) => sl<AllInstitutionsCubit>()..getInstitutions(_),
                 ),

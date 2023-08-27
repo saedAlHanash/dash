@@ -75,6 +75,7 @@ class GetUrl {
   static var getAllSharedTrips = 'api/services/app/SharedTripService/GetAllSharedTrips';
 
   static var fromDriver = 'api/services/app/AccountsService/RequiredAmountFromDriver';
+
   static var fromCompany = 'api/services/app/AccountsService/DriverDebtFromCompany';
 
   static var getAllCoupons = 'api/services/app/Coupons/GetAll';
@@ -82,6 +83,10 @@ class GetUrl {
   static var allPermissions = 'api/services/app/Role/GetAllPermissions';
 
   static var institutions = 'api/services/app/InstitutiosnsService/GetAll';
+
+  static var systemParams = 'api/services/app/SystemParametersService/GetAll';
+
+  static var systemSettings = 'api/services/app/SystemSettingsService/GetAll';
 }
 
 class PostUrl {
@@ -174,6 +179,10 @@ class PutUrl {
   static var updateRole = 'api/services/app/Role/Update';
 
   static var updateInstitution = 'api/services/app/InstitutiosnsService/Update';
+
+  static var updateParams = 'api/services/app/SystemParametersService/Update';
+
+  static var updateSetting = 'api/services/app/SystemSettingsService/Update';
 }
 
 class DeleteUrl {
