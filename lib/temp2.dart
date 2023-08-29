@@ -1,232 +1,42 @@
-// import 'dart:ui' as ui;
-//
-// import 'package:flutter/material.dart';
-// import 'package:crop/crop.dart';
-// import 'package:share_plus/share_plus.dart';
-// import 'package:url_launcher/url_launcher.dart';
-//
-//
-//
-//
-// class MyApp1 extends StatelessWidget {
-//   const MyApp1({Key? key}) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Crop Demo',
-//       theme: ThemeData(
-//         primarySwatch: Colors.blue,
-//         useMaterial3: true,
-//         brightness: Brightness.dark,
-//       ),
-//       home: const HomePage(),
-//     );
-//   }
-// }
-//
-// class HomePage extends StatefulWidget {
-//   const HomePage({Key? key}) : super(key: key);
-//   @override
-//   State<HomePage> createState() => _HomePageState();
-// }
-//
-// class _HomePageState extends State<HomePage> {
-//   final controller = CropController(aspectRatio: 1000 / 667.0);
-//   double _rotation = 0;
-//   BoxShape shape = BoxShape.rectangle;
-//
-//   void _cropImage() async {
-//     final pixelRatio = MediaQuery.of(context).devicePixelRatio;
-//     final cropped = await controller.crop(pixelRatio: pixelRatio);
-//
-//     if (cropped == null) return;
-//
-//     if (!mounted) return;
-//
-//     Navigator.of(context).push(
-//       MaterialPageRoute(
-//         builder: (context) => Scaffold(
-//           appBar: AppBar(
-//             title: const Text('Crop Result'),
-//             centerTitle: true,
-//             actions: [
-//               Builder(
-//                 builder: (context) => IconButton(
-//                   icon: const Icon(Icons.save),
-//                   onPressed: () async {
-//                       await _saveScreenShot(cropped);
-//                       if (!mounted) {
-//                         return;
-//                       }
-//                       ScaffoldMessenger.of(context).showSnackBar(
-//                         const SnackBar(
-//                           content: Text('Saved to gallery.'),
-//                         ),
-//                       );
-//
-//                   },
-//                 ),
-//               ),
-//             ],
-//           ),
-//           body: Center(
-//             child: RawImage(
-//               image: cropped,
-//             ),
-//           ),
-//         ),
-//         fullscreenDialog: true,
-//       ),
-//     );
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     final theme = Theme.of(context);
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Crop Demo'),
-//         centerTitle: true,
-//         leading: IconButton(
-//           icon: const Icon(Icons.link),
-//           onPressed: () {
-//             launchUrl(Uri.parse('https://github.com/xclud/flutter_crop'),
-//                 mode: LaunchMode.externalApplication);
-//           },
-//         ),
-//         actions: <Widget>[
-//           IconButton(
-//             onPressed: _cropImage,
-//             tooltip: 'Crop',
-//             icon: const Icon(Icons.crop),
-//           )
-//         ],
-//       ),
-//       body: Column(
-//         children: <Widget>[
-//           Expanded(
-//             child: Container(
-//               color: Colors.black,
-//               padding: const EdgeInsets.all(8),
-//               child: Crop(
-//                 onChanged: (decomposition) {
-//                   if (_rotation != decomposition.rotation) {
-//                     setState(() {
-//                       _rotation = ((decomposition.rotation + 180) % 360) - 180;
-//                     });
-//                   }
-//
-//                   // print(
-//                   //     "Scale : ${decomposition.scale}, Rotation: ${decomposition.rotation}, translation: ${decomposition.translation}");
-//                 },
-//                 controller: controller,
-//                 shape: shape,
-//                 /* It's very important to set `fit: BoxFit.cover`.
-//                    Do NOT remove this line.
-//                    There are a lot of issues on github repo by people who remove this line and their image is not shown correctly.
-//                 */
-//                 foreground: IgnorePointer(
-//                   child: Container(
-//                     alignment: Alignment.bottomRight,
-//                     child: const Text(
-//                       'Foreground Object',
-//                       style: TextStyle(color: Colors.red),
-//                     ),
-//                   ),
-//                 ),
-//                 helper: shape == BoxShape.rectangle
-//                     ? Container(
-//                   decoration: BoxDecoration(
-//                     border: Border.all(color: Colors.white, width: 2),
-//                   ),
-//                 )
-//                     : null,
-//                 child: Image.asset(
-//                   'images/sample.jpg',
-//                   fit: BoxFit.cover,
-//                 ),
-//               ),
-//             ),
-//           ),
-//           Row(
-//             children: <Widget>[
-//               IconButton(
-//                 icon: const Icon(Icons.undo),
-//                 tooltip: 'Undo',
-//                 onPressed: () {
-//                   controller.rotation = 0;
-//                   controller.scale = 1;
-//                   controller.offset = Offset.zero;
-//                   setState(() {
-//                     _rotation = 0;
-//                   });
-//                 },
-//               ),
-//               PopupMenuButton<BoxShape>(
-//                 icon: const Icon(Icons.crop_free),
-//                 itemBuilder: (context) => [
-//                   const PopupMenuItem(
-//                     value: BoxShape.rectangle,
-//                     child: Text("Box"),
-//                   ),
-//                   const PopupMenuItem(
-//                     value: BoxShape.circle,
-//                     child: Text("Oval"),
-//                   ),
-//                 ],
-//                 tooltip: 'Crop Shape',
-//                 onSelected: (x) {
-//                   setState(() {
-//                     shape = x;
-//                   });
-//                 },
-//               ),
-//               PopupMenuButton<double>(
-//                 icon: const Icon(Icons.aspect_ratio),
-//                 itemBuilder: (context) => [
-//                   const PopupMenuItem(
-//                     value: 1000 / 667.0,
-//                     child: Text("Original"),
-//                   ),
-//                   const PopupMenuDivider(),
-//                   const PopupMenuItem(
-//                     value: 16.0 / 9.0,
-//                     child: Text("16:9"),
-//                   ),
-//                   const PopupMenuItem(
-//                     value: 4.0 / 3.0,
-//                     child: Text("4:3"),
-//                   ),
-//                   const PopupMenuItem(
-//                     value: 1,
-//                     child: Text("1:1"),
-//                   ),
-//                   const PopupMenuItem(
-//                     value: 3.0 / 4.0,
-//                     child: Text("3:4"),
-//                   ),
-//                   const PopupMenuItem(
-//                     value: 9.0 / 16.0,
-//                     child: Text("9:16"),
-//                   ),
-//                 ],
-//                 tooltip: 'Aspect Ratio',
-//                 onSelected: (x) {
-//                   controller.aspectRatio = x;
-//                   setState(() {});
-//                 },
-//               ),
-//             ],
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
-//
-// Future<dynamic> _saveScreenShot(ui.Image img) async {
-//   var byteData = await img.toByteData(format: ui.ImageByteFormat.png);
-//   var buffer = byteData!.buffer.asUint8List();
-//   await Share.shareXFiles([XFile.fromData(buffer)]);
-// }
+import 'dart:math';
+class LatLng {
+  final double latitude;
+  final double longitude;
+
+  LatLng(this.latitude, this.longitude);
+}
+
+bool isPointInPolygon(LatLng point, List<LatLng> polygonVertices) {
+  int intersectCount = 0;
+  for (int i = 0; i < polygonVertices.length; i++) {
+    final LatLng p1 = polygonVertices[i];
+    final LatLng p2 = polygonVertices[(i + 1) % polygonVertices.length];
+    if (rayIntersectsSegment(point, p1, p2)) {
+      intersectCount++;
+    }
+  }
+  return intersectCount % 2 == 1;
+}
+
+bool rayIntersectsSegment(LatLng point, LatLng p1, LatLng p2) {
+  final double pointLat = point.latitude;
+  final double pointLng = point.longitude;
+  final double p1Lat = p1.latitude;
+  final double p1Lng = p1.longitude;
+  final double p2Lat = p2.latitude;
+  final double p2Lng = p2.longitude;
+
+  if (pointLat > min(p1Lat, p2Lat) &&
+      pointLat <= max(p1Lat, p2Lat) &&
+      pointLng <= max(p1Lng, p2Lng) &&
+      p1Lat != p2Lat) {
+    final double xIntersection = (pointLat - p1Lat) *
+        (p2Lng - p1Lng) /
+        (p2Lat - p1Lat) +
+        p1Lng;
+    if (p1Lng == p2Lng || pointLng <= xIntersection) {
+      return true;
+    }
+  }
+  return false;
+}

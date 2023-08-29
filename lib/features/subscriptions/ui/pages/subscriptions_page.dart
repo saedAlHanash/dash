@@ -57,6 +57,7 @@ class SubscriptionsPage extends StatelessWidget {
               SaedTableWidget(
                 command: state.command,
                 title: _super_userList,
+                fullHeight: 0.4.sh,
                 data: list
                     .mapIndexed(
                       (i, e) => [

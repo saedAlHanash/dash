@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_dash/core/util/note_message.dart';
 import 'package:qareeb_dash/core/widgets/my_card_widget.dart';
 import 'package:qareeb_dash/core/widgets/my_checkbox_widget.dart';
 import 'package:qareeb_dash/core/widgets/my_text_form_widget.dart';
@@ -189,6 +190,7 @@ class _CreateBusTripPageState extends State<CreateBusTripPage> {
                     ),
                     30.0.verticalSpace,
                     Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Expanded(
                           child: BlocBuilder<AllBusesCubit, AllBusesInitial>(
@@ -196,50 +198,73 @@ class _CreateBusTripPageState extends State<CreateBusTripPage> {
                               if (state.statuses.loading) {
                                 return MyStyle.loadingWidget();
                               }
-                              bussesC.text =
-                                  state.getNames(request.busesId).toString();
+                              bussesC.text = state.getNames(request.busesId).toString();
 
-                              void showMultiSelect() async {
-                                await showModalBottomSheet(
-                                  isScrollControlled: true,
-                                  // required for min/max child size
-                                  context: context,
-                                  builder: (ctx) {
-                                    return Padding(
-                                      padding:
-                                          const EdgeInsets.symmetric(horizontal: 200.0).r,
-                                      child: MultiSelectBottomSheet<int>(
-                                        searchable: true,
-                                        items: state.getSpinnerItem.mapIndexed(
-                                          (i, e) {
-                                            return MultiSelectItem<int>(e.id, e.name);
-                                          },
-                                        ).toList(),
-                                        initialValue: request.busesId,
-                                        onConfirm: (values) {
-                                          request.busesId
-                                            ..clear()
-                                            ..addAll(values);
-                                          bussesC.text =
-                                              state.getNames(request.busesId).toString();
-                                        },
-                                      ),
-                                    );
+                              //
+                              // void showMultiSelect() async {
+                              //   await showModalBottomSheet(
+                              //     isScrollControlled: true,
+                              //     // required for min/max child size
+                              //     context: context,
+                              //     builder: (ctx) {
+                              //       return Padding(
+                              //         padding:
+                              //             const EdgeInsets.symmetric(horizontal: 200.0).r,
+                              //         child: MultiSelectBottomSheet<int>(
+                              //           searchable: true,
+                              //           items: state.getSpinnerItem.mapIndexed(
+                              //             (i, e) {
+                              //               return MultiSelectItem<int>(e.id, e.name);
+                              //             },
+                              //           ).toList(),
+                              //           initialValue: request.busesId,
+                              //           onConfirm: (values) {
+                              //             request.busesId
+                              //               ..clear()
+                              //               ..addAll(values);
+                              //             bussesC.text =
+                              //                 state.getNames(request.busesId).toString();
+                              //           },
+                              //         ),
+                              //       );
+                              //     },
+                              //   );
+                              // }
+
+                            return  MultiSelectDialogField(
+                              buttonText: const Text('الباصات'),
+                                searchable: true,
+                                items: state.getSpinnerItem.mapIndexed(
+                                      (i, e) {
+                                    return MultiSelectItem<int>(e.id, e.name);
                                   },
-                                );
-                              }
+                                ).toList(),
+                                initialValue: request.busesId,
 
-                              return MyTextFormNoLabelWidget(
-                                label: 'باصات الرحلة',
-                                controller: bussesC,
-                                disableAndKeepIcon: true,
-                                textDirection: TextDirection.ltr,
-                                iconWidget: IconButton(
-                                    onPressed: () async {
-                                      showMultiSelect();
-                                    },
-                                    icon: const Icon(Icons.bus_alert_rounded)),
+                                onConfirm: (values) {
+                                  request.busesId
+                                    ..clear()
+                                    ..addAll(values);
+                                  bussesC.text = state
+                                      .getNames(request.busesId)
+                                      .toString();
+                                },
                               );
+                              // return MyTextFormNoLabelWidget(
+                              //   label: 'باصات الرحلة',
+                              //   controller: bussesC,
+                              //   disableAndKeepIcon: true,
+                              //   textDirection: TextDirection.ltr,
+                              //   iconWidget: IconButton(
+                              //       onPressed: () async {
+                              //         // showMultiSelect();
+                              //         NoteMessage.showMyDialog(
+                              //           context,
+                              //           child: ,
+                              //         );
+                              //       },
+                              //       icon: const Icon(Icons.bus_alert_rounded)),
+                              // );
                             },
                           ),
                         ),

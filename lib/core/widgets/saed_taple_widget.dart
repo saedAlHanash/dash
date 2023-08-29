@@ -17,10 +17,12 @@ class SaedTableWidget extends StatelessWidget {
     this.onChangePage,
     this.fullSizeIndex,
     this.fullHeight,
+    this.filters,
   });
 
   final List<dynamic> title;
   final List<int>? fullSizeIndex;
+  final Widget? filters;
   final List<List<dynamic>> data;
 
   final Command? command;
@@ -34,30 +36,8 @@ class SaedTableWidget extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0).r,
       child: Column(
         children: [
-          Row(
-            children: title.mapIndexed(
-              (i, e) {
-                final widget = e is String
-                    ? DrawableText(
-                        selectable: true,
-                        size: 18.0.sp,
-                        matchParent: true,
-                        textAlign: TextAlign.center,
-                        text: e,
-                        color: Colors.black,
-                        fontFamily: FontManager.cairoBold,
-                      )
-                    : title is Widget
-                        ? title as Widget
-                        : Container(
-                            color: Colors.red,
-                            height: 10,
-                          );
-
-                return Expanded(child: widget);
-              },
-            ).toList(),
-          ),
+          filters ?? 0.0.verticalSpace,
+          TitleWidget(title: title),
           Container(
             constraints: BoxConstraints(maxHeight: fullHeight ?? 0.6.sh),
             child: ListView.builder(
@@ -69,21 +49,27 @@ class SaedTableWidget extends StatelessWidget {
               },
             ),
           ),
-          if (command != null) 30.0.verticalSpace,
-          if (command != null)
-            Row(
+          30.0.verticalSpace,
+          Align(
+            alignment: Alignment.center,
+            child: Row(
               mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                SpinnerWidget(
-                  items: command!.getSpinnerItems,
-                  onChanged: (spinnerItem) {
-                    onChangePage?.call(command!..goToPage(spinnerItem.id));
-                  },
-                ),
+                if (command != null)
+                  SpinnerWidget(
+                    items: command!.getSpinnerItems,
+                    onChanged: (spinnerItem) {
+                      onChangePage?.call(command!..goToPage(spinnerItem.id));
+                    },
+                  ),
                 15.0.horizontalSpace,
-                DrawableText(text: 'عدد الصفحات الكلي: ${command?.maxPages}')
+                if (command != null)
+                  DrawableText(text: 'عدد الصفحات الكلي: ${command?.maxPages}'),
+                // InkWell(onTap: () {}, child: Icon(Icons.search))
               ],
             ),
+          ),
           20.0.verticalSpace,
         ],
       ),
@@ -128,6 +114,40 @@ class CellWidget extends StatelessWidget {
           ).toList(),
         ),
       ],
+    );
+  }
+}
+
+class TitleWidget extends StatelessWidget {
+  const TitleWidget({super.key, required this.title});
+
+  final List title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: title.mapIndexed(
+        (i, e) {
+          final widget = e is String
+              ? DrawableText(
+                  selectable: true,
+                  size: 18.0.sp,
+                  matchParent: true,
+                  textAlign: TextAlign.center,
+                  text: e,
+                  color: Colors.black,
+                  fontFamily: FontManager.cairoBold,
+                )
+              : title is Widget
+                  ? title as Widget
+                  : Container(
+                      color: Colors.red,
+                      height: 10,
+                    );
+
+          return Expanded(child: widget);
+        },
+      ).toList(),
     );
   }
 }

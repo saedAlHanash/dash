@@ -22,6 +22,14 @@ class AllMemberWithoutSubscriptionInitial extends Equatable {
     );
   }
 
+  List<Subscriber> filter(String q) {
+    if (q.isEmpty) return result;
+    final filterList = <Subscriber>[];
+    for (var e in result) {
+      if (e.fullName.contains(q)) filterList.add(e);
+    }
+    return filterList;
+  }
   List<SpinnerItem> get getSpinnerItem {
     final list = <SpinnerItem>[];
     for (var e in result) {

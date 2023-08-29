@@ -9,6 +9,7 @@ import 'package:qareeb_dash/core/util/note_message.dart';
 import 'package:qareeb_dash/core/widgets/item_info.dart';
 import 'package:qareeb_dash/core/widgets/my_button.dart';
 import 'package:qareeb_dash/core/widgets/my_card_widget.dart';
+import 'package:qareeb_dash/core/widgets/my_text_form_widget.dart';
 import 'package:qareeb_dash/core/widgets/saed_taple_widget.dart';
 import 'package:qareeb_dash/features/map/bloc/map_controller_cubit/map_controller_cubit.dart';
 import 'package:qareeb_dash/features/map/ui/widget/map_widget.dart';
@@ -81,103 +82,140 @@ class _CreateSubscriptionPageState extends State<SubscriptionInfoPage> {
           ],
         ),
         body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0).w,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              BlocBuilder<AllSubscriberCubit, AllSubscriberInitial>(
-                builder: (context, state) {
-                  if (state.statuses.loading) {
-                    return MyStyle.loadingWidget();
-                  }
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      DrawableText(
+          padding: const EdgeInsets.symmetric(horizontal: 120.0).w,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                BlocBuilder<AllSubscriberCubit, AllSubscriberInitial>(
+                  builder: (context, state) {
+                    if (state.statuses.loading) {
+                      return MyStyle.loadingWidget();
+                    }
+                    var q = '';
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        DrawableText(
+                          fontFamily: FontManager.cairoBold,
                           text:
                               'الطلاب المشتركين بهذا النموذج   ( ${state.result.length} طالب )',
-                          color: Colors.black),
-                      SaedTableWidget(
-                        fullHeight: 0.4.sh,
+                          color: Colors.black,
+                        ),
+                        StatefulBuilder(builder: (context, mState) {
+                          return SaedTableWidget(
+                            filters: Row(
+                              children: [
+                                SizedBox(
+                                  width: 250.0.w,
+                                  child: MyTextFormNoLabelWidget(
+                                    hint: 'بحث',
+                                    iconWidget: const Icon(Icons.search),
+                                    onChanged: (val) => mState(() => q = val),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            fullHeight: 0.6.sh,
+                            title: const [
+                              'ID',
+                              'اسم الطالب',
+                              'الكلية',
+                              'رقم هاتف',
+                              'عمليات',
+                            ],
+                            data: state
+                                .filter(q)
+                                .map(
+                                  (e) => [
+                                    e.id.toString(),
+                                    e.fullName,
+                                    e.facility,
+                                    e.phoneNo,
+                                    IconButton(
+                                      onPressed: () {
+                                        dialogSubscription(context, e.id);
+                                      },
+                                      icon: const Icon(
+                                        Icons.info_outline_rounded,
+                                      ),
+                                    ),
+                                  ],
+                                )
+                                .toList(),
+                          );
+                        }),
+                      ],
+                    );
+                  },
+                ),
+                const Divider(),
+                const DrawableText(
+                    fontFamily: FontManager.cairoBold,
+                    text: 'الطلاب الغير مشتركين ',
+                    color: Colors.black),
+                BlocBuilder<AllMemberWithoutSubscriptionCubit,
+                    AllMemberWithoutSubscriptionInitial>(
+                  builder: (context, state) {
+                    if (state.statuses.loading) {
+                      return MyStyle.loadingWidget();
+                    }
+                    var q = '';
+                    return StatefulBuilder(builder: (context, mState) {
+                      return SaedTableWidget(
+                        filters: Row(
+                          children: [
+                            SizedBox(
+                              width: 250.0.w,
+                              child: MyTextFormNoLabelWidget(
+                                hint: 'بحث',
+                                iconWidget: const Icon(Icons.search),
+                                onChanged: (val) => mState(() => q = val),
+                              ),
+                            ),
+                          ],
+                        ),
+                        fullHeight: 0.6.sh,
                         title: const [
                           'ID',
                           'اسم الطالب',
                           'الكلية',
                           'رقم هاتف',
-                          'عمليات',
+                          'مشترك؟',
                         ],
-                        data: state.result
+                        data: state
+                            .filter(q)
                             .map(
                               (e) => [
                                 e.id.toString(),
                                 e.fullName,
                                 e.facility,
                                 e.phoneNo,
-                                IconButton(
-                                  onPressed: () {
-                                    dialogSubscription(context, e.id);
-                                  },
-                                  icon: const Icon(
-                                    Icons.info_outline_rounded,
-                                  ),
-                                ),
+                                StatefulBuilder(builder: (context, myState) {
+                                  return Checkbox(
+                                    value: selected.contains(e.id),
+                                    onChanged: (value) {
+                                      myState(
+                                        () {
+                                          if (value ?? false) {
+                                            selected.add(e.id);
+                                          } else {
+                                            selected.remove(e.id);
+                                          }
+                                        },
+                                      );
+                                    },
+                                  );
+                                }),
                               ],
                             )
                             .toList(),
-                      ),
-                    ],
-                  );
-                },
-              ),
-              const Divider(),
-              const DrawableText(text: 'الطلاب الغير مشتركين ', color: Colors.black),
-              SizedBox(
-                child: BlocBuilder<AllMemberWithoutSubscriptionCubit,
-                    AllMemberWithoutSubscriptionInitial>(
-                  builder: (context, state) {
-                    if (state.statuses.loading) {
-                      return MyStyle.loadingWidget();
-                    }
-                    return SaedTableWidget(
-                      fullHeight: 0.4.sh,
-                      title: const [
-                        'ID',
-                        'اسم الطالب',
-                        'الكلية',
-                        'رقم هاتف',
-                        'مشترك؟',
-                      ],
-                      data: state.result
-                          .map(
-                            (e) => [
-                              e.id.toString(),
-                              e.fullName,
-                              e.facility,
-                              e.phoneNo,
-                              StatefulBuilder(builder: (context, myState) {
-                                return Checkbox(
-                                  value: selected.contains(e.id),
-                                  onChanged: (value) {
-                                    myState(
-                                      () {
-                                        if (value ?? false) {
-                                          selected.add(e.id);
-                                        } else {
-                                          selected.remove(e.id);
-                                        }
-                                      },
-                                    );
-                                  },
-                                );
-                              }),
-                            ],
-                          )
-                          .toList(),
-                    );
+                      );
+                    });
                   },
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
