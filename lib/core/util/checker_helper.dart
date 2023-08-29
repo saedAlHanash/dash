@@ -49,7 +49,7 @@ class AppPermissions {
   static const tapTripsHistory = "Pages.Coupon";
   static const tapSubscriptions = "Pages.Reason";
   static const members = "Pages.Reports";
-  static const tapMember = "Pages.Customers";
+  static const home = "Pages.Customers";
   static const subscriptions = "Pages.Messages";
   static const tapBuses = "Pages.Drivers";
   static const tapSuberUser = "Pages.Trips";
@@ -95,9 +95,9 @@ String tranzlatePermition(String p) {
   } else if (p == AppPermissions.members) {
     //
     return 'عمليات الطلاب';
-  } else if (p == AppPermissions.tapMember) {
+  } else if (p == AppPermissions.home) {
     //
-    return ' عرض جدول الطلاب';
+    return 'التتبع المباشر';
   } else if (p == AppPermissions.tapBuses) {
   //
     return 'عرض جدول الباصات';

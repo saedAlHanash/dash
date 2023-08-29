@@ -24,6 +24,7 @@ class EasyAutocomplete<T> extends StatefulWidget {
 
   /// Function that handles the submission of the input
   final Function(SpinnerItem)? onSubmitted;
+  final Function(String val)? onChange;
 
   /// Can be used to set custom inputFormatters to field
   final List<TextInputFormatter> inputFormatter;
@@ -84,6 +85,7 @@ class EasyAutocomplete<T> extends StatefulWidget {
       this.keyboardType = TextInputType.text,
       this.focusNode,
       this.cursorColor,
+      this.onChange,
       this.inputTextStyle = const TextStyle(),
       this.suggestionTextStyle = const TextStyle(),
       this.suggestionBackgroundColor,
@@ -157,7 +159,6 @@ class _EasyAutocompleteState extends State<EasyAutocomplete> {
                 suggestionTextStyle: widget.suggestionTextStyle,
                 suggestionBackgroundColor: widget.suggestionBackgroundColor,
                 onItemTapped: (value) {
-
                   _controller.value = TextEditingValue(
                       text: value.name,
                       selection: TextSelection.collapsed(offset: value.name.length));
@@ -237,8 +238,11 @@ class _EasyAutocompleteState extends State<EasyAutocomplete> {
               TextFormField(
                 decoration: widget.decoration,
                 controller: _controller,
+                // textDirection: TextDirection.rtl,
+                textAlign: TextAlign.right,
                 inputFormatters: widget.inputFormatter,
                 autofocus: widget.autofocus,
+                onChanged: (value) => widget.onChange?.call(value),
                 focusNode: _focusNode,
                 textCapitalization: widget.textCapitalization,
                 keyboardType: widget.keyboardType,

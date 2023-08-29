@@ -87,6 +87,7 @@ class _MembersPageState extends State<MembersPage> {
               final list = state.result;
               if (list.isEmpty) return const NotFoundWidget(text: 'لا يوجد تصنيفات');
               return SaedTableWidget(
+                fullHeight: 0.5.sh,
                 command: state.command,
                 title: _super_userList,
                 data: list

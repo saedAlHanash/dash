@@ -333,7 +333,12 @@ final appGoRouter = GoRouter(
           BlocProvider(create: (_) => di.sl<MapControllerCubit>()),
           BlocProvider(create: (_) => di.sl<PointsEdgeCubit>()),
           BlocProvider(create: (_) => di.sl<CreateTempTripCubit>()),
-          BlocProvider(create: (_) => di.sl<PointsCubit>()..getAllPoints(_)),
+
+          if (id != 0)
+            BlocProvider(create: (_) => di.sl<PointsCubit>())
+          else
+            BlocProvider(create: (_) => di.sl<PointsCubit>()..getAllPoints(_)),
+
           BlocProvider(
             create: (_) => di.sl<TempTripBuIdCubit>()..getTempTripBuId(context, id: id),
           ),

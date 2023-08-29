@@ -78,6 +78,18 @@ class TempTripsPage extends StatelessWidget {
                                 color: Colors.grey,
                               ),
                             ),
+                            InkWell(
+                              onTap: () {
+                                      context.pushNamed(
+                                        GoRouteName.createTempTrip,
+                                        queryParams: {'id': e.id.toString()},
+                                      );
+                                    },
+                              child: const Icon(
+                                Icons.edit,
+                                color: Colors.amber,
+                              ),
+                            ),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: BlocConsumer<DeleteTempTripCubit,

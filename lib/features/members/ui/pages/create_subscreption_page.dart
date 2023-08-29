@@ -13,7 +13,6 @@ import 'package:qareeb_dash/core/widgets/saed_taple_widget.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 import '../../../../core/strings/app_color_manager.dart';
-import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/my_style.dart';
 import '../../bloc/all_member_cubit/all_member_cubit.dart';
 import '../../bloc/create_subscreption_cubit/create_subscreption_cubit.dart';
@@ -41,7 +40,8 @@ class _CreateSubscriptionPage1State extends State<CreateSubscriptionPage1> {
           listenWhen: (p, c) => c.statuses.done,
           listener: (context, state) {
             context.read<AllMembersCubit>().getMembers(context);
-            window.history.back();
+            Navigator.pop(context);
+            // window.history.back();
           },
         ),
         BlocListener<MemberBuIdCubit, MemberBuIdInitial>(
@@ -49,7 +49,9 @@ class _CreateSubscriptionPage1State extends State<CreateSubscriptionPage1> {
           listener: (context, state) {
             request = CreateSubscriptionRequest.fromMember(state.result);
 
-            if (!request.isNotExpired) request.id = null;
+            if (!request.isNotExpired) {
+              request = CreateSubscriptionRequest(memberId: state.result.id);
+            }
             startDateC.text = request.supscriptionDate?.formatDate ?? '';
             endDateC.text = request.expirationDate?.formatDate ?? '';
           },
@@ -87,43 +89,43 @@ class _CreateSubscriptionPage1State extends State<CreateSubscriptionPage1> {
                   margin: const EdgeInsets.only(top: 30.0, bottom: 30.0).h,
                   child: Column(
                     children: [
-                      // Row(
-                      //   children: [
-                      //     Expanded(
-                      //       child: MyTextFormNoLabelWidget(
-                      //         label: 'تاريخ بداية الاشتراك',
-                      //         controller: startDateC,
-                      //         disableAndKeepIcon: true,
-                      //         enable: request.isActive,
-                      //         iconWidget: SelectSingeDateWidget(
-                      //           initial: request.supscriptionDate,
-                      //           minDate: DateTime.now(),
-                      //           onSelect: (selected) {
-                      //             startDateC.text = selected?.formatDate ?? '';
-                      //             request.supscriptionDate = selected;
-                      //           },
-                      //         ),
-                      //       ),
-                      //     ),
-                      //     15.0.horizontalSpace,
-                      //     Expanded(
-                      //       child: MyTextFormNoLabelWidget(
-                      //         label: 'تاريخ نهاية الاشتراك',
-                      //         controller: endDateC,
-                      //         disableAndKeepIcon: true,
-                      //         enable: request.isActive,
-                      //         iconWidget: SelectSingeDateWidget(
-                      //           initial: request.expirationDate,
-                      //           minDate: DateTime.now(),
-                      //           onSelect: (selected) {
-                      //             endDateC.text = selected?.formatDate ?? '';
-                      //             request.expirationDate = selected;
-                      //           },
-                      //         ),
-                      //       ),
-                      //     ),
-                      //   ],
-                      // ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: MyTextFormNoLabelWidget(
+                              label: 'تاريخ بداية الاشتراك',
+                              controller: startDateC,
+                              disableAndKeepIcon: true,
+                              // enable: request.isActive,
+                              iconWidget: SelectSingeDateWidget(
+                                initial: request.supscriptionDate,
+                                minDate: DateTime.now(),
+                                onSelect: (selected) {
+                                  startDateC.text = selected?.formatDate ?? '';
+                                  request.supscriptionDate = selected;
+                                },
+                              ),
+                            ),
+                          ),
+                          15.0.horizontalSpace,
+                          Expanded(
+                            child: MyTextFormNoLabelWidget(
+                              label: 'تاريخ نهاية الاشتراك',
+                              controller: endDateC,
+                              disableAndKeepIcon: true,
+                              // enable: request.isActive,
+                              iconWidget: SelectSingeDateWidget(
+                                initial: request.expirationDate,
+                                minDate: DateTime.now(),
+                                onSelect: (selected) {
+                                  endDateC.text = selected?.formatDate ?? '';
+                                  request.expirationDate = selected;
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                       BlocBuilder<CreateSubscriptionCubit1, CreateSubscriptionInitial1>(
                         builder: (context, state) {
                           if (state.statuses.loading) {
@@ -132,18 +134,17 @@ class _CreateSubscriptionPage1State extends State<CreateSubscriptionPage1> {
                           return Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              // MyButton(
-                              //   text: request.isNotExpired ? 'تعديل' : 'إنشاء',
-                              //   onTap: () {
-                              //     if (request.validateRequest(context)) {
-                              //       context
-                              //           .read<CreateSubscriptionCubit1>()
-                              //           .createSubscription(context, request: request);
-                              //     }
-                              //   },
-                              // ),
-                              // 20.0.horizontalSpace,
-                              if (isAllowed(AppPermissions.subscriptions))
+                              MyButton(
+                                text: request.isNotExpired ? 'تعديل' : 'إنشاء',
+                                onTap: () {
+                                  if (request.validateRequest(context)) {
+                                    context
+                                        .read<CreateSubscriptionCubit1>()
+                                        .createSubscription(context, request: request);
+                                  }
+                                },
+                              ),
+                              20.0.horizontalSpace,
                               if (request.isNotExpired)
                                 MyButton(
                                   textColor: Colors.white,

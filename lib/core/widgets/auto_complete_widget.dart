@@ -25,6 +25,9 @@ class AutoCompleteWidget extends StatelessWidget {
       decoration: InputDecoration(hintText: hint),
       initialValue: listItems.firstWhereOrNull((element) => element.isSelected),
       onSubmitted: (value) => onTap.call(value),
+      onChange: (val) {
+        if (val.isEmpty) onTap.call(SpinnerItem());
+      },
     );
   }
 }

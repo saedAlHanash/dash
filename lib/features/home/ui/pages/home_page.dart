@@ -147,19 +147,16 @@ class _HomePageState extends State<HomePage> {
                         title: 'سجل الرحلات', route: NamePaths.tripHistory),
                 ],
               ),
-              if (isAllowed(AppPermissions.tapSubscriptions) &&
-                  isAllowed(AppPermissions.tapMember))
-                AdminMenuItem(
-                  title: 'الطلاب',
-                  icon: Icons.group,
-                  children: [
-                    if (isAllowed(AppPermissions.tapSubscriptions))
-                      const AdminMenuItem(
-                          title: 'نماذج الاشتراكات', route: NamePaths.subscriptions),
-                    if (isAllowed(AppPermissions.tapMember))
-                      const AdminMenuItem(title: 'الطلاب', route: NamePaths.members),
-                  ],
-                ),
+              AdminMenuItem(
+                title: 'الطلاب',
+                icon: Icons.group,
+                children: [
+                  if (isAllowed(AppPermissions.tapSubscriptions))
+                    const AdminMenuItem(
+                        title: 'نماذج الاشتراكات', route: NamePaths.subscriptions),
+                  const AdminMenuItem(title: 'الطلاب', route: NamePaths.members),
+                ],
+              ),
               if (isAllowed(AppPermissions.tapRoles) &&
                   isAllowed(AppPermissions.tapAdmins))
                 AdminMenuItem(

@@ -44,6 +44,7 @@ class CreateSubscriptionCubit1 extends Cubit<CreateSubscriptionInitial1> {
         body: state.request.toJson(),
       );
     } else {
+      state.request.isActive = true;
       response = await APIService().postApi(
         url: PostUrl.createSubscription1,
         body: state.request.toJson(),

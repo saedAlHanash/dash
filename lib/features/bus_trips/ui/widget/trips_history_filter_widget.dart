@@ -58,7 +58,7 @@ class _TripsHistoryFilterWidgetState extends State<TripsHistoryFilterWidget> {
             return SizedBox(
               width: 200.0.w,
               child: AutoCompleteWidget(
-                hint: '',
+                hint: 'باص الرحلة',
                 onTap: (item) => request.busTripId = item.id,
                 listItems: list,
               ),

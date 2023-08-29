@@ -286,18 +286,6 @@ class MyEditTextWidget extends StatelessWidget {
       builder: (context, state) {
         onChangeObscure = () => state(() {});
         return TextFormField(
-          onTap: () {
-            if (controller != null) {
-              if (controller!.selection ==
-                  TextSelection.fromPosition(
-                      TextPosition(offset: controller!.text.length - 1))) {
-                state(() {
-                  controller!.selection = TextSelection.fromPosition(
-                      TextPosition(offset: controller!.text.length));
-                });
-              }
-            }
-          },
           initialValue: initialValue,
           obscureText: obscureText,
           decoration: inputDecoration,

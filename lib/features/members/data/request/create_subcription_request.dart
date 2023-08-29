@@ -12,7 +12,7 @@ class CreateSubscriptionRequest {
     this.memberId,
     this.supscriptionDate,
     this.expirationDate,
-    this.isActive = false,
+    this.isActive = true,
   });
 
   int? id;
@@ -42,7 +42,7 @@ class CreateSubscriptionRequest {
       memberId: member.id,
       supscriptionDate: member.subscriptions.lastOrNull?.supscriptionDate,
       expirationDate: member.subscriptions.lastOrNull?.expirationDate,
-      isActive: member.subscriptions.lastOrNull?.isActive ?? false,
+      isActive: member.subscriptions.lastOrNull?.isActive ?? true,
     );
   }
 
