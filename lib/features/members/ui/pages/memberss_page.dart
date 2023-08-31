@@ -28,6 +28,7 @@ import '../../../home/ui/screens/dashboard_page.dart';
 import '../../bloc/all_member_cubit/all_member_cubit.dart';
 import '../../bloc/create_subscreption_cubit/create_subscreption_cubit.dart';
 import '../../bloc/member_by_id_cubit/member_by_id_cubit.dart';
+import '../widget/member_filter_widget.dart';
 
 final _super_userList = [
   'ID',
@@ -56,116 +57,137 @@ class _MembersPageState extends State<MembersPage> {
               child: const Icon(Icons.add, color: Colors.white),
             )
           : null,
-      body: Column(
-        children: [
-          BlocBuilder<HomeCubit, HomeInitial>(
-            builder: (context, state) {
-              if (state.statuses.loading) {
-                return MyStyle.loadingWidget();
-              }
-              return Column(
-                children: [
-                  TotalWidget(
-                    text: 'عدد الطلاب المشتركين في النقل',
-                    icon: Assets.iconsCheckCircle,
-                    number: state.result.membersWithSubscription,
-                  ),
-                  TotalWidget(
-                    text: 'عدد الطلاب الغير مشتركين في النقل',
-                    icon: Assets.iconsReject,
-                    number: state.result.membersWithoutSubscription,
-                  ),
-                ],
-              );
-            },
-          ),
-          BlocBuilder<AllMembersCubit, AllMembersInitial>(
-            builder: (context, state) {
-              if (state.statuses.loading) {
-                return MyStyle.loadingWidget();
-              }
-              final list = state.result;
-              if (list.isEmpty) return const NotFoundWidget(text: 'لا يوجد تصنيفات');
-              return SaedTableWidget(
-                fullHeight: 0.5.sh,
-                command: state.command,
-                title: _super_userList,
-                data: list
-                    .mapIndexed(
-                      (index, e) => [
-                        e.id.toString(),
-                        e.fullName,
-                        e.collegeIdNumber,
-                        e.facility,
-                        (e.subscriptions.isEmpty || !e.subscriptions.last.isActive)
-                            ? 'غير مشترك'
-                            : (e.subscriptions.last.isNotExpired)
-                                ? 'مشترك'
-                                : 'اشتراك منتهي',
-                        InkWell(
-                          onTap: () => dialogSubscription(context, e.id),
-                          child: const Icon(
-                            Icons.edit_calendar,
-                            color: Colors.green,
-                          ),
-                        ),
-                        if (isAllowed(AppPermissions.members))
-                          Center(
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                IconButton(
-                                  onPressed: () {
-                                    NoteMessage.showMyDialog(
-                                      context,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(20.0).r,
-                                        child: Column(
-                                          children: [
-                                            ItemInfoInLine(
-                                              title: 'UserName',
-                                              info: e.userName,
-                                            ),
-                                            ItemInfoInLine(
-                                              title: 'Password',
-                                              info: e.password,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                  icon: const Icon(Icons.key),
-                                ),
-                                IconButton(
-                                  onPressed: () {
-                                    downloadImage(e.id, e.collegeIdNumber);
-                                  },
-                                  icon: const Icon(Icons.qr_code, color: Colors.black),
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    context.pushNamed(GoRouteName.createMember,
-                                        queryParams: {'id': e.id.toString()});
-                                  },
-                                  child: const Icon(
-                                    Icons.edit,
-                                    color: Colors.amber,
-                                  ),
-                                ),
-                              ],
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.only(bottom: 100.0).r,
+        child: Column(
+          children: [
+            BlocBuilder<HomeCubit, HomeInitial>(
+              builder: (context, state) {
+                if (state.statuses.loading) {
+                  return MyStyle.loadingWidget();
+                }
+                return Column(
+                  children: [
+                    TotalWidget(
+                      text: 'عدد الطلاب المشتركين في النقل',
+                      icon: Assets.iconsCheckCircle,
+                      number: state.result.membersWithSubscription,
+                    ),
+                    TotalWidget(
+                      text: 'عدد الطلاب الغير مشتركين في النقل',
+                      icon: Assets.iconsReject,
+                      number: state.result.membersWithoutSubscription,
+                    ),
+                  ],
+                );
+              },
+            ),
+            BlocBuilder<AllMembersCubit, AllMembersInitial>(
+              builder: (context, state) {
+                return MemberFilterWidget(
+                  onApply: (request) {
+                    context.read<AllMembersCubit>().getMembers(
+                          context,
+                          command: context.read<AllMembersCubit>().state.command.copyWith(
+                                memberFilterRequest: request,
+                                skipCount: 0,
+                                totalCount: 0,
+                              ),
+                        );
+                  },
+                  command: state.command,
+                );
+              },
+            ),
+            10.0.verticalSpace,
+            BlocBuilder<AllMembersCubit, AllMembersInitial>(
+              builder: (context, state) {
+                if (state.statuses.loading) {
+                  return MyStyle.loadingWidget();
+                }
+                final list = state.result;
+                if (list.isEmpty) return const NotFoundWidget(text: 'لا يوجد تصنيفات');
+                return SaedTableWidget(
+                  fullHeight: 0.5.sh,
+                  command: state.command,
+                  title: _super_userList,
+                  data: list
+                      .mapIndexed(
+                        (index, e) => [
+                          e.id.toString(),
+                          e.fullName,
+                          e.collegeIdNumber,
+                          e.facility,
+                          (e.subscriptions.isEmpty || !e.subscriptions.last.isActive)
+                              ? 'غير مشترك'
+                              : (e.subscriptions.last.isNotExpired)
+                                  ? 'مشترك'
+                                  : 'اشتراك منتهي',
+                          InkWell(
+                            onTap: () => dialogSubscription(context, e.id),
+                            child: const Icon(
+                              Icons.edit_calendar,
+                              color: Colors.green,
                             ),
-                          )
-                      ],
-                    )
-                    .toList(),
-                onChangePage: (command) {
-                  context.read<AllMembersCubit>().getMembers(context, command: command);
-                },
-              );
-            },
-          ),
-        ],
+                          ),
+                          if (isAllowed(AppPermissions.members))
+                            Center(
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  IconButton(
+                                    onPressed: () {
+                                      NoteMessage.showMyDialog(
+                                        context,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(20.0).r,
+                                          child: Column(
+                                            children: [
+                                              ItemInfoInLine(
+                                                title: 'UserName',
+                                                info: e.userName,
+                                              ),
+                                              ItemInfoInLine(
+                                                title: 'Password',
+                                                info: e.password,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    icon: const Icon(Icons.key),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {
+                                      downloadImage(e.id, e.collegeIdNumber);
+                                    },
+                                    icon: const Icon(Icons.qr_code, color: Colors.black),
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      context.pushNamed(GoRouteName.createMember,
+                                          queryParams: {'id': e.id.toString()});
+                                    },
+                                    child: const Icon(
+                                      Icons.edit,
+                                      color: Colors.amber,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                        ],
+                      )
+                      .toList(),
+                  onChangePage: (command) {
+                    context.read<AllMembersCubit>().getMembers(context, command: command);
+                  },
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

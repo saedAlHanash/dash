@@ -22,6 +22,7 @@ class AddPointCubit extends Cubit<AddPointInitial> {
 
   void removeEdge({int? pointId}) {
     int? keyForRemove;
+
     state.edgeIds.forEach((key, value) {
       if (pointId == key) {
         keyForRemove = pointId;

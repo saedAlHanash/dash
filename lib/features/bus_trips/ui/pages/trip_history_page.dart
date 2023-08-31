@@ -35,74 +35,76 @@ class TripHistoryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          TripsHistoryFilterWidget(
-            onApply: (request) {
-              context.read<AllTripHistoryCubit>().getTripHistory(
-                    context,
-                    command: context.read<AllTripHistoryCubit>().state.command.copyWith(
-                          historyRequest: request,
-                          skipCount: 0,
-                          totalCount: 0,
-                        ),
-                  );
-            },
-          ),
-          BlocBuilder<AllTripHistoryCubit, AllTripHistoryInitial>(
-            builder: (context, state) {
-              if (state.statuses.loading) {
-                return MyStyle.loadingWidget();
-              }
-              final list = state.result;
-              if (list.isEmpty) return const NotFoundWidget(text: 'يرجى إضافة رحلات');
-              return SaedTableWidget(
-                command: state.command,
-                title: _super_userList,
-                data: list
-                    .mapIndexed(
-                      (i, e) => [
-                        e.id.toString(),
-                        e.busMember.fullName,
-                        e.busTrip.name,
-                        e.bus.driverName,
-                        e.attendanceType.arabicName,
-                        e.isSubscribed
-                            ? const DrawableText(
-                                text: 'مشترك',
-                                matchParent: true,
-                                color: AppColorManager.mainColor,
-                                textAlign: TextAlign.center,
-                              )
-                            : const DrawableText(
-                                text: 'غير مشترك',
-                                color: Colors.red,
-                                matchParent: true,
-                                textAlign: TextAlign.center,
-                              ),
-                        e.date?.formatDateTime,
-                      ],
-                    )
-                    .toList(),
-                onChangePage: (command) {
-                  context
-                      .read<AllTripHistoryCubit>()
-                      .getTripHistory(context, command: command);
-                },
-              );
-            },
-          ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            TripsHistoryFilterWidget(
+              onApply: (request) {
+                context.read<AllTripHistoryCubit>().getTripHistory(
+                      context,
+                      command: context.read<AllTripHistoryCubit>().state.command.copyWith(
+                            historyRequest: request,
+                            skipCount: 0,
+                            totalCount: 0,
+                          ),
+                    );
+              },
+            ),
+            BlocBuilder<AllTripHistoryCubit, AllTripHistoryInitial>(
+              builder: (context, state) {
+                if (state.statuses.loading) {
+                  return MyStyle.loadingWidget();
+                }
+                final list = state.result;
+                if (list.isEmpty) return const NotFoundWidget(text: 'يرجى إضافة رحلات');
+                return SaedTableWidget(
+                  command: state.command,
+                  title: _super_userList,
+                  data: list
+                      .mapIndexed(
+                        (i, e) => [
+                          e.id.toString(),
+                          e.busMember.fullName,
+                          e.busTrip.name,
+                          e.bus.driverName,
+                          e.attendanceType.arabicName,
+                          e.isSubscribed
+                              ? const DrawableText(
+                                  text: 'مشترك',
+                                  matchParent: true,
+                                  color: AppColorManager.mainColor,
+                                  textAlign: TextAlign.center,
+                                )
+                              : const DrawableText(
+                                  text: 'غير مشترك',
+                                  color: Colors.red,
+                                  matchParent: true,
+                                  textAlign: TextAlign.center,
+                                ),
+                          e.date?.formatDateTime,
+                        ],
+                      )
+                      .toList(),
+                  onChangePage: (command) {
+                    context
+                        .read<AllTripHistoryCubit>()
+                        .getTripHistory(context, command: command);
+                  },
+                );
+              },
+            ),
 
-          // Expanded(
-          //   child: ListView.builder(
-          //     itemCount: list.length,
-          //     itemBuilder: (context, i) {
-          //       final item = list[i];
-          //       return ItemBusTrip(item: item);
-          //     },
-          //   ),
-          // ),
-        ],
+            // Expanded(
+            //   child: ListView.builder(
+            //     itemCount: list.length,
+            //     itemBuilder: (context, i) {
+            //       final item = list[i];
+            //       return ItemBusTrip(item: item);
+            //     },
+            //   ),
+            // ),
+          ],
+        ),
       ),
     );
   }

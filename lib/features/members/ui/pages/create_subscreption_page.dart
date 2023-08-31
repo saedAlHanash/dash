@@ -18,6 +18,7 @@ import '../../bloc/all_member_cubit/all_member_cubit.dart';
 import '../../bloc/create_subscreption_cubit/create_subscreption_cubit.dart';
 import '../../bloc/member_by_id_cubit/member_by_id_cubit.dart';
 import '../../data/request/create_subcription_request.dart';
+import 'create_member_page.dart';
 
 class CreateSubscriptionPage1 extends StatefulWidget {
   const CreateSubscriptionPage1({super.key});
@@ -170,78 +171,6 @@ class _CreateSubscriptionPage1State extends State<CreateSubscriptionPage1> {
             ),
           );
         },
-      ),
-    );
-  }
-}
-
-class SelectSingeDateWidget extends StatelessWidget {
-  const SelectSingeDateWidget({
-    super.key,
-    this.onSelect,
-    this.initial,
-    this.maxDate,
-    this.minDate,
-  });
-
-  final DateTime? initial;
-  final DateTime? maxDate;
-  final DateTime? minDate;
-  final Function(DateTime? selected)? onSelect;
-
-  @override
-  Widget build(BuildContext context) {
-    return PopupMenuButton(
-      constraints: BoxConstraints(maxHeight: 1.0.sh, maxWidth: 1.0.sw),
-      splashRadius: 0.001,
-      color: Colors.white,
-      padding: const EdgeInsets.all(5.0).r,
-      elevation: 2.0,
-      iconSize: 0.1,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20.0.r),
-      ),
-      itemBuilder: (context) {
-        return [
-          // PopupMenuItem 1
-          PopupMenuItem(
-            value: 1,
-            enabled: false,
-            // row with 2 children
-            child: SizedBox(
-              height: 400.0.spMin,
-              width: 300.0.spMin,
-              child: Center(
-                child: Directionality(
-                  textDirection: TextDirection.ltr,
-                  child: SfDateRangePicker(
-                    initialSelectedDate: initial,
-                    maxDate: maxDate,
-                    minDate: minDate,
-                    onSelectionChanged: (DateRangePickerSelectionChangedArgs range) {
-                      if (range.value is DateTime) {
-                        onSelect?.call(range.value);
-                        Navigator.pop(context);
-                      } else if (range.value is PickerDateRange) {}
-                    },
-                    selectionMode: DateRangePickerSelectionMode.single,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ];
-      },
-      child: Container(
-        padding: const EdgeInsets.all(15.0).r,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12.0.r),
-          color: AppColorManager.offWhit.withOpacity(0.5),
-        ),
-        child: Icon(
-          Icons.date_range,
-          size: 40.0.r,
-        ),
       ),
     );
   }

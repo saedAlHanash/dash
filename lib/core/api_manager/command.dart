@@ -3,6 +3,7 @@ import 'package:qareeb_dash/core/util/shared_preferences.dart';
 
 import '../../features/accounts/data/request/transfer_filter_request.dart';
 import '../../features/bus_trips/data/request/filter_trip_history_request.dart';
+import '../../features/members/data/request/member_filter_request.dart';
 import '../widgets/spinner_widget.dart';
 
 class Command {
@@ -10,13 +11,14 @@ class Command {
     this.skipCount,
     this.totalCount,
     this.historyRequest,
+    this.memberFilterRequest,
   });
 
   int? skipCount;
   int maxResultCount = 20;
   int? totalCount;
   FilterTripHistoryRequest? historyRequest;
-
+  MemberFilterRequest? memberFilterRequest;
 
   int get maxPages => ((totalCount ?? 0) / maxResultCount).myRound;
 
@@ -54,11 +56,20 @@ class Command {
   }
 
   Map<String, dynamic> toJson() {
-    return {
+    final json = <String, dynamic>{
       'skipCount': skipCount,
       'maxResultCount': maxResultCount,
       'InstitutionId': AppSharedPreference.getInstitutionId,
-    }..addAll(historyRequest?.toMap() ?? {});
+    };
+
+    if (historyRequest != null) {
+      json.addAll(historyRequest!.toMap());
+    }
+    if (memberFilterRequest != null) {
+      json.addAll(memberFilterRequest!.toJson());
+    }
+
+    return json;
   }
 
   factory Command.fromJson(Map<String, dynamic> map) {
@@ -71,11 +82,13 @@ class Command {
     int? skipCount,
     int? totalCount,
     FilterTripHistoryRequest? historyRequest,
+    MemberFilterRequest? memberFilterRequest,
   }) {
     return Command(
       skipCount: skipCount ?? this.skipCount,
       totalCount: totalCount ?? this.totalCount,
       historyRequest: historyRequest ?? this.historyRequest,
+      memberFilterRequest: memberFilterRequest ?? this.memberFilterRequest,
     );
   }
 }

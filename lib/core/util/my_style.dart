@@ -63,7 +63,7 @@ class MyStyle {
   }
 
   static var outlineBorder = BoxDecoration(
-      border: Border.all(color: AppColorManager.f1),
+      border: Border.all(color: AppColorManager.gray),
       borderRadius: BorderRadius.circular(12.0.r),
       color: Colors.white);
 

@@ -2,6 +2,7 @@ import 'package:drawable_text/drawable_text.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:qareeb_dash/core/api_manager/api_service.dart';
 
 import '../strings/app_color_manager.dart';
 
@@ -50,7 +51,7 @@ class SpinnerWidgetState<T> extends State<SpinnerWidget<T>> {
         return DropdownMenuItem(
           value: item,
           child: DrawableText(
-            text: item.name ?? '',
+            text: item.name,
             padding: padding,
             color: (item.id != -1)
                 ? (item.enable)
@@ -74,6 +75,14 @@ class SpinnerWidgetState<T> extends State<SpinnerWidget<T>> {
     super.initState();
   }
 
+  void clearSelect() {
+    if (widget.hint == null) {
+      selectedItem = list.first.value;
+    } else {
+      selectedItem = null;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return StatefulBuilder(
@@ -83,35 +92,41 @@ class SpinnerWidgetState<T> extends State<SpinnerWidget<T>> {
           value: selectedItem,
           hint: widget.hint,
           onChanged: (value) {
-            if (!(value! as SpinnerItem).enable) return;
-            if (widget.onChanged != null) widget.onChanged!(value as SpinnerItem);
-            state(() => selectedItem = value as SpinnerItem);
+            if (!(value!).enable) return;
+            if (widget.onChanged != null) widget.onChanged!(value);
+            state(() => selectedItem = value);
           },
-          buttonWidth: widget.width,
+          buttonStyleData: ButtonStyleData(
+            width: widget.width,
+            height: 60.0.h,
+            decoration: widget.decoration ??
+                BoxDecoration(
+                  borderRadius: BorderRadius.circular(12.0.r),
+                  color: AppColorManager.offWhit.withOpacity(0.5),
+                ),
+            padding: const EdgeInsets.only(right: 10.0).w,
+            elevation: 0,
+          ),
+          dropdownStyleData: DropdownStyleData(
+            width: widget.dropdownWidth,
+            maxHeight: 300.0.h,
+            elevation: 2,
+          ),
+          iconStyleData: IconStyleData(
+            icon: Row(
+              children: [
+                const Icon(
+                  Icons.expand_more,
+                  color: AppColorManager.mainColor,
+                ),
+                18.0.horizontalSpace,
+              ],
+            ),
+            iconSize: 35.0.spMin,
+          ),
           isExpanded: widget.expanded ?? false,
-          dropdownWidth: widget.dropdownWidth,
           customButton: widget.customButton,
           underline: 0.0.verticalSpace,
-          buttonHeight: 60.0.h,
-          dropdownMaxHeight: 300.0.h,
-          buttonDecoration: widget.decoration ??
-              BoxDecoration(
-                borderRadius: BorderRadius.circular(12.0.r),
-                color: AppColorManager.offWhit.withOpacity(0.5),
-              ),
-          buttonPadding: const EdgeInsets.only(right: 10.0).w,
-          buttonElevation: 0,
-          dropdownElevation: 2,
-          icon: Row(
-            children: [
-              const Icon(
-                Icons.expand_more,
-                color: AppColorManager.mainColor,
-              ),
-              18.0.horizontalSpace,
-            ],
-          ),
-          iconSize: 35.0.spMin,
         );
       },
     );

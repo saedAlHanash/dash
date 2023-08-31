@@ -99,17 +99,62 @@ extension MaxInt on num {
   String get formatPrice => 'spy${oCcy.format(this)}';
 
   String get iconPoint {
-    switch (toInt()) {
-      case 0:
-        return Assets.iconsA;
+    final data = toInt() + 1;
+    switch (data) {
       case 1:
-        return Assets.iconsB;
+        return Assets.icons1;
       case 2:
-        return Assets.iconsC;
+        return Assets.icons2;
       case 3:
-        return Assets.iconsD;
+        return Assets.icons3;
+      case 4:
+        return Assets.icons4;
+      case 5:
+        return Assets.icons5;
+      case 6:
+        return Assets.icons6;
+      case 7:
+        return Assets.icons7;
+      case 8:
+        return Assets.icons8;
+      case 9:
+        return Assets.icons9;
+      case 10:
+        return Assets.icons10;
+      case 11:
+        return Assets.icons11;
+      case 12:
+        return Assets.icons12;
+      case 13:
+        return Assets.icons13;
+      case 14:
+        return Assets.icons14;
+      case 15:
+        return Assets.icons15;
+      case 16:
+        return Assets.icons16;
+      case 17:
+        return Assets.icons17;
+      case 18:
+        return Assets.icons18;
+      case 19:
+        return Assets.icons19;
+      case 20:
+        return Assets.icons20;
+      case 21:
+        return Assets.icons21;
+      case 22:
+        return Assets.icons22;
+      case 23:
+        return Assets.icons23;
+      case 24:
+        return Assets.icons24;
+      case 25:
+        return Assets.icons25;
+      case 26:
+        return Assets.icons26;
     }
-    return Assets.iconsE;
+    return Assets.icons26;
   }
 
   int get myRound {
