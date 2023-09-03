@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -48,5 +49,52 @@ class AllMembersCubit extends Cubit<AllMembersInitial> {
 
   void update() {
     emit(state.copyWith());
+  }
+
+  Future<Pair<List<String>, List<List<dynamic>>>?> getMembersAsync(
+      BuildContext context) async {
+    emit(state.copyWith(command: state.command.copyWith(maxResultCount: 1.maxInt)));
+    final pair = await _getMembersApi();
+    emit(state.copyWith(command: state.command.copyWith(maxResultCount: 20)));
+    if (pair.first == null) {
+      if (context.mounted) {
+        NoteMessage.showSnakeBar(message: pair.second ?? '', context: context);
+      }
+    } else {
+      return _getXlsData(pair.first!.items);
+    }
+    return null;
+  }
+
+  Pair<List<String>, List<List<dynamic>>> _getXlsData(List<Member> data) {
+    return Pair(
+        [
+          'id',
+          'fullName',
+          'address',
+          'late',
+          'Lng',
+          'userName',
+          'password',
+          'phoneNumber',
+          'facility',
+          'idNumber',
+          'collegeIdNumber',
+        ],
+        data
+            .mapIndexed(
+              (index, element) => [
+                element.id,
+                element.fullName,
+                element.address,
+                element.late,
+                element.longe,
+                element.userName,
+                element.password,
+                element.phoneNo,
+                element.facility,
+              ],
+            )
+            .toList());
   }
 }

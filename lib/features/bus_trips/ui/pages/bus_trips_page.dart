@@ -11,6 +11,7 @@ import 'package:qareeb_dash/core/widgets/saed_taple_widget.dart';
 import 'package:qareeb_dash/router/go_route_pages.dart';
 
 import '../../../../core/util/checker_helper.dart';
+import '../../../../core/util/file_util.dart';
 import '../../../../core/util/my_style.dart';
 
 import '../../bloc/all_bus_trips_cubit/all_bus_trips_cubit.dart';
@@ -23,34 +24,66 @@ final _super_userList = [
   'الباصات',
   'تاريخ الرحلة',
   'وقت الرحلة',
-  'حالة الرحلة الآن',
   'عدد اشتراكات الطلاب',
+  'حالة الرحلة الآن',
   if (isAllowed(AppPermissions.busTrips)) 'عمليات',
 ];
 
-class BusTripsPage extends StatelessWidget {
+class BusTripsPage extends StatefulWidget {
   const BusTripsPage({super.key});
+
+  @override
+  State<BusTripsPage> createState() => _BusTripsPageState();
+}
+
+class _BusTripsPageState extends State<BusTripsPage> {
+  var loading = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: isAllowed(AppPermissions.busTrips)
-          ? FloatingActionButton(
-              onPressed: () => context.pushNamed(GoRouteName.createBusTrip),
-              child: const Icon(Icons.add, color: Colors.white),
+          ? Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                FloatingActionButton(
+                  onPressed: () => context.pushNamed(GoRouteName.createBusTrip),
+                  child: const Icon(Icons.add, color: Colors.white),
+                ),
+                10.0.verticalSpace,
+                StatefulBuilder(
+                  builder: (context, mState) {
+                    return FloatingActionButton(
+                      onPressed: () {
+                        mState(() => loading = true);
+                        context.read<AllBusTripsCubit>().getBusAsync(context).then(
+                          (value) {
+                            if (value == null) return;
+                            saveXls(header: value.first, data: value.second);
+                            mState(() => loading = false);
+                          },
+                        );
+                      },
+                      child: loading
+                          ? const CircularProgressIndicator.adaptive()
+                          : const Icon(Icons.file_download, color: Colors.white),
+                    );
+                  },
+                ),
+              ],
             )
           : null,
-      body: BlocBuilder<AllBusTripsCubit, AllBusTripsInitial>(
-        builder: (context, state) {
-          if (state.statuses.loading) {
-            return MyStyle.loadingWidget();
-          }
-          final list = state.result;
+      body: Column(
+        children: [
+          BlocBuilder<AllBusTripsCubit, AllBusTripsInitial>(
+            builder: (context, state) {
+              if (state.statuses.loading) {
+                return MyStyle.loadingWidget();
+              }
+              final list = state.result;
 
-          if (list.isEmpty) return const NotFoundWidget(text: 'لا يوجد تصنيفات');
-          return Column(
-            children: [
-              SaedTableWidget(
+              if (list.isEmpty) return const NotFoundWidget(text: 'يرجى إضافة رحلات');
+              return SaedTableWidget(
                 command: state.command,
                 title: _super_userList,
                 data: list.mapIndexed(
@@ -121,20 +154,10 @@ class BusTripsPage extends StatelessWidget {
                 onChangePage: (command) {
                   context.read<AllBusTripsCubit>().getBusTrips(context, command: command);
                 },
-              ),
-
-              // Expanded(
-              //   child: ListView.builder(
-              //     itemCount: list.length,
-              //     itemBuilder: (context, i) {
-              //       final item = list[i];
-              //       return ItemBusTrip(item: item);
-              //     },
-              //   ),
-              // ),
-            ],
-          );
-        },
+              );
+            },
+          ),
+        ],
       ),
     );
   }

@@ -3,26 +3,34 @@ import 'package:qareeb_dash/core/util/shared_preferences.dart';
 
 import '../../features/accounts/data/request/transfer_filter_request.dart';
 import '../../features/bus_trips/data/request/filter_trip_history_request.dart';
+import '../../features/bus_trips/data/request/trips_filter_request.dart';
+import '../../features/buses/data/request/buses_filter_request.dart';
 import '../../features/members/data/request/member_filter_request.dart';
 import '../widgets/spinner_widget.dart';
 
 class Command {
   Command({
     this.skipCount,
+    this.maxResultCount,
     this.totalCount,
     this.historyRequest,
     this.memberFilterRequest,
+    this.busesFilterRequest,
+    this.tripsFilterRequest,
   });
 
   int? skipCount;
-  int maxResultCount = 20;
+  int? maxResultCount;
+
   int? totalCount;
   FilterTripHistoryRequest? historyRequest;
   MemberFilterRequest? memberFilterRequest;
+  BusesFilterRequest? busesFilterRequest;
+  TripsFilterRequest? tripsFilterRequest;
 
-  int get maxPages => ((totalCount ?? 0) / maxResultCount).myRound;
+  int get maxPages => ((totalCount ?? 0) / (maxResultCount??20)).myRound;
 
-  int get currentPage => ((skipCount ?? 0) + 1 / maxResultCount).myRound;
+  int get currentPage => ((skipCount ?? 0) + 1 / (maxResultCount??20)).myRound;
 
   List<SpinnerItem> get getSpinnerItems {
     final list = <SpinnerItem>[];
@@ -39,7 +47,7 @@ class Command {
   }
 
   void goToPage(int pageIndex) {
-    skipCount = (pageIndex - 1) * maxResultCount;
+    skipCount = (pageIndex - 1) * (maxResultCount??20);
   }
 
   factory Command.initial() {
@@ -69,6 +77,14 @@ class Command {
       json.addAll(memberFilterRequest!.toJson());
     }
 
+    if (busesFilterRequest != null) {
+      json.addAll(busesFilterRequest!.toJson());
+    }
+
+    if (tripsFilterRequest != null) {
+      // json.addAll(tripsFilterRequest!.toJson());
+    }
+
     return json;
   }
 
@@ -81,14 +97,20 @@ class Command {
   Command copyWith({
     int? skipCount,
     int? totalCount,
+    int? maxResultCount,
     FilterTripHistoryRequest? historyRequest,
     MemberFilterRequest? memberFilterRequest,
+    BusesFilterRequest? busesFilterRequest,
+    TripsFilterRequest? tripsFilterRequest,
   }) {
     return Command(
       skipCount: skipCount ?? this.skipCount,
       totalCount: totalCount ?? this.totalCount,
       historyRequest: historyRequest ?? this.historyRequest,
       memberFilterRequest: memberFilterRequest ?? this.memberFilterRequest,
+      busesFilterRequest: busesFilterRequest ?? this.busesFilterRequest,
+      tripsFilterRequest: tripsFilterRequest ?? this.tripsFilterRequest,
+      maxResultCount: maxResultCount ?? this.maxResultCount,
     );
   }
 }

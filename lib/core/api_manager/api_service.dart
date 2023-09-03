@@ -89,7 +89,7 @@ class APIService {
     if (path != null) url = '$url/$path';
 
     if (query != null) {
-      query.removeWhere((key, value) => value == null);
+      query.removeWhere((key, value) => (value == null || value.toString().isEmpty));
       query.forEach((key, value) => query[key] = value.toString());
     }
 

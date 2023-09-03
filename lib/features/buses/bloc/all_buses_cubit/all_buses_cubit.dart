@@ -36,6 +36,51 @@ class AllBusesCubit extends Cubit<AllBusesInitial> {
     }
   }
 
+  Future<Pair<List<String>, List<List<dynamic>>>?> getBusesAsync(
+      BuildContext context) async {
+    emit(state.copyWith(command: state.command.copyWith(maxResultCount: 1.maxInt)));
+    final pair = await _getBusesApi();
+    emit(state.copyWith(command: state.command.copyWith(maxResultCount: 20)));
+    if (pair.first == null) {
+      if (context.mounted) {
+        NoteMessage.showSnakeBar(message: pair.second ?? '', context: context);
+      }
+    } else {
+      return _getXlsData(pair.first!.items);
+    }
+    return null;
+  }
+
+  Pair<List<String>, List<List<dynamic>>> _getXlsData(List<BusModel> data) {
+    return Pair(
+        [
+          'id',
+          'institutionId',
+          'ime',
+          'driverName',
+          'driverPhone',
+          'busModel',
+          'busColor',
+          'busNumber',
+          'seatsNumber',
+        ],
+        data
+            .mapIndexed(
+              (index, element) => [
+                element.id,
+                element.institutionId,
+                element.ime,
+                element.driverName,
+                element.driverPhone,
+                element.busModel,
+                element.busColor,
+                element.busNumber,
+                element.seatsNumber,
+              ],
+            )
+            .toList());
+  }
+
   Ime getBusByImei(Ime imei) {
     final r = state.result.firstWhereOrNull((element) => element.ime == imei.ime);
     if (r != null) {

@@ -2,7 +2,7 @@ part of 'add_point_cubit.dart';
 
 class AddPointInitial {
   final List<TripPoint> addedPoints;
-  final Map<int, int> edgeIds;
+  final List<int> edgeIds;
 
   const AddPointInitial({
     required this.addedPoints,
@@ -13,7 +13,7 @@ class AddPointInitial {
     var list = <TripPoint>[];
     return AddPointInitial(
       addedPoints: list,
-      edgeIds: <int, int>{},
+      edgeIds: [],
     );
   }
 

@@ -25,7 +25,7 @@ class PathPointsWidget extends StatelessWidget {
           list: state.addedPoints,
           onTap: (e) {
             var latestPoint = addPointCubit.removePoint(id: e.id);
-            addPointCubit.removeEdge(pointId: latestPoint?.id);
+            addPointCubit.removeEdge();
             pointsCubit.getConnectedPoints(context, point: latestPoint);
           },
         );

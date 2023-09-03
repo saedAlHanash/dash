@@ -52,6 +52,8 @@ class AllBusesInitial extends Equatable {
     return list;
   }
 
+
+
   @override
   List<Object> get props => [statuses, result, error];
 

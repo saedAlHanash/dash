@@ -13,6 +13,7 @@ import 'package:qareeb_dash/router/go_route_pages.dart';
 
 import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/util/checker_helper.dart';
+import '../../../../core/util/file_util.dart';
 import '../../../../core/util/my_style.dart';
 
 import '../../bloc/all_bus_trips_cubit/all_bus_trips_cubit.dart';
@@ -29,12 +30,38 @@ final _super_userList = [
   'تاريخ العملية',
 ];
 
-class TripHistoryPage extends StatelessWidget {
+class TripHistoryPage extends StatefulWidget {
   const TripHistoryPage({super.key});
+
+  @override
+  State<TripHistoryPage> createState() => _TripHistoryPageState();
+}
+
+class _TripHistoryPageState extends State<TripHistoryPage> {
+  var loading = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: StatefulBuilder(
+        builder: (context, mState) {
+          return FloatingActionButton(
+            onPressed: () {
+              mState(() => loading = true);
+              context.read<AllTripHistoryCubit>().getTripHistoryAsync(context).then(
+                (value) {
+                  if (value == null) return;
+                  saveXls(header: value.first, data: value.second);
+                  mState(() => loading = false);
+                },
+              );
+            },
+            child: loading
+                ? const CircularProgressIndicator.adaptive()
+                : const Icon(Icons.file_download, color: Colors.white),
+          );
+        },
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [

@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,6 @@ import '../../../../core/strings/enum_manager.dart';
 import '../../../../core/util/note_message.dart';
 import '../../../../core/util/pair_class.dart';
 import '../../data/response/trip_history_response.dart';
-
 
 part 'trip_history_state.dart';
 
@@ -44,6 +44,51 @@ class AllTripHistoryCubit extends Cubit<AllTripHistoryInitial> {
     } else {
       return Pair(null, ErrorManager.getApiError(response));
     }
+  }
+
+  Future<Pair<List<String>, List<List<dynamic>>>?> getTripHistoryAsync(
+      BuildContext context) async {
+    state.command.maxResultCount = 1.maxInt;
+
+    final pair = await _getTripHistoryApi();
+
+    state.command.maxResultCount = 20;
+    if (pair.first == null) {
+      if (context.mounted) {
+        NoteMessage.showSnakeBar(message: pair.second ?? '', context: context);
+      }
+    } else {
+      return _getXlsData(pair.first!.items);
+    }
+    return null;
+  }
+
+  Pair<List<String>, List<List<dynamic>>> _getXlsData(List<TripHistoryItem> data) {
+    return Pair(
+        [
+          'id',
+          'busId',
+          'bus',
+          'busTrip',
+          'busMember',
+          'date',
+          'attendanceType',
+          'isSubscribed',
+        ],
+        data
+            .mapIndexed(
+              (index, element) => [
+                element.id,
+                element.busId,
+                element.bus.driverName,
+                element.busTrip.name,
+                element.busMember.fullName,
+                element.date?.toIso8601String(),
+                element.attendanceType.arabicName,
+                element.isSubscribed ? 'مشترك' : "غير مشترك",
+              ],
+            )
+            .toList());
   }
 
   void update() {

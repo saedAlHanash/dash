@@ -98,7 +98,7 @@ class UpdateTempTripPageState extends State<UpdateTempTripPage> {
                                     text: request.id != null ? 'تعديل' : 'إنشاء',
                                     onTap: () {
                                       request.pathEdgesIds.clear();
-                                      addPointCubit.state.edgeIds.forEach((key, value) {
+                                      addPointCubit.state.edgeIds.forEach(( value) {
                                         request.pathEdgesIds.add(value);
                                       });
 

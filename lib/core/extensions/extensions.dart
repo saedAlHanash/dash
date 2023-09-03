@@ -477,3 +477,4 @@ extension ScrollMax on ScrollController {
 
   bool get isMin => offset == 0;
 }
+

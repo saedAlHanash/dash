@@ -13,6 +13,7 @@ import 'package:qareeb_dash/router/go_route_pages.dart';
 import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/my_style.dart';
 
+import '../../../buses/ui/widget/buses_filter_widget.dart';
 import '../../bloc/all_super_users_cubit/all_super_users_cubit.dart';
 import '../../bloc/delete_super_user_cubit/delete_super_user_cubit.dart';
 
@@ -37,82 +38,102 @@ class SuperUsersPage extends StatelessWidget {
               child: const Icon(Icons.add, color: Colors.white),
             )
           : null,
-      body: Column(
-        children: [
-          BlocBuilder<AllSuperUsersCubit, AllSuperUsersInitial>(
-            builder: (context, state) {
-              if (state.statuses.loading) {
-                return MyStyle.loadingWidget();
-              }
-              final list = state.result;
-              if (list.isEmpty) return const NotFoundWidget(text: 'يرجى إضافة جهاز لوحي جديد');
-              return SaedTableWidget(
-                command: state.command,
-                title: _super_userList,
-                data: list
-                    .mapIndexed(
-                      (index, e) => [
-                        e.id.toString(),
-                        e.fullName,
-                        e.bus.ime,
-                        e.bus.driverName,
-                        if(isAllowed(AppPermissions.suberUsers))
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                      context.pushNamed(GoRouteName.createSuperUsers,
-                                          extra: e);
-                                    },
-                              child: const Icon(
-                                Icons.edit,
-                                color: Colors.amber,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            BlocBuilder<AllSuperUsersCubit, AllSuperUsersInitial>(
+              builder: (context, state) {
+                return BusesFilterWidget(
+                  command: state.command,
+                  onApply: (request) {
+                    context.read<AllSuperUsersCubit>().getSuperUsers(
+                      context,
+                      command: context.read<AllSuperUsersCubit>().state.command.copyWith(
+                        busesFilterRequest: request,
+                        skipCount: 0,
+                        totalCount: 0,
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
+            10.0.verticalSpace,
+            BlocBuilder<AllSuperUsersCubit, AllSuperUsersInitial>(
+              builder: (context, state) {
+                if (state.statuses.loading) {
+                  return MyStyle.loadingWidget();
+                }
+                final list = state.result;
+                if (list.isEmpty) return const NotFoundWidget(text: 'يرجى إضافة جهاز لوحي جديد');
+                return SaedTableWidget(
+                  command: state.command,
+                  title: _super_userList,
+                  data: list
+                      .mapIndexed(
+                        (index, e) => [
+                          e.id.toString(),
+                          e.fullName,
+                          e.bus.ime,
+                          e.bus.driverName,
+                          if(isAllowed(AppPermissions.suberUsers))
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                        context.pushNamed(GoRouteName.createSuperUsers,
+                                            extra: e);
+                                      },
+                                child: const Icon(
+                                  Icons.edit,
+                                  color: Colors.amber,
+                                ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: BlocConsumer<DeleteSuperUserCubit,
-                                  DeleteSuperUserInitial>(
-                                listener: (context, state) {
-                                  context
-                                      .read<AllSuperUsersCubit>()
-                                      .getSuperUsers(context);
-                                },
-                                listenWhen: (p, c) => c.statuses.done,
-                                buildWhen: (p, c) => c.id == e.id,
-                                builder: (context, state) {
-                                  if (state.statuses.loading) {
-                                    return MyStyle.loadingWidget();
-                                  }
-                                  return InkWell(
-                                    onTap: () {
-                                      context
-                                          .read<DeleteSuperUserCubit>()
-                                          .deleteSuperUsers(context, id: e.id);
-                                    },
-                                    child: const Icon(
-                                      Icons.delete_forever,
-                                      color: Colors.red,
-                                    ),
-                                  );
-                                },
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: BlocConsumer<DeleteSuperUserCubit,
+                                    DeleteSuperUserInitial>(
+                                  listener: (context, state) {
+                                    context
+                                        .read<AllSuperUsersCubit>()
+                                        .getSuperUsers(context);
+                                  },
+                                  listenWhen: (p, c) => c.statuses.done,
+                                  buildWhen: (p, c) => c.id == e.id,
+                                  builder: (context, state) {
+                                    if (state.statuses.loading) {
+                                      return MyStyle.loadingWidget();
+                                    }
+                                    return InkWell(
+                                      onTap: () {
+                                        context
+                                            .read<DeleteSuperUserCubit>()
+                                            .deleteSuperUsers(context, id: e.id);
+                                      },
+                                      child: const Icon(
+                                        Icons.delete_forever,
+                                        color: Colors.red,
+                                      ),
+                                    );
+                                  },
+                                ),
                               ),
-                            ),
-                          ],
-                        )
-                      ],
-                    )
-                    .toList(),
-                onChangePage: (command) {
-                  context
-                      .read<AllSuperUsersCubit>()
-                      .getSuperUsers(context, command: command);
-                },
-              );
-            },
-          ),
-        ],
+                            ],
+                          )
+                        ],
+                      )
+                      .toList(),
+                  onChangePage: (command) {
+                    context
+                        .read<AllSuperUsersCubit>()
+                        .getSuperUsers(context, command: command);
+                  },
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
