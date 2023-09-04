@@ -49,12 +49,16 @@ class AllBusTripsCubit extends Cubit<AllBusTripsInitial> {
 
   Future<Pair<List<String>, List<List<dynamic>>>?> getBusAsync(
       BuildContext context) async {
+
     var oldSkipCount = state.command.skipCount;
-    emit(state.copyWith(
-        command: state.command.copyWith(maxResultCount: 1.maxInt, skipCount: 0)));
+    state.command
+      ..maxResultCount = 1.maxInt
+      ..skipCount = 0;
+
     final pair = await _getBusTripsApi();
-    emit(state.copyWith(
-        command: state.command.copyWith(maxResultCount: 20, skipCount: oldSkipCount)));
+    state.command
+      ..maxResultCount = 20
+      ..skipCount = oldSkipCount;
     if (pair.first == null) {
       if (context.mounted) {
         NoteMessage.showSnakeBar(message: pair.second ?? '', context: context);

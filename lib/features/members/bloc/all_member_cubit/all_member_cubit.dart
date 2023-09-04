@@ -54,9 +54,15 @@ class AllMembersCubit extends Cubit<AllMembersInitial> {
 
   Future<Pair<List<String>, List<List<dynamic>>>?> getMembersAsync(
       BuildContext context) async {
-    emit(state.copyWith(command: state.command.copyWith(maxResultCount: 1.maxInt)));
+    var oldSkipCount = state.command.skipCount;
+    state.command
+      ..maxResultCount = 1.maxInt
+      ..skipCount = 0;
+
     final pair = await _getMembersApi();
-    emit(state.copyWith(command: state.command.copyWith(maxResultCount: 20)));
+    state.command
+      ..maxResultCount = 20
+      ..skipCount = oldSkipCount;
     if (pair.first == null) {
       if (context.mounted) {
         NoteMessage.showSnakeBar(message: pair.second ?? '', context: context);
@@ -73,7 +79,6 @@ class AllMembersCubit extends Cubit<AllMembersInitial> {
           'ID',
           'اسم الطالب',
           'عنوان الطالب',
-          'الموقع على الخريطة',
           'اسم المستخدم',
           'كلمة السر',
           'رقم الهاتف',
@@ -87,7 +92,6 @@ class AllMembersCubit extends Cubit<AllMembersInitial> {
                 element.id,
                 element.fullName,
                 element.address,
-                LatLng(element.late, element.longe).toString(),
                 element.userName,
                 element.password,
                 element.phoneNo,
