@@ -126,15 +126,18 @@ class _MemberFilterWidgetState extends State<MemberFilterWidget> {
                   width: 1.0.sw,
                   color: AppColorManager.black,
                   text: 'مسح الفلاتر',
-                  onTap: () => setState(() {
-                    request.clearFilter();
-                    collegeIdNumberC.text = request.collegeIdNumber ?? '';
-                    addressC.text = request.address ?? '';
-                    facilityC.text = request.facility ?? '';
-                    phoneNoC.text = request.phoneNo ?? '';
-                    nameC.text = request.name ?? '';
-                    idNumberC.text = request.idNumber ?? '';
-                  }),
+                  onTap: () {
+                    setState(() {
+                      request.clearFilter();
+                      collegeIdNumberC.text = request.collegeIdNumber ?? '';
+                      addressC.text = request.address ?? '';
+                      facilityC.text = request.facility ?? '';
+                      phoneNoC.text = request.phoneNo ?? '';
+                      nameC.text = request.name ?? '';
+                      idNumberC.text = request.idNumber ?? '';
+                    });
+                    widget.onApply?.call(request);
+                  },
                 ),
               ),
             ],

@@ -74,7 +74,6 @@ class _TripsHistoryFilterWidgetState extends State<TripsHistoryFilterWidget> {
                   textDirection: TextDirection.ltr,
                   iconWidget: SelectSingeDateWidget(
                     initial: request.startTime,
-                    minDate: DateTime.now(),
                     onSelect: (selected) {
                       startDateC.text = selected?.formatDate ?? '';
                       request.startTime = selected;
@@ -91,7 +90,6 @@ class _TripsHistoryFilterWidgetState extends State<TripsHistoryFilterWidget> {
                   textDirection: TextDirection.ltr,
                   iconWidget: SelectSingeDateWidget(
                     initial: request.endTime,
-                    minDate: DateTime.now(),
                     onSelect: (selected) {
                       endDateC.text = selected?.formatDate ?? '';
                       request.endTime = selected;
@@ -232,7 +230,8 @@ class _TripsHistoryFilterWidgetState extends State<TripsHistoryFilterWidget> {
                   width: 1.0.sw,
                   color: AppColorManager.black,
                   text: 'مسح الفلاتر',
-                  onTap: () => setState(() {
+                  onTap: () {
+                    setState(() {
                     request.clearFilter();
                     startDateC.text = '';
                     endDateC.text = '';
@@ -243,7 +242,9 @@ class _TripsHistoryFilterWidgetState extends State<TripsHistoryFilterWidget> {
                     key1.currentState?.clearSelect();
                     key2.currentState?.clearSelect();
                     key3.currentState?.clearSelect();
-                  }),
+                  });
+                    widget.onApply?.call(request);
+                  },
                 ),
               ),
             ],

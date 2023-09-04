@@ -88,6 +88,7 @@ class GetUrl {
   static var superUsers = 'api/services/app/InstitutionSupervisorsService/GetAll';
 
   static var tempTrips = 'api/services/app/InstitutionTripTemplatesService/GetAll';
+
   static var tempTripById = 'api/services/app/InstitutionTripTemplatesService/Get';
 
   static var members = 'api/services/app/InstitutionMembersService/getMembers';

@@ -82,7 +82,7 @@ class Command {
     }
 
     if (tripsFilterRequest != null) {
-      // json.addAll(tripsFilterRequest!.toJson());
+      json.addAll(tripsFilterRequest!.toJson());
     }
 
     return json;

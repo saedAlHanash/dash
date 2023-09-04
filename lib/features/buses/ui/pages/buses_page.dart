@@ -158,6 +158,7 @@ class _BusesPageState extends State<BusesPage> {
                 );
               },
             ),
+            50.0.verticalSpace,
           ],
         ),
       ),

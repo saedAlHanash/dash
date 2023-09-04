@@ -4,6 +4,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:qareeb_dash/core/api_manager/api_url.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_dash/temp2.dart';
 
 import '../../../../core/api_manager/api_service.dart';
 import '../../../../core/api_manager/command.dart';
@@ -69,17 +70,16 @@ class AllMembersCubit extends Cubit<AllMembersInitial> {
   Pair<List<String>, List<List<dynamic>>> _getXlsData(List<Member> data) {
     return Pair(
         [
-          'id',
-          'fullName',
-          'address',
-          'late',
-          'Lng',
-          'userName',
-          'password',
-          'phoneNumber',
-          'facility',
-          'idNumber',
-          'collegeIdNumber',
+          'ID',
+          'اسم الطالب',
+          'عنوان الطالب',
+          'الموقع على الخريطة',
+          'اسم المستخدم',
+          'كلمة السر',
+          'رقم الهاتف',
+          'الكلية',
+          'الرقم الوطني',
+          'الرقم الجامعي',
         ],
         data
             .mapIndexed(
@@ -87,8 +87,7 @@ class AllMembersCubit extends Cubit<AllMembersInitial> {
                 element.id,
                 element.fullName,
                 element.address,
-                element.late,
-                element.longe,
+                LatLng(element.late, element.longe).toString(),
                 element.userName,
                 element.password,
                 element.phoneNo,

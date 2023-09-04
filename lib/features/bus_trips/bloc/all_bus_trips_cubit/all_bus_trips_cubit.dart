@@ -49,9 +49,12 @@ class AllBusTripsCubit extends Cubit<AllBusTripsInitial> {
 
   Future<Pair<List<String>, List<List<dynamic>>>?> getBusAsync(
       BuildContext context) async {
-    emit(state.copyWith(command: state.command.copyWith(maxResultCount: 1.maxInt)));
+    var oldSkipCount = state.command.skipCount;
+    emit(state.copyWith(
+        command: state.command.copyWith(maxResultCount: 1.maxInt, skipCount: 0)));
     final pair = await _getBusTripsApi();
-    emit(state.copyWith(command: state.command.copyWith(maxResultCount: 20)));
+    emit(state.copyWith(
+        command: state.command.copyWith(maxResultCount: 20, skipCount: oldSkipCount)));
     if (pair.first == null) {
       if (context.mounted) {
         NoteMessage.showSnakeBar(message: pair.second ?? '', context: context);
@@ -65,25 +68,23 @@ class AllBusTripsCubit extends Cubit<AllBusTripsInitial> {
   Pair<List<String>, List<List<dynamic>>> _getXlsData(List<BusTripModel> data) {
     return Pair(
         [
-          'id',
-          'name',
-          'tripTemplateId',
-          'description',
-          'numberOfParticipation',
-          'isActive',
-          'distance',
-          'buses',
-          'startDate',
-          'endDate',
-          'busTripType',
-          'days',
+          'ID',
+          'الاسم',
+          'وصف',
+          'عدد اشتراكات الإشعارات',
+          'حالة الرحلة',
+          'مسافة الرحلة',
+          'باصات الرحلة',
+          'تاريخ ووقت البداية',
+          'تاريخ ووقت النهاية',
+          'نوع الرحلة',
+          'أيام الرحلة',
         ],
         data
             .mapIndexed(
               (index, element) => [
                 element.id,
                 element.name,
-                element.tripTemplateId,
                 element.description,
                 element.numberOfParticipation,
                 element.isActive ? 'Active' : 'Un Active',
@@ -91,7 +92,7 @@ class AllBusTripsCubit extends Cubit<AllBusTripsInitial> {
                 element.buses.map((e) => e.driverName).toList().join("-"),
                 element.startDate?.toIso8601String(),
                 element.endDate?.toIso8601String(),
-                element.busTripType.name,
+                element.busTripType.arabicName,
                 element.days.map((e) => e.arabicName).toList().join("-"),
               ],
             )

@@ -48,11 +48,17 @@ class AllTripHistoryCubit extends Cubit<AllTripHistoryInitial> {
 
   Future<Pair<List<String>, List<List<dynamic>>>?> getTripHistoryAsync(
       BuildContext context) async {
-    state.command.maxResultCount = 1.maxInt;
+    var oldSkipCount = state.command.skipCount;
+    state.command
+      ..maxResultCount = 1.maxInt
+      ..skipCount = 0;
 
     final pair = await _getTripHistoryApi();
 
-    state.command.maxResultCount = 20;
+    state.command
+      ..maxResultCount = 20
+      ..skipCount = oldSkipCount;
+
     if (pair.first == null) {
       if (context.mounted) {
         NoteMessage.showSnakeBar(message: pair.second ?? '', context: context);
@@ -66,14 +72,14 @@ class AllTripHistoryCubit extends Cubit<AllTripHistoryInitial> {
   Pair<List<String>, List<List<dynamic>>> _getXlsData(List<TripHistoryItem> data) {
     return Pair(
         [
-          'id',
-          'busId',
-          'bus',
-          'busTrip',
-          'busMember',
-          'date',
-          'attendanceType',
-          'isSubscribed',
+          'ID',
+          'ID الباص',
+          'اسم الباص',
+          'اسم الرحلة',
+          'اسم الطالب',
+          'تاريخ العملية',
+          'نوع المعملية',
+          'حالة الاشتراك بالنقل',
         ],
         data
             .mapIndexed(

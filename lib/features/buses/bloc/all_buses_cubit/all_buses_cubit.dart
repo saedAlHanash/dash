@@ -38,9 +38,12 @@ class AllBusesCubit extends Cubit<AllBusesInitial> {
 
   Future<Pair<List<String>, List<List<dynamic>>>?> getBusesAsync(
       BuildContext context) async {
-    emit(state.copyWith(command: state.command.copyWith(maxResultCount: 1.maxInt)));
+    var oldSkipCount = state.command.skipCount;
+    emit(state.copyWith(
+        command: state.command.copyWith(maxResultCount: 1.maxInt, skipCount: 0)));
     final pair = await _getBusesApi();
-    emit(state.copyWith(command: state.command.copyWith(maxResultCount: 20)));
+    emit(state.copyWith(
+        command: state.command.copyWith(maxResultCount: 20, skipCount: oldSkipCount)));
     if (pair.first == null) {
       if (context.mounted) {
         NoteMessage.showSnakeBar(message: pair.second ?? '', context: context);
@@ -54,21 +57,19 @@ class AllBusesCubit extends Cubit<AllBusesInitial> {
   Pair<List<String>, List<List<dynamic>>> _getXlsData(List<BusModel> data) {
     return Pair(
         [
-          'id',
-          'institutionId',
-          'ime',
-          'driverName',
-          'driverPhone',
-          'busModel',
-          'busColor',
-          'busNumber',
-          'seatsNumber',
+          'ID',
+          'IMEI',
+          'اسم الباص',
+          'رقم هاتف السائق',
+          'نوع الباص',
+          'لون الباص',
+          'رقم لوحة الباص',
+          'عد المقاعد',
         ],
         data
             .mapIndexed(
               (index, element) => [
                 element.id,
-                element.institutionId,
                 element.ime,
                 element.driverName,
                 element.driverPhone,

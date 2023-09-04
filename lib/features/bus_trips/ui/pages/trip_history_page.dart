@@ -120,7 +120,7 @@ class _TripHistoryPageState extends State<TripHistoryPage> {
                 );
               },
             ),
-
+            50.0.verticalSpace,
             // Expanded(
             //   child: ListView.builder(
             //     itemCount: list.length,

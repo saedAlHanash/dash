@@ -43,16 +43,9 @@ class TempTripsPage extends StatelessWidget {
             return MyStyle.loadingWidget();
           }
           final list = state.result;
-          if (list.isEmpty) return const NotFoundWidget(text: 'لا يوجد نماذج');
+          if (list.isEmpty) return const NotFoundWidget(text: 'يرجى إضافة نماذج للرحلات');
           return Column(
             children: [
-              DrawableText(
-                text: 'نماذج الرحلات',
-                matchParent: true,
-                size: 28.0.sp,
-                textAlign: TextAlign.center,
-                padding: const EdgeInsets.symmetric(vertical: 15.0).h,
-              ),
               SaedTableWidget(
                 command: state.command,
                 title: _super_userList,

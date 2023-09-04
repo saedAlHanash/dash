@@ -83,11 +83,14 @@ class _BusesFilterWidgetState extends State<BusesFilterWidget> {
                   width: 1.0.sw,
                   color: AppColorManager.black,
                   text: 'مسح الفلاتر',
-                  onTap: () => setState(() {
+                  onTap: () {
+                    setState(() {
                     request.clearFilter();
                     imeiC.text = request.imei ?? '';
                     nameC.text = request.name ?? '';
-                  }),
+                  });
+                    widget.onApply?.call(request);
+                  },
                 ),
               ),
             ],
