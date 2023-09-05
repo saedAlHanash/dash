@@ -50,39 +50,44 @@ class MembersPage extends StatefulWidget {
 
 class _MembersPageState extends State<MembersPage> {
   var loading = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: isAllowed(AppPermissions.members)
           ? Column(
-        mainAxisSize: MainAxisSize.min,
-            children: [
-              FloatingActionButton(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                FloatingActionButton(
                   onPressed: () => context.pushNamed(GoRouteName.createMember),
                   child: const Icon(Icons.add, color: Colors.white),
                 ),
-              10.0.verticalSpace,
-              StatefulBuilder(
-                builder: (context, mState) {
-                  return FloatingActionButton(
-                    onPressed: () {
-                      mState(() => loading = true);
-                      context.read<AllMembersCubit>().getMembersAsync(context).then(
-                            (value) {
-                          if (value == null) return;
-                          saveXls(header: value.first, data: value.second);
-                          mState(() => loading = false);
-                        },
-                      );
-                    },
-                    child: loading
-                        ? const CircularProgressIndicator.adaptive()
-                        : const Icon(Icons.file_download, color: Colors.white),
-                  );
-                },
-              ),
-            ],
-          )
+                10.0.verticalSpace,
+                StatefulBuilder(
+                  builder: (context, mState) {
+                    return FloatingActionButton(
+                      onPressed: () {
+                        mState(() => loading = true);
+                        context.read<AllMembersCubit>().getMembersAsync(context).then(
+                          (value) {
+                            if (value == null) return;
+                            saveXls(
+                              header: value.first,
+                              data: value.second,
+                              fileName: 'تقرير الطلاب ${DateTime.now().formatDate}',
+                            );
+                            mState(() => loading = false);
+                          },
+                        );
+                      },
+                      child: loading
+                          ? const CircularProgressIndicator.adaptive()
+                          : const Icon(Icons.file_download, color: Colors.white),
+                    );
+                  },
+                ),
+              ],
+            )
           : null,
       body: SingleChildScrollView(
         padding: const EdgeInsets.only(bottom: 100.0).r,

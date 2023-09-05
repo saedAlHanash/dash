@@ -51,8 +51,15 @@ class _TripHistoryPageState extends State<TripHistoryPage> {
               context.read<AllTripHistoryCubit>().getTripHistoryAsync(context).then(
                 (value) {
                   if (value == null) return;
-                  saveXls(header: value.first, data: value.second);
-                  mState(() => loading = false);
+                  saveXls(
+                    header: value.first,
+                    data: value.second,
+                    fileName: 'تقرير سجلات الصعود والنزول ${DateTime.now().formatDate}',
+                  );
+
+                  mState(
+                    () => loading = false,
+                  );
                 },
               );
             },

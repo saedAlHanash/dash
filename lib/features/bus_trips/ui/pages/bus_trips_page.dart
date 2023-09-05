@@ -60,7 +60,11 @@ class _BusTripsPageState extends State<BusTripsPage> {
                         context.read<AllBusTripsCubit>().getBusAsync(context).then(
                           (value) {
                             if (value == null) return;
-                            saveXls(header: value.first, data: value.second);
+                            saveXls(
+                              header: value.first,
+                              data: value.second,
+                              fileName: 'تقرير الرحلات ${DateTime.now().formatDate}',
+                            );
                             mState(() => loading = false);
                           },
                         );

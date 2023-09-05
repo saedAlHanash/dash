@@ -18,11 +18,11 @@ class AddPointCubit extends Cubit<AddPointInitial> {
   }
 
   void addEdge({required int edgeId, required int pointId}) {
-    state.edgeIds.add( edgeId);
+    state.edgeIds.add(edgeId);
   }
 
   void removeEdge() {
-
+    if (state.edgeIds.isEmpty) return;
     state.edgeIds.removeLast();
   }
 
@@ -36,7 +36,6 @@ class AddPointCubit extends Cubit<AddPointInitial> {
       }
       addEdge(edgeId: e.id, pointId: e.endPointId);
     });
-
   }
 
   TripPoint? removePoint({required int id}) {

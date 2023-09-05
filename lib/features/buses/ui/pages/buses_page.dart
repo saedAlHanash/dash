@@ -57,7 +57,12 @@ class _BusesPageState extends State<BusesPage> {
                         context.read<AllBusesCubit>().getBusesAsync(context).then(
                           (value) {
                             if (value == null) return;
-                            saveXls(header: value.first, data: value.second);
+                            saveXls(
+                              header: value.first,
+                              data: value.second,
+                              fileName:
+                                  'تقرير الباصات ${DateTime.now().formatDate}',
+                            );
                             mState(() => loading = false);
                           },
                         );
