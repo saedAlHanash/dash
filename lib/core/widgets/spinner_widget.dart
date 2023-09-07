@@ -2,6 +2,7 @@ import 'package:drawable_text/drawable_text.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:qareeb_dash/core/api_manager/api_service.dart';
 import 'package:qareeb_models/global.dart';
 
 import '../strings/app_color_manager.dart';
@@ -75,6 +76,14 @@ class SpinnerWidgetState<T> extends State<SpinnerWidget<T>> {
     super.initState();
   }
 
+  void clearSelect() {
+    if (widget.hint == null) {
+      selectedItem = list.first.value;
+    } else {
+      selectedItem = null;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return StatefulBuilder(
@@ -84,35 +93,41 @@ class SpinnerWidgetState<T> extends State<SpinnerWidget<T>> {
           value: selectedItem,
           hint: widget.hint,
           onChanged: (value) {
-            if (!(value! as SpinnerItem).enable) return;
-            if (widget.onChanged != null) widget.onChanged!(value as SpinnerItem);
-            state(() => selectedItem = value as SpinnerItem);
+            if (!(value!).enable) return;
+            if (widget.onChanged != null) widget.onChanged!(value);
+            state(() => selectedItem = value);
           },
-          buttonWidth: widget.width,
+          buttonStyleData: ButtonStyleData(
+            width: widget.width,
+            height: 60.0.h,
+            decoration: widget.decoration ??
+                BoxDecoration(
+                  borderRadius: BorderRadius.circular(12.0.r),
+                  color: AppColorManager.offWhit.withOpacity(0.5),
+                ),
+            padding: const EdgeInsets.only(right: 10.0).w,
+            elevation: 0,
+          ),
+          dropdownStyleData: DropdownStyleData(
+            width: widget.dropdownWidth,
+            maxHeight: 300.0.h,
+            elevation: 2,
+          ),
+          iconStyleData: IconStyleData(
+            icon: Row(
+              children: [
+                const Icon(
+                  Icons.expand_more,
+                  color: AppColorManager.mainColor,
+                ),
+                18.0.horizontalSpace,
+              ],
+            ),
+            iconSize: 35.0.spMin,
+          ),
           isExpanded: widget.expanded ?? false,
-          dropdownWidth: widget.dropdownWidth,
           customButton: widget.customButton,
           underline: 0.0.verticalSpace,
-          buttonHeight: 60.0.h,
-          dropdownMaxHeight: 300.0.h,
-          buttonDecoration: widget.decoration ??
-              BoxDecoration(
-                borderRadius: BorderRadius.circular(12.0.r),
-                color: AppColorManager.offWhit.withOpacity(0.5),
-              ),
-          buttonPadding: const EdgeInsets.only(right: 10.0).w,
-          buttonElevation: 0,
-          dropdownElevation: 2,
-          icon: Row(
-            children: [
-              const Icon(
-                Icons.expand_more,
-                color: AppColorManager.mainColor,
-              ),
-              18.0.horizontalSpace,
-            ],
-          ),
-          iconSize: 35.0.spMin,
         );
       },
     );
@@ -175,61 +190,3 @@ class SpinnerOutlineTitle extends StatelessWidget {
     );
   }
 }
-//
-// class SpinnerItem<T> {
-//   SpinnerItem({
-//     this.name = '',
-//     this.id = 0,
-//     this.isSelected = false,
-//     this.item,
-//     this.icon,
-//     this.enable = true,
-//   });
-//
-//   String name;
-//   int id;
-//   bool isSelected;
-//   bool enable;
-//   T? item;
-//   Widget? icon;
-//
-// //<editor-fold desc="Data Methods">
-//
-//   SpinnerItem copyWith({
-//     String? name,
-//     int? id,
-//     bool? isSelected,
-//     bool? enable,
-//     dynamic item,
-//   }) {
-//     return SpinnerItem(
-//       name: name ?? this.name,
-//       id: id ?? this.id,
-//       isSelected: isSelected ?? this.isSelected,
-//       enable: enable ?? this.enable,
-//       item: item ?? this.item,
-//     );
-//   }
-//
-//   Map<String, dynamic> toMap() {
-//     return {
-//       'name': name,
-//       'id': id,
-//       'isSelected': isSelected,
-//       'enable': enable,
-//       'item': item,
-//     };
-//   }
-//
-//   factory SpinnerItem.fromMap(Map<String, dynamic> map) {
-//     return SpinnerItem(
-//       name: map['name'] as String,
-//       id: map['id'] as int,
-//       isSelected: map['isSelected'] as bool,
-//       enable: map['enable'] as bool,
-//       item: map['item'] as dynamic,
-//     );
-//   }
-//
-// //</editor-fold>
-// }

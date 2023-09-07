@@ -1,7 +1,7 @@
 import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:latlong2/latlong.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/widgets/text_with_list_dote.dart';

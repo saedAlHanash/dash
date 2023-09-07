@@ -27,32 +27,20 @@ class CreateEdgeCubit extends Cubit<CreateEdgeInitial> {
   }) async {
     emit(state.copyWith(statuses: CubitStatuses.loading));
 
-    final saed = await getServerProxyApi(
-      request: ApiServerRequest(
-        url: APIService()
-            .getUri(
-              url: 'route/v1/driving',
-              hostName: 'router.project-osrm.org',
-              path:
-                  '${request.startPointLatLng?.longitude},${request.startPointLatLng?.latitude};'
-                  '${request.endPointLatLng?.longitude},${request.endPointLatLng?.latitude}',
-            )
-            .toString(),
-      ),
-    );
-
-    // final saed = await APIService().getApiProxyPayed(
-    //   url: 'https://router.project-osrm.org/route/v1/driving',
-    //   path:
-    //       '${request.startPointLatLng?.longitude},${request.startPointLatLng?.latitude};'
-    //       '${request.endPointLatLng?.longitude},${request.endPointLatLng?.latitude}',
+    // final saed = await getServerProxyApi(
+    //   request: ApiServerRequest(
+    //     url: APIService()
+    //         .getUri(
+    //           url: 'route/v1/driving',
+    //           hostName: 'router.project-osrm.org',
+    //           path:
+    //               '${request.startPointLatLng?.longitude},${request.startPointLatLng?.latitude};'
+    //               '${request.endPointLatLng?.longitude},${request.endPointLatLng?.latitude}',
+    //         )
+    //         .toString(),
+    //   ),
     // );
 
-    if (saed.first !=null) {
-      final osrm = OsrmModel.fromJson(jsonDecode(saed.first));
-
-      request.distance = osrm.routes.first.distance;
-      request.steps = osrm.routes.first.geometry;
 
       final pair = await _createEdgeApi(request: request);
 
@@ -64,7 +52,7 @@ class CreateEdgeCubit extends Cubit<CreateEdgeInitial> {
       } else {
         emit(state.copyWith(statuses: CubitStatuses.done, result: pair.first));
       }
-    }
+
   }
 
   Future<Pair<bool?, String?>> _createEdgeApi(

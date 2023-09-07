@@ -6,7 +6,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:latlong2/latlong.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:map_package/map/data/models/my_marker.dart';
 import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_models/global.dart';
@@ -18,7 +18,7 @@ import '../strings/app_string_manager.dart';
 import '../util/shared_preferences.dart';
 // import 'package:intl/date_symbol_data_local.dart';
 // import 'package:intl/intl.dart';
-// import 'package:latlong2/latlong.dart';
+// import 'package:google_maps_flutter/google_maps_flutter.dart';
 // import 'package:qareeb_dash/core/util/shared_preferences.dart';
 //  import 'package:qareeb_dash/core/widgets/spinner_widget.dart'; import 'package:qareeb_models/global.dart';
 // import 'package:qareeb_dash/generated/assets.dart';

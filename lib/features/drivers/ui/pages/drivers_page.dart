@@ -1,12 +1,14 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/widgets/not_found_widget.dart';
 
 import '../../../../core/util/checker_helper.dart';
+import '../../../../core/util/file_util.dart';
 import '../../../../core/util/my_style.dart';
 import '../../../../core/widgets/change_user_state_btn.dart';
 import '../../../../core/widgets/my_button.dart';
@@ -26,20 +28,55 @@ final clientTableHeader = [
   "العمليات",
 ];
 
-class DriverPage extends StatelessWidget {
+class DriverPage extends StatefulWidget {
   const DriverPage({Key? key}) : super(key: key);
+
+  @override
+  State<DriverPage> createState() => _DriverPageState();
+}
+
+class _DriverPageState extends State<DriverPage> {
+  var loading = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: isAllowed(AppPermissions.CREATION)
-          ? FloatingActionButton(
+      floatingActionButton: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (isAllowed(AppPermissions.CREATION))
+            FloatingActionButton(
               onPressed: () {
                 context.pushNamed(GoRouteName.createDriver);
               },
               child: const Icon(Icons.add, color: Colors.white),
-            )
-          : null,
+            ),
+          10.0.verticalSpace,
+          StatefulBuilder(
+            builder: (context, mState) {
+              return FloatingActionButton(
+                onPressed: () {
+                  mState(() => loading = true);
+                  context.read<AllDriversCubit>().getBusAsync(context).then(
+                    (value) {
+                      if (value == null) return;
+                      saveXls(
+                        header: value.first,
+                        data: value.second,
+                        fileName: 'تقرير السائقين ${DateTime.now().formatDate}',
+                      );
+                      mState(() => loading = false);
+                    },
+                  );
+                },
+                child: loading
+                    ? const CircularProgressIndicator.adaptive()
+                    : const Icon(Icons.file_download, color: Colors.white),
+              );
+            },
+          ),
+        ],
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [

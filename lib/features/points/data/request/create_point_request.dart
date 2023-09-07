@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:latlong2/latlong.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:qareeb_dash/features/points/data/response/points_response.dart';
 import 'package:qareeb_models/points/data/model/trip_point.dart';
 

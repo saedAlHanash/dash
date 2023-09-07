@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:qareeb_dash/core/widgets/not_found_widget.dart';
 import 'package:qareeb_models/extensions.dart';
 
+import '../../../../core/util/file_util.dart';
 import '../../../../core/util/my_style.dart';
 import '../../../../core/widgets/change_user_state_btn.dart';
 import '../../../../core/widgets/my_button.dart';
@@ -30,9 +31,34 @@ class ClientsPage extends StatefulWidget {
 }
 
 class _ClientsPageState extends State<ClientsPage> {
+  var loading = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: StatefulBuilder(
+        builder: (context, mState) {
+          return FloatingActionButton(
+            onPressed: () {
+              mState(() => loading = true);
+              context.read<AllClientsCubit>().getBusAsync(context).then(
+                (value) {
+                  if (value == null) return;
+                  saveXls(
+                    header: value.first,
+                    data: value.second,
+                    fileName: 'تقرير المستخدمين ${DateTime.now().formatDate}',
+                  );
+                  mState(() => loading = false);
+                },
+              );
+            },
+            child: loading
+                ? const CircularProgressIndicator.adaptive()
+                : const Icon(Icons.file_download, color: Colors.white),
+          );
+        },
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
