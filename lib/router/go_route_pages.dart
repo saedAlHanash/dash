@@ -100,8 +100,7 @@ final appGoRouter = GoRouter(
         final providers = [
           BlocProvider(create: (_) => di.sl<LoginCubit>()),
         ];
-        final q = state.queryParams['key'];
-        context.read<NavHomeCubit>().changePage('/${q ?? ''}');
+
         return MultiBlocProvider(
           providers: providers,
           child: const HomePage(),

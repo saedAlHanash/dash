@@ -77,6 +77,10 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
+    context
+        .read<NavHomeCubit>()
+        .changePage('/${getCurrentQueryParameters()['key'] ?? ''}');
+
     sideMenu.addListener((p0) {
       page.jumpToPage(p0);
     });
@@ -391,23 +395,29 @@ class _HomePageState extends State<HomePage> {
       },
     );
   }
+}
 
-  void addQueryParameters({required Map<String, dynamic> params}) {
-    final uri = window.location.href;
-    final parsedUri = Uri.parse(uri);
-    if (!parsedUri.toString().contains('Home')) return;
-    // context.pushNamed(GoRouteName.homePage, queryParams: params);
+void addQueryParameters({required Map<String, dynamic> params}) {
+  final uri = window.location.href;
+  final parsedUri = Uri.parse(uri);
+  if (!parsedUri.toString().contains('Home')) return;
+  // context.pushNamed(GoRouteName.homePage, queryParams: params);
 
-    final newQuery = Map.from(parsedUri.queryParameters)..addAll(params);
-    final s = <String, String>{};
-    newQuery.forEach((key, value) => s[key.toString()] = value.toString());
-    final newUri = Uri(
-      scheme: parsedUri.scheme,
-      host: parsedUri.host,
-      port: parsedUri.port,
-      path: parsedUri.path,
-      queryParameters: s,
-    );
-    window.history.pushState(null, '', newUri.toString());
-  }
+  final newQuery = Map.from(parsedUri.queryParameters)..addAll(params);
+  final s = <String, String>{};
+  newQuery.forEach((key, value) => s[key.toString()] = value.toString());
+  final newUri = Uri(
+    scheme: parsedUri.scheme,
+    host: parsedUri.host,
+    port: parsedUri.port,
+    path: parsedUri.path,
+    queryParameters: s,
+  );
+  window.history.pushState(null, '', newUri.toString());
+}
+
+// Get query parameters from the current URL
+Map<String, String> getCurrentQueryParameters() {
+  final uri = Uri.parse(window.location.href);
+  return uri.queryParameters;
 }

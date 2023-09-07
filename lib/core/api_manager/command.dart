@@ -1,17 +1,23 @@
-import 'package:qareeb_models/extensions.dart';  import 'package:qareeb_models/extensions.dart';  import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_models/extensions.dart';
+import 'package:qareeb_models/extensions.dart';
+import 'package:qareeb_dash/core/extensions/extensions.dart';
 
 import '../../features/accounts/data/request/transfer_filter_request.dart';
 import 'package:qareeb_models/global.dart';
+
+import '../../features/clients/data/request/clients_filter_request.dart';
 
 class Command {
   Command({
     this.skipCount,
     this.totalCount,
+    this.memberFilterRequest,
   });
 
   int? skipCount;
   int maxResultCount = 20;
   int? totalCount;
+  ClientsFilterRequest? memberFilterRequest;
 
   var transferFilterRequest = TransferFilterRequest();
 
@@ -51,15 +57,33 @@ class Command {
   }
 
   Map<String, dynamic> toJson() {
-    return {
+    var json = <String, dynamic>{
       'skipCount': skipCount,
       'maxResultCount': maxResultCount,
     };
+
+    if (memberFilterRequest != null) {
+      json.addAll(memberFilterRequest!.toJson());
+    }
+
+    return json;
   }
 
   factory Command.fromJson(Map<String, dynamic> map) {
     return Command(
       skipCount: map['skipCount'] as int,
+    );
+  }
+
+  Command copyWith({
+    int? skipCount,
+    int? totalCount,
+    ClientsFilterRequest? memberFilterRequest,
+  }) {
+    return Command(
+      skipCount: skipCount ?? this.skipCount,
+      totalCount: totalCount ?? this.totalCount,
+      memberFilterRequest: memberFilterRequest ?? this.memberFilterRequest,
     );
   }
 }

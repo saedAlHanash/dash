@@ -42,6 +42,7 @@ class CreateCarCatRequest {
   num? sharedGoldRatio;
 
   num? sharedTiresRatio;
+  num? priceVariant;
 
 
 
@@ -64,35 +65,9 @@ class CreateCarCatRequest {
     this.sharedOilRatio,
     this.sharedGoldRatio,
     this.sharedTiresRatio,
+    this.priceVariant,
   });
 
-  CreateCarCatRequest copyWith({
-    String? name,
-    num? driverRatio,
-    UploadFile? file,
-    num? nightKMOverCost,
-    num? nightSharedKMOverCost,
-    num? dayKMOverCost,
-    num? sharedKMOverCost,
-    num? sharedDriverRatio,
-    num? minimumDayPrice,
-    num? minimumNightPrice,
-    num? companyLoyaltyRatio,
-  }) {
-    return CreateCarCatRequest(
-      name: name ?? this.name,
-      driverRatio: driverRatio ?? this.driverRatio,
-      file: file ?? this.file,
-      nightKMOverCost: nightKMOverCost ?? this.nightKMOverCost,
-      nightSharedKMOverCost: nightSharedKMOverCost ?? this.nightSharedKMOverCost,
-      dayKMOverCost: dayKMOverCost ?? this.dayKMOverCost,
-      sharedKMOverCost: sharedKMOverCost ?? this.sharedKMOverCost,
-      sharedDriverRatio: sharedDriverRatio ?? this.sharedDriverRatio,
-      minimumDayPrice: minimumDayPrice ?? this.minimumDayPrice,
-      minimumNightPrice: minimumNightPrice ?? this.minimumNightPrice,
-
-    );
-  }
 
   Map<String, dynamic> toMap() {
     return {
@@ -113,6 +88,7 @@ class CreateCarCatRequest {
       'SharedOilRatio': sharedOilRatio,
       'SharedGoldRatio': sharedGoldRatio,
       'SharedTiresRatio': sharedTiresRatio,
+      'priceVariant': priceVariant,
     };
   }
 
@@ -134,6 +110,7 @@ class CreateCarCatRequest {
       sharedOilRatio: carCategory.sharedOilRatio,
       sharedGoldRatio: carCategory.sharedGoldRatio,
       sharedTiresRatio: carCategory.sharedTiresRatio,
+      priceVariant: carCategory.priceVariant,
     )..file = UploadFile(fileBytes: null, initialImage: carCategory.imageUrl);
   }
 
@@ -198,8 +175,14 @@ class CreateCarCatRequest {
       return false;
     }
 
+
     if (sharedTiresRatio == 0) {
       NoteMessage.showErrorSnackBar(message: 'خطأ في نسبة الولاء', context: context);
+      return false;
+    }
+
+    if (priceVariant == 0) {
+      NoteMessage.showErrorSnackBar(message: 'خطأ في متغير السعر', context: context);
       return false;
     }
 

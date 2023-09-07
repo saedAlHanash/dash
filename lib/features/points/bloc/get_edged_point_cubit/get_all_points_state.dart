@@ -31,9 +31,9 @@ class PointsInitial extends Equatable {
     }
     return result
         .map((e) => SpinnerItem(
+              id: e.id,
               name: e.arName,
               item: e,
-              id: e.id,
               isSelected: e.id == selectedId,
             ))
         .toList()

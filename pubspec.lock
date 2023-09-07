@@ -509,18 +509,18 @@ packages:
     dependency: transitive
     description:
       name: flutter_widget_from_html
-      sha256: "6c2e29e9b44a1afe3a21bf4feb47ed67e9aef43c303e7888131842fbcbb7fd37"
+      sha256: "5ce55353d029196e71cd5506737be8c887ccb28a0465a5ba6dcfd40ef33a2d58"
       url: "https://pub.dev"
     source: hosted
-    version: "0.10.3"
+    version: "0.10.4"
   flutter_widget_from_html_core:
     dependency: transitive
     description:
       name: flutter_widget_from_html_core
-      sha256: b733a240388736fcf40692920033dc3a749155dc49c840f6c0e4a732f553908b
+      sha256: "719da7fba82343efb9ad3be528a768dec4a4d8f3b37ebd9eef8d93e891a1d58f"
       url: "https://pub.dev"
     source: hosted
-    version: "0.10.3"
+    version: "0.10.4"
   fwfh_cached_network_image:
     dependency: transitive
     description:
@@ -553,14 +553,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.8.0+2"
-  fwfh_text_style:
-    dependency: transitive
-    description:
-      name: fwfh_text_style
-      sha256: f0883ccb64b7bb3f2a7a091542c2e834fc3e2a6aa54158f46b3c43b55675d8f7
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.22.8+3"
   fwfh_url_launcher:
     dependency: transitive
     description:
@@ -919,10 +911,10 @@ packages:
     dependency: transitive
     description:
       name: package_info_plus
-      sha256: ceb027f6bc6a60674a233b4a90a7658af1aebdea833da0b5b53c1e9821a78c7b
+      sha256: "6ff267fcd9d48cb61c8df74a82680e8b82e940231bb5f68356672fde0397334a"
       url: "https://pub.dev"
     source: hosted
-    version: "4.0.2"
+    version: "4.1.0"
   package_info_plus_platform_interface:
     dependency: transitive
     description:
@@ -1072,10 +1064,10 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "191a073dfb75fa358fe966ca7bb67626afa8f4ef"
+      resolved-ref: "158e2f62e8a119e161a4b2084d294187dd44a2f0"
       url: "https://github.com/saedAlHanash/qareeb_models"
     source: git
-    version: "0.1.0"
+    version: "0.1.4"
   rxdart:
     dependency: transitive
     description:
@@ -1089,7 +1081,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: ce508ae414aa635516f25bc808b4a287cb291747
+      resolved-ref: f374b27405b7d4f7919f3d32c60f0cf8e82e3be4
       url: "https://github.com/saedAlHanash/saed_http"
     source: git
     version: "0.0.1"
@@ -1430,42 +1422,42 @@ packages:
     dependency: transitive
     description:
       name: video_player
-      sha256: "3fd106c74da32f336dc7feb65021da9b0207cb3124392935f1552834f7cce822"
+      sha256: d3910a8cefc0de8a432a4411dcf85030e885d8fef3ddea291f162253a05dbf01
       url: "https://pub.dev"
     source: hosted
-    version: "2.7.0"
+    version: "2.7.1"
   video_player_android:
     dependency: transitive
     description:
       name: video_player_android
-      sha256: f338a5a396c845f4632959511cad3542cdf3167e1b2a1a948ef07f7123c03608
+      sha256: "3fe89ab07fdbce786e7eb25b58532d6eaf189ceddc091cb66cba712f8d9e8e55"
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.9"
+    version: "2.4.10"
   video_player_avfoundation:
     dependency: transitive
     description:
       name: video_player_avfoundation
-      sha256: f5f5b7fe8c865be8a57fe80c2dca130772e1db775b7af4e5c5aa1905069cfc6c
+      sha256: c3b123a5a56c9812b9029f840c65b92fd65083eb08d69be016b01e8aa018f77d
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.9"
+    version: "2.4.10"
   video_player_platform_interface:
     dependency: transitive
     description:
       name: video_player_platform_interface
-      sha256: "1ca9acd7a0fb15fb1a990cb554e6f004465c6f37c99d2285766f08a4b2802988"
+      sha256: be72301bf2c0150ab35a8c34d66e5a99de525f6de1e8d27c0672b836fe48f73a
       url: "https://pub.dev"
     source: hosted
-    version: "6.2.0"
+    version: "6.2.1"
   video_player_web:
     dependency: transitive
     description:
       name: video_player_web
-      sha256: "44ce41424d104dfb7cf6982cc6b84af2b007a24d126406025bf40de5d481c74c"
+      sha256: "9c34a243785feca23148bfcd772dbb803d63c9304488177ec4f3f4463802fcb7"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.16"
+    version: "2.0.17"
   wakelock_plus:
     dependency: transitive
     description:

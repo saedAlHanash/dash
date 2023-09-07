@@ -228,6 +228,13 @@ class _CreateCarCategoryPageState extends State<CreateCarCategoryPage> {
                         ),
                       ],
                     ),
+                    MyTextFormNoLabelWidget(
+                      label: 'متغير السعر',
+                      initialValue: request.priceVariant?.toString(),
+                      onChanged: (p0) {
+                        request.priceVariant = num.tryParse(p0);
+                      },
+                    ),
                   ],
                 ),
               ),
