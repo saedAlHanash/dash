@@ -24,6 +24,7 @@ import 'package:qareeb_models/points/data/model/trip_point.dart';
 import 'package:qareeb_models/points/data/response/points_edge_response.dart';
 import 'package:qareeb_models/trip_path/data/models/trip_path.dart';
 
+import '../../../../core/api_manager/api_service.dart';
 import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/my_style.dart';
 import '../../../../core/widgets/auto_complete_widget.dart';
@@ -129,7 +130,7 @@ class _PointInfoPageState extends State<PointInfoPage> {
           listener: (context, state) {
             tripPoint = state.result;
             pointNameC.text = tripPoint?.name ?? '';
-            mapController.addMarker(
+            mapController.addSingleMarker(
               marker: MyMarker(
                 point: state.result.getLatLng,
                 item: state.result,
@@ -165,11 +166,14 @@ class _PointInfoPageState extends State<PointInfoPage> {
                   child: MapWidget(
                     initialPoint: request.getLatLng,
                     search: search,
-                    onMapClick: !createMode
+                    onMapClick: !canEdit
                         ? null
                         : (latLng) {
                             request.lat = latLng.latitude;
                             request.lng = latLng.longitude;
+                            mapController.addSingleMarker(
+                                marker: MyMarker(point: request.getLatLng!),
+                                moveTo: true);
                           },
                     onTapMarker: (marker) {
                       context.pushNamed(
