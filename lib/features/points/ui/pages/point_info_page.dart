@@ -96,9 +96,10 @@ class _PointInfoPageState extends State<PointInfoPage> {
           listener: (context, state) {
             context.read<PointsCubit>().getAllPoints(context);
             if (tripPoint != null) {
+              context.read<PointByIdCubit>().getPointById(context, id: request.id);
               setState(() => canEdit = false);
             } else {
-              context.read<PointsCubit>().getAllPoints(context);
+              // context.read<PointsCubit>().getAllPoints(context);
               window.history.back();
             }
           },
@@ -139,21 +140,21 @@ class _PointInfoPageState extends State<PointInfoPage> {
           },
         ),
       ],
-      child: BlocBuilder<PointByIdCubit, PointByIdInitial>(
-        builder: (context, state) {
-          createMode = state.statuses.init;
-          if (state.statuses.isLoading) {
-            return MyStyle.loadingWidget();
-          }
-          if (!createMode) {
-            request.initFromPoint(state.result);
-          }
+      child: Scaffold(
+        appBar: const AppBarWidget(
+          text: 'نقطة مواقف قريب',
+        ),
+        body: BlocBuilder<PointByIdCubit, PointByIdInitial>(
+          builder: (context, state) {
+            createMode = state.statuses.init;
+            if (state.statuses.isLoading) {
+              return MyStyle.loadingWidget();
+            }
+            if (!createMode) {
+              request.initFromPoint(state.result);
+            }
 
-          return Scaffold(
-            appBar: const AppBarWidget(
-              text: 'نقطة مواقف قريب',
-            ),
-            body: Row(
+            return Row(
               children: [
                 Expanded(
                   child: SingleChildScrollView(
@@ -184,9 +185,9 @@ class _PointInfoPageState extends State<PointInfoPage> {
                   ),
                 ),
               ],
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }
@@ -258,32 +259,33 @@ class _PointInfoPageState extends State<PointInfoPage> {
           onChanged: (val) => request.name = val,
         ),
         20.0.verticalSpace,
-        MyTextFormNoLabelWidget(
-          enable: canEdit || createMode,
-          label: 'خطوط الطول والعرض ( 0.00,0.00 )',
-          onChanged: (val) async {
-            final listNum = val.split(',');
-            if (listNum.length <= 2) {
-              var lat = double.tryParse(listNum.first);
-              var lng = double.tryParse(listNum.last);
-              request.lat = lat;
-              request.lng = lng;
-              var l = request.getLatLng;
-              if (l != null) {
-                mapController.addSingleMarker(marker: MyMarker(point: l), moveTo: true);
-                setState(() {});
-                if (pointNameC.text.isEmpty) {
-                  final name = await LocationNameCubit.getLocationNameApi(latLng: l);
+        if (!canEdit)
+          MyTextFormNoLabelWidget(
+            enable: canEdit || createMode,
+            label: 'خطوط الطول والعرض ( 0.00,0.00 )',
+            onChanged: (val) async {
+              final listNum = val.split(',');
+              if (listNum.length <= 2) {
+                var lat = double.tryParse(listNum.first);
+                var lng = double.tryParse(listNum.last);
+                request.lat = lat;
+                request.lng = lng;
+                var l = request.getLatLng;
+                if (l != null) {
+                  mapController.addSingleMarker(marker: MyMarker(point: l), moveTo: true);
+                  setState(() {});
+                  if (pointNameC.text.isEmpty) {
+                    final name = await LocationNameCubit.getLocationNameApi(latLng: l);
 
-                  request.name = name.first;
+                    request.name = name.first;
 
-                  pointNameC.text = request.name ?? '';
+                    pointNameC.text = request.name ?? '';
+                  }
                 }
               }
-            }
-          },
-          initialValue: request.lat == null ? null : '${request.lat},${request.lng}',
-        ),
+            },
+            initialValue: request.lat == null ? null : '${request.lat},${request.lng}',
+          ),
         20.0.verticalSpace,
         MyTextFormNoLabelWidget(
           enable: canEdit || createMode,

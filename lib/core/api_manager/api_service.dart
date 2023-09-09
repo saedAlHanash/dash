@@ -10,7 +10,7 @@ import 'package:qareeb_models/extensions.dart';
 
 import '../util/shared_preferences.dart';
 
-const baseUrl = 'livetest.qareeb-maas.com';
+const baseUrl = 'live.qareeb-maas.com';
 // const baseUrl = '192.168.1.44:44311';
 
 var loggerObject = Logger(
@@ -70,7 +70,7 @@ class APIService {
 
     logRequest('${hostName ?? ''}$url', query);
 
-    final uri = Uri.http(hostName ?? baseUrl, url, query);
+    final uri = Uri.https(hostName ?? baseUrl, url, query);
 
     return uri;
   }
@@ -96,7 +96,7 @@ class APIService {
 
     logRequest('${hostName ?? ''}$url', query);
 
-    final uri = Uri.http(hostName ?? baseUrl, url, query);
+    final uri = Uri.https(hostName ?? baseUrl, url, query);
 
 
     final response = await http.get(uri, headers: innerHeader).timeout(
@@ -128,8 +128,8 @@ class APIService {
 
     logRequest('${hostName ?? ''}$url', query);
 
-    final uri = Uri.http(hostName ?? baseUrl, url, query);
-    final proxyUri = Uri.http('api.allorigins.win', 'raw', {'url': uri.toString()});
+    final uri = Uri.https(hostName ?? baseUrl, url, query);
+    final proxyUri = Uri.https('api.allorigins.win', 'raw', {'url': uri.toString()});
 
     final response = await http.get(proxyUri, headers: innerHeader).timeout(
       const Duration(seconds: 40),
@@ -155,7 +155,7 @@ class APIService {
       query.forEach((key, value) => query[key] = value.toString());
     }
 
-    final uri = Uri.http('proxy.cors.sh', url, query);
+    final uri = Uri.https('proxy.cors.sh', url, query);
 
     final response = await http
         .get(uri, headers: innerHeader)
@@ -181,7 +181,7 @@ class APIService {
 
     innerHeader.addAll(header ?? {});
 
-    final uri = Uri.http(hostName ?? baseUrl, url, query);
+    final uri = Uri.https(hostName ?? baseUrl, url, query);
 
     logRequest(url, (body ?? {})
       ..addAll(query ?? {}));
@@ -213,7 +213,7 @@ class APIService {
       query.forEach((key, value) => query[key] = value.toString());
     }
 
-    final uri = Uri.http(baseUrl, url, query);
+    final uri = Uri.https(baseUrl, url, query);
 
     logRequest(url, body);
 
@@ -244,7 +244,7 @@ class APIService {
       query.forEach((key, value) => query[key] = value.toString());
     }
 
-    final uri = Uri.http(baseUrl, url, query);
+    final uri = Uri.https(baseUrl, url, query);
 
     logRequest(url, body);
 
@@ -274,7 +274,7 @@ class APIService {
 
     innerHeader.addAll(header ?? {});
 
-    final uri = Uri.http(baseUrl, url, query);
+    final uri = Uri.https(baseUrl, url, query);
 
     logRequest(url, body);
 
@@ -301,7 +301,7 @@ class APIService {
     (fields ?? {}).forEach((key, value) => f[key] = value.toString());
 
     innerHeader.addAll(header ?? {});
-    final uri = Uri.http(baseUrl, '$url/${path ?? ''}');
+    final uri = Uri.https(baseUrl, '$url/${path ?? ''}');
 
     var request = http.MultipartRequest(type, uri);
 
@@ -335,7 +335,7 @@ class APIService {
   }
 
   Future<DateTime> getServerTime() async {
-    var uri = Uri.http(baseUrl);
+    var uri = Uri.https(baseUrl);
 
     final response = await http.get(uri, headers: innerHeader).timeout(
       const Duration(seconds: 40),
