@@ -47,6 +47,7 @@ class MyApp extends StatelessWidget {
           initialHeightText: 2.0.h,
           selectable: true,
           renderHtml: true,
+          textDirection: TextDirection.ltr
         );
 
         return MaterialApp.router(

@@ -119,8 +119,8 @@ class PathPointsWidgetWrap extends StatelessWidget {
                     color: Colors.black,
                     drawableStart: ImageMultiType(
                       url: i.iconPoint,
-                      height: 25.0.spMin,
-                      width: 25.0.spMin,
+                      height: 40.0.spMin,
+                      width: 40.0.spMin,
                     ),
                   ),
                   Padding(
@@ -214,7 +214,7 @@ class EdgesPointWidget extends StatelessWidget {
           ),
           Expanded(
             child: DrawableText(
-              text: 'البعد : ${item.distance} متر',
+              text: 'البعد : ${item.distance.toInt()} متر',
               color: Colors.black,
               fontFamily: FontManager.cairoBold,
             ),

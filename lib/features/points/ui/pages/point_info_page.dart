@@ -97,6 +97,7 @@ class _PointInfoPageState extends State<PointInfoPage> {
             context.read<PointsCubit>().getAllPoints(context);
             if (tripPoint != null) {
               context.read<PointByIdCubit>().getPointById(context, id: request.id);
+              context.read<EdgesPointCubit>().getAllEdgesPoint(context, id: request.id);
               setState(() => canEdit = false);
             } else {
               // context.read<PointsCubit>().getAllPoints(context);
@@ -167,7 +168,7 @@ class _PointInfoPageState extends State<PointInfoPage> {
                   child: MapWidget(
                     initialPoint: request.getLatLng,
                     search: search,
-                    onMapClick: !canEdit
+                    onMapClick: !canEdit && !createMode
                         ? null
                         : (latLng) {
                             request.lat = latLng.latitude;
@@ -259,33 +260,32 @@ class _PointInfoPageState extends State<PointInfoPage> {
           onChanged: (val) => request.name = val,
         ),
         20.0.verticalSpace,
-        if (!canEdit)
-          MyTextFormNoLabelWidget(
-            enable: canEdit || createMode,
-            label: 'خطوط الطول والعرض ( 0.00,0.00 )',
-            onChanged: (val) async {
-              final listNum = val.split(',');
-              if (listNum.length <= 2) {
-                var lat = double.tryParse(listNum.first);
-                var lng = double.tryParse(listNum.last);
-                request.lat = lat;
-                request.lng = lng;
-                var l = request.getLatLng;
-                if (l != null) {
-                  mapController.addSingleMarker(marker: MyMarker(point: l), moveTo: true);
-                  setState(() {});
-                  if (pointNameC.text.isEmpty) {
-                    final name = await LocationNameCubit.getLocationNameApi(latLng: l);
+        MyTextFormNoLabelWidget(
+          enable: canEdit || createMode,
+          label: 'خطوط الطول والعرض ( 0.00,0.00 )',
+          onChanged: (val) async {
+            final listNum = val.split(',');
+            if (listNum.length <= 2) {
+              var lat = double.tryParse(listNum.first);
+              var lng = double.tryParse(listNum.last);
+              request.lat = lat;
+              request.lng = lng;
+              var l = request.getLatLng;
+              if (l != null) {
+                mapController.addSingleMarker(marker: MyMarker(point: l), moveTo: true);
+                setState(() {});
+                if (pointNameC.text.isEmpty) {
+                  final name = await LocationNameCubit.getLocationNameApi(latLng: l);
 
-                    request.name = name.first;
+                  request.name = name.first;
 
-                    pointNameC.text = request.name ?? '';
-                  }
+                  pointNameC.text = request.name ?? '';
                 }
               }
-            },
-            initialValue: request.lat == null ? null : '${request.lat},${request.lng}',
-          ),
+            }
+          },
+          initialValue: request.lat == null ? null : '${request.lat},${request.lng}',
+        ),
         20.0.verticalSpace,
         MyTextFormNoLabelWidget(
           enable: canEdit || createMode,
@@ -391,22 +391,23 @@ class _PointInfoPageState extends State<PointInfoPage> {
               ],
             ),
         10.0.verticalSpace,
-        BlocBuilder<CreatePointCubit, CreatePointInitial>(
-          builder: (context, createState) {
-            if (createState.statuses.isLoading) {
-              return MyStyle.loadingWidget();
-            }
-            return MyButton(
-              active: createMode || canEdit,
-              text: createMode ? 'إنشاء' : 'تعديل',
-              onTap: () {
-                if (!request.validateRequest(context)) return;
+        if (createMode || canEdit)
+          BlocBuilder<CreatePointCubit, CreatePointInitial>(
+            builder: (context, createState) {
+              if (createState.statuses.isLoading) {
+                return MyStyle.loadingWidget();
+              }
+              return MyButton(
+                active: createMode || canEdit,
+                text: createMode ? 'إنشاء' : 'تعديل',
+                onTap: () {
+                  if (!request.validateRequest(context)) return;
 
-                context.read<CreatePointCubit>().createPoint(context, request: request);
-              },
-            );
-          },
-        )
+                  context.read<CreatePointCubit>().createPoint(context, request: request);
+                },
+              );
+            },
+          )
       ],
     );
   }
