@@ -29,13 +29,14 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
               ),
         backgroundColor: AppColorManager.f1,
         actions: actions,
-        leading: context.canPop()
+        leading: window.history.length != 0
             ? IconButton(
                 onPressed: () => window.history.back(),
                 icon: const Icon(
                   Icons.arrow_back_ios,
                   color: AppColorManager.mainColorDark,
-                ))
+                ),
+              )
             : 0.0.verticalSpace,
       ),
     );

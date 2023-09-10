@@ -662,7 +662,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "3f5d9bb162c02dacd51baa28dcd5401ca1f306a2"
+      resolved-ref: bec5c6365d8347eac49ed6a3e29ef68ff93eb553
       url: "https://github.com/saedAlHanash/image_multi_type"
     source: git
     version: "0.0.1"
@@ -814,11 +814,11 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "google+_map_test"
-      resolved-ref: c1ab9c71a69c4ae59e9d78a53e813cca687b6c13
+      ref: html
+      resolved-ref: "6c650beb3a69df4bed344391c23bec43cfe46a4f"
       url: "https://github.com/saedAlHanash/map_qareeb"
     source: git
-    version: "0.1.5"
+    version: "0.1.6"
   matcher:
     dependency: transitive
     description:
@@ -1016,7 +1016,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "420db30cebfecf84d28ebe2235f4b02bf514dd5a"
+      resolved-ref: "8ffe1cd4cae05c9c3d5535cd8632d902b0d30d04"
       url: "https://github.com/saedAlHanash/qareeb_models"
     source: git
     version: "0.1.5"

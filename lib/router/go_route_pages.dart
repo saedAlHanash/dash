@@ -42,6 +42,7 @@ import '../features/points/bloc/delete_edge_cubit/delete_edge_cubit.dart';
 import '../features/points/bloc/delete_point_cubit/delete_point_cubit.dart';
 import '../features/points/bloc/get_all_points_cubit/get_edged_point_cubit.dart';
 import '../features/points/ui/pages/point_info_page.dart';
+import '../features/points/ui/pages/points_page.dart';
 import '../features/redeems/bloc/create_redeem_cubit/create_redeem_cubit.dart';
 import '../features/redeems/bloc/redeems_cubit/redeems_cubit.dart';
 import '../features/roles/bloc/all_permissions_cubit/all_permissions_cubit.dart';
@@ -274,6 +275,7 @@ final appGoRouter = GoRouter(
       builder: (BuildContext context, GoRouterState state) {
         final id = int.tryParse(state.queryParams['id'] ?? '0') ?? 0;
 
+        final arg = state.extra;
         final providers = [
           BlocProvider(
               create: (_) => di.sl<PointByIdCubit>()..getPointById(context, id: id)),
@@ -290,7 +292,7 @@ final appGoRouter = GoRouter(
         ];
         return MultiBlocProvider(
           providers: providers,
-          child: const PointInfoPage(),
+          child: PointInfoPage(mapMediator: arg == null ? null : arg as MapMediator),
         );
       },
     ),

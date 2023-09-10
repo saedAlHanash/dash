@@ -28,7 +28,7 @@ class _DashboardPageState extends State<DashboardPage> {
 
   @override
   Widget build(BuildContext context) {
-    loggerObject.w(AppSharedPreference.getRole.toLowerCase());
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(

@@ -37,6 +37,7 @@ import 'package:map_package/map/bloc/my_location_cubit/my_location_cubit.dart';
 import 'package:map_package/map/bloc/search_location/search_location_cubit.dart';
 import 'package:map_package/map/bloc/set_point_cubit/map_control_cubit.dart';
 import '../../features/messages/bloc/all_messages/all_messages_cubit.dart';
+import '../../features/news/bloc/notification_cubit/notification_cubit.dart';
 import '../../features/points/bloc/creta_edge_cubit/create_edge_cubit.dart';
 import '../../features/points/bloc/creta_point_cubit/create_point_cubit.dart';
 import '../../features/points/bloc/delete_edge_cubit/delete_edge_cubit.dart';
@@ -266,6 +267,7 @@ Future<void> init() async {
   sl.registerFactory(() => UpdateParamsCubit());
   sl.registerFactory(() => UpdateSettingCubit());
   sl.registerFactory(() => SystemSettingsCubit());
+  sl.registerFactory(() => CreateNotificationCubit());
 
 //! External
 

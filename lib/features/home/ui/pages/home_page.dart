@@ -43,6 +43,7 @@ import '../../../drivers/ui/pages/drivers_page.dart';
 import '../../../institutions/bloc/delete_institution_cubit/delete_institution_cubit.dart';
 import '../../../institutions/ui/pages/institutions_page.dart';
 
+import '../../../news/ui/pages/news.dart';
 import '../../../pay_to_drivers/bloc/pay_to_cubit/pay_to_cubit.dart';
 import '../../../pay_to_drivers/ui/pages/pay_to_drivers_page.dart';
 
@@ -191,6 +192,10 @@ class _HomePageState extends State<HomePage> {
                     icon: Icons.privacy_tip_rounded,
                     title: 'سياسة الخصوصية',
                     route: "/policy"),
+                const AdminMenuItem(
+                    icon: Icons.privacy_tip_rounded,
+                    title: 'إشعارات الزبائن',
+                    route: "/notification"),
               if (isAllowed(AppPermissions.MESSAGES))
                 const AdminMenuItem(
                     icon: Icons.message, title: 'الرسائل', route: "/messages"),
@@ -251,6 +256,8 @@ class _HomePageState extends State<HomePage> {
                   );
                 case "/policy":
                   return const PrivacyPolicyPage();
+                case "/notification":
+                  return const NotificationPage();
                 case "/drivers":
                   return MultiBlocProvider(
                     providers: [

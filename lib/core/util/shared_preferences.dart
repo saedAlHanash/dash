@@ -86,7 +86,7 @@ class AppSharedPreference {
   static LoginResult get getUser {
     final string = _prefs?.getString(_user) ?? '{}';
 
-    loggerObject.w(string);
+
     return LoginResult.fromJson(jsonDecode(string));
   }
 

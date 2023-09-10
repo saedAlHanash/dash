@@ -1,10 +1,14 @@
+import 'dart:js_interop';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:map_package/map/bloc/map_controller_cubit/map_controller_cubit.dart';
 import 'package:map_package/map/bloc/search_location/search_location_cubit.dart';
 import 'package:map_package/map/ui/widget/map_widget.dart';
+import 'package:qareeb_dash/core/api_manager/api_service.dart';
 
 import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/note_message.dart';
@@ -24,10 +28,11 @@ class PointsPage extends StatefulWidget {
 class _PointsPageState extends State<PointsPage> {
   late final MapControllerCubit mapController;
 
+  final mapKey = GlobalKey<MapWidgetState>();
+
   @override
   void initState() {
     mapController = context.read<MapControllerCubit>();
-    context.read<PointsCubit>().getAllPoints(context);
     super.initState();
   }
 
@@ -35,7 +40,10 @@ class _PointsPageState extends State<PointsPage> {
   Widget build(BuildContext context) {
     return BlocListener<PointsCubit, PointsInitial>(
       listener: (context, state) {
-        mapController.addAllPoints(points: state.result);
+        loggerObject.w(state.result.length);
+        mapController
+          ..clearMap(false)
+          ..addAllPoints(points: state.result);
       },
       child: Scaffold(
         floatingActionButton: isAllowed(AppPermissions.CREATION)
@@ -45,7 +53,15 @@ class _PointsPageState extends State<PointsPage> {
                 children: [
                   FloatingActionButton(
                     onPressed: () {
-                      context.pushNamed(GoRouteName.pointInfo);
+                      final c = MapMediator(
+                        zoom: mapKey.currentState?.controller.zoom,
+                        center: mapKey.currentState?.controller.center.gll,
+                      );
+
+                      context.pushNamed(
+                        GoRouteName.pointInfo,
+                        extra: c,
+                      );
                     },
                     child: const Icon(Icons.add, color: Colors.white),
                   ),
@@ -59,7 +75,7 @@ class _PointsPageState extends State<PointsPage> {
                             30.0.verticalSpace,
                             SizedBox(
                               width: 300.0.w,
-                                child: AutoCompleteWidget(
+                              child: AutoCompleteWidget(
                                 onTap: (spinnerItem) {
                                   context.pushNamed(
                                     GoRouteName.pointInfo,
@@ -82,6 +98,7 @@ class _PointsPageState extends State<PointsPage> {
               )
             : null,
         body: MapWidget(
+          key: mapKey,
           updateMarkerWithZoom: true,
           search: () async {
             NoteMessage.showCustomBottomSheet(
@@ -108,5 +125,22 @@ class _PointsPageState extends State<PointsPage> {
         ),
       ),
     );
+  }
+}
+
+class MapMediator {
+  LatLng? center;
+  double? zoom;
+
+  MapMediator({
+    required this.center,
+    required this.zoom,
+  });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'center': center,
+      'zoom': zoom,
+    };
   }
 }

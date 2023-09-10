@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:qareeb_dash/features/points/ui/pages/points_page.dart';
 import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/strings/app_color_manager.dart';
@@ -46,7 +47,9 @@ import 'dart:html';
 import '../../data/response/points_edge_response.dart';
 
 class PointInfoPage extends StatefulWidget {
-  const PointInfoPage({super.key});
+  const PointInfoPage({super.key, this.mapMediator});
+
+  final MapMediator? mapMediator;
 
   @override
   State<PointInfoPage> createState() => _PointInfoPageState();
@@ -67,6 +70,18 @@ class _PointInfoPageState extends State<PointInfoPage> {
   void initState() {
     mapController = context.read<MapControllerCubit>();
 
+    if (widget.mapMediator != null && widget.mapMediator!.center != null) {
+      Future.delayed(
+        const Duration(seconds: 1),
+        () {
+
+          mapController.addAllPoints(points: context.read<PointsCubit>().state.result);
+
+          mapController.movingCamera(
+              point: widget.mapMediator!.center!, zoom: widget.mapMediator!.zoom ?? 14);
+        },
+      );
+    }
     super.initState();
   }
 

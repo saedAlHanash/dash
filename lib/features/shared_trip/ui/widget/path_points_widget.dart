@@ -108,7 +108,7 @@ class PathPointsWidgetWrap extends StatelessWidget {
       alignment: WrapAlignment.start,
       children: list
           .mapIndexed((i, e) {
-            loggerObject.w(i.iconPoint);
+
             return Row(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
