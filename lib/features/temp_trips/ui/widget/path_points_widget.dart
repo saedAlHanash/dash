@@ -59,8 +59,8 @@ class PathPointsWidget1 extends StatelessWidget {
               color: Colors.black,
               drawableStart: ImageMultiType(
                 url: i.iconPoint,
-                height: 25.0.spMin,
-                width: 25.0.spMin,
+                height: 40.0.spMin,
+                width: 40.0.spMin,
               ),
               drawableEnd: (i == list.length - 1)
                   ? Icon(
@@ -106,8 +106,8 @@ class PathPointsWidgetWrap extends StatelessWidget {
                     color: Colors.black,
                     drawableStart: ImageMultiType(
                       url: i.iconPoint,
-                      height: 25.0.spMin,
-                      width: 25.0.spMin,
+                      height: 40.0.spMin,
+                      width: 40.0.spMin,
                     ),
                   ),
                   Padding(
