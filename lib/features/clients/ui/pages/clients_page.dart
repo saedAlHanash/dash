@@ -90,6 +90,11 @@ class _ClientsPageState extends State<ClientsPage> {
                 }
 
                 return SaedTableWidget(
+                  onChangePage: (command) {
+                    context
+                        .read<AllClientsCubit>()
+                        .getAllClients(context, command: command);
+                  },
                   command: state.command,
                   title: clientTableHeader,
                   data: list
@@ -120,11 +125,6 @@ class _ClientsPageState extends State<ClientsPage> {
                         ],
                       )
                       .toList(),
-                  onChangePage: (command) {
-                    context
-                        .read<AllClientsCubit>()
-                        .getAllClients(context, command: command);
-                  },
                 );
               },
             ),

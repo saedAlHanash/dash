@@ -57,7 +57,7 @@ class _DriverPageState extends State<DriverPage> {
               return FloatingActionButton(
                 onPressed: () {
                   mState(() => loading = true);
-                  context.read<AllDriversCubit>().getBusAsync(context).then(
+                  context.read<AllDriversCubit>().getDriversAsync(context).then(
                     (value) {
                       if (value == null) return;
                       saveXls(
@@ -107,6 +107,7 @@ class _DriverPageState extends State<DriverPage> {
                 }
                 final list = state.result;
                 return SaedTableWidget(
+
                   command: state.command,
                   title: clientTableHeader,
                   fullSizeIndex: const [7],

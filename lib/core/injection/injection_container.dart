@@ -38,6 +38,7 @@ import 'package:map_package/map/bloc/search_location/search_location_cubit.dart'
 import 'package:map_package/map/bloc/set_point_cubit/map_control_cubit.dart';
 import '../../features/messages/bloc/all_messages/all_messages_cubit.dart';
 import '../../features/news/bloc/notification_cubit/notification_cubit.dart';
+import '../../features/pay_to_drivers/bloc/financial_report_cubit/financial_report_cubit.dart';
 import '../../features/points/bloc/creta_edge_cubit/create_edge_cubit.dart';
 import '../../features/points/bloc/creta_point_cubit/create_point_cubit.dart';
 import '../../features/points/bloc/delete_edge_cubit/delete_edge_cubit.dart';
@@ -73,6 +74,7 @@ import '../../features/system_params/bloc/update_system_params_cubit/update_syst
 import '../../features/system_settings/bloc/system_settings_cubit/system_settings_cubit.dart';
 import '../../features/system_settings/bloc/update_system_params_cubit/update_system_settings_cubit.dart';
 import '../../features/trip/bloc/all_trips_cubit/all_trips_cubit.dart';
+import '../../features/trip/bloc/cancel_trip_cubit/cancel_trip_cubit.dart';
 import '../../features/trip/bloc/driver_status_cubit/driver_status_cubit.dart';
 import '../../features/trip/bloc/nav_trip_cubit/nav_trip_cubit.dart';
 import '../../features/trip/bloc/trip_by_id/trip_by_id_cubit.dart';
@@ -268,6 +270,8 @@ Future<void> init() async {
   sl.registerFactory(() => UpdateSettingCubit());
   sl.registerFactory(() => SystemSettingsCubit());
   sl.registerFactory(() => CreateNotificationCubit());
+  sl.registerFactory(() => FinancialReportCubit());
+  sl.registerFactory(() => CancelTripCubit());
 
 //! External
 

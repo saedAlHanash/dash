@@ -1,138 +1,111 @@
 {
   "result": {
-    "totalCount": 2,
+    "totalCount": 15,
     "items": [
       {
-        "userName": "Qareeb963938891523@gmail.com",
-        "fullName": "سعيد الحنش الحنش الحنش",
-        "name": "سعيد الحنش الحنش",
-        "fireBaseToken": "e7Q6BixnSJmugembagSqPm:APA91bEki1eD0UIcJzXU4RfrCt183OMvhZ2N0LXo3UZ-wVLImwNInqv68SaVqiWfddy6vm7TgIQhauCMGUUT0biI6GhUqBXbgkIUM0KHCTiU9kVAbkQrnOTcMBqVOPMTcf_X-2c4R9Rb",
-        "carCategoryID": 3,
-        "surname": "الحنش",
-        "birthdate": "1998-01-15",
-        "address": "saddfasdf",
-        "phoneNumber": "963938891523",
-        "carCategories": {
-          "name": "فان تسع ركاب ",
-          "imageUrl": "1693124140230I8BRz6OLub.jpg",
-          "price": 0,
-          "driverRatio": 86,
-          "nightKMOverCost": 4190,
-          "dayKMOverCost": 4190,
-          "sharedKMOverCost": 4190,
-          "nightSharedKMOverCost": 4190,
-          "sharedDriverRatio": 86,
-          "minimumDayPrice": 9000,
-          "minimumNightPrice": 9000,
-          "companyLoyaltyRatio": null,
-          "normalOilRatio": 1,
-          "normalGoldRatio": 1,
-          "normalTiresRatio": 1,
-          "sharedOilRatio": 1,
-          "sharedGoldRatio": 1,
-          "sharedTiresRatio": 1,
-          "priceVariant": null,
-          "stepIncrement": null,
-          "id": 3
-        },
-        "currentLocation": {
-          "clientId": 0,
-          "longitud": 36.295095,
-          "latitud": 33.518587,
-          "speed": null,
-          "active": null
-        },
-        "carType": {
-          "userId": 16,
-          "carBrand": "kia",
-          "carModel": "kia",
-          "carColor": "red",
-          "carNumber": "5444",
-          "seatsNumber": 5
-        },
-        "userType": 1,
-        "roleNames": null,
-        "isActive": true,
-        "isLoyaltySupscriper": true,
-        "emailConfirmationCode": "991738",
-        "creationTime": "2023-07-06",
-        "emailAddress": "Qareeb963938891523@gmail.com",
-        "imei": null,
-        "qarebDeviceimei": "354017116595949",
-        "gender": 0,
-        "avatar": "1692647404535scaled_٢٠٢٣٠٨٢٠_١٢٤٥١٨.jpg",
-        "identity": "1688656155472LWG6SICPQE.jpg",
-        "contract": "1688656155474zeWqfMa7tv.jpg",
-        "drivingLicence": "1688656155469xGNfvPxylh.jpg",
-        "carMechanic": "16886561554716RttUlpQ8o.jpg",
-        "password": "AQAAAAEAACcQAAAAEFmCmWePgt3yQYzzXuvtPlOdcqgacXcTsUdiwYx8E+5VeV9w1e4ysw2+JQLZtgu07Q==",
-        "id": 16
+        "driverId": 12,
+        "driverName": "محمد جهاد  الهندي الهندي",
+        "driverPhoneNo": "963933215432",
+        "requiredAmountFromDriver": 7487900.0,
+        "requiredAmountFromCompany": 6425230.0
       },
       {
-        "userName": "Qareeb963968353685@gmail.com",
-        "fullName": "محمد جهاد الهندي",
-        "name": "محمد جهاد",
-        "fireBaseToken": "fN5wAx2ISxSqTWDXD0AtN2:APA91bFtFgYAENJfbAxQqsEofglR4dMil_L0D0nqNrEYDSXizp4B0oqRTk_E8LkpiF3TaQnLZvtJURxL48gSo2GgL2w70gonQQnDEwVMthVaY-czVN9LQw9WzamX-_d_d9Pyc8YrQP-4",
-        "carCategoryID": 1,
-        "surname": "الهندي",
-        "birthdate": "1986-07-07",
-        "address": "الروضة ٢",
-        "phoneNumber": "963968353685",
-        "carCategories": {
-          "name": "كلاسيك",
-          "imageUrl": "1688550884143x.jpg",
-          "price": 0,
-          "driverRatio": 86,
-          "nightKMOverCost": 4190,
-          "dayKMOverCost": 4190,
-          "sharedKMOverCost": 4190,
-          "nightSharedKMOverCost": 4190,
-          "sharedDriverRatio": 86,
-          "minimumDayPrice": 9000,
-          "minimumNightPrice": 9000,
-          "companyLoyaltyRatio": null,
-          "normalOilRatio": 1,
-          "normalGoldRatio": 1,
-          "normalTiresRatio": 1,
-          "sharedOilRatio": 1,
-          "sharedGoldRatio": 1,
-          "sharedTiresRatio": 1,
-          "priceVariant": null,
-          "stepIncrement": null,
-          "id": 1
-        },
-        "currentLocation": {
-          "clientId": 0,
-          "longitud": 36.28065,
-          "latitud": 33.508133,
-          "speed": null,
-          "active": null
-        },
-        "carType": {
-          "userId": 12,
-          "carBrand": "كيا ريو",
-          "carModel": "كيا ريو",
-          "carColor": "ابيض",
-          "carNumber": "581957",
-          "seatsNumber": 4
-        },
-        "userType": 1,
-        "roleNames": null,
-        "isActive": true,
-        "isLoyaltySupscriper": true,
-        "emailConfirmationCode": "273051",
-        "creationTime": "2023-07-05",
-        "emailAddress": "Qareeb963968353685@gmail.com",
-        "imei": null,
-        "qarebDeviceimei": "354778341877739",
-        "gender": 0,
-        "avatar": "1688559176144x.jpg",
-        "identity": "1688559176147x.jpg",
-        "contract": "1688559176147x.jpg",
-        "drivingLicence": "1688559176145x.jpg",
-        "carMechanic": "1688559176146x.jpg",
-        "password": "AQAAAAEAACcQAAAAEL10+0T58mzRxp6b/hzlBCd/aXhZem8qqlUs4/nky7lCima8+JPAZTbh0EbN+6x+Ew==",
-        "id": 12
+        "driverId": 16,
+        "driverName": "سعيد الحنش ",
+        "driverPhoneNo": "963938891523",
+        "requiredAmountFromDriver": 1103500.0,
+        "requiredAmountFromCompany": 135290.0
+      },
+      {
+        "driverId": 73,
+        "driverName": "store Test",
+        "driverPhoneNo": "963756490918",
+        "requiredAmountFromDriver": 0.0,
+        "requiredAmountFromCompany": 0.0
+      },
+      {
+        "driverId": 74,
+        "driverName": "eyad agha",
+        "driverPhoneNo": "963944222803",
+        "requiredAmountFromDriver": 0.0,
+        "requiredAmountFromCompany": 59340.0
+      },
+      {
+        "driverId": 82,
+        "driverName": "قراس  زكريا ",
+        "driverPhoneNo": "963993370529",
+        "requiredAmountFromDriver": 0.0,
+        "requiredAmountFromCompany": 0.0
+      },
+      {
+        "driverId": 94,
+        "driverName": "خالد الرهونجي محمد وليد ",
+        "driverPhoneNo": "963955268205",
+        "requiredAmountFromDriver": 0.0,
+        "requiredAmountFromCompany": -2960.0
+      },
+      {
+        "driverId": 382,
+        "driverName": "محمد القاري محمد منير",
+        "driverPhoneNo": "963988718278",
+        "requiredAmountFromDriver": 0.0,
+        "requiredAmountFromCompany": 0.0
+      },
+      {
+        "driverId": 385,
+        "driverName": "نضال عدي  وائل",
+        "driverPhoneNo": "963966279515",
+        "requiredAmountFromDriver": 0.0,
+        "requiredAmountFromCompany": 0.0
+      },
+      {
+        "driverId": 391,
+        "driverName": "محمد الحداوي  صالح",
+        "driverPhoneNo": "963932948324",
+        "requiredAmountFromDriver": 0.0,
+        "requiredAmountFromCompany": 0.0
+      },
+      {
+        "driverId": 393,
+        "driverName": "أحمد جمال أيبش  محمد عزت ",
+        "driverPhoneNo": "963944504910",
+        "requiredAmountFromDriver": 0.0,
+        "requiredAmountFromCompany": 64500.0
+      },
+      {
+        "driverId": 394,
+        "driverName": "محمد هاني شرفه باسل ",
+        "driverPhoneNo": "963932696805",
+        "requiredAmountFromDriver": 0.0,
+        "requiredAmountFromCompany": 0.0
+      },
+      {
+        "driverId": 434,
+        "driverName": "محمد علاء الدين أبو أرشيد",
+        "driverPhoneNo": "963991282096",
+        "requiredAmountFromDriver": 0.0,
+        "requiredAmountFromCompany": 0.0
+      },
+      {
+        "driverId": 435,
+        "driverName": "مححمد يحيى  الشعيري",
+        "driverPhoneNo": "963999892034",
+        "requiredAmountFromDriver": 0.0,
+        "requiredAmountFromCompany": 0.0
+      },
+      {
+        "driverId": 436,
+        "driverName": "فادي عواد",
+        "driverPhoneNo": "963944966611",
+        "requiredAmountFromDriver": 10000.0,
+        "requiredAmountFromCompany": 0.0
+      },
+      {
+        "driverId": 438,
+        "driverName": "qareeb mass mass",
+        "driverPhoneNo": "963988774834",
+        "requiredAmountFromDriver": 0.0,
+        "requiredAmountFromCompany": 0.0
       }
     ]
   },

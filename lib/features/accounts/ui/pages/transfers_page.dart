@@ -60,6 +60,11 @@ class TransfersPage extends StatelessWidget {
                 final list = state.result;
                 if (list.isEmpty) return const NotFoundWidget(text: 'لا يوجد تصنيفات');
                 return SaedTableWidget(
+                    onChangePage: (command) {
+                      context
+                          .read<AllTransfersCubit>()
+                          .getAllTransfers(context, command: command);
+                    },
                     title: transfersHeaderTable,
                     data: state.result.mapIndexed((index, e) {
                       return [

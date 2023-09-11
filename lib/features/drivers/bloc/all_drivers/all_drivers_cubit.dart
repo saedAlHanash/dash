@@ -47,7 +47,7 @@ class AllDriversCubit extends Cubit<AllDriversInitial> {
     }
   }
 
-  Future<Pair<List<String>, List<List<dynamic>>>?> getBusAsync(
+  Future<Pair<List<String>, List<List<dynamic>>>?> getDriversAsync(
       BuildContext context) async {
     var oldSkipCount = state.command.skipCount;
     state.command

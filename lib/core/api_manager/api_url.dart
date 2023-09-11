@@ -87,12 +87,15 @@ class GetUrl {
   static var systemParams = 'api/services/app/SystemParametersService/GetAll';
 
   static var systemSettings = 'api/services/app/SystemSettingsService/GetAll';
+
+  static var financialReport = 'api/services/app/AccountsService/FinancialReport';
 }
 
 class PostUrl {
   static const serverProxy = 'api/services/app/HttpRequestService/ExecuteRequest';
   static const requestOtp = 'api/Auth/RequestOTP';
-  static const sendNotificaion = 'api/services/app/SystemNotificationService/ProdcastNotification';
+  static const sendNotificaion =
+      'api/services/app/SystemNotificationService/ProdcastNotification';
   static const signup = 'api/services/app/Account/Register';
   static const acceptPolicy = 'api/services/app/AcceptPolicy/Create';
 
@@ -226,3 +229,4 @@ class PathUrl {
 }
 
 const baseUrl = 'live.qareeb-maas.com';
+// const baseUrl = 'livetest.qareeb-maas.com';

@@ -44,6 +44,7 @@ import '../../../institutions/bloc/delete_institution_cubit/delete_institution_c
 import '../../../institutions/ui/pages/institutions_page.dart';
 
 import '../../../news/ui/pages/news.dart';
+import '../../../pay_to_drivers/bloc/financial_report_cubit/financial_report_cubit.dart';
 import '../../../pay_to_drivers/bloc/pay_to_cubit/pay_to_cubit.dart';
 import '../../../pay_to_drivers/ui/pages/pay_to_drivers_page.dart';
 
@@ -379,6 +380,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       BlocProvider(create: (_) => sl<PayToCubit>()),
                       BlocProvider(create: (_) => sl<AccountAmountCubit>()),
+                      BlocProvider(create: (_) => sl<FinancialReportCubit>()),
                     ],
                     child: const PayToDriversPage(),
                   );

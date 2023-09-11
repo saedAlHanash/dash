@@ -1,3 +1,4 @@
+import 'package:qareeb_dash/core/api_manager/api_service.dart';
 import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
@@ -23,12 +24,13 @@ class Command {
 
   int get maxPages => ((totalCount ?? 0) / maxResultCount).myRound;
 
-  int get currentPage => ((skipCount ?? 0) + 1 / maxResultCount).myRound;
+  int get currentPage => (((skipCount ?? 0) + 1) / maxResultCount).myRound;
 
   List<SpinnerItem> get getSpinnerItems {
     final list = <SpinnerItem>[];
-
+    loggerObject.w(currentPage);
     for (var i = 1; i <= maxPages; i++) {
+      // loggerObject.w(i == currentPage);
       list.add(SpinnerItem(
         id: i,
         name: i.toString(),

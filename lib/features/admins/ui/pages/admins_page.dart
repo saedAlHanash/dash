@@ -52,6 +52,11 @@ class _AdminPageState extends State<AdminPage> {
           }
           final list = state.result;
           return SaedTableWidget(
+            onChangePage: (command) {
+              context
+                  .read<AllAdminsCubit>()
+                  .getAllAdmins(context, command: command);
+            },
             command: state.command,
             title: adminsEableHeader,
             fullSizeIndex: const [5],
@@ -93,9 +98,6 @@ class _AdminPageState extends State<AdminPage> {
                   ],
                 )
                 .toList(),
-            onChangePage: (command) {
-              context.read<AllAdminsCubit>().getAllAdmins(context, command: command);
-            },
           );
 
         },

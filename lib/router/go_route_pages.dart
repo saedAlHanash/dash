@@ -54,6 +54,7 @@ import '../features/shared_trip/bloc/shared_trip_by_id_cubit/shared_trip_by_id_c
 import '../features/shared_trip/ui/pages/shared_trip_info_page.dart';
 import '../features/shared_trip/ui/pages/shared_trips_page.dart';
 import '../features/trip/bloc/all_trips_cubit/all_trips_cubit.dart';
+import '../features/trip/bloc/cancel_trip_cubit/cancel_trip_cubit.dart';
 import '../features/trip/bloc/trip_by_id/trip_by_id_cubit.dart';
 import '../features/trip/bloc/trip_status_cubit/trip_status_cubit.dart';
 import '../features/trip/data/request/filter_trip_request.dart';
@@ -311,6 +312,7 @@ final appGoRouter = GoRouter(
           BlocProvider(create: (_) => di.sl<MapControllerCubit>()),
           BlocProvider(create: (_) => di.sl<TripStatusCubit>()),
           BlocProvider(create: (_) => di.sl<AtherCubit>()),
+          BlocProvider(create: (_) => di.sl<CancelTripCubit>()),
           BlocProvider(create: (_) => di.sl<TripByIdCubit>()..tripById(_, tripId: id)),
         ];
         return MultiBlocProvider(

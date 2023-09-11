@@ -2,10 +2,12 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qareeb_dash/core/api_manager/api_url.dart';
-import 'package:qareeb_models/extensions.dart';  import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_models/extensions.dart';
+import 'package:qareeb_dash/core/extensions/extensions.dart';
 
 import 'package:qareeb_models/global.dart';
-import 'package:qareeb_models/previous_trips/data/response/trips_response.dart'; import '../../../../../core/strings/enum_manager.dart';
+import 'package:qareeb_models/previous_trips/data/response/trips_response.dart';
+import '../../../../../core/strings/enum_manager.dart';
 import '../../../../core/api_manager/api_service.dart';
 import '../../../../core/api_manager/command.dart';
 import '../../../../core/error/error_manager.dart';
@@ -50,7 +52,7 @@ class AllTripsCubit extends Cubit<AllTripsInitial> {
     if (await network.isConnected) {
       final response = await APIService().getApi(
         url: GetUrl.getAllTrips,
-        query: state.filter.toMap(),
+        query: state.filter.toMap()..addAll(state.command.toJson()),
       );
 
       if (response.statusCode == 200) {

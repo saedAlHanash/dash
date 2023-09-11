@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:qareeb_models/extensions.dart';  import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_models/extensions.dart';
+import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/widgets/not_found_widget.dart';
 import 'package:qareeb_dash/core/widgets/saed_taple_widget.dart';
 import 'package:qareeb_dash/features/trip/ui/widget/filters/trips_filter_widget.dart';
@@ -69,6 +70,11 @@ class TripsPage extends StatelessWidget {
 
                 return SingleChildScrollView(
                   child: SaedTableWidget(
+                    onChangePage: (command) {
+                      context
+                          .read<AllTripsCubit>()
+                          .getAllTrips(context, command: command);
+                    },
                     title: _tripsTableHeader,
                     data: list
                         .mapIndexed(

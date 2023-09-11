@@ -73,7 +73,11 @@ class _SharedTripsPageState extends State<SharedTripsPage> {
                 }
 
                 return SingleChildScrollView(
-                  child: SaedTableWidget(
+                  child: SaedTableWidget(            onChangePage: (command) {
+                    context
+                        .read<GetSharedTripsCubit>()
+                        .getSharesTrip(context, command: command);
+                  },
                     title: _tripsTableHeader,
                     data: list
                         .mapIndexed(
