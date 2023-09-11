@@ -76,15 +76,17 @@ class AllMembersCubit extends Cubit<AllMembersInitial> {
   Pair<List<String>, List<List<dynamic>>> _getXlsData(List<Member> data) {
     return Pair(
         [
-          'ID',
-          'اسم الطالب',
-          'عنوان الطالب',
-          'اسم المستخدم',
-          'كلمة السر',
-          'رقم الهاتف',
-          'الكلية',
-          'الرقم الوطني',
-          'الرقم الجامعي',
+          '\tID\t',
+          '\tاسم الطالب\t',
+          '\tعنوان الطالب\t',
+          '\tاسم المستخدم\t',
+          '\tكلمة السر\t',
+          '\tرقم الهاتف\t',
+          '\tالكلية\t',
+          '\tالرقم الوطني\t',
+          '\tالرقم الجامعي\t',
+          '\tحالة الاشتراك\t',
+          '\tتاريخ انتهاء اشترك\t',
         ],
         data
             .mapIndexed(
@@ -96,6 +98,10 @@ class AllMembersCubit extends Cubit<AllMembersInitial> {
                 element.password,
                 element.phoneNo,
                 element.facility,
+                element.idNumber,
+                element.collegeIdNumber,
+                element.subscriptions.lastOrNull?.isNotExpired,
+                element.subscriptions.lastOrNull?.expirationDate?.formatDate ?? 'لا يوجد',
               ],
             )
             .toList());

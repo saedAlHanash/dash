@@ -91,7 +91,7 @@ class AllTripHistoryCubit extends Cubit<AllTripHistoryInitial> {
                 element.busMember.fullName,
                 element.date?.toIso8601String(),
                 element.attendanceType.arabicName,
-                element.isSubscribed ? 'مشترك' : "غير مشترك",
+                element.isSubscribed ,
               ],
             )
             .toList());

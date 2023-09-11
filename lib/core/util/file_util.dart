@@ -25,7 +25,6 @@ saveXls(
         bold: true,
         horizontalAlign: HorizontalAlign.Center,
         verticalAlign: VerticalAlign.Center,
-        textWrapping: TextWrapping.WrapText,
       ),
     );
   }
@@ -36,20 +35,19 @@ saveXls(
       final dataItem = data[i - 1][j];
       sheetObject.updateCell(
         CellIndex.indexByColumnRow(rowIndex: i, columnIndex: j),
-        dataItem,
+        (dataItem is bool) ? '' : dataItem,
         cellStyle: CellStyle(
           leftBorder: Border(borderStyle: BorderStyle.Thin),
           rightBorder: Border(borderStyle: BorderStyle.Thin),
           topBorder: Border(borderStyle: BorderStyle.Thin),
           bottomBorder: Border(borderStyle: BorderStyle.Thin),
-          backgroundColorHex: dataItem == 'غير مشترك'
-              ? '#C60000'
-              : dataItem == 'مشترك'
+          backgroundColorHex: (dataItem is bool)
+              ? dataItem
                   ? '#8BB93E'
-                  : 'none',
+                  : '#C60000'
+              : 'none',
           horizontalAlign: HorizontalAlign.Center,
           verticalAlign: VerticalAlign.Center,
-          textWrapping: TextWrapping.WrapText,
         ),
       );
     }

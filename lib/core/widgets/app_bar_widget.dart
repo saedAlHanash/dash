@@ -44,7 +44,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
                 ),
               )
             ],
-            leading: context.canPop()
+            leading: window.history.length > 0
                 ? IconButton(
                     onPressed: () => window.history.back(),
                     icon: const Icon(
