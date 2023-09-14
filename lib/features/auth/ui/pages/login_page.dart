@@ -8,10 +8,10 @@ import 'package:go_router/go_router.dart';
 import 'package:qareeb_dash/core/util/shared_preferences.dart';
 import 'package:qareeb_dash/core/widgets/app_bar_widget.dart';
 import 'package:qareeb_dash/router/go_route_pages.dart';
+import 'package:qareeb_models/global.dart';
 
 import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/strings/app_string_manager.dart';
-import 'package:qareeb_models/global.dart';
 import '../../../../core/util/my_style.dart';
 import '../../../../core/widgets/my_button.dart';
 import '../../../../core/widgets/my_card_widget.dart';

@@ -1,4 +1,4 @@
-import 'package:qareeb_models/trip_process/data/response/trip_response.dart';
+
 //
 // class TripsResponse {
 //   TripsResponse({

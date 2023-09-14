@@ -5,12 +5,11 @@ import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/features/auth/data/response/login_response.dart';
 import 'package:qareeb_dash/features/trip/bloc/trip_by_id/trip_by_id_cubit.dart';
 import 'package:qareeb_models/extensions.dart';
+import 'package:qareeb_models/global.dart';
 import 'package:qareeb_models/trip_process/data/response/trip_response.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../features/profile/data/response/profile_info_response.dart';
-import 'package:qareeb_models/global.dart';
-import '../strings/enum_manager.dart';
 
 class AppSharedPreference {
   static const _token = '1';

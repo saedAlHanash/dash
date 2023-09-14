@@ -1,8 +1,6 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:qareeb_models/points/data/response/points_edge_response.dart';
 
-import '../response/points_edge_response.dart';
-
 class CreateEdgeRequest {
   CreateEdgeRequest({
      this.startPointLatLng,

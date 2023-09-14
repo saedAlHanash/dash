@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qareeb_models/global.dart';
 
 import '../api_manager/command.dart';
-import 'package:qareeb_models/global.dart'; import '../strings/enum_manager.dart';
 import '../util/my_style.dart';
 import 'my_button.dart';
 

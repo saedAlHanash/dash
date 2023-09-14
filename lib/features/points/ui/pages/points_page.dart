@@ -1,5 +1,3 @@
-import 'dart:js_interop';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,7 +6,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:map_package/map/bloc/map_controller_cubit/map_controller_cubit.dart';
 import 'package:map_package/map/bloc/search_location/search_location_cubit.dart';
 import 'package:map_package/map/ui/widget/map_widget.dart';
-import 'package:qareeb_dash/core/api_manager/api_service.dart';
 
 import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/note_message.dart';
@@ -33,18 +30,37 @@ class _PointsPageState extends State<PointsPage> {
   @override
   void initState() {
     mapController = context.read<MapControllerCubit>();
+    Future.delayed(
+      const Duration(seconds: 5),
+      () {
+        if (context.read<PointsCubit>().state.result.isEmpty) {
+          context.read<PointsCubit>().getAllPoints(context);
+        }
+      },
+    );
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<PointsCubit, PointsInitial>(
-      listener: (context, state) {
-        loggerObject.w(state.result.length);
-        mapController
-          ..clearMap(false)
-          ..addAllPoints(points: state.result);
-      },
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<PointsCubit, PointsInitial>(
+          listener: (context, state) {
+            mapController
+              ..clearMap(false)
+              ..addAllPoints(
+                points: state.result,
+                onTapMarker: (item) {
+                  context.pushNamed(
+                    GoRouteName.pointInfo,
+                    queryParams: {'id': item.id.toString()},
+                  );
+                },
+              );
+          },
+        ),
+      ],
       child: Scaffold(
         floatingActionButton: isAllowed(AppPermissions.CREATION)
             ? Column(
@@ -52,6 +68,7 @@ class _PointsPageState extends State<PointsPage> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   FloatingActionButton(
+                    heroTag: "btn2",
                     onPressed: () {
                       final c = MapMediator(
                         zoom: mapKey.currentState?.controller.zoom,
@@ -67,6 +84,7 @@ class _PointsPageState extends State<PointsPage> {
                   ),
                   10.0.verticalSpace,
                   FloatingActionButton(
+                    heroTag: "btn1",
                     onPressed: () {
                       NoteMessage.showCustomBottomSheet(
                         context,
@@ -114,12 +132,6 @@ class _PointsPageState extends State<PointsPage> {
                   },
                 ),
               ),
-            );
-          },
-          onTapMarker: (marker) {
-            context.pushNamed(
-              GoRouteName.pointInfo,
-              queryParams: {'id': marker.item.id.toString()},
             );
           },
         ),

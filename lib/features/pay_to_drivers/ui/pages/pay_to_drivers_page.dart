@@ -3,40 +3,34 @@ import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:qareeb_dash/core/api_manager/command.dart';
-import 'package:qareeb_models/extensions.dart';
-import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/widgets/item_info.dart';
-import 'package:qareeb_dash/core/widgets/my_button.dart';
-import 'package:qareeb_dash/core/widgets/not_found_widget.dart';
 import 'package:qareeb_dash/core/widgets/saed_taple_widget.dart';
 import 'package:qareeb_dash/features/drivers/bloc/all_drivers/all_drivers_cubit.dart';
 import 'package:qareeb_dash/features/pay_to_drivers/ui/widget/pay_to_driver_widget.dart';
-
+import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_models/global.dart';
-import '../../../../core/strings/enum_manager.dart';
+
 import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/file_util.dart';
 import '../../../../core/util/my_style.dart';
 import '../../../../core/util/note_message.dart';
-import '../../../../core/widgets/my_text_form_widget.dart';
 import '../../../../core/widgets/spinner_widget.dart';
-import '../../../../core/widgets/spinner_widget.dart';
-import 'package:qareeb_models/global.dart';
+import '../../../../router/go_route_pages.dart';
 import '../../../accounts/bloc/account_amount_cubit/account_amount_cubit.dart';
 import '../../../accounts/bloc/all_transfers_cubit/all_transfers_cubit.dart';
-
+import '../../../clients/ui/widget/clients_filter_widget.dart';
 import '../../bloc/financial_report_cubit/financial_report_cubit.dart';
 import '../../bloc/pay_to_cubit/pay_to_cubit.dart';
 
 const transfersHeaderTable = [
   'ID',
-  'النوع',
-  'المرسل',
-  'المستقبل',
-  'المبلغ',
-  'الحالة',
-  'التاريخ',
+  'الاسم الكامل',
+  'رقم الهاتف',
+  'مستحقات الشركة',
+  'مستحقات السائق',
+  'الملخص',
 ];
 
 class PayToDriversPage extends StatefulWidget {
@@ -109,66 +103,70 @@ class _PayToDriversPageState extends State<PayToDriversPage> {
           ),
         ],
       ),
-      body: BlocBuilder<AllTransfersCubit, AllTransfersInitial>(
-        builder: (context, state) {
-          if (state.statuses.isLoading) {
-            return MyStyle.loadingWidget();
-          }
-          return Column(
-            children: [
-              DrawableText(
-                text: 'دفعات السائقين ',
-                matchParent: true,
-                size: 28.0.sp,
-                textAlign: TextAlign.center,
-                padding: const EdgeInsets.symmetric(vertical: 15.0).h,
-              ),
-              ItemInfoInLine(
-                title: 'فلترة حسب النوع',
-                widget: SpinnerWidget(
-                    items: [
-                      SpinnerItem(
-                        id: 2,
-                        name: 'من السائق للشركة',
-                        enable: state.command.transferFilterRequest.type?.index != 2,
-                        isSelected: state.command.transferFilterRequest.type?.index == 2,
-                      ),
-                      SpinnerItem(
-                        id: 3,
-                        name: 'من الشركة للسائق',
-                        enable: state.command.transferFilterRequest.type?.index != 3,
-                        isSelected: state.command.transferFilterRequest.type?.index == 3,
-                      ),
-                    ],
-                    onChanged: (spinnerItem) {
-                      state.command.transferFilterRequest.type =
-                          TransferType.values[spinnerItem.id];
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.only(bottom: 200.0).h,
+        child: Column(
+          children: [
+            BlocBuilder<FinancialReportCubit, FinancialReportInitial>(
+              builder: (context, state) {
+                return ClientsFilterWidget(
+                  command: state.command,
+                  onApply: (request) {
+                    context.read<FinancialReportCubit>().getReport(
+                          context,
+                          command:
+                              context.read<FinancialReportCubit>().state.command.copyWith(
+                                    memberFilterRequest: request,
+                                    skipCount: 0,
+                                    totalCount: 0,
+                                  ),
+                        );
+                  },
+                );
+              },
+            ),
+            BlocBuilder<FinancialReportCubit, FinancialReportInitial>(
+              builder: (context, state) {
+                if (state.statuses.isLoading) {
+                  return MyStyle.loadingWidget();
+                }
+                return SaedTableWidget(
+                    command: state.command,
+                    fullHeight: 1.8.sh,
+                    onChangePage: (command) {
                       context
                           .read<AllTransfersCubit>()
-                          .getAllTransfers(context, command: state.command);
-                    }),
-              ),
-              SaedTableWidget(
-                  onChangePage: (command) {
-                    context
-                        .read<AllTransfersCubit>()
-                        .getAllTransfers(context, command: command);
-                  },
-                  title: transfersHeaderTable,
-                  data: state.result.mapIndexed((index, e) {
-                    return [
-                      e.id.toString(),
-                      e.type?.arabicName ?? '-',
-                      e.sourceName,
-                      e.destinationName,
-                      e.amount.formatPrice,
-                      e.status?.name ?? '-',
-                      e.transferDate?.formatDateTime ?? '',
-                    ];
-                  }).toList()),
-            ],
-          );
-        },
+                          .getAllTransfers(context, command: command);
+                    },
+                    title: transfersHeaderTable,
+                    data: state.result.mapIndexed((index, e) {
+                      return [
+                        InkWell(
+                          onTap: () {
+                            context.pushNamed(GoRouteName.driverInfo,
+                                queryParams: {'id': e.driverId.toString()});
+                          },
+                          child: DrawableText(
+                            selectable: false,
+                            size: 16.0.sp,
+                            matchParent: true,
+                            textAlign: TextAlign.center,
+                            underLine: true,
+                            text: e.driverId.toString(),
+                            color: Colors.blue,
+                          ),
+                        ),
+                        e.driverName,
+                        e.driverPhoneNo,
+                        e.requiredAmountFromDriver.formatPrice,
+                        e.requiredAmountFromCompany.formatPrice,
+                        getMessage(e),
+                      ];
+                    }).toList());
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

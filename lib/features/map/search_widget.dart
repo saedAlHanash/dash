@@ -13,7 +13,6 @@ import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/strings/app_string_manager.dart';
 import '../../../../core/util/my_style.dart';
 import '../../../../core/widgets/my_text_form_widget.dart';
-import '../../../../main.dart';
 
 class SearchWidget extends StatefulWidget {
   const SearchWidget({super.key, required this.onTap});

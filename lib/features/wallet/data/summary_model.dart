@@ -1,6 +1,5 @@
-import 'package:qareeb_models/extensions.dart';  import 'package:qareeb_dash/core/extensions/extensions.dart';
-
-import 'package:qareeb_models/global.dart'; import '../../../core/strings/enum_manager.dart';
+import 'package:qareeb_models/extensions.dart';
+import 'package:qareeb_models/global.dart';
 
 class SummaryModel {
   int? driverId;
@@ -10,7 +9,7 @@ class SummaryModel {
 
   String get message {
     return 'سيتم تحويل مبلغ ل'
-        '${type == SummaryPayToEnum.requireDriverPay ? 'للشركة' : 'للسائق'} '
+        '${type == SummaryPayToEnum.requiredFromDriver ? 'للشركة' : 'للسائق'} '
         'وقدره '
         '${payAmount?.formatPrice} ليرة سورية'
         '';

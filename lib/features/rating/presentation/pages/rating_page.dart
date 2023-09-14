@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:qareeb_models/extensions.dart';  import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_models/extensions.dart';
+import 'package:qareeb_models/trip_process/data/response/trip_response.dart';
 
 import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/strings/app_string_manager.dart';
@@ -15,7 +17,6 @@ import '../../../../core/widgets/my_text_form_widget.dart';
 import '../../../../core/widgets/table_widget.dart';
 import '../../../../core/widgets/top_title_widget.dart';
 import '../../../../generated/assets.dart';
-import 'package:qareeb_models/trip_process/data/response/trip_response.dart';
 import '../../domain/entities/request/rating_request.dart';
 import '../bloc/rating_cubit/rating_cubit.dart';
 

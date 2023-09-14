@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,7 +11,6 @@ import 'package:qareeb_dash/core/widgets/my_button.dart';
 import '../../generated/assets.dart';
 import '../widgets/images/image_multi_type.dart';
 import '../widgets/snake_bar_widget.dart';
-import 'dart:html';
 class NoteMessage {
   static void showSuccessSnackBar(
       {required String message, required BuildContext context}) {

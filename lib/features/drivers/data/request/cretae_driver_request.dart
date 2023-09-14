@@ -3,8 +3,7 @@ import 'package:qareeb_dash/core/api_manager/api_service.dart';
 import 'package:qareeb_dash/core/util/checker_helper.dart';
 import 'package:qareeb_dash/core/util/note_message.dart';
 import 'package:qareeb_dash/features/drivers/data/response/drivers_response.dart';
-
-import 'package:qareeb_models/global.dart'; import '../../../../core/strings/enum_manager.dart';
+import 'package:qareeb_models/global.dart';
 
 class CreateDriverRequest {
   String? name;

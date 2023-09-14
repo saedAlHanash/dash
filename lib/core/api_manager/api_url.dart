@@ -89,6 +89,10 @@ class GetUrl {
   static var systemSettings = 'api/services/app/SystemSettingsService/GetAll';
 
   static var financialReport = 'api/services/app/AccountsService/FinancialReport';
+
+  static var tempTrips = 'api/services/app/PathService/GetPaths';
+
+  static var tempTripById = 'api/services/app/PathService/GetPathById';
 }
 
 class PostUrl {
@@ -163,6 +167,7 @@ class PostUrl {
   static var createRole = 'api/services/app/Role/Create';
 
   static var createInstitution = 'api/services/app/InstitutiosnsService/Create';
+  static var createTempTrip = 'api/services/app/PathService/CreatePath';
 }
 
 class PutUrl {
@@ -187,9 +192,12 @@ class PutUrl {
   static var updateParams = 'api/services/app/SystemParametersService/Update';
 
   static var updateSetting = 'api/services/app/SystemSettingsService/Update';
+
+  static var updateTempTrip = 'api/services/app/PathService/UpdatePath';
 }
 
 class DeleteUrl {
+  static var deleteTempTrip = 'api/services/app/PathService/DeletePath';
   static const deleteFavoritePlace = 'api/services/app/FavirotePlacesAppServices/Delete';
 
   static const deleteCancelReason = 'api/services/app/CancelReasons/Delete';

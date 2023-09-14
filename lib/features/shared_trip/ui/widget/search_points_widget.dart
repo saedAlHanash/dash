@@ -5,7 +5,6 @@ import 'package:qareeb_models/points/data/model/trip_point.dart';
 
 import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/widgets/text_with_list_dote.dart';
-import 'package:qareeb_models/points/data/response/points_response.dart';
 
 class SearchLocationWidget extends StatelessWidget {
   const SearchLocationWidget({Key? key, required this.items, this.onItemClick})

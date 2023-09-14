@@ -1,7 +1,5 @@
 import 'dart:html';
 
-import 'package:collection/collection.dart';
-import 'package:drawable_text/drawable_text.dart';
 import 'package:excel/excel.dart';
 
 saveXls(

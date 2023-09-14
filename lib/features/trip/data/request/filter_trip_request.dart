@@ -35,6 +35,10 @@ class FilterTripRequest {
       'ClientPhone': (clientPhone?.isEmpty ?? true) ? null : clientPhone,
     };
   }
+  void clearFilter() {
+    startTime = null;
+    endTime = null;
+  }
 
 //</editor-fold>
 }

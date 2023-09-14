@@ -2,8 +2,8 @@ import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:qareeb_models/extensions.dart';  import 'package:qareeb_models/extensions.dart';  import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/strings/app_color_manager.dart';
+import 'package:qareeb_models/extensions.dart';
 
 import '../../features/drivers/bloc/loyalty_cubit/loyalty_cubit.dart';
 import '../../features/drivers/data/response/drivers_response.dart';

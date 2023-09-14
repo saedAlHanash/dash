@@ -4,15 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:qareeb_models/extensions.dart';  import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/widgets/not_found_widget.dart';
+import 'package:qareeb_models/extensions.dart';
+import 'package:qareeb_models/global.dart';
 
-import 'package:qareeb_models/global.dart'; import '../../../../core/strings/enum_manager.dart';
 import '../../../../core/util/my_style.dart';
 import '../../../../core/widgets/my_button.dart';
 import '../../../../core/widgets/saed_taple_widget.dart';
 import '../../../../router/go_route_pages.dart';
-import '../../../trip/ui/widget/filters/trips_filter_widget.dart';
 import '../../bloc/get_shared_trips_cubit/get_shared_trips_cubit.dart';
 import '../widget/filters/shared_trips_filter_widget.dart';
 
@@ -27,7 +26,9 @@ const _tripsTableHeader = [
 
 class SharedTripsPage extends StatefulWidget {
   const SharedTripsPage({super.key, this.isClientTrips});
+
   final bool? isClientTrips;
+
   @override
   State<SharedTripsPage> createState() => _SharedTripsPageState();
 }
@@ -45,11 +46,12 @@ class _SharedTripsPageState extends State<SharedTripsPage> {
             textAlign: TextAlign.center,
             padding: const EdgeInsets.symmetric(vertical: 15.0).h,
           ),
-
           if (!(widget.isClientTrips ?? false))
             SharedTripsFilterWidget(
               onApply: (request) {
-                context.read<GetSharedTripsCubit>().getSharesTrip(context, filter: request);
+                context
+                    .read<GetSharedTripsCubit>()
+                    .getSharesTrip(context, filter: request);
               },
             ),
           if ((widget.isClientTrips ?? false))
@@ -58,7 +60,6 @@ class _SharedTripsPageState extends State<SharedTripsPage> {
                 return DrawableText(text: 'رحلات  : ${state.filter.clientName}');
               },
             ),
-
           const Divider(),
           Expanded(
             child: BlocBuilder<GetSharedTripsCubit, GetSharedTripsInitial>(
@@ -73,11 +74,12 @@ class _SharedTripsPageState extends State<SharedTripsPage> {
                 }
 
                 return SingleChildScrollView(
-                  child: SaedTableWidget(            onChangePage: (command) {
-                    context
-                        .read<GetSharedTripsCubit>()
-                        .getSharesTrip(context, command: command);
-                  },
+                  child: SaedTableWidget(
+                    onChangePage: (command) {
+                      context
+                          .read<GetSharedTripsCubit>()
+                          .getSharesTrip(context, command: command);
+                    },
                     title: _tripsTableHeader,
                     data: list
                         .mapIndexed(
@@ -86,7 +88,7 @@ class _SharedTripsPageState extends State<SharedTripsPage> {
                             e.reservedSeats.toString(),
                             (e.seatCost).formatPrice,
                             e.schedulingDate?.formatDateTime ?? '',
-                            e.tripStatus.sharedTripName(),
+                            e.tripStatus.arabicName,
                             InkWell(
                               onTap: () {
                                 context.pushNamed(GoRouteName.sharedTripInfo,
@@ -109,5 +111,20 @@ class _SharedTripsPageState extends State<SharedTripsPage> {
         ],
       ),
     );
+  }
+}
+
+extension SharedTripStatusHelper on SharedTripStatus {
+  String get arabicName {
+    switch (this) {
+      case SharedTripStatus.pending:
+        return 'لم تبدأ';
+      case SharedTripStatus.started:
+        return 'جارية';
+      case SharedTripStatus.closed:
+        return 'منتهية';
+      case SharedTripStatus.canceled:
+        return 'ملغية';
+    }
   }
 }

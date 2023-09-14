@@ -1,4 +1,4 @@
-import '../../../../core/strings/enum_manager.dart';
+import 'package:qareeb_models/global.dart';
 
 class ClientsFilterRequest {
   String? name;

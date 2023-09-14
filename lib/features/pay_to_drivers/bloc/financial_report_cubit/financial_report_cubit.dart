@@ -10,7 +10,6 @@ import 'package:qareeb_models/global.dart';
 import '../../../../core/api_manager/api_service.dart';
 import '../../../../core/api_manager/command.dart';
 import '../../../../core/error/error_manager.dart';
-import '../../../../core/strings/enum_manager.dart';
 import '../../../../core/util/note_message.dart';
 import '../../../../core/util/pair_class.dart';
 import '../../data/response/financial_report_response.dart';
@@ -93,47 +92,33 @@ class FinancialReportCubit extends Cubit<FinancialReportInitial> {
     }
   }
 
-  String getMessage(FinancialReport report) {
-    switch (summaryType(report)) {
-      //السائق يجب أن يدفع للشركة
-      case SummaryPayToEnum.requireDriverPay:
-        return 'يستوجب على السائق تسديد مبلغ للشركة وقدره :  '
-            '${(report.requiredAmountFromDriver - report.requiredAmountFromCompany).formatPrice}  ليرة سورية ';
+}
 
-      //الشركة يجب انت تدفع للسائق
-      case SummaryPayToEnum.requireCompanyPay:
-        return 'يستوجب على الشركة تسديد مبلغ للسائق وقدره :   '
-            ' ${(report.requiredAmountFromCompany - report.requiredAmountFromDriver).formatPrice}   ليرة سورية';
-
-      //الرصيد متكافئ
-      case SummaryPayToEnum.equal:
-        return 'ان مستحقات الشركة من السائق مساوية تماما لمستحقات السائق لدى الشركة';
-    }
+SummaryPayToEnum summaryType(FinancialReport report) {
+  if (report.requiredAmountFromDriver > report.requiredAmountFromCompany) {
+    return SummaryPayToEnum.requiredFromDriver;
+  } else if (report.requiredAmountFromCompany > report.requiredAmountFromDriver) {
+    return SummaryPayToEnum.requiredFromCompany;
+  } else {
+    return SummaryPayToEnum.equal;
   }
+}
 
-  // num price(FinancialReport report) {
-  //   switch (summaryType(report)) {
-  //     //السائق يجب أن يدفع للشركة
-  //     case SummaryPayToEnum.requireDriverPay:
-  //       return report.requiredAmountFromCompany - report.requiredAmountFromDriver;
-  //
-  //     //الشركة يجب انت تدفع للسائق
-  //     case SummaryPayToEnum.requireCompanyPay:
-  //       return report.requiredAmountFromDriver - report.requiredAmountFromCompany;
-  //
-  //     //الرصيد متكافئ
-  //     case SummaryPayToEnum.equal:
-  //       return 0;
-  //   }
-  // }
+String getMessage(FinancialReport report) {
+  switch (summaryType(report)) {
+  //السائق يجب أن يدفع للشركة
+    case SummaryPayToEnum.requiredFromDriver:
+      return 'يستوجب على السائق تسديد مبلغ للشركة وقدره :  \n'
+          '${(report.requiredAmountFromDriver - report.requiredAmountFromCompany).formatPrice}\n  ليرة سورية ';
 
-  SummaryPayToEnum summaryType(FinancialReport report) {
-    if (report.requiredAmountFromDriver > report.requiredAmountFromCompany) {
-      return SummaryPayToEnum.requireDriverPay;
-    } else if (report.requiredAmountFromCompany > report.requiredAmountFromDriver) {
-      return SummaryPayToEnum.requireCompanyPay;
-    } else {
-      return SummaryPayToEnum.equal;
-    }
+  //الشركة يجب انت تدفع للسائق
+    case SummaryPayToEnum.requiredFromCompany:
+      return 'يستوجب على الشركة تسديد مبلغ للسائق وقدره :   \n'
+          ' ${(report.requiredAmountFromCompany - report.requiredAmountFromDriver).formatPrice}\n   ليرة سورية';
+
+  //الرصيد متكافئ
+    case SummaryPayToEnum.equal:
+      return 'ان مستحقات الشركة من السائق مساوية تماما لمستحقات السائق لدى الشركة';
   }
+  return '';
 }

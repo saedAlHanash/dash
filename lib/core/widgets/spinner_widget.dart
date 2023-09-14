@@ -52,6 +52,7 @@ class SpinnerWidgetState<T> extends State<SpinnerWidget<T>> {
         return DropdownMenuItem(
           value: item,
           child: DrawableText(
+            selectable: false,
             text: item.name ?? '',
             padding: padding,
             color: (item.id != -1)
@@ -166,6 +167,7 @@ class SpinnerOutlineTitle extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         DrawableText(
+          selectable: false,
           text: label,
           color: AppColorManager.black,
           padding: const EdgeInsets.symmetric(horizontal: 10.0).w,

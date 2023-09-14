@@ -15,14 +15,15 @@ import '../../features/coupons/bloc/all_coupons_vubit/all_coupons_cubit.dart';
 import '../../features/drivers/bloc/all_drivers/all_drivers_cubit.dart';
 import '../../features/home/bloc/nav_home_cubit/nav_home_cubit.dart';
 import '../../features/institutions/bloc/all_institutions_cubit/all_institutions_cubit.dart';
-import 'package:map_package/map/bloc/set_point_cubit/map_control_cubit.dart';
 import '../../features/messages/bloc/all_messages/all_messages_cubit.dart';
 import '../../features/news/bloc/notification_cubit/notification_cubit.dart';
+import '../../features/pay_to_drivers/bloc/financial_report_cubit/financial_report_cubit.dart';
 import '../../features/points/bloc/get_edged_point_cubit/get_all_points_cubit.dart';
 import '../../features/roles/bloc/all_roles/all_roles_cubit.dart';
 import '../../features/shared_trip/bloc/get_shared_trips_cubit/get_shared_trips_cubit.dart';
 import '../../features/system_params/bloc/system_params_cubit/system_params_cubit.dart';
 import '../../features/system_settings/bloc/system_settings_cubit/system_settings_cubit.dart';
+import '../../features/temp_trips/bloc/all_temp_trips_cubit/all_temp_trips_cubit.dart';
 import '../../features/trip/bloc/all_trips_cubit/all_trips_cubit.dart';
 import '../../features/wallet/bloc/providers_cubit/providers_cubit.dart';
 import '../../router/go_route_pages.dart';
@@ -41,15 +42,14 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       builder: (context, child) {
         DrawableText.initial(
-          initialColor: AppColorManager.black,
-          titleSizeText: 28.0.sp,
-          headerSizeText: 30.0.sp,
-          initialSize: 22.0.sp,
-          initialHeightText: 2.0.h,
-          selectable: true,
-          renderHtml: true,
-          textDirection: TextDirection.ltr
-        );
+            initialColor: AppColorManager.black,
+            titleSizeText: 28.0.sp,
+            headerSizeText: 30.0.sp,
+            initialSize: 22.0.sp,
+            initialHeightText: 2.0.h,
+            selectable: true,
+            renderHtml: true,
+            textDirection: TextDirection.ltr);
 
         return MaterialApp.router(
           scrollBehavior: MyCustomScrollBehavior(),
@@ -71,6 +71,8 @@ class MyApp extends StatelessWidget {
                 BlocProvider(create: (_) => sl<AllDriversCubit>()..getAllDrivers(_)),
                 BlocProvider(create: (_) => sl<AllClientsCubit>()..getAllClients(_)),
                 BlocProvider(create: (_) => sl<AllCouponsCubit>()..getAllCoupons(_)),
+                BlocProvider(create: (_) => sl<AllTempTripsCubit>()..getTempTrips(_)),
+                BlocProvider(create: (_) => sl<FinancialReportCubit>()..getReport(_)),
                 BlocProvider(create: (_) => sl<AllTransfersCubit>()..getAllTransfers(_)),
                 BlocProvider(create: (_) => sl<GetSharedTripsCubit>()..getSharesTrip(_)),
                 BlocProvider(create: (_) => sl<ProvidersCubit>()..getAllEpayProviders(_)),

@@ -2,13 +2,12 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qareeb_dash/core/api_manager/api_url.dart';
-import 'package:qareeb_models/extensions.dart';  import 'package:qareeb_dash/core/extensions/extensions.dart';
-import 'package:qareeb_dash/features/drivers/data/response/drivers_response.dart';
+import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_models/global.dart';
 
 import '../../../../core/api_manager/api_service.dart';
 import '../../../../core/api_manager/command.dart';
 import '../../../../core/error/error_manager.dart';
-import 'package:qareeb_models/global.dart'; import '../../../../core/strings/enum_manager.dart';
 import '../../../../core/util/note_message.dart';
 import '../../../../core/util/pair_class.dart';
 import '../../data/response/roles_response.dart';

@@ -28,8 +28,6 @@
 import 'package:flutter/material.dart';
 import 'package:qareeb_models/global.dart';
 
-import '../../spinner_widget.dart';
-
 class FilterableList extends StatelessWidget {
   final List<SpinnerItem> items;
   final Function(SpinnerItem) onItemTapped;

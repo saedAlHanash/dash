@@ -1,39 +1,36 @@
+import 'dart:html';
+
 import 'package:collection/collection.dart';
 import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:qareeb_dash/features/points/ui/pages/points_page.dart';
-import 'package:qareeb_models/extensions.dart';
+import 'package:map_package/map/bloc/map_controller_cubit/map_controller_cubit.dart';
+import 'package:map_package/map/bloc/search_location/search_location_cubit.dart';
+import 'package:map_package/map/data/models/my_marker.dart';
+import 'package:map_package/map/ui/widget/map_widget.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/strings/app_color_manager.dart';
 import 'package:qareeb_dash/core/util/note_message.dart';
 import 'package:qareeb_dash/core/widgets/app_bar_widget.dart';
 import 'package:qareeb_dash/core/widgets/my_button.dart';
 import 'package:qareeb_dash/core/widgets/my_text_form_widget.dart';
-import 'package:qareeb_dash/core/widgets/spinner_widget.dart';
-import 'package:qareeb_models/global.dart';
-import 'package:map_package/map/data/models/my_marker.dart';
-import 'package:map_package/map/ui/widget/map_widget.dart';
 import 'package:qareeb_dash/features/points/bloc/creta_edge_cubit/create_edge_cubit.dart';
 import 'package:qareeb_dash/features/points/bloc/get_all_points_cubit/get_edged_point_cubit.dart';
 import 'package:qareeb_dash/features/points/data/request/create_edg_request.dart';
-import 'package:qareeb_dash/features/points/data/response/points_response.dart';
+import 'package:qareeb_dash/features/points/ui/pages/points_page.dart';
 import 'package:qareeb_dash/features/shared_trip/ui/widget/path_points_widget.dart';
+import 'package:qareeb_models/extensions.dart';
+import 'package:qareeb_models/global.dart';
 import 'package:qareeb_models/points/data/model/trip_point.dart';
 import 'package:qareeb_models/points/data/response/points_edge_response.dart';
-import 'package:qareeb_models/trip_path/data/models/trip_path.dart';
 
-import '../../../../core/api_manager/api_service.dart';
 import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/my_style.dart';
 import '../../../../core/widgets/auto_complete_widget.dart';
 import '../../../../router/go_route_pages.dart';
 import '../../../../services/osrm/bloc/location_name_cubit/location_name_cubit.dart';
-import 'package:map_package/map/bloc/map_controller_cubit/map_controller_cubit.dart';
-import 'package:map_package/map/bloc/search_location/search_location_cubit.dart';
-
 import '../../../map/search_location_widget.dart';
 import '../../../map/search_widget.dart';
 import '../../bloc/creta_point_cubit/create_point_cubit.dart';
@@ -42,9 +39,6 @@ import '../../bloc/delete_point_cubit/delete_point_cubit.dart';
 import '../../bloc/get_edged_point_cubit/get_all_points_cubit.dart';
 import '../../bloc/point_by_id_cubit/point_by_id_cubit.dart';
 import '../../data/request/create_point_request.dart';
-import 'dart:html';
-
-import '../../data/response/points_edge_response.dart';
 
 class PointInfoPage extends StatefulWidget {
   const PointInfoPage({super.key, this.mapMediator});
@@ -68,15 +62,27 @@ class _PointInfoPageState extends State<PointInfoPage> {
 
   @override
   void initState() {
+
+    Future.delayed(
+      const Duration(seconds: 5),
+          () {
+        if (context.read<PointsCubit>().state.result.isEmpty) {
+          context.read<PointsCubit>().getAllPoints(context);
+        }
+      },
+    );
+
     mapController = context.read<MapControllerCubit>();
+
+
+    mapController
+      ..clearMap(false)
+      ..addAllPoints(points: context.read<PointsCubit>().state.result);
 
     if (widget.mapMediator != null && widget.mapMediator!.center != null) {
       Future.delayed(
         const Duration(seconds: 1),
         () {
-
-          mapController.addAllPoints(points: context.read<PointsCubit>().state.result);
-
           mapController.movingCamera(
               point: widget.mapMediator!.center!, zoom: widget.mapMediator!.zoom ?? 14);
         },
@@ -104,6 +110,21 @@ class _PointInfoPageState extends State<PointInfoPage> {
             context
                 .read<EdgesPointCubit>()
                 .getAllEdgesPoint(context, id: tripPoint?.id ?? 0);
+          },
+        ),
+        BlocListener<PointsCubit, PointsInitial>(
+          listener: (context, state) {
+            mapController
+              ..clearMap(false)
+              ..addAllPoints(
+                points: state.result,
+                onTapMarker: (item) {
+                  context.pushNamed(
+                    GoRouteName.pointInfo,
+                    queryParams: {'id': item.id.toString()},
+                  );
+                },
+              );
           },
         ),
         BlocListener<CreatePointCubit, CreatePointInitial>(
@@ -181,6 +202,7 @@ class _PointInfoPageState extends State<PointInfoPage> {
                 20.0.horizontalSpace,
                 Expanded(
                   child: MapWidget(
+                    updateMarkerWithZoom: true,
                     initialPoint: request.getLatLng,
                     search: search,
                     onMapClick: !canEdit && !createMode
@@ -189,15 +211,11 @@ class _PointInfoPageState extends State<PointInfoPage> {
                             request.lat = latLng.latitude;
                             request.lng = latLng.longitude;
                             mapController.addSingleMarker(
-                                marker: MyMarker(point: request.getLatLng!),
-                                moveTo: true);
+                              marker: MyMarker(
+                                  point: request.getLatLng!, type: MyMarkerType.location),
+                              moveTo: true,
+                            );
                           },
-                    onTapMarker: (marker) {
-                      context.pushNamed(
-                        GoRouteName.pointInfo,
-                        queryParams: {'id': marker.item.id.toString()},
-                      );
-                    },
                   ),
                 ),
               ],

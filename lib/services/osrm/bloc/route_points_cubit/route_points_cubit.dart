@@ -6,15 +6,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:map_package/map/data/response/ors_response.dart';
 import 'package:map_package/map/data/response/rote_points_result.dart';
+import 'package:qareeb_models/global.dart';
 
 import '../../../../core/api_manager/api_service.dart';
 import '../../../../core/api_manager/api_url.dart';
 import '../../../../core/network/network_info.dart';
 import '../../../../core/strings/app_string_manager.dart';
-import 'package:qareeb_models/global.dart'; import '../../../../core/strings/enum_manager.dart';
 import '../../../../core/util/note_message.dart';
 import '../../../../core/util/pair_class.dart';
-
 
 part 'route_points_state.dart';
 

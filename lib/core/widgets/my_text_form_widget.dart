@@ -334,11 +334,15 @@ class MyTextFormNoLabelWidget extends StatelessWidget {
     this.color,
     this.initialValue,
     this.textDirection,
+    this.iconWidget,
+    this.disableAndKeepIcon,
   }) : super(key: key);
   final bool? enable;
+  final bool? disableAndKeepIcon;
   final String label;
   final String hint;
   final String? icon;
+  final Widget? iconWidget;
   final Color? color;
   final int maxLines;
   final int maxLength;
@@ -359,7 +363,9 @@ class MyTextFormNoLabelWidget extends StatelessWidget {
     Widget? suffixIcon;
     VoidCallback? onChangeObscure;
 
-    if (icon != null) {
+    if (iconWidget != null) {
+      suffixIcon = iconWidget;
+    } else if (icon != null) {
       suffixIcon = Padding(
         padding: EdgeInsets.symmetric(horizontal: 10.0.w),
         child: ImageMultiType(url: icon!, height: 23.0.h, width: 40.0.w),
@@ -399,7 +405,7 @@ class MyTextFormNoLabelWidget extends StatelessWidget {
 
     final textStyle = TextStyle(
       fontFamily: FontManager.cairoSemiBold.name,
-      fontSize: 18.0.sp,
+      fontSize: 22.0.sp,
       color: AppColorManager.mainColor,
     );
 
@@ -412,11 +418,12 @@ class MyTextFormNoLabelWidget extends StatelessWidget {
             matchParent: true,
             color: AppColorManager.black,
             padding: const EdgeInsets.symmetric(horizontal: 10.0).w,
-            size: 18.0.sp,
+            size: 16.0.sp,
           ),
           3.0.verticalSpace,
           TextFormField(
             decoration: inputDecoration,
+            focusNode: (disableAndKeepIcon ?? false) ? AlwaysDisabledFocusNode() : null,
             maxLines: maxLines,
             initialValue: initialValue,
             obscureText: obscureText,
@@ -433,4 +440,8 @@ class MyTextFormNoLabelWidget extends StatelessWidget {
       );
     });
   }
+}
+class AlwaysDisabledFocusNode extends FocusNode {
+  @override
+  bool get hasFocus => false;
 }

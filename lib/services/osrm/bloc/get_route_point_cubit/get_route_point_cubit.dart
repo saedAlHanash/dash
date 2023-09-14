@@ -7,11 +7,11 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:qareeb_dash/core/api_manager/api_service.dart';
 import 'package:qareeb_dash/core/api_manager/api_url.dart';
 import 'package:qareeb_dash/services/osrm/data/response/osrm_model.dart';
+import 'package:qareeb_models/global.dart';
 
 import '../../../../core/injection/injection_container.dart';
 import '../../../../core/network/network_info.dart';
 import '../../../../core/strings/app_string_manager.dart';
-import 'package:qareeb_models/global.dart'; import '../../../../core/strings/enum_manager.dart';
 import '../../../../core/util/note_message.dart';
 import '../../../../core/util/pair_class.dart';
 

@@ -1,21 +1,14 @@
-import 'package:collection/collection.dart';
-import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
-import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
-import 'package:qareeb_dash/core/widgets/not_found_widget.dart';
+import 'package:qareeb_models/extensions.dart';
 
 import '../../../../core/strings/app_color_manager.dart';
-import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/my_style.dart';
 import '../../../../core/widgets/my_button.dart';
 import '../../../../core/widgets/my_card_widget.dart';
 import '../../../../core/widgets/my_text_form_widget.dart';
-import '../../../../core/widgets/saed_taple_widget.dart';
-import '../../../../router/go_route_pages.dart';
 import '../../bloc/system_params_cubit/system_params_cubit.dart';
 import '../../bloc/update_system_params_cubit/update_system_params_cubit.dart';
 

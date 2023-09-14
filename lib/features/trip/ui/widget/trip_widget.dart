@@ -1,15 +1,17 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:qareeb_models/extensions.dart';  import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/strings/app_color_manager.dart';
 import 'package:qareeb_dash/features/trip/ui/widget/screen/end_trip_widget.dart';
 import 'package:qareeb_dash/features/trip/ui/widget/screen/final_trip.dart';
 import 'package:qareeb_dash/features/trip/ui/widget/screen/have_trip_widget.dart';
 import 'package:qareeb_dash/features/trip/ui/widget/screen/start_trip_widget.dart';
 import 'package:qareeb_dash/features/trip/ui/widget/screen/waiting_widget.dart';
-import 'dart:html';
-import 'package:qareeb_models/global.dart'; import '../../../../core/strings/enum_manager.dart';
+import 'package:qareeb_models/global.dart';
+
 import '../../../../core/util/shared_preferences.dart';
 import '../../bloc/nav_trip_cubit/nav_trip_cubit.dart';
 import '../../bloc/trip_status_cubit/trip_status_cubit.dart';

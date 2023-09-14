@@ -2,10 +2,11 @@ import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:qareeb_models/extensions.dart';  import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_models/extensions.dart';
+import 'package:qareeb_models/global.dart';
 
 import '../../../../../core/strings/app_color_manager.dart';
-import 'package:qareeb_models/global.dart'; import '../../../../../core/strings/enum_manager.dart';
 import '../../../../../core/util/launcher_helper.dart';
 import '../../../../../core/util/my_style.dart';
 import '../../../../../core/util/shared_preferences.dart';

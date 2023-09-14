@@ -56,19 +56,21 @@ class ItemInfoInLine extends StatelessWidget {
       text: '$title:  ',
       color: Colors.black,
       size: 22.0.sp,
+      selectable: false,
       padding: const EdgeInsets.only(right: 10.0, bottom: 15.0, top: 3.0).r,
       drawablePadding: 5.0.w,
       fontFamily: FontManager.cairoBold,
       drawableEnd: widget == null
           ? Directionality(
-            textDirection: TextDirection.ltr,
-            child: DrawableText(
-                text: info?.replaceAll('spy', '') ?? '',
+              textDirection: TextDirection.ltr,
+              child: DrawableText(
+                text: info ?? '',
                 size: 24.0.sp,
+                selectable: false,
                 fontFamily: FontManager.cairoBold,
                 color: AppColorManager.mainColor,
               ),
-          )
+            )
           : widget!,
     );
   }

@@ -1,9 +1,9 @@
 import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:qareeb_models/trip_process/data/response/trip_response.dart';
 
 import '../../../../../core/widgets/app_bar_widget.dart';
-import 'package:qareeb_models/trip_process/data/response/trip_response.dart';
 import '../../../trip/ui/widget/trip_info_list_widget.dart';
 
 

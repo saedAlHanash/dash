@@ -1,114 +1,154 @@
 {
-  "result": {
-    "totalCount": 15,
-    "items": [
-      {
-        "driverId": 12,
-        "driverName": "محمد جهاد  الهندي الهندي",
-        "driverPhoneNo": "963933215432",
-        "requiredAmountFromDriver": 7487900.0,
-        "requiredAmountFromCompany": 6425230.0
+  "result": [
+    {
+      "path": {
+        "name": "test",
+        "arName": "test",
+        "edges": [
+          {
+            "startPoint": {
+              "name": "قوس المشروع",
+              "arName": "قوس المشروع",
+              "latitude": 33.531301614670774,
+              "langitude": 36.23773998902129,
+              "tags": "قوس المشروع,",
+              "zoneId": 10557,
+              "id": 120
+            },
+            "startPointId": 120,
+            "endPoint": {
+              "name": "دوار الكنيسة",
+              "arName": " دوار الكنيسة القادم من المشروع",
+              "latitude": 33.52338942491543,
+              "langitude": 36.2153192040864,
+              "tags": "جسر مشروع دمر,مركز دمر الطبي,كنيسة مشروع دمر",
+              "zoneId": null,
+              "id": 116
+            },
+            "endPointId": 116,
+            "distance": 2346.6,
+            "duration": 0.0,
+            "price": 0.0,
+            "steps": "oatkE}td|EdAbMdEdHbAnFPtDsAbHhBhAbBtCjChIvEn[vVno@",
+            "name": null,
+            "arName": null,
+            "id": 199
+          },
+          {
+            "startPoint": {
+              "name": "دوار الكنيسة",
+              "arName": " دوار الكنيسة القادم من المشروع",
+              "latitude": 33.52338942491543,
+              "langitude": 36.2153192040864,
+              "tags": "جسر مشروع دمر,مركز دمر الطبي,كنيسة مشروع دمر",
+              "zoneId": null,
+              "id": 116
+            },
+            "startPointId": 116,
+            "endPoint": {
+              "name": "24 Square",
+              "arName": "دوار الجزيرة 24",
+              "latitude": 33.527460521348594,
+              "langitude": 36.2118348306563,
+              "tags": "دوار ال24",
+              "zoneId": 11140,
+              "id": 221
+            },
+            "endPointId": 221,
+            "distance": 938.7,
+            "duration": 0.0,
+            "price": 0.0,
+            "steps": "workE_i`|EJZEj@Oj@[f@_CbCwDtCu@N[EkCyAm@Qg@@{A`@_ChBmAJSXGT?bCFd@Zh@d@TdBm@HSCWKGSBIR",
+            "name": null,
+            "arName": null,
+            "id": 335
+          }
+        ],
+        "id": 171
       },
-      {
-        "driverId": 16,
-        "driverName": "سعيد الحنش ",
-        "driverPhoneNo": "963938891523",
-        "requiredAmountFromDriver": 1103500.0,
-        "requiredAmountFromCompany": 135290.0
+      "carCategoryName": "كلاسيك",
+      "carCategorySeats": 5,
+      "prices": [
+        3000,
+        4000,
+        5000
+      ]
+    },
+    {
+      "path": {
+        "name": "test",
+        "arName": "test",
+        "edges": [
+          {
+            "startPoint": {
+              "name": "قوس المشروع",
+              "arName": "قوس المشروع",
+              "latitude": 33.531301614670774,
+              "langitude": 36.23773998902129,
+              "tags": "قوس المشروع,",
+              "zoneId": 10557,
+              "id": 120
+            },
+            "startPointId": 120,
+            "endPoint": {
+              "name": "دوار الكنيسة",
+              "arName": " دوار الكنيسة القادم من المشروع",
+              "latitude": 33.52338942491543,
+              "langitude": 36.2153192040864,
+              "tags": "جسر مشروع دمر,مركز دمر الطبي,كنيسة مشروع دمر",
+              "zoneId": null,
+              "id": 116
+            },
+            "endPointId": 116,
+            "distance": 2346.6,
+            "duration": 0.0,
+            "price": 0.0,
+            "steps": "oatkE}td|EdAbMdEdHbAnFPtDsAbHhBhAbBtCjChIvEn[vVno@",
+            "name": null,
+            "arName": null,
+            "id": 199
+          },
+          {
+            "startPoint": {
+              "name": "دوار الكنيسة",
+              "arName": " دوار الكنيسة القادم من المشروع",
+              "latitude": 33.52338942491543,
+              "langitude": 36.2153192040864,
+              "tags": "جسر مشروع دمر,مركز دمر الطبي,كنيسة مشروع دمر",
+              "zoneId": null,
+              "id": 116
+            },
+            "startPointId": 116,
+            "endPoint": {
+              "name": "24 Square",
+              "arName": "دوار الجزيرة 24",
+              "latitude": 33.527460521348594,
+              "langitude": 36.2118348306563,
+              "tags": "دوار ال24",
+              "zoneId": 11140,
+              "id": 221
+            },
+            "endPointId": 221,
+            "distance": 938.7,
+            "duration": 0.0,
+            "price": 0.0,
+            "steps": "workE_i`|EJZEj@Oj@[f@_CbCwDtCu@N[EkCyAm@Qg@@{A`@_ChBmAJSXGT?bCFd@Zh@d@TdBm@HSCWKGSBIR",
+            "name": null,
+            "arName": null,
+            "id": 335
+          }
+        ],
+        "id": 171
       },
-      {
-        "driverId": 73,
-        "driverName": "store Test",
-        "driverPhoneNo": "963756490918",
-        "requiredAmountFromDriver": 0.0,
-        "requiredAmountFromCompany": 0.0
-      },
-      {
-        "driverId": 74,
-        "driverName": "eyad agha",
-        "driverPhoneNo": "963944222803",
-        "requiredAmountFromDriver": 0.0,
-        "requiredAmountFromCompany": 59340.0
-      },
-      {
-        "driverId": 82,
-        "driverName": "قراس  زكريا ",
-        "driverPhoneNo": "963993370529",
-        "requiredAmountFromDriver": 0.0,
-        "requiredAmountFromCompany": 0.0
-      },
-      {
-        "driverId": 94,
-        "driverName": "خالد الرهونجي محمد وليد ",
-        "driverPhoneNo": "963955268205",
-        "requiredAmountFromDriver": 0.0,
-        "requiredAmountFromCompany": -2960.0
-      },
-      {
-        "driverId": 382,
-        "driverName": "محمد القاري محمد منير",
-        "driverPhoneNo": "963988718278",
-        "requiredAmountFromDriver": 0.0,
-        "requiredAmountFromCompany": 0.0
-      },
-      {
-        "driverId": 385,
-        "driverName": "نضال عدي  وائل",
-        "driverPhoneNo": "963966279515",
-        "requiredAmountFromDriver": 0.0,
-        "requiredAmountFromCompany": 0.0
-      },
-      {
-        "driverId": 391,
-        "driverName": "محمد الحداوي  صالح",
-        "driverPhoneNo": "963932948324",
-        "requiredAmountFromDriver": 0.0,
-        "requiredAmountFromCompany": 0.0
-      },
-      {
-        "driverId": 393,
-        "driverName": "أحمد جمال أيبش  محمد عزت ",
-        "driverPhoneNo": "963944504910",
-        "requiredAmountFromDriver": 0.0,
-        "requiredAmountFromCompany": 64500.0
-      },
-      {
-        "driverId": 394,
-        "driverName": "محمد هاني شرفه باسل ",
-        "driverPhoneNo": "963932696805",
-        "requiredAmountFromDriver": 0.0,
-        "requiredAmountFromCompany": 0.0
-      },
-      {
-        "driverId": 434,
-        "driverName": "محمد علاء الدين أبو أرشيد",
-        "driverPhoneNo": "963991282096",
-        "requiredAmountFromDriver": 0.0,
-        "requiredAmountFromCompany": 0.0
-      },
-      {
-        "driverId": 435,
-        "driverName": "مححمد يحيى  الشعيري",
-        "driverPhoneNo": "963999892034",
-        "requiredAmountFromDriver": 0.0,
-        "requiredAmountFromCompany": 0.0
-      },
-      {
-        "driverId": 436,
-        "driverName": "فادي عواد",
-        "driverPhoneNo": "963944966611",
-        "requiredAmountFromDriver": 10000.0,
-        "requiredAmountFromCompany": 0.0
-      },
-      {
-        "driverId": 438,
-        "driverName": "qareeb mass mass",
-        "driverPhoneNo": "963988774834",
-        "requiredAmountFromDriver": 0.0,
-        "requiredAmountFromCompany": 0.0
-      }
-    ]
-  },
+      "carCategoryName": "مركبة  عائلية 7 ركاب",
+      "carCategorySeats": 7,
+      "prices": [
+        2500,
+        3000,
+        3500
+      ]
+    }
+  ],
   "targetUrl": null,
   "success": true,
   "error": null,

@@ -1,5 +1,10 @@
 import 'package:geolocator/geolocator.dart';
 import 'package:get_it/get_it.dart';
+import 'package:map_package/map/bloc/ather_cubit/ather_cubit.dart';
+import 'package:map_package/map/bloc/map_controller_cubit/map_controller_cubit.dart';
+import 'package:map_package/map/bloc/my_location_cubit/my_location_cubit.dart';
+import 'package:map_package/map/bloc/search_location/search_location_cubit.dart';
+import 'package:map_package/map/bloc/set_point_cubit/map_control_cubit.dart';
 import 'package:qareeb_dash/features/pay_to_drivers/bloc/pay_to_cubit/pay_to_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -31,11 +36,6 @@ import '../../features/home/bloc/nav_home_cubit/nav_home_cubit.dart';
 import '../../features/institutions/bloc/all_institutions_cubit/all_institutions_cubit.dart';
 import '../../features/institutions/bloc/create_institution_cubit/create_institution_cubit.dart';
 import '../../features/institutions/bloc/delete_institution_cubit/delete_institution_cubit.dart';
-import 'package:map_package/map/bloc/ather_cubit/ather_cubit.dart';
-import 'package:map_package/map/bloc/map_controller_cubit/map_controller_cubit.dart';
-import 'package:map_package/map/bloc/my_location_cubit/my_location_cubit.dart';
-import 'package:map_package/map/bloc/search_location/search_location_cubit.dart';
-import 'package:map_package/map/bloc/set_point_cubit/map_control_cubit.dart';
 import '../../features/messages/bloc/all_messages/all_messages_cubit.dart';
 import '../../features/news/bloc/notification_cubit/notification_cubit.dart';
 import '../../features/pay_to_drivers/bloc/financial_report_cubit/financial_report_cubit.dart';
@@ -73,6 +73,10 @@ import '../../features/system_params/bloc/system_params_cubit/system_params_cubi
 import '../../features/system_params/bloc/update_system_params_cubit/update_system_params_cubit.dart';
 import '../../features/system_settings/bloc/system_settings_cubit/system_settings_cubit.dart';
 import '../../features/system_settings/bloc/update_system_params_cubit/update_system_settings_cubit.dart';
+import '../../features/temp_trips/bloc/all_temp_trips_cubit/all_temp_trips_cubit.dart';
+import '../../features/temp_trips/bloc/create_temp_trip_cubit/create_temp_trip_cubit.dart';
+import '../../features/temp_trips/bloc/delete_temp_trip_cubit/delete_temp_trip_cubit.dart';
+import '../../features/temp_trips/bloc/temp_trip_by_id_cubit/temp_trip_by_id_cubit.dart';
 import '../../features/trip/bloc/all_trips_cubit/all_trips_cubit.dart';
 import '../../features/trip/bloc/cancel_trip_cubit/cancel_trip_cubit.dart';
 import '../../features/trip/bloc/driver_status_cubit/driver_status_cubit.dart';
@@ -256,6 +260,12 @@ Future<void> init() async {
 
   //endregion
 
+  //region tempTrip
+  sl.registerFactory(() => CreateTempTripCubit());
+  sl.registerFactory(() => AllTempTripsCubit());
+  sl.registerFactory(() => DeleteTempTripCubit());
+  sl.registerFactory(() => TempTripBuIdCubit());
+  //endregion
   sl.registerFactory(() => AllClientsCubit());
   sl.registerFactory(() => ClientByIdCubit());
   sl.registerFactory(() => AllTransfersCubit());

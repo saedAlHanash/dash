@@ -28,11 +28,11 @@ class AccountAmountInitial extends Equatable {
   String get getMessage {
     switch (summaryType) {
       //السائق يجب أن يدفع للشركة
-      case SummaryPayToEnum.requireDriverPay:
+      case SummaryPayToEnum.requiredFromDriver:
         return 'يستوجب على السائق تسديد مبلغ للشركة وقدره : ';
 
       //الشركة يجب انت تدفع للسائق
-      case SummaryPayToEnum.requireCompanyPay:
+      case SummaryPayToEnum.requiredFromCompany:
         return 'يستوجب على الشركة تسديد مبلغ للسائق وقدره : ';
 
       //الرصيد متكافئ
@@ -44,11 +44,11 @@ class AccountAmountInitial extends Equatable {
   num get price {
     switch (summaryType) {
       //السائق يجب أن يدفع للشركة
-      case SummaryPayToEnum.requireDriverPay:
+      case SummaryPayToEnum.requiredFromDriver:
         return companyAmount - driverAmount;
 
       //الشركة يجب انت تدفع للسائق
-      case SummaryPayToEnum.requireCompanyPay:
+      case SummaryPayToEnum.requiredFromCompany:
         return driverAmount - companyAmount;
 
       //الرصيد متكافئ
@@ -59,9 +59,9 @@ class AccountAmountInitial extends Equatable {
 
   SummaryPayToEnum get summaryType {
     if (driverAmount > companyAmount) {
-      return SummaryPayToEnum.requireCompanyPay;
+      return SummaryPayToEnum.requiredFromCompany;
     } else if (companyAmount > driverAmount) {
-      return SummaryPayToEnum.requireDriverPay;
+      return SummaryPayToEnum.requiredFromDriver;
     } else {
       return SummaryPayToEnum.equal;
     }

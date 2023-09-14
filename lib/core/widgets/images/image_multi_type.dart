@@ -7,7 +7,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 
 import '../../../generated/assets.dart';
-import '../../api_manager/api_service.dart';
 import '../../strings/app_color_manager.dart';
 
 enum ImageType { tempImg, assetImg, assetSvg, network, file, networkSvg }

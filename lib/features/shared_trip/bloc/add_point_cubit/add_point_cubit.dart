@@ -1,8 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qareeb_models/points/data/model/trip_point.dart';
-
-import 'package:qareeb_models/points/data/response/points_response.dart';
+import 'package:qareeb_models/trip_path/data/models/trip_path.dart';
 
 part 'add_point_state.dart';
 
@@ -16,20 +15,24 @@ class AddPointCubit extends Cubit<AddPointInitial> {
   }
 
   void addEdge({required int edgeId, required int pointId}) {
-    state.edgeIds[pointId] = edgeId;
+    state.edgeIds.add(edgeId);
   }
 
-  void removeEdge({int? pointId}) {
-    int? keyForRemove;
-    state.edgeIds.forEach((key, value) {
-      if (pointId == key) {
-        keyForRemove = pointId;
-      }
-    });
+  void removeEdge() {
+    if (state.edgeIds.isEmpty) return;
+    state.edgeIds.removeLast();
+  }
 
-    if (keyForRemove != null) {
-      state.edgeIds.remove(keyForRemove);
-    }
+  void fromTempModel({required TripPath model}) {
+    model.edges.forEachIndexed((i, e) {
+      if (i == 0) {
+        state.addedPoints.add(e.startPoint);
+        state.addedPoints.add(e.endPoint);
+      } else {
+        state.addedPoints.add(e.endPoint);
+      }
+      addEdge(edgeId: e.id, pointId: e.endPointId as int);
+    });
   }
 
   TripPoint? removePoint({required int id}) {

@@ -1,17 +1,16 @@
 import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:qareeb_models/extensions.dart';  import 'package:qareeb_models/extensions.dart';  import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/widgets/my_card_widget.dart';
 import 'package:qareeb_dash/core/widgets/my_checkbox_widget.dart';
 import 'package:qareeb_dash/core/widgets/my_text_form_widget.dart';
- import 'package:qareeb_dash/core/widgets/spinner_widget.dart'; import 'package:qareeb_models/global.dart';
+import 'package:qareeb_models/extensions.dart';
+import 'package:qareeb_models/global.dart';
 
 import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/widgets/app_bar_widget.dart';
 import '../../../drivers/data/response/drivers_response.dart';
 import '../../data/request/create_admin_request.dart';
-import '../../data/response/admins_response.dart';
 
 class AdminInfoPage extends StatefulWidget {
   const AdminInfoPage({super.key, required this.admin});

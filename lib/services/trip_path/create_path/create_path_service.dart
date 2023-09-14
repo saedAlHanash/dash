@@ -1,7 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:qareeb_dash/core/api_manager/api_url.dart';
-import 'package:qareeb_models/extensions.dart';  import 'package:qareeb_models/extensions.dart';  import 'package:qareeb_dash/core/extensions/extensions.dart';
-import 'package:qareeb_dash/services/trip_path/data/models/trip_path.dart';
+import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_models/trip_path/data/models/trip_path.dart';
 
 import '../../../core/api_manager/api_service.dart';

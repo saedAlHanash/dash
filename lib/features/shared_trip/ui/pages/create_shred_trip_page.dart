@@ -2,7 +2,9 @@ import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:qareeb_models/extensions.dart';  import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:map_package/map/bloc/map_controller_cubit/map_controller_cubit.dart';
+import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_models/points/data/model/trip_point.dart';
 
 import '../../../../core/strings/app_color_manager.dart';
@@ -13,9 +15,6 @@ import '../../../../core/widgets/app_bar_widget.dart';
 import '../../../../core/widgets/my_button.dart';
 import '../../../../core/widgets/my_text_form_widget.dart';
 import '../../../../router/app_router.dart';
-import 'package:map_package/map/bloc/map_controller_cubit/map_controller_cubit.dart';
-
-import 'package:qareeb_models/points/data/response/points_response.dart';
 import '../../../points/bloc/get_edged_point_cubit/get_all_points_cubit.dart';
 import '../../../points/bloc/get_points_edge_cubit/get_points_edge_cubit.dart';
 import '../../bloc/add_point_cubit/add_point_cubit.dart';
@@ -192,9 +191,9 @@ class _CreateSharedTripPageState extends State<CreateSharedTripPage> {
                                   final request = RequestCreateShared();
                                   request.schedulingDate =
                                       now.initialFromDateTime(date: pick, time: time);
-                                  addPointCubit.state.edgeIds.forEach((key, value) {
+                                  for (var value in addPointCubit.state.edgeIds) {
                                     request.pathEdgesIds.add(value);
-                                  });
+                                  }
 
                                   createSharedCubit.createSharesTrip(
                                     context,

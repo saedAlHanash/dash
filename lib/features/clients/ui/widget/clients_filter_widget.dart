@@ -4,7 +4,6 @@ import 'package:qareeb_dash/core/api_manager/command.dart';
 import 'package:qareeb_dash/core/strings/app_color_manager.dart';
 import 'package:qareeb_dash/core/widgets/my_button.dart';
 
-
 import '../../../../core/util/my_style.dart';
 import '../../../../core/widgets/my_text_form_widget.dart';
 import '../../data/request/clients_filter_request.dart';

@@ -4,17 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_dash/core/widgets/app_bar_widget.dart';
 import 'package:qareeb_dash/core/widgets/not_found_widget.dart';
 import 'package:qareeb_dash/core/widgets/saed_taple_widget.dart';
 import 'package:qareeb_dash/features/trip/ui/widget/filters/trips_filter_widget.dart';
+import 'package:qareeb_models/extensions.dart';
 
 import '../../../../core/util/my_style.dart';
 import '../../../../core/widgets/my_button.dart';
 import '../../../../router/go_route_pages.dart';
-import '../../../admins/ui/widget/admin_data_grid.dart';
 import '../../bloc/all_trips_cubit/all_trips_cubit.dart';
+import '../widget/filters/trips_history_filter_widget.dart';
 
 const _tripsTableHeader = [
   'انطلاق',
@@ -35,30 +36,42 @@ class TripsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          DrawableText(
-            text: 'الرحلات ',
-            matchParent: true,
-            size: 28.0.sp,
-            textAlign: TextAlign.center,
-            padding: const EdgeInsets.symmetric(vertical: 15.0).h,
-          ),
-          if (!(isClientTrips ?? false))
-            TripsFilterWidget(
-              onApply: (request) {
-                context.read<AllTripsCubit>().getAllTrips(context, filter: request);
-              },
-            ),
-          if ((isClientTrips ?? false))
+      appBar: const AppBarWidget(text: 'الرحلات'),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.only(bottom: 100.0).h,
+        child: Column(
+          children: [
+            if (!(isClientTrips ?? false))
+              TripsFilterWidget(
+                onApply: (request) {
+                  context.read<AllTripsCubit>().getAllTrips(context, filter: request);
+                },
+              ),
+            if ((isClientTrips ?? false))
+              Column(
+                children: [
+                  BlocBuilder<AllTripsCubit, AllTripsInitial>(
+                    builder: (context, state) {
+                      return DrawableText(text: 'رحلات  : ${state.filter.clientName}');
+                    },
+                  ),
+                  BlocBuilder<AllTripsCubit, AllTripsInitial>(
+                    builder: (context, state) {
+                      return TripFilterWidget(
+                        onApply: (request) {
+                          context.read<AllTripsCubit>().getAllTrips(
+                                context,
+                                command:
+                                    state.command.copyWith(filterTripRequest: request),
+                              );
+                        },
+                      );
+                    },
+                  )
+                ],
+              ),
+            const Divider(),
             BlocBuilder<AllTripsCubit, AllTripsInitial>(
-              builder: (context, state) {
-                return DrawableText(text: 'رحلات  : ${state.filter.clientName}');
-              },
-            ),
-          const Divider(),
-          Expanded(
-            child: BlocBuilder<AllTripsCubit, AllTripsInitial>(
               builder: (context, state) {
                 if (state.statuses.isLoading) {
                   return MyStyle.loadingWidget();
@@ -75,6 +88,7 @@ class TripsPage extends StatelessWidget {
                           .read<AllTripsCubit>()
                           .getAllTrips(context, command: command);
                     },
+                    fullHeight: 1.0.sh,
                     title: _tripsTableHeader,
                     data: list
                         .mapIndexed(
@@ -104,8 +118,8 @@ class TripsPage extends StatelessWidget {
                 );
               },
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

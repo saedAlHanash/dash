@@ -3,15 +3,15 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:qareeb_models/global.dart';
+import 'package:qareeb_models/trip_process/data/response/trip_response.dart';
 
 import '../../../../core/api_manager/api_service.dart';
 import '../../../../core/api_manager/api_url.dart';
 import '../../../../core/error/error_manager.dart';
-import 'package:qareeb_models/global.dart'; import '../../../../core/strings/enum_manager.dart';
 import '../../../../core/util/note_message.dart';
 import '../../../../core/util/pair_class.dart';
 import '../../../../core/util/shared_preferences.dart';
-import 'package:qareeb_models/trip_process/data/response/trip_response.dart';
 
 part 'trip_by_id_state.dart';
 

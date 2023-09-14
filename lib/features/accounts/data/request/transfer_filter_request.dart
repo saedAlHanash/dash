@@ -1,32 +1,31 @@
 import 'package:qareeb_models/global.dart';
-import '../../../../core/strings/enum_manager.dart';
 
 class TransferFilterRequest{
-  int? userId;
-  DateTime ?fromDateTime;
-  DateTime ?toDateTime;
+  String? userName;
+  DateTime ?startTime;
+  DateTime ?endTime;
   TransferType? type;
   TransferStatus? status;
 
   TransferFilterRequest({
-    this.userId,
-    this.fromDateTime,
-    this.toDateTime,
+    this.userName,
+    this.startTime,
+    this.endTime,
     this.type,
     this.status,
   });
 
   TransferFilterRequest copyWith({
-    int? userId,
-    DateTime? fromDateTime,
-    DateTime? toDateTime,
+    String? userName,
+    DateTime? startTime,
+    DateTime? endTime,
     TransferType? type,
     TransferStatus? status,
   }) {
     return TransferFilterRequest(
-      userId: userId ?? this.userId,
-      fromDateTime: fromDateTime ?? this.fromDateTime,
-      toDateTime: toDateTime ?? this.toDateTime,
+      userName: userName ?? this.userName,
+      startTime: startTime ?? this.startTime,
+      endTime: endTime ?? this.endTime,
       type: type ?? this.type,
       status: status ?? this.status,
     );
@@ -34,13 +33,21 @@ class TransferFilterRequest{
 
   Map<String, dynamic> toMap() {
     return {
-      'userId': userId,
-      'fromDateTime': fromDateTime?.toIso8601String(),
-      'toDateTime': toDateTime?.toIso8601String(),
+      'userName': userName,
+      'startTime': startTime?.toIso8601String(),
+      'endTime': endTime?.toIso8601String(),
       'type': type?.index,
       'status': status?.index,
     };
   }
 
+  void clearFilter() {
+
+    userName= null;
+    startTime= null;
+    endTime= null;
+    type= null;
+    status= null;
+  }
 
 }

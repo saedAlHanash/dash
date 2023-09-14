@@ -2,10 +2,11 @@ import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:qareeb_models/extensions.dart';  import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_models/extensions.dart';
+import 'package:qareeb_models/global.dart';
 
 import '../../../../core/strings/app_color_manager.dart';
-import 'package:qareeb_models/global.dart'; import '../../../../core/strings/enum_manager.dart';
 import '../../../../core/util/my_style.dart';
 import '../../../../core/widgets/item_info.dart';
 import '../../../accounts/bloc/account_amount_cubit/account_amount_cubit.dart';
@@ -24,10 +25,10 @@ class SummaryPayToWidget extends StatelessWidget {
         final model = SummaryModel();
         model.type = state.summaryType;
         switch (state.summaryType) {
-          case SummaryPayToEnum.requireDriverPay:
+          case SummaryPayToEnum.requiredFromDriver:
             model.cutAmount = state.driverAmount;
             break;
-          case SummaryPayToEnum.requireCompanyPay:
+          case SummaryPayToEnum.requiredFromCompany:
             model.cutAmount = state.companyAmount;
             break;
           case SummaryPayToEnum.equal:
@@ -77,7 +78,7 @@ class SummaryPayToWidget extends StatelessWidget {
                   drawableEnd: Directionality(
                     textDirection: TextDirection.ltr,
                     child: DrawableText(
-                      text: state.price.formatPrice.replaceAll('spy', ''),
+                      text: state.price.formatPrice,
                       size: 24.0.sp,
                       fontFamily: FontManager.cairoBold,
                       color: AppColorManager.mainColor,

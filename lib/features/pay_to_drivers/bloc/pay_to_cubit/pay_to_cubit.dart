@@ -2,11 +2,10 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:qareeb_dash/core/api_manager/api_url.dart';
+import 'package:qareeb_models/global.dart';
 
 import '../../../../core/api_manager/api_service.dart';
 import '../../../../core/error/error_manager.dart';
-import 'package:qareeb_models/global.dart';
-import '../../../../core/strings/enum_manager.dart';
 import '../../../../core/util/note_message.dart';
 import '../../../../core/util/pair_class.dart';
 import '../../../wallet/data/summary_model.dart';
@@ -26,7 +25,7 @@ class PayToCubit extends Cubit<PayToInitial> {
 
     Pair? pair;
     switch (request.type!) {
-      case SummaryPayToEnum.requireDriverPay:
+      case SummaryPayToEnum.requiredFromDriver:
         pair = await _payPayToApi(
           driverId: request.driverId!,
           type: TransferPayType.companyToDriver,
@@ -42,7 +41,7 @@ class PayToCubit extends Cubit<PayToInitial> {
         }
 
         break;
-      case SummaryPayToEnum.requireCompanyPay:
+      case SummaryPayToEnum.requiredFromCompany:
         pair = await _payPayToApi(
           driverId: request.driverId!,
           type: TransferPayType.driverToCompany,

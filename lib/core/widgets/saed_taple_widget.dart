@@ -2,11 +2,9 @@ import 'package:collection/collection.dart';
 import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:qareeb_dash/core/api_manager/api_service.dart';
 import 'package:qareeb_dash/core/widgets/spinner_widget.dart';
 
 import '../api_manager/command.dart';
-import '../strings/app_color_manager.dart';
 import 'my_card_widget.dart';
 
 class SaedTableWidget extends StatelessWidget {
@@ -96,11 +94,12 @@ class CellWidget extends StatelessWidget {
                       textDirection: TextDirection.ltr,
                       child: DrawableText(
                         selectable: true,
-                        size: 16.0.sp,
+                        size: 17.0.sp,
                         matchParent: true,
                         textAlign: TextAlign.center,
-                        text: e.isEmpty ? '-' : e.replaceAll('spy', ''),
+                        text: e.isEmpty ? '-' : e,
                         color: Colors.black,
+                        fontFamily: FontManager.cairoBold,
                       ),
                     )
                   : e is Widget
@@ -132,7 +131,7 @@ class TitleWidget extends StatelessWidget {
           final widget = e is String
               ? DrawableText(
                   selectable: true,
-                  size: 18.0.sp,
+                  size: 20.0.sp,
                   matchParent: true,
                   textAlign: TextAlign.center,
                   text: e,

@@ -4,14 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:qareeb_models/extensions.dart';  import 'package:qareeb_models/extensions.dart';  import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_models/extensions.dart';
+import 'package:qareeb_models/extensions.dart';
+import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/strings/app_color_manager.dart';
 import 'package:qareeb_dash/core/widgets/auto_complete_widget.dart';
 import 'package:qareeb_dash/core/widgets/not_found_widget.dart';
 import 'package:qareeb_dash/core/widgets/saed_taple_widget.dart';
 import 'package:qareeb_dash/features/accounts/ui/widget/filters/transfers_filter_widget.dart';
 
-import 'package:qareeb_models/global.dart'; import '../../../../core/strings/enum_manager.dart';
+import 'package:qareeb_models/global.dart';
+import '../../../../core/strings/enum_manager.dart';
+import '../../../../core/util/file_util.dart';
 import '../../../../core/util/my_style.dart';
 import '../../../../router/go_route_pages.dart';
 import '../../bloc/all_transfers_cubit/all_transfers_cubit.dart';
@@ -27,32 +31,62 @@ const transfersHeaderTable = [
   'عمليات',
 ];
 
-class TransfersPage extends StatelessWidget {
+class TransfersPage extends StatefulWidget {
   const TransfersPage({super.key});
+
+  @override
+  State<TransfersPage> createState() => _TransfersPageState();
+}
+
+class _TransfersPageState extends State<TransfersPage> {
+  var loading = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          DrawableText(
-            text: 'المعاملات ',
-            matchParent: true,
-            size: 28.0.sp,
-            textAlign: TextAlign.center,
-            padding: const EdgeInsets.symmetric(vertical: 15.0).h,
-          ),
-          TransfersFilterWidget(
-            onApply: (request) {
-              context.read<AllTransfersCubit>().getAllTransfers(
-                    context,
-                    command: context.read<AllTransfersCubit>().state.command
-                      ..transferFilterRequest = request,
+      floatingActionButton: StatefulBuilder(
+        builder: (context, mState) {
+          return FloatingActionButton(
+            onPressed: () {
+              mState(() => loading = true);
+              context.read<AllTransfersCubit>().getDataAsync(context).then(
+                (value) {
+                  if (value == null) return;
+                  saveXls(
+                    header: value.first,
+                    data: value.second,
+                    fileName: 'تقرير التحويلات المالية${DateTime.now().formatDate}',
                   );
+
+                  mState(
+                    () => loading = false,
+                  );
+                },
+              );
             },
-          ),
-          Expanded(
-            child: BlocBuilder<AllTransfersCubit, AllTransfersInitial>(
+            child: loading
+                ? const CircularProgressIndicator.adaptive()
+                : const Icon(Icons.file_download, color: Colors.white),
+          );
+        },
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.only(bottom: 200.0).h,
+        child: Column(
+          children: [
+            TransfersFilterWidget(
+              onApply: (request) {
+                context.read<AllTransfersCubit>().getAllTransfers(
+                      context,
+                      command: context.read<AllTransfersCubit>().state.command.copyWith(
+                            transferFilterRequest: request,
+                            skipCount: 0,
+                            totalCount: 0,
+                          ),
+                    );
+              },
+            ),
+            BlocBuilder<AllTransfersCubit, AllTransfersInitial>(
               builder: (context, state) {
                 if (state.statuses.isLoading) {
                   return MyStyle.loadingWidget();
@@ -60,6 +94,8 @@ class TransfersPage extends StatelessWidget {
                 final list = state.result;
                 if (list.isEmpty) return const NotFoundWidget(text: 'لا يوجد تصنيفات');
                 return SaedTableWidget(
+                    command: state.command,
+                    fullHeight: 1.5.sh,
                     onChangePage: (command) {
                       context
                           .read<AllTransfersCubit>()
@@ -69,13 +105,14 @@ class TransfersPage extends StatelessWidget {
                     data: state.result.mapIndexed((index, e) {
                       return [
                         e.id.toString(),
-                        e.type?.arabicName,
+                        e.type?.transferarabicName,
                         e.sourceName,
                         e.destinationName,
                         e.amount.formatPrice,
                         e.status == TransferStatus.closed ? 'تمت' : 'معلقة',
                         e.transferDate?.formatDateTime ?? '',
-                        if (e.type != TransferType.payoff && e.type != TransferType.debit)
+                        if (e.type == TransferType.sharedPay ||
+                            e.type == TransferType.tripPay)
                           TextButton(
                             onPressed: () {
                               if (e.tripId != 0) {
@@ -83,23 +120,43 @@ class TransfersPage extends StatelessWidget {
                                     queryParams: {'id': e.tripId.toString()});
                               } else {
                                 context.pushNamed(GoRouteName.sharedTripInfo,
-                                    queryParams: {'requestId': e.sharedRequestId.toString()});
+                                    queryParams: {
+                                      'requestId': e.sharedRequestId.toString()
+                                    });
                               }
                             },
                             child: const DrawableText(
+                              selectable: false,
                               text: 'عرض الرحلة',
                               color: AppColorManager.mainColor,
                             ),
-                          ),
-                        if (e.type == TransferType.payoff || e.type == TransferType.debit)
+                          )
+                        else
                           0.0.verticalSpace,
                       ];
                     }).toList());
               },
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
+  }
+}
+
+extension TransferTypeHelper on TransferType {
+  String get transferarabicName {
+    switch (this) {
+      case TransferType.sharedPay:
+        return 'رحلة تشاركية';
+      case TransferType.tripPay:
+        return 'رحلة عادية';
+      case TransferType.payoff:
+        return 'السائق دافع للشركة';
+      case TransferType.debit:
+        return 'الشركة دافعة للسائق';
+      case TransferType.award:
+        return 'مكافئة تنزيل التطبيق';
+    }
   }
 }

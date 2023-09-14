@@ -1,4 +1,3 @@
-import 'package:qareeb_dash/core/strings/enum_manager.dart';
 import 'package:qareeb_models/global.dart';
 
 class TransfersResponse {
@@ -76,7 +75,7 @@ class Transfer {
       status: json["status"] == null ? null : TransferStatus.values[json["status"]],
       transferDate: DateTime.tryParse(json["transferDate"] ?? ""),
       sourceId: json["sourceId"] ?? 0,
-      sourceName: json["sourceName"] ?? "",
+      sourceName: json["sourceName"] ?? "قريب",
       destinationId: json["destinationId"] ?? 0,
       destinationName: json["destinationName"] ?? "",
       amount: json["amount"] ?? 0,

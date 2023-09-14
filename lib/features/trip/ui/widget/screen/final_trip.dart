@@ -2,7 +2,7 @@ import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:qareeb_models/extensions.dart';  import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/features/trip/bloc/driver_status_cubit/driver_status_cubit.dart';
 
 import '../../../../../core/strings/app_color_manager.dart';

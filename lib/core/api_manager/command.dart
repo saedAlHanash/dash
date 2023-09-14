@@ -1,26 +1,27 @@
 import 'package:qareeb_dash/core/api_manager/api_service.dart';
 import 'package:qareeb_models/extensions.dart';
-import 'package:qareeb_models/extensions.dart';
-import 'package:qareeb_dash/core/extensions/extensions.dart';
-
-import '../../features/accounts/data/request/transfer_filter_request.dart';
 import 'package:qareeb_models/global.dart';
 
+import '../../features/accounts/data/request/transfer_filter_request.dart';
 import '../../features/clients/data/request/clients_filter_request.dart';
+import '../../features/trip/data/request/filter_trip_request.dart';
 
 class Command {
   Command({
     this.skipCount,
     this.totalCount,
     this.memberFilterRequest,
+    this.filterTripRequest,
+    this.transferFilterRequest,
   });
 
   int? skipCount;
   int maxResultCount = 20;
   int? totalCount;
   ClientsFilterRequest? memberFilterRequest;
+  FilterTripRequest? filterTripRequest;
 
-  var transferFilterRequest = TransferFilterRequest();
+  TransferFilterRequest? transferFilterRequest;
 
   int get maxPages => ((totalCount ?? 0) / maxResultCount).myRound;
 
@@ -64,6 +65,13 @@ class Command {
       'maxResultCount': maxResultCount,
     };
 
+    if (filterTripRequest != null) {
+      json.addAll(filterTripRequest!.toMap());
+    }
+    if (transferFilterRequest != null) {
+      json.addAll(transferFilterRequest!.toMap());
+    }
+
     if (memberFilterRequest != null) {
       json.addAll(memberFilterRequest!.toJson());
     }
@@ -80,12 +88,16 @@ class Command {
   Command copyWith({
     int? skipCount,
     int? totalCount,
+    FilterTripRequest? filterTripRequest,
     ClientsFilterRequest? memberFilterRequest,
+    TransferFilterRequest? transferFilterRequest,
   }) {
     return Command(
       skipCount: skipCount ?? this.skipCount,
       totalCount: totalCount ?? this.totalCount,
+      filterTripRequest: filterTripRequest ?? this.filterTripRequest,
       memberFilterRequest: memberFilterRequest ?? this.memberFilterRequest,
+      transferFilterRequest: transferFilterRequest ?? this.transferFilterRequest,
     );
   }
 }
