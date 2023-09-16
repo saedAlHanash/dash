@@ -101,7 +101,6 @@ class _WalletPageState extends State<WalletPage> {
                     ),
                     TextButton(
                       onPressed: () {
-                        loggerObject.w('saed');
                         context.pushNamed(
                           GoRouteName.debts,
                           queryParams: {'id': widget.id.toString()},

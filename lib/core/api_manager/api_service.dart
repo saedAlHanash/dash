@@ -75,7 +75,6 @@ class APIService {
     return uri;
   }
 
-
   Future<http.Response> getApi({
     required String url,
     Map<String, dynamic>? query,
@@ -83,14 +82,13 @@ class APIService {
     String? path,
     String? hostName,
   }) async {
-    if (query != null) query.removeWhere((key, value) => value == null);
 
     innerHeader.addAll(header ?? {});
 
     if (path != null) url = '$url/$path';
 
     if (query != null) {
-      query.removeWhere((key, value) => value == null);
+      query.removeWhere((key, value) => (value == null || value.toString().isEmpty));
       query.forEach((key, value) => query[key] = value.toString());
     }
 
@@ -98,11 +96,10 @@ class APIService {
 
     final uri = Uri.https(hostName ?? baseUrl, url, query);
 
-
     final response = await http.get(uri, headers: innerHeader).timeout(
-      const Duration(seconds: 40),
-      onTimeout: () => http.Response('connectionTimeOut', 481),
-    );
+          const Duration(seconds: 40),
+          onTimeout: () => http.Response('connectionTimeOut', 481),
+        );
 
     logResponse(url, response);
     return response;
@@ -115,14 +112,13 @@ class APIService {
     String? path,
     String? hostName,
   }) async {
-    if (query != null) query.removeWhere((key, value) => value == null);
 
     innerHeader.addAll(header ?? {});
 
     if (path != null) url = '$url/$path';
 
     if (query != null) {
-      query.removeWhere((key, value) => value == null);
+      query.removeWhere((key, value) => (value == null || value.toString().isEmpty));
       query.forEach((key, value) => query[key] = value.toString());
     }
 
@@ -132,9 +128,9 @@ class APIService {
     final proxyUri = Uri.https('api.allorigins.win', 'raw', {'url': uri.toString()});
 
     final response = await http.get(proxyUri, headers: innerHeader).timeout(
-      const Duration(seconds: 40),
-      onTimeout: () => http.Response('connectionTimeOut', 481),
-    );
+          const Duration(seconds: 40),
+          onTimeout: () => http.Response('connectionTimeOut', 481),
+        );
 
     logResponse(url, response);
     return response;
@@ -146,24 +142,21 @@ class APIService {
     Map<String, String>? header,
     String? path,
   }) async {
-    if (query != null) query.removeWhere((key, value) => value == null);
 
     if (path != null) url = '$url/$path';
 
     if (query != null) {
-      query.removeWhere((key, value) => value == null);
+      query.removeWhere((key, value) => (value == null || value.toString().isEmpty));
       query.forEach((key, value) => query[key] = value.toString());
     }
 
     final uri = Uri.https('proxy.cors.sh', url, query);
 
-    final response = await http
-        .get(uri, headers: innerHeader)
-        .timeout(const Duration(seconds: 40));
+    final response =
+        await http.get(uri, headers: innerHeader).timeout(const Duration(seconds: 40));
 
     return response;
   }
-
 
   Future<http.Response> postApi({
     required String url,
@@ -175,7 +168,7 @@ class APIService {
     if (body != null) body.removeWhere((key, value) => value == null);
 
     if (query != null) {
-      query.removeWhere((key, value) => value == null);
+      query.removeWhere((key, value) => (value == null || value.toString().isEmpty));
       query.forEach((key, value) => query[key] = value.toString());
     }
 
@@ -183,14 +176,13 @@ class APIService {
 
     final uri = Uri.https(hostName ?? baseUrl, url, query);
 
-    logRequest(url, (body ?? {})
-      ..addAll(query ?? {}));
+    logRequest(url, (body ?? {})..addAll(query ?? {}));
 
     final response =
-    await http.post(uri, body: jsonEncode(body), headers: innerHeader).timeout(
-      const Duration(seconds: 40),
-      onTimeout: () => http.Response('connectionTimeOut', 481),
-    );
+        await http.post(uri, body: jsonEncode(body), headers: innerHeader).timeout(
+              const Duration(seconds: 40),
+              onTimeout: () => http.Response('connectionTimeOut', 481),
+            );
 
     logResponse(url, response);
 
@@ -204,12 +196,12 @@ class APIService {
     Map<String, String>? header,
   }) async {
     if (body != null) body.removeWhere((key, value) => value == null);
-    if (query != null) query.removeWhere((key, value) => value == null);
+
 
     innerHeader.addAll(header ?? {});
 
     if (query != null) {
-      query.removeWhere((key, value) => value == null);
+      query.removeWhere((key, value) => (value == null || value.toString().isEmpty));
       query.forEach((key, value) => query[key] = value.toString());
     }
 
@@ -218,10 +210,10 @@ class APIService {
     logRequest(url, body);
 
     final response =
-    await http.put(uri, body: jsonEncode(body), headers: innerHeader).timeout(
-      const Duration(seconds: 40),
-      onTimeout: () => http.Response('connectionTimeOut', 481),
-    );
+        await http.put(uri, body: jsonEncode(body), headers: innerHeader).timeout(
+              const Duration(seconds: 40),
+              onTimeout: () => http.Response('connectionTimeOut', 481),
+            );
 
     logResponse(url, response);
 
@@ -235,12 +227,12 @@ class APIService {
     Map<String, String>? header,
   }) async {
     if (body != null) body.removeWhere((key, value) => value == null);
-    if (query != null) query.removeWhere((key, value) => value == null);
+
 
     innerHeader.addAll(header ?? {});
 
     if (query != null) {
-      query.removeWhere((key, value) => value == null);
+      query.removeWhere((key, value) => (value == null || value.toString().isEmpty));
       query.forEach((key, value) => query[key] = value.toString());
     }
 
@@ -249,10 +241,10 @@ class APIService {
     logRequest(url, body);
 
     final response =
-    await http.patch(uri, body: jsonEncode(body), headers: innerHeader).timeout(
-      const Duration(seconds: 40),
-      onTimeout: () => http.Response('connectionTimeOut', 481),
-    );
+        await http.patch(uri, body: jsonEncode(body), headers: innerHeader).timeout(
+              const Duration(seconds: 40),
+              onTimeout: () => http.Response('connectionTimeOut', 481),
+            );
 
     logResponse(url, response);
 
@@ -268,7 +260,7 @@ class APIService {
     if (body != null) body.removeWhere((key, value) => value == null);
 
     if (query != null) {
-      query.removeWhere((key, value) => value == null);
+      query.removeWhere((key, value) => (value == null || value.toString().isEmpty));
       query.forEach((key, value) => query[key] = value.toString());
     }
 
@@ -279,10 +271,10 @@ class APIService {
     logRequest(url, body);
 
     final response =
-    await http.delete(uri, body: jsonEncode(body), headers: innerHeader).timeout(
-      const Duration(seconds: 40),
-      onTimeout: () => http.Response('connectionTimeOut', 481),
-    );
+        await http.delete(uri, body: jsonEncode(body), headers: innerHeader).timeout(
+              const Duration(seconds: 40),
+              onTimeout: () => http.Response('connectionTimeOut', 481),
+            );
 
     logResponse(url, response);
 
@@ -338,9 +330,9 @@ class APIService {
     var uri = Uri.https(baseUrl);
 
     final response = await http.get(uri, headers: innerHeader).timeout(
-      const Duration(seconds: 40),
-      onTimeout: () => http.Response('connectionTimeOut', 481),
-    );
+          const Duration(seconds: 40),
+          onTimeout: () => http.Response('connectionTimeOut', 481),
+        );
 
     return getDateTimeFromHeaders(response);
   }
@@ -468,6 +460,5 @@ android {
 const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
 final _rnd = Random();
 
-String getRandomString(int length) =>
-    String.fromCharCodes(
-        Iterable.generate(length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
+String getRandomString(int length) => String.fromCharCodes(
+    Iterable.generate(length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));

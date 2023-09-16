@@ -24,13 +24,11 @@ class AllTripsCubit extends Cubit<AllTripsInitial> {
 
   final network = sl<NetworkInfo>();
 
-  Future<void> getAllTrips(BuildContext context,
-      {FilterTripRequest? filter, Command? command}) async {
+  Future<void> getAllTrips(BuildContext context, {Command? command}) async {
     emit(
       state.copyWith(
         statuses: CubitStatuses.loading,
         command: command,
-        filter: filter,
       ),
     );
     final pair = await _getAllTripsApi();
@@ -50,7 +48,7 @@ class AllTripsCubit extends Cubit<AllTripsInitial> {
     if (await network.isConnected) {
       final response = await APIService().getApi(
         url: GetUrl.getAllTrips,
-        query: state.filter.toMap()..addAll(state.command.toJson()),
+        query: state.command.toJson(),
       );
 
       if (response.statusCode == 200) {

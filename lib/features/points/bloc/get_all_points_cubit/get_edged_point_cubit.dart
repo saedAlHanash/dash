@@ -37,7 +37,7 @@ class EdgesPointCubit extends Cubit<EdgesPointInitial> {
     }
   }
 
-  Future<Pair<List<PointsEdgeResult>?, String?>> _getAllEdgesPointApi(
+  Future<Pair<List<Edge>?, String?>> _getAllEdgesPointApi(
       {required int id}) async {
     if (await network.isConnected) {
       final response = await APIService()
@@ -47,9 +47,9 @@ class EdgesPointCubit extends Cubit<EdgesPointInitial> {
         final json = response.jsonBody;
         return Pair(
             json['result'] == null
-                ? <PointsEdgeResult>[]
-                : List<PointsEdgeResult>.from(
-                    json['result'].map((e) => PointsEdgeResult.fromJson(e))),
+                ? <Edge>[]
+                : List<Edge>.from(
+                    json['result'].map((e) => Edge.fromJson(e))),
             null);
       } else {
         return Pair(null, ErrorManager.getApiError(response));

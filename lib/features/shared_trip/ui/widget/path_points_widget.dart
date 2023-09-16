@@ -7,6 +7,7 @@ import 'package:map_package/map/data/models/my_marker.dart';
 import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_models/points/data/model/trip_point.dart';
 import 'package:qareeb_models/points/data/response/points_edge_response.dart';
+import 'package:qareeb_models/trip_path/data/models/trip_path.dart';
 
 import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/util/my_style.dart';
@@ -184,7 +185,7 @@ class PathPointsWidgetWrap1 extends StatelessWidget {
 class EdgesPointWidget extends StatelessWidget {
   const EdgesPointWidget({super.key, required this.item, required this.color});
 
-  final PointsEdgeResult item;
+  final Edge item;
   final Color color;
 
   @override

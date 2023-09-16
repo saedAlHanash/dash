@@ -5,6 +5,7 @@ import 'package:map_package/map/bloc/ather_cubit/ather_cubit.dart';
 import 'package:map_package/map/bloc/map_controller_cubit/map_controller_cubit.dart';
 import 'package:map_package/map/bloc/search_location/search_location_cubit.dart';
 import 'package:map_package/map/bloc/set_point_cubit/map_control_cubit.dart';
+import 'package:qareeb_dash/core/api_manager/command.dart';
 import 'package:qareeb_dash/features/admins/bloc/create_admin_cubit/create_admin_cubit.dart';
 import 'package:qareeb_dash/features/admins/ui/pages/create_admin_page.dart';
 import 'package:qareeb_dash/features/car_catigory/data/response/car_categories_response.dart';
@@ -54,6 +55,7 @@ import '../features/shared_trip/bloc/shared_trip_by_id_cubit/shared_trip_by_id_c
 import '../features/shared_trip/ui/pages/shared_trip_info_page.dart';
 import '../features/shared_trip/ui/pages/shared_trips_page.dart';
 import '../features/temp_trips/bloc/create_temp_trip_cubit/create_temp_trip_cubit.dart';
+import '../features/temp_trips/bloc/estimate_cubit/estimate_cubit.dart';
 import '../features/temp_trips/bloc/temp_trip_by_id_cubit/temp_trip_by_id_cubit.dart';
 import '../features/temp_trips/ui/pages/create_temp_trip_page.dart';
 import '../features/temp_trips/ui/pages/temp_trip_info_page.dart';
@@ -333,24 +335,28 @@ final appGoRouter = GoRouter(
       builder: (BuildContext context, GoRouterState state) {
         final clientId = int.tryParse(state.queryParams['clientId'] ?? '');
         final driverId = int.tryParse(state.queryParams['driverId'] ?? '');
-        final name = state.queryParams['name'] ?? '';
+        final driverName = state.queryParams['driverName'] ?? '';
+        final clientName = state.queryParams['clientName'] ?? '';
 
         final providers = [
           BlocProvider(
             create: (_) => di.sl<AllTripsCubit>()
               ..getAllTrips(
                 context,
-                filter: FilterTripRequest(
-                  clientName: name,
-                  customerId: clientId,
-                  driverId: driverId,
+                command: Command.initial().copyWith(
+                  filterTripRequest: FilterTripRequest(
+                      clientId: clientId,
+                      driverId: driverId,
+                      driverName: driverName,
+                      clientName: clientName,
+                  ),
                 ),
               ),
           ),
         ];
         return MultiBlocProvider(
           providers: providers,
-          child: const TripsPage(isClientTrips: true),
+          child: const TripsPage(),
         );
       },
     ),
@@ -388,17 +394,21 @@ final appGoRouter = GoRouter(
       builder: (BuildContext context, GoRouterState state) {
         final clientId = int.tryParse(state.queryParams['clientId'] ?? '');
         final driverId = int.tryParse(state.queryParams['driverId'] ?? '');
-        final name = state.queryParams['name'] ?? '';
+        final driverName = state.queryParams['driverName'] ?? '';
+        final clientName = state.queryParams['clientName'] ?? '';
 
         final providers = [
           BlocProvider(
             create: (_) => di.sl<GetSharedTripsCubit>()
               ..getSharesTrip(
                 context,
-                filter: FilterTripRequest(
-                  clientName: name,
-                  customerId: clientId,
-                  driverId: driverId,
+                command: Command.initial().copyWith(
+                  filterTripRequest: FilterTripRequest(
+                    clientId: clientId,
+                    driverId: driverId,
+                    driverName: driverName,
+                    clientName: clientName,
+                  ),
                 ),
               ),
           ),
@@ -444,13 +454,13 @@ final appGoRouter = GoRouter(
           BlocProvider(create: (_) => di.sl<AddPointCubit>()),
           BlocProvider(create: (_) => di.sl<MapControllerCubit>()),
           BlocProvider(create: (_) => di.sl<PointsEdgeCubit>()),
+          BlocProvider(create: (_) => di.sl<AtherCubit>()),
           BlocProvider(create: (_) => di.sl<CreateTempTripCubit>()),
-
+          BlocProvider(create: (_) => di.sl<EstimateCubit>()),
           if (id != 0)
             BlocProvider(create: (_) => di.sl<PointsCubit>())
           else
             BlocProvider(create: (_) => di.sl<PointsCubit>()..getAllPoints(_)),
-
           BlocProvider(
             create: (_) => di.sl<TempTripBuIdCubit>()..getTempTripBuId(context, id: id),
           ),
@@ -472,6 +482,7 @@ final appGoRouter = GoRouter(
           BlocProvider(create: (_) => di.sl<MapControlCubit>()),
           BlocProvider(create: (_) => di.sl<MapControllerCubit>()),
           BlocProvider(create: (_) => di.sl<AtherCubit>()),
+          BlocProvider(create: (_) => di.sl<EstimateCubit>()),
           BlocProvider(
             create: (_) => di.sl<TempTripBuIdCubit>()..getTempTripBuId(context, id: id),
           ),
@@ -540,7 +551,6 @@ class GoRouteName {
   static const createInstitution = 'createInstitution';
   static const createTempTrip = 'createTempTrip';
   static const tempTripInfo = 'tempTripInfo';
-
 }
 
 class _GoRoutePath {

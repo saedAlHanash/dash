@@ -15,6 +15,8 @@ final _super_userList = [
   'ID',
   'اسم المسار',
   'عدد النقاط',
+  'طول المسار',
+  // 'الوقت المقدر للمسار',
   'عمليات',
 ];
 
@@ -48,6 +50,8 @@ class TempTripsPage extends StatelessWidget {
                         e.id.toString(),
                         e.arName,
                         (e.edges.length + 1).toString(),
+                        '${(e.distance / 1000).round()} km',
+                        // '${(e.duration / 60).round()} min',
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [

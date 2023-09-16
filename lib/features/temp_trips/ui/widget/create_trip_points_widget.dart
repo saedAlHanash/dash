@@ -69,9 +69,11 @@ class _CreateTempTripWidgetState extends State<CreateTempTripWidget> {
         BlocListener<PointsEdgeCubit, PointsEdgeInitial>(
           listenWhen: (p, c) => c.statuses.done,
           listener: (context, state) {
-
             addPointCubit.addEdge(
-                edgeId: state.result.id, pointId: state.result.endPointId);
+              edgeId: state.result.id,
+              pointId: state.result.endPointId,
+              edge: state.result,
+            );
           },
         ),
         BlocListener<PointsCubit, PointsInitial>(
@@ -92,12 +94,10 @@ class _CreateTempTripWidgetState extends State<CreateTempTripWidget> {
       child: Padding(
         padding: MyStyle.pagePadding,
         child: Column(
-
           children: [
             const PathPointsWidget(),
             MyEditTextWidget(
               controller: searchController,
-
               radios: 15.0.r,
               backgroundColor: AppColorManager.whit,
               hint: AppStringManager.search,

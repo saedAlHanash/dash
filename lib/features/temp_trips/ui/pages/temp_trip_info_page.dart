@@ -5,10 +5,13 @@ import 'package:map_package/map/bloc/map_controller_cubit/map_controller_cubit.d
 import 'package:map_package/map/ui/widget/map_widget.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/widgets/item_info.dart';
+import 'package:qareeb_dash/features/temp_trips/data/request/estimate_request.dart';
 import 'package:qareeb_models/extensions.dart';
 
 import '../../../../core/util/my_style.dart';
 import '../../../../core/widgets/app_bar_widget.dart';
+import '../../../../core/widgets/saed_taple_widget.dart';
+import '../../bloc/estimate_cubit/estimate_cubit.dart';
 import '../../bloc/temp_trip_by_id_cubit/temp_trip_by_id_cubit.dart';
 import '../widget/path_points_widget.dart';
 
@@ -33,6 +36,11 @@ class _CreateTempTripPageState extends State<TempTripInfoPage> {
           listenWhen: (p, c) => c.statuses.done,
           listener: (context, state) {
             context.read<MapControllerCubit>().addPath(path: state.result);
+            context.read<EstimateCubit>().getEstimate(
+                  context,
+                  request: EstimateRequest(
+                      pathEdgesIds: state.result.edges.map((e) => e.id).toList()),
+                );
           },
         ),
       ],
@@ -56,8 +64,47 @@ class _CreateTempTripPageState extends State<TempTripInfoPage> {
                     list: state.result.getTripPoints,
                   ),
                 ),
-                 const Expanded(
-                  child: MapWidget(),
+                Expanded(
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          children: [
+                            BlocBuilder<EstimateCubit, EstimateInitial>(
+                              builder: (context, mState) {
+                                if (mState.statuses.loading) {
+                                  return MyStyle.loadingWidget();
+                                }
+                                return SaedTableWidget(
+                                  title: const [
+                                    'اسم التصنيف',
+                                    'السعر الأدنى',
+                                    'السعر الوسطي',
+                                    'السعر الأعلى',
+                                    'المسافة',
+                                  ],
+                                  data: mState.result
+                                      .map(
+                                        (e) => [
+                                          e.carCategoryName,
+                                          (e.carCategorySeats * e.prices[0]).formatPrice,
+                                          (e.carCategorySeats * e.prices[1]).formatPrice,
+                                          (e.carCategorySeats * e.prices[2]).formatPrice,
+                                          '${(state.result.distance / 1000).round()} km'
+                                        ],
+                                      )
+                                      .toList(),
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                      const Expanded(
+                        child: MapWidget(),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),

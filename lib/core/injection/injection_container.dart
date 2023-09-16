@@ -76,6 +76,7 @@ import '../../features/system_settings/bloc/update_system_params_cubit/update_sy
 import '../../features/temp_trips/bloc/all_temp_trips_cubit/all_temp_trips_cubit.dart';
 import '../../features/temp_trips/bloc/create_temp_trip_cubit/create_temp_trip_cubit.dart';
 import '../../features/temp_trips/bloc/delete_temp_trip_cubit/delete_temp_trip_cubit.dart';
+import '../../features/temp_trips/bloc/estimate_cubit/estimate_cubit.dart';
 import '../../features/temp_trips/bloc/temp_trip_by_id_cubit/temp_trip_by_id_cubit.dart';
 import '../../features/trip/bloc/all_trips_cubit/all_trips_cubit.dart';
 import '../../features/trip/bloc/cancel_trip_cubit/cancel_trip_cubit.dart';
@@ -265,7 +266,10 @@ Future<void> init() async {
   sl.registerFactory(() => AllTempTripsCubit());
   sl.registerFactory(() => DeleteTempTripCubit());
   sl.registerFactory(() => TempTripBuIdCubit());
+  sl.registerFactory(() => EstimateCubit());
   //endregion
+
+
   sl.registerFactory(() => AllClientsCubit());
   sl.registerFactory(() => ClientByIdCubit());
   sl.registerFactory(() => AllTransfersCubit());

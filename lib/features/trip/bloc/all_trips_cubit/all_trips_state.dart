@@ -5,14 +5,14 @@ class AllTripsInitial extends Equatable {
   final List<TripResult> result;
   final String error;
   final Command command;
-  final FilterTripRequest filter;
+
 
   const AllTripsInitial({
     required this.statuses,
     required this.result,
     required this.error,
     required this.command,
-    required this.filter,
+
   });
 
   factory AllTripsInitial.initial() {
@@ -21,7 +21,7 @@ class AllTripsInitial extends Equatable {
       result: list,
       error: '',
       command: Command.initial(),
-      filter: FilterTripRequest(),
+
       statuses: CubitStatuses.init,
     );
   }
@@ -41,7 +41,6 @@ class AllTripsInitial extends Equatable {
       result: result ?? this.result,
       error: error ?? this.error,
       command: command ?? this.command,
-      filter: filter ?? this.filter,
     );
   }
 }

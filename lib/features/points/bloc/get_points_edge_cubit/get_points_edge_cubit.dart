@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qareeb_models/global.dart';
 import 'package:qareeb_models/points/data/response/points_edge_response.dart';
+import 'package:qareeb_models/trip_path/data/models/trip_path.dart';
 
 import '../../../../core/api_manager/api_service.dart';
 import '../../../../core/api_manager/api_url.dart';
@@ -41,7 +42,7 @@ class PointsEdgeCubit extends Cubit<PointsEdgeInitial> {
     }
   }
 
-  Future<Pair<PointsEdgeResult?, String?>> _getPointsEdgeApi(
+  Future<Pair<Edge?, String?>> _getPointsEdgeApi(
       {required int start, required int end}) async {
     if (await network.isConnected) {
       final response = await APIService().getApi(

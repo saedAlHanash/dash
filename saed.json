@@ -1,154 +1,119 @@
 {
-  "result": [
-    {
-      "path": {
-        "name": "test",
-        "arName": "test",
-        "edges": [
-          {
-            "startPoint": {
-              "name": "قوس المشروع",
-              "arName": "قوس المشروع",
-              "latitude": 33.531301614670774,
-              "langitude": 36.23773998902129,
-              "tags": "قوس المشروع,",
-              "zoneId": 10557,
-              "id": 120
-            },
-            "startPointId": 120,
-            "endPoint": {
-              "name": "دوار الكنيسة",
-              "arName": " دوار الكنيسة القادم من المشروع",
-              "latitude": 33.52338942491543,
-              "langitude": 36.2153192040864,
-              "tags": "جسر مشروع دمر,مركز دمر الطبي,كنيسة مشروع دمر",
-              "zoneId": null,
-              "id": 116
-            },
-            "endPointId": 116,
-            "distance": 2346.6,
-            "duration": 0.0,
-            "price": 0.0,
-            "steps": "oatkE}td|EdAbMdEdHbAnFPtDsAbHhBhAbBtCjChIvEn[vVno@",
-            "name": null,
-            "arName": null,
-            "id": 199
-          },
-          {
-            "startPoint": {
-              "name": "دوار الكنيسة",
-              "arName": " دوار الكنيسة القادم من المشروع",
-              "latitude": 33.52338942491543,
-              "langitude": 36.2153192040864,
-              "tags": "جسر مشروع دمر,مركز دمر الطبي,كنيسة مشروع دمر",
-              "zoneId": null,
-              "id": 116
-            },
-            "startPointId": 116,
-            "endPoint": {
-              "name": "24 Square",
-              "arName": "دوار الجزيرة 24",
-              "latitude": 33.527460521348594,
-              "langitude": 36.2118348306563,
-              "tags": "دوار ال24",
-              "zoneId": 11140,
-              "id": 221
-            },
-            "endPointId": 221,
-            "distance": 938.7,
-            "duration": 0.0,
-            "price": 0.0,
-            "steps": "workE_i`|EJZEj@Oj@[f@_CbCwDtCu@N[EkCyAm@Qg@@{A`@_ChBmAJSXGT?bCFd@Zh@d@TdBm@HSCWKGSBIR",
-            "name": null,
-            "arName": null,
-            "id": 335
-          }
-        ],
-        "id": 171
+  "result": {
+    "totalCount": 19,
+    "items": [
+      {
+        "senderId": 543,
+        "senderName": "مسلم الشعراوي",
+        "senderType": "client",
+        "reciverId": 543,
+        "reciverName": "مسلم الشعراوي",
+        "reciverType": "client",
+        "tilte": "مرحبا شكرا لخدمتكوم المنتظرة نرجو النجاح و التوفيق",
+        "body": "سؤلي عن السعر قلتوم انهو سعر تقريبي و لكن هل هو للاياب و الزهاب ام فقط لأياب و فقط للزهاب",
+        "id": 19
       },
-      "carCategoryName": "كلاسيك",
-      "carCategorySeats": 5,
-      "prices": [
-        3000,
-        4000,
-        5000
-      ]
-    },
-    {
-      "path": {
-        "name": "test",
-        "arName": "test",
-        "edges": [
-          {
-            "startPoint": {
-              "name": "قوس المشروع",
-              "arName": "قوس المشروع",
-              "latitude": 33.531301614670774,
-              "langitude": 36.23773998902129,
-              "tags": "قوس المشروع,",
-              "zoneId": 10557,
-              "id": 120
-            },
-            "startPointId": 120,
-            "endPoint": {
-              "name": "دوار الكنيسة",
-              "arName": " دوار الكنيسة القادم من المشروع",
-              "latitude": 33.52338942491543,
-              "langitude": 36.2153192040864,
-              "tags": "جسر مشروع دمر,مركز دمر الطبي,كنيسة مشروع دمر",
-              "zoneId": null,
-              "id": 116
-            },
-            "endPointId": 116,
-            "distance": 2346.6,
-            "duration": 0.0,
-            "price": 0.0,
-            "steps": "oatkE}td|EdAbMdEdHbAnFPtDsAbHhBhAbBtCjChIvEn[vVno@",
-            "name": null,
-            "arName": null,
-            "id": 199
-          },
-          {
-            "startPoint": {
-              "name": "دوار الكنيسة",
-              "arName": " دوار الكنيسة القادم من المشروع",
-              "latitude": 33.52338942491543,
-              "langitude": 36.2153192040864,
-              "tags": "جسر مشروع دمر,مركز دمر الطبي,كنيسة مشروع دمر",
-              "zoneId": null,
-              "id": 116
-            },
-            "startPointId": 116,
-            "endPoint": {
-              "name": "24 Square",
-              "arName": "دوار الجزيرة 24",
-              "latitude": 33.527460521348594,
-              "langitude": 36.2118348306563,
-              "tags": "دوار ال24",
-              "zoneId": 11140,
-              "id": 221
-            },
-            "endPointId": 221,
-            "distance": 938.7,
-            "duration": 0.0,
-            "price": 0.0,
-            "steps": "workE_i`|EJZEj@Oj@[f@_CbCwDtCu@N[EkCyAm@Qg@@{A`@_ChBmAJSXGT?bCFd@Zh@d@TdBm@HSCWKGSBIR",
-            "name": null,
-            "arName": null,
-            "id": 335
-          }
-        ],
-        "id": 171
+      {
+        "senderId": 381,
+        "senderName": " ",
+        "senderType": "client",
+        "reciverId": 381,
+        "reciverName": " ",
+        "reciverType": "client",
+        "tilte": "مشترك",
+        "body": "كل ما حاول اطلب مشترك ما بلاقي ",
+        "id": 18
       },
-      "carCategoryName": "مركبة  عائلية 7 ركاب",
-      "carCategorySeats": 7,
-      "prices": [
-        2500,
-        3000,
-        3500
-      ]
-    }
-  ],
+      {
+        "senderId": 156,
+        "senderName": "kinan  eb",
+        "senderType": "client",
+        "reciverId": 156,
+        "reciverName": "kinan  eb",
+        "reciverType": "client",
+        "tilte": "استفسار ",
+        "body": "هل بدأ العمل بالتطبيق؟ \nجميع النقاط التشاركية لا تعمل .\n",
+        "id": 17
+      },
+      {
+        "senderId": 415,
+        "senderName": "غيث أرسلان",
+        "senderType": "client",
+        "reciverId": 415,
+        "reciverName": "غيث أرسلان",
+        "reciverType": "client",
+        "tilte": "كيفيه العمل",
+        "body": "يعطيكن الف عافيه ممكن تشرحولي بطريقه مختره كيفيه عمل البرنامج وانا معي سياره لوين ادخل وشو الطريقه لو تكرمتو ولكم جزيل الشكر \n\n",
+        "id": 16
+      },
+      {
+        "senderId": 338,
+        "senderName": "احمد  الذهبي",
+        "senderType": "client",
+        "reciverId": 338,
+        "reciverName": "احمد  الذهبي",
+        "reciverType": "client",
+        "tilte": "كيفية الانضمام لفريق قريب",
+        "body": "الرجاء الرد في اسرع وقت ممكن\n",
+        "id": 15
+      },
+      {
+        "senderId": 278,
+        "senderName": "محمد ايهاب تغلبي",
+        "senderType": "client",
+        "reciverId": 278,
+        "reciverName": "محمد ايهاب تغلبي",
+        "reciverType": "client",
+        "tilte": "اضافة سيارة ",
+        "body": "كيفية اضافة سيارتي على الرحلات التشتركية ",
+        "id": 14
+      },
+      {
+        "senderId": 249,
+        "senderName": "إناس الأعظمي ",
+        "senderType": "client",
+        "reciverId": 249,
+        "reciverName": "إناس الأعظمي ",
+        "reciverType": "client",
+        "tilte": "إستفسار",
+        "body": "بحاجة تفاصيل اكثر ",
+        "id": 13
+      },
+      {
+        "senderId": 210,
+        "senderName": "رهف اغا",
+        "senderType": "client",
+        "reciverId": 210,
+        "reciverName": "رهف اغا",
+        "reciverType": "client",
+        "tilte": "سعر",
+        "body": "ليش مو كاتبين سعر الرحلة",
+        "id": 12
+      },
+      {
+        "senderId": 168,
+        "senderName": "علاء الموصللي",
+        "senderType": "client",
+        "reciverId": 168,
+        "reciverName": "علاء الموصللي",
+        "reciverType": "client",
+        "tilte": "كيفية التعامل",
+        "body": "انا صاحب سيارة كيف بدي لاقي زبون ",
+        "id": 11
+      },
+      {
+        "senderId": 12,
+        "senderName": "محمد جهاد  الهندي الهندي",
+        "senderType": "driver",
+        "reciverId": 12,
+        "reciverName": "محمد جهاد  الهندي الهندي",
+        "reciverType": "driver",
+        "tilte": "ررر",
+        "body": "تت",
+        "id": 10
+      }
+    ]
+  },
   "targetUrl": null,
   "success": true,
   "error": null,

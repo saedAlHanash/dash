@@ -76,7 +76,10 @@ class _CreateSharedTripPageState extends State<CreateSharedTripPage> {
             listenWhen: (p, c) => c.statuses.done,
             listener: (context, state) {
               addPointCubit.addEdge(
-                  edgeId: state.result.id, pointId: state.result.endPointId);
+                edgeId: state.result.id,
+                pointId: state.result.endPointId,
+                edge: state.result,
+              );
             },
           ),
           BlocListener<PointsCubit, PointsInitial>(

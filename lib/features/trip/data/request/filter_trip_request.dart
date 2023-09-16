@@ -1,41 +1,49 @@
 class FilterTripRequest {
+
+  int? clientId;
   int? driverId;
 
-  int? customerId;
+  String? driverName;
   String? clientName;
+
   String? driverPhone;
   String? clientPhone;
 
-  int? carCategoryId;
 
   DateTime? startTime;
   DateTime? endTime;
 
 //<editor-fold desc="Data Methods">
   FilterTripRequest({
+    this.clientId,
     this.driverId,
-    this.customerId,
-    this.carCategoryId,
     this.clientName,
-    this.driverPhone,
+    this.driverName,
     this.clientPhone,
+    this.driverPhone,
     this.startTime,
     this.endTime,
   });
 
   Map<String, dynamic> toMap() {
     return {
-      'driverId': driverId == -1 ? null : driverId,
-      'customerId': customerId == -1 ? null : customerId,
-      'ClientId': customerId == -1 ? null : customerId,
-      'carCategoryId': carCategoryId == -1 ? null : carCategoryId,
-      'startTime': startTime,
-      'endTime': endTime,
-      'DriverPhone': (driverPhone?.isEmpty ?? true) ? null : driverPhone,
-      'ClientPhone': (clientPhone?.isEmpty ?? true) ? null : clientPhone,
+      'ClientId': clientId ,
+      'DriverId': driverId ,
+      'DriverName': driverName ,
+      'ClientName': clientName ,
+      'DriverPhone':  driverPhone,
+      'ClientPhone':  clientPhone,
+      'FromDate': startTime?.toIso8601String(),
+      'ToDate': endTime?.toIso8601String(),
     };
   }
   void clearFilter() {
+    clientId = null;
+    driverId = null;
+    driverName = null;
+    clientName = null;
+    driverPhone = null;
+    clientPhone = null;
     startTime = null;
     endTime = null;
   }

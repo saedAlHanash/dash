@@ -168,6 +168,8 @@ class PostUrl {
 
   static var createInstitution = 'api/services/app/InstitutiosnsService/Create';
   static var createTempTrip = 'api/services/app/PathService/CreatePath';
+
+  static var estimateSharedTrip ='api/services/app/PathService/GetPathEstimation';
 }
 
 class PutUrl {

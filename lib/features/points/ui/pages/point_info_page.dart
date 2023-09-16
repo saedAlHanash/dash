@@ -25,6 +25,7 @@ import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_models/global.dart';
 import 'package:qareeb_models/points/data/model/trip_point.dart';
 import 'package:qareeb_models/points/data/response/points_edge_response.dart';
+import 'package:qareeb_models/trip_path/data/models/trip_path.dart';
 
 import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/my_style.dart';
@@ -52,7 +53,7 @@ class PointInfoPage extends StatefulWidget {
 class _PointInfoPageState extends State<PointInfoPage> {
   late final MapControllerCubit mapController;
 
-  List<PointsEdgeResult>? edges;
+  List<Edge>? edges;
   final request = CreatePointRequest();
 
   TripPoint? tripPoint;
@@ -60,12 +61,13 @@ class _PointInfoPageState extends State<PointInfoPage> {
   var canEdit = false;
   var createMode = true;
 
+  final mapKey = GlobalKey<MapWidgetState>();
+
   @override
   void initState() {
-
     Future.delayed(
       const Duration(seconds: 5),
-          () {
+      () {
         if (context.read<PointsCubit>().state.result.isEmpty) {
           context.read<PointsCubit>().getAllPoints(context);
         }
@@ -74,10 +76,22 @@ class _PointInfoPageState extends State<PointInfoPage> {
 
     mapController = context.read<MapControllerCubit>();
 
-
     mapController
       ..clearMap(false)
-      ..addAllPoints(points: context.read<PointsCubit>().state.result);
+      ..addAllPoints(
+        points: context.read<PointsCubit>().state.result,
+        onTapMarker: (item) {
+          final c = MapMediator(
+            zoom: mapKey.currentState?.controller.zoom,
+            center: mapKey.currentState?.controller.center.gll,
+          );
+          context.pushNamed(
+            GoRouteName.pointInfo,
+            queryParams: {'id': item.id.toString()},
+            extra: c,
+          );
+        },
+      );
 
     if (widget.mapMediator != null && widget.mapMediator!.center != null) {
       Future.delayed(
@@ -119,9 +133,14 @@ class _PointInfoPageState extends State<PointInfoPage> {
               ..addAllPoints(
                 points: state.result,
                 onTapMarker: (item) {
+                  final c = MapMediator(
+                    zoom: mapKey.currentState?.controller.zoom,
+                    center: mapKey.currentState?.controller.center.gll,
+                  );
                   context.pushNamed(
                     GoRouteName.pointInfo,
                     queryParams: {'id': item.id.toString()},
+                    extra: c,
                   );
                 },
               );
@@ -202,6 +221,7 @@ class _PointInfoPageState extends State<PointInfoPage> {
                 20.0.horizontalSpace,
                 Expanded(
                   child: MapWidget(
+                    key: mapKey,
                     updateMarkerWithZoom: true,
                     initialPoint: request.getLatLng,
                     search: search,

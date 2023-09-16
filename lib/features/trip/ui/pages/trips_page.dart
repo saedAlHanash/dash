@@ -8,6 +8,7 @@ import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/widgets/app_bar_widget.dart';
 import 'package:qareeb_dash/core/widgets/not_found_widget.dart';
 import 'package:qareeb_dash/core/widgets/saed_taple_widget.dart';
+import 'package:qareeb_dash/features/shared_trip/ui/widget/filters/shared_trips_filter_widget.dart';
 import 'package:qareeb_dash/features/trip/ui/widget/filters/trips_filter_widget.dart';
 import 'package:qareeb_models/extensions.dart';
 
@@ -29,9 +30,7 @@ const _tripsTableHeader = [
 ];
 
 class TripsPage extends StatelessWidget {
-  const TripsPage({super.key, this.isClientTrips});
-
-  final bool? isClientTrips;
+  const TripsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -41,36 +40,17 @@ class TripsPage extends StatelessWidget {
         padding: const EdgeInsets.only(bottom: 100.0).h,
         child: Column(
           children: [
-            if (!(isClientTrips ?? false))
-              TripsFilterWidget(
-                onApply: (request) {
-                  context.read<AllTripsCubit>().getAllTrips(context, filter: request);
-                },
-              ),
-            if ((isClientTrips ?? false))
-              Column(
-                children: [
-                  BlocBuilder<AllTripsCubit, AllTripsInitial>(
-                    builder: (context, state) {
-                      return DrawableText(text: 'رحلات  : ${state.filter.clientName}');
-                    },
-                  ),
-                  BlocBuilder<AllTripsCubit, AllTripsInitial>(
-                    builder: (context, state) {
-                      return TripFilterWidget(
-                        onApply: (request) {
-                          context.read<AllTripsCubit>().getAllTrips(
-                                context,
-                                command:
-                                    state.command.copyWith(filterTripRequest: request),
-                              );
-                        },
-                      );
-                    },
-                  )
-                ],
-              ),
-            const Divider(),
+            BlocBuilder<AllTripsCubit, AllTripsInitial>(
+              builder: (context, state) {
+                return TripsFilterWidget(
+                  command: state.command,
+                  onApply: (request) {
+                    context.read<AllTripsCubit>().getAllTrips(context,
+                        command: state.command.copyWith(filterTripRequest: request));
+                  },
+                );
+              },
+            ),
             BlocBuilder<AllTripsCubit, AllTripsInitial>(
               builder: (context, state) {
                 if (state.statuses.isLoading) {
@@ -81,40 +61,38 @@ class TripsPage extends StatelessWidget {
 
                 if (list.isEmpty) return const NotFoundWidget(text: 'لا يوجد رحلات');
 
-                return SingleChildScrollView(
-                  child: SaedTableWidget(
-                    onChangePage: (command) {
-                      context
-                          .read<AllTripsCubit>()
-                          .getAllTrips(context, command: command);
-                    },
-                    fullHeight: 1.0.sh,
-                    title: _tripsTableHeader,
-                    data: list
-                        .mapIndexed(
-                          (index, e) => [
-                            e.currentLocationName,
-                            e.destinationName,
-                            e.getTripsCost,
-                            e.clientName,
-                            e.driver.fullName.isEmpty ? '-' : e.driver.fullName,
-                            e.tripStateName,
-                            e.startDate?.formatDateTime ?? '-',
-                            InkWell(
-                              onTap: () {
-                                context.pushNamed(GoRouteName.tripInfo,
-                                    queryParams: {'id': e.id.toString()});
-                              },
-                              child: const CircleButton(
-                                color: Colors.grey,
-                                icon: Icons.info_outline_rounded,
-                              ),
+                return SaedTableWidget(
+                  onChangePage: (command) {
+                    context
+                        .read<AllTripsCubit>()
+                        .getAllTrips(context, command: command);
+                  },
+                  fullHeight: 1.8.sh,
+                  title: _tripsTableHeader,
+                  data: list
+                      .mapIndexed(
+                        (index, e) => [
+                          e.currentLocationName,
+                          e.destinationName,
+                          e.getTripsCost,
+                          e.clientName,
+                          e.driver.fullName.isEmpty ? '-' : e.driver.fullName,
+                          e.tripStateName,
+                          e.startDate?.formatDateTime ?? '-',
+                          InkWell(
+                            onTap: () {
+                              context.pushNamed(GoRouteName.tripInfo,
+                                  queryParams: {'id': e.id.toString()});
+                            },
+                            child: const CircleButton(
+                              color: Colors.grey,
+                              icon: Icons.info_outline_rounded,
                             ),
-                          ],
-                        )
-                        .toList(),
-                    command: state.command,
-                  ),
+                          ),
+                        ],
+                      )
+                      .toList(),
+                  command: state.command,
                 );
               },
             ),

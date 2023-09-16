@@ -31,7 +31,7 @@ dependencies:
     git:
       url: https://github.com/saedAlHanash/drawable_text
       ref: html
-
+#
   qareeb_models:
     git:
       url: https://github.com/saedAlHanash/qareeb_models
@@ -41,7 +41,7 @@ dependencies:
       url: https://github.com/saedAlHanash/map_qareeb
       ref: html
 
-#
+
 #  map_package:
 #    path: ../../packages/map_package
 #

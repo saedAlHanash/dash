@@ -64,7 +64,7 @@ class ClientInfoPage extends StatelessWidget {
                             GoRouteName.tripsPae,
                             queryParams: {
                               'clientId': state.result.id.toString(),
-                              'name': state.result.fullName,
+                              'clientName': state.result.fullName,
                             },
                           );
                         },
@@ -77,7 +77,7 @@ class ClientInfoPage extends StatelessWidget {
                             GoRouteName.sharedTripsPae,
                             queryParams: {
                               'clientId': state.result.id.toString(),
-                              'name': state.result.fullName,
+                              'clientName': state.result.fullName,
                             },
                           );
                         },

@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:qareeb_dash/core/util/note_message.dart';
 import 'package:qareeb_dash/core/widgets/not_found_widget.dart';
+import 'package:qareeb_dash/core/widgets/saed_taple_widget.dart';
 import 'package:qareeb_models/extensions.dart';
 
 import '../../../../core/util/my_style.dart';
@@ -28,87 +30,81 @@ class _MessagesPageState extends State<MessagesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<AllMessagesCubit, AllMessagesInitial>(
-        builder: (context, state) {
-          if (state.statuses.isLoading) {
-            return MyStyle.loadingWidget();
-          }
-          //institution
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.only(bottom: 100.0).h,
+        child: Column(
+          children: [
+            BlocBuilder<AllMessagesCubit, AllMessagesInitial>(
+              builder: (context, state) {
+                if (state.statuses.isLoading) {
+                  return MyStyle.loadingWidget();
+                }
+                //institution
 
-          if (state.result.isEmpty) {
-            return const NotFoundWidget(text: 'لا يوجد رسائل');
-          }
-          return ListView.builder(
-            itemCount: state.result.length,
-            itemBuilder: (_, i) {
-              final item = state.result[i];
-              return MyCardWidget(
-                margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0).r,
-                child: Column(
-                  children: [
-                    DrawableText(
-                      size: 18.0.sp,
-                      matchParent: true,
-                      drawablePadding: 10.0.w,
-                      drawableStart: IconButton(
-                        onPressed: () {
-                          context.pushNamed(
-                              item.reciverType == 'driver'
-                                  ? GoRouteName.driverInfo
-                                  : GoRouteName.clientInfo,
-                              queryParams: {'id': item.senderId.toString()});
-                        },
-                        icon: const Icon(Icons.info_outline_rounded),
-                      ),
-                      drawableAlin: DrawableAlin.withText,
-                      text: 'المرسل',
-                      color: Colors.black,
-                      fontFamily: FontManager.cairoBold,
-                      drawableEnd: DrawableText(
-                        size: 18.0.sp,
-                        textAlign: TextAlign.center,
-                        text: '${item.senderName} - (${item.senderType})',
-                        color: Colors.black,
-                      ),
-                    ),
-                    const Divider(),
-                    DrawableText(
-                      size: 18.0.sp,
-                      matchParent: true,
-                      drawablePadding: 10.0.w,
-                      drawableAlin: DrawableAlin.withText,
-                      text: 'العنوان',
-                      color: Colors.black,
-                      fontFamily: FontManager.cairoBold,
-                      drawableEnd: DrawableText(
-                        size: 18.0.sp,
-                        textAlign: TextAlign.center,
-                        text: item.tilte,
-                        color: Colors.black,
-                      ),
-                    ),
-                    const Divider(),
-                    DrawableText(
-                      size: 18.0.sp,
-                      matchParent: true,
-                      drawablePadding: 10.0.w,
-                      drawableAlin: DrawableAlin.withText,
-                      text: 'المحتوى',
-                      color: Colors.black,
-                      fontFamily: FontManager.cairoBold,
-                      drawableEnd: DrawableText(
-                        size: 18.0.sp,
-                        textAlign: TextAlign.center,
-                        text: item.body,
-                        color: Colors.black,
-                      ),
-                    ),
+                if (state.result.isEmpty) {
+                  return const NotFoundWidget(text: 'لا يوجد رسائل');
+                }
+                return SaedTableWidget(
+                  command: state.command,
+                  fullHeight: 1.8.sh,
+                  onChangePage: (command) {
+                    context
+                        .read<AllMessagesCubit>()
+                        .getAllMessages(context, command: command);
+                  },
+                  title: const [
+                    'ID',
+                    'اسم المرسل',
+                    'رقم الهاتف',
+                    'نوع المرسل',
+                    'عنوان الرسالة',
+                    'المحتوى',
                   ],
-                ),
-              );
-            },
-          );
-        },
+                  data: state.result
+                      .map(
+                        (e) => [
+                          InkWell(
+                            onTap: () {
+                              context.pushNamed(
+                                  e.reciverType == 'driver'
+                                      ? GoRouteName.driverInfo
+                                      : GoRouteName.clientInfo,
+                                  queryParams: {'id': e.senderId.toString()});
+                            },
+                            child: DrawableText(
+                              selectable: false,
+                              size: 16.0.sp,
+                              matchParent: true,
+                              textAlign: TextAlign.center,
+                              underLine: true,
+                              text: e.senderId.toString(),
+                              color: Colors.blue,
+                            ),
+                          ),
+                          e.senderName,
+                          e.senderPhone,
+                          e.senderType,
+                          e.tilte,
+                          IconButton(
+                            onPressed: () {
+                              NoteMessage.showMyDialog(
+                                context,
+                                child: Container(
+                                  padding: const EdgeInsets.all(20.0).r,
+                                  child: DrawableText(text: e.body),
+                                ),
+                              );
+                            },
+                            icon: const Icon(Icons.message),
+                          ),
+                        ],
+                      )
+                      .toList(),
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

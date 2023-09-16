@@ -97,7 +97,7 @@ class DriverInfoPage extends StatelessWidget {
                             GoRouteName.tripsPae,
                             queryParams: {
                               'driverId': state.result.id.toString(),
-                              'name': state.result.fullName,
+                              'driverName': state.result.fullName,
                             },
                           );
                         },
@@ -110,7 +110,7 @@ class DriverInfoPage extends StatelessWidget {
                             GoRouteName.sharedTripsPae,
                             queryParams: {
                               'driverId': state.result.id.toString(),
-                              'name': state.result.fullName,
+                              'driverName': state.result.fullName,
                             },
                           );
                         },

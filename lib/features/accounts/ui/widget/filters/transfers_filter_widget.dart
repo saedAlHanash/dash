@@ -55,7 +55,7 @@ class _TransfersFilterWidgetState extends State<TransfersFilterWidget> {
             children: [
               Expanded(
                 child: MyTextFormNoLabelWidget(
-                  label: 'تاريخ بداية الرحلة',
+                  label: 'تاريخ بداية',
                   controller: startDateC,
                   disableAndKeepIcon: true,
                   textDirection: TextDirection.ltr,
@@ -71,7 +71,7 @@ class _TransfersFilterWidgetState extends State<TransfersFilterWidget> {
               15.0.horizontalSpace,
               Expanded(
                 child: MyTextFormNoLabelWidget(
-                  label: 'تاريخ نهاية الرحلة',
+                  label: 'تاريخ نهاية',
                   controller: endDateC,
                   disableAndKeepIcon: true,
                   textDirection: TextDirection.ltr,

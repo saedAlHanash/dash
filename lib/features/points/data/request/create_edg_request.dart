@@ -1,5 +1,6 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:qareeb_models/points/data/response/points_edge_response.dart';
+import 'package:qareeb_models/trip_path/data/models/trip_path.dart';
 
 class CreateEdgeRequest {
   CreateEdgeRequest({
@@ -51,7 +52,7 @@ class CreateEdgeRequest {
         "arName": arName,
       };
 
-  void initFromEdge(PointsEdgeResult result) {
+  void initFromEdge(Edge result) {
     id = result.id;
     startPointId = result.startPointId;
     endPointId = result.endPointId;

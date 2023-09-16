@@ -52,9 +52,14 @@ class _PointsPageState extends State<PointsPage> {
               ..addAllPoints(
                 points: state.result,
                 onTapMarker: (item) {
+                  final c = MapMediator(
+                    zoom: mapKey.currentState?.controller.zoom,
+                    center: mapKey.currentState?.controller.center.gll,
+                  );
                   context.pushNamed(
                     GoRouteName.pointInfo,
                     queryParams: {'id': item.id.toString()},
+                    extra: c,
                   );
                 },
               );
@@ -95,9 +100,14 @@ class _PointsPageState extends State<PointsPage> {
                               width: 300.0.w,
                               child: AutoCompleteWidget(
                                 onTap: (spinnerItem) {
+                                  final c = MapMediator(
+                                    zoom: mapKey.currentState?.controller.zoom,
+                                    center: mapKey.currentState?.controller.center.gll,
+                                  );
                                   context.pushNamed(
                                     GoRouteName.pointInfo,
                                     queryParams: {'id': spinnerItem.id.toString()},
+                                    extra: c,
                                   );
                                 },
                                 listItems:
