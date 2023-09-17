@@ -70,6 +70,7 @@ class _TripInfoPageState extends State<TripInfoPage> {
                         DrawableText(
                           text: 'تفاصيل الطلب',
                           matchParent: true,
+                          selectable: false,
                           fontFamily: FontManager.cairoBold,
                           textAlign: TextAlign.center,
                           color: Colors.black,

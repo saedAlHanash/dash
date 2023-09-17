@@ -64,6 +64,8 @@ class CarCategory {
     required this.sharedGoldRatio,
     required this.sharedTiresRatio,
     required this.priceVariant,
+    required this.sharedMinimumDistanceInMeters,
+    required this.seatNumber,
   });
 
   final String name;
@@ -87,6 +89,9 @@ class CarCategory {
   final num sharedTiresRatio;
   final num priceVariant;
 
+  final num sharedMinimumDistanceInMeters;
+  final num seatNumber;
+
   factory CarCategory.fromJson(Map<String, dynamic> json) {
     return CarCategory(
       name: json["name"] ?? "",
@@ -109,6 +114,8 @@ class CarCategory {
       sharedGoldRatio: json["sharedGoldRatio"] ?? 0.0,
       sharedTiresRatio: json["sharedTiresRatio"] ?? 0.0,
       priceVariant: json["priceVariant"] ?? 0.0,
+      sharedMinimumDistanceInMeters: json["sharedMinimumDistanceInMeters"] ?? 0.0,
+      seatNumber: json["seatNumber"] ?? 0.0,
     );
   }
 
@@ -133,5 +140,7 @@ class CarCategory {
         "sharedGoldRatio": sharedGoldRatio,
         "sharedTiresRatio": sharedTiresRatio,
         "priceVariant": priceVariant,
+        "sharedMinimumDistanceInMeters": sharedMinimumDistanceInMeters,
+        "seatNumber": seatNumber,
       };
 }

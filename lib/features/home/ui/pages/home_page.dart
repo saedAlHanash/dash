@@ -38,9 +38,12 @@ import '../../../clients/ui/pages/clients_page.dart';
 import '../../../coupons/bloc/create_coupon_cubit/create_coupon_cubit.dart';
 import '../../../drivers/bloc/loyalty_cubit/loyalty_cubit.dart';
 import '../../../drivers/ui/pages/drivers_page.dart';
+import '../../../governorates/bloc/create_governorate_cubit/create_governorate_cubit.dart';
+import '../../../governorates/bloc/delete_governorate_cubit/delete_governorate_cubit.dart';
+import '../../../governorates/ui/pages/governments_page.dart';
 import '../../../institutions/bloc/delete_institution_cubit/delete_institution_cubit.dart';
 import '../../../institutions/ui/pages/institutions_page.dart';
-import '../../../news/ui/pages/news.dart';
+import '../../../notifications/ui/pages/notifications_page.dart';
 import '../../../pay_to_drivers/bloc/financial_report_cubit/financial_report_cubit.dart';
 import '../../../pay_to_drivers/bloc/pay_to_cubit/pay_to_cubit.dart';
 import '../../../pay_to_drivers/ui/pages/pay_to_drivers_page.dart';
@@ -188,6 +191,7 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   if (isAllowed(AppPermissions.REASON))
                     const AdminMenuItem(title: 'أسباب الإلغاء', route: '/cancel_reasons'),
+                  const AdminMenuItem(title: 'المحافظات', route: '/government'),
                   if (isAllowed(AppPermissions.CAR_CATEGORY))
                     const AdminMenuItem(title: 'المؤسسات', route: '/institutions'),
                   if (isAllowed(AppPermissions.ROLES))
@@ -210,8 +214,7 @@ class _HomePageState extends State<HomePage> {
                   if (isAllowed(AppPermissions.SETTINGS))
                     const AdminMenuItem(title: 'محاسبة السائقين', route: "/payToDrivers"),
 
-                    // const AdminMenuItem(title: 'التقاص', route: "/payToDrivers"),
-
+                  // const AdminMenuItem(title: 'التقاص', route: "/payToDrivers"),
                 ],
               ),
 
@@ -388,6 +391,15 @@ class _HomePageState extends State<HomePage> {
                     ],
                     child: const ReasonsPage(),
                   );
+
+                case "/government":
+                  return MultiBlocProvider(
+                    providers: [
+                      BlocProvider(create: (context) => sl<DeleteGovernmentCubit>()),
+                      BlocProvider(create: (context) => sl<CreateGovernmentCubit>()),
+                    ],
+                    child: const GovernmentsPage(),
+                  );
                 case "/messages":
                   return const MessagesPage();
                 case "/paths":
@@ -399,8 +411,7 @@ class _HomePageState extends State<HomePage> {
                   );
                 case "/payToDrivers":
                   final request = TransferFilterRequest();
-                  request
-                    .type = TransferType.debit;
+                  request.type = TransferType.debit;
 
                   return MultiBlocProvider(
                     providers: [

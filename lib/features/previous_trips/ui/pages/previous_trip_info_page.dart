@@ -24,6 +24,7 @@ class PreviousTripInfoPage extends StatelessWidget {
             const DrawableText(
               text: 'تفاصيل الطلب',
               matchParent: true,
+              selectable: false,
               fontFamily: FontManager.cairoBold,
 
               color: Colors.black,

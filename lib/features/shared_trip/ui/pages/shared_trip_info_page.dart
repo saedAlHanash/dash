@@ -10,7 +10,9 @@ import 'package:qareeb_models/global.dart';
 
 import '../../../../core/util/my_style.dart';
 import '../../../../core/widgets/app_bar_widget.dart';
+import '../../../../core/widgets/my_button.dart';
 import '../../bloc/shared_trip_by_id_cubit/shared_trip_by_id_cubit.dart';
+import '../../bloc/update_shared_cubit/update_shared_cubit.dart';
 
 class SharedTripInfoPage extends StatefulWidget {
   const SharedTripInfoPage({Key? key}) : super(key: key);
@@ -36,14 +38,28 @@ class _SharedTripInfoPageState extends State<SharedTripInfoPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<SharedTripByIdCubit, SharedTripByIdInitial>(
-      listenWhen: (p, c) => c.statuses.done,
-      listener: (context, state) {
-        mapController.addPath(path: state.result.path);
-        if (state.result.tripStatus == SharedTripStatus.started) {
-          MapWidget.initImeis([state.result.driver.imei]);
-        }
-      },
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<SharedTripByIdCubit, SharedTripByIdInitial>(
+          listenWhen: (p, c) => c.statuses.done,
+          listener: (context, state) {
+            mapController.addPath(path: state.result.path);
+            if (state.result.tripStatus == SharedTripStatus.started) {
+              MapWidget.initImeis([state.result.driver.imei]);
+            }
+          },
+        ),
+        BlocListener<UpdateSharedCubit, UpdateSharedInitial>(
+          listenWhen: (p, c) => c.statuses.done,
+          listener: (context, state) {
+            context.read<SharedTripByIdCubit>().getSharedTripById(
+                  context,
+                  id: state.result.id,
+                  requestId: 0,
+                );
+          },
+        ),
+      ],
       child: Scaffold(
         appBar: const AppBarWidget(),
         body: Row(
@@ -57,16 +73,42 @@ class _SharedTripInfoPageState extends State<SharedTripInfoPage> {
                     if (state.statuses.loading) {
                       return MyStyle.loadingWidget();
                     }
-
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const DrawableText(
+                        DrawableText(
                           text: 'تفاصيل الطلب',
                           matchParent: true,
+                          selectable: false,
                           fontFamily: FontManager.cairoBold,
                           textAlign: TextAlign.center,
                           color: Colors.black,
+                          drawableEnd: (state.result.tripStatus ==
+                                      SharedTripStatus.closed ||
+                                  state.result.tripStatus == SharedTripStatus.canceled)
+                              ? null
+                              : BlocBuilder<UpdateSharedCubit, UpdateSharedInitial>(
+                                  builder: (context, cState) {
+                                    if (cState.statuses.loading) {
+                                      return MyStyle.loadingWidget();
+                                    }
+                                    return MyButton(
+                                      width: 100.0.w,
+                                      text: 'إلغاء الرحلة',
+                                      color: Colors.black,
+                                      textColor: Colors.white,
+                                      onTap: () {
+                                        context
+                                            .read<UpdateSharedCubit>()
+                                            .updateSharedTrip(
+                                              context,
+                                              trip: state.result,
+                                              tState: SharedTripStatus.canceled,
+                                            );
+                                      },
+                                    );
+                                  },
+                                ),
                         ),
                         TripInfoListWidget(trip: state.result),
                       ],

@@ -23,6 +23,10 @@ import '../core/injection/injection_container.dart' as di;
 import '../core/util/shared_preferences.dart';
 import '../features/accounts/bloc/account_amount_cubit/account_amount_cubit.dart';
 import '../features/admins/ui/pages/admin_info_page.dart';
+import '../features/areas/bloc/areas_cubit/areas_cubit.dart';
+import '../features/areas/bloc/create_area_cubit/create_area_cubit.dart';
+import '../features/areas/bloc/delete_area_cubit/delete_area_cubit.dart';
+import '../features/areas/ui/pages/areas_page.dart';
 import '../features/auth/bloc/login_cubit/login_cubit.dart';
 import '../features/auth/ui/pages/login_page.dart';
 import '../features/car_catigory/bloc/create_car_category_cubit/create_car_category_cubit.dart';
@@ -52,6 +56,7 @@ import '../features/roles/ui/pages/create_role_page.dart';
 import '../features/shared_trip/bloc/add_point_cubit/add_point_cubit.dart';
 import '../features/shared_trip/bloc/get_shared_trips_cubit/get_shared_trips_cubit.dart';
 import '../features/shared_trip/bloc/shared_trip_by_id_cubit/shared_trip_by_id_cubit.dart';
+import '../features/shared_trip/bloc/update_shared_cubit/update_shared_cubit.dart';
 import '../features/shared_trip/ui/pages/shared_trip_info_page.dart';
 import '../features/shared_trip/ui/pages/shared_trips_page.dart';
 import '../features/temp_trips/bloc/create_temp_trip_cubit/create_temp_trip_cubit.dart';
@@ -345,10 +350,10 @@ final appGoRouter = GoRouter(
                 context,
                 command: Command.initial().copyWith(
                   filterTripRequest: FilterTripRequest(
-                      clientId: clientId,
-                      driverId: driverId,
-                      driverName: driverName,
-                      clientName: clientName,
+                    clientId: clientId,
+                    driverId: driverId,
+                    driverName: driverName,
+                    clientName: clientName,
                   ),
                 ),
               ),
@@ -375,6 +380,7 @@ final appGoRouter = GoRouter(
         final providers = [
           BlocProvider(create: (_) => di.sl<MapControllerCubit>()),
           BlocProvider(create: (_) => di.sl<AtherCubit>()),
+          BlocProvider(create: (_) => di.sl<UpdateSharedCubit>()),
           BlocProvider(
             create: (_) => di.sl<SharedTripByIdCubit>()
               ..getSharedTripById(_, id: id, requestId: requestId),
@@ -527,6 +533,25 @@ final appGoRouter = GoRouter(
         );
       },
     ),
+
+    ///createRole
+    GoRoute(
+      name: GoRouteName.area,
+      path: _GoRoutePath.area,
+      builder: (BuildContext context, GoRouterState state) {
+        final id = int.tryParse(state.queryParams['id'] ?? '0') ?? 0;
+
+        final providers = [
+          BlocProvider(create: (_) => di.sl<AreasCubit>()..getArea(_, id: id)),
+          BlocProvider(create: (_) => di.sl<CreateAreaCubit>()),
+          BlocProvider(create: (_) => di.sl<DeleteAreaCubit>()),
+        ];
+        return MultiBlocProvider(
+          providers: providers,
+          child: AreasPage(governorateId: id),
+        );
+      },
+    ),
   ],
 );
 
@@ -551,6 +576,7 @@ class GoRouteName {
   static const createInstitution = 'createInstitution';
   static const createTempTrip = 'createTempTrip';
   static const tempTripInfo = 'tempTripInfo';
+  static const area = 'area';
 }
 
 class _GoRoutePath {
@@ -574,4 +600,5 @@ class _GoRoutePath {
   static const createInstitution = '/createInstitution';
   static const createTempTrip = '/createTempTrip';
   static const tempTripInfo = '/tempTripInfo';
+  static const area = '/area';
 }

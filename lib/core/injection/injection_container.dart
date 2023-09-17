@@ -12,6 +12,9 @@ import '../../features/accounts/bloc/account_amount_cubit/account_amount_cubit.d
 import '../../features/accounts/bloc/all_transfers_cubit/all_transfers_cubit.dart';
 import '../../features/admins/bloc/all_admins/all_admins_cubit.dart';
 import '../../features/admins/bloc/create_admin_cubit/create_admin_cubit.dart';
+import '../../features/areas/bloc/areas_cubit/areas_cubit.dart';
+import '../../features/areas/bloc/create_area_cubit/create_area_cubit.dart';
+import '../../features/areas/bloc/delete_area_cubit/delete_area_cubit.dart';
 import '../../features/auth/bloc/change_user_state_cubit/change_user_state_cubit.dart';
 import '../../features/auth/bloc/create_policy_cubit/policy_cubit.dart';
 import '../../features/auth/bloc/forgot_password_cubit/forgot_password_cubit.dart';
@@ -32,12 +35,15 @@ import '../../features/drivers/bloc/all_drivers/all_drivers_cubit.dart';
 import '../../features/drivers/bloc/create_driver_cubit/create_driver_cubit.dart';
 import '../../features/drivers/bloc/driver_by_id_cubit/driver_by_id_cubit.dart';
 import '../../features/drivers/bloc/loyalty_cubit/loyalty_cubit.dart';
+import '../../features/governorates/bloc/create_governorate_cubit/create_governorate_cubit.dart';
+import '../../features/governorates/bloc/delete_governorate_cubit/delete_governorate_cubit.dart';
+import '../../features/governorates/bloc/governorates_cubit/governorates_cubit.dart';
 import '../../features/home/bloc/nav_home_cubit/nav_home_cubit.dart';
 import '../../features/institutions/bloc/all_institutions_cubit/all_institutions_cubit.dart';
 import '../../features/institutions/bloc/create_institution_cubit/create_institution_cubit.dart';
 import '../../features/institutions/bloc/delete_institution_cubit/delete_institution_cubit.dart';
 import '../../features/messages/bloc/all_messages/all_messages_cubit.dart';
-import '../../features/news/bloc/notification_cubit/notification_cubit.dart';
+import '../../features/notifications/bloc/notification_cubit/notification_cubit.dart';
 import '../../features/pay_to_drivers/bloc/financial_report_cubit/financial_report_cubit.dart';
 import '../../features/points/bloc/creta_edge_cubit/create_edge_cubit.dart';
 import '../../features/points/bloc/creta_point_cubit/create_point_cubit.dart';
@@ -269,7 +275,6 @@ Future<void> init() async {
   sl.registerFactory(() => EstimateCubit());
   //endregion
 
-
   sl.registerFactory(() => AllClientsCubit());
   sl.registerFactory(() => ClientByIdCubit());
   sl.registerFactory(() => AllTransfersCubit());
@@ -286,6 +291,20 @@ Future<void> init() async {
   sl.registerFactory(() => CreateNotificationCubit());
   sl.registerFactory(() => FinancialReportCubit());
   sl.registerFactory(() => CancelTripCubit());
+
+  //region government
+
+  sl.registerFactory(() => GovernmentsCubit());
+  sl.registerFactory(() => CreateGovernmentCubit());
+  sl.registerFactory(() => DeleteGovernmentCubit());
+  //endregion
+
+  //region Area
+
+  sl.registerFactory(() => AreasCubit());
+  sl.registerFactory(() => CreateAreaCubit());
+  sl.registerFactory(() => DeleteAreaCubit());
+  //endregion
 
 //! External
 

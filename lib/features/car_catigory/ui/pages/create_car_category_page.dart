@@ -33,7 +33,6 @@ class _CreateCarCategoryPageState extends State<CreateCarCategoryPage> {
 
   @override
   void initState() {
-
     if (widget.carCat != null) {
       request = CreateCarCatRequest().fromCarCategory(widget.carCat!);
     }
@@ -80,12 +79,28 @@ class _CreateCarCategoryPageState extends State<CreateCarCategoryPage> {
                 margin: const EdgeInsets.symmetric(vertical: 30.0).h,
                 child: Column(
                   children: [
-                    MyTextFormNoLabelWidget(
-                      label: 'اسم التصنيف',
-                      initialValue: request.name,
-                      onChanged: (p0) {
-                        request.name = p0;
-                      },
+                    Row(
+                      children: [
+                        Expanded(
+                          child: MyTextFormNoLabelWidget(
+                            label: 'اسم التصنيف',
+                            initialValue: request.name,
+                            onChanged: (p0) {
+                              request.name = p0;
+                            },
+                          ),
+                        ),
+                        15.0.horizontalSpace,
+                        Expanded(
+                          child: MyTextFormNoLabelWidget(
+                            label: 'عدد المقاعد الافتراضي',
+                            initialValue: request.seatNumber?.toString(),
+                            onChanged: (p0) {
+                              request.seatNumber = int.tryParse(p0);
+                            },
+                          ),
+                        ),
+                      ],
                     ),
                     const Divider(),
                     DrawableText(
@@ -115,6 +130,17 @@ class _CreateCarCategoryPageState extends State<CreateCarCategoryPage> {
                             initialValue: request.sharedDriverRatio?.toString(),
                             onChanged: (p0) {
                               request.sharedDriverRatio = double.tryParse(p0);
+                            },
+                          ),
+                        ),
+                        15.0.horizontalSpace,
+                        Expanded(
+                          child: MyTextFormNoLabelWidget(
+                            label: 'أقل مسافة مسار للرحلة التشاركية (متر)',
+                            initialValue:
+                                request.sharedMinimumDistanceInMeters?.toString(),
+                            onChanged: (p0) {
+                              request.sharedMinimumDistanceInMeters = double.tryParse(p0);
                             },
                           ),
                         ),

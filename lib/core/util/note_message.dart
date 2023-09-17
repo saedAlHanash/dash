@@ -11,6 +11,7 @@ import 'package:qareeb_dash/core/widgets/my_button.dart';
 import '../../generated/assets.dart';
 import '../widgets/images/image_multi_type.dart';
 import '../widgets/snake_bar_widget.dart';
+
 class NoteMessage {
   static void showSuccessSnackBar(
       {required String message, required BuildContext context}) {
@@ -189,23 +190,23 @@ class NoteMessage {
     return (result ?? false);
   }
 
-  static Future<bool> showMyDialog(BuildContext context, {required Widget child}) async {
+  static Future<bool> showMyDialog(BuildContext context,
+      {required Widget child, Function(dynamic val)? onCancel}) async {
     // show the dialog
     final result = await showDialog(
       context: context,
-      barrierColor: Colors.black.withOpacity(0.3),
       builder: (BuildContext context) {
         return Dialog(
-          alignment: Alignment.center,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(20.0.r),
-            ),
-          ),
-          insetPadding: const EdgeInsets.all(20.0).r,
-          elevation: 10.0,
           clipBehavior: Clip.hardEdge,
-          child: SingleChildScrollView(
+          child: Container(
+            width: 0.6.sw,
+            padding: const EdgeInsets.all(20.0).r,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(
+                Radius.circular(20.0.r),
+              ),
+            ),
+            clipBehavior: Clip.hardEdge,
             child: child,
           ),
         );

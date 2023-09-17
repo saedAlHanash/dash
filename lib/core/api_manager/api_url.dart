@@ -55,44 +55,47 @@ class GetUrl {
   static const bestDriver = 'api/services/app/User/GetBestDriver';
   static const getAllAdmins = 'api/services/app/User/getAllAdmins';
 
-  static var allRoles = 'api/services/app/Role/GetAll';
+  static const allRoles = 'api/services/app/Role/GetAll';
 
-  static var getAllClients = 'api/services/app/User/GetAllCustomars';
+  static const getAllClients = 'api/services/app/User/GetAllCustomars';
 
-  static var getClientById = 'api/services/app/User/Get';
-  static var pointById = 'api/services/app/PointsService/Get';
+  static const getClientById = 'api/services/app/User/Get';
+  static const pointById = 'api/services/app/PointsService/Get';
 
-  static var getAllEdgesPoint = 'api/services/app/EdgesService/GetEdgesFromPoint';
+  static const getAllEdgesPoint = 'api/services/app/EdgesService/GetEdgesFromPoint';
 
   static const getAllEpay = 'api/services/app/EpaymentService/GetAll';
 
-  static var getAllMessages = 'api/services/app/Messages/GetAll';
+  static const getAllMessages = 'api/services/app/Messages/GetAll';
 
-  static var getAllTransfers = 'api/services/app/AccountsService/GetAllTransfers';
+  static const getAllTransfers = 'api/services/app/AccountsService/GetAllTransfers';
 
-  static var getAllTrips = 'api/services/app/Order/GetAllTrips';
+  static const getAllTrips = 'api/services/app/Order/GetAllTrips';
 
-  static var getAllSharedTrips = 'api/services/app/SharedTripService/GetAllSharedTrips';
+  static const getAllSharedTrips = 'api/services/app/SharedTripService/GetAllSharedTrips';
 
-  static var fromDriver = 'api/services/app/AccountsService/RequiredAmountFromDriver';
+  static const fromDriver = 'api/services/app/AccountsService/RequiredAmountFromDriver';
 
-  static var fromCompany = 'api/services/app/AccountsService/DriverDebtFromCompany';
+  static const fromCompany = 'api/services/app/AccountsService/DriverDebtFromCompany';
 
-  static var getAllCoupons = 'api/services/app/Coupons/GetAll';
+  static const getAllCoupons = 'api/services/app/Coupons/GetAll';
 
-  static var allPermissions = 'api/services/app/Role/GetAllPermissions';
+  static const allPermissions = 'api/services/app/Role/GetAllPermissions';
 
-  static var institutions = 'api/services/app/InstitutiosnsService/GetAll';
+  static const institutions = 'api/services/app/InstitutiosnsService/GetAll';
 
-  static var systemParams = 'api/services/app/SystemParametersService/GetAll';
+  static const systemParams = 'api/services/app/SystemParametersService/GetAll';
 
-  static var systemSettings = 'api/services/app/SystemSettingsService/GetAll';
+  static const systemSettings = 'api/services/app/SystemSettingsService/GetAll';
 
-  static var financialReport = 'api/services/app/AccountsService/FinancialReport';
+  static const financialReport = 'api/services/app/AccountsService/FinancialReport';
 
-  static var tempTrips = 'api/services/app/PathService/GetPaths';
+  static const tempTrips = 'api/services/app/PathService/GetPaths';
 
-  static var tempTripById = 'api/services/app/PathService/GetPathById';
+  static const tempTripById = 'api/services/app/PathService/GetPathById';
+
+  static const governments = 'api/services/app/GovernorateService/GetAll';
+  static const areas = 'api/services/app/AreaService/GetAll';
 }
 
 class PostUrl {
@@ -152,66 +155,73 @@ class PostUrl {
 
   static const createCarCategory = 'api/services/app/CarCategoriesService/Create';
 
-  static var createAdmin = 'api/services/app/User/Create';
+  static const createAdmin = 'api/services/app/User/Create';
 
-  static var createPoint = 'api/services/app/PointsService/CreatePoint';
+  static const createPoint = 'api/services/app/PointsService/CreatePoint';
 
-  static var createEdge = 'api/services/app/EdgesService/CreateEdge';
+  static const createEdge = 'api/services/app/EdgesService/CreateEdge';
 
-  static var createPolicy = 'api/services/app/Settings/Updatesettings';
+  static const createPolicy = 'api/services/app/Settings/Updatesettings';
 
-  static var createFromDriver = 'api/services/app/PaymentService/CreatePayOffPayment';
-  static var createFromCompany = 'api/services/app/PaymentService/CreateDebtPayment';
-  static var createCoupon = 'api/services/app/Coupons/Create';
+  static const createFromDriver = 'api/services/app/PaymentService/CreatePayOffPayment';
+  static const createFromCompany = 'api/services/app/PaymentService/CreateDebtPayment';
+  static const createCoupon = 'api/services/app/Coupons/Create';
 
-  static var createRole = 'api/services/app/Role/Create';
+  static const createRole = 'api/services/app/Role/Create';
 
-  static var createInstitution = 'api/services/app/InstitutiosnsService/Create';
-  static var createTempTrip = 'api/services/app/PathService/CreatePath';
+  static const createInstitution = 'api/services/app/InstitutiosnsService/Create';
+  static const createTempTrip = 'api/services/app/PathService/CreatePath';
 
-  static var estimateSharedTrip ='api/services/app/PathService/GetPathEstimation';
+  static const estimateSharedTrip = 'api/services/app/PathService/GetPathEstimation';
+  static const createGovernment = 'api/services/app/GovernorateService/Create';
+  static const createArea = 'api/services/app/AreaService/Create';
 }
 
 class PutUrl {
+  static const updateGovernment = 'api/services/app/GovernorateService/Update';
+  static const updateArea = 'api/services/app/AreaService/Update';
   static const updateProfile = 'api/services/app/User/UpdateUser';
   static const updateDriver = 'api/services/app/User/UpdateDriver';
 
   static const updateFavoritePlace = 'api/services/app/FavirotePlacesAppServices/Update';
   static const changeUserLocation = 'api/services/app/UserService/ChangeUserLocation';
 
-  static var updateCarCategory = 'api/services/app/CarCategoriesService/Update';
+  static const updateCarCategory = 'api/services/app/CarCategoriesService/Update';
 
-  static var updateAdmin = 'api/services/app/User/Update';
+  static const updateAdmin = 'api/services/app/User/Update';
 
-  static var updatePoint = 'api/services/app/PointsService/Update';
+  static const updatePoint = 'api/services/app/PointsService/Update';
 
-  static var updateEdge = 'api/services/app/EdgesService/Update';
-  static var updateCoupon = 'api/services/app/Coupons/Update';
-  static var updateRole = 'api/services/app/Role/Update';
+  static const updateEdge = 'api/services/app/EdgesService/Update';
+  static const updateCoupon = 'api/services/app/Coupons/Update';
+  static const updateRole = 'api/services/app/Role/Update';
 
-  static var updateInstitution = 'api/services/app/InstitutiosnsService/Update';
+  static const updateInstitution = 'api/services/app/InstitutiosnsService/Update';
 
-  static var updateParams = 'api/services/app/SystemParametersService/Update';
+  static const updateParams = 'api/services/app/SystemParametersService/Update';
 
-  static var updateSetting = 'api/services/app/SystemSettingsService/Update';
+  static const updateSetting = 'api/services/app/SystemSettingsService/Update';
 
-  static var updateTempTrip = 'api/services/app/PathService/UpdatePath';
+  static const updateTempTrip = 'api/services/app/PathService/UpdatePath';
 }
 
 class DeleteUrl {
-  static var deleteTempTrip = 'api/services/app/PathService/DeletePath';
+  static const deleteTempTrip = 'api/services/app/PathService/DeletePath';
   static const deleteFavoritePlace = 'api/services/app/FavirotePlacesAppServices/Delete';
 
   static const deleteCancelReason = 'api/services/app/CancelReasons/Delete';
   static const deleteCarCategory = 'api/services/app/CarCategoriesService/Delete';
 
-  static var deleteEdge = 'api/services/app/EdgesService/RemoveEdge';
+  static const deleteEdge = 'api/services/app/EdgesService/RemoveEdge';
 
-  static var deletePoint = 'api/services/app/PointsService/Delete';
+  static const deletePoint = 'api/services/app/PointsService/Delete';
 
-  static var deleteRole = 'api/services/app/Role/Delete';
+  static const deleteRole = 'api/services/app/Role/Delete';
 
-  static var deleteInstitution = 'api/services/app/InstitutiosnsService/Delete';
+  static const deleteInstitution = 'api/services/app/InstitutiosnsService/Delete';
+
+  static var deleteCancelGovernment = 'api/services/app/GovernorateService/Delete';
+  static var deleteCancelArea = 'api/services/app/AreaService/Delete';
 }
 
 class OrsUrl {
@@ -235,7 +245,8 @@ class PathUrl {
 
   static const changeLoyalty = 'api/services/app/UserService/ChangeSubscriptionInLoyalty';
 
-  static var changeProviderState = 'api/services/app/EpaymentService/ChangeActiveStatus';
+  static const changeProviderState =
+      'api/services/app/EpaymentService/ChangeActiveStatus';
 }
 
 const baseUrl = 'live.qareeb-maas.com';

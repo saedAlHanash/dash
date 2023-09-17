@@ -6,8 +6,6 @@ import '../../../../core/api_manager/api_service.dart';
 import '../../../../core/util/note_message.dart';
 
 class CreateCarCatRequest {
-
-
   String? name;
 
   num? driverRatio;
@@ -28,7 +26,6 @@ class CreateCarCatRequest {
 
   num? minimumNightPrice;
 
-
   int? id;
 
   num? normalOilRatio;
@@ -44,8 +41,8 @@ class CreateCarCatRequest {
   num? sharedTiresRatio;
   num? priceVariant;
 
-
-
+  num? sharedMinimumDistanceInMeters;
+  num? seatNumber;
 
   CreateCarCatRequest({
     this.id,
@@ -66,8 +63,9 @@ class CreateCarCatRequest {
     this.sharedGoldRatio,
     this.sharedTiresRatio,
     this.priceVariant,
+    this.sharedMinimumDistanceInMeters,
+    this.seatNumber,
   });
-
 
   Map<String, dynamic> toMap() {
     return {
@@ -81,7 +79,6 @@ class CreateCarCatRequest {
       'SharedDriverRatio': sharedDriverRatio,
       'MinimumDayPrice': minimumDayPrice,
       'MinimumNightPrice': minimumNightPrice,
-
       'NormalOilRatio': normalOilRatio,
       'NormalGoldRatio': normalGoldRatio,
       'NormalTiresRatio': normalTiresRatio,
@@ -89,6 +86,8 @@ class CreateCarCatRequest {
       'SharedGoldRatio': sharedGoldRatio,
       'SharedTiresRatio': sharedTiresRatio,
       'priceVariant': priceVariant,
+      'sharedMinimumDistanceInMeters': sharedMinimumDistanceInMeters,
+      'seatNumber': seatNumber,
     };
   }
 
@@ -111,6 +110,8 @@ class CreateCarCatRequest {
       sharedGoldRatio: carCategory.sharedGoldRatio,
       sharedTiresRatio: carCategory.sharedTiresRatio,
       priceVariant: carCategory.priceVariant,
+      sharedMinimumDistanceInMeters: carCategory.sharedMinimumDistanceInMeters,
+      seatNumber: carCategory.seatNumber,
     )..file = UploadFile(fileBytes: null, initialImage: carCategory.imageUrl);
   }
 
@@ -175,7 +176,6 @@ class CreateCarCatRequest {
       return false;
     }
 
-
     if (sharedTiresRatio == 0) {
       NoteMessage.showErrorSnackBar(message: 'خطأ في نسبة الولاء', context: context);
       return false;
@@ -186,6 +186,11 @@ class CreateCarCatRequest {
       return false;
     }
 
+    if (sharedMinimumDistanceInMeters == 0) {
+      NoteMessage.showErrorSnackBar(
+          message: 'خطأ في أقل مسافة للرحلة التشاركية', context: context);
+      return false;
+    }
 
     return true;
   }
