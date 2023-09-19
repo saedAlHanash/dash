@@ -1,22 +1,19 @@
-part of 'delete_governorate_cubit.dart';
+part of 'replay_ticket_cubit.dart';
 
-class DeleteGovernorateInitial extends Equatable {
+class ReplayTicketInitial extends Equatable {
   final CubitStatuses statuses;
-  final bool  result;
-  final int  id;
+  final String result;
   final String error;
 
-  const DeleteGovernorateInitial({
+  const ReplayTicketInitial({
     required this.statuses,
     required this.result,
-    required this.id,
     required this.error,
   });
 
-  factory DeleteGovernorateInitial.initial() {
-    return const DeleteGovernorateInitial(
-      result:false,
-      id:0,
+  factory ReplayTicketInitial.initial() {
+    return const ReplayTicketInitial(
+      result: '',
       error: '',
       statuses: CubitStatuses.init,
     );
@@ -25,15 +22,13 @@ class DeleteGovernorateInitial extends Equatable {
   @override
   List<Object> get props => [statuses, result, error];
 
-  DeleteGovernorateInitial copyWith({
+  ReplayTicketInitial copyWith({
     CubitStatuses? statuses,
-    bool? result,
-    int? id,
+    String? result,
     String? error,
   }) {
-    return DeleteGovernorateInitial(
+    return ReplayTicketInitial(
       statuses: statuses ?? this.statuses,
-      id: id ?? this.id,
       result: result ?? this.result,
       error: error ?? this.error,
     );

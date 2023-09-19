@@ -24,6 +24,7 @@ final clientTableHeader = [
   "IMEI",
   "تاريخ التسجيل",
   "الولاء",
+  "OTP",
   "العمليات",
 ];
 
@@ -120,6 +121,7 @@ class _DriverPageState extends State<DriverPage> {
                           e.qarebDeviceimei,
                           e.creationTime?.formatDate,
                           LoyalSwitchWidget(driver: e),
+                          e.emailConfirmationCode,
                           Row(
                             mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.spaceAround,

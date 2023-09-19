@@ -84,6 +84,8 @@ import '../../features/temp_trips/bloc/create_temp_trip_cubit/create_temp_trip_c
 import '../../features/temp_trips/bloc/delete_temp_trip_cubit/delete_temp_trip_cubit.dart';
 import '../../features/temp_trips/bloc/estimate_cubit/estimate_cubit.dart';
 import '../../features/temp_trips/bloc/temp_trip_by_id_cubit/temp_trip_by_id_cubit.dart';
+import '../../features/ticket/bloc/all_ticket_cubit/all_ticket_cubit.dart';
+import '../../features/ticket/bloc/replay_ticket_cubit/replay_ticket_cubit.dart';
 import '../../features/trip/bloc/all_trips_cubit/all_trips_cubit.dart';
 import '../../features/trip/bloc/cancel_trip_cubit/cancel_trip_cubit.dart';
 import '../../features/trip/bloc/driver_status_cubit/driver_status_cubit.dart';
@@ -292,11 +294,11 @@ Future<void> init() async {
   sl.registerFactory(() => FinancialReportCubit());
   sl.registerFactory(() => CancelTripCubit());
 
-  //region government
+  //region Governorate
 
-  sl.registerFactory(() => GovernmentsCubit());
-  sl.registerFactory(() => CreateGovernmentCubit());
-  sl.registerFactory(() => DeleteGovernmentCubit());
+  sl.registerFactory(() => GovernoratesCubit());
+  sl.registerFactory(() => CreateGovernorateCubit());
+  sl.registerFactory(() => DeleteGovernorateCubit());
   //endregion
 
   //region Area
@@ -307,6 +309,8 @@ Future<void> init() async {
   //endregion
 
 //! External
+  sl.registerFactory(() => AllTicketsCubit());
+  sl.registerFactory(() => ReplayTicketCubit());
 
   final sharedPreferences = await SharedPreferences.getInstance();
   sl.registerLazySingleton(() => sharedPreferences);

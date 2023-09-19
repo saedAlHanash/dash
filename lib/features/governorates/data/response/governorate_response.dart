@@ -1,13 +1,13 @@
-class GovernmentResponse {
-  GovernmentResponse({
+class GovernorateResponse {
+  GovernorateResponse({
     required this.result,
   });
 
-  final GovernmentResult result;
+  final GovernorateResult result;
 
-  factory GovernmentResponse.fromJson(Map<String, dynamic> json) {
-    return GovernmentResponse(
-      result: GovernmentResult.fromJson(json["result"] ?? {}),
+  factory GovernorateResponse.fromJson(Map<String, dynamic> json) {
+    return GovernorateResponse(
+      result: GovernorateResult.fromJson(json["result"] ?? {}),
     );
   }
 
@@ -16,21 +16,21 @@ class GovernmentResponse {
       };
 }
 
-class GovernmentResult {
-  GovernmentResult({
+class GovernorateResult {
+  GovernorateResult({
     required this.totalCount,
     required this.items,
   });
 
   final int totalCount;
-  final List<GovernmentModel> items;
+  final List<GovernorateModel> items;
 
-  factory GovernmentResult.fromJson(Map<String, dynamic> json) {
-    return GovernmentResult(
+  factory GovernorateResult.fromJson(Map<String, dynamic> json) {
+    return GovernorateResult(
       totalCount: json["totalCount"] ?? 0,
       items: json["items"] == null
           ? []
-          : List<GovernmentModel>.from(json["items"]!.map((x) => GovernmentModel.fromJson(x))),
+          : List<GovernorateModel>.from(json["items"]!.map((x) => GovernorateModel.fromJson(x))),
     );
   }
 
@@ -40,17 +40,16 @@ class GovernmentResult {
       };
 }
 
-class GovernmentModel {
-  GovernmentModel({
+class GovernorateModel {
+  GovernorateModel({
     required this.id,
     required this.name,
   });
 
   final int id;
    String name;
-
-  factory GovernmentModel.fromJson(Map<String, dynamic> json) {
-    return GovernmentModel(
+  factory GovernorateModel.fromJson(Map<String, dynamic> json) {
+    return GovernorateModel(
       name: json["name"] ?? "",
       id: json["id"] ?? 0,
     );

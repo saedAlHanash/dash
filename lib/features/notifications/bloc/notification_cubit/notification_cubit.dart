@@ -8,16 +8,17 @@ import '../../../../core/api_manager/api_service.dart';
 import '../../../../core/error/error_manager.dart';
 import '../../../../core/util/note_message.dart';
 import '../../../../core/util/pair_class.dart';
+import '../../data/request/notification_request.dart';
 
 part 'notification_state.dart';
 
 class CreateNotificationCubit extends Cubit<CreateNotificationInitial> {
   CreateNotificationCubit() : super(CreateNotificationInitial.initial());
 
-  Future<void> createNotification(BuildContext context, {required String policy}) async {
-    emit(state.copyWith(statuses: CubitStatuses.loading));
+  Future<void> createNotification(BuildContext context, {required NotificationRequest request}) async {
+    emit(state.copyWith(statuses: CubitStatuses.loading,request: request));
 
-    final pair = await _createNotificationApi(policy: policy);
+    final pair = await _createNotificationApi();
 
     if (pair.first == null) {
       if (context.mounted) {
@@ -29,11 +30,11 @@ class CreateNotificationCubit extends Cubit<CreateNotificationInitial> {
     }
   }
 
-  Future<Pair<bool?, String?>> _createNotificationApi({required String policy}) async {
+  Future<Pair<bool?, String?>> _createNotificationApi() async {
     final response = await APIService().postApi(
       url: PostUrl.sendNotificaion,
-      query: {'UserType': 0},
-      body: {"title": "إعلان", "body": policy},
+      query: state.request.toMap(),
+      body: state.request.toMapBody(),
     );
 
     if (response.statusCode == 200) {

@@ -11,15 +11,15 @@ import '../../../../core/util/pair_class.dart';
 
 part 'delete_governorate_state.dart';
 
-class DeleteGovernmentCubit extends Cubit<DeleteGovernmentInitial> {
-  DeleteGovernmentCubit() : super(DeleteGovernmentInitial.initial());
+class DeleteGovernorateCubit extends Cubit<DeleteGovernorateInitial> {
+  DeleteGovernorateCubit() : super(DeleteGovernorateInitial.initial());
 
-  Future<void> deleteGovernment(BuildContext context, {required int id}) async {
+  Future<void> deleteGovernorate(BuildContext context, {required int id}) async {
     final r = await NoteMessage.showConfirm(context, text: 'تأكيد العملية');
     if (!r) return;
 
     emit(state.copyWith(statuses: CubitStatuses.loading, id: id));
-    final pair = await _deleteGovernmentApi(id: id);
+    final pair = await _deleteGovernorateApi(id: id);
 
     if (pair.first == null) {
       if (context.mounted) {
@@ -31,9 +31,9 @@ class DeleteGovernmentCubit extends Cubit<DeleteGovernmentInitial> {
     }
   }
 
-  Future<Pair<bool?, String?>> _deleteGovernmentApi({required int id}) async {
+  Future<Pair<bool?, String?>> _deleteGovernorateApi({required int id}) async {
     final response = await APIService().deleteApi(
-      url: DeleteUrl.deleteCancelGovernment,
+      url: DeleteUrl.deleteCancelGovernorate,
       query: {'Id': id},
     );
 

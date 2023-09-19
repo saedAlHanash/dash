@@ -1,3 +1,5 @@
+import 'package:qareeb_models/global.dart';
+
 import '../../../../core/strings/fix_url.dart';
 import '../../../trip/data/shared/location_model.dart';
 
@@ -13,7 +15,6 @@ class DriversResponse {
       result: DriversResult.fromJson(json['result'] ?? {}),
     );
   }
-
 }
 
 class DriversResult {
@@ -86,7 +87,7 @@ class DriverModel {
   final CarCategories carCategories;
   final LocationModel currentLocation;
   final CarType carType;
-  final int userType;
+  final UserType userType;
   final List<String> roleNames;
   bool isActive;
   bool loyalty;
@@ -118,7 +119,7 @@ class DriverModel {
       carCategories: CarCategories.fromJson(json["carCategories"] ?? {}),
       currentLocation: LocationModel.fromJson(json["currentLocation"] ?? {}),
       carType: CarType.fromJson(json["carType"] ?? {}),
-      userType: json["userType"] ?? 0,
+      userType: UserType.values[json["userType"] ?? 0],
       roleNames: json["roleNames"] == null
           ? []
           : List<String>.from(json["roleNames"]!.map((x) => x)),
@@ -153,7 +154,7 @@ class DriverModel {
         "carCategories": carCategories.toJson(),
         "currentLocation": currentLocation.toJson(),
         "carType": carType.toJson(),
-        "userType": userType,
+        "userType": userType.index,
         "roleNames": roleNames.map((x) => x).toList(),
         "isActive": isActive,
         "emailConfirmationCode": emailConfirmationCode,
@@ -294,6 +295,9 @@ class CarType {
     required this.carColor,
     required this.carNumber,
     required this.seatsNumber,
+    required this.carGovernorate,
+    required this.manufacturingYear,
+    required this.type,
   });
 
   final num userId;
@@ -302,6 +306,9 @@ class CarType {
   final String carColor;
   final String carNumber;
   final num seatsNumber;
+  final String carGovernorate;
+  final String manufacturingYear;
+  final String type;
 
   factory CarType.fromJson(Map<String, dynamic> json) {
     return CarType(
@@ -311,6 +318,9 @@ class CarType {
       carColor: json["carColor"] ?? "",
       carNumber: json["carNumber"] ?? "",
       seatsNumber: json["seatsNumber"] ?? 0,
+      carGovernorate: json["carGovernorate"] ?? "",
+      manufacturingYear: json["manufacturingYear"] ?? "",
+      type: json["type"] ?? "",
     );
   }
 
@@ -321,5 +331,8 @@ class CarType {
         "carColor": carColor,
         "carNumber": carNumber,
         "seatsNumber": seatsNumber,
+        "carGovernorate": carGovernorate,
+        "manufacturingYear": manufacturingYear,
+        "type": type,
       };
 }

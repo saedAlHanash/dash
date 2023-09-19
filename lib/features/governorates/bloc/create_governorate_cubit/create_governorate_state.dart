@@ -1,23 +1,23 @@
 part of 'create_governorate_cubit.dart';
 
-class CreateGovernmentInitial extends Equatable {
+class CreateGovernorateInitial extends Equatable {
   final CubitStatuses statuses;
   final bool result;
   final String error;
-  final GovernmentModel request;
+  final GovernorateModel request;
 
-  const CreateGovernmentInitial({
+  const CreateGovernorateInitial({
     required this.statuses,
     required this.result,
     required this.error,
     required this.request,
   });
 
-  factory CreateGovernmentInitial.initial() {
-    return CreateGovernmentInitial(
+  factory CreateGovernorateInitial.initial() {
+    return CreateGovernorateInitial(
       result: false,
       error: '',
-      request: GovernmentModel.fromJson({}),
+      request: GovernorateModel.fromJson({}),
       statuses: CubitStatuses.init,
     );
   }
@@ -25,13 +25,13 @@ class CreateGovernmentInitial extends Equatable {
   @override
   List<Object> get props => [statuses, result, error];
 
-  CreateGovernmentInitial copyWith({
+  CreateGovernorateInitial copyWith({
     CubitStatuses? statuses,
     bool? result,
     String? error,
-    GovernmentModel? request,
+    GovernorateModel? request,
   }) {
-    return CreateGovernmentInitial(
+    return CreateGovernorateInitial(
       statuses: statuses ?? this.statuses,
       result: result ?? this.result,
       error: error ?? this.error,

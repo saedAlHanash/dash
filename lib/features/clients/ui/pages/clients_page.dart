@@ -20,6 +20,7 @@ final clientTableHeader = [
   "رقم الهاتف",
   "حالة الزبون",
   "تاريخ التسجيل",
+  "OTP",
   "العمليات",
 ];
 
@@ -105,6 +106,7 @@ class _ClientsPageState extends State<ClientsPage> {
                           e.phoneNumber,
                           e.isActive ? 'مفعل' : 'غير مفعل',
                           e.creationTime?.formatDate,
+                          e.emailConfirmationCode,
                           Row(
                             mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.spaceAround,

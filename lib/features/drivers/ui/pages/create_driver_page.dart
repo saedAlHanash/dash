@@ -24,6 +24,7 @@ import '../../../car_catigory/bloc/all_car_categories_cubit/all_car_categories_c
 import '../../bloc/all_drivers/all_drivers_cubit.dart';
 import '../../bloc/create_driver_cubit/create_driver_cubit.dart';
 import '../widget/item_image_create.dart';
+
 class CreateDriverPage extends StatefulWidget {
   const CreateDriverPage({super.key, this.driver});
 
@@ -47,7 +48,7 @@ class _CreateDriverPageState extends State<CreateDriverPage> {
     return BlocListener<CreateDriverCubit, CreateDriverInitial>(
       listenWhen: (p, c) => c.statuses.done,
       listener: (context, state) {
-           window.history.back();
+        window.history.back();
         context.read<AllDriversCubit>().getAllDrivers(context);
       },
       child: Scaffold(
@@ -306,6 +307,39 @@ class _CreateDriverPageState extends State<CreateDriverPage> {
                       children: [
                         Expanded(
                           child: MyTextFormNoLabelWidget(
+                            label: 'محافظة السيارة',
+                            initialValue: request.carGovernorate,
+                            onChanged: (p0) {
+                              request.carGovernorate = p0;
+                            },
+                          ),
+                        ),
+                        15.0.horizontalSpace,
+                        Expanded(
+                          child: MyTextFormNoLabelWidget(
+                            label: 'سنة الصنع',
+                            initialValue: request.manufacturingYear,
+                            onChanged: (p0) {
+                              request.manufacturingYear = p0;
+                            },
+                          ),
+                        ),
+                        15.0.horizontalSpace,
+                        Expanded(
+                          child: MyTextFormNoLabelWidget(
+                            label: 'التصنيف الحكومي',
+                            initialValue: request.type,
+                            onChanged: (p0) {
+                              request.type = p0;
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: MyTextFormNoLabelWidget(
                             label: 'رقم السيارة',
                             initialValue: request.carNumber,
                             onChanged: (p0) {
@@ -359,35 +393,6 @@ class _CreateDriverPageState extends State<CreateDriverPage> {
                         ),
                       ],
                     ),
-                    // const Divider(),
-                    // DrawableText(
-                    //   text: 'نظام الولاء',
-                    //   size: 25.0.sp,
-                    //   padding: const EdgeInsets.symmetric(vertical: 30.0).h,
-                    //   matchParent: true,
-                    //   textAlign: TextAlign.center,
-                    //   fontFamily: FontManager.cairoBold,
-                    // ),
-                    // SpinnerWidget(
-                    //   items: [
-                    //     SpinnerItem(
-                    //         name: 'غير مشترك',
-                    //         id: 0,
-                    //         isSelected: !request.isLoyaltySubscriber),
-                    //     SpinnerItem(
-                    //         name: 'مشترك',
-                    //         id: 1,
-                    //         isSelected: request.isLoyaltySubscriber),
-                    //   ],
-                    //   width: 1.0.sw,
-                    //   decoration: BoxDecoration(
-                    //     border: Border.all(width: 1.0.spMin, color: AppColorManager.gray),
-                    //     borderRadius: BorderRadius.circular(12.0.r),
-                    //   ),
-                    //   onChanged: (spinnerItem) {
-                    //     request.isLoyaltySubscriber = spinnerItem.id == 1;
-                    //   },
-                    // ),
                   ],
                 ),
               ),

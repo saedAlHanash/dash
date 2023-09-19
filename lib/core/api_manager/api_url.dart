@@ -94,11 +94,13 @@ class GetUrl {
 
   static const tempTripById = 'api/services/app/PathService/GetPathById';
 
-  static const governments = 'api/services/app/GovernorateService/GetAll';
+  static const governorates = 'api/services/app/GovernorateService/GetAll';
   static const areas = 'api/services/app/AreaService/GetAll';
+    static var allTickets = 'api/services/app/TicketsService/GetAll';
 }
 
 class PostUrl {
+    static var replayTicket = 'api/services/app/TicketsService/AddReplyToTicket';
   static const serverProxy = 'api/services/app/HttpRequestService/ExecuteRequest';
   static const requestOtp = 'api/Auth/RequestOTP';
   static const sendNotificaion =
@@ -173,12 +175,12 @@ class PostUrl {
   static const createTempTrip = 'api/services/app/PathService/CreatePath';
 
   static const estimateSharedTrip = 'api/services/app/PathService/GetPathEstimation';
-  static const createGovernment = 'api/services/app/GovernorateService/Create';
+  static const createGovernorate = 'api/services/app/GovernorateService/Create';
   static const createArea = 'api/services/app/AreaService/Create';
 }
 
 class PutUrl {
-  static const updateGovernment = 'api/services/app/GovernorateService/Update';
+  static const updateGovernorate = 'api/services/app/GovernorateService/Update';
   static const updateArea = 'api/services/app/AreaService/Update';
   static const updateProfile = 'api/services/app/User/UpdateUser';
   static const updateDriver = 'api/services/app/User/UpdateDriver';
@@ -220,7 +222,7 @@ class DeleteUrl {
 
   static const deleteInstitution = 'api/services/app/InstitutiosnsService/Delete';
 
-  static var deleteCancelGovernment = 'api/services/app/GovernorateService/Delete';
+  static var deleteCancelGovernorate = 'api/services/app/GovernorateService/Delete';
   static var deleteCancelArea = 'api/services/app/AreaService/Delete';
 }
 

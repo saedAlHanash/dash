@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/strings/app_color_manager.dart';
 import 'package:qareeb_dash/core/util/note_message.dart';
 import 'package:qareeb_dash/core/widgets/my_button.dart';
@@ -15,30 +14,30 @@ import 'package:qareeb_models/extensions.dart';
 import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/my_style.dart';
 import '../../../../core/widgets/my_card_widget.dart';
-import '../../bloc/create_governorate_cubit/create_governorate_cubit.dart';
-import '../../bloc/delete_governorate_cubit/delete_governorate_cubit.dart';
 import '../../bloc/governorates_cubit/governorates_cubit.dart';
-import '../../data/response/government_response.dart';
+import '../../bloc/create_Governorate_cubit/create_governorate_cubit.dart';
+import '../../bloc/delete_Governorate_cubit/delete_governorate_cubit.dart';
+import '../../data/response/governorate_response.dart';
 
-class GovernmentsPage extends StatefulWidget {
-  const GovernmentsPage({super.key});
+class GovernoratesPage extends StatefulWidget {
+  const GovernoratesPage({super.key});
 
   @override
-  State<GovernmentsPage> createState() => _GovernmentsPageState();
+  State<GovernoratesPage> createState() => _GovernoratesPageState();
 }
 
-class _GovernmentsPageState extends State<GovernmentsPage> {
-  void showCreateDialog({GovernmentModel? request}) {
-    request ??= GovernmentModel.fromJson({});
+class _GovernoratesPageState extends State<GovernoratesPage> {
+  void showCreateDialog({GovernorateModel? request}) {
+    request ??= GovernorateModel.fromJson({});
     NoteMessage.showMyDialog(
       context,
       child: MultiBlocProvider(
         providers: [
           BlocProvider.value(
-            value: context.read<CreateGovernmentCubit>(),
+            value: context.read<CreateGovernorateCubit>(),
           ),
           BlocProvider.value(
-            value: context.read<GovernmentsCubit>(),
+            value: context.read<GovernoratesCubit>(),
           ),
         ],
         child: Padding(
@@ -52,12 +51,12 @@ class _GovernmentsPageState extends State<GovernmentsPage> {
                 initialValue: request.name,
                 onChanged: (p0) => request!.name = p0,
               ),
-              BlocConsumer<CreateGovernmentCubit, CreateGovernmentInitial>(
+              BlocConsumer<CreateGovernorateCubit, CreateGovernorateInitial>(
                 listener: (context, state) {
-                  context.read<GovernmentsCubit>().getGovernment(context);
+                  context.read<GovernoratesCubit>().getGovernorate(context);
                   Navigator.pop(context, true);
                 },
-                listenWhen: (p, c) => c.statuses.done,
+                listenWhen: (p, c) => c.statuses.isDone,
                 builder: (context, state) {
                   if (state.statuses.isLoading) {
                     return MyStyle.loadingWidget();
@@ -66,8 +65,8 @@ class _GovernmentsPageState extends State<GovernmentsPage> {
                     onTap: () {
                       if (request!.name.isEmpty) return;
                       context
-                          .read<CreateGovernmentCubit>()
-                          .createGovernment(context, request: request);
+                          .read<CreateGovernorateCubit>()
+                          .createGovernorate(context, request: request);
                     },
                     text: request?.id != 0 ? 'تعديل' : 'إنشاء',
                   );
@@ -89,7 +88,7 @@ class _GovernmentsPageState extends State<GovernmentsPage> {
               child: const Icon(Icons.add, color: Colors.white),
             )
           : null,
-      body: BlocBuilder<GovernmentsCubit, GovernmentsInitial>(
+      body: BlocBuilder<GovernoratesCubit, GovernoratesInitial>(
         builder: (context, state) {
           if (state.statuses.isLoading) {
             return MyStyle.loadingWidget();
@@ -122,11 +121,11 @@ class _GovernmentsPageState extends State<GovernmentsPage> {
                               fontFamily: FontManager.cairoBold,
                             ),
                           ),
-                          BlocConsumer<DeleteGovernmentCubit, DeleteGovernmentInitial>(
+                          BlocConsumer<DeleteGovernorateCubit, DeleteGovernorateInitial>(
                             listener: (context, state) {
-                              context.read<GovernmentsCubit>().getGovernment(context);
+                              context.read<GovernoratesCubit>().getGovernorate(context);
                             },
-                            listenWhen: (p, c) => c.statuses.done,
+                            listenWhen: (p, c) => c.statuses.isDone,
                             buildWhen: (p, c) => c.id == item.id,
                             builder: (context, state) {
                               if (state.statuses.isLoading) {
@@ -138,8 +137,8 @@ class _GovernmentsPageState extends State<GovernmentsPage> {
                                   IconButton(
                                     onPressed: () {
                                       context
-                                          .read<DeleteGovernmentCubit>()
-                                          .deleteGovernment(context, id: item.id);
+                                          .read<DeleteGovernorateCubit>()
+                                          .deleteGovernorate(context, id: item.id);
                                     },
                                     icon: const Icon(
                                       Icons.delete_forever,

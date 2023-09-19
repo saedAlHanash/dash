@@ -6,6 +6,11 @@ import 'package:qareeb_dash/features/drivers/data/response/drivers_response.dart
 import 'package:qareeb_models/global.dart';
 
 class CreateDriverRequest {
+  CreateDriverRequest({
+    this.carGovernorate = 'ميكروباص',
+    this.type = 'سياحي',
+  });
+
   String? name;
   String? surname;
   String? phoneNumber;
@@ -19,9 +24,12 @@ class CreateDriverRequest {
   String? carNumber;
   num? carCategoryID;
   String? imei;
-  int?id;
+  int? id;
+  String? carGovernorate;
+  String? manufacturingYear;
+  String? type;
 
-//------------------------
+  //------------------------
   bool isLoyaltySubscriber = false;
 
   UploadFile? imageFile;
@@ -46,6 +54,9 @@ class CreateDriverRequest {
       'carCategoryID': carCategoryID,
       'imei': imei,
       'id': id,
+      'carGovernorate': carGovernorate,
+      'manufacturingYear': manufacturingYear,
+      'type': type,
     };
   }
 
@@ -123,6 +134,11 @@ class CreateDriverRequest {
       return false;
     }
 
+    if (manufacturingYear == null) {
+      NoteMessage.showErrorSnackBar(message: 'خطأ في سنة الصنع', context: context);
+      return false;
+    }
+
     return true;
   }
 
@@ -142,6 +158,9 @@ class CreateDriverRequest {
     r.carNumber = driver.carType.carNumber;
     r.carCategoryID = driver.carCategoryId;
     r.imei = driver.qarebDeviceimei;
+    r.carGovernorate = driver.carType.carGovernorate;
+    r.manufacturingYear = driver.carType.manufacturingYear;
+    r.type = driver.carType.type;
     r.isLoyaltySubscriber = driver.loyalty;
     r.imageFile = UploadFile(fileBytes: null, initialImage: driver.avatar);
     r.identityFile = UploadFile(fileBytes: null, initialImage: driver.identity);

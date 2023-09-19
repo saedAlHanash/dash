@@ -43,4 +43,17 @@ class AreasInitial extends Equatable {
       id: id ?? this.id,
     );
   }
+  List<SpinnerItem> getSpinnerItems({int? selectedId}) {
+    if (result.isEmpty) {
+      return [SpinnerItem(name: 'لا توجد مناطق', id: 0)];
+    }
+    return result
+        .map((e) => SpinnerItem(
+      id: e.id,
+      name: e.name,
+      item: e,
+      isSelected: e.id == selectedId,
+    ))
+        .toList();
+  }
 }

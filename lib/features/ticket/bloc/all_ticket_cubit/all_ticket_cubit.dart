@@ -10,16 +10,16 @@ import '../../../../core/api_manager/command.dart';
 import '../../../../core/error/error_manager.dart';
 import '../../../../core/util/note_message.dart';
 import '../../../../core/util/pair_class.dart';
-import '../../data/response/governorate_response.dart';
+import '../../data/response/tickets_response.dart';
 
-part 'governorates_state.dart';
+part 'all_ticket_state.dart';
 
-class GovernoratesCubit extends Cubit<GovernoratesInitial> {
-  GovernoratesCubit() : super(GovernoratesInitial.initial());
+class AllTicketsCubit extends Cubit<AllTicketsInitial> {
+  AllTicketsCubit() : super(AllTicketsInitial.initial());
 
-  Future<void> getGovernorate(BuildContext context, {Command? command}) async {
+  Future<void> getTickets(BuildContext context, {Command? command}) async {
     emit(state.copyWith(statuses: CubitStatuses.loading, command: command));
-    final pair = await _getGovernorateApi();
+    final pair = await _getTicketsApi();
 
     if (pair.first == null) {
       if (context.mounted) {
@@ -32,16 +32,20 @@ class GovernoratesCubit extends Cubit<GovernoratesInitial> {
     }
   }
 
-  Future<Pair<GovernorateResult?, String?>> _getGovernorateApi() async {
+  Future<Pair<TicketsResult?, String?>> _getTicketsApi() async {
     final response = await APIService().getApi(
-      url: GetUrl.governorates,
+      url: GetUrl.allTickets,
       query: state.command.toJson(),
     );
 
     if (response.statusCode == 200) {
-      return Pair(GovernorateResponse.fromJson(response.jsonBody).result, null);
+      return Pair(TicketsResponse.fromJson(response.jsonBody).result, null);
     } else {
       return Pair(null, ErrorManager.getApiError(response));
     }
+  }
+
+  void update() {
+    emit(state.copyWith());
   }
 }

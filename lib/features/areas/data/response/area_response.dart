@@ -1,4 +1,4 @@
-import '../../../governorates/data/response/government_response.dart';
+import '../../../governorates/data/response/governorate_response.dart';
 
 class AreaResponse {
   AreaResponse({
@@ -53,14 +53,14 @@ class AreaModel {
   final int id;
   String name;
   num governorateId;
-  final GovernmentModel governorate;
+  final GovernorateModel governorate;
 
   factory AreaModel.fromJson(Map<String, dynamic> json) {
     return AreaModel(
       id: json["id"] ?? 0,
       name: json["name"] ?? "",
       governorateId: json["governorateId"] ?? 0,
-      governorate: GovernmentModel.fromJson(json["governorate"] ?? {}),
+      governorate: GovernorateModel.fromJson(json["governorate"] ?? {}),
     );
   }
 

@@ -40,7 +40,7 @@ import '../../../drivers/bloc/loyalty_cubit/loyalty_cubit.dart';
 import '../../../drivers/ui/pages/drivers_page.dart';
 import '../../../governorates/bloc/create_governorate_cubit/create_governorate_cubit.dart';
 import '../../../governorates/bloc/delete_governorate_cubit/delete_governorate_cubit.dart';
-import '../../../governorates/ui/pages/governments_page.dart';
+import '../../../governorates/ui/pages/governorates_page.dart';
 import '../../../institutions/bloc/delete_institution_cubit/delete_institution_cubit.dart';
 import '../../../institutions/ui/pages/institutions_page.dart';
 import '../../../notifications/ui/pages/notifications_page.dart';
@@ -61,6 +61,8 @@ import '../../../system_settings/bloc/update_system_params_cubit/update_system_s
 import '../../../system_settings/ui/pages/system_settings_page.dart';
 import '../../../temp_trips/bloc/delete_temp_trip_cubit/delete_temp_trip_cubit.dart';
 import '../../../temp_trips/ui/pages/temp_trips_page.dart';
+import '../../../ticket/bloc/replay_ticket_cubit/replay_ticket_cubit.dart';
+import '../../../ticket/ui/pages/tickets_page.dart';
 import '../../../wallet/bloc/change_provider_state_cubit/change_provider_state_cubit.dart';
 import '../../../wallet/ui/pages/providers_page.dart';
 import '../../bloc/nav_home_cubit/nav_home_cubit.dart';
@@ -229,7 +231,7 @@ class _HomePageState extends State<HomePage> {
                   route: "/notification"),
               if (isAllowed(AppPermissions.MESSAGES))
                 const AdminMenuItem(
-                    icon: Icons.message, title: 'الرسائل', route: "/messages"),
+                    icon: Icons.message, title: 'الشكاوى', route: "/ticket"),
             ],
             selectedRoute: state.page,
             onSelected: (item) {
@@ -395,13 +397,18 @@ class _HomePageState extends State<HomePage> {
                 case "/government":
                   return MultiBlocProvider(
                     providers: [
-                      BlocProvider(create: (context) => sl<DeleteGovernmentCubit>()),
-                      BlocProvider(create: (context) => sl<CreateGovernmentCubit>()),
+                      BlocProvider(create: (context) => sl<DeleteGovernorateCubit>()),
+                      BlocProvider(create: (context) => sl<CreateGovernorateCubit>()),
                     ],
-                    child: const GovernmentsPage(),
+                    child: const GovernoratesPage(),
                   );
-                case "/messages":
-                  return const MessagesPage();
+                case "/ticket":
+                  return MultiBlocProvider(
+                    providers: [
+                      BlocProvider(create: (context) => sl<ReplayTicketCubit>()),
+                    ],
+                    child: const TicketsPage(),
+                  );
                 case "/paths":
                   return MultiBlocProvider(
                     providers: [
