@@ -15,8 +15,8 @@ import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/my_style.dart';
 import '../../../../core/widgets/my_card_widget.dart';
 import '../../bloc/governorates_cubit/governorates_cubit.dart';
-import '../../bloc/create_Governorate_cubit/create_governorate_cubit.dart';
-import '../../bloc/delete_Governorate_cubit/delete_governorate_cubit.dart';
+import '../../bloc/create_governorate_cubit/create_governorate_cubit.dart';
+import '../../bloc/delete_governorate_cubit/delete_governorate_cubit.dart';
 import '../../data/response/governorate_response.dart';
 
 class GovernoratesPage extends StatefulWidget {
@@ -95,87 +95,75 @@ class _GovernoratesPageState extends State<GovernoratesPage> {
           }
           final list = state.result;
           if (list.isEmpty) return const NotFoundWidget(text: 'لا يوجد محافظات');
-          return Column(
-            children: [
-              DrawableText(
-                text: 'المحافظات',
-                matchParent: true,
-                size: 28.0.sp,
-                textAlign: TextAlign.center,
-                padding: const EdgeInsets.symmetric(vertical: 15.0).h,
-              ),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: list.length,
-                  itemBuilder: (context, i) {
-                    final item = list[i];
-                    return MyCardWidget(
-                      margin:
-                          const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0).r,
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: DrawableText(
-                              text: item.name,
-                              color: Colors.black,
-                              fontFamily: FontManager.cairoBold,
-                            ),
-                          ),
-                          BlocConsumer<DeleteGovernorateCubit, DeleteGovernorateInitial>(
-                            listener: (context, state) {
-                              context.read<GovernoratesCubit>().getGovernorate(context);
-                            },
-                            listenWhen: (p, c) => c.statuses.isDone,
-                            buildWhen: (p, c) => c.id == item.id,
-                            builder: (context, state) {
-                              if (state.statuses.isLoading) {
-                                return MyStyle.loadingWidget();
-                              }
-                              return Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  IconButton(
-                                    onPressed: () {
-                                      context
-                                          .read<DeleteGovernorateCubit>()
-                                          .deleteGovernorate(context, id: item.id);
-                                    },
-                                    icon: const Icon(
-                                      Icons.delete_forever,
-                                      color: Colors.red,
-                                    ),
-                                  ),
-                                  IconButton(
-                                    onPressed: () {
-                                      showCreateDialog(request: item);
-                                    },
-                                    icon: const Icon(
-                                      Icons.edit,
-                                      color: Colors.amber,
-                                    ),
-                                  ),
-                                  IconButton(
-                                    onPressed: () {
-                                      context.pushNamed(GoRouteName.area, queryParams: {
-                                        'id': item.id.toString(),
-                                      });
-                                    },
-                                    icon: const Icon(
-                                      Icons.add,
-                                      color: AppColorManager.mainColor,
-                                    ),
-                                  ),
-                                ],
-                              );
-                            },
-                          ),
-                        ],
+          return ListView.builder(
+            shrinkWrap: true,
+            itemCount: list.length,
+            itemBuilder: (context, i) {
+              final item = list[i];
+              return MyCardWidget(
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0).r,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: DrawableText(
+                        text: item.name,
+                        color: Colors.black,
+                        fontFamily: FontManager.cairoBold,
                       ),
-                    );
-                  },
+                    ),
+                    BlocConsumer<DeleteGovernorateCubit, DeleteGovernorateInitial>(
+                      listener: (context, state) {
+                        context.read<GovernoratesCubit>().getGovernorate(context);
+                      },
+                      listenWhen: (p, c) => c.statuses.isDone,
+                      buildWhen: (p, c) => c.id == item.id,
+                      builder: (context, state) {
+                        if (state.statuses.isLoading) {
+                          return MyStyle.loadingWidget();
+                        }
+                        return Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            IconButton(
+                              onPressed: () {
+                                context
+                                    .read<DeleteGovernorateCubit>()
+                                    .deleteGovernorate(context, id: item.id);
+                              },
+                              icon: const Icon(
+                                Icons.delete_forever,
+                                color: Colors.red,
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                showCreateDialog(request: item);
+                              },
+                              icon: const Icon(
+                                Icons.edit,
+                                color: Colors.amber,
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                context.pushNamed(GoRouteName.area, queryParams: {
+                                  'id': item.id.toString(),
+                                });
+                              },
+                              icon: const Icon(
+                                Icons.add,
+                                color: AppColorManager.mainColor,
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    ),
+                  ],
                 ),
-              ),
-            ],
+              );
+            },
           );
         },
       ),
