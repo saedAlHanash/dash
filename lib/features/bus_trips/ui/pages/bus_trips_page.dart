@@ -1,15 +1,18 @@
 import 'package:collection/collection.dart';
 import 'package:drawable_text/drawable_text.dart';
+import 'package:floating_action_bubble/floating_action_bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_dash/core/strings/app_color_manager.dart';
 import 'package:qareeb_dash/core/widgets/not_found_widget.dart';
 import 'package:qareeb_dash/core/widgets/saed_taple_widget.dart';
 
 import 'package:qareeb_dash/router/go_route_pages.dart';
 
+import '../../../../core/strings/enum_manager.dart';
 import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/file_util.dart';
 import '../../../../core/util/my_style.dart';
@@ -20,6 +23,7 @@ import '../widget/trips_filter_widget.dart';
 
 final _super_userList = [
   'ID',
+  'نوع',
   'اسم',
   'وصف',
   'الباصات',
@@ -37,48 +41,109 @@ class BusTripsPage extends StatefulWidget {
   State<BusTripsPage> createState() => _BusTripsPageState();
 }
 
-class _BusTripsPageState extends State<BusTripsPage> {
+class _BusTripsPageState extends State<BusTripsPage> with SingleTickerProviderStateMixin {
   var loading = false;
+  late Animation<double> _animation;
+  late AnimationController _animationController;
+
+  @override
+  void initState() {
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 260),
+    );
+
+    final curvedAnimation =
+        CurvedAnimation(curve: Curves.easeInOut, parent: _animationController);
+    _animation = Tween<double>(begin: 0, end: 1).animate(curvedAnimation);
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: isAllowed(AppPermissions.busTrips)
-          ? Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                FloatingActionButton(
-                  onPressed: () => context.pushNamed(GoRouteName.createBusTrip),
-                  child: const Icon(Icons.add, color: Colors.white),
-                ),
-                10.0.verticalSpace,
-                StatefulBuilder(
-                  builder: (context, mState) {
-                    return FloatingActionButton(
-                      onPressed: () {
-                        mState(() => loading = true);
-                        context.read<AllBusTripsCubit>().getBusAsync(context).then(
-                          (value) {
-                            if (value == null) return;
-                            saveXls(
-                              header: value.first,
-                              data: value.second,
-                              fileName: 'تقرير الرحلات ${DateTime.now().formatDate}',
-                            );
-                            mState(() => loading = false);
-                          },
-                        );
-                      },
-                      child: loading
-                          ? const CircularProgressIndicator.adaptive()
-                          : const Icon(Icons.file_download, color: Colors.white),
-                    );
-                  },
-                ),
-              ],
-            )
+          ? StatefulBuilder(builder: (context, mState) {
+              return FloatingActionBubble(
+                // Menu items
+                items: [
+                  Bubble(
+                    title: "إنشاء رحلة نقاط تجمع",
+                    iconColor: Colors.white,
+                    bubbleColor: AppColorManager.mainColor,
+                    icon: Icons.location_pin,
+                    titleStyle: const TextStyle(fontSize: 16, color: Colors.white),
+                    onPress: () {
+                      context.pushNamed(
+                        GoRouteName.createBusTrip,
+                        queryParams: {
+                          't_index': BusTripCategory.qareebPoints.index.toString()
+                        },
+                      );
+                      _animationController.reverse();
+                    },
+                  ),
+                  Bubble(
+                    title: "إنشاء رحلة منازل طلاب",
+                    iconColor: Colors.white,
+                    bubbleColor: AppColorManager.mainColor,
+                    icon: Icons.location_history,
+                    titleStyle: const TextStyle(fontSize: 16, color: Colors.white),
+                    onPress: () {
+                      context.pushNamed(
+                        GoRouteName.createBusTrip,
+                        queryParams: {
+                          't_index': BusTripCategory.customPoints.index.toString()
+                        },
+                      );
+                      _animationController.reverse();
+                    },
+                  ),
+                  // Floating action menu item
+                  Bubble(
+                    title: loading ? 'جاري التحميل...' : "تحميل ملف إكسل",
+                    iconColor: Colors.white,
+                    bubbleColor: AppColorManager.mainColor,
+                    icon: Icons.file_copy_rounded,
+                    titleStyle: const TextStyle(fontSize: 16, color: Colors.white),
+                    onPress: () {
+                      mState(() => loading = true);
+                      context.read<AllBusTripsCubit>().getBusAsync(context).then(
+                        (value) {
+                          mState(() => loading = false);
+                          _animationController.reverse();
+                          if (value == null) return;
+                          saveXls(
+                            header: value.first,
+                            data: value.second,
+                            fileName: 'تقرير الرحلات ${DateTime.now().formatDate}',
+                          );
+                        },
+                      );
+                    },
+                  ),
+                ],
+
+                // animation controller
+                animation: _animation,
+
+                // On pressed change animation state
+                onPress: () => _animationController.isCompleted
+                    ? _animationController.reverse()
+                    : _animationController.forward(),
+
+                // Floating Action button Icon color
+                iconColor: AppColorManager.whit,
+
+                // Flaoting Action button Icon
+                iconData: Icons.settings,
+                backGroundColor: AppColorManager.mainColor,
+              );
+            })
           : null,
       body: SingleChildScrollView(
+        padding: const EdgeInsets.only(bottom: 100.0).h,
         child: Column(
           children: [
             BlocBuilder<AllBusTripsCubit, AllBusTripsInitial>(
@@ -118,6 +183,7 @@ class _BusTripsPageState extends State<BusTripsPage> {
                       }
                       return [
                         e.id.toString(),
+                        e.category.index == 0 ? 'نقاط تجمع' : 'منازل طلاب',
                         e.name,
                         e.description,
                         busesS,
@@ -183,7 +249,6 @@ class _BusTripsPageState extends State<BusTripsPage> {
                 );
               },
             ),
-            50.0.verticalSpace,
           ],
         ),
       ),

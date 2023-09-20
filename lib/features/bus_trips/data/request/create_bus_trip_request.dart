@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qareeb_dash/core/api_manager/api_service.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 
 import '../../../../core/strings/enum_manager.dart';
@@ -19,6 +20,7 @@ class CreateBusTripRequest {
     this.endDate,
     this.busTripType = BusTripType.go,
     this.days,
+    this.category = BusTripCategory.qareebPoints,
   });
 
   int? id;
@@ -31,10 +33,19 @@ class CreateBusTripRequest {
   DateTime? startDate;
   DateTime? endDate;
   BusTripType busTripType;
+  BusTripCategory category;
   List<WeekDays>? days;
 
   List<WeekDays> get getDays {
-    days ??= [];
+    days ??= [
+      WeekDays.sunday,
+      WeekDays.monday,
+      WeekDays.tuesday,
+      WeekDays.wednesday,
+      WeekDays.thursday,
+      WeekDays.friday,
+      WeekDays.saturday
+    ];
     return days!;
   }
 
@@ -46,10 +57,10 @@ class CreateBusTripRequest {
       pathId: json["pathId"] ?? 0,
       description: json["description"] ?? "",
       distance: json["distance"] ?? 0,
-
       startDate: DateTime.tryParse(json["startDate"] ?? ""),
       endDate: DateTime.tryParse(json["endDate"] ?? ""),
       busTripType: json["busTripType"] ?? "",
+      category: json["category"] ?? "",
     );
   }
 
@@ -62,6 +73,7 @@ class CreateBusTripRequest {
         "description": description,
         "distance": distance,
         "busIds": busesId,
+        "category": category.index,
         "startDate": startDate?.toIso8601String(),
         "endDate": endDate?.toIso8601String(),
         "busTripType": busTripType.index,
@@ -80,6 +92,7 @@ class CreateBusTripRequest {
       endDate: model.endDate,
       busTripType: model.busTripType,
       days: model.days,
+      category: model.category,
     )..busesId = model.buses.map((e) => e.id).toList();
   }
 
@@ -88,17 +101,17 @@ class CreateBusTripRequest {
       NoteMessage.showErrorSnackBar(message: 'خطأ في الاسم', context: context);
       return false;
     }
-    if (tripTemplateId == null) {
+    if (tripTemplateId == null && category.index == 0) {
       NoteMessage.showErrorSnackBar(message: 'خطأ في نموذج الرحلة', context: context);
       return false;
     }
 
-    if (pathId == null) {
-      NoteMessage.showErrorSnackBar(message: 'خطأ في الاسم', context: context);
+    if (pathId == null&& category.index == 0) {
+      NoteMessage.showErrorSnackBar(message: 'خطأ في المسار', context: context);
       return false;
     }
 
-    if (busesId .isEmpty) {
+    if (busesId.isEmpty) {
       NoteMessage.showErrorSnackBar(message: 'خطأ في الباص', context: context);
       return false;
     }

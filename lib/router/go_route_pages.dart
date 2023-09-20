@@ -18,6 +18,7 @@ import 'package:qareeb_dash/features/points/bloc/point_by_id_cubit/point_by_id_c
 import 'package:qareeb_dash/features/super_user/ui/pages/create_super_user_page.dart';
 
 import '../core/injection/injection_container.dart' as di;
+import '../core/strings/enum_manager.dart';
 import '../features/accounts/bloc/account_amount_cubit/account_amount_cubit.dart';
 import '../features/admins/ui/pages/admin_info_page.dart';
 import '../features/auth/bloc/login_cubit/login_cubit.dart';
@@ -328,12 +329,10 @@ final appGoRouter = GoRouter(
           BlocProvider(create: (_) => di.sl<MapControllerCubit>()),
           BlocProvider(create: (_) => di.sl<PointsEdgeCubit>()),
           BlocProvider(create: (_) => di.sl<CreateTempTripCubit>()),
-
           if (id != 0)
             BlocProvider(create: (_) => di.sl<PointsCubit>())
           else
             BlocProvider(create: (_) => di.sl<PointsCubit>()..getAllPoints(_)),
-
           BlocProvider(
             create: (_) => di.sl<TempTripBuIdCubit>()..getTempTripBuId(context, id: id),
           ),
@@ -375,6 +374,8 @@ final appGoRouter = GoRouter(
       path: _GoRoutePath.createBusTrip,
       builder: (BuildContext context, GoRouterState state) {
         final id = int.tryParse(state.queryParams['id'] ?? '') ?? 0;
+        final tIndex = int.tryParse(state.queryParams['t_index'] ?? '') ?? 0;
+
         final providers = [
           BlocProvider(create: (_) => di.sl<CreateBusTripCubit>()),
           BlocProvider(
@@ -383,7 +384,7 @@ final appGoRouter = GoRouter(
         ];
         return MultiBlocProvider(
           providers: providers,
-          child: const CreateBusTripPage(),
+          child: CreateBusTripPage(qareebPoints: tIndex == 0),
         );
       },
     ),

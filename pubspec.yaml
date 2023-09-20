@@ -81,6 +81,7 @@ dependencies:
   group_button: ^5.2.2
   go_router: ^6.5.8
 #  easy_autocomplete: ^1.6.0
+  floating_action_bubble: ^1.1.4
   webview_flutter_android: ^3.4.5
   webview_flutter_wkwebview: ^3.2.4
   multi_select_flutter: ^4.1.3

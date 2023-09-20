@@ -87,7 +87,7 @@ class BusTripModel {
   final List<WeekDays> days;
   final int id;
 
-  final dynamic category;
+  final BusTripCategory category;
   final num numberOfParticipation;
   final bool isActive;
   final List<TripHistoryItem> attendances;
@@ -114,7 +114,7 @@ class BusTripModel {
           ? []
           : List<WeekDays>.from(json["days"]!.map((x) => WeekDays.values[x])),
       id: json["id"] ?? 0,
-      category: json["category"] ?? "",
+      category: BusTripCategory.values[json["category"] ?? 0],
       numberOfParticipation: json["numberOfParticipation"] ?? 0,
       isActive: json["isActive"] ?? false,
       attendances: json["attendances"] == null

@@ -14,10 +14,10 @@ class BusesFilterRequest {
         name != null;
   }
 
-  void clearFilter() {
-    imei = null;
-    name = null;
-  }
+    void clearFilter() {
+      imei = null;
+      name = null;
+    }
 
   BusesFilterRequest copyWith({
     String? imei,

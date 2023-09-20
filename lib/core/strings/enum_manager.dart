@@ -52,6 +52,8 @@ enum Government { damascus, rifDimashq }
 
 enum BusTripType { go, back }
 
+enum BusTripCategory { qareebPoints, customPoints }
+
 enum AttendanceType { up, down, unknown }
 
 enum UserType { client, driver, admin, institutionAdmin }

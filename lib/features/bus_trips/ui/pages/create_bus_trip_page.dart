@@ -4,6 +4,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:qareeb_dash/core/api_manager/api_service.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/util/note_message.dart';
 import 'package:qareeb_dash/core/widgets/my_card_widget.dart';
@@ -27,7 +28,9 @@ import '../../data/request/create_bus_trip_request.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 
 class CreateBusTripPage extends StatefulWidget {
-  const CreateBusTripPage({super.key});
+  const CreateBusTripPage({super.key, this.qareebPoints = true});
+
+  final bool qareebPoints;
 
   @override
   State<CreateBusTripPage> createState() => _CreateBusTripPageState();
@@ -41,6 +44,13 @@ class _CreateBusTripPageState extends State<CreateBusTripPage> {
   final startTimeC = TextEditingController();
   final endTimeC = TextEditingController();
   final bussesC = TextEditingController();
+
+  @override
+  void initState() {
+    request.category =
+        widget.qareebPoints ? BusTripCategory.qareebPoints : BusTripCategory.customPoints;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -200,96 +210,50 @@ class _CreateBusTripPageState extends State<CreateBusTripPage> {
                               }
                               bussesC.text = state.getNames(request.busesId).toString();
 
-                              //
-                              // void showMultiSelect() async {
-                              //   await showModalBottomSheet(
-                              //     isScrollControlled: true,
-                              //     // required for min/max child size
-                              //     context: context,
-                              //     builder: (ctx) {
-                              //       return Padding(
-                              //         padding:
-                              //             const EdgeInsets.symmetric(horizontal: 200.0).r,
-                              //         child: MultiSelectBottomSheet<int>(
-                              //           searchable: true,
-                              //           items: state.getSpinnerItem.mapIndexed(
-                              //             (i, e) {
-                              //               return MultiSelectItem<int>(e.id, e.name);
-                              //             },
-                              //           ).toList(),
-                              //           initialValue: request.busesId,
-                              //           onConfirm: (values) {
-                              //             request.busesId
-                              //               ..clear()
-                              //               ..addAll(values);
-                              //             bussesC.text =
-                              //                 state.getNames(request.busesId).toString();
-                              //           },
-                              //         ),
-                              //       );
-                              //     },
-                              //   );
-                              // }
-
-                            return  MultiSelectDialogField(
-                              buttonText: const Text('الباصات'),
+                              return MultiSelectDialogField(
+                                buttonText: const Text('الباصات'),
                                 searchable: true,
                                 items: state.getSpinnerItem.mapIndexed(
-                                      (i, e) {
+                                  (i, e) {
                                     return MultiSelectItem<int>(e.id, e.name);
                                   },
                                 ).toList(),
                                 initialValue: request.busesId,
-
                                 onConfirm: (values) {
                                   request.busesId
                                     ..clear()
                                     ..addAll(values);
-                                  bussesC.text = state
-                                      .getNames(request.busesId)
-                                      .toString();
-                                },
-                              );
-                              // return MyTextFormNoLabelWidget(
-                              //   label: 'باصات الرحلة',
-                              //   controller: bussesC,
-                              //   disableAndKeepIcon: true,
-                              //   textDirection: TextDirection.ltr,
-                              //   iconWidget: IconButton(
-                              //       onPressed: () async {
-                              //         // showMultiSelect();
-                              //         NoteMessage.showMyDialog(
-                              //           context,
-                              //           child: ,
-                              //         );
-                              //       },
-                              //       icon: const Icon(Icons.bus_alert_rounded)),
-                              // );
-                            },
-                          ),
-                        ),
-                        15.0.horizontalSpace,
-                        Expanded(
-                          child: BlocBuilder<AllTempTripsCubit, AllTempTripsInitial>(
-                            builder: (context, state) {
-                              if (state.statuses.loading) {
-                                return MyStyle.loadingWidget();
-                              }
-                              return SpinnerOutlineTitle(
-                                sendFirstItem: true,
-                                width: double.infinity,
-                                items: state.getSpinnerItem,
-                                label: 'نموذج الرحلة',
-                                onChanged: (spinnerItem) {
-                                  var tempTrip = spinnerItem.item as TempTripModel;
-                                  request.tripTemplateId = tempTrip.id;
-                                  request.pathId = tempTrip.pathId;
-                                  request.distance = tempTrip.distance;
+                                  bussesC.text =
+                                      state.getNames(request.busesId).toString();
                                 },
                               );
                             },
                           ),
                         ),
+                        if (widget.qareebPoints) ...[
+                          15.0.horizontalSpace,
+                          Expanded(
+                            child: BlocBuilder<AllTempTripsCubit, AllTempTripsInitial>(
+                              builder: (context, state) {
+                                if (state.statuses.loading) {
+                                  return MyStyle.loadingWidget();
+                                }
+                                return SpinnerOutlineTitle(
+                                  sendFirstItem: true,
+                                  width: double.infinity,
+                                  items: state.getSpinnerItem,
+                                  label: 'نموذج الرحلة',
+                                  onChanged: (spinnerItem) {
+                                    var tempTrip = spinnerItem.item as TempTripModel;
+                                    request.tripTemplateId = tempTrip.id;
+                                    request.pathId = tempTrip.pathId;
+                                    request.distance = tempTrip.distance;
+                                  },
+                                );
+                              },
+                            ),
+                          ),
+                        ],
                         15.0.horizontalSpace,
                         Expanded(
                           child: SpinnerOutlineTitle(
@@ -305,10 +269,10 @@ class _CreateBusTripPageState extends State<CreateBusTripPage> {
                       ],
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 40.0).h,
+                      padding: const EdgeInsets.symmetric(vertical: 60.0).h,
                       child: MyCheckboxWidget(
                         width: .1.sw,
-                        items: WeekDays.values.spinnerItems(selected: request.days),
+                        items: WeekDays.values.spinnerItems(selected: request.getDays),
                         onSelectGetListItems: (list) {
                           request.getDays.clear();
                           request.getDays

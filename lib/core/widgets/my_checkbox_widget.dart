@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:group_button/group_button.dart';
 
+import '../app_theme.dart';
 import '../strings/app_color_manager.dart';
 import '../widgets/spinner_widget.dart';
 
@@ -93,18 +94,12 @@ class _MyCheckboxWidgetState extends State<MyCheckboxWidget> {
                 child: DrawableText(
                   text: value.name ?? '',
                   maxLines: 1,
-                  color: selected
-                      ? AppColorManager.mainColorDark
-                      : ((widget.maxSelected != null &&
-                                  controller.selectedIndexes.length >=
-                                      widget.maxSelected!) ||
-                              value.enable == false)
-                          ? AppColorManager.mainColorDark
-                          : AppColorManager.black,
+                  color: Colors.black,
                   size: 24.0.sp,
                   fontFamily: FontManager.cairoBold,
                   drawableStart: Checkbox(
                     value: selected,
+                    fillColor: const MaterialStatePropertyAll(primaryColor),
                     activeColor: AppColorManager.mainColorDark,
                     side: BorderSide(
                         width: 1.0.spMin, color: AppColorManager.mainColorDark),
