@@ -15,6 +15,10 @@ class CreateMemberRequest {
     this.file,
     this.address,
     this.latLng,
+    this.phoneNo,
+    this.facility,
+    this.idNumber,
+    this.collegeIdNumber,
   });
 
   int? id;
@@ -73,6 +77,10 @@ class CreateMemberRequest {
       fullName: model.fullName,
       file: UploadFile(initialImage: model.imageUrl),
       address: model.address,
+      phoneNo: model.phoneNo,
+      facility: model.facility,
+      idNumber: model.idNumber,
+      collegeIdNumber: model.collegeIdNumber,
       latLng: LatLng(model.late, model.longe),
     );
   }

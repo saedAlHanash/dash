@@ -1,7 +1,4 @@
-import 'package:collection/collection.dart';
-import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qareeb_dash/core/api_manager/api_service.dart';
 import 'package:qareeb_dash/core/api_manager/command.dart';
@@ -10,13 +7,10 @@ import 'package:qareeb_dash/core/strings/app_color_manager.dart';
 import 'package:qareeb_dash/core/strings/enum_manager.dart';
 import 'package:qareeb_dash/core/widgets/my_button.dart';
 import 'package:qareeb_dash/core/widgets/spinner_widget.dart';
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 import '../../../../../core/util/my_style.dart';
-import '../../../../core/widgets/auto_complete_widget.dart';
 import '../../../../core/widgets/my_text_form_widget.dart';
 import '../../../members/ui/pages/create_member_page.dart';
-import '../../bloc/all_bus_trips_cubit/all_bus_trips_cubit.dart';
 import '../../data/request/filter_trip_history_request.dart';
 
 class TripsHistoryFilterWidget extends StatefulWidget {
@@ -97,15 +91,15 @@ class _TripsHistoryFilterWidgetState extends State<TripsHistoryFilterWidget> {
                   ),
                 ),
               ),
-              15.0.horizontalSpace,
-              Expanded(
-                child: MyTextFormNoLabelWidget(
-                  label: 'اسم النموذج',
-                  // initialValue: request.phoneNo,
-                  controller: busTripTemplateNameC,
-                  onChanged: (p0) => request.busTripTemplateName = p0,
-                ),
-              ),
+              // 15.0.horizontalSpace,
+              // Expanded(
+              //   child: MyTextFormNoLabelWidget(
+              //     label: 'اسم النموذج',
+              //     // initialValue: request.phoneNo,
+              //     controller: busTripTemplateNameC,
+              //     onChanged: (p0) => request.busTripTemplateName = p0,
+              //   ),
+              // ),
             ],
           ),
           Row(

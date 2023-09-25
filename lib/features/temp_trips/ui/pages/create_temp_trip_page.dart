@@ -116,7 +116,7 @@ class _CreateTempTripPageState extends State<CreateTempTripPage> {
                             },
                           ),
                         ],
-                      )),
+                      ),),
                   20.0.verticalSpace,
                 ],
               ),

@@ -11,17 +11,38 @@ import '../../../points/bloc/get_edged_point_cubit/get_all_points_cubit.dart';
 import '../../../points/data/response/points_response.dart';
 import '../../bloc/add_point_cubit/add_point_cubit.dart';
 
-class PathPointsWidget extends StatelessWidget {
+class PathPointsWidget extends StatefulWidget {
   const PathPointsWidget({super.key});
+
+  @override
+  State<PathPointsWidget> createState() => _PathPointsWidgetState();
+}
+
+class _PathPointsWidgetState extends State<PathPointsWidget> {
+  final scrollController = ScrollController();
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final addPointCubit = context.read<AddPointCubit>();
     final pointsCubit = context.read<PointsCubit>();
 
-    return BlocBuilder<AddPointCubit, AddPointInitial>(
+    return BlocConsumer<AddPointCubit, AddPointInitial>(
+      listener: (context, state) {
+        scrollController.animateTo(
+          1.maxInt as double,
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.easeInOut,
+        );
+      },
       builder: (_, state) {
         return PathPointsWidget1(
+          scrollController: scrollController,
           list: state.addedPoints,
           onTap: (e) {
             var latestPoint = addPointCubit.removePoint(id: e.id);
@@ -35,16 +56,19 @@ class PathPointsWidget extends StatelessWidget {
 }
 
 class PathPointsWidget1 extends StatelessWidget {
-  const PathPointsWidget1({super.key, required this.list, this.onTap});
+  const PathPointsWidget1(
+      {super.key, required this.list, this.onTap, required this.scrollController});
 
   final List<TripPoint> list;
   final Function(TripPoint e)? onTap;
+  final ScrollController scrollController;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 50.0.h,
       child: ListView.separated(
+        controller: scrollController,
         itemBuilder: (context, i) {
           final item = list[i];
           return TextButton(
@@ -56,6 +80,7 @@ class PathPointsWidget1 extends StatelessWidget {
             child: DrawableText(
               drawablePadding: 3.0.w,
               text: item.arName,
+              selectable: false,
               color: Colors.black,
               drawableStart: ImageMultiType(
                 url: i.iconPoint,

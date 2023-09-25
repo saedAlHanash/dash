@@ -17,7 +17,7 @@ class AllBusesInitial extends Equatable {
     return AllBusesInitial(
       result: const <BusModel>[],
       error: '',
-      command: Command.initial(),
+      command: Command.noPagination(),
       statuses: CubitStatuses.init,
     );
   }

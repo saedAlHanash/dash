@@ -72,14 +72,15 @@ class AllTripHistoryCubit extends Cubit<AllTripHistoryInitial> {
   Pair<List<String>, List<List<dynamic>>> _getXlsData(List<TripHistoryItem> data) {
     return Pair(
         [
-          'ID',
-          'ID الباص',
-          'اسم الباص',
-          'اسم الرحلة',
-          'اسم الطالب',
-          'تاريخ العملية',
-          'نوع المعملية',
-          'حالة الاشتراك بالنقل',
+          '\tID\t',
+          '\tID الباص\t',
+          '\tاسم الباص\t',
+          '\tاسم الرحلة\t',
+          '\tاسم الطالب\t',
+          '\tتاريخ العملية\t',
+          '\tوقت العملية العملية\t',
+          '\tنوع المعملية\t',
+          '\tحالة الاشتراك بالنقل\t',
         ],
         data
             .mapIndexed(
@@ -89,7 +90,8 @@ class AllTripHistoryCubit extends Cubit<AllTripHistoryInitial> {
                 element.bus.driverName,
                 element.busTrip.name,
                 element.busMember.fullName,
-                element.date?.toIso8601String(),
+                element.date?.formatDate,
+                element.date?.formatTime,
                 element.attendanceType.arabicName,
                 element.isSubscribed ,
               ],
