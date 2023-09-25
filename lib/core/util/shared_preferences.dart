@@ -28,6 +28,7 @@ class AppSharedPreference {
   static const _user = '14';
   static const _email = '15';
   static const _role = '16';
+  static const _testMode = '117';
 
   static SharedPreferences? _prefs;
 
@@ -78,13 +79,12 @@ class AppSharedPreference {
   static String get getRole {
     _prefs?.getString(_role) ?? 'saed';
     _prefs?.getString(_role) ?? 'saed';
-    final s  = _prefs?.getString(_role) ?? 'saed';
+    final s = _prefs?.getString(_role) ?? 'saed';
     return s;
   }
 
   static LoginResult get getUser {
     final string = _prefs?.getString(_user) ?? '{}';
-
 
     return LoginResult.fromJson(jsonDecode(string));
   }
@@ -136,7 +136,23 @@ class AppSharedPreference {
   }
 
   static void logout() {
-    _prefs?.clear();
+    _prefs?.remove(_token);
+    _prefs?.remove(_myId);
+    _prefs?.remove(_phoneNumber);
+    _prefs?.remove(_toScreen);
+    _prefs?.remove(_policy);
+    _prefs?.remove(_previousTrips);
+    _prefs?.remove(_profileInfo);
+    _prefs?.remove(_trip);
+    _prefs?.remove(_fireToken);
+    _prefs?.remove(_ime);
+    _prefs?.remove(_driverAvailable);
+    _prefs?.remove(_wallet);
+    _prefs?.remove(_myPermission);
+    _prefs?.remove(_user);
+    _prefs?.remove(_email);
+    // _prefs?.remove(_role);
+    // _prefs?.remove(_testMode);
     APIService.reInitial();
   }
 
@@ -263,4 +279,10 @@ class AppSharedPreference {
   }
 
   static String get getEmail => _prefs?.getString(_email) ?? '';
+
+  static changeTestMode() {
+    _prefs?.setBool(_testMode, !isTestMode);
+  }
+
+  static bool get isTestMode => _prefs?.getBool(_testMode) ?? false;
 }

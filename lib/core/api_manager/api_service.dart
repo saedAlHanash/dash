@@ -9,8 +9,9 @@ import 'package:logger/logger.dart';
 import 'package:qareeb_models/extensions.dart';
 
 import '../util/shared_preferences.dart';
+import 'api_url.dart';
 
-const baseUrl = 'live.qareeb-maas.com';
+// const baseUrl = 'live.qareeb-maas.com';
 // const baseUrl = '192.168.1.44:44311';
 
 var loggerObject = Logger(

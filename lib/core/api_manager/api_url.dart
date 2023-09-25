@@ -1,3 +1,7 @@
+import 'package:qareeb_dash/core/api_manager/api_service.dart';
+
+import '../util/shared_preferences.dart';
+
 class GetUrl {
   static const getPolicy = 'api/services/app/Settings/Getsettings';
   static const getSharedTrips =
@@ -251,5 +255,12 @@ class PathUrl {
       'api/services/app/EpaymentService/ChangeActiveStatus';
 }
 
-const baseUrl = 'live.qareeb-maas.com';
+String get baseUrl {
+  final s  =  AppSharedPreference.isTestMode
+      ? 'livetest.qareeb-maas.com'
+      : 'live.qareeb-maas.com';
+  return s ;
+}
+
+// const baseUrl = 'live.qareeb-maas.com';
 // const baseUrl = 'livetest.qareeb-maas.com';

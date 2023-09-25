@@ -662,7 +662,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: bec5c6365d8347eac49ed6a3e29ef68ff93eb553
+      resolved-ref: ded9300b1b7b70b7e0d859f9f6b020305ebfb92c
       url: "https://github.com/saedAlHanash/image_multi_type"
     source: git
     version: "0.0.1"
@@ -815,7 +815,7 @@ packages:
     description:
       path: "."
       ref: html
-      resolved-ref: b4f54041884903c175415d3c7efa04b51bee717b
+      resolved-ref: c49975120f1ca96593456cbfd15ca3318385f5a9
       url: "https://github.com/saedAlHanash/map_qareeb"
     source: git
     version: "0.1.6"
@@ -1024,7 +1024,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "00c2c819f3b3dc0a8cc67a2b542163b8865c648a"
+      resolved-ref: f5cfa2454076edbd2ce86abda0f118d3c24d69f0
       url: "https://github.com/saedAlHanash/qareeb_models"
     source: git
     version: "0.1.5"

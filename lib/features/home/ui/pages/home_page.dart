@@ -11,6 +11,7 @@ import 'package:go_router/go_router.dart';
 import 'package:map_package/map/bloc/ather_cubit/ather_cubit.dart';
 import 'package:map_package/map/bloc/map_controller_cubit/map_controller_cubit.dart';
 import 'package:map_package/map/bloc/search_location/search_location_cubit.dart';
+import 'package:qareeb_dash/core/api_manager/api_service.dart';
 import 'package:qareeb_dash/core/api_manager/command.dart';
 import 'package:qareeb_dash/features/accounts/ui/pages/transfers_page.dart';
 import 'package:qareeb_dash/features/car_catigory/bloc/delete_car_cat_cubit/delete_car_cat_cubit.dart';
@@ -104,7 +105,7 @@ class _HomePageState extends State<HomePage> {
             centerTitle: true,
             title: const LogoText(),
             backgroundColor: AppColorManager.f1,
-            leading: Navigator.canPop(context)
+            leading: window.history.length != 0
                 ? IconButton(
                     onPressed: () => window.history.back(),
                     icon: const Icon(
@@ -159,72 +160,77 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
 
-              AdminMenuItem(
-                title: 'الطلبات',
-                children: [
-                  if (isAllowed(AppPermissions.EPAYMENT))
-                    const AdminMenuItem(
-                        title: 'مزودي الدفع', route: '/epayments_provider'),
-                  if (isAllowed(AppPermissions.COUPON))
-                    const AdminMenuItem(title: 'قسائم الحسم', route: '/coupons'),
-                  if (isAllowed(AppPermissions.CAR_CATEGORY))
-                    const AdminMenuItem(
-                        title: 'أصناف السيارات', route: '/car_categories'),
-                ],
-              ),
-              AdminMenuItem(
-                title: 'النقاط والمسارات',
-                children: [
-                  if (isAllowed(AppPermissions.POINTS))
-                    const AdminMenuItem(
-                      route: '/points',
-                      icon: Icons.location_on_sharp,
-                      title: 'النقاط',
-                    ),
-                  const AdminMenuItem(
-                    icon: Icons.linear_scale_rounded,
-                    title: 'المسارات',
-                    route: "/paths",
+              if (AppSharedPreference.getUser.roleName.toLowerCase() == 'admin')
+                ...[
+                  AdminMenuItem(
+                    title: 'الطلبات',
+                    children: [
+                      if (isAllowed(AppPermissions.EPAYMENT))
+                        const AdminMenuItem(
+                            title: 'مزودي الدفع', route: '/epayments_provider'),
+                      if (isAllowed(AppPermissions.COUPON))
+                        const AdminMenuItem(title: 'قسائم الحسم', route: '/coupons'),
+                      if (isAllowed(AppPermissions.CAR_CATEGORY))
+                        const AdminMenuItem(
+                            title: 'أصناف السيارات', route: '/car_categories'),
+                    ],
+                  ),
+                  AdminMenuItem(
+                    title: 'النقاط والمسارات',
+                    children: [
+                      if (isAllowed(AppPermissions.POINTS))
+                        const AdminMenuItem(
+                          route: '/points',
+                          icon: Icons.location_on_sharp,
+                          title: 'النقاط',
+                        ),
+                      const AdminMenuItem(
+                        icon: Icons.linear_scale_rounded,
+                        title: 'المسارات',
+                        route: "/paths",
+                      ),
+                    ],
+                  ),
+                  AdminMenuItem(
+                    title: 'عمليات إدارية',
+                    children: [
+                      if (isAllowed(AppPermissions.REASON))
+                        const AdminMenuItem(title: 'أسباب الإلغاء', route: '/cancel_reasons'),
+                      const AdminMenuItem(title: 'المحافظات', route: '/government'),
+                      if (isAllowed(AppPermissions.CAR_CATEGORY))
+                        const AdminMenuItem(title: 'المؤسسات', route: '/institutions'),
+                      if (isAllowed(AppPermissions.ROLES))
+                        const AdminMenuItem(title: 'الأدوار', route: '/roles'),
+                      const AdminMenuItem(title: 'متغيرات الولاء', route: '/systemParams'),
+                      const AdminMenuItem(title: 'إدارة الإصدارات', route: '/systemVersion'),
+                    ],
+                  ),
+                  AdminMenuItem(
+                    title: 'عمليات مالية',
+                    icon: Icons.payments_outlined,
+                    children: [
+                      if (isAllowed(AppPermissions.REPORTS))
+                        const AdminMenuItem(
+                          title: 'التحويلات',
+                          //   icon:Icons.,
+                          route: "/transactions",
+                        ),
+
+                      if (isAllowed(AppPermissions.SETTINGS))
+                        const AdminMenuItem(title: 'محاسبة السائقين', route: "/payToDrivers"),
+
+                      // const AdminMenuItem(title: 'التقاص', route: "/payToDrivers"),
+                    ],
                   ),
                 ],
-              ),
-              AdminMenuItem(
-                title: 'عمليات إدارية',
-                children: [
-                  if (isAllowed(AppPermissions.REASON))
-                    const AdminMenuItem(title: 'أسباب الإلغاء', route: '/cancel_reasons'),
-                  const AdminMenuItem(title: 'المحافظات', route: '/government'),
-                  if (isAllowed(AppPermissions.CAR_CATEGORY))
-                    const AdminMenuItem(title: 'المؤسسات', route: '/institutions'),
-                  if (isAllowed(AppPermissions.ROLES))
-                    const AdminMenuItem(title: 'الأدوار', route: '/roles'),
-                  const AdminMenuItem(title: 'متغيرات الولاء', route: '/systemParams'),
-                  const AdminMenuItem(title: 'إدارة الإصدارات', route: '/systemVersion'),
-                ],
-              ),
-              AdminMenuItem(
-                title: 'عمليات مالية',
-                icon: Icons.payments_outlined,
-                children: [
-                  if (isAllowed(AppPermissions.REPORTS))
-                    const AdminMenuItem(
-                      title: 'التحويلات',
-                      //   icon:Icons.,
-                      route: "/transactions",
-                    ),
 
-                  if (isAllowed(AppPermissions.SETTINGS))
-                    const AdminMenuItem(title: 'محاسبة السائقين', route: "/payToDrivers"),
-
-                  // const AdminMenuItem(title: 'التقاص', route: "/payToDrivers"),
-                ],
-              ),
 
               if (isAllowed(AppPermissions.SETTINGS))
                 const AdminMenuItem(
                     icon: Icons.privacy_tip_rounded,
                     title: 'سياسة الخصوصية',
                     route: "/policy"),
+              if (isAllowed(AppPermissions.SETTINGS))
               const AdminMenuItem(
                   icon: Icons.notification_add,
                   title: 'إشعارات الزبائن',
@@ -239,37 +245,64 @@ class _HomePageState extends State<HomePage> {
                 context.read<NavHomeCubit>().changePage(item.route!);
               });
             },
-            header: Container(
-              height: 50,
-              width: double.infinity,
-              color: AppColorManager.mainColor,
-              child: Center(
-                child: DrawableText(
-                  color: Colors.white,
-                  text: AppSharedPreference.getEmail,
+            header: InkWell(
+              child: Container(
+                height: 50,
+                width: double.infinity,
+                color: AppColorManager.mainColor,
+                child: Center(
+                  child: DrawableText(
+                    color: Colors.white,
+                    text: AppSharedPreference.getEmail,
+                  ),
                 ),
               ),
             ),
             footer: Container(
-              height: 50,
+              height: 150.h,
               alignment: Alignment.center,
               width: double.infinity,
               color: AppColorManager.mainColor,
-              child: InkWell(
-                onTap: () {
-                  AppSharedPreference.logout();
-                  while (Navigator.canPop(context)) {
-                    window.history.back();
-                  }
-                  context.pushNamed(GoRouteName.loginPage);
-                },
-                child: const DrawableText(
-                  text: 'تسجيل الخروج',
-                  selectable: false,
-                  matchParent: true,
-                  color: Colors.white,
-                  textAlign: TextAlign.center,
-                ),
+              child: Column(
+                children: [
+                  if (AppSharedPreference.getUser.roleName.toLowerCase() == 'admin')
+                    TextButton(
+                      onPressed: () {
+                        // popAllJs();
+                        AppSharedPreference.changeTestMode();
+                        AppSharedPreference.logout();
+                        APIService.reInitial();
+                        window.location.reload();
+                        // context.pushNamed(GoRouteName.loginPage);
+                      },
+                      child: DrawableText(
+                        text: AppSharedPreference.isTestMode
+                            ? 'التبديل للوضع الحي'
+                            : 'التبديل لوضع الاختبار',
+                        selectable: false,
+                        matchParent: true,
+                        color: Colors.white,
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  const Divider(color: Colors.white),
+                  InkWell(
+                    onTap: () {
+                      // popAllJs();
+                      AppSharedPreference.logout();
+                      APIService.reInitial();
+                      window.location.reload();
+                      // context.pushNamed(GoRouteName.loginPage);
+                    },
+                    child: const DrawableText(
+                      text: 'تسجيل الخروج',
+                      selectable: false,
+                      matchParent: true,
+                      color: Colors.white,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ],
               ),
             ),
           ),

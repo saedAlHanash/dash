@@ -1,5 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'dart:html';
+
 import 'package:flutter/cupertino.dart';
 import 'package:qareeb_dash/core/util/note_message.dart';
 import 'package:qareeb_dash/core/util/shared_preferences.dart';
@@ -33,9 +35,18 @@ bool checkEmail(BuildContext context, String? email) {
   return emailValid;
 }
 
-bool isAllowed(String permission){
+bool isAllowed(String permission) {
   return AppSharedPreference.myPermissions.contains(permission);
 }
+
+bool get canPopJs => window.history.length > 1;
+
+void popAllJs() {
+  while (canPopJs) {
+    window.history.go(-1);
+  }
+}
+
 
 class AppPermissions {
   static String CREATION = "Create_Permission";
@@ -59,5 +70,4 @@ class AppPermissions {
   static String SHARED_TRIP = "Pages.SharedTrip";
   static String ACCEPT_ORDER = "Pages.accept_order";
   static String SETTINGS = "Pages.Settings";
-
 }

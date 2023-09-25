@@ -13,10 +13,12 @@ import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_models/global.dart';
 
 import '../../../../core/util/my_style.dart';
+import '../../../../core/util/shared_preferences.dart';
 import '../../../../core/widgets/my_card_widget.dart';
 import '../../bloc/create_redeem_cubit/create_redeem_cubit.dart';
 import '../../bloc/redeems_cubit/redeems_cubit.dart';
 import '../../data/request/redeem_request.dart';
+
 class LoyaltyWidget extends StatelessWidget {
   const LoyaltyWidget({super.key});
 
@@ -148,42 +150,43 @@ class ItemLoyal extends StatelessWidget {
               ),
             ),
           if (driverId != 0)
-            Expanded(
-              child: BlocConsumer<CreateRedeemCubit, CreateRedeemInitial>(
-                listenWhen: (p, c) => c.statuses.done,
-                listener: (context, state) {
-                  NoteMessage.showDoneDialog(
-                    context,
-                    text: 'تم بنجاح',
-                    onCancel: () => window.history.back(),
-                  );
-                },
-                buildWhen: (p, c) => c.request.type == type,
-                builder: (context, state) {
-                  if (state.statuses.isLoading) {
-                    return MyStyle.loadingWidget();
-                  }
-                  if (state.statuses.isDone) {
-                    return CircleButton(
-                      color: Colors.green,
-                      size: 30.0.spMin,
-                      icon: Icons.check_circle_outline,
+            if (AppSharedPreference.getUser.roleName.toLowerCase() == 'admin')
+              Expanded(
+                child: BlocConsumer<CreateRedeemCubit, CreateRedeemInitial>(
+                  listenWhen: (p, c) => c.statuses.done,
+                  listener: (context, state) {
+                    NoteMessage.showDoneDialog(
+                      context,
+                      text: 'تم بنجاح',
+                      onCancel: () => window.history.back(),
                     );
-                  }
-                  return MyButton(
-                    text: 'استبدال',
-                    active: count > 0,
-                    onTap: () {
-                      final request = RedeemRequest(driverId: driverId, type: type);
-                      context.read<CreateRedeemCubit>().createRedeem(
-                            context,
-                            request: request,
-                          );
-                    },
-                  );
-                },
+                  },
+                  buildWhen: (p, c) => c.request.type == type,
+                  builder: (context, state) {
+                    if (state.statuses.isLoading) {
+                      return MyStyle.loadingWidget();
+                    }
+                    if (state.statuses.isDone) {
+                      return CircleButton(
+                        color: Colors.green,
+                        size: 30.0.spMin,
+                        icon: Icons.check_circle_outline,
+                      );
+                    }
+                    return MyButton(
+                      text: 'استبدال',
+                      active: count > 0,
+                      onTap: () {
+                        final request = RedeemRequest(driverId: driverId, type: type);
+                        context.read<CreateRedeemCubit>().createRedeem(
+                              context,
+                              request: request,
+                            );
+                      },
+                    );
+                  },
+                ),
               ),
-            ),
         ],
       ),
     );

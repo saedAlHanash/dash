@@ -9,6 +9,7 @@ import 'package:qareeb_dash/features/shared_trip/ui/widget/shared_trip_info_list
 import 'package:qareeb_models/global.dart';
 
 import '../../../../core/util/my_style.dart';
+import '../../../../core/util/shared_preferences.dart';
 import '../../../../core/widgets/app_bar_widget.dart';
 import '../../../../core/widgets/my_button.dart';
 import '../../bloc/shared_trip_by_id_cubit/shared_trip_by_id_cubit.dart';
@@ -91,6 +92,11 @@ class _SharedTripInfoPageState extends State<SharedTripInfoPage> {
                                   builder: (context, cState) {
                                     if (cState.statuses.loading) {
                                       return MyStyle.loadingWidget();
+                                    }
+                                    if (AppSharedPreference.getUser.roleName
+                                            .toLowerCase() !=
+                                        'admin') {
+                                      return 0.0.verticalSpace;
                                     }
                                     return MyButton(
                                       width: 100.0.w,

@@ -1,36 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:qareeb_dash/core/strings/app_color_manager.dart';
+import 'package:qareeb_dash/core/util/shared_preferences.dart';
 
-const primaryColor = AppColorManager.mainColor;
+final primaryColor = AppSharedPreference.isTestMode
+    ? AppColorManager.mainColorLight
+    : AppColorManager.mainColor;
 const secondaryColor = AppColorManager.mainColorDark;
 
 final appTheme = ThemeData(
-    appBarTheme: const AppBarTheme(
+    appBarTheme: AppBarTheme(
       backgroundColor: primaryColor,
       centerTitle: true,
     ),
     scaffoldBackgroundColor: Colors.white,
-    switchTheme: const SwitchThemeData(
+    switchTheme: SwitchThemeData(
         thumbColor: MaterialStatePropertyAll(primaryColor),
-        overlayColor: MaterialStatePropertyAll(secondaryColor)),
+        overlayColor: const MaterialStatePropertyAll(secondaryColor)),
     brightness: Brightness.light,
     primaryColor: primaryColor,
-    colorScheme: const ColorScheme.light(
-        primary: primaryColor, secondary: secondaryColor),
-    progressIndicatorTheme:
-        const ProgressIndicatorThemeData(color: primaryColor),
-    floatingActionButtonTheme: const FloatingActionButtonThemeData(
+    colorScheme: ColorScheme.light(primary: primaryColor, secondary: secondaryColor),
+    progressIndicatorTheme: ProgressIndicatorThemeData(color: primaryColor),
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: primaryColor,
       foregroundColor: secondaryColor,
     ),
     inputDecorationTheme: InputDecorationTheme(
-        floatingLabelStyle: const TextStyle(color: primaryColor),
+        floatingLabelStyle: TextStyle(color: primaryColor),
         iconColor: secondaryColor,
         focusedBorder: OutlineInputBorder(
           borderSide: const BorderSide(color: secondaryColor),
           borderRadius: BorderRadius.circular(8),
         ),
         border: OutlineInputBorder(
-          borderSide: const BorderSide(color: primaryColor),
+          borderSide: BorderSide(color: primaryColor),
           borderRadius: BorderRadius.circular(8),
         )));

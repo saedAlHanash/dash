@@ -53,7 +53,7 @@ class ItemInfoInLine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DrawableText(
-      text: '$title:  ',
+      text: '$title \t',
       color: Colors.black,
       size: 22.0.sp,
       selectable: false,

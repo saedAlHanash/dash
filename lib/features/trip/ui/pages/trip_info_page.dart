@@ -10,6 +10,7 @@ import 'package:qareeb_dash/features/trip/data/request/cancel_trip_request.dart'
 import 'package:qareeb_models/extensions.dart';
 
 import '../../../../core/util/my_style.dart';
+import '../../../../core/util/shared_preferences.dart';
 import '../../../../core/widgets/app_bar_widget.dart';
 import '../../bloc/cancel_trip_cubit/cancel_trip_cubit.dart';
 import '../../bloc/trip_by_id/trip_by_id_cubit.dart';
@@ -80,6 +81,11 @@ class _TripInfoPageState extends State<TripInfoPage> {
                                   builder: (context, cState) {
                                     if (cState.statuses.loading) {
                                       return MyStyle.loadingWidget();
+                                    }
+                                    if (AppSharedPreference.getUser.roleName
+                                            .toLowerCase() !=
+                                        'admin') {
+                                      return 0.0.verticalSpace;
                                     }
                                     return MyButton(
                                       width: 100.0.w,

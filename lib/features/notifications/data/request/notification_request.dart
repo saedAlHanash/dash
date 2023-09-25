@@ -24,7 +24,7 @@ class NotificationRequest {
 
   Map<String, dynamic> toMapBody() {
     return {
-      'title': title,
+      'title': 'إعلان',
       'body': body,
     };
   }

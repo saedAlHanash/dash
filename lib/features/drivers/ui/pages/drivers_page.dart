@@ -9,6 +9,7 @@ import 'package:qareeb_models/extensions.dart';
 import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/file_util.dart';
 import '../../../../core/util/my_style.dart';
+import '../../../../core/util/shared_preferences.dart';
 import '../../../../core/widgets/change_user_state_btn.dart';
 import '../../../../core/widgets/my_button.dart';
 import '../../../../core/widgets/saed_taple_widget.dart';
@@ -23,8 +24,10 @@ final clientTableHeader = [
   "حالة السائق",
   "IMEI",
   "تاريخ التسجيل",
-  "الولاء",
-  "OTP",
+  if (AppSharedPreference.getUser.roleName.toLowerCase() == 'admin') ...[
+    "الولاء",
+    "OTP",
+  ],
   "العمليات",
 ];
 
@@ -107,7 +110,6 @@ class _DriverPageState extends State<DriverPage> {
                 }
                 final list = state.result;
                 return SaedTableWidget(
-
                   command: state.command,
                   title: clientTableHeader,
                   fullSizeIndex: const [7],
@@ -120,8 +122,11 @@ class _DriverPageState extends State<DriverPage> {
                           e.isActive ? 'مفعل' : 'غير مفعل',
                           e.qarebDeviceimei,
                           e.creationTime?.formatDate,
-                          LoyalSwitchWidget(driver: e),
-                          e.emailConfirmationCode,
+                          if (AppSharedPreference.getUser.roleName.toLowerCase() ==
+                              'admin') ...[
+                            LoyalSwitchWidget(driver: e),
+                            e.emailConfirmationCode,
+                          ],
                           Row(
                             mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.spaceAround,

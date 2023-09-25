@@ -1,118 +1,207 @@
 {
   "result": {
-    "totalCount": 19,
-    "items": [
+    "driverId": 74,
+    "pathId": 396,
+    "path": {
+      "name": null,
+      "arName": null,
+      "distance": null,
+      "duration": null,
+      "edges": [
+        {
+          "startPoint": {
+            "name": "جسر الرئيس ",
+            "arName": "تحت جسر الرئيس ",
+            "latitude": 33.512556807528185,
+            "langitude": 36.28875245972702,
+            "tags": "جامعة دمشق , المتحف الوطني  ,",
+            "zoneId": null,
+            "id": 111
+          },
+          "startPointId": 111,
+          "endPoint": {
+            "name": "جسر فكتوريا ",
+            "arName": "جسر فكتوريا",
+            "latitude": 33.51236128909377,
+            "langitude": 36.2963816509706,
+            "tags": "جسر فكتوريا, شارع سعد الله الجابري, جانب مختبرات أرول",
+            "zoneId": 10550,
+            "id": 113
+          },
+          "endPointId": 113,
+          "distance": 1223.4,
+          "duration": 0.0,
+          "price": 0.0,
+          "steps": "olpkEqsn|EsADUEIIC_AIa@w@[_@}]OaDkAmMF[h@MtAEnDVH`@ItEb@B",
+          "name": null,
+          "arName": null,
+          "id": 122
+        },
+        {
+          "startPoint": {
+            "name": "جسر فكتوريا ",
+            "arName": "جسر فكتوريا",
+            "latitude": 33.51236128909377,
+            "langitude": 36.2963816509706,
+            "tags": "جسر فكتوريا, شارع سعد الله الجابري, جانب مختبرات أرول",
+            "zoneId": 10550,
+            "id": 113
+          },
+          "startPointId": 113,
+          "endPoint": {
+            "name": "ساحة الاموين",
+            "arName": "ساحة الاموين",
+            "latitude": 33.51345385394587,
+            "langitude": 36.27610115245214,
+            "tags": "ساحة الاموين,شارع بيروت ,جانب نادي ضباط القوات المسلحة",
+            "zoneId": null,
+            "id": 114
+          },
+          "endPointId": 114,
+          "distance": 2172.1,
+          "duration": 220.0,
+          "price": 0.0,
+          "steps": "ikpkEccp|Ec@COvEoDWeA~A`@hKnAbrAO|B]nAy@nG}@TYZWhAV|Al@f@tA?\\U",
+          "name": null,
+          "arName": null,
+          "id": 123
+        },
+        {
+          "startPoint": {
+            "name": "ساحة الاموين",
+            "arName": "ساحة الاموين",
+            "latitude": 33.51345385394587,
+            "langitude": 36.27610115245214,
+            "tags": "ساحة الاموين,شارع بيروت ,جانب نادي ضباط القوات المسلحة",
+            "zoneId": null,
+            "id": 114
+          },
+          "startPointId": 114,
+          "endPoint": {
+            "name": "مفرق المزة",
+            "arName": "مفرق المزة",
+            "latitude": 33.51633826458502,
+            "langitude": 36.26239800236892,
+            "tags": "مفرق المزة,جانب مشاتل الربوة",
+            "zoneId": 10554,
+            "id": 117
+          },
+          "endPointId": 117,
+          "distance": 1610.3,
+          "duration": 143.4,
+          "price": 0.0,
+          "steps": "_rpkEodl|Eb@kA?u@]aAoAg@}@TYZWhAV|Al@f@mD`[}C~g@o@~EuAvG",
+          "name": null,
+          "arName": null,
+          "id": 124
+        },
+        {
+          "startPoint": {
+            "name": "مفرق المزة",
+            "arName": "مفرق المزة",
+            "latitude": 33.51633826458502,
+            "langitude": 36.26239800236892,
+            "tags": "مفرق المزة,جانب مشاتل الربوة",
+            "zoneId": 10554,
+            "id": 117
+          },
+          "startPointId": 117,
+          "endPoint": {
+            "name": "دوار العلم",
+            "arName": "دوار العلم",
+            "latitude": 33.53979422476423,
+            "langitude": 36.195147606384296,
+            "tags": "المركز الثقافي في ضاحية قدسيا",
+            "zoneId": 10560,
+            "id": 123
+          },
+          "endPointId": 123,
+          "distance": 9544.7,
+          "duration": 0.0,
+          "price": 0.0,
+          "steps": "edqkE_oi|EI`CtR[g@nb@`DlMnJtSJ`DoBhIL`GtGjI~@hDq@tGoDdCcDGiL{G{GeA}CdAuApDUtUhIzRfEnb@~EdOUtWeCfE_D|AyKHoEzBmNvP_ObMyFdLsH`GsH_BmHdF_Dd@M~AdBbEeBdNNtI{GzSgFtFyKdCkNvIyVx[",
+          "name": null,
+          "arName": null,
+          "id": 131
+        }
+      ],
+      "id": 396
+    },
+    "sharedRequests": [
       {
-        "senderId": 543,
-        "senderName": "مسلم الشعراوي",
-        "senderType": "client",
-        "reciverId": 543,
-        "reciverName": "مسلم الشعراوي",
-        "reciverType": "client",
-        "tilte": "مرحبا شكرا لخدمتكوم المنتظرة نرجو النجاح و التوفيق",
-        "body": "سؤلي عن السعر قلتوم انهو سعر تقريبي و لكن هل هو للاياب و الزهاب ام فقط لأياب و فقط للزهاب",
-        "id": 19
-      },
-      {
-        "senderId": 381,
-        "senderName": " ",
-        "senderType": "client",
-        "reciverId": 381,
-        "reciverName": " ",
-        "reciverType": "client",
-        "tilte": "مشترك",
-        "body": "كل ما حاول اطلب مشترك ما بلاقي ",
-        "id": 18
-      },
-      {
-        "senderId": 156,
-        "senderName": "kinan  eb",
-        "senderType": "client",
-        "reciverId": 156,
-        "reciverName": "kinan  eb",
-        "reciverType": "client",
-        "tilte": "استفسار ",
-        "body": "هل بدأ العمل بالتطبيق؟ \nجميع النقاط التشاركية لا تعمل .\n",
-        "id": 17
-      },
-      {
-        "senderId": 415,
-        "senderName": "غيث أرسلان",
-        "senderType": "client",
-        "reciverId": 415,
-        "reciverName": "غيث أرسلان",
-        "reciverType": "client",
-        "tilte": "كيفيه العمل",
-        "body": "يعطيكن الف عافيه ممكن تشرحولي بطريقه مختره كيفيه عمل البرنامج وانا معي سياره لوين ادخل وشو الطريقه لو تكرمتو ولكم جزيل الشكر \n\n",
-        "id": 16
-      },
-      {
-        "senderId": 338,
-        "senderName": "احمد  الذهبي",
-        "senderType": "client",
-        "reciverId": 338,
-        "reciverName": "احمد  الذهبي",
-        "reciverType": "client",
-        "tilte": "كيفية الانضمام لفريق قريب",
-        "body": "الرجاء الرد في اسرع وقت ممكن\n",
-        "id": 15
-      },
-      {
-        "senderId": 278,
-        "senderName": "محمد ايهاب تغلبي",
-        "senderType": "client",
-        "reciverId": 278,
-        "reciverName": "محمد ايهاب تغلبي",
-        "reciverType": "client",
-        "tilte": "اضافة سيارة ",
-        "body": "كيفية اضافة سيارتي على الرحلات التشتركية ",
-        "id": 14
-      },
-      {
-        "senderId": 249,
-        "senderName": "إناس الأعظمي ",
-        "senderType": "client",
-        "reciverId": 249,
-        "reciverName": "إناس الأعظمي ",
-        "reciverType": "client",
-        "tilte": "إستفسار",
-        "body": "بحاجة تفاصيل اكثر ",
-        "id": 13
-      },
-      {
-        "senderId": 210,
-        "senderName": "رهف اغا",
-        "senderType": "client",
-        "reciverId": 210,
-        "reciverName": "رهف اغا",
-        "reciverType": "client",
-        "tilte": "سعر",
-        "body": "ليش مو كاتبين سعر الرحلة",
-        "id": 12
-      },
-      {
-        "senderId": 168,
-        "senderName": "علاء الموصللي",
-        "senderType": "client",
-        "reciverId": 168,
-        "reciverName": "علاء الموصللي",
-        "reciverType": "client",
-        "tilte": "كيفية التعامل",
-        "body": "انا صاحب سيارة كيف بدي لاقي زبون ",
-        "id": 11
-      },
-      {
-        "senderId": 12,
-        "senderName": "محمد جهاد  الهندي الهندي",
-        "senderType": "driver",
-        "reciverId": 12,
-        "reciverName": "محمد جهاد  الهندي الهندي",
-        "reciverType": "driver",
-        "tilte": "ررر",
-        "body": "تت",
-        "id": 10
+        "id": 105,
+        "sharedTripId": 367,
+        "clientId": 8,
+        "client": {
+          "userName": "Qareeb963995188978@gmail.com",
+          "fullName": "محمد  مصطفى",
+          "name": "محمد ",
+          "surname": "مصطفى",
+          "phoneNumber": "963995188978",
+          "avatar": "1693224331912scaled_Screenshot_20230828-150140.jpg",
+          "emergencyPhone": "963995188978",
+          "userType": "client"
+        },
+        "status": 2,
+        "seatNumber": 3,
+        "dropPointId": 123,
+        "dropPoint": {
+          "name": "دوار العلم",
+          "arName": "دوار العلم",
+          "latitude": 33.53979422476423,
+          "langitude": 36.195147606384296,
+          "tags": "المركز الثقافي في ضاحية قدسيا",
+          "zoneId": 10560,
+          "id": 123
+        },
+        "pickupPointId": 114,
+        "pickupPoint": {
+          "name": "ساحة الاموين",
+          "arName": "ساحة الاموين",
+          "latitude": 33.51345385394587,
+          "langitude": 36.27610115245214,
+          "tags": "ساحة الاموين,شارع بيروت ,جانب نادي ضباط القوات المسلحة",
+          "zoneId": null,
+          "id": 114
+        },
+        "amount": 37500.0
       }
-    ]
+    ],
+    "creationDate": "2023-09-24T14:12:01.537708",
+    "schedulingDate": "2023-09-24T14:25:00",
+    "startDate": null,
+    "endDate": null,
+    "tripStatus": 0,
+    "seatCost": 12500,
+    "totalCost": 50000,
+    "distance": 14550,
+    "availableSeats": 1,
+    "reservedSeats": 3,
+    "seatNumber": 4,
+    "note": null,
+    "driver": {
+      "userName": "Qareeb963944222803@gmail.com",
+      "fullName": "eyad agha",
+      "name": "eyad",
+      "surname": "agha",
+      "phoneNumber": "963944222803",
+      "imei": "354778341876699",
+      "avatar": "1693134888961hoGCImh4HU.jpg",
+      "rating": 0.0,
+      "carType": {
+        "userId": 74,
+        "carBrand": "هيوندا ",
+        "carModel": "هيوندا ",
+        "carColor": "بيتنجاني ",
+        "carNumber": "712746",
+        "seatsNumber": 4,
+        "carGovernorate": null,
+        "manufacturingYear": null,
+        "type": null
+      },
+      "id": 74
+    },
+    "id": 367
   },
   "targetUrl": null,
   "success": true,

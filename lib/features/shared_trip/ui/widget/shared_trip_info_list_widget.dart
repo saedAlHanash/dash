@@ -30,7 +30,9 @@ class _TripInfoListWidgetState extends State<TripInfoListWidget> {
       children: [
         ItemInfoInLine(title: 'السائق', info: widget.trip.driver.fullName),
         ItemInfoInLine(
-          title: 'عدد المقاعد',
+            title: 'عدد المقاعد المتاحة', info: widget.trip.seatNumber.toString()),
+        ItemInfoInLine(
+          title: 'فيعدد مقاعد السيارة',
           info: widget.trip.driver.carType.seatsNumber.toString(),
         ),
         ItemInfoInLine(title: 'سعر المقعد', info: widget.trip.seatCost.formatPrice),
@@ -40,7 +42,7 @@ class _TripInfoListWidgetState extends State<TripInfoListWidget> {
         ),
         ItemInfoInLine(
           title: 'التكلفة الكلية',
-          info: (widget.trip.seatsNumber * widget.trip.seatCost).toString(),
+          info: (widget.trip.seatNumber * widget.trip.seatCost).toString(),
         ),
         Builder(builder: (context) {
           var x = 0.0;
@@ -89,6 +91,7 @@ class _TripInfoListWidgetState extends State<TripInfoListWidget> {
               'عدد المقاعد',
               'نقطة الركوب',
               'رمز النقطة',
+              'حالة الدفع',
             ],
             data: e.sharedRequests.mapIndexed(
               (index, element) {
@@ -108,7 +111,9 @@ class _TripInfoListWidgetState extends State<TripInfoListWidget> {
                     url: tripIconId.iconPoint,
                     height: 40.0.r,
                     width: 40.0.r,
+                    fit: BoxFit.contain,
                   ),
+                  element.status.arabicName,
                 ];
               },
             ).toList(),
