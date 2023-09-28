@@ -3,17 +3,22 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qareeb_dash/core/api_manager/command.dart';
 import 'package:qareeb_dash/core/strings/app_color_manager.dart';
 import 'package:qareeb_dash/core/widgets/my_button.dart';
+import 'package:qareeb_models/global.dart';
 
 import '../../../../core/util/my_style.dart';
 import '../../../../core/widgets/my_text_form_widget.dart';
+import '../../../../core/widgets/spinner_widget.dart';
 import '../../data/request/clients_filter_request.dart';
 
 class ClientsFilterWidget extends StatefulWidget {
-  const ClientsFilterWidget({super.key, this.onApply, this.command});
+  const ClientsFilterWidget(
+      {super.key, this.onApply, this.command, this.isDriver = false});
 
   final Function(ClientsFilterRequest request)? onApply;
 
   final Command? command;
+
+  final bool isDriver;
 
   @override
   State<ClientsFilterWidget> createState() => _ClientsFilterWidgetState();
@@ -24,6 +29,7 @@ class _ClientsFilterWidgetState extends State<ClientsFilterWidget> {
 
   late final TextEditingController phoneNoC;
   late final TextEditingController nameC;
+  final key1 = GlobalKey<SpinnerWidgetState>();
 
   @override
   void initState() {
@@ -62,6 +68,34 @@ class _ClientsFilterWidgetState extends State<ClientsFilterWidget> {
                   onChanged: (p0) => request.phoneNo = p0,
                 ),
               ),
+              if (widget.isDriver) ...[
+                15.0.horizontalSpace,
+                Expanded(
+                  child: SpinnerWidget(
+                    key: key1,
+                    width: 1.0.sw,
+                    items: [
+                      SpinnerItem(
+                          name: 'متاح ',
+                          id: 1,
+                          item: true,
+                          isSelected: request.isAvailable == true),
+                      SpinnerItem(
+                          name: 'غير متاح',
+                          id: 2,
+                          item: false,
+                          isSelected: request.isAvailable == false),
+                    ]..insert(
+                        0,
+                        SpinnerItem(
+                          name: 'حالة السائق',
+                          id: -1,
+                          isSelected: request.isAvailable == null,
+                        )),
+                    onChanged: (item) => request.isAvailable = item.item,
+                  ),
+                ),
+              ],
             ],
           ),
           Row(
@@ -87,6 +121,7 @@ class _ClientsFilterWidgetState extends State<ClientsFilterWidget> {
                       nameC.text = request.name ?? '';
                     });
                     widget.onApply?.call(request);
+                    if (widget.isDriver) key1.currentState?.clearSelect();
                   },
                 ),
               ),

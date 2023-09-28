@@ -34,6 +34,12 @@ class _TripInfoPageState extends State<TripInfoPage> {
   }
 
   @override
+  void dispose() {
+    MapWidget.initImeis([]);
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return MultiBlocListener(
       listeners: [
@@ -42,6 +48,9 @@ class _TripInfoPageState extends State<TripInfoPage> {
           listener: (context, state) {
             tripId = state.result.id;
             mapController.addTrip(trip: state.result);
+            if (state.result.driver.id > 0) {
+              MapWidget.initImeis([state.result.driver.imei]);
+            }
           },
         ),
         BlocListener<CancelTripCubit, CancelTripInitial>(

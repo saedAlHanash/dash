@@ -81,11 +81,13 @@ class _DriverPageState extends State<DriverPage> {
         ],
       ),
       body: SingleChildScrollView(
+        padding: const EdgeInsets.only(bottom: 200.0).h,
         child: Column(
           children: [
             BlocBuilder<AllDriversCubit, AllDriversInitial>(
               builder: (context, state) {
                 return ClientsFilterWidget(
+                  isDriver: true,
                   onApply: (request) {
                     context.read<AllDriversCubit>().getAllDrivers(
                           context,
@@ -110,6 +112,7 @@ class _DriverPageState extends State<DriverPage> {
                 }
                 final list = state.result;
                 return SaedTableWidget(
+                  fullHeight: 1.8.sh,
                   command: state.command,
                   title: clientTableHeader,
                   fullSizeIndex: const [7],

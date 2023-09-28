@@ -2,6 +2,7 @@ import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:map_package/map/bloc/ather_cubit/ather_cubit.dart';
 import 'package:map_package/map/bloc/map_controller_cubit/map_controller_cubit.dart';
 import 'package:map_package/map/ui/widget/map_widget.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
@@ -25,6 +26,8 @@ class SharedTripInfoPage extends StatefulWidget {
 class _SharedTripInfoPageState extends State<SharedTripInfoPage> {
   late final MapControllerCubit mapController;
 
+  var zoomingCenter = false;
+
   @override
   void initState() {
     mapController = context.read<MapControllerCubit>();
@@ -46,8 +49,17 @@ class _SharedTripInfoPageState extends State<SharedTripInfoPage> {
           listener: (context, state) {
             mapController.addPath(path: state.result.path);
             if (state.result.tripStatus == SharedTripStatus.started) {
+              context.read<AtherCubit>().getDriverLocation([state.result.driver.imei]);
               MapWidget.initImeis([state.result.driver.imei]);
             }
+          },
+        ),
+        BlocListener<AtherCubit, AtherInitial>(
+          listener: (context, state) {
+            if (zoomingCenter) return;
+            context.read<MapControllerCubit>().centerPointMarkers(withDriver: true);
+
+            zoomingCenter = true;
           },
         ),
         BlocListener<UpdateSharedCubit, UpdateSharedInitial>(

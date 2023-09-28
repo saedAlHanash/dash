@@ -3,11 +3,13 @@ import 'package:qareeb_models/global.dart';
 class ClientsFilterRequest {
   String? name;
   String? phoneNo;
+  bool? isAvailable;
   Gender? gender;
 
   ClientsFilterRequest({
     this.name,
     this.phoneNo,
+    this.isAvailable,
     this.gender,
   });
 
@@ -17,6 +19,7 @@ class ClientsFilterRequest {
 
   void clearFilter() {
     name = null;
+    isAvailable = null;
     phoneNo = null;
     gender = null;
   }
@@ -24,11 +27,13 @@ class ClientsFilterRequest {
   ClientsFilterRequest copyWith({
     String? name,
     String? phoneNo,
+    bool? isAvailable,
     Gender? gender,
   }) {
     return ClientsFilterRequest(
       name: name ?? this.name,
       phoneNo: phoneNo ?? this.phoneNo,
+      isAvailable: isAvailable ?? this.isAvailable,
       gender: gender ?? this.gender,
     );
   }
@@ -37,6 +42,7 @@ class ClientsFilterRequest {
     return {
       'name': name,
       'phone': phoneNo,
+      'isAvailable': isAvailable,
       'Gender': gender,
     };
   }
@@ -45,6 +51,7 @@ class ClientsFilterRequest {
     return ClientsFilterRequest(
       name: map['name'] ?? '',
       phoneNo: map['phoneNo'] ?? '',
+      isAvailable: map['isAvailable'] ?? '',
       gender: map['gender'] ?? '',
     );
   }

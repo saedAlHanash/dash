@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -19,7 +18,6 @@ extension CubitStateHelper1 on CubitStatuses {
 
   bool get init => this == CubitStatuses.init;
 }
-
 
 extension MapResponse on http.Response {
   dynamic get jsonBody => jsonDecode(body);
@@ -45,13 +43,21 @@ extension NormalTripMap on TripResult {
     return '${tripFare - paidAmount} ${AppStringManager.currency}';
   }
 
-
   String get getDistance {
     return ' $distance ${AppStringManager.km}';
+  }
+
+  String get getRealDistance {
+    if (realDistance == 0) return '-';
+    return ' $realDistance ${AppStringManager.km}';
+  }
+
+  String get getPreAcceptDistance {
+    if (preAcceptDistance == 0) return '-';
+    return ' $preAcceptDistance ${AppStringManager.km}';
   }
 
   bool get iamDriver {
     return (driver.id == 0) || (driver.id == AppSharedPreference.getMyId);
   }
 }
-
