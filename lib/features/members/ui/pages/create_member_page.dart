@@ -129,6 +129,14 @@ class _CreateMemberPageState extends State<CreateMemberPage> {
                                   onChanged: (p0) => request.facility = p0,
                                 ),
                               ),
+                              15.0.horizontalSpace,
+                              Expanded(
+                                child: MyTextFormNoLabelWidget(
+                                  label: 'الفصل الدراسي',
+                                  initialValue: request.session,
+                                  onChanged: (p0) => request.session = p0,
+                                ),
+                              ),
                             ],
                           ),
                           Row(

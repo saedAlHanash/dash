@@ -10,10 +10,13 @@ import 'core/app/app_widget.dart';
 import 'core/database/db_helper.dart';
 import 'core/injection/injection_container.dart' as di;
 import 'core/util/shared_preferences.dart';
-
+import 'package:flutter/services.dart' show ByteData, Uint8List, rootBundle;
+import 'package:pdf/widgets.dart' as pw;
 // import 'features/trip/bloc/nav_trip_cubit/nav_trip_cubit.dart';
 import 'package:path/path.dart';
 import 'package:excel/excel.dart';
+
+import 'features/members/utile/member_card_utile.dart';
 
 final dbHelper = DatabaseHelper();
 
@@ -27,6 +30,12 @@ void main() async {
   await SharedPreferences.getInstance().then((value) {
     AppSharedPreference.init(value);
   });
+
+  arabicFont = pw.Font.ttf(await rootBundle.load('fonts/IBMPlexSansArabic-Medium.ttf'));
+  logoSvg = pw.SvgImage(
+      svg: await rootBundle.loadString('icons/logo_with_text.svg'), height: 20.0);
+
+  stamp =await assetImageToMemoryImage('icons/stamp.png');
 
   var e = document.getElementById('loading');
   e?.style.display = 'none';

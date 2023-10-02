@@ -54,7 +54,7 @@ class _BusTripsPageState extends State<BusTripsPage> with SingleTickerProviderSt
     );
 
     final curvedAnimation =
-        CurvedAnimation(curve: Curves.easeInOut, parent: _animationController);
+    CurvedAnimation(curve: Curves.easeInOut, parent: _animationController);
     _animation = Tween<double>(begin: 0, end: 1).animate(curvedAnimation);
 
     super.initState();

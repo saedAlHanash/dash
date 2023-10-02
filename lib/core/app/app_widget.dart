@@ -70,6 +70,7 @@ class _MyAppState extends State<MyApp> {
           scrollBehavior: MyCustomScrollBehavior(),
           debugShowCheckedModeBanner: false,
           theme: appTheme,
+          locale: const Locale.fromSubtags(languageCode: 'en'),
           builder: (context, child) {
             return MultiBlocProvider(
               providers: [
@@ -104,10 +105,7 @@ class _MyAppState extends State<MyApp> {
                   create: (_) => sl<AllCarCategoriesCubit>()..getCarCategories(_),
                 ),
               ],
-              child: Directionality(
-                textDirection: TextDirection.rtl,
-                child: child!,
-              ),
+              child: child!,
             );
           },
           routerConfig: appGoRouter,

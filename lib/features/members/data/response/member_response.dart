@@ -59,6 +59,7 @@ class Member {
     required this.phoneNo,
     required this.facility,
     required this.idNumber,
+    required this.session,
     required this.collegeIdNumber,
   });
 
@@ -73,6 +74,7 @@ class Member {
   final String phoneNo;
   final String facility;
   final String idNumber;
+  final String session;
   final String collegeIdNumber;
   final num institutionId;
   final List<Subscription> subscriptions;
@@ -91,6 +93,7 @@ class Member {
       phoneNo: json["phoneNo"] ?? "",
       facility: json["facility"] ?? "",
       idNumber: json["idNumber"] ?? "",
+      session: json["session"] ?? "",
       collegeIdNumber: json["collegeIdNumber"] ?? "",
       institutionId: json["institutionId"] ?? 0,
       subscriptions: json["subscriptions"] == null
@@ -105,6 +108,7 @@ class Member {
         "fullName": fullName,
         "imageUrl": imageUrl,
         "address": address,
+        "session": session,
         "late": late,
         "longe": longe,
         "userName": userName,

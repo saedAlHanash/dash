@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qareeb_dash/core/api_manager/api_url.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_dash/core/util/file_util.dart';
 import 'package:qareeb_dash/core/util/shared_preferences.dart';
 import 'package:qareeb_dash/features/home/data/response/home_response.dart';
+import 'package:qareeb_dash/features/members/utile/member_card_utile.dart';
 
 import '../../../../core/api_manager/api_service.dart';
 import '../../../../core/api_manager/command.dart';
@@ -13,6 +15,7 @@ import '../../../../core/strings/enum_manager.dart';
 import '../../../../core/util/note_message.dart';
 import '../../../../core/util/pair_class.dart';
 import '../../data/response/home1_response.dart';
+import 'package:pdf/widgets.dart' as pw;
 
 part 'home1_state.dart';
 
@@ -31,6 +34,11 @@ class Home1Cubit extends Cubit<Home1Initial> {
       }
       emit(state.copyWith(statuses: CubitStatuses.error, error: pair.second));
     } else {
+      fetchImage(pair.first!.imageUrl).then((value) {
+        if (value != null) {
+          institutionsLogo = pw.MemoryImage(value);
+        }
+      });
       emit(state.copyWith(statuses: CubitStatuses.done, result: pair.first));
     }
   }

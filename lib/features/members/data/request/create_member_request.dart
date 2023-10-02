@@ -12,6 +12,7 @@ class CreateMemberRequest {
   CreateMemberRequest({
     this.id,
     this.fullName,
+    this.session,
     this.file,
     this.address,
     this.latLng,
@@ -23,6 +24,7 @@ class CreateMemberRequest {
 
   int? id;
   String? fullName;
+  String? session;
   UploadFile? file;
   String? address;
   LatLng? latLng;
@@ -41,6 +43,7 @@ class CreateMemberRequest {
   Map<String, dynamic> toJson() => {
         "id": id,
         "FullName": fullName,
+        "session": session,
         "Address": address,
         "Late": latLng?.latitude,
         "Longe": latLng?.longitude,
@@ -75,6 +78,7 @@ class CreateMemberRequest {
     return CreateMemberRequest(
       id: model.id,
       fullName: model.fullName,
+      session: model.session,
       file: UploadFile(initialImage: model.imageUrl),
       address: model.address,
       phoneNo: model.phoneNo,

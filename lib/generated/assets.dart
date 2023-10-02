@@ -3,6 +3,7 @@ class Assets {
   Assets._();
 
   static const String assetsQareeb = 'assets/qareeb.db';
+  static const String fontsAmiriRegular = 'assets/fonts/Amiri-Regular.ttf';
   static const String fontsCairo = 'assets/fonts/cairo.ttf';
   static const String fontsCairoBold = 'assets/fonts/cairo_bold.ttf';
   static const String fontsCairoSemiBold = 'assets/fonts/cairo_semi_bold.ttf';
@@ -60,11 +61,13 @@ class Assets {
       'https://for-delete-c0d5f.web.app/assets/assets/icons/9.png';
   static const String icons963 = 'assets/icons/_963.png';
   static const String iconsAlphaLogoBackground = 'assets/icons/alpha_logo_background.svg';
+  static const String iconsBackCard = 'assets/icons/back_card.jpg';
   static const String iconsBlackMarker = 'assets/icons/black_marker.svg';
   static const String iconsBuses = 'assets/icons/buses.svg';
   static const String iconsCallDriver = 'assets/icons/call_driver.svg';
   static const String iconsCarPlaceHolder = 'assets/icons/car_place_holder.svg';
   static const String iconsCarTopView = 'assets/icons/car_top_view.png';
+  static const String iconsCardBack = 'assets/icons/card_back.png';
   static const String iconsCheckCircle = 'assets/icons/check_circle.svg';
   static const String iconsCoins = 'assets/icons/coins.svg';
   static const String iconsContract = 'assets/icons/contract.svg';
@@ -75,6 +78,7 @@ class Assets {
   static const String iconsFacebook = 'assets/icons/facebook.svg';
   static const String iconsFaftoraLogo = 'assets/icons/faftora_logo.png';
   static const String iconsFatoraLogo = 'assets/icons/fatora_logo.jpg';
+  static const String iconsFrontCard = 'assets/icons/front_card.jpg';
   static const String iconsFullStar = 'assets/icons/full_star.svg';
   static const String iconsGold = 'assets/icons/gold.svg';
   static const String iconsHistory = 'assets/icons/history.svg';
