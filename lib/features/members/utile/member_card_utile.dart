@@ -27,6 +27,7 @@ pw.SvgImage? logoSvg;
 
 Future<pw.Widget> getCardMember(Member member) async {
   final qrImage = await getQrImage(member.id);
+
   Uint8List? memberImageBytes = await fetchImage(member.imageUrl);
 
   ///style

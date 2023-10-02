@@ -7,7 +7,8 @@ import 'package:collection/collection.dart';
 import 'package:drawable_text/drawable_text.dart';
 import 'package:excel/excel.dart';
 import 'package:http/http.dart' as http;
-import 'package:qareeb_dash/core/api_manager/api_service.dart';
+
+import '../api_manager/api_service.dart';
 
 saveXls(
     {required List<String> header, required List<List<dynamic>> data, String? fileName}) {
@@ -116,11 +117,16 @@ saveImageFile({
 
 Future<Uint8List?> fetchImage(String imageUrl) async {
   if (imageUrl.isEmpty) return null;
-  final response = await APIService()
-      .getApi(url: imageUrl.replaceAll('https://live.qareeb-maas.com/', ''));
-  if (response.statusCode == 200) {
-    return response.bodyBytes;
-  } else {
+
+  try {
+    final response =
+        await http.get(Uri.parse(imageUrl), headers: APIService().innerHeader);
+    if (response.statusCode == 200) {
+      return response.bodyBytes;
+    } else {
+      return null;
+    }
+  } on Exception {
     return null;
   }
 }
