@@ -120,7 +120,7 @@ Future<Uint8List?> fetchImage(String imageUrl) async {
 
   try {
     final response =
-        await http.get(Uri.parse(imageUrl), headers: APIService().innerHeader);
+        await http.post(Uri.parse(imageUrl), headers: APIService().innerHeader);
     if (response.statusCode == 200) {
       return response.bodyBytes;
     } else {
