@@ -33,7 +33,7 @@ void main() async {
   });
 
   try {
-    arabicFont = pw.Font.ttf(await rootBundle.load('assets/fonts/IBMPlexSansArabic-Medium.ttf'));
+    arabicFont = pw.Font.ttf(await rootBundle.load('fonts/IBMPlexSansArabic-Medium.ttf'));
     logoSvg = pw.SvgImage(
         svg: await rootBundle.loadString('assets/icons/logo_with_text.svg'), height: 20.0);
   stamp = await assetImageToMemoryImage('assets/icons/stamp.png');
