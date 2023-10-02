@@ -105,7 +105,10 @@ class _MyAppState extends State<MyApp> {
                   create: (_) => sl<AllCarCategoriesCubit>()..getCarCategories(_),
                 ),
               ],
-              child: child!,
+              child: Directionality(
+                textDirection: TextDirection.rtl,
+                child: child!,
+              ),
             );
           },
           routerConfig: appGoRouter,
