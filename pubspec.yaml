@@ -63,6 +63,7 @@ dependencies:
   excel: ^2.1.0
   flutter_html_to_pdf: any
   package_info_plus: ^4.1.0
+  flutter_cache_manager: any
   widgets_to_image: ^0.0.2
   #  hive: ^2.2.3
   #  flutter_background_service: ^3.0.1

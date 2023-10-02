@@ -7,7 +7,9 @@ import 'package:collection/collection.dart';
 import 'package:drawable_text/drawable_text.dart';
 import 'package:excel/excel.dart';
 import 'package:http/http.dart' as http;
-
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:qareeb_dash/core/util/shared_preferences.dart';
 import '../api_manager/api_service.dart';
 
 saveXls(
@@ -118,10 +120,18 @@ saveImageFile({
 Future<Uint8List?> fetchImage(String imageUrl) async {
   if (imageUrl.isEmpty) return null;
 
+  final imageFromCash = AppSharedPreference.getImage(imageUrl);
+  if (imageFromCash != null) {
+    loggerObject.wtf('from cache');
+    return imageFromCash;
+  }
+
+  loggerObject.w('get mage');
   try {
     final response = await APIService().getApiProxyPayed(url: imageUrl);
 
     if (response.statusCode == 200) {
+      AppSharedPreference.cashImage(imageUrl, response.bodyBytes);
       return response.bodyBytes;
     } else {
       return null;

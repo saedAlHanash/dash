@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:qareeb_dash/core/api_manager/api_service.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
@@ -65,14 +66,13 @@ class AppSharedPreference {
   static int get getMyId => _prefs?.getInt(_myId) ?? 0;
 
   static cashInstitutionId(int id) {
-
     _prefs?.setString('_institutionId', id.toString());
   }
 
   static int get getInstitutionId {
-
     return int.parse(_prefs?.getString('_institutionId') ?? '0');
   }
+
   //
   // static cashUser(LoginResult user) {
   //   final string = jsonEncode(user);
@@ -130,10 +130,7 @@ class AppSharedPreference {
     return result;
   }
 
-
   static Future<void> reload() async => await _prefs?.reload();
-
-
 
   static void removeCashedTrip() {
     _prefs?.remove(_trip);
@@ -146,9 +143,6 @@ class AppSharedPreference {
   static String getFireToken() {
     return _prefs?.getString(_fireToken) ?? '';
   }
-
-
-
 
   static void cashDriverAvailable(bool isAvailable) {
     _prefs?.setBool(_driverAvailable, isAvailable);
@@ -169,13 +163,32 @@ class AppSharedPreference {
 
   static String get getEmail => _prefs?.getString(_email) ?? '';
 
-
   static List<String> getIme() {
     return _prefs?.getStringList(_ime) ?? [];
   }
 
   static cashIme(List<String> ime) {
     _prefs?.setStringList(_ime, ime);
+  }
+
+  static cashImage(String url, Uint8List? data) {
+    if (data == null) return;
+
+    final fileName = url.split('/').lastOrNull ?? url;
+
+    _prefs?.setStringList(fileName, data.map((byte) => byte.toString()).toList());
+  }
+  static Uint8List? getImage(String url) {
+    final fileName = url.split('/').lastOrNull ?? url;
+    final cachedData = _prefs?.getStringList(fileName);
+
+    if (cachedData != null) {
+      final restoredData = Uint8List.fromList(
+          cachedData.map((str) => int.parse(str)).toList()
+      );
+      return restoredData;
+    }
+    return null;
   }
 
 }
