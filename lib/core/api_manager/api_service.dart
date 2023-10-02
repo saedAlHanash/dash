@@ -44,6 +44,7 @@ class APIService {
   final innerHeader = {
     'Content-Type': 'application/json',
     'origin': 'x-requested-with',
+    'X-Frame-Options': 'SAMEORIGIN',
     'x-cors-api-key': 'temp_ddc55961defc6c4343f28eec36c009da',
     'Authorization': 'Bearer ${AppSharedPreference.getToken()}',
   };

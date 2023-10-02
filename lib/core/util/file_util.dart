@@ -119,8 +119,8 @@ Future<Uint8List?> fetchImage(String imageUrl) async {
   if (imageUrl.isEmpty) return null;
 
   try {
-    final response =
-        await http.post(Uri.parse(imageUrl), headers: APIService().innerHeader);
+    final response = await APIService().getApiProxyPayed(url: imageUrl);
+
     if (response.statusCode == 200) {
       return response.bodyBytes;
     } else {
