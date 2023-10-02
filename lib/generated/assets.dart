@@ -117,15 +117,10 @@ class Assets {
   static const String iconsUp = 'assets/icons/up.svg';
   static const String iconsUser = 'assets/icons/user.svg';
   static const String iconsWallet = 'assets/icons/wallet.svg';
-  static const String lottiesAccountsLoginPleasewait = 'assets/lotties/accounts_login_pleasewait.json';
+
   static const String lottiesError = 'assets/lotties/error.json';
-  static const String lottiesFindLocation = 'assets/lotties/find_location.json';
-  static const String lottiesLoading = 'assets/lotties/loading.json';
-  static const String lottiesLoadingMap = 'assets/lotties/loading_map.json';
-  static const String lottiesMochup01Hi = 'assets/lotties/mochup_01_hi.json';
   static const String lottiesMochup02Location = 'assets/lotties/mochup_02_location.json';
   static const String lottiesMochup03Done = 'assets/lotties/mochup_03_done.json';
-  static const String lottiesSample = 'assets/lotties/sample.json';
-  static const String soundsSound = 'assets/sounds/sound.wav';
+
 
 }

@@ -105,8 +105,6 @@ flutter:
     - assets/fonts/
     - assets/icons/
     - assets/lotties/
-    - assets/sounds/
-    - assets/
 
   fonts:
     - family: cairo
