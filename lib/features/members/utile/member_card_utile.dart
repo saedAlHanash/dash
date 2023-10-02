@@ -19,11 +19,11 @@ extension PwHelper on double {
 }
 
 pw.MemoryImage? institutionsLogo;
-late final pw.MemoryImage stamp;
+pw.MemoryImage? stamp;
 
-late final pw.Font arabicFont;
+pw.Font? arabicFont;
 
-late final pw.SvgImage logoSvg;
+pw.SvgImage? logoSvg;
 
 Future<pw.Widget> getCardMember(Member member) async {
   final qrImage = await getQrImage(member.id);
@@ -37,7 +37,7 @@ Future<pw.Widget> getCardMember(Member member) async {
   final topCard = pw.Row(
     mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
     children: [
-      logoSvg,
+      if (logoSvg != null) logoSvg!,
       pw.Text(
         'بطاقة اشتراك بالنقل',
         textDirection: pw.TextDirection.rtl,
@@ -47,7 +47,7 @@ Future<pw.Widget> getCardMember(Member member) async {
           font: arabicFont,
         ),
       ),
-      institutionsLogo == null ? logoSvg : pw.Image(institutionsLogo!, height: 20.0),
+      if (institutionsLogo != null) pw.Image(institutionsLogo!, height: 20.0),
     ],
   );
 
@@ -149,11 +149,12 @@ Future<pw.Widget> getCardMember(Member member) async {
             ],
           ),
         ),
-        pw.Positioned(
-          bottom: 0.0,
-          left: 35.0,
-          child: pw.Image(stamp, height: 50, width: 50),
-        ),
+        if (stamp != null)
+          pw.Positioned(
+            bottom: 0.0,
+            left: 35.0,
+            child: pw.Image(stamp!, height: 50, width: 50),
+          ),
       ]),
     ],
   );
