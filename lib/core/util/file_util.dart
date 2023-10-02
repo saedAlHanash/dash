@@ -114,6 +114,7 @@ saveImageFile({
 }
 
 Future<Uint8List?> fetchImage(String imageUrl) async {
+  if (imageUrl.isEmpty) return null;
   final response = await http.get(Uri.parse(imageUrl));
   if (response.statusCode == 200) {
     return response.bodyBytes;
