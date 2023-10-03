@@ -42,8 +42,14 @@ class TripsPage extends StatelessWidget {
                 return TripsFilterWidget(
                   command: state.command,
                   onApply: (request) {
-                    context.read<AllTripsCubit>().getAllTrips(context,
-                        command: state.command.copyWith(filterTripRequest: request));
+                    context.read<AllTripsCubit>().getAllTrips(
+                          context,
+                          command: state.command.copyWith(
+                            filterTripRequest: request,
+                            skipCount: 0,
+                            totalCount: 0,
+                          ),
+                        );
                   },
                 );
               },
@@ -60,9 +66,7 @@ class TripsPage extends StatelessWidget {
 
                 return SaedTableWidget(
                   onChangePage: (command) {
-                    context
-                        .read<AllTripsCubit>()
-                        .getAllTrips(context, command: command);
+                    context.read<AllTripsCubit>().getAllTrips(context, command: command);
                   },
                   fullHeight: 1.8.sh,
                   title: _tripsTableHeader,

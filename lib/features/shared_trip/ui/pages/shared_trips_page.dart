@@ -48,8 +48,14 @@ class _SharedTripsPageState extends State<SharedTripsPage> {
                 return TripsFilterWidget(
                   command: state.command,
                   onApply: (request) {
-                    context.read<GetSharedTripsCubit>().getSharesTrip(context,
-                        command: state.command.copyWith(filterTripRequest: request));
+                    context.read<GetSharedTripsCubit>().getSharesTrip(
+                          context,
+                          command: state.command.copyWith(
+                            filterTripRequest: request,
+                            skipCount: 0,
+                            totalCount: 0,
+                          ),
+                        );
                   },
                 );
               },

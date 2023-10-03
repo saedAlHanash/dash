@@ -6,7 +6,9 @@ import 'package:map_package/map/bloc/ather_cubit/ather_cubit.dart';
 import 'package:map_package/map/bloc/map_controller_cubit/map_controller_cubit.dart';
 import 'package:map_package/map/ui/widget/map_widget.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_dash/core/strings/app_color_manager.dart';
 import 'package:qareeb_dash/features/shared_trip/ui/widget/shared_trip_info_list_widget.dart';
+import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_models/global.dart';
 
 import '../../../../core/util/my_style.dart';
@@ -15,6 +17,7 @@ import '../../../../core/widgets/app_bar_widget.dart';
 import '../../../../core/widgets/my_button.dart';
 import '../../bloc/shared_trip_by_id_cubit/shared_trip_by_id_cubit.dart';
 import '../../bloc/update_shared_cubit/update_shared_cubit.dart';
+import '../../data/request/create_shared_request.dart';
 
 class SharedTripInfoPage extends StatefulWidget {
   const SharedTripInfoPage({Key? key}) : super(key: key);
@@ -110,20 +113,35 @@ class _SharedTripInfoPageState extends State<SharedTripInfoPage> {
                                         'admin') {
                                       return 0.0.verticalSpace;
                                     }
-                                    return MyButton(
-                                      width: 100.0.w,
-                                      text: 'إلغاء الرحلة',
-                                      color: Colors.black,
-                                      textColor: Colors.white,
-                                      onTap: () {
-                                        context
-                                            .read<UpdateSharedCubit>()
-                                            .updateSharedTrip(
-                                              context,
-                                              trip: state.result,
-                                              tState: SharedTripStatus.canceled,
-                                            );
-                                      },
+
+                                    return Row(
+                                      children: [
+                                        MyButton(
+                                          width: 100.0.w,
+                                          text: 'إلغاء الرحلة',
+                                          color: Colors.black,
+                                          textColor: Colors.white,
+                                          onTap: () {
+                                            context
+                                                .read<UpdateSharedCubit>()
+                                                .updateSharedTrip(
+                                                  context,
+                                                  trip: state.result,
+                                                  tState: SharedTripStatus.canceled,
+                                                );
+                                          },
+                                        ),
+                                        10.0.horizontalSpace,
+                                        MyButton(
+                                          width: 100.0.w,
+                                          text: 'تعديل وقت الرحلة',
+                                          color: AppColorManager.mainColor,
+                                          textColor: Colors.white,
+                                          onTap: () async {
+                                            await updateTripTime(context, state);
+                                          },
+                                        ),
+                                      ],
                                     );
                                   },
                                 ),
@@ -143,6 +161,28 @@ class _SharedTripInfoPageState extends State<SharedTripInfoPage> {
         ),
       ),
     );
+  }
+
+  Future<void> updateTripTime(BuildContext context, SharedTripByIdInitial state) async {
+    final time = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.fromDateTime(
+        state.result.schedulingDate ?? DateTime.now(),
+      ),
+    );
+
+    if (time != null && context.mounted) {
+      final request = RequestCreateShared();
+      request.id = state.result.id;
+      request.schedulingDate = state.result.schedulingDate?.copyWith(
+        hour: time.hour,
+        minute: time.minute,
+      );
+      context.read<UpdateSharedCubit>().updateSharedTripTime(
+            context,
+            request: request,
+          );
+    }
   }
 }
 // DrawableText(

@@ -245,9 +245,10 @@ class OsrmUrl {
   static const key = '5b3ce3597851110001cf6248989ba286fa3c483496378107c01120f3';
 }
 
-class PathUrl {
-  static const updateSharedTrip =
-      'api/services/app/SharedTripService/UpdateSharedTripStatus';
+class PatchUrl {
+  static const updateSharedTrip = 'api/services/app/SharedTripService/UpdateSharedTripStatus';
+
+  static const updateSharedTripTime = 'api/services/app/SharedTripService/UpdateSharedTripTime';
 
   static const changeLoyalty = 'api/services/app/UserService/ChangeSubscriptionInLoyalty';
 

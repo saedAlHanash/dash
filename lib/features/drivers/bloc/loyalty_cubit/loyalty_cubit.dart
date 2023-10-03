@@ -37,7 +37,7 @@ class LoyaltyCubit extends Cubit<LoyaltyInitial> {
   static Future<Pair<bool?, String?>> changeLoyaltyApi(
       {required int driverId, required bool loyalState}) async {
     final response = await APIService().patchApi(
-      url: PathUrl.changeLoyalty,
+      url: PatchUrl.changeLoyalty,
       body: {
         "driverId": driverId,
         "subscribed": loyalState,

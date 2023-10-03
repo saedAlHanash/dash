@@ -34,7 +34,7 @@ class ChangeProviderStateCubit extends Cubit<ChangeProviderStateInitial> {
   Future<Pair<bool?, String?>> _changeProviderStateApi(
       {required bool providerState}) async {
     final response = await APIService().patchApi(
-        url: PathUrl.changeProviderState,
+        url: PatchUrl.changeProviderState,
         query: {'Id': state.id, 'isActive': providerState});
 
     if (response.statusCode == 200) {

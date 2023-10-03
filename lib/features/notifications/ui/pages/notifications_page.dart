@@ -47,6 +47,12 @@ class _NotificationPageState extends State<NotificationPage> {
                     state.request.areaIds = request.areaIds;
                   },
                 ),
+                MyEditTextWidget(
+                  onChanged: (p0) => state.request.title = p0,
+                  hint: 'اكتب عنوان الإشعار',
+                  innerPadding: const EdgeInsets.all(20.0).r,
+                ),
+                5.0.verticalSpace,
                 SizedBox(
                   height: 300.h,
                   child: MyEditTextWidget(

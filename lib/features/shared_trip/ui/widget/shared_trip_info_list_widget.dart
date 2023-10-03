@@ -58,6 +58,9 @@ class _TripInfoListWidgetState extends State<TripInfoListWidget> {
             title: 'تاريخ الإنشاء',
             info: widget.trip.creationDate?.formatDateTime ?? '-'),
         ItemInfoInLine(
+            title: 'تاريخ الجدولة',
+            info: widget.trip.schedulingDate?.formatDateTime ?? '-'),
+        ItemInfoInLine(
             title: 'تاريخ البداية', info: widget.trip.startDate?.formatDateTime ?? '-'),
         ItemInfoInLine(
             title: 'تاريخ النهاية', info: widget.trip.endDate?.formatDateTime ?? '-'),

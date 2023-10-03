@@ -18,6 +18,8 @@ import '../../../../core/util/pair_class.dart';
 import 'package:map_package/map/bloc/ather_cubit/ather_cubit.dart';
 import 'package:qareeb_models/shared_trip/data/response/shared_trip.dart';
 
+import '../../data/request/create_shared_request.dart';
+
 part 'update_shared_state.dart';
 
 class UpdateSharedCubit extends Cubit<UpdateSharedInitial> {
@@ -62,7 +64,7 @@ class UpdateSharedCubit extends Cubit<UpdateSharedInitial> {
 
     if (await network.isConnected) {
       final response = await APIService().patchApi(
-        url: PathUrl.updateSharedTrip,
+        url: PatchUrl.updateSharedTrip,
         body: {
           "tripId": state.trip.id,
           "status": state.tState.upperFirst,
@@ -72,6 +74,43 @@ class UpdateSharedCubit extends Cubit<UpdateSharedInitial> {
 
       if (response.statusCode == 200) {
         return Pair(SharedTripResponse.fromJson(response.jsonBody).result, null);
+      } else {
+        return Pair(null, ErrorManager.getApiError(response));
+      }
+    } else {
+      return Pair(null, AppStringManager.noInternet);
+    }
+  }
+
+  Future<void> updateSharedTripTime(
+    BuildContext context, {
+    required RequestCreateShared request,
+  }) async {
+    final r = await NoteMessage.showConfirm(context, text: 'تأكيد العملية');
+    if (!r) return;
+    emit(state.copyWith(statuses: CubitStatuses.loading, request: request));
+
+    final pair = await _updateSharedTripTimeApi();
+
+    if (pair.first == null) {
+      if (context.mounted) {
+        NoteMessage.showSnakeBar(message: pair.second ?? '', context: context);
+      }
+      emit(state.copyWith(statuses: CubitStatuses.error, error: pair.second));
+    } else {
+      emit(state.copyWith(statuses: CubitStatuses.done, result: pair.first));
+    }
+  }
+
+  Future<Pair<SharedTrip?, String?>> _updateSharedTripTimeApi() async {
+    if (await network.isConnected) {
+      final response = await APIService().patchApi(
+        url: PatchUrl.updateSharedTripTime,
+        body: state.request.toJson(),
+      );
+
+      if (response.statusCode == 200) {
+        return Pair(SharedTrip.fromJson({'id': state.request.id}), null);
       } else {
         return Pair(null, ErrorManager.getApiError(response));
       }

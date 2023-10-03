@@ -187,6 +187,7 @@ class _CreateSharedTripPageState extends State<CreateSharedTripPage> {
                                 lastDate: now.addFromNow(month: 1),
                               );
                               if (pick != null && context.mounted) {
+
                                 final time = await showTimePicker(
                                     context: context, initialTime: TimeOfDay.now());
 
@@ -194,6 +195,7 @@ class _CreateSharedTripPageState extends State<CreateSharedTripPage> {
                                   final request = RequestCreateShared();
                                   request.schedulingDate =
                                       now.initialFromDateTime(date: pick, time: time);
+
                                   for (var value in addPointCubit.state.edgeIds) {
                                     request.pathEdgesIds.add(value);
                                   }

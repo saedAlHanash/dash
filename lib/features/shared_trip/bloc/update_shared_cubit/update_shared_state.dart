@@ -7,12 +7,14 @@ class UpdateSharedInitial extends Equatable {
   final String error;
   final SharedTrip trip;
   final SharedTripStatus tState;
+  final RequestCreateShared request;
 
   const UpdateSharedInitial({
     required this.statuses,
     required this.result,
     required this.error,
     required this.tState,
+    required this.request,
     required this.trip,
   });
 
@@ -23,6 +25,7 @@ class UpdateSharedInitial extends Equatable {
       trip: SharedTrip.fromJson({}),
       statuses: CubitStatuses.init,
       tState: SharedTripStatus.pending,
+      request: RequestCreateShared(),
     );
   }
 
@@ -35,6 +38,7 @@ class UpdateSharedInitial extends Equatable {
     String? error,
     SharedTrip? trip,
     SharedTripStatus? tState,
+    RequestCreateShared? request,
   }) {
     return UpdateSharedInitial(
       statuses: statuses ?? this.statuses,
@@ -42,6 +46,7 @@ class UpdateSharedInitial extends Equatable {
       error: error ?? this.error,
       trip: trip ?? this.trip,
       tState: tState ?? this.tState,
+      request: request ?? this.request,
     );
   }
 }
