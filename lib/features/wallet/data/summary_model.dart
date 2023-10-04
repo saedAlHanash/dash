@@ -3,8 +3,11 @@ import 'package:qareeb_models/global.dart';
 
 class SummaryModel {
   int? driverId;
+  ///المبلغ الذي سيتم اقتطاعه بأول عملية تحويل
   num? cutAmount;
+  ///المبلغ الثاني في عملية التحويل
   num? payAmount;
+  ///
   SummaryPayToEnum? type;
 
   String get message {

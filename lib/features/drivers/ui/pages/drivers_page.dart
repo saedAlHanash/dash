@@ -115,7 +115,7 @@ class _DriverPageState extends State<DriverPage> {
                   fullHeight: 1.8.sh,
                   command: state.command,
                   title: clientTableHeader,
-                  fullSizeIndex: const [7],
+
                   data: list
                       .mapIndexed(
                         (index, e) => [

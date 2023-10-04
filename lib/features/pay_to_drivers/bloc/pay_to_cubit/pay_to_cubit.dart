@@ -16,6 +16,8 @@ class PayToCubit extends Cubit<PayToInitial> {
   PayToCubit() : super(PayToInitial.initial());
 
   Future<void> payTo(BuildContext context, {required SummaryModel request}) async {
+    if ((request.payAmount ?? 0) == 0) return;
+    if (request.driverId == null) return;
     final r = await NoteMessage.showConfirm(context, text: request.message);
     if (!r) return;
 
@@ -24,41 +26,57 @@ class PayToCubit extends Cubit<PayToInitial> {
     emit(state.copyWith(statuses: CubitStatuses.loading));
 
     Pair? pair;
+
     switch (request.type!) {
+      //مطلوب من السائق
       case SummaryPayToEnum.requiredFromDriver:
+        //region
+
+        //دفعة بمستحقات السائق من الشركة
+        //Company To Driver
         pair = await _payPayToApi(
           driverId: request.driverId!,
           type: TransferPayType.companyToDriver,
           amount: request.cutAmount!,
         );
 
+        //دفعة بمستحقات الشركة من السائق
+        //Driver To Company
         if (checkResponse(pair)) {
           pair = await _payPayToApi(
             driverId: request.driverId!,
             type: TransferPayType.driverToCompany,
-            amount: request.payAmount!,
+            amount: request.payAmount! + request.cutAmount!,
           );
         }
-
         break;
+      //endregion
+
+      //مطلوب من الشركة
       case SummaryPayToEnum.requiredFromCompany:
+        //region
+        //دفعة بمستحقات الشركة من السائق
+        //Driver To Company
         pair = await _payPayToApi(
           driverId: request.driverId!,
           type: TransferPayType.driverToCompany,
           amount: request.cutAmount!,
         );
-
+        //دفعة بمستحقات السائق من الشركة
+        //Company To Driver
         if (checkResponse(pair)) {
           pair = await _payPayToApi(
             driverId: request.driverId!,
             type: TransferPayType.companyToDriver,
-            amount: request.payAmount!,
+            amount: request.payAmount! + request.cutAmount!,
           );
         }
-
         break;
+      //endregion
 
+      //المبلغ متساوي
       case SummaryPayToEnum.equal:
+        //region
         pair = await _payPayToApi(
           driverId: request.driverId!,
           type: TransferPayType.driverToCompany,
@@ -73,6 +91,7 @@ class PayToCubit extends Cubit<PayToInitial> {
           );
         }
         break;
+      //endregion
     }
 
     if (pair.first == null) {

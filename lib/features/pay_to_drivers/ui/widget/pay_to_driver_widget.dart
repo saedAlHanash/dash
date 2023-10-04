@@ -61,35 +61,19 @@ class _PayToDriverWidgetState extends State<PayToDriverWidget> {
                           ),
                         )),
                 );
-
-                // return SpinnerWidget(
-                //   items: state.getSpinnerItem
-                //     ..insert(
-                //       0,
-                //       SpinnerItem(
-                //         id: -1,
-                //         enable: false,
-                //         name: 'اختر سائق',
-                //       ),
-                //     ),
-                //   onChanged: (spinnerItem) {
-                //     request.driverId = spinnerItem.id;
-                //     context.read<AccountAmountCubit>().getAccountAmount(
-                //           context,
-                //           driverId: request.driverId ?? 0,
-                //         );
-                //   },
-                // );
               },
             ),
           ),
+
           SummaryPayToWidget(
             onGetSummary: (summary) => request = summary,
           ),
+
           MyTextFormNoLabelWidget(
             label: 'قيمة الدفعة',
             onChanged: (p0) => request.payAmount = num.tryParse(p0) ?? 0,
           ),
+
           BlocConsumer<PayToCubit, PayToInitial>(
             listenWhen: (p, c) => c.statuses.done,
             listener: (context, state) => Navigator.pop(context, true),
@@ -100,8 +84,6 @@ class _PayToDriverWidgetState extends State<PayToDriverWidget> {
               return MyButton(
                 text: 'تسديد',
                 onTap: () {
-                  if ((request.payAmount ?? 0) == 0) return;
-                  if (request.driverId == null) return;
                   context.read<PayToCubit>().payTo(
                         context,
                         request: request,

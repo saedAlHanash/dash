@@ -12,32 +12,45 @@ import '../../../../core/widgets/item_info.dart';
 import '../../../accounts/bloc/account_amount_cubit/account_amount_cubit.dart';
 import '../../data/summary_model.dart';
 
-class SummaryPayToWidget extends StatelessWidget {
+class SummaryPayToWidget extends StatefulWidget {
   const SummaryPayToWidget({super.key, required this.onGetSummary});
 
   final Function(SummaryModel summary)? onGetSummary;
+
+  @override
+  State<SummaryPayToWidget> createState() => _SummaryPayToWidgetState();
+}
+
+class _SummaryPayToWidgetState extends State<SummaryPayToWidget> {
+  final model = SummaryModel();
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AccountAmountCubit, AccountAmountInitial>(
       listenWhen: (p, c) => c.statuses.done,
       listener: (context, state) {
-        final model = SummaryModel();
         model.type = state.summaryType;
+
         switch (state.summaryType) {
+          //مطلوب من السائق
           case SummaryPayToEnum.requiredFromDriver:
             model.cutAmount = state.driverAmount;
             break;
+          //مطلوب من الشركة
           case SummaryPayToEnum.requiredFromCompany:
             model.cutAmount = state.companyAmount;
             break;
+          //متساوي
           case SummaryPayToEnum.equal:
             model.cutAmount = state.companyAmount;
             break;
         }
+        //تخزين المعرف
         model.driverId = state.id;
-        onGetSummary?.call(model);
+        //استدعاء التابع
+        widget.onGetSummary?.call(model);
       },
+
       builder: (context, state) {
         if (state.statuses == CubitStatuses.init) {
           return 0.0.verticalSpace;

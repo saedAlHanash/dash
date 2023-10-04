@@ -135,8 +135,8 @@ class _PayToDriversPageState extends State<PayToDriversPage> {
                     fullHeight: 1.8.sh,
                     onChangePage: (command) {
                       context
-                          .read<AllTransfersCubit>()
-                          .getAllTransfers(context, command: command);
+                          .read<FinancialReportCubit>()
+                          .getReport(context, command: command);
                     },
                     title: transfersHeaderTable,
                     data: state.result.mapIndexed((index, e) {
