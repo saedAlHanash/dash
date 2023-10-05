@@ -51,9 +51,10 @@ class MembersPage extends StatefulWidget {
   State<MembersPage> createState() => _MembersPageState();
 }
 
-class _MembersPageState extends State<MembersPage>  with SingleTickerProviderStateMixin{
+class _MembersPageState extends State<MembersPage> with SingleTickerProviderStateMixin {
   var loading = false;
   var loading1 = false;
+  var loading2 = false;
   late Animation<double> _animation;
   late AnimationController _animationController;
 
@@ -65,7 +66,7 @@ class _MembersPageState extends State<MembersPage>  with SingleTickerProviderSta
     );
 
     final curvedAnimation =
-    CurvedAnimation(curve: Curves.easeInOut, parent: _animationController);
+        CurvedAnimation(curve: Curves.easeInOut, parent: _animationController);
     _animation = Tween<double>(begin: 0, end: 1).animate(curvedAnimation);
 
     super.initState();
@@ -76,75 +77,92 @@ class _MembersPageState extends State<MembersPage>  with SingleTickerProviderSta
     return Scaffold(
       floatingActionButton: isAllowed(AppPermissions.members)
           ? StatefulBuilder(builder: (context, mState) {
-            return FloatingActionBubble(
-              // Menu items
-              items: [
-                Bubble(
-                  title: "إضافة طالب",
-                  iconColor: Colors.white,
-                  bubbleColor: AppColorManager.mainColor,
-                  icon: Icons.add,
-                  titleStyle: const TextStyle(fontSize: 16, color: Colors.white),
-                  onPress: () {
-                    context.pushNamed(GoRouteName.createMember);
-                  },
-                ),
-                Bubble(
-                  title: loading1 ? 'جاري التحميل...' : "تحميل ملف بطاقات الطلاب",
-                  iconColor: Colors.white,
-                  bubbleColor: AppColorManager.mainColor,
-                  icon: Icons.credit_card,
-                  titleStyle: const TextStyle(fontSize: 16, color: Colors.white),
-                  onPress: () {
-                    mState(() => loading1 = true);
-                    context.read<AllMembersCubit>().getMembersAsyncPdf(context).then(
-                          (value) {
-                        mState(() => loading1 = false);
-                      },
-                    );
-                  },
-                ),
+              return FloatingActionBubble(
+                // Menu items
+                items: [
+                  Bubble(
+                    title: "إضافة طالب",
+                    iconColor: Colors.white,
+                    bubbleColor: AppColorManager.mainColor,
+                    icon: Icons.add,
+                    titleStyle: const TextStyle(fontSize: 16, color: Colors.white),
+                    onPress: () {
+                      context.pushNamed(GoRouteName.createMember);
+                    },
+                  ),
+                  Bubble(
+                    title: loading1 ? 'جاري التحميل...' : "تحميل ملف بطاقات الطلاب",
+                    iconColor: Colors.white,
+                    bubbleColor: AppColorManager.mainColor,
+                    icon: Icons.credit_card,
+                    titleStyle: const TextStyle(fontSize: 16, color: Colors.white),
+                    onPress: () {
+                      mState(() => loading1 = true);
+                      context.read<AllMembersCubit>().getMembersAsyncPdf(context).then(
+                        (value) {
+                          mState(() => loading1 = false);
+                        },
+                      );
+                    },
+                  ),
+                  Bubble(
+                    title:
+                        loading2 ? 'جاري التحميل...' : " تحديد تحميل ملف بطاقات الطلاب",
+                    iconColor: Colors.white,
+                    bubbleColor: AppColorManager.mainColor,
+                    icon: Icons.credit_card,
+                    titleStyle: const TextStyle(fontSize: 16, color: Colors.white),
+                    onPress: () {
+                      mState(() => loading2 = true);
+                      context
+                          .read<AllMembersCubit>()
+                          .getMembersAsyncPdf(context, all: false)
+                          .then(
+                        (value) {
+                          mState(() => loading2 = false);
+                        },
+                      );
+                    },
+                  ),
+                  Bubble(
+                    title: loading ? 'جاري التحميل...' : "تحميل ملف إكسل",
+                    iconColor: Colors.white,
+                    bubbleColor: AppColorManager.mainColor,
+                    icon: Icons.file_copy_rounded,
+                    titleStyle: const TextStyle(fontSize: 16, color: Colors.white),
+                    onPress: () {
+                      mState(() => loading = true);
+                      context.read<AllMembersCubit>().getMembersAsync(context).then(
+                        (value) {
+                          if (value == null) return;
+                          saveXls(
+                            header: value.first,
+                            data: value.second,
+                            fileName: 'تقرير الطلاب ${DateTime.now().formatDate}',
+                          );
+                          mState(() => loading = false);
+                        },
+                      );
+                    },
+                  ),
+                ],
 
-                // Floating action menu item
-                Bubble(
-                  title: loading ? 'جاري التحميل...' : "تحميل ملف إكسل",
-                  iconColor: Colors.white,
-                  bubbleColor: AppColorManager.mainColor,
-                  icon: Icons.file_copy_rounded,
-                  titleStyle: const TextStyle(fontSize: 16, color: Colors.white),
-                  onPress: () {
-                    mState(() => loading = true);
-                    context.read<AllMembersCubit>().getMembersAsync(context).then(
-                          (value) {
-                        if (value == null) return;
-                        saveXls(
-                          header: value.first,
-                          data: value.second,
-                          fileName: 'تقرير الطلاب ${DateTime.now().formatDate}',
-                        );
-                        mState(() => loading = false);
-                      },
-                    );
-                  },
-                ),
-              ],
+                // animation controller
+                animation: _animation,
 
-              // animation controller
-              animation: _animation,
+                // On pressed change animation state
+                onPress: () => _animationController.isCompleted
+                    ? _animationController.reverse()
+                    : _animationController.forward(),
 
-              // On pressed change animation state
-              onPress: () => _animationController.isCompleted
-                  ? _animationController.reverse()
-                  : _animationController.forward(),
+                // Floating Action button Icon color
+                iconColor: AppColorManager.whit,
 
-              // Floating Action button Icon color
-              iconColor: AppColorManager.whit,
-
-              // Flaoting Action button Icon
-              iconData: Icons.settings,
-              backGroundColor: AppColorManager.mainColor,
-            );
-          })
+                // Flaoting Action button Icon
+                iconData: Icons.settings,
+                backGroundColor: AppColorManager.mainColor,
+              );
+            })
           : null,
       body: SingleChildScrollView(
         padding: const EdgeInsets.only(bottom: 100.0).r,
@@ -248,10 +266,17 @@ class _MembersPageState extends State<MembersPage>  with SingleTickerProviderSta
                                     icon: const Icon(Icons.key),
                                   ),
                                   IconButton(
-                                    onPressed: () {
-                                      downloadImage(e.id, e.collegeIdNumber);
+                                    onPressed: () async {
+                                      createCard([e]);
                                     },
                                     icon: const Icon(Icons.qr_code, color: Colors.black),
+                                  ),
+                                  IconButton(
+                                    onPressed: () async {
+                                      createCard([e]);
+                                    },
+                                    icon: const Icon(Icons.credit_card,
+                                        color: AppColorManager.mainColor),
                                   ),
                                   InkWell(
                                     onTap: () {

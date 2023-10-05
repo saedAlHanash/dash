@@ -178,17 +178,16 @@ class AppSharedPreference {
 
     _prefs?.setStringList(fileName, data.map((byte) => byte.toString()).toList());
   }
+
   static Uint8List? getImage(String url) {
     final fileName = url.split('/').lastOrNull ?? url;
     final cachedData = _prefs?.getStringList(fileName);
 
-    if (cachedData != null) {
-      final restoredData = Uint8List.fromList(
-          cachedData.map((str) => int.parse(str)).toList()
-      );
+    if (cachedData != null && cachedData.isNotEmpty) {
+      final restoredData =
+          Uint8List.fromList(cachedData.map((str) => int.parse(str)).toList());
       return restoredData;
     }
     return null;
   }
-
 }

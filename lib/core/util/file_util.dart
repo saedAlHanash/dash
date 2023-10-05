@@ -121,15 +121,14 @@ Future<Uint8List?> fetchImage(String imageUrl) async {
   if (imageUrl.isEmpty) return null;
 
   final imageFromCash = AppSharedPreference.getImage(imageUrl);
+
   if (imageFromCash != null) {
-    loggerObject.wtf('from cache');
+
     return imageFromCash;
   }
 
-  loggerObject.w('get mage');
   try {
     final response = await APIService().getApiProxyPayed(url: imageUrl);
-
     if (response.statusCode == 200) {
       AppSharedPreference.cashImage(imageUrl, response.bodyBytes);
       return response.bodyBytes;

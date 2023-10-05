@@ -147,7 +147,7 @@ class _TripsHistoryFilterWidgetState extends State<TripsHistoryFilterWidget> {
               15.0.horizontalSpace,
               Expanded(
                 child: Builder(builder: (context) {
-                  loggerObject.w('message');
+
                   return SpinnerWidget(
                     key: key2,
                     width: 1.0.sw,
@@ -176,35 +176,35 @@ class _TripsHistoryFilterWidgetState extends State<TripsHistoryFilterWidget> {
                   );
                 }),
               ),
-              15.0.horizontalSpace,
-              Expanded(
-                child: SpinnerWidget(
-                  key: key3,
-                  width: 1.0.sw,
-                  items: [
-                    SpinnerItem(
-                      name: 'مشترك',
-                      id: 1,
-                      item: true,
-                      isSelected: request.isParticipated ?? false,
-                    ),
-                    SpinnerItem(
-                      name: 'غير مشترك',
-                      id: 2,
-                      item: false,
-                      isSelected: !(request.isParticipated ?? true),
-                    ),
-                  ]..insert(
-                      0,
-                      SpinnerItem(
-                        name: 'حالة الاشتراك في النقل',
-                        id: -1,
-                        isSelected: request.isParticipated == null,
-                      ),
-                    ),
-                  onChanged: (item) => request.isParticipated = item.item,
-                ),
-              ),
+              // 15.0.horizontalSpace,
+              // Expanded(
+              //   child: SpinnerWidget(
+              //     key: key3,
+              //     width: 1.0.sw,
+              //     items: [
+              //       SpinnerItem(
+              //         name: 'مشترك',
+              //         id: 1,
+              //         item: true,
+              //         isSelected: request.isParticipated ?? false,
+              //       ),
+              //       SpinnerItem(
+              //         name: 'غير مشترك',
+              //         id: 2,
+              //         item: false,
+              //         isSelected: !(request.isParticipated ?? true),
+              //       ),
+              //     ]..insert(
+              //         0,
+              //         SpinnerItem(
+              //           name: 'حالة الاشتراك في الرحلات',
+              //           id: -1,
+              //           isSelected: request.isParticipated == null,
+              //         ),
+              //       ),
+              //     onChanged: (item) => request.isParticipated = item.item,
+              //   ),
+              // ),
             ],
           ),
           20.0.verticalSpace,

@@ -152,7 +152,7 @@ Future<pw.Widget> getCardMember(Member member) async {
         ),
         if (stamp != null)
           pw.Positioned(
-            bottom: 0.0,
+            bottom: 10.0,
             left: 35.0,
             child: pw.Image(stamp!, height: 50, width: 50),
           ),
