@@ -48,7 +48,7 @@ Future<pw.Widget> getCardMember(Member member) async {
           font: arabicFont,
         ),
       ),
-      if (institutionsLogo != null) pw.Image(institutionsLogo!, height: 20.0),
+      if (institutionsLogo != null) pw.Image(institutionsLogo!, height: 40.0),
     ],
   );
 
