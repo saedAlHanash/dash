@@ -215,7 +215,7 @@ class _MembersPageState extends State<MembersPage> with SingleTickerProviderStat
                 final list = state.result;
                 if (list.isEmpty) return const NotFoundWidget(text: 'لا يوجد تصنيفات');
                 return SaedTableWidget(
-                  fullHeight: 0.5.sh,
+                  fullHeight: 1.8.sh,
                   command: state.command,
                   title: _super_userList,
                   data: list

@@ -48,7 +48,7 @@ Future<pw.Widget> getCardMember(Member member) async {
           font: arabicFont,
         ),
       ),
-      if (institutionsLogo != null) pw.Image(institutionsLogo!, height: 40.0),
+      if (institutionsLogo != null) pw.Image(institutionsLogo!, height: 35.0),
     ],
   );
 
@@ -59,7 +59,7 @@ Future<pw.Widget> getCardMember(Member member) async {
 
   ///image border
   final memberImage = pw.Container(
-    height: 75.0,
+    height: 70.0,
     width: 60.0,
     constraints: const pw.BoxConstraints(
       minHeight: 75.0,
@@ -126,12 +126,6 @@ Future<pw.Widget> getCardMember(Member member) async {
             children: [
               //top
               topCard,
-              pw.Divider(
-                color: PdfColors.white,
-                thickness: 0,
-                indent: 20.0,
-                endIndent: 20.0,
-              ),
               5.0.pwVerticalSpace,
               pw.Row(
                 crossAxisAlignment: pw.CrossAxisAlignment.start,
