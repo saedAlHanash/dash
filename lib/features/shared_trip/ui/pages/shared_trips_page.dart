@@ -45,7 +45,7 @@ class _SharedTripsPageState extends State<SharedTripsPage> {
           children: [
             BlocBuilder<GetSharedTripsCubit, GetSharedTripsInitial>(
               builder: (context, state) {
-                return TripsFilterWidget(
+                return SharedFilterWidget(
                   command: state.command,
                   onApply: (request) {
                     context.read<GetSharedTripsCubit>().getSharesTrip(

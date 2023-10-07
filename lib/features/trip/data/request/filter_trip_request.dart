@@ -1,5 +1,6 @@
-class FilterTripRequest {
+import 'package:qareeb_models/global.dart';
 
+class FilterTripRequest {
   int? clientId;
   int? driverId;
 
@@ -9,7 +10,8 @@ class FilterTripRequest {
   String? driverPhone;
   String? clientPhone;
 
-
+  TripStatus? tripStatus;
+  TripType? tripType;
   DateTime? startTime;
   DateTime? endTime;
 
@@ -23,20 +25,25 @@ class FilterTripRequest {
     this.driverPhone,
     this.startTime,
     this.endTime,
+    this.tripStatus,
+    this.tripType,
   });
 
   Map<String, dynamic> toMap() {
     return {
-      'ClientId': clientId ,
-      'DriverId': driverId ,
-      'DriverName': driverName ,
-      'ClientName': clientName ,
-      'DriverPhone':  driverPhone,
-      'ClientPhone':  clientPhone,
+      'ClientId': clientId,
+      'DriverId': driverId,
+      'DriverName': driverName,
+      'ClientName': clientName,
+      'DriverPhone': driverPhone,
+      'ClientPhone': clientPhone,
+      'Status': tripStatus?.index,
+      'Type': tripType?.index,
       'FromDate': startTime?.toIso8601String(),
       'ToDate': endTime?.toIso8601String(),
     };
   }
+
   void clearFilter() {
     clientId = null;
     driverId = null;
@@ -46,6 +53,8 @@ class FilterTripRequest {
     clientPhone = null;
     startTime = null;
     endTime = null;
+    tripStatus = null;
+    tripType = null;
   }
 
 //</editor-fold>

@@ -34,9 +34,9 @@ class AccountAmountCubit extends Cubit<AccountAmountInitial> {
 
     if (response.statusCode == 200 && response1.statusCode == 200) {
       var fromDriver =
-          AccountAmountResponse.fromJson(response.jsonBody).result.data.amount;
+          AccountAmountResponse.fromJson(response.json).result.data.amount;
       var fromCompany =
-          AccountAmountResponse.fromJson(response1.jsonBody).result.data.amount;
+          AccountAmountResponse.fromJson(response1.json).result.data.amount;
       return Pair(fromDriver, fromCompany);
     } else {
       return Pair(-1, -1);

@@ -53,19 +53,14 @@ import '../../features/points/bloc/get_all_points_cubit/get_edged_point_cubit.da
 import '../../features/points/bloc/get_edged_point_cubit/get_all_points_cubit.dart';
 import '../../features/points/bloc/get_points_edge_cubit/get_points_edge_cubit.dart';
 import '../../features/points/bloc/point_by_id_cubit/point_by_id_cubit.dart';
-import '../../features/previous_trips/bloc/previous_trip/previous_trips_cubit.dart';
 import '../../features/profile/bloc/profile_info_cubit/profile_info_cubit.dart';
 import '../../features/profile/bloc/update_profile_cubit/update_profile_cubit.dart';
-import '../../features/rating/data/data_source/rating_remote.dart';
-import '../../features/rating/data/repo/rating_repo_imp.dart';
-import '../../features/rating/domain/repo/rating_repo.dart';
-import '../../features/rating/domain/use_cases/rating_use_case.dart';
-import '../../features/rating/presentation/bloc/rating_cubit/rating_cubit.dart';
 import '../../features/reasons/bloc/create_cubit/create_cubit.dart';
 import '../../features/reasons/bloc/delete_reason_cubit/delete_reason_cubit.dart';
 import '../../features/reasons/bloc/get_reasons_cubit/get_reasons_cubit.dart';
 import '../../features/redeems/bloc/create_redeem_cubit/create_redeem_cubit.dart';
 import '../../features/redeems/bloc/redeems_cubit/redeems_cubit.dart';
+import '../../features/redeems/bloc/redeems_history_cubit/redeems_history_cubit.dart';
 import '../../features/roles/bloc/all_permissions_cubit/all_permissions_cubit.dart';
 import '../../features/roles/bloc/all_roles/all_roles_cubit.dart';
 import '../../features/roles/bloc/create_role_cubit/create_role_cubit.dart';
@@ -86,12 +81,10 @@ import '../../features/temp_trips/bloc/estimate_cubit/estimate_cubit.dart';
 import '../../features/temp_trips/bloc/temp_trip_by_id_cubit/temp_trip_by_id_cubit.dart';
 import '../../features/ticket/bloc/all_ticket_cubit/all_ticket_cubit.dart';
 import '../../features/ticket/bloc/replay_ticket_cubit/replay_ticket_cubit.dart';
-import '../../features/trip/bloc/all_trips_cubit/all_trips_cubit.dart';
-import '../../features/trip/bloc/cancel_trip_cubit/cancel_trip_cubit.dart';
-import '../../features/trip/bloc/driver_status_cubit/driver_status_cubit.dart';
-import '../../features/trip/bloc/nav_trip_cubit/nav_trip_cubit.dart';
+import '../../features/trip/bloc/active_trips/active_trips_cubit.dart';
 import '../../features/trip/bloc/trip_by_id/trip_by_id_cubit.dart';
 import '../../features/trip/bloc/trip_status_cubit/trip_status_cubit.dart';
+import '../../features/trip/bloc/trips_cubit/trips_cubit.dart';
 import '../../features/wallet/bloc/change_provider_state_cubit/change_provider_state_cubit.dart';
 import '../../features/wallet/bloc/charge_client_cubit/charge_client_cubit.dart';
 import '../../features/wallet/bloc/debt_cubit/debts_cubit.dart';
@@ -116,21 +109,6 @@ Future<void> init() async {
   sl.registerFactory(() => ForgotPasswordCubit(network: sl()));
   sl.registerFactory(() => ResendCodeCubit(network: sl()));
   sl.registerFactory(() => ResetPasswordCubit(network: sl()));
-
-  //endregion
-
-  //region rating_cubit
-  /// Bloc
-  sl.registerFactory(() => RatingCubit(useCase: sl()));
-
-  /// UseCases
-  sl.registerLazySingleton(() => RatingUseCase(repository: sl()));
-
-  /// Repository
-  sl.registerLazySingleton<RatingRepo>(() => RatingRepoImp(remote: sl(), network: sl()));
-
-  /// Data sources
-  sl.registerLazySingleton<RatingRemoteRepo>(() => const RatingRemoteRepoImp());
 
   //endregion
 
@@ -191,15 +169,13 @@ Future<void> init() async {
   sl.registerFactory(() => SharedTripByIdCubit());
   sl.registerFactory(() => UpdateSharedCubit());
   sl.registerFactory(() => PathByIdCubit());
-  sl.registerFactory(() => AllTripsCubit());
+  sl.registerFactory(() => TripsCubit());
+  sl.registerFactory(() => ActiveTripsCubit());
   //endregion
 
   //region trip
-  sl.registerFactory(() => DriverStatusCubit());
-  sl.registerFactory(() => TripStatusCubit());
+  sl.registerFactory(() => ChangeTripStatusCubit());
   sl.registerFactory(() => TripByIdCubit());
-  sl.registerFactory(() => NavTripCubit());
-  sl.registerFactory(() => PreviousTripsCubit());
 
   //endregion
 
@@ -220,6 +196,7 @@ Future<void> init() async {
   //region redeems
   sl.registerFactory(() => RedeemsCubit());
   sl.registerFactory(() => CreateRedeemCubit());
+  sl.registerFactory(() => RedeemsHistoryCubit());
 
   //endregion
 
@@ -292,7 +269,6 @@ Future<void> init() async {
   sl.registerFactory(() => SystemSettingsCubit());
   sl.registerFactory(() => CreateNotificationCubit());
   sl.registerFactory(() => FinancialReportCubit());
-  sl.registerFactory(() => CancelTripCubit());
 
   //region Governorate
 

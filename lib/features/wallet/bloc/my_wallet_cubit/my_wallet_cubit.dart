@@ -38,7 +38,7 @@ class WalletCubit extends Cubit<WalletInitial> {
       );
 
       if (response.statusCode == 200) {
-        var r = Pair(WalletResponse.fromJson(response.jsonBody).result, null);
+        var r = Pair(WalletResponse.fromJson(response.json).result, null);
         AppSharedPreference.setWalletBalance(r.first.totalMoney);
         return r;
       } else {

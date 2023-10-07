@@ -73,7 +73,7 @@ class UpdateSharedCubit extends Cubit<UpdateSharedInitial> {
       );
 
       if (response.statusCode == 200) {
-        return Pair(SharedTripResponse.fromJson(response.jsonBody).result, null);
+        return Pair(SharedTripResponse.fromJson(response.json).result, null);
       } else {
         return Pair(null, ErrorManager.getApiError(response));
       }

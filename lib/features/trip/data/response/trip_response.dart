@@ -4,13 +4,13 @@
 // class TripResponse {
 //   TripResponse({required this.result});
 //
-//   final TripResult? result;
+//   final Trip? result;
 //
 //   factory TripResponse.fromJson(Map<String, dynamic> json) {
 //     return TripResponse(
 //       result: json['result'] == null
-//           ? TripResult.fromJson({})
-//           : TripResult.fromJson(json['result']),
+//           ? Trip.fromJson({})
+//           : Trip.fromJson(json['result']),
 //     );
 //   }
 //
@@ -26,14 +26,14 @@
 //   });
 //
 //   final int totalCount;
-//   final List<TripResult> items;
+//   final List<Trip> items;
 //
 //   factory TripsResponse.fromJson(Map<String, dynamic> json) {
 //     return TripsResponse(
 //       totalCount: json['result']["totalCount"] ?? 0,
 //       items: json['result']["items"] == null
 //           ? []
-//           : List<TripResult>.from(json['result']["items"]!.map((x) => TripResult.fromJson(x))),
+//           : List<Trip>.from(json['result']["items"]!.map((x) => Trip.fromJson(x))),
 //     );
 //   }
 //
@@ -43,8 +43,8 @@
 //       };
 // }
 //
-// class TripResult {
-//   TripResult({
+// class Trip {
+//   Trip({
 //     required this.id,
 //     required this.clientId,
 //     required this.driverId,
@@ -125,8 +125,8 @@
 //   final int couponsId;
 //   final Driver driver;
 //
-//   factory TripResult.fromJson(Map<String, dynamic> json) {
-//     return TripResult(
+//   factory Trip.fromJson(Map<String, dynamic> json) {
+//     return Trip(
 //       id: json['id'] ?? 0,
 //       clientId: json['clientId'] ?? 0,
 //       driverId: json['driverId'] ?? 0,

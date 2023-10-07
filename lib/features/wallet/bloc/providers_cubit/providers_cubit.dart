@@ -40,7 +40,7 @@ class ProvidersCubit extends Cubit<ProvidersInitial> {
       final response = await APIService().getApi(url: GetUrl.getAllEpay);
 
       if (response.statusCode == 200) {
-        return Pair(EpayResponse.fromJson(response.jsonBody).result.items, null);
+        return Pair(EpayResponse.fromJson(response.json).result.items, null);
       } else {
         return Pair(null, ErrorManager.getApiError(response));
       }

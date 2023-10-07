@@ -815,7 +815,7 @@ packages:
     description:
       path: "."
       ref: html
-      resolved-ref: a0ecbdb907f8f4f9c144a88450534645d3789364
+      resolved-ref: "5f87e2234684a26fcb2ef73ef07b24952d6bb014"
       url: "https://github.com/saedAlHanash/map_qareeb"
     source: git
     version: "0.1.6"
@@ -1024,7 +1024,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: c002eea283a8a7aa9507a0bb003bf04df32daaab
+      resolved-ref: "6874785eb0badb7ec2c8674be62262e468d3170e"
       url: "https://github.com/saedAlHanash/qareeb_models"
     source: git
     version: "0.1.5"

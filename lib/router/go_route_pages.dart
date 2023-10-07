@@ -49,6 +49,8 @@ import '../features/points/ui/pages/point_info_page.dart';
 import '../features/points/ui/pages/points_page.dart';
 import '../features/redeems/bloc/create_redeem_cubit/create_redeem_cubit.dart';
 import '../features/redeems/bloc/redeems_cubit/redeems_cubit.dart';
+import '../features/redeems/bloc/redeems_history_cubit/redeems_history_cubit.dart';
+import '../features/redeems/ui/pages/redeems_page.dart';
 import '../features/roles/bloc/all_permissions_cubit/all_permissions_cubit.dart';
 import '../features/roles/bloc/create_role_cubit/create_role_cubit.dart';
 import '../features/roles/data/response/roles_response.dart';
@@ -64,10 +66,10 @@ import '../features/temp_trips/bloc/estimate_cubit/estimate_cubit.dart';
 import '../features/temp_trips/bloc/temp_trip_by_id_cubit/temp_trip_by_id_cubit.dart';
 import '../features/temp_trips/ui/pages/create_temp_trip_page.dart';
 import '../features/temp_trips/ui/pages/temp_trip_info_page.dart';
-import '../features/trip/bloc/all_trips_cubit/all_trips_cubit.dart';
-import '../features/trip/bloc/cancel_trip_cubit/cancel_trip_cubit.dart';
+
 import '../features/trip/bloc/trip_by_id/trip_by_id_cubit.dart';
 import '../features/trip/bloc/trip_status_cubit/trip_status_cubit.dart';
+import '../features/trip/bloc/trips_cubit/trips_cubit.dart';
 import '../features/trip/data/request/filter_trip_request.dart';
 import '../features/trip/ui/pages/trip_info_page.dart';
 import '../features/wallet/bloc/debt_cubit/debts_cubit.dart';
@@ -321,9 +323,8 @@ final appGoRouter = GoRouter(
 
         final providers = [
           BlocProvider(create: (_) => di.sl<MapControllerCubit>()),
-          BlocProvider(create: (_) => di.sl<TripStatusCubit>()),
+          BlocProvider(create: (_) => di.sl<ChangeTripStatusCubit>()),
           BlocProvider(create: (_) => di.sl<AtherCubit>()),
-          BlocProvider(create: (_) => di.sl<CancelTripCubit>()),
           BlocProvider(create: (_) => di.sl<TripByIdCubit>()..tripById(_, tripId: id)),
         ];
         return MultiBlocProvider(
@@ -345,8 +346,8 @@ final appGoRouter = GoRouter(
 
         final providers = [
           BlocProvider(
-            create: (_) => di.sl<AllTripsCubit>()
-              ..getAllTrips(
+            create: (_) => di.sl<TripsCubit>()
+              ..getTrips(
                 context,
                 command: Command.initial().copyWith(
                   filterTripRequest: FilterTripRequest(
@@ -552,6 +553,26 @@ final appGoRouter = GoRouter(
         );
       },
     ),
+
+    ///createRole
+    GoRoute(
+      name: GoRouteName.redeems,
+      path: _GoRoutePath.redeems,
+      builder: (BuildContext context, GoRouterState state) {
+        final id = int.tryParse(state.queryParams['id'] ?? '0') ?? 0;
+
+        final providers = [
+          BlocProvider(
+            create: (_) =>
+                di.sl<RedeemsHistoryCubit>()..getRedeemsHistory(_, driverId: id),
+          ),
+        ];
+        return MultiBlocProvider(
+          providers: providers,
+          child: const RedeemsPage(),
+        );
+      },
+    ),
   ],
 );
 
@@ -577,6 +598,7 @@ class GoRouteName {
   static const createTempTrip = 'createTempTrip';
   static const tempTripInfo = 'tempTripInfo';
   static const area = 'area';
+  static const redeems = 'redeems';
 }
 
 class _GoRoutePath {
@@ -601,4 +623,5 @@ class _GoRoutePath {
   static const createTempTrip = '/createTempTrip';
   static const tempTripInfo = '/tempTripInfo';
   static const area = '/area';
+  static const redeems = '/redeems';
 }

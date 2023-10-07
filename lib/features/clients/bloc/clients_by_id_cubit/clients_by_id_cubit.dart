@@ -38,7 +38,7 @@ class ClientByIdCubit extends Cubit<ClientByIdInitial> {
     );
 
     if (response.statusCode == 200) {
-      return Pair(DriverModel.fromJson(response.jsonBody['result'] ?? {}), null);
+      return Pair(DriverModel.fromJson(response.json['result'] ?? {}), null);
     } else {
       return Pair(null, ErrorManager.getApiError(response));
     }

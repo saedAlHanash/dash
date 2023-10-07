@@ -112,7 +112,7 @@ Future<BestDriver> getBestDriver() async {
   final result = await APIService().getApi(url: GetUrl.bestDriver);
 
   if (result.statusCode == 200) {
-    return BestDriverResponse.fromJson(result.jsonBody).result;
+    return BestDriverResponse.fromJson(result.json).result;
   }
 
   return BestDriver.fromJson({});

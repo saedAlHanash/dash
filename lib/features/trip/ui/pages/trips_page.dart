@@ -3,17 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/widgets/app_bar_widget.dart';
 import 'package:qareeb_dash/core/widgets/not_found_widget.dart';
 import 'package:qareeb_dash/core/widgets/saed_taple_widget.dart';
-import 'package:qareeb_dash/features/shared_trip/ui/widget/filters/shared_trips_filter_widget.dart';
 import 'package:qareeb_models/extensions.dart';
 
 import '../../../../core/util/my_style.dart';
 import '../../../../core/widgets/my_button.dart';
 import '../../../../router/go_route_pages.dart';
-import '../../bloc/all_trips_cubit/all_trips_cubit.dart';
+import '../../bloc/trips_cubit/trips_cubit.dart';
+import '../widget/filters/trips_history_filter_widget.dart';
+
 
 const _tripsTableHeader = [
   'انطلاق',
@@ -22,7 +22,7 @@ const _tripsTableHeader = [
   'الزبون',
   'السائق',
   'الحالة',
-  'تاريخ بداية',
+  'تاريخ الحجز',
   'العمليات',
 ];
 
@@ -37,12 +37,12 @@ class TripsPage extends StatelessWidget {
         padding: const EdgeInsets.only(bottom: 100.0).h,
         child: Column(
           children: [
-            BlocBuilder<AllTripsCubit, AllTripsInitial>(
+            BlocBuilder<TripsCubit, TripsInitial>(
               builder: (context, state) {
                 return TripsFilterWidget(
                   command: state.command,
                   onApply: (request) {
-                    context.read<AllTripsCubit>().getAllTrips(
+                    context.read<TripsCubit>().getTrips(
                           context,
                           command: state.command.copyWith(
                             filterTripRequest: request,
@@ -54,7 +54,7 @@ class TripsPage extends StatelessWidget {
                 );
               },
             ),
-            BlocBuilder<AllTripsCubit, AllTripsInitial>(
+            BlocBuilder<TripsCubit, TripsInitial>(
               builder: (context, state) {
                 if (state.statuses.isLoading) {
                   return MyStyle.loadingWidget();
@@ -66,20 +66,20 @@ class TripsPage extends StatelessWidget {
 
                 return SaedTableWidget(
                   onChangePage: (command) {
-                    context.read<AllTripsCubit>().getAllTrips(context, command: command);
+                    context.read<TripsCubit>().getTrips(context, command: command);
                   },
                   fullHeight: 1.8.sh,
                   title: _tripsTableHeader,
                   data: list
                       .mapIndexed(
                         (index, e) => [
-                          e.currentLocationName,
+                          e.sourceName,
                           e.destinationName,
-                          e.getTripsCost,
-                          e.clientName,
+                          e.estimatedCost.formatPrice,
+                          e.client.fullName,
                           e.driver.fullName.isEmpty ? '-' : e.driver.fullName,
-                          e.tripStateName,
-                          e.startDate?.formatDateTime ?? '-',
+                          e.tripStatus.arabicName,
+                          e.reqestDate?.formatDateTime ?? '-',
                           InkWell(
                             onTap: () {
                               context.pushNamed(GoRouteName.tripInfo,

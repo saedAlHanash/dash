@@ -86,7 +86,7 @@ class FinancialReportCubit extends Cubit<FinancialReportInitial> {
     );
 
     if (response.statusCode == 200) {
-      return Pair(FinancialReportResponse.fromJson(response.jsonBody).result, null);
+      return Pair(FinancialReportResponse.fromJson(response.json).result, null);
     } else {
       return Pair(null, ErrorManager.getApiError(response));
     }

@@ -38,7 +38,7 @@ class AllPermissionsCubit extends Cubit<AllPermissionsInitial> {
     );
 
     if (response.statusCode == 200) {
-      return Pair(PermissionsResponse.fromJson(response.jsonBody).result, null);
+      return Pair(PermissionsResponse.fromJson(response.json).result, null);
     } else {
       return Pair(null, ErrorManager.getApiError(response));
     }

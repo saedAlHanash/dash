@@ -1,46 +1,46 @@
 part of 'trip_status_cubit.dart';
 
-class TripStatusInitial extends Equatable {
+class ChangeTripStatusInitial extends Equatable {
   final CubitStatuses statuses;
   final bool result;
   final String error;
   final TripStatus tripStatus;
-  final num tripId;
+  final UpdateTripRequest request;
 
-  const TripStatusInitial({
+  const ChangeTripStatusInitial({
     required this.statuses,
     required this.result,
     required this.error,
     required this.tripStatus,
-    required this.tripId,
+    required this.request,
   });
 
-  factory TripStatusInitial.initial() {
-    return const TripStatusInitial(
+  factory ChangeTripStatusInitial.initial() {
+    return ChangeTripStatusInitial(
       result: false,
       error: '',
       statuses: CubitStatuses.init,
-      tripStatus: TripStatus.non,
-      tripId: 0,
+      tripStatus: TripStatus.pending,
+      request: UpdateTripRequest(),
     );
   }
 
   @override
   List<Object> get props => [statuses, result, error];
 
-  TripStatusInitial copyWith({
+  ChangeTripStatusInitial copyWith({
     CubitStatuses? statuses,
     bool? result,
     String? error,
     TripStatus? tripStatus,
-    num? tripId,
+    UpdateTripRequest? request,
   }) {
-    return TripStatusInitial(
+    return ChangeTripStatusInitial(
       statuses: statuses ?? this.statuses,
       result: result ?? this.result,
       error: error ?? this.error,
       tripStatus: tripStatus ?? this.tripStatus,
-      tripId: tripId ?? this.tripId,
+      request: request ?? this.request,
     );
   }
 }

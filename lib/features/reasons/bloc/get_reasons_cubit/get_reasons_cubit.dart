@@ -36,7 +36,7 @@ class GetReasonsCubit extends Cubit<GetReasonsInitial> {
     );
 
     if (response.statusCode == 200) {
-      return Pair(CancelReasonsResponse.fromJson(response.jsonBody).result.items, null);
+      return Pair(CancelReasonsResponse.fromJson(response.json).result.items, null);
     } else {
       return Pair(null, ErrorManager.getApiError(response));
     }

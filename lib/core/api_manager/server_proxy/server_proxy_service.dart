@@ -18,7 +18,7 @@ final network = sl<NetworkInfo>();
         await APIService().postApi(url: PostUrl.serverProxy, body: request.toJson());
 
     if (response.statusCode == 200) {
-      return Pair(response.jsonBody['result'], null);
+      return Pair(response.json['result'], null);
     } else {
       return Pair(null, ErrorManager.getApiError(response));
     }

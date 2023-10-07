@@ -65,7 +65,7 @@ class PointByIdCubit extends Cubit<PointByIdInitial> {
       );
 
       if (response.statusCode == 200) {
-        return Pair(TripPoint.fromJson(response.jsonBody['result'] ?? {}), null);
+        return Pair(TripPoint.fromJson(response.json['result'] ?? {}), null);
       } else {
         return Pair(null, ErrorManager.getApiError(response));
       }

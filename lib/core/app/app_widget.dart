@@ -26,7 +26,9 @@ import '../../features/system_params/bloc/system_params_cubit/system_params_cubi
 import '../../features/system_settings/bloc/system_settings_cubit/system_settings_cubit.dart';
 import '../../features/temp_trips/bloc/all_temp_trips_cubit/all_temp_trips_cubit.dart';
 import '../../features/ticket/bloc/all_ticket_cubit/all_ticket_cubit.dart';
-import '../../features/trip/bloc/all_trips_cubit/all_trips_cubit.dart';
+
+import '../../features/trip/bloc/active_trips/active_trips_cubit.dart';
+import '../../features/trip/bloc/trips_cubit/trips_cubit.dart';
 import '../../features/wallet/bloc/providers_cubit/providers_cubit.dart';
 import '../../router/go_route_pages.dart';
 import '../app_theme.dart';
@@ -44,14 +46,15 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       builder: (context, child) {
         DrawableText.initial(
-            initialColor: AppColorManager.black,
-            titleSizeText: 28.0.sp,
-            headerSizeText: 30.0.sp,
-            initialSize: 22.0.sp,
-            initialHeightText: 2.0.h,
-            selectable: true,
-            renderHtml: true,
-            textDirection: TextDirection.ltr);
+          initialColor: AppColorManager.black,
+          titleSizeText: 28.0.sp,
+          headerSizeText: 30.0.sp,
+          initialSize: 22.0.sp,
+          initialHeightText: 2.0.h,
+          selectable: true,
+          renderHtml: true,
+          // textDirection: TextDirection.ltr,
+        );
 
         return MaterialApp.router(
           scrollBehavior: MyCustomScrollBehavior(),
@@ -68,7 +71,7 @@ class MyApp extends StatelessWidget {
                 BlocProvider(create: (_) => sl<PolicyCubit>()..getPolicy(_)),
                 BlocProvider(create: (_) => sl<PointsCubit>()..getAllPoints(_)),
                 BlocProvider(create: (_) => sl<AllRolesCubit>()..getAllRoles(_)),
-                BlocProvider(create: (_) => sl<AllTripsCubit>()..getAllTrips(_)),
+                BlocProvider(create: (_) => sl<TripsCubit>()..getTrips(_)),
                 BlocProvider(create: (_) => sl<AllTicketsCubit>()..getTickets(_)),
                 BlocProvider(create: (_) => sl<AllAdminsCubit>()..getAllAdmins(_)),
                 BlocProvider(create: (_) => sl<AllDriversCubit>()..getAllDrivers(_)),
@@ -76,6 +79,7 @@ class MyApp extends StatelessWidget {
                 BlocProvider(create: (_) => sl<AllCouponsCubit>()..getAllCoupons(_)),
                 BlocProvider(create: (_) => sl<AllTempTripsCubit>()..getTempTrips(_)),
                 BlocProvider(create: (_) => sl<FinancialReportCubit>()..getReport(_)),
+                BlocProvider(create: (_) => sl<ActiveTripsCubit>()..getActiveTrips(_)),
                 BlocProvider(create: (_) => sl<GovernoratesCubit>()..getGovernorate(_)),
                 BlocProvider(create: (_) => sl<AllTransfersCubit>()..getAllTransfers(_)),
                 BlocProvider(create: (_) => sl<GetSharedTripsCubit>()..getSharesTrip(_)),

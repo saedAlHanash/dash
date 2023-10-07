@@ -39,7 +39,7 @@ class SystemParamsCubit extends Cubit<SystemParamsInitial> {
     );
 
     if (response.statusCode == 200) {
-      return Pair(SystemParamsResponse.fromJson(response.jsonBody).result.items, null);
+      return Pair(SystemParamsResponse.fromJson(response.json).result.items, null);
     } else {
       return Pair(null, ErrorManager.getApiError(response));
     }

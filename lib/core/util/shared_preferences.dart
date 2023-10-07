@@ -118,16 +118,16 @@ class AppSharedPreference {
     return _prefs?.getBool(_policy) ?? false;
   }
 
-  static void cashPreviousTrips(List<TripResult> result) {
+  static void cashPreviousTrips(List<Trip> result) {
     var json = jsonEncode(result);
     _prefs?.setString(_previousTrips, json);
   }
 
-  static List<TripResult> getPreviousTrips() {
+  static List<Trip> getPreviousTrips() {
     var json = _prefs?.getString(_previousTrips);
     if (json == null || json.isEmpty) return [];
     dynamic f = jsonDecode(json);
-    var result = List<TripResult>.from(f.map((x) => TripResult.fromJson(x)));
+    var result = List<Trip>.from(f.map((x) => Trip.fromJson(x)));
     return result;
   }
 
@@ -169,18 +169,18 @@ class AppSharedPreference {
     return result;
   }
 
-  static void cashTrip(TripResult? trip) {
+  static void cashTrip(Trip? trip) {
     if (trip == null) return;
     _prefs?.setString(_trip, jsonEncode(trip));
   }
 
   static Future<void> reload() async => await _prefs?.reload();
 
-  static TripResult getCashedTrip() {
+  static Trip getCashedTrip() {
     var json = _prefs?.getString(_trip);
-    if (json == null || json.isEmpty) return TripResult.fromJson({});
+    if (json == null || json.isEmpty) return Trip.fromJson({});
 
-    return TripResult.fromJson(jsonDecode(json));
+    return Trip.fromJson(jsonDecode(json));
   }
 
   static void removeCashedTrip() {
@@ -199,70 +199,9 @@ class AppSharedPreference {
 
   static String get ime => _prefs?.getString(_ime) ?? '';
 
-  static Future<NavTrip> getTripStateAsync() async {
-    await _prefs?.reload();
-    var trip = getCashedTrip();
-
-    if (trip.id == 0) {
-      return NavTrip.waiting;
-    }
-    await TripByIdCubit.tripByIdApi(tripId: trip.id);
-
-    trip = getCashedTrip();
-
-    //غير موجودة أو منتهية
-    if (!trip.iamDriver || trip.isCanceled) {
-      removeCashedTrip();
-      return NavTrip.waiting;
-    }
-
-    //final
-    if (trip.isDelved) return NavTrip.end;
-    //بدأت
-    if (trip.isStarted) return NavTrip.start;
-    //تم قبولها
-    if (trip.isAccepted) return NavTrip.acceptor;
-    //تم تأكيدها
-    if (trip.isConfirmed) return NavTrip.have;
-
-    return NavTrip.waiting;
-  }
-
-  static NavTrip getTripState() {
-    var trip = getCashedTrip();
-
-    //غير موجودة أو منتهية
-    if (!trip.iamDriver || trip.id == 0 || trip.isCanceled) {
-      removeCashedTrip();
-      return NavTrip.waiting;
-    }
-    //final
-    if (trip.isDelved) return NavTrip.end;
-    //بدأت
-    if (trip.isStarted) return NavTrip.start;
-    //تم قبولها
-    if (trip.isAccepted) return NavTrip.acceptor;
-    //تم تأكيدها
-    if (trip.isConfirmed) return NavTrip.have;
-
-    return NavTrip.waiting;
-  }
 
   static void cashDriverAvailable(bool isAvailable) {
     _prefs?.setBool(_driverAvailable, isAvailable);
-  }
-
-  static Future<bool> get isDriverAvailable async {
-    var isAvailable = _prefs?.getBool(_driverAvailable) ?? false;
-
-    final trip = getCashedTrip();
-
-    if (trip.id != 0) {
-      await TripByIdCubit.tripByIdApi(tripId: trip.id);
-      if (getTripState() != NavTrip.waiting) isAvailable = true;
-    }
-
-    return isAvailable;
   }
 
   static bool isShared() {

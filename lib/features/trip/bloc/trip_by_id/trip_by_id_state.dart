@@ -2,7 +2,7 @@ part of 'trip_by_id_cubit.dart';
 
 class TripByIdInitial extends Equatable {
   final CubitStatuses statuses;
-  final TripResult result;
+  final Trip result;
   final String error;
 
   const TripByIdInitial({
@@ -13,7 +13,7 @@ class TripByIdInitial extends Equatable {
 
   factory TripByIdInitial.initial() {
     return TripByIdInitial(
-      result: TripResult.fromJson({}),
+      result: Trip.fromJson({}),
       error: '',
       statuses: CubitStatuses.init,
     );
@@ -24,7 +24,7 @@ class TripByIdInitial extends Equatable {
 
   TripByIdInitial copyWith({
     CubitStatuses? statuses,
-    TripResult? result,
+    Trip? result,
     String? error,
   }) {
     return TripByIdInitial(

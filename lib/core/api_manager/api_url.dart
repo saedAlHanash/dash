@@ -3,17 +3,17 @@ import 'package:qareeb_dash/core/api_manager/api_service.dart';
 import '../util/shared_preferences.dart';
 
 class GetUrl {
+  static const getAvailableTrips = 'api/services/app/TripsService/GetAvailableTrips';
   static const getPolicy = 'api/services/app/Settings/Getsettings';
   static const getSharedTrips =
       'api/services/app/SharedTripService/GetDriverFilteredTrips';
 
-  static const getPreviousTrips = 'api/services/app/Order/GetDriverTrips';
+  static const getActiveTrips = 'api/services/app/TripsService/GetActiveTrip';
 
-  static const acceptor = 'api/services/app/Order/GetMyTripAccpter';
-  static const tripById = 'api/services/app/Order/Get';
+  static const tripById = 'api/services/app/TripsService/Get';
 
   static const getProfileInfo = 'api/services/app/UserService/Get';
-  static const confirmTrip = 'api/services/app/Order/ConfirmTrip';
+
   static const cancelReason = 'api/services/app/CancelReasons/GetAll';
 
   static const getFavoritePlaces =
@@ -37,12 +37,6 @@ class GetUrl {
 
   static const driverUnAvailable = 'api/services/app/UserService/MakeDriverUnAavailable';
 
-  static const currentTrip = 'api/services/app/UserService/GetCurrentOrder';
-
-  static const getAvailableTrips = 'api/services/app/Order/GetAavailableTrips';
-
-  static const getOldTrips = 'api/services/app/Order/GetDriverTrips';
-
   static const myWallet = 'api/services/app/AccountsService/GetAccountBalance';
 
   static const debt = 'api/services/app/AccountsService/DriverDebts';
@@ -52,7 +46,7 @@ class GetUrl {
   static const getDriverById = 'api/services/app/User/GetDriverById';
 
   static const driverRedeems = 'api/services/app/RedeemService/GetRedeems';
-  static const allRedeems = 'api/services/app/RedeemService/GetAllRedeems';
+  static const allRedeems = 'api/services/app/RedeemService/GetAll';
 
   static const carCategories = 'api/services/app/CarCategoriesService/GetAll';
 
@@ -74,7 +68,7 @@ class GetUrl {
 
   static const getAllTransfers = 'api/services/app/AccountsService/GetAllTransfers';
 
-  static const getAllTrips = 'api/services/app/Order/GetAllTrips';
+  static const getTrips = 'api/services/app/TripsService/GetAllTrips';
 
   static const getAllSharedTrips = 'api/services/app/SharedTripService/GetAllSharedTrips';
 
@@ -100,11 +94,11 @@ class GetUrl {
 
   static const governorates = 'api/services/app/GovernorateService/GetAll';
   static const areas = 'api/services/app/AreaService/GetAll';
-    static var allTickets = 'api/services/app/TicketsService/GetAll';
+  static var allTickets = 'api/services/app/TicketsService/GetAll';
 }
 
 class PostUrl {
-    static var replayTicket = 'api/services/app/TicketsService/AddReplyToTicket';
+  static var replayTicket = 'api/services/app/TicketsService/AddReplyToTicket';
   static const serverProxy = 'api/services/app/HttpRequestService/ExecuteRequest';
   static const requestOtp = 'api/Auth/RequestOTP';
   static const sendNotificaion =
@@ -120,10 +114,7 @@ class PostUrl {
   static const forgotPassword = 'api/services/app/Account/ForgetPassword';
   static const resendCode = 'api/Auth/ResendOTP';
   static const resetPassword = 'api/services/app/Account/ResetNewPassword';
-  static const checkTripInfo = 'api/services/app/Order/CheckTripInformation';
-  static const cancelTrip = 'api/services/app/Order/CancelTrip';
-  static const createTrip = 'api/services/app/Order/CreateTrip';
-  static const addCoupon = 'api/services/app/Order/UseCouponTrip';
+
   static const createSharedTrip = 'api/services/app/SharedTripService/CreateSharedTrip';
   static const createPath = 'api/services/app/PathService/CreatePath';
   static const lookingForDriver = 'api/services/app/UserService/LookingForDriver';
@@ -131,17 +122,8 @@ class PostUrl {
   static const insertFireBaseToken =
       'api/services/app/UserService/InsertFireBaseTokenForUser';
 
-  static const createPayment = 'api/services/app/Order/createTripPayment';
   static const mtnPaymentRequest = 'api/services/app/EpaymentService/MtnPaymentRequest';
   static const mtnSendOtp = 'api/services/app/EpaymentService/MtnDoPayment';
-
-  static const rejectTrip = 'api/services/app/Order/RejectTrip';
-
-  static const acceptTrip = 'api/services/app/Order/AcceptTrip';
-
-  static const startTrip = 'api/services/app/Order/StartTrip';
-
-  static const endTrip = 'api/services/app/Order/EndTrip';
 
   static const chargeClient = 'api/services/app/AccountsService/ChargeClientAccount';
 
@@ -184,6 +166,8 @@ class PostUrl {
 }
 
 class PutUrl {
+  static const updateTrip = 'api/services/app/TripsService/UpdateStatus';
+
   static const updateGovernorate = 'api/services/app/GovernorateService/Update';
   static const updateArea = 'api/services/app/AreaService/Update';
   static const updateProfile = 'api/services/app/User/UpdateUser';
@@ -246,9 +230,11 @@ class OsrmUrl {
 }
 
 class PatchUrl {
-  static const updateSharedTrip = 'api/services/app/SharedTripService/UpdateSharedTripStatus';
+  static const updateSharedTrip =
+      'api/services/app/SharedTripService/UpdateSharedTripStatus';
 
-  static const updateSharedTripTime = 'api/services/app/SharedTripService/UpdateSharedTripTime';
+  static const updateSharedTripTime =
+      'api/services/app/SharedTripService/UpdateSharedTripTime';
 
   static const changeLoyalty = 'api/services/app/UserService/ChangeSubscriptionInLoyalty';
 
@@ -257,10 +243,10 @@ class PatchUrl {
 }
 
 String get baseUrl {
-  final s  =  AppSharedPreference.isTestMode
+  final s = AppSharedPreference.isTestMode
       ? 'livetest.qareeb-maas.com'
       : 'live.qareeb-maas.com';
-  return s ;
+  return s;
 }
 
 // const baseUrl = 'live.qareeb-maas.com';

@@ -39,7 +39,7 @@ class AllTicketsCubit extends Cubit<AllTicketsInitial> {
     );
 
     if (response.statusCode == 200) {
-      return Pair(TicketsResponse.fromJson(response.jsonBody).result, null);
+      return Pair(TicketsResponse.fromJson(response.json).result, null);
     } else {
       return Pair(null, ErrorManager.getApiError(response));
     }

@@ -39,7 +39,7 @@ class AllInstitutionsCubit extends Cubit<AllInstitutionsInitial> {
     );
 
     if (response.statusCode == 200) {
-      return Pair(InstitutionsResponse.fromJson(response.jsonBody).result, null);
+      return Pair(InstitutionsResponse.fromJson(response.json).result, null);
     } else {
       return Pair(null, ErrorManager.getApiError(response));
     }

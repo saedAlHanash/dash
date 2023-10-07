@@ -12,7 +12,7 @@
 // class ItemTrip extends StatelessWidget {
 //   const ItemTrip({super.key, required this.item});
 //
-//   final TripResult item;
+//   final Trip item;
 //
 //   @override
 //   Widget build(BuildContext context) {

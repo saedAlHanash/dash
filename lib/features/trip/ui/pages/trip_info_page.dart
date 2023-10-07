@@ -8,12 +8,15 @@ import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/widgets/my_button.dart';
 import 'package:qareeb_dash/features/trip/data/request/cancel_trip_request.dart';
 import 'package:qareeb_models/extensions.dart';
+import 'package:qareeb_models/global.dart';
 
 import '../../../../core/util/my_style.dart';
 import '../../../../core/util/shared_preferences.dart';
 import '../../../../core/widgets/app_bar_widget.dart';
-import '../../bloc/cancel_trip_cubit/cancel_trip_cubit.dart';
+
 import '../../bloc/trip_by_id/trip_by_id_cubit.dart';
+import '../../bloc/trip_status_cubit/trip_status_cubit.dart';
+import '../../data/request/update_trip_request.dart';
 import '../widget/trip_info_list_widget.dart';
 
 class TripInfoPage extends StatefulWidget {
@@ -53,7 +56,7 @@ class _TripInfoPageState extends State<TripInfoPage> {
             }
           },
         ),
-        BlocListener<CancelTripCubit, CancelTripInitial>(
+        BlocListener<ChangeTripStatusCubit, ChangeTripStatusInitial>(
           listenWhen: (p, c) => c.statuses.done,
           listener: (context, state) {
             context.read<TripByIdCubit>().tripById(context, tripId: tripId);
@@ -86,7 +89,8 @@ class _TripInfoPageState extends State<TripInfoPage> {
                           color: Colors.black,
                           drawableEnd: (state.result.isCanceled || state.result.isDelved)
                               ? null
-                              : BlocBuilder<CancelTripCubit, CancelTripInitial>(
+                              : BlocBuilder<ChangeTripStatusCubit,
+                                  ChangeTripStatusInitial>(
                                   builder: (context, cState) {
                                     if (cState.statuses.loading) {
                                       return MyStyle.loadingWidget();
@@ -102,11 +106,15 @@ class _TripInfoPageState extends State<TripInfoPage> {
                                       color: Colors.black,
                                       textColor: Colors.white,
                                       onTap: () {
-                                        context.read<CancelTripCubit>().cancelTrip(
+                                        context
+                                            .read<ChangeTripStatusCubit>()
+                                            .changeTripStatus(
                                               context,
-                                              request: CancelTripRequest(
+                                              request: UpdateTripRequest(
                                                 tripId: state.result.id,
-                                                cancelReason: 'From Admin',
+                                                status: TripStatus.canceledByAdmin,
+                                                note:
+                                                    'From Admin ${AppSharedPreference.getEmail}',
                                               ),
                                             );
                                       },

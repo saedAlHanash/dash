@@ -4,6 +4,7 @@ import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/util/note_message.dart';
 import 'package:qareeb_dash/core/widgets/images/image_multi_type.dart';
@@ -15,6 +16,7 @@ import 'package:qareeb_models/global.dart';
 import '../../../../core/util/my_style.dart';
 import '../../../../core/util/shared_preferences.dart';
 import '../../../../core/widgets/my_card_widget.dart';
+import '../../../../router/go_route_pages.dart';
 import '../../bloc/create_redeem_cubit/create_redeem_cubit.dart';
 import '../../bloc/redeems_cubit/redeems_cubit.dart';
 import '../../data/request/redeem_request.dart';
@@ -29,7 +31,6 @@ class LoyaltyWidget extends StatelessWidget {
         if (state.statuses.isLoading) {
           return MyStyle.loadingWidget();
         }
-
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -40,7 +41,7 @@ class LoyaltyWidget extends StatelessWidget {
               textAlign: TextAlign.center,
               padding: const EdgeInsets.symmetric(vertical: 15.0).h,
             ),
-            _TotalWidget(text: state.result.totalMeters),
+            _TotalWidget(text: state.result.totalMeters, driverId: state.driverId),
             ItemLoyal(
               driverId: state.driverId,
               text: 'المليون',
@@ -196,9 +197,11 @@ class ItemLoyal extends StatelessWidget {
 class _TotalWidget extends StatelessWidget {
   const _TotalWidget({
     required this.text,
+    required this.driverId,
   });
 
   final num text;
+  final int driverId;
 
   @override
   Widget build(BuildContext context) {
@@ -225,6 +228,24 @@ class _TotalWidget extends StatelessWidget {
               text: '${(text / 1000).round()} (كيلو متر)',
               color: Colors.black,
               fontFamily: FontManager.cairoBold,
+            ),
+          ),
+          Expanded(
+            child: TextButton(
+              onPressed: () {
+                context.pushNamed(GoRouteName.redeems, queryParams: {'id': driverId});
+              },
+              child: DrawableText(
+                text: 'السجل',
+                underLine: true,
+                color: Colors.black,
+                fontFamily: FontManager.cairoBold,
+                drawablePadding: 5.0.w,
+                drawableEnd: Icon(
+                  Icons.info_outline_rounded,
+                  size: 30.0.r,
+                ),
+              ),
             ),
           ),
         ],

@@ -44,7 +44,7 @@ class EdgesPointCubit extends Cubit<EdgesPointInitial> {
           .getApi(url: GetUrl.getAllEdgesPoint, query: {'sourcePointId': id});
 
       if (response.statusCode == 200) {
-        final json = response.jsonBody;
+        final json = response.json;
         return Pair(
             json['result'] == null
                 ? <Edge>[]

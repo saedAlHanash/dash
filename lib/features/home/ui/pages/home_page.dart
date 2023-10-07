@@ -64,6 +64,8 @@ import '../../../temp_trips/bloc/delete_temp_trip_cubit/delete_temp_trip_cubit.d
 import '../../../temp_trips/ui/pages/temp_trips_page.dart';
 import '../../../ticket/bloc/replay_ticket_cubit/replay_ticket_cubit.dart';
 import '../../../ticket/ui/pages/tickets_page.dart';
+import '../../../trip/bloc/active_trips/active_trips_cubit.dart';
+import '../../../trip/ui/pages/active_trips_page.dart';
 import '../../../wallet/bloc/change_provider_state_cubit/change_provider_state_cubit.dart';
 import '../../../wallet/ui/pages/providers_page.dart';
 import '../../bloc/nav_home_cubit/nav_home_cubit.dart';
@@ -160,70 +162,71 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
 
-              if (AppSharedPreference.getUser.roleName.toLowerCase() == 'admin')
-                ...[
-                  AdminMenuItem(
-                    title: 'الطلبات',
-                    children: [
-                      if (isAllowed(AppPermissions.EPAYMENT))
-                        const AdminMenuItem(
-                            title: 'مزودي الدفع', route: '/epayments_provider'),
-                      if (isAllowed(AppPermissions.COUPON))
-                        const AdminMenuItem(title: 'قسائم الحسم', route: '/coupons'),
-                      if (isAllowed(AppPermissions.CAR_CATEGORY))
-                        const AdminMenuItem(
-                            title: 'أصناف السيارات', route: '/car_categories'),
-                    ],
-                  ),
-                  AdminMenuItem(
-                    title: 'النقاط والمسارات',
-                    children: [
-                      if (isAllowed(AppPermissions.POINTS))
-                        const AdminMenuItem(
-                          route: '/points',
-                          icon: Icons.location_on_sharp,
-                          title: 'النقاط',
-                        ),
+              if (AppSharedPreference.getUser.roleName.toLowerCase() == 'admin') ...[
+                AdminMenuItem(
+                  title: 'الطلبات',
+                  children: [
+                    if (isAllowed(AppPermissions.EPAYMENT))
                       const AdminMenuItem(
-                        icon: Icons.linear_scale_rounded,
-                        title: 'المسارات',
-                        route: "/paths",
+                          title: 'مزودي الدفع', route: '/epayments_provider'),
+                    if (isAllowed(AppPermissions.COUPON))
+                      const AdminMenuItem(title: 'قسائم الحسم', route: '/coupons'),
+                    if (isAllowed(AppPermissions.CAR_CATEGORY))
+                      const AdminMenuItem(
+                          title: 'أصناف السيارات', route: '/car_categories'),
+                  ],
+                ),
+                AdminMenuItem(
+                  title: 'النقاط والمسارات',
+                  children: [
+                    if (isAllowed(AppPermissions.POINTS))
+                      const AdminMenuItem(
+                        route: '/points',
+                        icon: Icons.location_on_sharp,
+                        title: 'النقاط',
                       ),
-                    ],
-                  ),
-                  AdminMenuItem(
-                    title: 'عمليات إدارية',
-                    children: [
-                      if (isAllowed(AppPermissions.REASON))
-                        const AdminMenuItem(title: 'أسباب الإلغاء', route: '/cancel_reasons'),
-                      const AdminMenuItem(title: 'المحافظات', route: '/government'),
-                      if (isAllowed(AppPermissions.CAR_CATEGORY))
-                        const AdminMenuItem(title: 'المؤسسات', route: '/institutions'),
-                      if (isAllowed(AppPermissions.ROLES))
-                        const AdminMenuItem(title: 'الأدوار', route: '/roles'),
-                      const AdminMenuItem(title: 'متغيرات الولاء', route: '/systemParams'),
-                      const AdminMenuItem(title: 'إدارة الإصدارات', route: '/systemVersion'),
-                    ],
-                  ),
-                  AdminMenuItem(
-                    title: 'عمليات مالية',
-                    icon: Icons.payments_outlined,
-                    children: [
-                      if (isAllowed(AppPermissions.REPORTS))
-                        const AdminMenuItem(
-                          title: 'التحويلات',
-                          //   icon:Icons.,
-                          route: "/transactions",
-                        ),
+                    const AdminMenuItem(
+                      icon: Icons.linear_scale_rounded,
+                      title: 'المسارات',
+                      route: "/paths",
+                    ),
+                  ],
+                ),
+                AdminMenuItem(
+                  title: 'عمليات إدارية',
+                  children: [
+                    if (isAllowed(AppPermissions.REASON))
+                      const AdminMenuItem(
+                          title: 'أسباب الإلغاء', route: '/cancel_reasons'),
+                    const AdminMenuItem(title: 'المحافظات', route: '/government'),
+                    if (isAllowed(AppPermissions.CAR_CATEGORY))
+                      const AdminMenuItem(title: 'المؤسسات', route: '/institutions'),
+                    if (isAllowed(AppPermissions.ROLES))
+                      const AdminMenuItem(title: 'الأدوار', route: '/roles'),
+                    const AdminMenuItem(title: 'متغيرات الولاء', route: '/systemParams'),
+                    const AdminMenuItem(
+                        title: 'إدارة الإصدارات', route: '/systemVersion'),
+                  ],
+                ),
+                AdminMenuItem(
+                  title: 'عمليات مالية',
+                  icon: Icons.payments_outlined,
+                  children: [
+                    if (isAllowed(AppPermissions.REPORTS))
+                      const AdminMenuItem(
+                        title: 'التحويلات',
+                        //   icon:Icons.,
+                        route: "/transactions",
+                      ),
 
-                      if (isAllowed(AppPermissions.SETTINGS))
-                        const AdminMenuItem(title: 'محاسبة السائقين', route: "/payToDrivers"),
+                    if (isAllowed(AppPermissions.SETTINGS))
+                      const AdminMenuItem(
+                          title: 'محاسبة السائقين', route: "/payToDrivers"),
 
-                      // const AdminMenuItem(title: 'التقاص', route: "/payToDrivers"),
-                    ],
-                  ),
-                ],
-
+                    // const AdminMenuItem(title: 'التقاص', route: "/payToDrivers"),
+                  ],
+                ),
+              ],
 
               if (isAllowed(AppPermissions.SETTINGS))
                 const AdminMenuItem(
@@ -231,10 +234,10 @@ class _HomePageState extends State<HomePage> {
                     title: 'سياسة الخصوصية',
                     route: "/policy"),
               if (isAllowed(AppPermissions.SETTINGS))
-              const AdminMenuItem(
-                  icon: Icons.notification_add,
-                  title: 'إشعارات الزبائن',
-                  route: "/notification"),
+                const AdminMenuItem(
+                    icon: Icons.notification_add,
+                    title: 'إشعارات الزبائن',
+                    route: "/notification"),
               if (isAllowed(AppPermissions.MESSAGES))
                 const AdminMenuItem(
                     icon: Icons.message, title: 'الشكاوى', route: "/ticket"),

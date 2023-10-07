@@ -39,7 +39,7 @@ class AllRolesCubit extends Cubit<AllRolesInitial> {
     );
 
     if (response.statusCode == 200) {
-      return Pair(RolesResponse.fromJson(response.jsonBody).result, null);
+      return Pair(RolesResponse.fromJson(response.json).result, null);
     } else {
       return Pair(null, ErrorManager.getApiError(response));
     }

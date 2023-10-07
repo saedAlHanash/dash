@@ -20,37 +20,10 @@ extension CubitStateHelper1 on CubitStatuses {
 }
 
 extension MapResponse on http.Response {
-  dynamic get jsonBody => jsonDecode(body);
+  dynamic get json => jsonDecode(body);
 }
 
-extension NormalTripMap on TripResult {
-  List<MyMarker> get getMarkers {
-    return [
-      MyMarker(point: startPoint, type: MyMarkerType.sharedPint),
-      MyMarker(point: endPoint, type: MyMarkerType.sharedPint),
-    ];
-  }
-
-  LatLng get startPoint => currentLocation.latLng;
-
-  LatLng get endPoint => destination.latLng;
-
-  String get getTripsCost {
-    return '$tripFare ${AppStringManager.currency}';
-  }
-
-  String get getCost {
-    return '${tripFare - paidAmount} ${AppStringManager.currency}';
-  }
-
-  String get getDistance {
-    return ' $distance ${AppStringManager.km}';
-  }
-
-  String get getRealDistance {
-    if (realDistance == 0) return '-';
-    return ' $realDistance ${AppStringManager.km}';
-  }
+extension NormalTripMap on Trip {
 
   String get getPreAcceptDistance {
     if (preAcceptDistance == 0) return '-';

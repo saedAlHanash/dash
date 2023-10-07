@@ -26,18 +26,18 @@ import '../../../../../core/util/my_style.dart';
 import '../../../../../core/widgets/my_text_form_widget.dart';
 import '../../../../../core/widgets/select_date.dart';
 
-class TripsFilterWidget extends StatefulWidget {
-  const TripsFilterWidget({super.key, this.onApply, this.command});
+class SharedFilterWidget extends StatefulWidget {
+  const SharedFilterWidget({super.key, this.onApply, this.command});
 
   final Function(FilterTripRequest request)? onApply;
 
   final Command? command;
 
   @override
-  State<TripsFilterWidget> createState() => _TripsFilterWidgetState();
+  State<SharedFilterWidget> createState() => _SharedFilterWidgetState();
 }
 
-class _TripsFilterWidgetState extends State<TripsFilterWidget> {
+class _SharedFilterWidgetState extends State<SharedFilterWidget> {
   late FilterTripRequest request;
 
   late final TextEditingController startDateC;

@@ -13,28 +13,18 @@ import '../../../../core/strings/app_string_manager.dart';
 import '../../../../core/util/note_message.dart';
 import '../../../../core/util/pair_class.dart';
 import '../../../../core/util/shared_preferences.dart';
+import '../../data/request/update_trip_request.dart';
 
 part 'trip_status_state.dart';
 
-class TripStatusCubit extends Cubit<TripStatusInitial> {
-  TripStatusCubit() : super(TripStatusInitial.initial());
+class ChangeTripStatusCubit extends Cubit<ChangeTripStatusInitial> {
+  ChangeTripStatusCubit() : super(ChangeTripStatusInitial.initial());
 
   final network = sl<NetworkInfo>();
 
-  Future<void> changeTripStatus(
-    BuildContext context, {
-    required int tripId,
-    required TripStatus tripStatus,
-  }) async {
-    final r = await NoteMessage.showConfirm(context, text: 'تأكيد العملية');
-    if (!r) return;
-    if (tripStatus == TripStatus.non) return;
-
-    emit(state.copyWith(
-      statuses: CubitStatuses.loading,
-      tripStatus: tripStatus,
-      tripId: tripId,
-    ));
+  Future<void> changeTripStatus(BuildContext context,
+      {required UpdateTripRequest request}) async {
+    emit(state.copyWith(statuses: CubitStatuses.loading, request: request));
 
     final pair = await _changeTripStatusApi();
 
@@ -42,51 +32,18 @@ class TripStatusCubit extends Cubit<TripStatusInitial> {
       if (context.mounted) {
         NoteMessage.showSnakeBar(message: pair.second ?? '', context: context);
       }
-      emit(state.copyWith(statuses: CubitStatuses.error, error: pair.second));
+      emit(state.copyWith(statuses: CubitStatuses.error));
     } else {
+      AppSharedPreference.removeCashedTrip();
       emit(state.copyWith(statuses: CubitStatuses.done, result: pair.first));
     }
   }
 
   Future<Pair<bool?, String?>> _changeTripStatusApi() async {
     if (await network.isConnected) {
-      var url = '';
-      var body = <String, dynamic>{};
-
-      num? distance;
-      switch (state.tripStatus) {
-        case TripStatus.non:
-          break;
-
-        case TripStatus.reject:
-          body['id'] = state.tripId;
-          body['cancelReasone'] = '';
-          url = PostUrl.rejectTrip;
-          break;
-        case TripStatus.accept:
-          url = PostUrl.acceptTrip;
-          break;
-        case TripStatus.start:
-          url = PostUrl.startTrip;
-          break;
-        case TripStatus.end:
-          try {
-            distance = await AtherCubit.getDriverDistance(
-              ime: '359632107579978',
-              start: AppSharedPreference.getCashedTrip().startDate,
-              end: await APIService().getServerTime(),
-            );
-          } on Exception {
-
-          }
-          url = PostUrl.endTrip;
-          break;
-      }
-
-      final response = await APIService().postApi(
-        url: url,
-        query: {'id': state.tripId, 'distance': distance},
-        body: body,
+      final response = await APIService().puttApi(
+        url: PutUrl.updateTrip,
+        body: state.request.toJson(),
       );
 
       if (response.statusCode == 200) {

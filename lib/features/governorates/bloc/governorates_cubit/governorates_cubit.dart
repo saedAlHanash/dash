@@ -39,7 +39,7 @@ class GovernoratesCubit extends Cubit<GovernoratesInitial> {
     );
 
     if (response.statusCode == 200) {
-      return Pair(GovernorateResponse.fromJson(response.jsonBody).result, null);
+      return Pair(GovernorateResponse.fromJson(response.json).result, null);
     } else {
       return Pair(null, ErrorManager.getApiError(response));
     }

@@ -45,7 +45,7 @@ class EstimateCubit extends Cubit<EstimateInitial> {
       );
 
       if (response.statusCode == 200) {
-        return Pair(EstimateResponse.fromJson(response.jsonBody).result,
+        return Pair(EstimateResponse.fromJson(response.json).result,
           null,
         );
       } else {

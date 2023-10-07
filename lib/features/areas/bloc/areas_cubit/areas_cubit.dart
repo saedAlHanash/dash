@@ -41,7 +41,7 @@ class AreasCubit extends Cubit<AreasInitial> {
     );
 
     if (response.statusCode == 200) {
-      return Pair(AreaResponse.fromJson(response.jsonBody).result, null);
+      return Pair(AreaResponse.fromJson(response.json).result, null);
     } else {
       return Pair(null, ErrorManager.getApiError(response));
     }

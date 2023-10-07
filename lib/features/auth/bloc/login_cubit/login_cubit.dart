@@ -68,7 +68,7 @@ class LoginCubit extends Cubit<LoginInitial> {
       );
 
       if (response.statusCode == 200) {
-        return Pair(LoginResponse.fromJson(response.jsonBody).result, null);
+        return Pair(LoginResponse.fromJson(response.json).result, null);
       } else {
         return Pair(null, ErrorManager.getApiError(response));
       }
@@ -85,7 +85,7 @@ class LoginCubit extends Cubit<LoginInitial> {
       );
 
       if (response.statusCode == 200) {
-        final json = response.jsonBody['result'] ?? <String, dynamic>{};
+        final json = response.json['result'] ?? <String, dynamic>{};
 
         return Pair(
             json == null ? <String>[] : List<String>.from(json!.map((x) => x)), null);

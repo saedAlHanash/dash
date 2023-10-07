@@ -39,7 +39,7 @@ class AllCarCategoriesCubit extends Cubit<AllCarCategoriesInitial> {
     );
 
     if (response.statusCode == 200) {
-      return Pair(CarCategoriesResponse.fromJson(response.jsonBody).result, null);
+      return Pair(CarCategoriesResponse.fromJson(response.json).result, null);
     } else {
       return Pair(null, ErrorManager.getApiError(response));
     }

@@ -39,7 +39,7 @@ class AllTempTripsCubit extends Cubit<AllTempTripsInitial> {
     );
 
     if (response.statusCode == 200) {
-      return Pair(TempTripsResponse.fromJson(response.jsonBody).result, null);
+      return Pair(TempTripsResponse.fromJson(response.json).result, null);
     } else {
       return Pair(null, ErrorManager.getApiError(response));
     }

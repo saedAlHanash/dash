@@ -40,7 +40,7 @@ class AllMessagesCubit extends Cubit<AllMessagesInitial> {
     );
 
     if (response.statusCode == 200) {
-      return Pair(MessagesResponse.fromJson(response.jsonBody).result, null);
+      return Pair(MessagesResponse.fromJson(response.json).result, null);
     } else {
       return Pair(null, ErrorManager.getApiError(response));
     }

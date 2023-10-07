@@ -43,7 +43,7 @@ class PathByIdCubit extends Cubit<PathByIdInitial> {
       );
 
       if (response.statusCode == 200) {
-        return Pair(TripPath.fromJson(response.jsonBody['result'] ?? {}), null);
+        return Pair(TripPath.fromJson(response.json['result'] ?? {}), null);
       } else {
         return Pair(null, ErrorManager.getApiError(response));
       }

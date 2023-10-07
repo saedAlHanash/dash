@@ -42,7 +42,7 @@ class AllTransfersCubit extends Cubit<AllTransfersInitial> {
     );
 
     if (response.statusCode == 200) {
-      return Pair(TransfersResponse.fromJson(response.jsonBody).result, null);
+      return Pair(TransfersResponse.fromJson(response.json).result, null);
     } else {
       return Pair(null, ErrorManager.getApiError(response));
     }

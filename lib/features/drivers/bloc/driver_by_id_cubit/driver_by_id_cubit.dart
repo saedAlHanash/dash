@@ -38,7 +38,7 @@ class DriverBuIdCubit extends Cubit<DriverBuIdInitial> {
     );
 
     if (response.statusCode == 200) {
-      return Pair(DriverModel.fromJson(response.jsonBody['result'] ?? {}), null);
+      return Pair(DriverModel.fromJson(response.json['result'] ?? {}), null);
     } else {
       return Pair(null, ErrorManager.getApiError(response));
     }
