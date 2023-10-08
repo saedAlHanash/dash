@@ -117,6 +117,9 @@ class GetUrl {
 
   static const memberWithoutSubscription =
       'api/services/app/InstitutionMembersService/getMembersWithoutSubscription';
+
+  static const failedAttendances =
+      'api/services/app/InstitutionAttendancesService/GetFaildAttendances';
 //GET
 //
 }
@@ -241,7 +244,9 @@ class PutUrl {
 
   static var updateSubscription =
       'api/services/app/InstituionSubscriptionTemplateService/Update';
-  static var updateSubscription1 = 'api/services/app/InstitutionSubscriptionsService/Update';
+  static var updateSubscription1 =
+      'api/services/app/InstitutionSubscriptionsService/Update';
+
 //PUT
 //
   static var updateBusTrip = 'api/services/app/InstitutionBusTripsService/Update';

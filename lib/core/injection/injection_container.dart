@@ -19,6 +19,7 @@ import '../../features/bus_trips/bloc/all_bus_trips_cubit/all_bus_trips_cubit.da
 import '../../features/bus_trips/bloc/bus_trip_by_id_cubit/bus_trip_by_id_cubit.dart';
 import '../../features/bus_trips/bloc/create_bus_trip_cubit/create_bus_trip_cubit.dart';
 import '../../features/bus_trips/bloc/delete_bus_trip_cubit/delete_bus_trip_cubit.dart';
+import '../../features/bus_trips/bloc/failed_attendances_cubit/failed_attendances_cubit.dart';
 import '../../features/bus_trips/bloc/trip_history_cubit/trip_history_cubit.dart';
 import '../../features/buses/bloc/all_buses_cubit/all_buses_cubit.dart';
 
@@ -248,6 +249,7 @@ Future<void> init() async {
   sl.registerFactory(() => DeleteSubscriptionCubit());
   sl.registerFactory(() => AllSubscriptionsCubit());
   sl.registerFactory(() => AllTripHistoryCubit());
+  sl.registerFactory(() => FailedAttendancesCubit());
   sl.registerFactory(() => AllTicketsCubit());
   sl.registerFactory(() => ReplayTicketCubit());
   sl.registerFactory(() => BusByImeiCubit());

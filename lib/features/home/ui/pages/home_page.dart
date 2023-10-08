@@ -19,6 +19,7 @@ import '../../../auth/bloc/change_user_state_cubit/change_user_state_cubit.dart'
 import '../../../auth/ui/pages/login_page.dart';
 import '../../../bus_trips/bloc/delete_bus_trip_cubit/delete_bus_trip_cubit.dart';
 import '../../../bus_trips/ui/pages/bus_trips_page.dart';
+import '../../../bus_trips/ui/pages/failed_attendances_page.dart';
 import '../../../bus_trips/ui/pages/trip_history_page.dart';
 import '../../../buses/bloc/delete_buss_cubit/delete_buss_cubit.dart';
 import '../../../buses/ui/pages/buses_page.dart';
@@ -148,7 +149,11 @@ class _HomePageState extends State<HomePage> {
                     const AdminMenuItem(title: 'جدول الرحلات', route: NamePaths.trips),
                   if (isAllowed(AppPermissions.tapTripsHistory))
                     const AdminMenuItem(
-                        title: 'سجل الرحلات', route: NamePaths.tripHistory),
+                        title: 'عمليات المسح', route: NamePaths.tripHistory),
+                  if (isAllowed(AppPermissions.tapTripsHistory))
+                    const AdminMenuItem(
+                        title: 'عمليات المسح الغير المرتبطة',
+                        route: NamePaths.failedAttendances),
                 ],
               ),
               AdminMenuItem(
@@ -269,6 +274,8 @@ class _HomePageState extends State<HomePage> {
                     ],
                     child: const TripHistoryPage(),
                   );
+                case NamePaths.failedAttendances:
+                  return const FailedAttendancesPage();
 
                 case NamePaths.members:
                   return const MembersPage();
@@ -332,6 +339,8 @@ class NamePaths {
   static const subscriptions = '/subscriptions';
   static const tripHistory = '/tripHistory';
   static const roles = '/roles';
+
+  static const failedAttendances = '/failed_attendancesPage';
 }
 
 void addQueryParameters({required Map<String, dynamic> params}) {

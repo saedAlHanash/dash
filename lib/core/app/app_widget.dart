@@ -10,6 +10,7 @@ import '../../features/admins/bloc/all_admins/all_admins_cubit.dart';
 import '../../features/auth/bloc/create_policy_cubit/policy_cubit.dart';
 import '../../features/auth/bloc/policy_cubit/create_policy_cubit.dart';
 import '../../features/bus_trips/bloc/all_bus_trips_cubit/all_bus_trips_cubit.dart';
+import '../../features/bus_trips/bloc/failed_attendances_cubit/failed_attendances_cubit.dart';
 import '../../features/bus_trips/bloc/trip_history_cubit/trip_history_cubit.dart';
 import '../../features/buses/bloc/all_buses_cubit/all_buses_cubit.dart';
 import '../../features/buses/bloc/bus_by_imei_cubti/bus_by_imei_cubit.dart';
@@ -79,6 +80,7 @@ class _MyAppState extends State<MyApp> {
                 BlocProvider(create: (_) => sl<MapControlCubit>()),
                 BlocProvider(create: (_) => sl<AllMessagesCubit>()),
                 BlocProvider(create: (_) => sl<CreatePolicyCubit>()),
+                BlocProvider(create: (_) => sl<AllSubscriberCubit>()),
                 BlocProvider(create: (_) => sl<HomeCubit>()..getHome(_)),
                 BlocProvider(create: (_) => sl<Home1Cubit>()..getHome1(_)),
                 BlocProvider(create: (_) => sl<PolicyCubit>()..getPolicy(_)),
@@ -93,8 +95,10 @@ class _MyAppState extends State<MyApp> {
                 BlocProvider(create: (_) => sl<AllTempTripsCubit>()..getTempTrips(_)),
                 BlocProvider(create: (_) => sl<AllSuperUsersCubit>()..getSuperUsers(_)),
                 BlocProvider(create: (_) => sl<AllTripHistoryCubit>()..getTripHistory(_)),
-                BlocProvider(create: (_) => sl<AllSubscriberCubit>()),
                 BlocProvider(create: (_) => sl<AllMemberWithoutSubscriptionCubit>()),
+                BlocProvider(
+                  create: (_) => sl<FailedAttendancesCubit>()..getFailedAttendances(_),
+                ),
                 BlocProvider(
                   create: (_) => sl<AllSubscriptionsCubit>()..getSubscriptions(_),
                 ),
