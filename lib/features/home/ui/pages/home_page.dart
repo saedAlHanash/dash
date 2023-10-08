@@ -152,7 +152,7 @@ class _HomePageState extends State<HomePage> {
                         title: 'عمليات المسح', route: NamePaths.tripHistory),
                   if (isAllowed(AppPermissions.tapTripsHistory))
                     const AdminMenuItem(
-                        title: 'عمليات المسح الغير المرتبطة',
+                        title: 'عمليات المسح الغير مرتبطة',
                         route: NamePaths.failedAttendances),
                 ],
               ),
