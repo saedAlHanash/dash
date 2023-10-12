@@ -26,7 +26,6 @@ import '../../features/system_params/bloc/system_params_cubit/system_params_cubi
 import '../../features/system_settings/bloc/system_settings_cubit/system_settings_cubit.dart';
 import '../../features/temp_trips/bloc/all_temp_trips_cubit/all_temp_trips_cubit.dart';
 import '../../features/ticket/bloc/all_ticket_cubit/all_ticket_cubit.dart';
-
 import '../../features/trip/bloc/active_trips/active_trips_cubit.dart';
 import '../../features/trip/bloc/trips_cubit/trips_cubit.dart';
 import '../../features/wallet/bloc/providers_cubit/providers_cubit.dart';

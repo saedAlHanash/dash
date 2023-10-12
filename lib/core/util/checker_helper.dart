@@ -1,6 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'dart:html';
+import "package:universal_html/html.dart";
 
 import 'package:flutter/cupertino.dart';
 import 'package:qareeb_dash/core/util/note_message.dart';

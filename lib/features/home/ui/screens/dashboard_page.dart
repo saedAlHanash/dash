@@ -40,7 +40,7 @@ class _DashboardPageState extends State<DashboardPage> {
               builder: (context, snapShot) {
                 if (!snapShot.hasData) return MyStyle.loadingWidget();
 
-                final bestDriver = snapShot.data! as BestDriver;
+                final bestDriver = snapShot.data!;
                 if (bestDriver.driverId == 0) return 0.0.verticalSpace;
                 return Column(
                   children: [

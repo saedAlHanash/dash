@@ -17,7 +17,7 @@ import '../../bloc/all_ticket_cubit/all_ticket_cubit.dart';
 import '../../bloc/replay_ticket_cubit/replay_ticket_cubit.dart';
 import '../../data/response/tickets_response.dart';
 
-final _super_userList = [
+final _titleList = [
   'ID',
   'اسم المستخدم',
   'تاريخ الإرسال',
@@ -42,7 +42,7 @@ class TicketsPage extends StatelessWidget {
               if (list.isEmpty) return const NotFoundWidget(text: 'لا يوجد شكاوى');
               return SaedTableWidget(
                 command: state.command,
-                title: _super_userList,
+                title: _titleList,
                 data: list
                     .mapIndexed(
                       (i, e) => [

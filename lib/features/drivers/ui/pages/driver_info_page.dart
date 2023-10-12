@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:qareeb_dash/core/util/note_message.dart';
 import 'package:qareeb_dash/core/widgets/table_widget.dart';
+import 'package:qareeb_dash/features/drivers/data/response/drivers_response.dart';
 import 'package:qareeb_dash/features/drivers/ui/pages/driver_wallet_page.dart';
 import 'package:qareeb_dash/features/redeems/ui/widget/loyalty_widget.dart';
 import 'package:qareeb_models/extensions.dart';
@@ -15,6 +16,7 @@ import '../../../../core/util/my_style.dart';
 import '../../../../core/widgets/app_bar_widget.dart';
 import '../../../../core/widgets/images/round_image_widget.dart';
 import '../../../../core/widgets/my_button.dart';
+import '../../../../core/widgets/my_card_widget.dart';
 import '../../../../router/go_route_pages.dart';
 import '../../bloc/driver_by_id_cubit/driver_by_id_cubit.dart';
 
@@ -84,40 +86,19 @@ class DriverInfoPage extends StatelessWidget {
                 const Divider(),
                 30.0.verticalSpace,
                 const LoyaltyWidget(),
+                30.0.verticalSpace,
+                const Divider(),
+                DrawableText(
+                  text: 'الرحلات',
+                  matchParent: true,
+                  size: 28.0.sp,
+                  textAlign: TextAlign.center,
+                  padding: const EdgeInsets.symmetric(vertical: 15.0).h,
+                ),
+                _NormalTripsCardWidget(driver: driver),
+                _SharedTripsCardWidget(driver: driver),
                 const Divider(),
                 30.0.verticalSpace,
-                Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      MyButton(
-                        text: 'الرحلات العادية',
-                        onTap: () {
-                          context.pushNamed(
-                            GoRouteName.tripsPae,
-                            queryParams: {
-                              'driverId': state.result.id.toString(),
-                              'driverName': state.result.fullName,
-                            },
-                          );
-                        },
-                      ),
-                      20.horizontalSpace,
-                      MyButton(
-                        text: 'الرحلات التشاركية',
-                        onTap: () {
-                          context.pushNamed(
-                            GoRouteName.sharedTripsPae,
-                            queryParams: {
-                              'driverId': state.result.id.toString(),
-                              'driverName': state.result.fullName,
-                            },
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                ),
                 WalletPage(id: driver.id),
                 150.0.verticalSpace,
               ],
@@ -158,6 +139,99 @@ class ItemImage extends StatelessWidget {
             DrawableText(text: text),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _NormalTripsCardWidget extends StatelessWidget {
+  const _NormalTripsCardWidget({required this.driver});
+
+  final DriverModel driver;
+
+  @override
+  Widget build(BuildContext context) {
+    return MyCardWidget(
+      elevation: 0.0,
+      margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0).r,
+      child: Row(
+        children: [
+          const Expanded(
+            child: DrawableText(
+              text: 'الرحلات العادية',
+              color: Colors.black,
+              fontFamily: FontManager.cairoBold,
+              matchParent: true,
+            ),
+          ),
+          Expanded(
+            child: DrawableText(
+              text: 'المرفوضة : ${driver.receivedTripsCount}',
+              color: Colors.black,
+              fontFamily: FontManager.cairoBold,
+            ),
+          ),
+          Expanded(
+            child: DrawableText(
+              text: 'الرحلات المرسلة  : ${driver.receivedTripsCount}',
+              color: Colors.black,
+              fontFamily: FontManager.cairoBold,
+            ),
+          ),
+          Expanded(
+            child: MyButton(
+              text: 'تفاصيل',
+              onTap: () {
+                context.pushNamed(
+                  GoRouteName.tripsPae,
+                  queryParams: {
+                    'driverId': driver.id.toString(),
+                    // 'driverName': driver.fullName,
+                  },
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _SharedTripsCardWidget extends StatelessWidget {
+  const _SharedTripsCardWidget({required this.driver});
+
+  final DriverModel driver;
+
+  @override
+  Widget build(BuildContext context) {
+    return MyCardWidget(
+      elevation: 0.0,
+      margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0).r,
+      child: Row(
+        children: [
+          const Expanded(
+            child: DrawableText(
+              text: 'الرحلات التشاركية',
+              color: Colors.black,
+              fontFamily: FontManager.cairoBold,
+              matchParent: true,
+            ),
+          ),
+          Spacer(),
+          MyButton(
+            text: 'تفاصيل',
+            onTap: () {
+              context.pushNamed(
+                GoRouteName.sharedTripsPae,
+                queryParams: {
+                  'driverId': driver.id.toString(),
+                  // 'driverName': driver.fullName,
+                },
+              );
+            },
+          ),
+        ],
       ),
     );
   }

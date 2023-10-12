@@ -1,9 +1,7 @@
 import 'dart:convert';
 
 import 'package:qareeb_dash/core/api_manager/api_service.dart';
-import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/features/auth/data/response/login_response.dart';
-import 'package:qareeb_dash/features/trip/bloc/trip_by_id/trip_by_id_cubit.dart';
 import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_models/global.dart';
 import 'package:qareeb_models/trip_process/data/response/trip_response.dart';

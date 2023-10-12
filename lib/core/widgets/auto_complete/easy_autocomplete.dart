@@ -4,10 +4,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:qareeb_dash/core/api_manager/api_service.dart';
 import 'package:qareeb_dash/core/widgets/auto_complete/widgets/filterable_list.dart';
-
- import 'package:qareeb_dash/core/widgets/spinner_widget.dart'; import 'package:qareeb_models/global.dart';
+import 'package:qareeb_models/global.dart';
 
 class EasyAutocomplete<T> extends StatefulWidget {
   /// The list of suggestions to be displayed

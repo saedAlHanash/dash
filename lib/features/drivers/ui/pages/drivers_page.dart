@@ -14,8 +14,8 @@ import '../../../../core/widgets/change_user_state_btn.dart';
 import '../../../../core/widgets/my_button.dart';
 import '../../../../core/widgets/saed_taple_widget.dart';
 import '../../../../router/go_route_pages.dart';
-import '../../../clients/ui/widget/clients_filter_widget.dart';
 import '../../bloc/all_drivers/all_drivers_cubit.dart';
+import '../widget/drivers_filter_widget.dart';
 
 final clientTableHeader = [
   "id",
@@ -86,13 +86,13 @@ class _DriverPageState extends State<DriverPage> {
           children: [
             BlocBuilder<AllDriversCubit, AllDriversInitial>(
               builder: (context, state) {
-                return ClientsFilterWidget(
-                  isDriver: true,
+                return DriversFilterWidget(
+
                   onApply: (request) {
                     context.read<AllDriversCubit>().getAllDrivers(
                           context,
                           command: context.read<AllDriversCubit>().state.command.copyWith(
-                                memberFilterRequest: request,
+                                driversFilterRequest: request,
                                 skipCount: 0,
                                 totalCount: 0,
                               ),
@@ -122,7 +122,7 @@ class _DriverPageState extends State<DriverPage> {
                           e.id.toString(),
                           e.fullName,
                           e.phoneNumber,
-                          e.isActive ? 'مفعل' : 'غير مفعل',
+                          e.driverStatus.arabicName,
                           e.qarebDeviceimei,
                           e.creationTime?.formatDate,
                           if (AppSharedPreference.getUser.roleName.toLowerCase() ==

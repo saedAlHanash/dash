@@ -70,7 +70,7 @@ class _ClientsPageState extends State<ClientsPage> {
                     context.read<AllClientsCubit>().getAllClients(
                           context,
                           command: context.read<AllClientsCubit>().state.command.copyWith(
-                                memberFilterRequest: request,
+                            clientsFilterRequest: request,
                                 skipCount: 0,
                                 totalCount: 0,
                               ),

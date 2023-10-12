@@ -52,7 +52,7 @@ class LoginCubit extends Cubit<LoginInitial> {
       }
       var s = '';
       for (var e in result.first!) {
-        s += '${e},';
+        s += '$e,';
       }
       AppSharedPreference.cashPermissions(s);
       emit(state.copyWith(statuses: CubitStatuses.error, error: pair.second));

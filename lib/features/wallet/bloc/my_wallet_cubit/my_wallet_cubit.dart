@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/util/shared_preferences.dart';
 import 'package:qareeb_models/global.dart';
+import 'package:qareeb_models/wallet/data/response/wallet_response.dart';
 
 import '../../../../core/api_manager/api_service.dart';
 import '../../../../core/api_manager/api_url.dart';
@@ -11,7 +12,6 @@ import '../../../../core/injection/injection_container.dart';
 import '../../../../core/network/network_info.dart';
 import '../../../../core/strings/app_string_manager.dart';
 import '../../../../core/util/pair_class.dart';
-import '../../data/response/wallet_response.dart';
 
 part 'my_wallet_state.dart';
 

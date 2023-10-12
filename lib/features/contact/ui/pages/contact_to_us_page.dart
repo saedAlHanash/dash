@@ -1,4 +1,4 @@
-import 'dart:html';
+import "package:universal_html/html.dart";
 
 import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';

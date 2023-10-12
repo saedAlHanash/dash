@@ -1,4 +1,4 @@
-import 'dart:html';
+import "package:universal_html/html.dart";
 
 import 'package:collection/collection.dart';
 import 'package:drawable_text/drawable_text.dart';
@@ -24,7 +24,6 @@ import 'package:qareeb_dash/features/shared_trip/ui/widget/path_points_widget.da
 import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_models/global.dart';
 import 'package:qareeb_models/points/data/model/trip_point.dart';
-import 'package:qareeb_models/points/data/response/points_edge_response.dart';
 import 'package:qareeb_models/trip_path/data/models/trip_path.dart';
 
 import '../../../../core/util/checker_helper.dart';

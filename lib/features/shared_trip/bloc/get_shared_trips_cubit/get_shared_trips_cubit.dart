@@ -16,7 +16,6 @@ import '../../../../core/network/network_info.dart';
 import '../../../../core/strings/app_string_manager.dart';
 import '../../../../core/util/note_message.dart';
 import '../../../../core/util/pair_class.dart';
-import '../../../trip/data/request/filter_trip_request.dart';
 
 part 'get_shared_trips_state.dart';
 

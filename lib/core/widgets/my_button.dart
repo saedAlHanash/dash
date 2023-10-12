@@ -2,8 +2,8 @@ import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/strings/app_color_manager.dart';
-import 'package:qareeb_models/extensions.dart';
 
 import '../../features/drivers/bloc/loyalty_cubit/loyalty_cubit.dart';
 import '../../features/drivers/data/response/drivers_response.dart';
@@ -38,7 +38,6 @@ class MyButton extends StatelessWidget {
     final child = this.child ??
         DrawableText(
           text: text,
-          selectable: false,
           color: textColor ?? AppColorManager.whit,
           fontFamily: FontManager.cairoBold,
           size: 17.0.sp,
@@ -166,26 +165,39 @@ class LoyalSwitchWidget extends StatelessWidget {
     return BlocBuilder<LoyaltyCubit, LoyaltyInitial>(
       buildWhen: (p, c) => c.id == driver.id,
       builder: (context, state) {
-        if (state.statuses.isLoading) {
+        if (state.statuses.loading) {
           return MyStyle.loadingWidget();
         }
 
-        if (state.statuses.isDone) {
+        if (state.statuses.done) {
           driver.loyalty = !driver.loyalty;
         }
 
-        return Switch(
-          value: driver.loyalty,
-          activeColor: AppColorManager.mainColor,
-          inactiveTrackColor: Colors.grey,
-          hoverColor: Colors.transparent,
-          onChanged: (value) {
-            context.read<LoyaltyCubit>().changeLoyalty(
-              context,
-              driverId: driver.id,
-              loyalState: !driver.loyalty,
-            );
-          },
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Switch(
+              value: driver.loyalty,
+              activeColor: AppColorManager.mainColor,
+              inactiveTrackColor: Colors.grey,
+              hoverColor: Colors.transparent,
+              onChanged: (value) {
+                context.read<LoyaltyCubit>().changeLoyalty(
+                      context,
+                      driverId: driver.id,
+                      loyalState: !driver.loyalty,
+                    );
+              },
+            ),
+            if (driver.loyalty)
+              DrawableText(
+                text: 'بنزين',
+                drawableEnd: Checkbox(
+                  value: driver.loyalty,
+                  onChanged: (value) {},
+                ),
+              ),
+          ],
         );
       },
     );

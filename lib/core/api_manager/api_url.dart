@@ -1,5 +1,3 @@
-import 'package:qareeb_dash/core/api_manager/api_service.dart';
-
 import '../util/shared_preferences.dart';
 
 class GetUrl {
@@ -95,6 +93,10 @@ class GetUrl {
   static const governorates = 'api/services/app/GovernorateService/GetAll';
   static const areas = 'api/services/app/AreaService/GetAll';
   static var allTickets = 'api/services/app/TicketsService/GetAll';
+
+  static var getAgencyById;
+
+  static var agencies;
 }
 
 class PostUrl {
@@ -163,6 +165,8 @@ class PostUrl {
   static const estimateSharedTrip = 'api/services/app/PathService/GetPathEstimation';
   static const createGovernorate = 'api/services/app/GovernorateService/Create';
   static const createArea = 'api/services/app/AreaService/Create';
+
+  static var createAgency;
 }
 
 class PutUrl {
@@ -193,6 +197,8 @@ class PutUrl {
   static const updateSetting = 'api/services/app/SystemSettingsService/Update';
 
   static const updateTempTrip = 'api/services/app/PathService/UpdatePath';
+
+  static var updateAgency;
 }
 
 class DeleteUrl {
@@ -212,6 +218,8 @@ class DeleteUrl {
 
   static var deleteCancelGovernorate = 'api/services/app/GovernorateService/Delete';
   static var deleteCancelArea = 'api/services/app/AreaService/Delete';
+
+  static var deleteCancelCoupon = 'api/services/app/Cupons/Delete';
 }
 
 class OrsUrl {
@@ -245,7 +253,7 @@ class PatchUrl {
 String get baseUrl {
   final s = AppSharedPreference.isTestMode
       ? 'livetest.qareeb-maas.com'
-      : 'live.qareeb-maas.com';
+      : 'livetest.qareeb-maas.com';
   return s;
 }
 

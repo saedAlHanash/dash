@@ -9,7 +9,6 @@ import 'package:qareeb_dash/core/widgets/saed_taple_widget.dart';
 import 'package:qareeb_models/extensions.dart';
 
 import '../../../../core/util/my_style.dart';
-import '../../../../core/widgets/my_card_widget.dart';
 import '../../../../router/go_route_pages.dart';
 import '../../bloc/all_messages/all_messages_cubit.dart';
 

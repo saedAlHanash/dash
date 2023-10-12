@@ -32,22 +32,22 @@ dependencies:
       url: https://github.com/saedAlHanash/drawable_text
       ref: html
 #
-  qareeb_models:
-    git:
-      url: https://github.com/saedAlHanash/qareeb_models
+#  qareeb_models:
+#    git:
+#      url: https://github.com/saedAlHanash/qareeb_models
+#
+#  map_package:
+#    git:
+#      url: https://github.com/saedAlHanash/map_qareeb
+#      ref: html
+
 
   map_package:
-    git:
-      url: https://github.com/saedAlHanash/map_qareeb
-      ref: html
+    path: ../../packages/map_package
 
+  qareeb_models:
+    path: ../../packages/qareeb_models
 
-#  map_package:
-#    path: ../../packages/map_package
-#
-#  qareeb_models:
-#    path: ../../packages/qareeb_models
-#
 
   excel: ^2.1.0
   flutter_bloc: ^8.1.3
@@ -55,10 +55,11 @@ dependencies:
   equatable: ^2.0.5
   get_it: any
   http: any
+  universal_html: ^2.2.4
   easy_sidemenu: ^0.4.1+1
   #  responsive_sizer: ^3.1.1
   shared_preferences: any
-  #  bloc: ^8.1.0
+  bloc: ^8.1.2
   flutter_admin_scaffold: ^1.2.0
   lottie: any
   flutter_svg: any
@@ -109,6 +110,7 @@ dependencies:
   multi_select_flutter: ^4.1.3
 #  flutter_cupertino_datetime_picker: ^3.0.0
 #  location_permissions:
+  toggle_switch: ^2.1.0
 
 dev_dependencies:
   flutter_test:

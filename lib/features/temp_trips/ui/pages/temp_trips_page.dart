@@ -11,7 +11,7 @@ import '../../../../router/go_route_pages.dart';
 import '../../bloc/all_temp_trips_cubit/all_temp_trips_cubit.dart';
 import '../../bloc/delete_temp_trip_cubit/delete_temp_trip_cubit.dart';
 
-final _super_userList = [
+final _titleList = [
   'ID',
   'اسم المسار',
   'عدد النقاط',
@@ -43,7 +43,7 @@ class TempTripsPage extends StatelessWidget {
             children: [
               SaedTableWidget(
                 command: state.command,
-                title: _super_userList,
+                title: _titleList,
                 data: list
                     .mapIndexed(
                       (i, e) => [

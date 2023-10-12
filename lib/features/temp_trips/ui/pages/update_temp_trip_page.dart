@@ -1,4 +1,4 @@
-import 'dart:html';
+import "package:universal_html/html.dart";
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -96,9 +96,9 @@ class UpdateTempTripPageState extends State<UpdateTempTripPage> {
                                     text: request.id != null ? 'تعديل' : 'إنشاء',
                                     onTap: () {
                                       request.pathEdgesIds.clear();
-                                      addPointCubit.state.edgeIds.forEach(( value) {
+                                      for (var value in addPointCubit.state.edgeIds) {
                                         request.pathEdgesIds.add(value);
-                                      });
+                                      }
 
                                       if (request.validateRequest(context)) {
                                         context

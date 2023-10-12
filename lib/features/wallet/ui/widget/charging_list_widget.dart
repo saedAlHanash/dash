@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qareeb_dash/core/widgets/not_found_widget.dart';
 import 'package:qareeb_models/extensions.dart';
+import 'package:qareeb_models/wallet/data/response/wallet_response.dart';
 
 import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/util/my_style.dart';
-import '../../data/response/wallet_response.dart';
 
 class ChargingListWidget extends StatelessWidget {
   const ChargingListWidget({Key? key, required this.wallet}) : super(key: key);
@@ -16,7 +16,7 @@ class ChargingListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final list = wallet.chargings;
         if(list.isEmpty){
-              return const NotFoundWidget(text: 'لا يووجد معلومات');
+              return const NotFoundWidget(text: 'لا يوجد معلومات');
             }
     return ListView.builder(
       itemCount: list.length,

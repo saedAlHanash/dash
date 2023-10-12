@@ -5,18 +5,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:qareeb_dash/core/api_manager/command.dart';
-import 'package:qareeb_dash/core/widgets/item_info.dart';
 import 'package:qareeb_dash/core/widgets/saed_taple_widget.dart';
 import 'package:qareeb_dash/features/drivers/bloc/all_drivers/all_drivers_cubit.dart';
 import 'package:qareeb_dash/features/pay_to_drivers/ui/widget/pay_to_driver_widget.dart';
 import 'package:qareeb_models/extensions.dart';
-import 'package:qareeb_models/global.dart';
 
 import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/file_util.dart';
 import '../../../../core/util/my_style.dart';
 import '../../../../core/util/note_message.dart';
-import '../../../../core/widgets/spinner_widget.dart';
 import '../../../../router/go_route_pages.dart';
 import '../../../accounts/bloc/account_amount_cubit/account_amount_cubit.dart';
 import '../../../accounts/bloc/all_transfers_cubit/all_transfers_cubit.dart';
@@ -116,7 +113,7 @@ class _PayToDriversPageState extends State<PayToDriversPage> {
                           context,
                           command:
                               context.read<FinancialReportCubit>().state.command.copyWith(
-                                    memberFilterRequest: request,
+                                clientsFilterRequest: request,
                                     skipCount: 0,
                                     totalCount: 0,
                                   ),

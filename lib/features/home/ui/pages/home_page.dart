@@ -1,4 +1,4 @@
-import 'dart:html';
+import "package:universal_html/html.dart";
 import 'dart:math';
 
 import 'package:drawable_text/drawable_text.dart';
@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_admin_scaffold/admin_scaffold.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 import 'package:map_package/map/bloc/ather_cubit/ather_cubit.dart';
 import 'package:map_package/map/bloc/map_controller_cubit/map_controller_cubit.dart';
 import 'package:map_package/map/bloc/search_location/search_location_cubit.dart';
@@ -16,7 +15,6 @@ import 'package:qareeb_dash/core/api_manager/command.dart';
 import 'package:qareeb_dash/features/accounts/ui/pages/transfers_page.dart';
 import 'package:qareeb_dash/features/car_catigory/bloc/delete_car_cat_cubit/delete_car_cat_cubit.dart';
 import 'package:qareeb_dash/features/coupons/ui/pages/coupons_page.dart';
-import 'package:qareeb_dash/features/messages/ui/pages/messages_page.dart';
 import 'package:qareeb_dash/features/redeems/bloc/redeems_cubit/redeems_cubit.dart';
 import 'package:qareeb_dash/features/shared_trip/ui/pages/shared_trips_page.dart';
 import 'package:qareeb_dash/features/trip/ui/pages/trips_page.dart';
@@ -27,7 +25,6 @@ import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/shared_preferences.dart';
 import '../../../../core/widgets/logo_text.dart';
-import '../../../../router/go_route_pages.dart';
 import '../../../accounts/bloc/account_amount_cubit/account_amount_cubit.dart';
 import '../../../accounts/bloc/all_transfers_cubit/all_transfers_cubit.dart';
 import '../../../accounts/data/request/transfer_filter_request.dart';
@@ -45,7 +42,6 @@ import '../../../governorates/ui/pages/governorates_page.dart';
 import '../../../institutions/bloc/delete_institution_cubit/delete_institution_cubit.dart';
 import '../../../institutions/ui/pages/institutions_page.dart';
 import '../../../notifications/ui/pages/notifications_page.dart';
-import '../../../pay_to_drivers/bloc/financial_report_cubit/financial_report_cubit.dart';
 import '../../../pay_to_drivers/bloc/pay_to_cubit/pay_to_cubit.dart';
 import '../../../pay_to_drivers/ui/pages/pay_to_drivers_page.dart';
 import '../../../points/ui/pages/points_page.dart';
@@ -64,8 +60,6 @@ import '../../../temp_trips/bloc/delete_temp_trip_cubit/delete_temp_trip_cubit.d
 import '../../../temp_trips/ui/pages/temp_trips_page.dart';
 import '../../../ticket/bloc/replay_ticket_cubit/replay_ticket_cubit.dart';
 import '../../../ticket/ui/pages/tickets_page.dart';
-import '../../../trip/bloc/active_trips/active_trips_cubit.dart';
-import '../../../trip/ui/pages/active_trips_page.dart';
 import '../../../wallet/bloc/change_provider_state_cubit/change_provider_state_cubit.dart';
 import '../../../wallet/ui/pages/providers_page.dart';
 import '../../bloc/nav_home_cubit/nav_home_cubit.dart';
@@ -195,15 +189,19 @@ class _HomePageState extends State<HomePage> {
                 AdminMenuItem(
                   title: 'عمليات إدارية',
                   children: [
-                    if (isAllowed(AppPermissions.REASON))
-                      const AdminMenuItem(
-                          title: 'أسباب الإلغاء', route: '/cancel_reasons'),
+                    // if (isAllowed(AppPermissions.REASON))
+                    //   const AdminMenuItem(
+                    //       title: 'أسباب الإلغاء', route: '/cancel_reasons'),
                     const AdminMenuItem(title: 'المحافظات', route: '/government'),
                     if (isAllowed(AppPermissions.CAR_CATEGORY))
                       const AdminMenuItem(title: 'المؤسسات', route: '/institutions'),
                     if (isAllowed(AppPermissions.ROLES))
                       const AdminMenuItem(title: 'الأدوار', route: '/roles'),
-                    const AdminMenuItem(title: 'متغيرات الولاء', route: '/systemParams'),
+                    const AdminMenuItem(
+                      title: 'إعدادات',
+                      route: '/systemParams',
+                      icon: Icons.settings,
+                    ),
                     const AdminMenuItem(
                         title: 'إدارة الإصدارات', route: '/systemVersion'),
                   ],

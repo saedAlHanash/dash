@@ -1,4 +1,4 @@
-import 'dart:html';
+import "package:universal_html/html.dart";
 
 import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
@@ -66,6 +66,14 @@ class LoyaltyWidget extends StatelessWidget {
               oldCount: state.result.tiresOldCount,
               p: state.result.tiresPCount,
             ),
+            ItemLoyal(
+              driverId: state.driverId,
+              text: 'بنزين',
+              count: state.result.gasCount,
+              type: RedeemType.gas,
+              oldCount: state.result.gasOldCount,
+              p: state.result.gasPCount,
+            ),
           ],
         );
       },
@@ -103,6 +111,9 @@ class ItemLoyal extends StatelessWidget {
       case RedeemType.tire:
         url = Assets.iconsTires;
         break;
+      case RedeemType.gas:
+        url = Assets.iconsGas;
+        break;
     }
     return MyCardWidget(
       elevation: 0.0,
@@ -115,6 +126,9 @@ class ItemLoyal extends StatelessWidget {
               color: Colors.black,
               fontFamily: FontManager.cairoBold,
               drawablePadding: 10.0.w,
+              drawableAlin: DrawableAlin.withText,
+              matchParent: true,
+              textAlign: TextAlign.start,
               drawableStart: ImageMultiType(
                 url: url,
                 width: 35.0.r,
@@ -230,24 +244,26 @@ class _TotalWidget extends StatelessWidget {
               fontFamily: FontManager.cairoBold,
             ),
           ),
-          Expanded(
-            child: TextButton(
-              onPressed: () {
-                context.pushNamed(GoRouteName.redeems, queryParams: {'id': driverId});
-              },
-              child: DrawableText(
-                text: 'السجل',
-                underLine: true,
-                color: Colors.black,
-                fontFamily: FontManager.cairoBold,
-                drawablePadding: 5.0.w,
-                drawableEnd: Icon(
-                  Icons.info_outline_rounded,
-                  size: 30.0.r,
+          if (driverId != 0)
+            Expanded(
+              child: TextButton(
+                onPressed: () {
+                  context.pushNamed(GoRouteName.redeems, queryParams: {'id': driverId});
+                },
+                child: DrawableText(
+                  text: 'السجل',
+                  selectable: false,
+                  underLine: true,
+                  color: Colors.black,
+                  fontFamily: FontManager.cairoBold,
+                  drawablePadding: 5.0.w,
+                  drawableEnd: Icon(
+                    Icons.info_outline_rounded,
+                    size: 30.0.r,
+                  ),
                 ),
               ),
             ),
-          ),
         ],
       ),
     );

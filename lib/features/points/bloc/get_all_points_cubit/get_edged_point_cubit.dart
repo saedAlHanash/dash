@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_models/global.dart';
-import 'package:qareeb_models/points/data/response/points_edge_response.dart';
 import 'package:qareeb_models/trip_path/data/models/trip_path.dart';
 
 import '../../../../core/api_manager/api_service.dart';

@@ -1,4 +1,4 @@
-import 'dart:html';
+import "package:universal_html/html.dart";
 
 import 'package:excel/excel.dart';
 
@@ -55,7 +55,7 @@ saveXls(
   //   sheetObject.insertRowIterables(element, index + 1);
   // });
 
-  List<int>? fileBytes = excel.save(fileName: '$fileName.xlsx' ?? 'Qareep Report.xlsx');
+  List<int>? fileBytes = excel.save(fileName: '$fileName.xlsx');
   saveFile(fileBytes: fileBytes);
 }
 

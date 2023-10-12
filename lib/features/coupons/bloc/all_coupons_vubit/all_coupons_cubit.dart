@@ -12,7 +12,7 @@ import '../../../../core/util/note_message.dart';
 import '../../../../core/util/pair_class.dart';
 import '../../data/response/coupons_response.dart';
 
-part 'all_coupon_state.dart';
+part 'all_coupons_state.dart';
 
 class AllCouponsCubit extends Cubit<AllCouponsInitial> {
   AllCouponsCubit() : super(AllCouponsInitial.initial());

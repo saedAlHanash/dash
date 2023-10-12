@@ -9,7 +9,7 @@ import '../../../../core/api_manager/api_service.dart';
 import '../../../../core/error/error_manager.dart';
 import '../../../../core/util/note_message.dart';
 import '../../../../core/util/pair_class.dart';
-import '../../data/request/create_coupons_request.dart';
+import '../../data/response/coupons_response.dart';
 
 part 'create_coupon_state.dart';
 
@@ -18,7 +18,7 @@ class CreateCouponCubit extends Cubit<CreateCouponInitial> {
 
   Future<void> createCoupon(
     BuildContext context, {
-    required CreateCouponRequest request,
+    required Coupon request,
   }) async {
     emit(state.copyWith(statuses: CubitStatuses.loading));
     final pair = await _createCouponApi(request: request);
@@ -34,10 +34,10 @@ class CreateCouponCubit extends Cubit<CreateCouponInitial> {
   }
 
   Future<Pair<bool?, String?>> _createCouponApi(
-      {required CreateCouponRequest request}) async {
+      {required Coupon request}) async {
     late Response response;
 
-    if (request.id != null) {
+    if (request.id != 0) {
       response = await APIService().puttApi(
         url: PutUrl.updateCoupon,
         body: request.toJson(),

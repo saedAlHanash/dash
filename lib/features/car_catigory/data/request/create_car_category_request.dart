@@ -120,7 +120,7 @@ class CreateCarCatRequest {
       NoteMessage.showErrorSnackBar(message: 'خطأ في الاسم', context: context);
       return false;
     }
-    if (file == 0) {
+    if (file == null) {
       NoteMessage.showErrorSnackBar(message: 'خطأ في صورة التصنيف', context: context);
       return false;
     }

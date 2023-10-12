@@ -1,11 +1,10 @@
-import 'dart:html';
+import "package:universal_html/html.dart";
 
 import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../strings/app_color_manager.dart';
-import '../util/checker_helper.dart';
 import 'logo_text.dart';
 
 class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {

@@ -6,14 +6,12 @@ import 'package:map_package/map/bloc/map_controller_cubit/map_controller_cubit.d
 import 'package:map_package/map/ui/widget/map_widget.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/widgets/my_button.dart';
-import 'package:qareeb_dash/features/trip/data/request/cancel_trip_request.dart';
 import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_models/global.dart';
 
 import '../../../../core/util/my_style.dart';
 import '../../../../core/util/shared_preferences.dart';
 import '../../../../core/widgets/app_bar_widget.dart';
-
 import '../../bloc/trip_by_id/trip_by_id_cubit.dart';
 import '../../bloc/trip_status_cubit/trip_status_cubit.dart';
 import '../../data/request/update_trip_request.dart';

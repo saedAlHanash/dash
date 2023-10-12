@@ -56,14 +56,14 @@ class FilterableList extends StatelessWidget {
     final ThemeData theme = Theme.of(context);
     final ScaffoldState? scaffold = Scaffold.maybeOf(context);
 
-    Color _suggestionBackgroundColor = suggestionBackgroundColor ??
+    Color suggestionBackgroundColor = this.suggestionBackgroundColor ??
         scaffold?.widget.backgroundColor ??
         theme.scaffoldBackgroundColor;
 
     return Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(5),
-      color: _suggestionBackgroundColor,
+      color: suggestionBackgroundColor,
       child: Container(
         constraints: BoxConstraints(maxHeight: maxListHeight),
         child: Visibility(

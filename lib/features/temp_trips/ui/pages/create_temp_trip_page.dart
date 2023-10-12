@@ -1,10 +1,9 @@
-import 'dart:html';
+import "package:universal_html/html.dart";
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:map_package/map/bloc/map_controller_cubit/map_controller_cubit.dart';
-import 'package:map_package/map/ui/widget/map_widget.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/widgets/my_button.dart';
 import 'package:qareeb_dash/core/widgets/my_card_widget.dart';
@@ -116,9 +115,9 @@ class _CreateTempTripPageState extends State<CreateTempTripPage> {
                               text: request.id != null ? 'تعديل' : 'إنشاء',
                               onTap: () {
                                 request.pathEdgesIds.clear();
-                                addPointCubit.state.edgeIds.forEach((value) {
+                                for (var value in addPointCubit.state.edgeIds) {
                                   request.pathEdgesIds.add(value);
-                                });
+                                }
 
                                 if (request.validateRequest(context)) {
                                   context

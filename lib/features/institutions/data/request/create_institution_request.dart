@@ -8,7 +8,7 @@ import '../response/institutions_response.dart';
 
 class CreateInstitutionRequest {
   String? name;
-  Government government;
+  Governorate government;
   InstitutionType type;
   String? atharKey;
   String? adminFirstName;
@@ -24,7 +24,7 @@ class CreateInstitutionRequest {
     this.id,
     this.name,
     this.file,
-    this.government = Government.damascus,
+    this.government = Governorate.damascus,
     this.type = InstitutionType.college,
     this.atharKey,
     this.adminFirstName,
@@ -38,7 +38,7 @@ class CreateInstitutionRequest {
   Map<String, dynamic> toMap() {
     return {
       'Name': name,
-      'Government': government.index,
+      'Governorate': government.index,
       'Type': type.index,
       'AtharKey': atharKey,
       'AdminFirstName': adminFirstName,
@@ -55,7 +55,7 @@ class CreateInstitutionRequest {
     return CreateInstitutionRequest(
       id: model.id,
       name: model.name,
-      government: Government.values[model.government],
+      government: Governorate.values[model.government],
       type: InstitutionType.values[model.type],
       atharKey: model.atharKey,
     )..file = UploadFile(fileBytes: null, initialImage: model.imageUrl);

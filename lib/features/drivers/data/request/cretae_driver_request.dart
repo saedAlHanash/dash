@@ -144,7 +144,7 @@ class CreateDriverRequest {
 
   static CreateDriverRequest fromDriver(DriverModel driver) {
     final r = CreateDriverRequest();
-    r.name = driver.fullName;
+    r.name = driver.name;
     r.id = driver.id;
     r.surname = driver.surname;
     r.phoneNumber = driver.phoneNumber;

@@ -64,7 +64,7 @@ class SaedTableWidget extends StatelessWidget {
                   ),
                 15.0.horizontalSpace,
                 if (command != null)
-                  DrawableText(text: 'الصفحات: (${command?.maxPages}) - النتائج : (${command?.totalCount})'),
+                  DrawableText(text: 'الصفحات: ${command?.maxPages}   - النتائج : ${command?.totalCount}'),
                 // InkWell(onTap: () {}, child: Icon(Icons.search))
               ],
             ),

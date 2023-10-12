@@ -72,6 +72,9 @@ class DriverModel {
     required this.drivingLicence,
     required this.carMechanic,
     required this.password,
+    required this.driverStatus,
+    required this.rejectedTripsCount,
+    required this.receivedTripsCount,
   });
 
   final int id;
@@ -103,6 +106,9 @@ class DriverModel {
   final String drivingLicence;
   final String carMechanic;
   final String password;
+  final DriverStatus driverStatus;
+  final num rejectedTripsCount;
+  final num receivedTripsCount;
 
   factory DriverModel.fromJson(Map<String, dynamic> json) {
     return DriverModel(
@@ -137,6 +143,9 @@ class DriverModel {
       drivingLicence: fixAvatarImage(json["drivingLicence"] ?? ""),
       carMechanic: fixAvatarImage(json["carMechanic"] ?? ""),
       password: json["password"] ?? "",
+      driverStatus: DriverStatus.values[json["driverStatus"] ?? 0],
+      rejectedTripsCount: json["rejectedTripsCount"] ?? 0,
+      receivedTripsCount: json["receivedTripsCount"] ?? 0,
     );
   }
 
@@ -170,6 +179,9 @@ class DriverModel {
         "drivingLicence": drivingLicence,
         "carMechanic": carMechanic,
         "password": password,
+        "driverStatus": driverStatus.index,
+        "rejectedTripsCount": rejectedTripsCount,
+        "receivedTripsCount": receivedTripsCount,
       };
 }
 

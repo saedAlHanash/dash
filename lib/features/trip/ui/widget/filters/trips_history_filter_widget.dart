@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qareeb_dash/core/strings/app_color_manager.dart';
 import 'package:qareeb_dash/core/widgets/my_button.dart';
@@ -8,23 +7,10 @@ import 'package:qareeb_dash/core/widgets/spinner_widget.dart';
 import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_models/global.dart';
 
-import '../../../../../core/util/checker_helper.dart';
-import '../../../../../core/util/my_style.dart';
-import '../../../../drivers/bloc/all_drivers/all_drivers_cubit.dart';
-import '../../../../trip/data/request/filter_trip_request.dart';
-
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:qareeb_dash/core/strings/app_color_manager.dart';
-import 'package:qareeb_dash/core/widgets/my_button.dart';
-import 'package:qareeb_dash/core/widgets/spinner_widget.dart';
-import 'package:qareeb_models/extensions.dart';
-import 'package:qareeb_models/global.dart';
-
 import '../../../../../core/api_manager/command.dart';
 import '../../../../../core/util/my_style.dart';
-import '../../../../../core/widgets/my_text_form_widget.dart';
 import '../../../../../core/widgets/select_date.dart';
+import '../../../../trip/data/request/filter_trip_request.dart';
 
 class TripsFilterWidget extends StatefulWidget {
   const TripsFilterWidget(

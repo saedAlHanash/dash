@@ -56,7 +56,6 @@ class _CouponPageState extends State<CouponPage> {
                 .mapIndexed(
                   (index, e) => [
                     e.id.toString(),
-                    e.couponName,
                     e.couponCode,
                     e.discountValue.toString(),
                     e.expireDate?.formatDate ?? '-',

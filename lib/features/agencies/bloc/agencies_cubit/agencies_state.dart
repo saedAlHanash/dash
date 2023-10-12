@@ -1,21 +1,29 @@
-part of 'all_coupons_cubit.dart';
+part of 'agencies_cubit.dart';
 
-class AllCouponsInitial extends Equatable {
+class AgenciesInitial extends Equatable {
   final CubitStatuses statuses;
-  final List<Coupon> result;
+  final List<Agency> result;
   final String error;
   final Command command;
 
-  const AllCouponsInitial({
+  const AgenciesInitial({
     required this.statuses,
     required this.result,
     required this.error,
     required this.command,
   });
 
-  factory AllCouponsInitial.initial() {
-    return  AllCouponsInitial(
-      result: const<Coupon>[],
+  List<SpinnerItem> get getSpinnerItem {
+    final list = <SpinnerItem>[];
+    for (var e in result) {
+      list.add(SpinnerItem(id: e.id, name: e.name, item: e));
+    }
+    return list;
+  }
+
+  factory AgenciesInitial.initial() {
+    return AgenciesInitial(
+      result: const <Agency>[],
       error: '',
       command: Command.initial(),
       statuses: CubitStatuses.init,
@@ -25,19 +33,17 @@ class AllCouponsInitial extends Equatable {
   @override
   List<Object> get props => [statuses, result, error];
 
-
-  AllCouponsInitial copyWith({
+  AgenciesInitial copyWith({
     CubitStatuses? statuses,
-    List<Coupon>? result,
+    List<Agency>? result,
     String? error,
     Command? command,
   }) {
-    return AllCouponsInitial(
+    return AgenciesInitial(
       statuses: statuses ?? this.statuses,
       result: result ?? this.result,
       error: error ?? this.error,
       command: command ?? this.command,
     );
   }
-
 }

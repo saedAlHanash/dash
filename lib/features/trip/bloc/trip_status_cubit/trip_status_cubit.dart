@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:map_package/map/bloc/ather_cubit/ather_cubit.dart';
 import 'package:qareeb_models/global.dart';
 
 import '../../../../core/api_manager/api_service.dart';

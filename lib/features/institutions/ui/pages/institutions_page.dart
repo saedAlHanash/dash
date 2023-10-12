@@ -4,21 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:qareeb_models/extensions.dart';  import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/widgets/not_found_widget.dart';
 import 'package:qareeb_dash/core/widgets/saed_taple_widget.dart';
-
 import 'package:qareeb_dash/router/go_route_pages.dart';
+import 'package:qareeb_models/extensions.dart';
+import 'package:qareeb_models/global.dart';
 
-import 'package:qareeb_models/global.dart'; import '../../../../core/strings/enum_manager.dart';
 import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/my_style.dart';
 import '../../../../core/widgets/images/round_image_widget.dart';
-
 import '../../bloc/all_institutions_cubit/all_institutions_cubit.dart';
-import '../../bloc/delete_institution_cubit/delete_institution_cubit.dart';
 
-final _InstitutionList = [
+const institutionList = [
   'صورة',
   'اسم المؤسسة',
   'المحافظة',
@@ -57,7 +54,7 @@ class InstitutionsPage extends StatelessWidget {
               ),
               SaedTableWidget(
                 command: state.command,
-                title: _InstitutionList,
+                title: institutionList,
                 data: list
                     .mapIndexed(
                       (index, e) => [
@@ -69,7 +66,7 @@ class InstitutionsPage extends StatelessWidget {
                           ),
                         ),
                         e.name,
-                        Government.values[e.government].arabicName,
+                        Governorate.values[e.government].arabicName,
                         InstitutionType.values[e.type].arabicName,
                         e.atharKey,
                         Row(

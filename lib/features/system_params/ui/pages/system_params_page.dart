@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_dash/core/widgets/item_info.dart';
+import 'package:qareeb_dash/core/widgets/spinner_widget.dart';
 import 'package:qareeb_models/extensions.dart';
+import 'package:qareeb_models/global.dart';
 
 import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/util/my_style.dart';
@@ -33,7 +36,6 @@ class _ParamsPageState extends State<ParamsPage> {
           padding: const EdgeInsets.symmetric(horizontal: 120.0).w,
           child: BlocBuilder<SystemParamsCubit, SystemParamsInitial>(
             builder: (context, state) {
-
               if (state.statuses.loading) {
                 return MyStyle.loadingWidget();
               }
@@ -70,6 +72,39 @@ class _ParamsPageState extends State<ParamsPage> {
                                 label: 'إطارات',
                                 initialValue: request.tire.toString(),
                                 onChanged: (p0) => request.tire = num.tryParse(p0),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: MyTextFormNoLabelWidget(
+                                label: 'نصف قطر دائرة البحث',
+                                initialValue: request.tripSearchRadius.toString(),
+                                onChanged: (p0) =>
+                                    request.tripSearchRadius = num.tryParse(p0),
+                              ),
+                            ),
+                            15.0.horizontalSpace,
+                            ItemInfoInLine(
+                              title: ':فلترة البحث بتصنيف السيارات  ',
+                              widget: SpinnerWidget(
+                                items: [
+                                  SpinnerItem(
+                                    isSelected: !request.onlySelectedCarCategory,
+                                    name: 'غير مفعل',
+                                    item: false,
+                                  ),
+                                  SpinnerItem(
+                                    isSelected: request.onlySelectedCarCategory,
+                                    name: 'مفعل',
+                                    item: true,
+                                  ),
+                                ],
+                                onChanged: (spinnerItem) {
+                                  request.onlySelectedCarCategory = spinnerItem.item;
+                                },
                               ),
                             ),
                           ],

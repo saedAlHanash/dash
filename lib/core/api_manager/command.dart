@@ -1,16 +1,17 @@
-import 'package:qareeb_dash/core/api_manager/api_service.dart';
 import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_models/global.dart';
 
 import '../../features/accounts/data/request/transfer_filter_request.dart';
 import '../../features/clients/data/request/clients_filter_request.dart';
+import '../../features/drivers/data/request/drivers_filter_request.dart';
 import '../../features/trip/data/request/filter_trip_request.dart';
 
 class Command {
   Command({
     this.skipCount,
     this.totalCount,
-    this.memberFilterRequest,
+    this.clientsFilterRequest,
+    this.driversFilterRequest,
     this.filterTripRequest,
     this.transferFilterRequest,
   });
@@ -18,7 +19,8 @@ class Command {
   int? skipCount;
   int maxResultCount = 20;
   int? totalCount;
-  ClientsFilterRequest? memberFilterRequest;
+  ClientsFilterRequest? clientsFilterRequest;
+  DriversFilterRequest? driversFilterRequest;
   FilterTripRequest? filterTripRequest;
 
   TransferFilterRequest? transferFilterRequest;
@@ -70,8 +72,12 @@ class Command {
       json.addAll(transferFilterRequest!.toMap());
     }
 
-    if (memberFilterRequest != null) {
-      json.addAll(memberFilterRequest!.toJson());
+    if (clientsFilterRequest != null) {
+      json.addAll(clientsFilterRequest!.toJson());
+    }
+
+    if (driversFilterRequest != null) {
+      json.addAll(driversFilterRequest!.toJson());
     }
 
     return json;
@@ -87,14 +93,16 @@ class Command {
     int? skipCount,
     int? totalCount,
     FilterTripRequest? filterTripRequest,
-    ClientsFilterRequest? memberFilterRequest,
+    ClientsFilterRequest? clientsFilterRequest,
+    DriversFilterRequest? driversFilterRequest,
     TransferFilterRequest? transferFilterRequest,
   }) {
     return Command(
       skipCount: skipCount ?? this.skipCount,
       totalCount: totalCount ?? this.totalCount,
       filterTripRequest: filterTripRequest ?? this.filterTripRequest,
-      memberFilterRequest: memberFilterRequest ?? this.memberFilterRequest,
+      clientsFilterRequest: clientsFilterRequest ?? this.clientsFilterRequest,
+      driversFilterRequest: driversFilterRequest ?? this.driversFilterRequest,
       transferFilterRequest: transferFilterRequest ?? this.transferFilterRequest,
     );
   }

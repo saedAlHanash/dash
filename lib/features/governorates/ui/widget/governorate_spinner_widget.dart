@@ -2,13 +2,13 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:qareeb_models/extensions.dart';
 
 import '../../../../core/util/my_style.dart';
 import '../../../../core/widgets/spinner_widget.dart';
 import '../../../areas/bloc/areas_cubit/areas_cubit.dart';
 import '../../bloc/governorates_cubit/governorates_cubit.dart';
-import 'package:multi_select_flutter/multi_select_flutter.dart';
 
 class GovernorateSpinnerWidget extends StatefulWidget {
   const GovernorateSpinnerWidget({super.key, required this.onSelect});

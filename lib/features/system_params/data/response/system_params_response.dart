@@ -42,44 +42,63 @@ class SystemParamsResult {
 
 class SystemParam {
   SystemParam({
-    this.gold,
-    this.oil,
-    this.tire,
     required this.id,
+    required this.gold,
+    required this.oil,
+    required this.tire,
+    required this.sosMessage,
+    required this.tripSearchRadius,
+    required this.onlySelectedCarCategory ,
   });
 
-  num? gold;
-  num? oil;
-  num? tire;
-  final int id;
+   int id;
+   num? gold;
+   num? oil;
+   num? tire;
+   String sosMessage;
+   num? tripSearchRadius;
+   bool onlySelectedCarCategory;
 
-  factory SystemParam.fromJson(Map<String, dynamic> json) {
+  factory SystemParam.fromJson(Map<String, dynamic> json){
     return SystemParam(
+      id: json["id"] ?? 0,
       gold: json["gold"] ?? 0,
       oil: json["oil"] ?? 0,
       tire: json["tire"] ?? 0,
-      id: json["id"] ?? 0,
+      sosMessage: json["sosMessage"] ?? "",
+      tripSearchRadius: json["tripSearchRadius"] ?? 0,
+      onlySelectedCarCategory: json["onlySelectedCarCategory"] ?? false,
     );
   }
 
   Map<String, dynamic> toJson() => {
-        "gold": gold,
-        "oil": oil,
-        "tire": tire,
-        "id": id,
-      };
+    "id": id,
+    "gold": gold,
+    "oil": oil,
+    "tire": tire,
+    "sosMessage": sosMessage,
+    "tripSearchRadius": tripSearchRadius,
+    "onlySelectedCarCategory": onlySelectedCarCategory,
+  };
 
   SystemParam copyWith({
+    int? id,
     num? gold,
     num? oil,
     num? tire,
-    int? id,
+    String? sosMessage,
+    num? tripSearchRadius,
+    bool? onlySelectedCarCategory,
   }) {
     return SystemParam(
+      id: id ?? this.id,
       gold: gold ?? this.gold,
       oil: oil ?? this.oil,
       tire: tire ?? this.tire,
-      id: id ?? this.id,
+      sosMessage: sosMessage ?? this.sosMessage,
+      tripSearchRadius: tripSearchRadius ?? this.tripSearchRadius,
+      onlySelectedCarCategory: onlySelectedCarCategory ?? this.onlySelectedCarCategory,
     );
   }
 }
+

@@ -14,9 +14,9 @@ import 'package:qareeb_models/extensions.dart';
 import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/my_style.dart';
 import '../../../../core/widgets/my_card_widget.dart';
-import '../../bloc/governorates_cubit/governorates_cubit.dart';
 import '../../bloc/create_governorate_cubit/create_governorate_cubit.dart';
 import '../../bloc/delete_governorate_cubit/delete_governorate_cubit.dart';
+import '../../bloc/governorates_cubit/governorates_cubit.dart';
 import '../../data/response/governorate_response.dart';
 
 class GovernoratesPage extends StatefulWidget {

@@ -11,7 +11,6 @@ import '../../../../core/api_manager/command.dart';
 import '../../../../core/error/error_manager.dart';
 import '../../../../core/util/note_message.dart';
 import '../../../../core/util/pair_class.dart';
-import '../../data/response/messages_response.dart';
 
 part 'all_messages_state.dart';
 

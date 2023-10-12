@@ -6,7 +6,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:map_package/map/data/models/my_marker.dart';
 import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_models/points/data/model/trip_point.dart';
-import 'package:qareeb_models/points/data/response/points_edge_response.dart';
 import 'package:qareeb_models/trip_path/data/models/trip_path.dart';
 
 import '../../../../core/strings/app_color_manager.dart';

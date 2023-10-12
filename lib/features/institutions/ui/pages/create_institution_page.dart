@@ -178,7 +178,7 @@ class _CreateInstitutionPageState extends State<CreateInstitutionPage> {
                         Expanded(
                           child: SpinnerOutlineTitle(
                             label: 'المحافظة',
-                            items: Government.values.spinnerItems(
+                            items: Governorate.values.spinnerItems(
                               selected: request.government,
                             ),
                             onChanged: (p0) => request.government = p0.item,

@@ -4,17 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:qareeb_models/extensions.dart';
-import 'package:qareeb_models/extensions.dart';
-import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/strings/app_color_manager.dart';
-import 'package:qareeb_dash/core/widgets/auto_complete_widget.dart';
 import 'package:qareeb_dash/core/widgets/not_found_widget.dart';
 import 'package:qareeb_dash/core/widgets/saed_taple_widget.dart';
 import 'package:qareeb_dash/features/accounts/ui/widget/filters/transfers_filter_widget.dart';
-
+import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_models/global.dart';
-import '../../../../core/strings/enum_manager.dart';
+
 import '../../../../core/util/file_util.dart';
 import '../../../../core/util/my_style.dart';
 import '../../../../router/go_route_pages.dart';
@@ -105,7 +101,7 @@ class _TransfersPageState extends State<TransfersPage> {
                     data: state.result.mapIndexed((index, e) {
                       return [
                         e.id.toString(),
-                        e.type?.transferarabicName,
+                        e.type?.arabicName,
                         e.sourceName,
                         e.destinationName,
                         e.amount.formatPrice,
@@ -141,22 +137,5 @@ class _TransfersPageState extends State<TransfersPage> {
         ),
       ),
     );
-  }
-}
-
-extension TransferTypeHelper on TransferType {
-  String get transferarabicName {
-    switch (this) {
-      case TransferType.sharedPay:
-        return 'رحلة تشاركية';
-      case TransferType.tripPay:
-        return 'رحلة عادية';
-      case TransferType.payoff:
-        return 'السائق دافع للشركة';
-      case TransferType.debit:
-        return 'الشركة دافعة للسائق';
-      case TransferType.award:
-        return 'مكافئة تنزيل التطبيق';
-    }
   }
 }

@@ -120,5 +120,5 @@ String getMessage(FinancialReport report) {
     case SummaryPayToEnum.equal:
       return 'ان مستحقات الشركة من السائق مساوية تماما لمستحقات السائق لدى الشركة';
   }
-  return '';
+
 }

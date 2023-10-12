@@ -6,7 +6,6 @@ import 'package:qareeb_dash/core/api_manager/api_url.dart';
 import 'package:qareeb_dash/core/api_manager/command.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/features/accounts/data/response/transfers_response.dart';
-import 'package:qareeb_dash/features/accounts/ui/pages/transfers_page.dart';
 import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_models/global.dart';
 
@@ -84,7 +83,7 @@ class AllTransfersCubit extends Cubit<AllTransfersInitial> {
             .mapIndexed(
               (index, e) => [
                 e.id,
-                e.type?.transferarabicName,
+                e.type?.arabicName,
                 e.sourceName,
                 e.destinationName,
                 e.amount.formatPrice,

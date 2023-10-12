@@ -152,7 +152,7 @@ class ItemTransfer extends StatelessWidget {
                         matchParent: true,
                         size: 18.0.sp,
                         textAlign: TextAlign.center,
-                        text: item.status == 1 ? 'تمت' : 'معلقة',
+                        text: item.status?.arabicName??'',
                         color: Colors.black,
                         fontFamily: FontManager.cairoBold,
                       ),

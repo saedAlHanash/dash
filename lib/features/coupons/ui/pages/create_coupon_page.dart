@@ -1,4 +1,4 @@
-import 'dart:html';
+import "package:universal_html/html.dart";
 
 import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
@@ -15,8 +15,8 @@ import '../../../../core/util/my_style.dart';
 import '../../../../core/widgets/app_bar_widget.dart';
 import '../../bloc/all_coupons_vubit/all_coupons_cubit.dart';
 import '../../bloc/create_coupon_cubit/create_coupon_cubit.dart';
-import '../../data/request/create_coupons_request.dart';
 import '../../data/response/coupons_response.dart';
+
 class CreateCouponPage extends StatefulWidget {
   const CreateCouponPage({super.key, this.coupon});
 
@@ -27,11 +27,11 @@ class CreateCouponPage extends StatefulWidget {
 }
 
 class _CreateCouponPageState extends State<CreateCouponPage> {
-  var request = CreateCouponRequest();
+  var request = Coupon.fromJson({});
 
   @override
   void initState() {
-    if (widget.coupon != null) request = CreateCouponRequest.fromCoupon(widget.coupon!);
+    if (widget.coupon != null) request = widget.coupon!;
     super.initState();
   }
 
@@ -40,7 +40,7 @@ class _CreateCouponPageState extends State<CreateCouponPage> {
     return BlocListener<CreateCouponCubit, CreateCouponInitial>(
       listenWhen: (p, c) => c.statuses.done,
       listener: (context, state) {
-            window.history.back();
+        window.history.back();
         context.read<AllCouponsCubit>().getAllCoupons(context);
       },
       child: Scaffold(
@@ -65,29 +65,6 @@ class _CreateCouponPageState extends State<CreateCouponPage> {
                       matchParent: true,
                       textAlign: TextAlign.center,
                       fontFamily: FontManager.cairoBold,
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: MyTextFormNoLabelWidget(
-                            label: 'اسم القسيمة',
-                            initialValue: request.couponName,
-                            onChanged: (p0) {
-                              request.couponName = p0;
-                            },
-                          ),
-                        ),
-                        15.0.horizontalSpace,
-                        Expanded(
-                          child: MyTextFormNoLabelWidget(
-                            label: 'كود القسيمة',
-                            initialValue: request.couponCode,
-                            onChanged: (p0) {
-                              request.couponCode = p0;
-                            },
-                          ),
-                        ),
-                      ],
                     ),
                     10.0.verticalSpace,
                     Row(
@@ -134,6 +111,15 @@ class _CreateCouponPageState extends State<CreateCouponPage> {
                           ),
                         ),
                         15.0.horizontalSpace,
+                        Expanded(
+                          child: MyTextFormNoLabelWidget(
+                            label: 'كود القسيمة',
+                            initialValue: request.couponCode,
+                            onChanged: (p0) {
+                              request.couponCode = p0;
+                            },
+                          ),
+                        ),
                       ],
                     ),
                   ],
@@ -145,7 +131,7 @@ class _CreateCouponPageState extends State<CreateCouponPage> {
                     return MyStyle.loadingWidget();
                   }
                   return MyButton(
-                    text: widget.coupon != null ? 'تعديل' : 'إنشاء',
+                    text: widget.coupon?.id != 0 ? 'تعديل' : 'إنشاء',
                     onTap: () {
                       if (request.validateRequest(context)) {
                         context
