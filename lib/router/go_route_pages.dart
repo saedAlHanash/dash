@@ -6,6 +6,7 @@ import 'package:map_package/map/bloc/map_controller_cubit/map_controller_cubit.d
 import 'package:map_package/map/bloc/search_location/search_location_cubit.dart';
 import 'package:map_package/map/bloc/set_point_cubit/map_control_cubit.dart';
 import 'package:qareeb_dash/core/api_manager/command.dart';
+import 'package:qareeb_dash/features/accounts/data/request/financial_filter_request.dart';
 import 'package:qareeb_dash/features/admins/bloc/create_admin_cubit/create_admin_cubit.dart';
 import 'package:qareeb_dash/features/admins/ui/pages/create_admin_page.dart';
 import 'package:qareeb_dash/features/car_catigory/data/response/car_categories_response.dart';
@@ -22,6 +23,8 @@ import 'package:qareeb_dash/features/trip/ui/pages/trips_page.dart';
 import '../core/injection/injection_container.dart' as di;
 import '../core/util/shared_preferences.dart';
 import '../features/accounts/bloc/account_amount_cubit/account_amount_cubit.dart';
+import '../features/accounts/bloc/driver_financial_cubit/driver_financial_cubit.dart';
+import '../features/accounts/bloc/reverse_charging_cubit/reverse_charging_cubit.dart';
 import '../features/admins/ui/pages/admin_info_page.dart';
 import '../features/areas/bloc/areas_cubit/areas_cubit.dart';
 import '../features/areas/bloc/create_area_cubit/create_area_cubit.dart';
@@ -135,15 +138,22 @@ final appGoRouter = GoRouter(
 
         // final driver = DriverModel.fromJson(jsonDecode(json));
         final providers = [
+          BlocProvider(create: (_) => di.sl<CreateRedeemCubit>()),
+          BlocProvider(create: (_) => di.sl<ReverseChargingCubit>()),
+          BlocProvider(create: (_) => di.sl<WalletCubit>()..getWallet(id: id)),
+          BlocProvider(create: (_) => di.sl<DebtsCubit>()..getDebts(_, id: id)),
+          BlocProvider(create: (_) => di.sl<RedeemsCubit>()..getRedeems(_, driverId: id)),
           BlocProvider(
               create: (_) => di.sl<DriverBuIdCubit>()..getDriverBuId(context, id: id)),
-          BlocProvider(create: (_) => di.sl<CreateRedeemCubit>()),
-          BlocProvider(create: (_) => di.sl<WalletCubit>()..getWallet(id: id)),
+          BlocProvider(
+              create: (_) =>
+                  di.sl<RedeemsHistoryCubit>()..getRedeemsHistory(_, driverId: id)),
           BlocProvider(
               create: (_) =>
                   di.sl<AccountAmountCubit>()..getAccountAmount(_, driverId: id)),
           BlocProvider(
-            create: (_) => di.sl<RedeemsCubit>()..getRedeems(_, driverId: id),
+            create: (_) => di.sl<DriverFinancialCubit>()
+              ..getDriverFinancial(_, request: FinancialFilterRequest(driverId: id)),
           ),
         ];
         return MultiBlocProvider(

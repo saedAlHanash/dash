@@ -27,7 +27,7 @@ class AgenciesPage extends StatelessWidget {
           ? FloatingActionButton(
               onPressed: () {
                 var reason = '';
-                NoteMessage.showCustomBottomSheet(
+                NoteMessage.showMyDialog(
                   context,
                   child: BlocProvider.value(
                     value: context.read<CreateAgencyCubit>(),
@@ -36,12 +36,12 @@ class AgenciesPage extends StatelessWidget {
                       children: [
                         30.0.verticalSpace,
                         MyTextFormNoLabelWidget(
-                          label: 'السبب',
+                          label: 'اسم الوكيل',
                           onChanged: (p0) => reason = p0,
                         ),
                         BlocConsumer<CreateAgencyCubit, CreateAgencyInitial>(
-                          listener: (context, state) => Navigator.pop(context, true),
                           listenWhen: (p, c) => c.statuses.done,
+                          listener: (context, state) => Navigator.pop(context, true),
                           builder: (context, state) {
                             if (state.statuses.isLoading) {
                               return MyStyle.loadingWidget();
@@ -49,9 +49,10 @@ class AgenciesPage extends StatelessWidget {
                             return MyButton(
                               onTap: () {
                                 if (reason.isEmpty) return;
-                                context
-                                    .read<CreateAgencyCubit>()
-                                    .createAgency(context, request: Agency.fromJson({}));
+                                context.read<CreateAgencyCubit>().createAgency(
+                                      context,
+                                      request: Agency.fromJson({'name': reason}),
+                                    );
                               },
                               text: 'إنشاء',
                             );
@@ -85,7 +86,7 @@ class AgenciesPage extends StatelessWidget {
                   children: [
                     Expanded(
                       child: DrawableText(
-                        text: 'السبب : ${item.name}',
+                        text: 'اسم الوكيل : ${item.name}',
                         color: Colors.black,
                         fontFamily: FontManager.cairoBold,
                       ),

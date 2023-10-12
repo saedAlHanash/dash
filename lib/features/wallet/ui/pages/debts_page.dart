@@ -18,82 +18,75 @@ class DebtsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const AppBarWidget(
-        text: 'سجل عائدات السائق من الرحلات',
-      ),
-      body: Column(
-        children: [
-          BlocBuilder<DebtsCubit, DebtsInitial>(
-            builder: (context, state) {
-              if (state.statuses.isLoading) {
-                return MyStyle.loadingWidget();
-              }
-              final list = state.result;
-              if (list.isEmpty) {
-                return const NotFoundWidget(text: 'السجل فارغ');
-              }
+    return SingleChildScrollView(
+      child: BlocBuilder<DebtsCubit, DebtsInitial>(
+        builder: (context, state) {
+          if (state.statuses.isLoading) {
+            return MyStyle.loadingWidget();
+          }
+          final list = state.result;
+          if (list.isEmpty) {
+            return const NotFoundWidget(text: 'السجل فارغ');
+          }
 
-              return SaedTableWidget(
-                onChangePage: (command) {
-                  context.read<DebtsCubit>().getDebts(context, command: command);
-                },
-                command: state.command,
-                title: const [
-                  'ID',
-                  'النوع',
-                  'الاجمالي',
-                  'للسائق',
-                  'للزيت',
-                  'للذهب',
-                  'للإطارات',
-                  'تاريخ'
-                ],
-                data: list.mapIndexed(
-                      (i, e) {
-                    return [
-                      InkWell(
-                        onTap: () {
-                          if (e.sharedRequestId != 0) {
-                            context.pushNamed(
-                              GoRouteName.sharedTripInfo,
-                              queryParams: {'requestId': '${e.sharedRequestId}'},
-                            );
-                          } else {
-                            context.pushNamed(
-                              GoRouteName.tripInfo,
-                              queryParams: {'id': '${e.tripId}'},
-                            );
-                          }
-                        },
-                        child: DrawableText(
-                          selectable: false,
-                          size: 16.0.sp,
-                          matchParent: true,
-                          textAlign: TextAlign.center,
-                          underLine: true,
-                          text: e.sharedRequestId != 0
-                              ? '${e.sharedRequestId}'
-                              : '${e.tripId}',
-                          color: Colors.blue,
-                        ),
-                      ),
-                      e.sharedRequestId != 0
-                          ? ' مقعد برحلة تشاركية'
-                          : ' عادية ',
-                      e.totalCost.formatPrice,
-                      e.driverShare.formatPrice,
-                      e.oilShare.formatPrice,
-                      e.goldShare.formatPrice,
-                      e.tiresShare.formatPrice,
-                      e.date?.formatDate ?? '-',
-                    ];
-                  },
-                ).toList(),
-              );
+          return SaedTableWidget(
+            fullHeight: 1.8.sh,
+            onChangePage: (command) {
+              context.read<DebtsCubit>().getDebts(context, command: command);
             },
-          ),
-        ],
+            command: state.command,
+            title: const [
+              'ID',
+              'النوع',
+              'الاجمالي',
+              'للسائق',
+              'للزيت',
+              'للذهب',
+              'للإطارات',
+              'بنزين',
+              'تاريخ'
+            ],
+            data: list.mapIndexed(
+              (i, e) {
+                return [
+                  InkWell(
+                    onTap: () {
+                      if (e.sharedRequestId != 0) {
+                        context.pushNamed(
+                          GoRouteName.sharedTripInfo,
+                          queryParams: {'requestId': '${e.sharedRequestId}'},
+                        );
+                      } else {
+                        context.pushNamed(
+                          GoRouteName.tripInfo,
+                          queryParams: {'id': '${e.tripId}'},
+                        );
+                      }
+                    },
+                    child: DrawableText(
+                      selectable: false,
+                      size: 16.0.sp,
+                      matchParent: true,
+                      textAlign: TextAlign.center,
+                      underLine: true,
+                      text:
+                          e.sharedRequestId != 0 ? '${e.sharedRequestId}' : '${e.tripId}',
+                      color: Colors.blue,
+                    ),
+                  ),
+                  e.sharedRequestId != 0 ? ' مقعد برحلة تشاركية' : ' عادية ',
+                  e.totalCost.formatPrice,
+                  e.driverShare.formatPrice,
+                  e.oilShare.formatPrice,
+                  e.goldShare.formatPrice,
+                  e.tiresShare.formatPrice,
+                  e.gasShare.formatPrice,
+                  e.date?.formatDate ?? '-',
+                ];
+              },
+            ).toList(),
+          );
+        },
       ),
     );
   }

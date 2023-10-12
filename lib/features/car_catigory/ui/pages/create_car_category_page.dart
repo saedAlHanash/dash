@@ -177,6 +177,16 @@ class _CreateCarCategoryPageState extends State<CreateCarCategoryPage> {
                             },
                           ),
                         ),
+                        15.0.horizontalSpace,
+                        Expanded(
+                          child: MyTextFormNoLabelWidget(
+                            label: 'نسبة ولاء البنزين',
+                            initialValue: request.sharedGasRatio?.toString(),
+                            onChanged: (p0) {
+                              request.sharedGasRatio = num.tryParse(p0);
+                            },
+                          ),
+                        ),
                       ],
                     ),
                     DrawableText(
@@ -250,6 +260,16 @@ class _CreateCarCategoryPageState extends State<CreateCarCategoryPage> {
                             initialValue: request.normalTiresRatio?.toString(),
                             onChanged: (p0) {
                               request.normalTiresRatio = num.tryParse(p0);
+                            },
+                          ),
+                        ),
+                        15.0.horizontalSpace,
+                        Expanded(
+                          child: MyTextFormNoLabelWidget(
+                            label: 'نسبة ولاء البنزين',
+                            initialValue: request.normalGasRatio?.toString(),
+                            onChanged: (p0) {
+                              request.normalGasRatio = num.tryParse(p0);
                             },
                           ),
                         ),

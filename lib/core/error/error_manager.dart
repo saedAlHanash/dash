@@ -23,7 +23,7 @@ class ErrorManager {
           final errorBody = ErrorBody.fromJson(jsonDecode(response.body));
           return errorBody.error.message;
         } on Exception {
-          return 'error';
+          return 'error Code ${response.statusCode}';
         }
     }
   }
@@ -36,9 +36,7 @@ class ErrorBody {
 
   factory ErrorBody.fromJson(Map<String, dynamic> json) {
     return ErrorBody(
-      error: json['error'] == null
-          ? Error.fromJson({})
-          : Error.fromJson(json['error']),
+      error: json['error'] == null ? Error.fromJson({}) : Error.fromJson(json['error']),
     );
   }
 

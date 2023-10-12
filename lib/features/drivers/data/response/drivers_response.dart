@@ -60,6 +60,7 @@ class DriverModel {
     required this.roleNames,
     required this.isActive,
     required this.loyalty,
+    required this.isGasIncluded,
     required this.emailConfirmationCode,
     required this.creationTime,
     required this.emailAddress,
@@ -94,6 +95,7 @@ class DriverModel {
   final List<String> roleNames;
   bool isActive;
   bool loyalty;
+  bool isGasIncluded;
   final String emailConfirmationCode;
   final DateTime? creationTime;
   final String emailAddress;
@@ -131,6 +133,7 @@ class DriverModel {
           : List<String>.from(json["roleNames"]!.map((x) => x)),
       isActive: json["isActive"] ?? false,
       loyalty: json["isLoyaltySupscriper"] ?? false,
+      isGasIncluded: json["isGasIncluded"] ?? false,
       emailConfirmationCode: json["emailConfirmationCode"] ?? "",
       creationTime: DateTime.tryParse(json["creationTime"] ?? ""),
       emailAddress: json["emailAddress"] ?? "",
@@ -171,6 +174,7 @@ class DriverModel {
         "emailAddress": emailAddress,
         "imei": imei,
         "loyalty": loyalty,
+        "isGasIncluded": isGasIncluded,
         "qarebDeviceimei": qarebDeviceimei,
         "gender": gender,
         "avatar": avatar,

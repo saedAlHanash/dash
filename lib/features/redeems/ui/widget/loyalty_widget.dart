@@ -1,10 +1,8 @@
-import "package:universal_html/html.dart";
-
+import 'package:collection/collection.dart';
 import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/util/note_message.dart';
 import 'package:qareeb_dash/core/widgets/images/image_multi_type.dart';
@@ -12,13 +10,16 @@ import 'package:qareeb_dash/core/widgets/my_button.dart';
 import 'package:qareeb_dash/generated/assets.dart';
 import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_models/global.dart';
+import "package:universal_html/html.dart";
 
 import '../../../../core/util/my_style.dart';
 import '../../../../core/util/shared_preferences.dart';
 import '../../../../core/widgets/my_card_widget.dart';
-import '../../../../router/go_route_pages.dart';
+import '../../../../core/widgets/not_found_widget.dart';
+import '../../../../core/widgets/saed_taple_widget.dart';
 import '../../bloc/create_redeem_cubit/create_redeem_cubit.dart';
 import '../../bloc/redeems_cubit/redeems_cubit.dart';
+import '../../bloc/redeems_history_cubit/redeems_history_cubit.dart';
 import '../../data/request/redeem_request.dart';
 
 class LoyaltyWidget extends StatelessWidget {
@@ -26,57 +27,87 @@ class LoyaltyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<RedeemsCubit, RedeemsInitial>(
-      builder: (context, state) {
-        if (state.statuses.isLoading) {
-          return MyStyle.loadingWidget();
-        }
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            DrawableText(
-              text: 'برنامج الولاء',
-              matchParent: true,
-              size: 28.0.sp,
-              textAlign: TextAlign.center,
-              padding: const EdgeInsets.symmetric(vertical: 15.0).h,
-            ),
-            _TotalWidget(text: state.result.totalMeters, driverId: state.driverId),
-            ItemLoyal(
-              driverId: state.driverId,
-              text: 'المليون',
-              count: state.result.goldCount,
-              type: RedeemType.gold,
-              oldCount: state.result.goldOldCount,
-              p: state.result.goldPCount,
-            ),
-            ItemLoyal(
-              driverId: state.driverId,
-              text: 'زيت',
-              count: state.result.oilCount,
-              type: RedeemType.oil,
-              oldCount: state.result.oilOldCount,
-              p: state.result.oilPCount,
-            ),
-            ItemLoyal(
-              driverId: state.driverId,
-              text: 'إطارات',
-              count: state.result.tiresCount,
-              type: RedeemType.tire,
-              oldCount: state.result.tiresOldCount,
-              p: state.result.tiresPCount,
-            ),
-            ItemLoyal(
-              driverId: state.driverId,
-              text: 'بنزين',
-              count: state.result.gasCount,
-              type: RedeemType.gas,
-              oldCount: state.result.gasOldCount,
-              p: state.result.gasPCount,
-            ),
-          ],
-        );
-      },
+    return Column(
+      children: [
+        BlocBuilder<RedeemsCubit, RedeemsInitial>(
+          builder: (context, state) {
+            if (state.statuses.isLoading) {
+              return MyStyle.loadingWidget();
+            }
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _TotalWidget(text: state.result.totalMeters, driverId: state.driverId),
+                ItemLoyal(
+                  driverId: state.driverId,
+                  text: 'المليون',
+                  count: state.result.goldCount,
+                  type: RedeemType.gold,
+                  oldCount: state.result.goldOldCount,
+                  p: state.result.goldPCount,
+                ),
+                ItemLoyal(
+                  driverId: state.driverId,
+                  text: 'زيت',
+                  count: state.result.oilCount,
+                  type: RedeemType.oil,
+                  oldCount: state.result.oilOldCount,
+                  p: state.result.oilPCount,
+                ),
+                ItemLoyal(
+                  driverId: state.driverId,
+                  text: 'إطارات',
+                  count: state.result.tiresCount,
+                  type: RedeemType.tire,
+                  oldCount: state.result.tiresOldCount,
+                  p: state.result.tiresPCount,
+                ),
+                ItemLoyal(
+                  driverId: state.driverId,
+                  text: 'بنزين',
+                  count: state.result.gasCount,
+                  type: RedeemType.gas,
+                  oldCount: state.result.gasOldCount,
+                  p: state.result.gasPCount,
+                ),
+              ],
+            );
+          },
+        ),
+        30.0.verticalSpace,
+        BlocBuilder<RedeemsHistoryCubit, RedeemsHistoryInitial>(
+          builder: (context, state) {
+            if (state.statuses.isLoading) {
+              return MyStyle.loadingWidget();
+            }
+
+            final list = state.result;
+
+
+            return SaedTableWidget(
+              fullHeight: 1.8.sh,
+              title: const [
+                'ID ',
+                'نوع العملية',
+                'محصلة المجمع',
+                'عدد الأمتار',
+                'تاريخ العملية',
+              ],
+              data: list
+                  .mapIndexed(
+                    (index, e) => [
+                      e.id,
+                      e.type.arabicName,
+                      e.aggregatedMoney.formatPrice,
+                      e.meters,
+                      e.redeemDate,
+                    ],
+                  )
+                  .toList(),
+            );
+          },
+        ),
+      ],
     );
   }
 }
@@ -244,26 +275,6 @@ class _TotalWidget extends StatelessWidget {
               fontFamily: FontManager.cairoBold,
             ),
           ),
-          if (driverId != 0)
-            Expanded(
-              child: TextButton(
-                onPressed: () {
-                  context.pushNamed(GoRouteName.redeems, queryParams: {'id': driverId});
-                },
-                child: DrawableText(
-                  text: 'السجل',
-                  selectable: false,
-                  underLine: true,
-                  color: Colors.black,
-                  fontFamily: FontManager.cairoBold,
-                  drawablePadding: 5.0.w,
-                  drawableEnd: Icon(
-                    Icons.info_outline_rounded,
-                    size: 30.0.r,
-                  ),
-                ),
-              ),
-            ),
         ],
       ),
     );

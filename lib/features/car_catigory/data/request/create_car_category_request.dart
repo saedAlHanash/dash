@@ -29,18 +29,19 @@ class CreateCarCatRequest {
   int? id;
 
   num? normalOilRatio;
-
   num? normalGoldRatio;
-
   num? normalTiresRatio;
+  num? normalGasRatio;
+
 
   num? sharedOilRatio;
-
   num? sharedGoldRatio;
-
   num? sharedTiresRatio;
-  num? priceVariant;
+  num? sharedGasRatio;
 
+
+
+  num? priceVariant;
   num? sharedMinimumDistanceInMeters;
   num? seatNumber;
 
@@ -59,9 +60,11 @@ class CreateCarCatRequest {
     this.normalOilRatio,
     this.normalGoldRatio,
     this.normalTiresRatio,
+    this.normalGasRatio,
     this.sharedOilRatio,
     this.sharedGoldRatio,
     this.sharedTiresRatio,
+    this.sharedGasRatio,
     this.priceVariant,
     this.sharedMinimumDistanceInMeters,
     this.seatNumber,
@@ -82,9 +85,11 @@ class CreateCarCatRequest {
       'NormalOilRatio': normalOilRatio,
       'NormalGoldRatio': normalGoldRatio,
       'NormalTiresRatio': normalTiresRatio,
+      'NormalGasRatio': normalGasRatio,
       'SharedOilRatio': sharedOilRatio,
       'SharedGoldRatio': sharedGoldRatio,
       'SharedTiresRatio': sharedTiresRatio,
+      'sharedGasRatio': sharedGasRatio,
       'priceVariant': priceVariant,
       'sharedMinimumDistanceInMeters': sharedMinimumDistanceInMeters,
       'seatNumber': seatNumber,
@@ -106,9 +111,11 @@ class CreateCarCatRequest {
       normalOilRatio: carCategory.normalOilRatio,
       normalGoldRatio: carCategory.normalGoldRatio,
       normalTiresRatio: carCategory.normalTiresRatio,
+      normalGasRatio: carCategory.normalGasRatio,
       sharedOilRatio: carCategory.sharedOilRatio,
       sharedGoldRatio: carCategory.sharedGoldRatio,
       sharedTiresRatio: carCategory.sharedTiresRatio,
+      sharedGasRatio: carCategory.sharedGasRatio,
       priceVariant: carCategory.priceVariant,
       sharedMinimumDistanceInMeters: carCategory.sharedMinimumDistanceInMeters,
       seatNumber: carCategory.seatNumber,
@@ -156,6 +163,11 @@ class CreateCarCatRequest {
       return false;
     }
 
+    if (normalGasRatio == 0) {
+      NoteMessage.showErrorSnackBar(message: 'خطأ في نسبة الولاء', context: context);
+      return false;
+    }
+
     if (normalGoldRatio == 0) {
       NoteMessage.showErrorSnackBar(message: 'خطأ في نسبة الولاء', context: context);
       return false;
@@ -172,6 +184,10 @@ class CreateCarCatRequest {
     }
 
     if (sharedGoldRatio == 0) {
+      NoteMessage.showErrorSnackBar(message: 'خطأ في نسبة الولاء', context: context);
+      return false;
+    }
+    if (sharedGasRatio == 0) {
       NoteMessage.showErrorSnackBar(message: 'خطأ في نسبة الولاء', context: context);
       return false;
     }

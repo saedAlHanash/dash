@@ -27,37 +27,32 @@ class RedeemsPage extends StatelessWidget {
     return Scaffold(
       body: SingleChildScrollView(
         padding: const EdgeInsets.only(bottom: 100.0).h,
-        child: Column(
-          children: [
+        child: BlocBuilder<RedeemsHistoryCubit, RedeemsHistoryInitial>(
+          builder: (context, state) {
+            if (state.statuses.isLoading) {
+              return MyStyle.loadingWidget();
+            }
 
-            BlocBuilder<RedeemsHistoryCubit, RedeemsHistoryInitial>(
-              builder: (context, state) {
-                if (state.statuses.isLoading) {
-                  return MyStyle.loadingWidget();
-                }
+            final list = state.result;
 
-                final list = state.result;
+            if (list.isEmpty) return const NotFoundWidget(text: 'لا يوجد عمليات للولاء');
 
-                if (list.isEmpty) return const NotFoundWidget(text: 'لا يوجد عمليات للولاء');
-
-                return SaedTableWidget(
-                  fullHeight: 1.8.sh,
-                  title: _tripsTableHeader,
-                  data: list
-                      .mapIndexed(
-                        (index, e) => [
-                          e.id,
-                          e.type.arabicName,
-                          e.aggregatedMoney.formatPrice,
-                          e.meters,
-                          e.redeemDate,
-                        ],
-                      )
-                      .toList(),
-                );
-              },
-            ),
-          ],
+            return SaedTableWidget(
+              fullHeight: 1.8.sh,
+              title: _tripsTableHeader,
+              data: list
+                  .mapIndexed(
+                    (index, e) => [
+                      e.id,
+                      e.type.arabicName,
+                      e.aggregatedMoney.formatPrice,
+                      e.meters,
+                      e.redeemDate,
+                    ],
+                  )
+                  .toList(),
+            );
+          },
         ),
       ),
     );

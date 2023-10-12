@@ -27,16 +27,24 @@ class AccountAmountCubit extends Cubit<AccountAmountInitial> {
 
   Future<Pair<num?, num?>> _getAccountAmountApi({required int driverId}) async {
     final response =
-        await APIService().getApi(url: GetUrl.fromDriver, query: {'driverId': driverId});
+    await APIService().getApi(url: GetUrl.fromDriver, query: {'driverId': driverId});
 
     final response1 =
-        await APIService().getApi(url: GetUrl.fromCompany, query: {'driverId': driverId});
+    await APIService().getApi(url: GetUrl.fromCompany, query: {'driverId': driverId});
 
     if (response.statusCode == 200 && response1.statusCode == 200) {
       var fromDriver =
-          AccountAmountResponse.fromJson(response.json).result.data.amount;
+          AccountAmountResponse
+              .fromJson(response.json)
+              .result
+              .data
+              .amount;
       var fromCompany =
-          AccountAmountResponse.fromJson(response1.json).result.data.amount;
+          AccountAmountResponse
+              .fromJson(response1.json)
+              .result
+              .data
+              .amount;
       return Pair(fromDriver, fromCompany);
     } else {
       return Pair(-1, -1);

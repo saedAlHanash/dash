@@ -1,25 +1,28 @@
+import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:map_package/error_manager.dart';
 import 'package:qareeb_dash/core/api_manager/api_url.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
-
 import 'package:qareeb_models/global.dart';
+import 'package:qareeb_models/wallet/data/response/driver_financial_response.dart';
 
 import '../../../../core/api_manager/api_service.dart';
-import '../../../../core/error/error_manager.dart';
 import '../../../../core/util/note_message.dart';
 import '../../../../core/util/pair_class.dart';
-import '../../data/response/agency_response.dart';
+import '../../data/request/financial_filter_request.dart';
 
-part 'agency_by_id_state.dart';
+part 'driver_financial_state.dart';
 
-class AgencyBuIdCubit extends Cubit<AgencyBuIdInitial> {
-  AgencyBuIdCubit() : super(AgencyBuIdInitial.initial());
+class DriverFinancialCubit extends Cubit<DriverFinancialInitial> {
+  DriverFinancialCubit() : super(DriverFinancialInitial.initial());
 
-  Future<void> getAgencyBuId(BuildContext context, {required int id}) async {
-    emit(state.copyWith(statuses: CubitStatuses.loading));
-    final pair = await _getAgencyBuIdApi(id:id);
+  Future<void> getDriverFinancial(
+    BuildContext context, {
+     FinancialFilterRequest? request,
+  }) async {
+    emit(state.copyWith(statuses: CubitStatuses.loading, request: request));
+    final pair = await _getDriverFinancialApi();
 
     if (pair.first == null) {
       if (context.mounted) {
@@ -31,15 +34,13 @@ class AgencyBuIdCubit extends Cubit<AgencyBuIdInitial> {
     }
   }
 
-  Future<Pair<Agency?, String?>> _getAgencyBuIdApi({required int id}) async {
+  Future<Pair<DriverFinancialResult?, String?>> _getDriverFinancialApi() async {
     final response = await APIService().getApi(
-      url: GetUrl.getAgencyById,
-      query: {'Id':id}
-
+      url: GetUrl.driverFinancialReport,
+      query: state.request.toMap(),
     );
-
     if (response.statusCode == 200) {
-      return Pair(Agency.fromJson(response.json['result'] ?? {}), null);
+      return Pair(DriverFinancialResponse.fromJson(response.json).result, null);
     } else {
       return Pair(null, ErrorManager.getApiError(response));
     }

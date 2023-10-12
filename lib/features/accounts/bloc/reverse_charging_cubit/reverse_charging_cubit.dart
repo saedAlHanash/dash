@@ -1,27 +1,31 @@
+import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qareeb_dash/core/api_manager/api_url.dart';
-import 'package:qareeb_dash/features/agencies/data/response/agency_response.dart';
 import 'package:qareeb_models/global.dart';
 
 import '../../../../core/api_manager/api_service.dart';
 import '../../../../core/error/error_manager.dart';
 import '../../../../core/util/note_message.dart';
 import '../../../../core/util/pair_class.dart';
+import '../../../wallet/data/summary_model.dart';
 
+part 'reverse_charging_state.dart';
 
-part 'create_agency_state.dart';
+class ReverseChargingCubit extends Cubit<ReverseChargingInitial> {
+  ReverseChargingCubit() : super(ReverseChargingInitial.initial());
 
-class CreateAgencyCubit extends Cubit<CreateAgencyInitial> {
-  CreateAgencyCubit() : super(CreateAgencyInitial.initial());
+  Future<void> payTo(BuildContext context, {required String processId}) async {
+    if (processId.isEmpty) {
+      NoteMessage.showErrorSnackBar(
+          message: 'العملية قديمة لا يمكن استرجاعها', context: context);
+      return;
+    }
+    final r = await NoteMessage.showConfirm(context, text: 'تأكيد العملية');
+    if (!r) return;
+    emit(state.copyWith(statuses: CubitStatuses.loading, processId: processId));
 
-  Future<void> createAgency(
-    BuildContext context, {
-    required Agency request,
-  }) async {
-    emit(state.copyWith(statuses: CubitStatuses.loading));
-    final pair = await _createAgencyApi(request: request);
+    final pair = await _payReverseChargingApi();
 
     if (pair.first == null) {
       if (context.mounted) {
@@ -33,11 +37,10 @@ class CreateAgencyCubit extends Cubit<CreateAgencyInitial> {
     }
   }
 
-  Future<Pair<bool?, String?>> _createAgencyApi(
-      {required Agency request}) async {
+  Future<Pair<bool?, String?>> _payReverseChargingApi() async {
     final response = await APIService().postApi(
-      url: request.id != 0 ? PutUrl.updateAgency : PostUrl.createAgency,
-      body: request.toJson(),
+      url: PostUrl.reverseCharging,
+      body: {"processId": state.processId},
     );
 
     if (response.statusCode == 200) {

@@ -30,6 +30,10 @@ var loggerObject = Logger(
   ),
 );
 
+DateTime? _serverDate;
+
+DateTime get getServerDate => _serverDate ?? DateTime.now();
+
 class APIService {
   static APIService _singleton = APIService._internal();
 
@@ -43,7 +47,7 @@ class APIService {
 
   final innerHeader = {
     'Content-Type': 'application/json',
-    'origin': 'x-requested-with',
+    // 'origin': 'x-requested-with',
     'X-Frame-Options': 'SAMEORIGIN',
     // 'x-cors-api-key': 'temp_ddc55961defc6c4343f28eec36c009da',
     'Authorization': 'Bearer ${AppSharedPreference.getToken()}',
@@ -83,7 +87,6 @@ class APIService {
     String? path,
     String? hostName,
   }) async {
-
     innerHeader.addAll(header ?? {});
 
     if (path != null) url = '$url/$path';
@@ -103,6 +106,7 @@ class APIService {
         );
 
     logResponse(url, response);
+    _serverDate = getDateTimeFromHeaders(response);
     return response;
   }
 
@@ -113,7 +117,6 @@ class APIService {
     String? path,
     String? hostName,
   }) async {
-
     innerHeader.addAll(header ?? {});
 
     if (path != null) url = '$url/$path';
@@ -134,6 +137,7 @@ class APIService {
         );
 
     logResponse(url, response);
+    _serverDate = getDateTimeFromHeaders(response);
     return response;
   }
 
@@ -143,7 +147,6 @@ class APIService {
     Map<String, String>? header,
     String? path,
   }) async {
-
     if (path != null) url = '$url/$path';
 
     if (query != null) {
@@ -155,7 +158,7 @@ class APIService {
 
     final response =
         await http.get(uri, headers: innerHeader).timeout(const Duration(seconds: 40));
-
+    _serverDate = getDateTimeFromHeaders(response);
     return response;
   }
 
@@ -186,7 +189,7 @@ class APIService {
             );
 
     logResponse(url, response);
-
+    _serverDate = getDateTimeFromHeaders(response);
     return response;
   }
 
@@ -197,7 +200,6 @@ class APIService {
     Map<String, String>? header,
   }) async {
     if (body != null) body.removeWhere((key, value) => value == null);
-
 
     innerHeader.addAll(header ?? {});
 
@@ -217,7 +219,7 @@ class APIService {
             );
 
     logResponse(url, response);
-
+    _serverDate = getDateTimeFromHeaders(response);
     return response;
   }
 
@@ -228,7 +230,6 @@ class APIService {
     Map<String, String>? header,
   }) async {
     if (body != null) body.removeWhere((key, value) => value == null);
-
 
     innerHeader.addAll(header ?? {});
 
@@ -248,7 +249,7 @@ class APIService {
             );
 
     logResponse(url, response);
-
+    _serverDate = getDateTimeFromHeaders(response);
     return response;
   }
 
@@ -278,7 +279,7 @@ class APIService {
             );
 
     logResponse(url, response);
-
+    _serverDate = getDateTimeFromHeaders(response);
     return response;
   }
 
@@ -323,11 +324,12 @@ class APIService {
 
     ///log
     logResponse(url, response);
-
+    _serverDate = getDateTimeFromHeaders(response);
     return response;
   }
 
   Future<DateTime> getServerTime() async {
+    if (_serverDate != null) return _serverDate!;
     var uri = Uri.https(baseUrl);
 
     final response = await http.get(uri, headers: innerHeader).timeout(
@@ -335,7 +337,9 @@ class APIService {
           onTimeout: () => http.Response('connectionTimeOut', 481),
         );
 
-    return getDateTimeFromHeaders(response);
+    _serverDate = getDateTimeFromHeaders(response);
+
+    return _serverDate!;
   }
 }
 
@@ -413,50 +417,6 @@ class UploadFile {
     );
   }
 }
-
-/*
-android {
-  testOptions {
-    managedDevices {
-      devices {
-        pixel2api30 (com.android.build.api.dsl.ManagedVirtualDevice) {
-          // Use device profiles you typically see in Android Studio.
-          device = "Pixel 2"
-          // Use only API levels 27 and higher.
-          apiLevel = 30
-          // To include Google services, use "google".
-          systemImageSource = "aosp"
-          // Whether the image must be a 64 bit image. Defaults to
-          // false, in which case the managed device will use a
-          // 32 bit image. Not applicable to arm64 machines.
-          require64Bit = false
-        }
-      }
-    }
-  }
-}
-
-android {
-  testOptions {
-    managedDevices {
-      devices {
-        pixel2api30 (com.android.build.api.dsl.ManagedVirtualDevice) {
-          // Use device profiles you typically see in Android Studio.
-          device = "Pixel 2"
-          // ATD currently support only API level 30.
-          apiLevel = 30
-          // You can also specify "google-atd" if you require Google
-          // Play Services.
-          systemImageSource = "aosp-atd"
-          // Whether the image must be a 64 bit image.
-          require64Bit = false
-        }
-      }
-    }
-  }
-}
-
- */
 
 const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
 final _rnd = Random();

@@ -44,6 +44,7 @@ class CarCategoriesResult {
 
 class CarCategory {
   CarCategory({
+    required this.id,
     required this.name,
     required this.imageUrl,
     required this.price,
@@ -56,18 +57,20 @@ class CarCategory {
     required this.minimumDayPrice,
     required this.minimumNightPrice,
     required this.companyLoyaltyRatio,
-    required this.id,
+    required this.sharedMinimumDistanceInMeters,
     required this.normalOilRatio,
     required this.normalGoldRatio,
     required this.normalTiresRatio,
+    required this.normalGasRatio,
     required this.sharedOilRatio,
     required this.sharedGoldRatio,
     required this.sharedTiresRatio,
+    required this.sharedGasRatio,
     required this.priceVariant,
-    required this.sharedMinimumDistanceInMeters,
     required this.seatNumber,
   });
 
+  final int id;
   final String name;
   final String imageUrl;
   final num price;
@@ -80,20 +83,21 @@ class CarCategory {
   final num minimumDayPrice;
   final num minimumNightPrice;
   final num companyLoyaltyRatio;
-  final int id;
+  final num sharedMinimumDistanceInMeters;
   final num normalOilRatio;
   final num normalGoldRatio;
   final num normalTiresRatio;
+  final num normalGasRatio;
   final num sharedOilRatio;
   final num sharedGoldRatio;
   final num sharedTiresRatio;
+  final num sharedGasRatio;
   final num priceVariant;
-
-  final num sharedMinimumDistanceInMeters;
   final num seatNumber;
 
   factory CarCategory.fromJson(Map<String, dynamic> json) {
     return CarCategory(
+      id: json["id"] ?? 0,
       name: json["name"] ?? "",
       imageUrl: fixAvatarImage(json["imageUrl"] ?? ""),
       price: json["price"] ?? 0,
@@ -106,20 +110,22 @@ class CarCategory {
       minimumDayPrice: json["minimumDayPrice"] ?? 0,
       minimumNightPrice: json["minimumNightPrice"] ?? 0,
       companyLoyaltyRatio: json["companyLoyaltyRatio"] ?? 0,
-      id: json["id"] ?? 0,
-      normalOilRatio: json["normalOilRatio"] ?? 0.0,
-      normalGoldRatio: json["normalGoldRatio"] ?? 0.0,
-      normalTiresRatio: json["normalTiresRatio"] ?? 0.0,
-      sharedOilRatio: json["sharedOilRatio"] ?? 0.0,
-      sharedGoldRatio: json["sharedGoldRatio"] ?? 0.0,
-      sharedTiresRatio: json["sharedTiresRatio"] ?? 0.0,
-      priceVariant: json["priceVariant"] ?? 0.0,
-      sharedMinimumDistanceInMeters: json["sharedMinimumDistanceInMeters"] ?? 0.0,
-      seatNumber: json["seatNumber"] ?? 0.0,
+      sharedMinimumDistanceInMeters: json["sharedMinimumDistanceInMeters"] ?? 0,
+      normalOilRatio: json["normalOilRatio"] ?? 0,
+      normalGoldRatio: json["normalGoldRatio"] ?? 0,
+      normalTiresRatio: json["normalTiresRatio"] ?? 0,
+      normalGasRatio: json["normalGasRatio"] ?? 0,
+      sharedOilRatio: json["sharedOilRatio"] ?? 0,
+      sharedGoldRatio: json["sharedGoldRatio"] ?? 0,
+      sharedTiresRatio: json["sharedTiresRatio"] ?? 0,
+      sharedGasRatio: json["sharedGasRatio"] ?? 0,
+      priceVariant: json["priceVariant"] ?? 0,
+      seatNumber: json["seatNumber"] ?? 0,
     );
   }
 
   Map<String, dynamic> toJson() => {
+        "id": id,
         "name": name,
         "imageUrl": imageUrl,
         "price": price,
@@ -132,15 +138,16 @@ class CarCategory {
         "minimumDayPrice": minimumDayPrice,
         "minimumNightPrice": minimumNightPrice,
         "companyLoyaltyRatio": companyLoyaltyRatio,
-        "id": id,
+        "sharedMinimumDistanceInMeters": sharedMinimumDistanceInMeters,
         "normalOilRatio": normalOilRatio,
         "normalGoldRatio": normalGoldRatio,
         "normalTiresRatio": normalTiresRatio,
+        "normalGasRatio": normalGasRatio,
         "sharedOilRatio": sharedOilRatio,
         "sharedGoldRatio": sharedGoldRatio,
         "sharedTiresRatio": sharedTiresRatio,
+        "sharedGasRatio": sharedGasRatio,
         "priceVariant": priceVariant,
-        "sharedMinimumDistanceInMeters": sharedMinimumDistanceInMeters,
         "seatNumber": seatNumber,
       };
 }

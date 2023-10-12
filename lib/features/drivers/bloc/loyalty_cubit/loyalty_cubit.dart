@@ -15,13 +15,19 @@ class LoyaltyCubit extends Cubit<LoyaltyInitial> {
   LoyaltyCubit() : super(LoyaltyInitial.initial());
 
   Future<void> changeLoyalty(BuildContext context,
-      {required int driverId, required bool loyalState}) async {
+      {required int driverId, bool? loyalState, bool? gas}) async {
     final r = await NoteMessage.showConfirm(context, text: 'تأكيد العملية');
     if (!r) return;
-    emit(state.copyWith(statuses: CubitStatuses.loading, id: driverId));
-    final pair = await changeLoyaltyApi(
+    emit(state.copyWith(
+      statuses: CubitStatuses.loading,
+      id: driverId,
+      loyalty: loyalState,
+      isGasIncluded: gas,
+    ));
+    final pair = await _changeLoyaltyApi(
       driverId: driverId,
       loyalState: loyalState,
+      gas: gas,
     );
 
     if (pair.first == null) {
@@ -34,13 +40,14 @@ class LoyaltyCubit extends Cubit<LoyaltyInitial> {
     }
   }
 
-  static Future<Pair<bool?, String?>> changeLoyaltyApi(
-      {required int driverId, required bool loyalState}) async {
+  static Future<Pair<bool?, String?>> _changeLoyaltyApi(
+      {required int driverId, bool? loyalState, bool? gas}) async {
     final response = await APIService().patchApi(
       url: PatchUrl.changeLoyalty,
       body: {
         "driverId": driverId,
         "subscribed": loyalState,
+        "includeGas": gas,
       },
     );
 

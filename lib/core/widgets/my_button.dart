@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/strings/app_color_manager.dart';
+import 'package:qareeb_dash/features/drivers/bloc/all_drivers/all_drivers_cubit.dart';
 
 import '../../features/drivers/bloc/loyalty_cubit/loyalty_cubit.dart';
 import '../../features/drivers/data/response/drivers_response.dart';
@@ -38,6 +39,7 @@ class MyButton extends StatelessWidget {
     final child = this.child ??
         DrawableText(
           text: text,
+          selectable: false,
           color: textColor ?? AppColorManager.whit,
           fontFamily: FontManager.cairoBold,
           size: 17.0.sp,
@@ -162,15 +164,14 @@ class LoyalSwitchWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LoyaltyCubit, LoyaltyInitial>(
+    return BlocConsumer<LoyaltyCubit, LoyaltyInitial>(
+      listenWhen: (p, c) => c.statuses.done,
+      listener: (context, state) =>
+          context.read<AllDriversCubit>().getAllDrivers(context),
       buildWhen: (p, c) => c.id == driver.id,
       builder: (context, state) {
         if (state.statuses.loading) {
           return MyStyle.loadingWidget();
-        }
-
-        if (state.statuses.done) {
-          driver.loyalty = !driver.loyalty;
         }
 
         return Column(
@@ -186,17 +187,25 @@ class LoyalSwitchWidget extends StatelessWidget {
                       context,
                       driverId: driver.id,
                       loyalState: !driver.loyalty,
+                      gas: driver.isGasIncluded,
                     );
               },
             ),
-            if (driver.loyalty)
-              DrawableText(
-                text: 'بنزين',
-                drawableEnd: Checkbox(
-                  value: driver.loyalty,
-                  onChanged: (value) {},
-                ),
+            DrawableText(
+              text: 'بنزين',
+              selectable: false,
+              drawableEnd: Checkbox(
+                value: driver.isGasIncluded,
+                onChanged: (value) {
+                  context.read<LoyaltyCubit>().changeLoyalty(
+                        context,
+                        driverId: driver.id,
+                        gas: !driver.isGasIncluded,
+                        loyalState: driver.loyalty,
+                      );
+                },
               ),
+            ),
           ],
         );
       },

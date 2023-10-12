@@ -32,21 +32,21 @@ dependencies:
       url: https://github.com/saedAlHanash/drawable_text
       ref: html
 #
-  qareeb_models:
-    git:
-      url: https://github.com/saedAlHanash/qareeb_models
+#  qareeb_models:
+#    git:
+#      url: https://github.com/saedAlHanash/qareeb_models
+#
+#  map_package:
+#    git:
+#      url: https://github.com/saedAlHanash/map_qareeb
+#      ref: html
+
 
   map_package:
-    git:
-      url: https://github.com/saedAlHanash/map_qareeb
-      ref: html
+    path: ../../packages/map_package
 
-
-#  map_package:
-#    path: ../../packages/map_package
-#
-#  qareeb_models:
-#    path: ../../packages/qareeb_models
+  qareeb_models:
+    path: ../../packages/qareeb_models
 
 
   excel: ^2.1.0

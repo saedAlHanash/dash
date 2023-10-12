@@ -50,6 +50,8 @@ class GetUrl {
 
   static const bestDriver = 'api/services/app/User/GetBestDriver';
   static const getAllAdmins = 'api/services/app/User/getAllAdmins';
+  static const driverFinancialReport =
+      'api/services/app/AccountsService/DriverFinancialReport';
 
   static const allRoles = 'api/services/app/Role/GetAll';
 
@@ -94,9 +96,9 @@ class GetUrl {
   static const areas = 'api/services/app/AreaService/GetAll';
   static var allTickets = 'api/services/app/TicketsService/GetAll';
 
-  static var getAgencyById;
+  static var getAgencyById = 'api/services/app/AgenciesService/Get';
 
-  static var agencies;
+  static var agencies = 'api/services/app/AgenciesService/GetAll';
 }
 
 class PostUrl {
@@ -166,7 +168,9 @@ class PostUrl {
   static const createGovernorate = 'api/services/app/GovernorateService/Create';
   static const createArea = 'api/services/app/AreaService/Create';
 
-  static var createAgency;
+  static const createAgency = 'api/services/app/AgenciesService/Create';
+  static const reverseCharging = 'api/services/app/AccountsService/ReverseCharging';
+
 }
 
 class PutUrl {
@@ -198,7 +202,7 @@ class PutUrl {
 
   static const updateTempTrip = 'api/services/app/PathService/UpdatePath';
 
-  static var updateAgency;
+  static var updateAgency = 'api/services/app/AgenciesService/Update';
 }
 
 class DeleteUrl {
@@ -221,7 +225,7 @@ class DeleteUrl {
 
   static var deleteCancelCoupon = 'api/services/app/Cupons/Delete';
 
-  static var deleteCancelAgency;
+  static var deleteCancelAgency = 'api/services/app/AgenciesService/Delete';
 }
 
 class OrsUrl {
