@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
+import 'package:qareeb_dash/core/util/pair_class.dart';
 import 'package:qareeb_models/extensions.dart';
 
 import '../../../../core/util/my_style.dart';
@@ -13,7 +14,7 @@ import '../../bloc/governorates_cubit/governorates_cubit.dart';
 class GovernorateSpinnerWidget extends StatefulWidget {
   const GovernorateSpinnerWidget({super.key, required this.onSelect});
 
-  final Function(List<int> ariaId) onSelect;
+  final Function(Pair<int,List<int>> ariaId) onSelect;
 
   @override
   State<GovernorateSpinnerWidget> createState() => _GovernorateSpinnerWidgetState();
@@ -38,6 +39,7 @@ class _GovernorateSpinnerWidgetState extends State<GovernorateSpinnerWidget> {
               width: 500.0.w,
               sendFirstItem: state.result.isNotEmpty,
               onChanged: (spinnerItem) {
+                gIds = spinnerItem.id;
                 context.read<AreasCubit>().getArea(context, id: spinnerItem.id);
               },
             );
@@ -65,7 +67,7 @@ class _GovernorateSpinnerWidgetState extends State<GovernorateSpinnerWidget> {
                   ..clear()
                   ..addAll(values);
 
-                widget.onSelect.call(aIds);
+                widget.onSelect.call(Pair(gIds, aIds));
               },
             );
           },

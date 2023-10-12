@@ -74,6 +74,14 @@ class _ParamsPageState extends State<ParamsPage> {
                                 onChanged: (p0) => request.tire = num.tryParse(p0),
                               ),
                             ),
+                            15.0.horizontalSpace,
+                            Expanded(
+                              child: MyTextFormNoLabelWidget(
+                                label: 'بنزين',
+                                initialValue: request.gas.toString(),
+                                onChanged: (p0) => request.gas = num.tryParse(p0),
+                              ),
+                            ),
                           ],
                         ),
                         Row(
@@ -84,6 +92,15 @@ class _ParamsPageState extends State<ParamsPage> {
                                 initialValue: request.tripSearchRadius.toString(),
                                 onChanged: (p0) =>
                                     request.tripSearchRadius = num.tryParse(p0),
+                              ),
+                            ),
+                            15.0.horizontalSpace,
+                            Expanded(
+                              child: MyTextFormNoLabelWidget(
+                                label: 'عدد الدقائق المنتظرة قبل إلغاء الرحلة',
+                                initialValue: request.autoCancelTripAfterMinutes.toString(),
+                                onChanged: (p0) =>
+                                    request.autoCancelTripAfterMinutes = num.tryParse(p0),
                               ),
                             ),
                             15.0.horizontalSpace,

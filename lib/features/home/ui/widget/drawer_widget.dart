@@ -1,3 +1,4 @@
+import 'package:image_multi_type/circle_image_widget.dart';
 import "package:universal_html/html.dart";
 
 import 'package:drawable_text/drawable_text.dart';
@@ -12,7 +13,7 @@ import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/strings/app_string_manager.dart';
 import '../../../../core/util/my_style.dart';
 import '../../../../core/widgets/images/circle_image_widget.dart';
-import '../../../../core/widgets/images/image_multi_type.dart';
+import 'package:image_multi_type/image_multi_type.dart';
 import '../../../../generated/assets.dart';
 import '../../../../router/app_router.dart';
 import '../../../profile/bloc/profile_info_cubit/profile_info_cubit.dart';

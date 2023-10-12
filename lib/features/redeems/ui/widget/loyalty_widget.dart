@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/util/note_message.dart';
-import 'package:qareeb_dash/core/widgets/images/image_multi_type.dart';
+import 'package:image_multi_type/image_multi_type.dart';
 import 'package:qareeb_dash/core/widgets/my_button.dart';
 import 'package:qareeb_dash/generated/assets.dart';
 import 'package:qareeb_models/extensions.dart';
@@ -23,7 +23,9 @@ import '../../bloc/redeems_history_cubit/redeems_history_cubit.dart';
 import '../../data/request/redeem_request.dart';
 
 class LoyaltyWidget extends StatelessWidget {
-  const LoyaltyWidget({super.key});
+  const LoyaltyWidget({super.key, this.driverId});
+
+  final int? driverId;
 
   @override
   Widget build(BuildContext context) {
@@ -75,38 +77,38 @@ class LoyaltyWidget extends StatelessWidget {
           },
         ),
         30.0.verticalSpace,
-        BlocBuilder<RedeemsHistoryCubit, RedeemsHistoryInitial>(
-          builder: (context, state) {
-            if (state.statuses.isLoading) {
-              return MyStyle.loadingWidget();
-            }
+        if (driverId != null)
+          BlocBuilder<RedeemsHistoryCubit, RedeemsHistoryInitial>(
+            builder: (context, state) {
+              if (state.statuses.isLoading) {
+                return MyStyle.loadingWidget();
+              }
 
-            final list = state.result;
+              final list = state.result;
 
-
-            return SaedTableWidget(
-              fullHeight: 1.8.sh,
-              title: const [
-                'ID ',
-                'نوع العملية',
-                'محصلة المجمع',
-                'عدد الأمتار',
-                'تاريخ العملية',
-              ],
-              data: list
-                  .mapIndexed(
-                    (index, e) => [
-                      e.id,
-                      e.type.arabicName,
-                      e.aggregatedMoney.formatPrice,
-                      e.meters,
-                      e.redeemDate,
-                    ],
-                  )
-                  .toList(),
-            );
-          },
-        ),
+              return SaedTableWidget(
+                fullHeight: 1.8.sh,
+                title: const [
+                  'ID ',
+                  'نوع العملية',
+                  'محصلة المجمع',
+                  'عدد الأمتار',
+                  'تاريخ العملية',
+                ],
+                data: list
+                    .mapIndexed(
+                      (index, e) => [
+                        e.id,
+                        e.type.arabicName,
+                        e.aggregatedMoney.formatPrice,
+                        e.meters,
+                        e.redeemDate,
+                      ],
+                    )
+                    .toList(),
+              );
+            },
+          ),
       ],
     );
   }

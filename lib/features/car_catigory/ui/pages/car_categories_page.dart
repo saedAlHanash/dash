@@ -12,7 +12,7 @@ import 'package:qareeb_models/extensions.dart';
 
 import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/my_style.dart';
-import '../../../../core/widgets/images/round_image_widget.dart';
+import 'package:image_multi_type/round_image_widget.dart';
 import '../../bloc/all_car_categories_cubit/all_car_categories_cubit.dart';
 import '../../bloc/delete_car_cat_cubit/delete_car_cat_cubit.dart';
 
@@ -25,8 +25,8 @@ final _carCatList = [
   'أقل سعر',
   'حصة السائق (عادي)',
   'حصة السائق (تشاركي)',
-  'الولاء (عادي)\n زيت \nذهب \n إطارات ',
-  'الولاء (تشاركي)\n زيت \nذهب \n إطارات ',
+  'الولاء عادي\n زيت \nذهب \n إطارات\n بنزين ',
+  'الولاء تشاركي\n زيت \nذهب \n إطارات\n بنزين ',
   'عمليات',
 ];
 
@@ -84,8 +84,8 @@ class CarCategoriesPage extends StatelessWidget {
                         '${e.driverRatio} %',
                         '${e.sharedDriverRatio} %',
                         // '${e.companyLoyaltyRatio} %',
-                        '${e.normalOilRatio}%\n ${e.normalGoldRatio}%\n ${e.normalTiresRatio}%',
-                        '${e.sharedOilRatio}%\n ${e.sharedGoldRatio}%\n ${e.sharedTiresRatio}%',
+                        '${e.normalOilRatio}%\n ${e.normalGoldRatio}%\n ${e.normalTiresRatio}%\n ${e.normalGasRatio}%',
+                        '${e.sharedOilRatio}%\n ${e.sharedGoldRatio}%\n ${e.sharedTiresRatio}%\n ${e.sharedGasRatio}%',
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
@@ -134,7 +134,6 @@ class CarCategoriesPage extends StatelessWidget {
                       ],
                     )
                     .toList(),
-
               ),
 
               // Expanded(

@@ -61,7 +61,8 @@ class _NotificationsFilterWidgetState extends State<NotificationsFilterWidget> {
                 15.0.horizontalSpace,
                 GovernorateSpinnerWidget(
                   onSelect: (ariaId) {
-                    request.areaIds = ariaId;
+                    request.areaIds = ariaId.second;
+                    request.governorateId = ariaId.first;
                     widget.onApply?.call(request);
                   },
                 ),

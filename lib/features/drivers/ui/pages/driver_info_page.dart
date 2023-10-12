@@ -6,9 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:image_multi_type/image_multi_type.dart';
 import 'package:qareeb_dash/core/api_manager/api_service.dart';
 import 'package:qareeb_dash/core/util/note_message.dart';
-import 'package:qareeb_dash/core/widgets/images/image_multi_type.dart';
+import 'package:image_multi_type/image_multi_type.dart';
 import 'package:qareeb_dash/core/widgets/table_widget.dart';
 import 'package:qareeb_dash/features/drivers/data/response/drivers_response.dart';
 import 'package:qareeb_dash/features/redeems/ui/widget/loyalty_widget.dart';
@@ -18,7 +19,7 @@ import 'package:qareeb_models/extensions.dart';
 import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/util/my_style.dart';
 import '../../../../core/widgets/app_bar_widget.dart';
-import '../../../../core/widgets/images/round_image_widget.dart';
+import 'package:image_multi_type/round_image_widget.dart';
 import '../../../../core/widgets/my_button.dart';
 import '../../../../core/widgets/my_card_widget.dart';
 import '../../../../core/widgets/saed_taple_widget.dart';
@@ -72,7 +73,7 @@ class _DriverInfoPageState extends State<DriverInfoPage>
                 child: TabBar(
                   controller: _tabController,
                   labelColor: AppColorManager.mainColorDark,
-                  unselectedLabelColor: AppColorManager.mainColor,
+                  unselectedLabelColor: AppColorManager.black,
                   tabs: const [
                     Tab(text: 'معلومات السائق'),
                     Tab(text: 'الولاء'),
@@ -95,7 +96,7 @@ class _DriverInfoPageState extends State<DriverInfoPage>
                           _DriverTableInfo(driver: driver),
                         ],
                       ),
-                      const LoyaltyWidget(),
+                      LoyaltyWidget(driverId: driver.id),
                       _DriverTripsCard(driver: driver),
                       const _DriverFinancialWidget(),
                       const DebtsPage(),
@@ -173,10 +174,10 @@ class _DriverTableInfo extends StatelessWidget {
 }
 
 class ItemImage extends StatelessWidget {
-  const ItemImage({super.key, required this.image, required this.text, this.fileBytes});
+  const ItemImage({super.key, required this.image, required this.text});
 
   final String image;
-  final Uint8List? fileBytes;
+
 
   final String text;
 
@@ -193,7 +194,6 @@ class ItemImage extends StatelessWidget {
           children: [
             RoundImageWidget(
               url: image,
-              fileBytes: fileBytes,
               height: 155.0.r,
               width: 155.0.r,
             ),
@@ -456,28 +456,30 @@ class _DriverFinancialWidget extends StatelessWidget {
                     return [
                       e.chargerName.isEmpty ? e.providerName : e.chargerName,
                       e.userName,
-                      e.amount.formatPrice,
+                      e.amount == 0 ? 'عملية استرجاع' : e.amount.formatPrice,
                       e.status.arabicName,
                       e.date?.formatDate,
-                      BlocBuilder<ReverseChargingCubit, ReverseChargingInitial>(
-                        builder: (context, state) {
-                          if (state.statuses.isLoading) {
-                            return MyStyle.loadingWidget();
-                          }
-                          return IconButton(
-                            onPressed: () {
-                              context
-                                  .read<ReverseChargingCubit>()
-                                  .payTo(context, processId: e.processId);
-                            },
-                            icon: const Icon(
-                              Icons.remove_circle,
-                              color: AppColorManager.red,
+                      e.amount == 0
+                          ? 0.0.verticalSpace
+                          : BlocBuilder<ReverseChargingCubit, ReverseChargingInitial>(
+                              builder: (context, state) {
+                                if (state.statuses.isLoading) {
+                                  return MyStyle.loadingWidget();
+                                }
+                                return IconButton(
+                                  onPressed: () {
+                                    context
+                                        .read<ReverseChargingCubit>()
+                                        .payTo(context, processId: e.processId);
+                                  },
+                                  icon: const Icon(
+                                    Icons.remove_circle,
+                                    color: AppColorManager.red,
+                                  ),
+                                );
+                              },
+                              buildWhen: (p, c) => c.processId == e.processId,
                             ),
-                          );
-                        },
-                        buildWhen: (p, c) => c.processId == e.processId,
-                      ),
                     ];
                   }).toList(),
                 ),

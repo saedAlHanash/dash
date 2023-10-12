@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qareeb_dash/core/strings/app_color_manager.dart';
 import 'package:qareeb_dash/core/widgets/my_card_widget.dart';
 
-import 'images/image_multi_type.dart';
+import 'package:image_multi_type/image_multi_type.dart';
 
 class TopTitleWidget extends StatelessWidget {
   const TopTitleWidget({

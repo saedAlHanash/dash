@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:qareeb_dash/core/widgets/not_found_widget.dart';
+import 'package:qareeb_dash/features/coupons/ui/widget/change_coupon_state_btn.dart';
 import 'package:qareeb_models/extensions.dart';
 
 import '../../../../core/util/checker_helper.dart';
@@ -11,14 +12,14 @@ import '../../../../core/widgets/saed_taple_widget.dart';
 import '../../../../router/go_route_pages.dart';
 import '../../bloc/all_coupons_vubit/all_coupons_cubit.dart';
 
-
 final adminsEableHeader = [
   "ID",
-  "اسم القسيمة",
   "كود القسية",
   "قيمة الحسم",
+  "أقصى عدد تفعيل",
   "تاريخ الانتهاء",
   "الحالة",
+  "عمليات",
 ];
 
 class CouponPage extends StatefulWidget {
@@ -58,8 +59,10 @@ class _CouponPageState extends State<CouponPage> {
                     e.id.toString(),
                     e.couponCode,
                     e.discountValue.toString(),
+                    e.maxActivation.toString(),
                     e.expireDate?.formatDate ?? '-',
                     e.isActive ? 'مفعل' : 'غير مفعل',
+                    ChangeCouponStateBtn(coupon: e),
                   ],
                 )
                 .toList(),

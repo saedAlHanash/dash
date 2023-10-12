@@ -6,7 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:map_package/map/data/models/my_marker.dart';
 import 'package:qareeb_dash/core/util/launcher_helper.dart';
 import 'package:qareeb_dash/core/util/note_message.dart';
-import 'package:qareeb_dash/core/widgets/images/image_multi_type.dart';
+import 'package:image_multi_type/image_multi_type.dart';
 import 'package:qareeb_dash/features/shared_trip/ui/widget/path_points_widget.dart';
 import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_models/global.dart';

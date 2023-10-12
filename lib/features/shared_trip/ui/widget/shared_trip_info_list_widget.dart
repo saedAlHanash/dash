@@ -9,7 +9,7 @@ import 'package:qareeb_models/shared_trip/data/response/shared_trip.dart';
 
 import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/util/note_message.dart';
-import '../../../../core/widgets/images/image_multi_type.dart';
+import 'package:image_multi_type/image_multi_type.dart';
 import '../../../../core/widgets/item_info.dart';
 import '../../../../core/widgets/saed_taple_widget.dart';
 

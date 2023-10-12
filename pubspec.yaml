@@ -27,26 +27,34 @@ dependencies:
 
   cupertino_icons: ^1.0.2
 
+  image_multi_type:
+    git:
+      url: https://github.com/saedAlHanash/image_multi_type
+
   drawable_text:
     git:
       url: https://github.com/saedAlHanash/drawable_text
       ref: html
 #
-#  qareeb_models:
-#    git:
-#      url: https://github.com/saedAlHanash/qareeb_models
-#
-#  map_package:
-#    git:
-#      url: https://github.com/saedAlHanash/map_qareeb
-#      ref: html
-
+  qareeb_models:
+    git:
+      url: https://github.com/saedAlHanash/qareeb_models
 
   map_package:
-    path: ../../packages/map_package
+    git:
+      url: https://github.com/saedAlHanash/map_qareeb
+      ref: html
 
-  qareeb_models:
-    path: ../../packages/qareeb_models
+#  image_multi_type:
+#    path: ../../Bandtech/image_multi_type
+
+
+
+#  map_package:
+#    path: ../../packages/map_package
+#
+#  qareeb_models:
+#    path: ../../packages/qareeb_models
 
 
   excel: ^2.1.0

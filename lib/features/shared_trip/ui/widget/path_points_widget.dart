@@ -10,7 +10,7 @@ import 'package:qareeb_models/trip_path/data/models/trip_path.dart';
 
 import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/util/my_style.dart';
-import '../../../../core/widgets/images/image_multi_type.dart';
+import 'package:image_multi_type/image_multi_type.dart';
 import '../../../../core/widgets/my_card_widget.dart';
 import '../../../../generated/assets.dart';
 import '../../../points/bloc/delete_edge_cubit/delete_edge_cubit.dart';

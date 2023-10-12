@@ -7,7 +7,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../generated/assets.dart';
 import '../strings/app_string_manager.dart';
-import 'images/image_multi_type.dart';
+import 'package:image_multi_type/image_multi_type.dart';
 
 class MyTableWidget extends StatelessWidget {
   const MyTableWidget({

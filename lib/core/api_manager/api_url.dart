@@ -94,15 +94,15 @@ class GetUrl {
 
   static const governorates = 'api/services/app/GovernorateService/GetAll';
   static const areas = 'api/services/app/AreaService/GetAll';
-  static var allTickets = 'api/services/app/TicketsService/GetAll';
+  static const allTickets = 'api/services/app/TicketsService/GetAll';
 
-  static var getAgencyById = 'api/services/app/AgenciesService/Get';
+  static const getAgencyById = 'api/services/app/AgenciesService/Get';
 
-  static var agencies = 'api/services/app/AgenciesService/GetAll';
+  static const agencies = 'api/services/app/AgenciesService/GetAll';
 }
 
 class PostUrl {
-  static var replayTicket = 'api/services/app/TicketsService/AddReplyToTicket';
+  static const replayTicket = 'api/services/app/TicketsService/AddReplyToTicket';
   static const serverProxy = 'api/services/app/HttpRequestService/ExecuteRequest';
   static const requestOtp = 'api/Auth/RequestOTP';
   static const sendNotificaion =
@@ -202,7 +202,7 @@ class PutUrl {
 
   static const updateTempTrip = 'api/services/app/PathService/UpdatePath';
 
-  static var updateAgency = 'api/services/app/AgenciesService/Update';
+  static const updateAgency = 'api/services/app/AgenciesService/Update';
 }
 
 class DeleteUrl {
@@ -220,12 +220,12 @@ class DeleteUrl {
 
   static const deleteInstitution = 'api/services/app/InstitutiosnsService/Delete';
 
-  static var deleteCancelGovernorate = 'api/services/app/GovernorateService/Delete';
-  static var deleteCancelArea = 'api/services/app/AreaService/Delete';
+  static const deleteCancelGovernorate = 'api/services/app/GovernorateService/Delete';
+  static const deleteCancelArea = 'api/services/app/AreaService/Delete';
 
-  static var deleteCancelCoupon = 'api/services/app/Cupons/Delete';
+  static const deleteCancelCoupon = 'api/services/app/Cupons/Delete';
 
-  static var deleteCancelAgency = 'api/services/app/AgenciesService/Delete';
+  static const deleteCancelAgency = 'api/services/app/AgenciesService/Delete';
 }
 
 class OrsUrl {
@@ -254,6 +254,8 @@ class PatchUrl {
 
   static const changeProviderState =
       'api/services/app/EpaymentService/ChangeActiveStatus';
+
+  static const changeCouponState ='api/services/app/Coupons/ToggleActiveStatus';
 }
 
 String get baseUrl {

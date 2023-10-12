@@ -34,6 +34,7 @@ class SaedTableWidget extends StatelessWidget {
     return MyCardWidget(
       margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0).r,
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           filters ?? 0.0.verticalSpace,
           TitleWidget(title: title),

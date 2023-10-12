@@ -7,7 +7,7 @@ import 'package:map_package/map/data/models/my_marker.dart';
 import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_models/points/data/model/trip_point.dart';
 
-import '../../../../core/widgets/images/image_multi_type.dart';
+import 'package:image_multi_type/image_multi_type.dart';
 import '../../../points/bloc/get_edged_point_cubit/get_all_points_cubit.dart';
 import '../../../shared_trip/bloc/add_point_cubit/add_point_cubit.dart';
 

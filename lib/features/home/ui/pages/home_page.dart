@@ -36,6 +36,7 @@ import '../../../auth/bloc/change_user_state_cubit/change_user_state_cubit.dart'
 import '../../../auth/ui/pages/policy_page.dart';
 import '../../../car_catigory/ui/pages/car_categories_page.dart';
 import '../../../clients/ui/pages/clients_page.dart';
+import '../../../coupons/bloc/change_coupon_state_cubit/change_coupon_state_cubit.dart';
 import '../../../coupons/bloc/create_coupon_cubit/create_coupon_cubit.dart';
 import '../../../drivers/bloc/loyalty_cubit/loyalty_cubit.dart';
 import '../../../drivers/ui/pages/drivers_page.dart';
@@ -371,6 +372,7 @@ class _HomePageState extends State<HomePage> {
                   return MultiBlocProvider(
                     providers: [
                       BlocProvider(create: (context) => sl<CreateCouponCubit>()),
+                      BlocProvider(create: (context) => sl<ChangeCouponStateCubit>()),
                     ],
                     child: const CouponPage(),
                   );

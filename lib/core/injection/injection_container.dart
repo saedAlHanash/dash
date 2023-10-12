@@ -35,6 +35,7 @@ import '../../features/clients/bloc/all_clients/all_clients_cubit.dart';
 import '../../features/clients/bloc/clients_by_id_cubit/clients_by_id_cubit.dart';
 import '../../features/contact/bloc/send_note_cubit/send_note_cubit.dart';
 import '../../features/coupons/bloc/all_coupons_vubit/all_coupons_cubit.dart';
+import '../../features/coupons/bloc/change_coupon_state_cubit/change_coupon_state_cubit.dart';
 import '../../features/coupons/bloc/create_coupon_cubit/create_coupon_cubit.dart';
 import '../../features/drivers/bloc/all_drivers/all_drivers_cubit.dart';
 import '../../features/drivers/bloc/create_driver_cubit/create_driver_cubit.dart';
@@ -259,6 +260,12 @@ Future<void> init() async {
   sl.registerFactory(() => EstimateCubit());
   //endregion
 
+  //region Coupons
+  sl.registerFactory(() => AllCouponsCubit());
+  sl.registerFactory(() => ChangeCouponStateCubit());
+  sl.registerFactory(() => CreateCouponCubit());
+  //endregion
+
   sl.registerFactory(() => AllClientsCubit());
   sl.registerFactory(() => ClientByIdCubit());
   sl.registerFactory(() => AllTransfersCubit());
@@ -266,8 +273,6 @@ Future<void> init() async {
   sl.registerFactory(() => ChangeProviderStateCubit());
   sl.registerFactory(() => PayToCubit());
   sl.registerFactory(() => AccountAmountCubit());
-  sl.registerFactory(() => AllCouponsCubit());
-  sl.registerFactory(() => CreateCouponCubit());
   sl.registerFactory(() => SystemParamsCubit());
   sl.registerFactory(() => UpdateParamsCubit());
   sl.registerFactory(() => UpdateSettingCubit());

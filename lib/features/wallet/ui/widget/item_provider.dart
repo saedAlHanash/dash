@@ -2,7 +2,8 @@ import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:qareeb_dash/core/widgets/images/round_image_widget.dart';
+import 'package:image_multi_type/image_multi_type.dart';
+import 'package:image_multi_type/round_image_widget.dart';
 import 'package:qareeb_models/e_pay/data/response/epay_response.dart';
 import 'package:qareeb_models/extensions.dart';
 

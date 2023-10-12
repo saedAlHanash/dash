@@ -3,6 +3,7 @@ import 'package:qareeb_models/global.dart';
 class NotificationRequest {
   UserType? userType;
   List<int>? areaIds;
+  int? governorateId;
   List<int>? ids;
 
   String? title;
@@ -11,6 +12,7 @@ class NotificationRequest {
   NotificationRequest({
     this.userType,
     this.areaIds,
+    this.governorateId,
     this.ids,
   });
 
@@ -18,6 +20,7 @@ class NotificationRequest {
     return {
       'UserType': userType?.index ?? 0,
       'AreaIds': areaIds,
+      'GovernorateId': governorateId,
       'Ids': ids,
     };
   }
@@ -31,6 +34,7 @@ class NotificationRequest {
 
   void clearFilter() {
     userType = null;
+    governorateId = null;
     areaIds = null;
     ids = null;
   }
