@@ -7,6 +7,7 @@ import 'package:map_package/map/bloc/set_point_cubit/map_control_cubit.dart';
 
 import '../../features/accounts/bloc/all_transfers_cubit/all_transfers_cubit.dart';
 import '../../features/admins/bloc/all_admins/all_admins_cubit.dart';
+import '../../features/agencies/bloc/agencies_cubit/agencies_cubit.dart';
 import '../../features/auth/bloc/create_policy_cubit/policy_cubit.dart';
 import '../../features/auth/bloc/policy_cubit/create_policy_cubit.dart';
 import '../../features/car_catigory/bloc/all_car_categories_cubit/all_car_categories_cubit.dart';
@@ -64,26 +65,27 @@ class MyApp extends StatelessWidget {
               providers: [
                 BlocProvider(create: (_) => sl<NavHomeCubit>()),
                 BlocProvider(create: (_) => sl<MapControlCubit>()),
-                BlocProvider(create: (_) => sl<CreatePolicyCubit>()),
                 BlocProvider(create: (_) => sl<AllMessagesCubit>()),
+                BlocProvider(create: (_) => sl<CreatePolicyCubit>()),
                 BlocProvider(create: (_) => sl<CreateNotificationCubit>()),
+                BlocProvider(create: (_) => sl<TripsCubit>()..getTrips(_)),
                 BlocProvider(create: (_) => sl<PolicyCubit>()..getPolicy(_)),
                 BlocProvider(create: (_) => sl<PointsCubit>()..getAllPoints(_)),
+                BlocProvider(create: (_) => sl<AgenciesCubit>()..getAgencies(_)),
                 BlocProvider(create: (_) => sl<AllRolesCubit>()..getAllRoles(_)),
-                BlocProvider(create: (_) => sl<TripsCubit>()..getTrips(_)),
                 BlocProvider(create: (_) => sl<AllTicketsCubit>()..getTickets(_)),
                 BlocProvider(create: (_) => sl<AllAdminsCubit>()..getAllAdmins(_)),
                 BlocProvider(create: (_) => sl<AllDriversCubit>()..getAllDrivers(_)),
                 BlocProvider(create: (_) => sl<AllClientsCubit>()..getAllClients(_)),
                 BlocProvider(create: (_) => sl<AllCouponsCubit>()..getAllCoupons(_)),
-                BlocProvider(create: (_) => sl<AllTempTripsCubit>()..getTempTrips(_)),
                 BlocProvider(create: (_) => sl<FinancialReportCubit>()..getReport(_)),
+                BlocProvider(create: (_) => sl<AllTempTripsCubit>()..getTempTrips(_)),
                 BlocProvider(create: (_) => sl<ActiveTripsCubit>()..getActiveTrips(_)),
                 BlocProvider(create: (_) => sl<GovernoratesCubit>()..getGovernorate(_)),
                 BlocProvider(create: (_) => sl<AllTransfersCubit>()..getAllTransfers(_)),
                 BlocProvider(create: (_) => sl<GetSharedTripsCubit>()..getSharesTrip(_)),
-                BlocProvider(create: (_) => sl<ProvidersCubit>()..getAllEpayProviders(_)),
                 BlocProvider(create: (_) => sl<SystemParamsCubit>()..getSystemParams(_)),
+                BlocProvider(create: (_) => sl<ProvidersCubit>()..getAllEpayProviders(_)),
                 BlocProvider(
                   create: (_) => sl<SystemSettingsCubit>()..getSystemSettings(_),
                 ),

@@ -29,6 +29,9 @@ import '../../../accounts/bloc/account_amount_cubit/account_amount_cubit.dart';
 import '../../../accounts/bloc/all_transfers_cubit/all_transfers_cubit.dart';
 import '../../../accounts/data/request/transfer_filter_request.dart';
 import '../../../admins/ui/pages/admins_page.dart';
+import '../../../agencies/bloc/create_agency_cubit/create_agency_cubit.dart';
+import '../../../agencies/bloc/delete_agency_cubit/delete_agency_cubit.dart';
+import '../../../agencies/ui/pages/agencies_page.dart';
 import '../../../auth/bloc/change_user_state_cubit/change_user_state_cubit.dart';
 import '../../../auth/ui/pages/policy_page.dart';
 import '../../../car_catigory/ui/pages/car_categories_page.dart';
@@ -189,12 +192,11 @@ class _HomePageState extends State<HomePage> {
                 AdminMenuItem(
                   title: 'عمليات إدارية',
                   children: [
-                    // if (isAllowed(AppPermissions.REASON))
-                    //   const AdminMenuItem(
-                    //       title: 'أسباب الإلغاء', route: '/cancel_reasons'),
                     const AdminMenuItem(title: 'المحافظات', route: '/government'),
                     if (isAllowed(AppPermissions.CAR_CATEGORY))
                       const AdminMenuItem(title: 'المؤسسات', route: '/institutions'),
+                    if (isAllowed(AppPermissions.CAR_CATEGORY))
+                      const AdminMenuItem(title: 'الوكلاء', route: '/agencies'),
                     if (isAllowed(AppPermissions.ROLES))
                       const AdminMenuItem(title: 'الأدوار', route: '/roles'),
                     const AdminMenuItem(
@@ -426,6 +428,14 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ],
                     child: const ReasonsPage(),
+                  );
+                case "/agencies":
+                  return MultiBlocProvider(
+                    providers: [
+                      BlocProvider(create: (context) => sl<DeleteAgencyCubit>()),
+                      BlocProvider(create: (context) => sl<CreateAgencyCubit>()),
+                    ],
+                    child: const AgenciesPage(),
                   );
 
                 case "/government":

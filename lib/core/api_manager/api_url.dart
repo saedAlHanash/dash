@@ -220,6 +220,8 @@ class DeleteUrl {
   static var deleteCancelArea = 'api/services/app/AreaService/Delete';
 
   static var deleteCancelCoupon = 'api/services/app/Cupons/Delete';
+
+  static var deleteCancelAgency;
 }
 
 class OrsUrl {

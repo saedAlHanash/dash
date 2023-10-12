@@ -12,6 +12,9 @@ import '../../features/accounts/bloc/account_amount_cubit/account_amount_cubit.d
 import '../../features/accounts/bloc/all_transfers_cubit/all_transfers_cubit.dart';
 import '../../features/admins/bloc/all_admins/all_admins_cubit.dart';
 import '../../features/admins/bloc/create_admin_cubit/create_admin_cubit.dart';
+import '../../features/agencies/bloc/agencies_cubit/agencies_cubit.dart';
+import '../../features/agencies/bloc/create_agency_cubit/create_agency_cubit.dart';
+import '../../features/agencies/bloc/delete_agency_cubit/delete_agency_cubit.dart';
 import '../../features/areas/bloc/areas_cubit/areas_cubit.dart';
 import '../../features/areas/bloc/create_area_cubit/create_area_cubit.dart';
 import '../../features/areas/bloc/delete_area_cubit/delete_area_cubit.dart';
@@ -282,6 +285,14 @@ Future<void> init() async {
   sl.registerFactory(() => AreasCubit());
   sl.registerFactory(() => CreateAreaCubit());
   sl.registerFactory(() => DeleteAreaCubit());
+  //endregion
+
+  //region agency
+
+  sl.registerFactory(() => CreateAgencyCubit());
+  sl.registerFactory(() => AgenciesCubit());
+  sl.registerFactory(() => DeleteAgencyCubit());
+
   //endregion
 
 //! External
