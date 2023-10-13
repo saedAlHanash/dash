@@ -27,6 +27,7 @@ import '../../../../core/util/shared_preferences.dart';
 import '../../../../core/widgets/logo_text.dart';
 import '../../../accounts/bloc/account_amount_cubit/account_amount_cubit.dart';
 import '../../../accounts/bloc/all_transfers_cubit/all_transfers_cubit.dart';
+import '../../../accounts/bloc/pay_to_cubit/pay_to_cubit.dart';
 import '../../../accounts/data/request/transfer_filter_request.dart';
 import '../../../admins/ui/pages/admins_page.dart';
 import '../../../agencies/bloc/create_agency_cubit/create_agency_cubit.dart';
@@ -46,8 +47,7 @@ import '../../../governorates/ui/pages/governorates_page.dart';
 import '../../../institutions/bloc/delete_institution_cubit/delete_institution_cubit.dart';
 import '../../../institutions/ui/pages/institutions_page.dart';
 import '../../../notifications/ui/pages/notifications_page.dart';
-import '../../../pay_to_drivers/bloc/pay_to_cubit/pay_to_cubit.dart';
-import '../../../pay_to_drivers/ui/pages/pay_to_drivers_page.dart';
+import '../../../pay_to_drivers/ui/pages/financial_page.dart';
 import '../../../points/ui/pages/points_page.dart';
 import '../../../reasons/bloc/create_cubit/create_cubit.dart';
 import '../../../reasons/bloc/delete_reason_cubit/delete_reason_cubit.dart';
@@ -476,9 +476,8 @@ class _HomePageState extends State<HomePage> {
                           ),
                       ),
                       BlocProvider(create: (_) => sl<PayToCubit>()),
-                      BlocProvider(create: (_) => sl<AccountAmountCubit>()),
                     ],
-                    child: const PayToDriversPage(),
+                    child: const FinancialPage(),
                   );
               }
               return SingleChildScrollView(

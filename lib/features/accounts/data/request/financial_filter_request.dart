@@ -1,6 +1,5 @@
 import 'package:qareeb_dash/core/api_manager/api_service.dart';
 import 'package:qareeb_models/extensions.dart';
-import 'package:qareeb_models/global.dart';
 
 class FinancialFilterRequest {
   int? driverId;

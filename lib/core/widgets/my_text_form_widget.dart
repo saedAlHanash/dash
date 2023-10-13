@@ -417,6 +417,7 @@ class MyTextFormNoLabelWidget extends StatelessWidget {
             text: label,
             matchParent: true,
             color: AppColorManager.black,
+            textAlign: TextAlign.end,
             padding: const EdgeInsets.symmetric(horizontal: 10.0).w,
             size: 16.0.sp,
           ),

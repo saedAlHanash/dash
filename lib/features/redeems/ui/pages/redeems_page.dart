@@ -1,4 +1,3 @@
-
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,7 +8,6 @@ import 'package:qareeb_models/extensions.dart';
 
 import '../../../../core/util/my_style.dart';
 import '../../bloc/redeems_history_cubit/redeems_history_cubit.dart';
-
 
 const _tripsTableHeader = [
   'ID ',

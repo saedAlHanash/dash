@@ -5,12 +5,12 @@ import 'package:map_package/map/bloc/map_controller_cubit/map_controller_cubit.d
 import 'package:map_package/map/bloc/my_location_cubit/my_location_cubit.dart';
 import 'package:map_package/map/bloc/search_location/search_location_cubit.dart';
 import 'package:map_package/map/bloc/set_point_cubit/map_control_cubit.dart';
-import 'package:qareeb_dash/features/pay_to_drivers/bloc/pay_to_cubit/pay_to_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../features/accounts/bloc/account_amount_cubit/account_amount_cubit.dart';
 import '../../features/accounts/bloc/all_transfers_cubit/all_transfers_cubit.dart';
 import '../../features/accounts/bloc/driver_financial_cubit/driver_financial_cubit.dart';
+import '../../features/accounts/bloc/pay_to_cubit/pay_to_cubit.dart';
 import '../../features/accounts/bloc/reverse_charging_cubit/reverse_charging_cubit.dart';
 import '../../features/admins/bloc/all_admins/all_admins_cubit.dart';
 import '../../features/admins/bloc/create_admin_cubit/create_admin_cubit.dart';
@@ -33,13 +33,14 @@ import '../../features/car_catigory/bloc/create_car_category_cubit/create_car_ca
 import '../../features/car_catigory/bloc/delete_car_cat_cubit/delete_car_cat_cubit.dart';
 import '../../features/clients/bloc/all_clients/all_clients_cubit.dart';
 import '../../features/clients/bloc/clients_by_id_cubit/clients_by_id_cubit.dart';
-import '../../features/contact/bloc/send_note_cubit/send_note_cubit.dart';
+
 import '../../features/coupons/bloc/all_coupons_vubit/all_coupons_cubit.dart';
 import '../../features/coupons/bloc/change_coupon_state_cubit/change_coupon_state_cubit.dart';
 import '../../features/coupons/bloc/create_coupon_cubit/create_coupon_cubit.dart';
 import '../../features/drivers/bloc/all_drivers/all_drivers_cubit.dart';
 import '../../features/drivers/bloc/create_driver_cubit/create_driver_cubit.dart';
 import '../../features/drivers/bloc/driver_by_id_cubit/driver_by_id_cubit.dart';
+import '../../features/drivers/bloc/drivers_imiei_cubit/drivers_imei_cubit.dart';
 import '../../features/drivers/bloc/loyalty_cubit/loyalty_cubit.dart';
 import '../../features/governorates/bloc/create_governorate_cubit/create_governorate_cubit.dart';
 import '../../features/governorates/bloc/delete_governorate_cubit/delete_governorate_cubit.dart';
@@ -48,9 +49,9 @@ import '../../features/home/bloc/nav_home_cubit/nav_home_cubit.dart';
 import '../../features/institutions/bloc/all_institutions_cubit/all_institutions_cubit.dart';
 import '../../features/institutions/bloc/create_institution_cubit/create_institution_cubit.dart';
 import '../../features/institutions/bloc/delete_institution_cubit/delete_institution_cubit.dart';
-import '../../features/messages/bloc/all_messages/all_messages_cubit.dart';
+
 import '../../features/notifications/bloc/notification_cubit/notification_cubit.dart';
-import '../../features/pay_to_drivers/bloc/financial_report_cubit/financial_report_cubit.dart';
+import '../../features/accounts/bloc/financial_report_cubit/financial_report_cubit.dart';
 import '../../features/points/bloc/creta_edge_cubit/create_edge_cubit.dart';
 import '../../features/points/bloc/creta_point_cubit/create_point_cubit.dart';
 import '../../features/points/bloc/delete_edge_cubit/delete_edge_cubit.dart';
@@ -151,10 +152,6 @@ Future<void> init() async {
   ///bloc
   //endregion
 
-  //region contact to us
-  sl.registerFactory(() => SendNoteCubit(network: sl()));
-
-  //endregion
 
   //region points
   sl.registerFactory(() => PointsCubit());
@@ -240,10 +237,7 @@ Future<void> init() async {
 
   //endregion
 
-  //region messages
-  sl.registerFactory(() => AllMessagesCubit());
 
-  //endregion
 
   //region institution
   sl.registerFactory(() => AllInstitutionsCubit());
@@ -272,7 +266,6 @@ Future<void> init() async {
   sl.registerFactory(() => ProvidersCubit());
   sl.registerFactory(() => ChangeProviderStateCubit());
   sl.registerFactory(() => PayToCubit());
-  sl.registerFactory(() => AccountAmountCubit());
   sl.registerFactory(() => SystemParamsCubit());
   sl.registerFactory(() => UpdateParamsCubit());
   sl.registerFactory(() => UpdateSettingCubit());
@@ -281,6 +274,7 @@ Future<void> init() async {
   sl.registerFactory(() => FinancialReportCubit());
   sl.registerFactory(() => DriverFinancialCubit());
   sl.registerFactory(() => ReverseChargingCubit());
+  sl.registerFactory(() => DriversImeiCubit());
 
   //region Governorate
 

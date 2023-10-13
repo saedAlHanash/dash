@@ -51,7 +51,7 @@ class ClientInfoPage extends StatelessWidget {
                 ),
                 const Divider(),
                 30.0.verticalSpace,
-                WalletPage(id: client.id, isClient: true),
+                const WalletPage(),
                 const Divider(),
                 ItemInfoInLine(
                   title: 'رحلات الزبون',

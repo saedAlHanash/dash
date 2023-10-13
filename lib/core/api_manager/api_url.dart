@@ -99,6 +99,8 @@ class GetUrl {
   static const getAgencyById = 'api/services/app/AgenciesService/Get';
 
   static const agencies = 'api/services/app/AgenciesService/GetAll';
+
+  static var getDriversImei ='api/services/app/User/GetDriversImes';
 }
 
 class PostUrl {

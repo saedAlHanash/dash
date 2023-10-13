@@ -17,11 +17,12 @@ import '../../../../core/widgets/my_text_form_widget.dart';
 import '../../../../router/app_router.dart';
 import '../../../points/bloc/get_edged_point_cubit/get_all_points_cubit.dart';
 import '../../../points/bloc/get_points_edge_cubit/get_points_edge_cubit.dart';
+import '../../../temp_trips/ui/widget/search_points_widget.dart';
 import '../../bloc/add_point_cubit/add_point_cubit.dart';
 import '../../bloc/create_shared_trip_cubit/create_shared_trip_cubit.dart';
 import '../../data/request/create_shared_request.dart';
 import '../widget/path_points_widget.dart';
-import '../widget/search_points_widget.dart';
+
 
 class CreateSharedTripPage extends StatefulWidget {
   const CreateSharedTripPage({Key? key}) : super(key: key);

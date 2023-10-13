@@ -4,22 +4,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:image_multi_type/image_multi_type.dart';
 import 'package:qareeb_dash/core/api_manager/command.dart';
+import 'package:qareeb_dash/core/strings/app_color_manager.dart';
 import 'package:qareeb_dash/core/widgets/saed_taple_widget.dart';
 import 'package:qareeb_dash/features/drivers/bloc/all_drivers/all_drivers_cubit.dart';
-import 'package:qareeb_dash/features/pay_to_drivers/ui/widget/pay_to_driver_widget.dart';
 import 'package:qareeb_models/extensions.dart';
 
-import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/file_util.dart';
 import '../../../../core/util/my_style.dart';
 import '../../../../core/util/note_message.dart';
 import '../../../../router/go_route_pages.dart';
-import '../../../accounts/bloc/account_amount_cubit/account_amount_cubit.dart';
-import '../../../accounts/bloc/all_transfers_cubit/all_transfers_cubit.dart';
+import '../../../accounts/bloc/driver_financial_cubit/driver_financial_cubit.dart';
+import '../../../accounts/bloc/financial_report_cubit/financial_report_cubit.dart';
+import '../../../accounts/bloc/pay_to_cubit/pay_to_cubit.dart';
 import '../../../clients/ui/widget/clients_filter_widget.dart';
-import '../../bloc/financial_report_cubit/financial_report_cubit.dart';
-import '../../bloc/pay_to_cubit/pay_to_cubit.dart';
+import '../widget/pay_to_driver_widget.dart';
 
 const transfersHeaderTable = [
   'ID',
@@ -28,16 +28,17 @@ const transfersHeaderTable = [
   'مستحقات الشركة',
   'مستحقات السائق',
   'الملخص',
+  'عمليات',
 ];
 
-class PayToDriversPage extends StatefulWidget {
-  const PayToDriversPage({super.key});
+class FinancialPage extends StatefulWidget {
+  const FinancialPage({super.key});
 
   @override
-  State<PayToDriversPage> createState() => _PayToDriversPageState();
+  State<FinancialPage> createState() => _FinancialPageState();
 }
 
-class _PayToDriversPageState extends State<PayToDriversPage> {
+class _FinancialPageState extends State<FinancialPage> {
   @override
   void initState() {
     context
@@ -54,39 +55,20 @@ class _PayToDriversPageState extends State<PayToDriversPage> {
       floatingActionButton: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (isAllowed(AppPermissions.CREATION))
-            FloatingActionButton(
-              onPressed: () {
-                NoteMessage.showCustomBottomSheet(
-                  context,
-                  child: MultiBlocProvider(
-                    providers: [
-                      BlocProvider.value(value: context.read<AllDriversCubit>()),
-                      BlocProvider.value(value: context.read<PayToCubit>()),
-                      BlocProvider.value(value: context.read<AccountAmountCubit>()),
-                    ],
-                    child: const PayToDriverWidget(),
-                  ),
-                  onCancel: (val) {
-                    context.read<AllTransfersCubit>().getAllTransfers(context);
-                  },
-                );
-              },
-              child: const Icon(Icons.add, color: Colors.white),
-            ),
-          10.0.verticalSpace,
           StatefulBuilder(
             builder: (context, mState) {
               return FloatingActionButton(
                 onPressed: () {
                   mState(() => loading = true);
                   context.read<FinancialReportCubit>().getDriversAsync(context).then(
-                    (value) {
+                        (value) {
                       if (value == null) return;
                       saveXls(
                         header: value.first,
                         data: value.second,
-                        fileName: 'التقرير المالي للسائقين${DateTime.now().formatDate}',
+                        fileName: 'التقرير المالي للسائقين${DateTime
+                            .now()
+                            .formatDate}',
                       );
                       mState(() => loading = false);
                     },
@@ -110,14 +92,18 @@ class _PayToDriversPageState extends State<PayToDriversPage> {
                   command: state.command,
                   onApply: (request) {
                     context.read<FinancialReportCubit>().getReport(
-                          context,
-                          command:
-                              context.read<FinancialReportCubit>().state.command.copyWith(
-                                clientsFilterRequest: request,
-                                    skipCount: 0,
-                                    totalCount: 0,
-                                  ),
-                        );
+                      context,
+                      command:
+                      context
+                          .read<FinancialReportCubit>()
+                          .state
+                          .command
+                          .copyWith(
+                        clientsFilterRequest: request,
+                        skipCount: 0,
+                        totalCount: 0,
+                      ),
+                    );
                   },
                 );
               },
@@ -158,6 +144,27 @@ class _PayToDriversPageState extends State<PayToDriversPage> {
                         e.requiredAmountFromDriver.formatPrice,
                         e.requiredAmountFromCompany.formatPrice,
                         getMessage(e),
+                        TextButton(
+                          onPressed: () {
+                            NoteMessage.showMyDialog(
+                              context,
+                              child: MultiBlocProvider(
+                                providers: [
+                                  BlocProvider.value(value: context.read<PayToCubit>()),
+                                ],
+                                child: PayToDriverWidget(result: e),
+                              ),
+                              onCancel: (val) {},
+                            );
+                          },
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStatePropertyAll(
+                              AppColorManager.mainColor.withOpacity(0.1),
+                            ),
+                          ),
+                          child: const DrawableText(
+                            text: 'تفريغ الرصيد', selectable: false,),
+                        ),
                       ];
                     }).toList());
               },

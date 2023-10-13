@@ -28,6 +28,8 @@ import '../../../accounts/bloc/driver_financial_cubit/driver_financial_cubit.dar
 import '../../../accounts/bloc/reverse_charging_cubit/reverse_charging_cubit.dart';
 import '../../../wallet/ui/pages/debts_page.dart';
 import '../../bloc/driver_by_id_cubit/driver_by_id_cubit.dart';
+import '../widget/driver_financial_widget.dart';
+import '../widget/driver_trips_card.dart';
 
 class DriverInfoPage extends StatefulWidget {
   const DriverInfoPage({super.key});
@@ -97,8 +99,8 @@ class _DriverInfoPageState extends State<DriverInfoPage>
                         ],
                       ),
                       LoyaltyWidget(driverId: driver.id),
-                      _DriverTripsCard(driver: driver),
-                      const _DriverFinancialWidget(),
+                      DriverTripsCard(driver: driver),
+                      const DriverFinancialWidget(),
                       const DebtsPage(),
                     ],
                   ),
@@ -174,10 +176,9 @@ class _DriverTableInfo extends StatelessWidget {
 }
 
 class ItemImage extends StatelessWidget {
-  const ItemImage({super.key, required this.image, required this.text});
+  const ItemImage({ required this.image, required this.text});
 
   final String image;
-
 
   final String text;
 
@@ -201,292 +202,6 @@ class ItemImage extends StatelessWidget {
             DrawableText(text: text),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class _DriverTripsCard extends StatelessWidget {
-  const _DriverTripsCard({required this.driver});
-
-  final DriverModel driver;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        MyCardWidget(
-          elevation: 0.0,
-          margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0).r,
-          child: Row(
-            children: [
-              const Expanded(
-                child: DrawableText(
-                  text: 'الرحلات العادية',
-                  color: Colors.black,
-                  fontFamily: FontManager.cairoBold,
-                  matchParent: true,
-                ),
-              ),
-              Expanded(
-                child: DrawableText(
-                  text: 'المرفوضة : ${driver.receivedTripsCount}',
-                  color: Colors.black,
-                  fontFamily: FontManager.cairoBold,
-                ),
-              ),
-              Expanded(
-                child: DrawableText(
-                  text: 'الرحلات المرسلة  : ${driver.receivedTripsCount}',
-                  color: Colors.black,
-                  fontFamily: FontManager.cairoBold,
-                ),
-              ),
-              MyButton(
-                text: 'تفاصيل',
-                width: 100.0.w,
-                onTap: () {
-                  context.pushNamed(
-                    GoRouteName.tripsPae,
-                    queryParams: {
-                      'driverId': driver.id.toString(),
-                      // 'driverName': driver.fullName,
-                    },
-                  );
-                },
-              ),
-            ],
-          ),
-        ),
-        MyCardWidget(
-          elevation: 0.0,
-          margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0).r,
-          child: Row(
-            children: [
-              const Expanded(
-                child: DrawableText(
-                  text: 'الرحلات التشاركية',
-                  color: Colors.black,
-                  fontFamily: FontManager.cairoBold,
-                  matchParent: true,
-                ),
-              ),
-              const Spacer(),
-              MyButton(
-                text: 'تفاصيل',
-                width: 100.0.w,
-                onTap: () {
-                  context.pushNamed(
-                    GoRouteName.sharedTripsPae,
-                    queryParams: {
-                      'driverId': driver.id.toString(),
-                      // 'driverName': driver.fullName,
-                    },
-                  );
-                },
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _DriverFinancialWidget extends StatelessWidget {
-  const _DriverFinancialWidget();
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocListener<ReverseChargingCubit, ReverseChargingInitial>(
-      listenWhen: (p, c) => c.statuses.isDone,
-      listener: (context, state) {
-        context.read<DriverFinancialCubit>().getDriverFinancial(context);
-      },
-      child: BlocBuilder<DriverFinancialCubit, DriverFinancialInitial>(
-        builder: (context, state) {
-          if (state.statuses.isLoading) {
-            return MyStyle.loadingWidget();
-          }
-          return SingleChildScrollView(
-            child: Column(
-              children: [
-                MyCardWidget(
-                  elevation: 0.0,
-                  margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0).r,
-                  child: Row(
-                    children: [
-                      ImageMultiType(
-                        url: Assets.iconsDriver,
-                        width: 55.0.r,
-                        height: 55.0.r,
-                      ),
-                      15.0.horizontalSpace,
-                      const DrawableText(
-                        text: 'رصيد السائق لدى الشركة',
-                        color: Colors.black,
-                        fontFamily: FontManager.cairoBold,
-                      ),
-                      const Spacer(),
-                      DrawableText(
-                        text: state.result.requiredAmountFromCompany.formatPrice,
-                        color: Colors.black,
-                        fontFamily: FontManager.cairoBold,
-                      ),
-                    ],
-                  ),
-                ),
-                MyCardWidget(
-                  elevation: 0.0,
-                  margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0).r,
-                  child: Row(
-                    children: [
-                      ImageMultiType(
-                        url: Assets.iconsQareebPoint,
-                        width: 55.0.r,
-                        height: 55.0.r,
-                      ),
-                      15.0.horizontalSpace,
-                      const DrawableText(
-                        text: 'رصيد الشركة لدى السائق',
-                        color: Colors.black,
-                        fontFamily: FontManager.cairoBold,
-                      ),
-                      const Spacer(),
-                      DrawableText(
-                        text: state.result.requiredAmountFromDriver.formatPrice,
-                        color: Colors.black,
-                        fontFamily: FontManager.cairoBold,
-                      ),
-                    ],
-                  ),
-                ),
-                MyCardWidget(
-                  elevation: 0.0,
-                  margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0).r,
-                  child: Row(
-                    children: [
-                      ImageMultiType(
-                        url: Assets.iconsCashSummary,
-                        width: 55.0.r,
-                        height: 55.0.r,
-                      ),
-                      15.0.horizontalSpace,
-                      DrawableText(
-                        text: state.getMessage,
-                        color: Colors.black,
-                        fontFamily: FontManager.cairoBold,
-                      ),
-                      const Spacer(),
-                      DrawableText(
-                        text: state.price.formatPrice,
-                        color: Colors.black,
-                        fontFamily: FontManager.cairoBold,
-                      ),
-                    ],
-                  ),
-                ),
-                MyCardWidget(
-                  elevation: 0.0,
-                  margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0).r,
-                  child: Row(
-                    children: [
-                      DrawableText(
-                        text: 'آخر شحنة من السائق للشركة',
-                        color: Colors.black,
-                        fontFamily: FontManager.cairoBold,
-                        drawablePadding: 30.0.h,
-                        drawableEnd: DrawableText(
-                          text: state.result.lastTransferFromDriver.transferDate
-                                  ?.formatDuration(getServerDate) ??
-                              '',
-                          color: Colors.grey,
-                        ),
-                      ),
-                      const Spacer(),
-                      DrawableText(
-                        text: state.result.lastTransferFromDriver.amount.formatPrice,
-                        color: Colors.black,
-                        fontFamily: FontManager.cairoBold,
-                      ),
-                    ],
-                  ),
-                ),
-                MyCardWidget(
-                  elevation: 0.0,
-                  margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0).r,
-                  child: Row(
-                    children: [
-                      DrawableText(
-                        text: 'آخر شحنة من الشركة للسائق',
-                        color: Colors.black,
-                        fontFamily: FontManager.cairoBold,
-                        drawablePadding: 30.0.h,
-                        drawableEnd: DrawableText(
-                          text: state.result.lastTransferFromDriver.transferDate
-                                  ?.formatDuration(getServerDate) ??
-                              '',
-                          color: Colors.grey,
-                        ),
-                      ),
-                      const Spacer(),
-                      DrawableText(
-                        text: state
-                            .result.lastTransferFromCompanyToDriver.amount.formatPrice,
-                        color: Colors.black,
-                        fontFamily: FontManager.cairoBold,
-                      ),
-                    ],
-                  ),
-                ),
-                const Divider(),
-                SaedTableWidget(
-                  filters: const DrawableText(
-                    text: 'شحنات السائق',
-                  ),
-                  title: const [
-                    'المرسل',
-                    'المستقبل',
-                    'القيمة',
-                    'الحالة',
-                    'التاريخ',
-                    'عمليات',
-                  ],
-                  data: state.result.charging.mapIndexed((i, e) {
-                    return [
-                      e.chargerName.isEmpty ? e.providerName : e.chargerName,
-                      e.userName,
-                      e.amount == 0 ? 'عملية استرجاع' : e.amount.formatPrice,
-                      e.status.arabicName,
-                      e.date?.formatDate,
-                      e.amount == 0
-                          ? 0.0.verticalSpace
-                          : BlocBuilder<ReverseChargingCubit, ReverseChargingInitial>(
-                              builder: (context, state) {
-                                if (state.statuses.isLoading) {
-                                  return MyStyle.loadingWidget();
-                                }
-                                return IconButton(
-                                  onPressed: () {
-                                    context
-                                        .read<ReverseChargingCubit>()
-                                        .payTo(context, processId: e.processId);
-                                  },
-                                  icon: const Icon(
-                                    Icons.remove_circle,
-                                    color: AppColorManager.red,
-                                  ),
-                                );
-                              },
-                              buildWhen: (p, c) => c.processId == e.processId,
-                            ),
-                    ];
-                  }).toList(),
-                ),
-              ],
-            ),
-          );
-        },
       ),
     );
   }

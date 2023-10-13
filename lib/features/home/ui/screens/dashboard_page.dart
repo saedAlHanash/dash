@@ -1,16 +1,31 @@
+import 'package:collection/collection.dart';
 import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:image_multi_type/image_multi_type.dart';
+import 'package:map_package/map/bloc/ather_cubit/ather_cubit.dart';
+import 'package:map_package/map/bloc/map_controller_cubit/map_controller_cubit.dart';
+import 'package:map_package/map/bloc/set_point_cubit/map_control_cubit.dart';
+import 'package:map_package/map/data/models/my_marker.dart';
+import 'package:map_package/map/ui/widget/map_widget.dart';
 import 'package:qareeb_dash/core/api_manager/api_service.dart';
 import 'package:qareeb_dash/core/api_manager/api_url.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/util/shared_preferences.dart';
 import 'package:qareeb_dash/core/widgets/my_card_widget.dart';
+import 'package:qareeb_dash/features/drivers/bloc/drivers_imiei_cubit/drivers_imei_cubit.dart';
 import 'package:qareeb_dash/features/redeems/ui/widget/loyalty_widget.dart';
 import 'package:qareeb_dash/router/go_route_pages.dart';
+import 'package:qareeb_models/extensions.dart';
+import 'package:qareeb_models/global.dart';
+import 'package:qareeb_models/home/data/response/drivers_imei_response.dart';
 
+import '../../../../core/injection/injection_container.dart';
+import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/util/my_style.dart';
+import '../../../../generated/assets.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
@@ -27,7 +42,6 @@ class _DashboardPageState extends State<DashboardPage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -101,6 +115,26 @@ class _DashboardPageState extends State<DashboardPage> {
                 );
               },
             ),
+            DrawableText(
+              text: 'التتبع المباشر',
+              size: 24.0.sp,
+              fontFamily: FontManager.cairoBold,
+            ),
+            10.0.verticalSpace,
+            SizedBox(
+              height: 500.0.h,
+              child: MultiBlocProvider(
+                providers: [
+                  BlocProvider(create: (_) => sl<MapControllerCubit>()),
+                  BlocProvider(create: (_) => sl<AtherCubit>()),
+                ],
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 128.0).r,
+                  child: const BusesMap(),
+                ),
+              ),
+            ),
+            150.0.verticalSpace,
           ],
         ),
       ),
@@ -168,4 +202,88 @@ class BestDriver {
         "sharedTripsCount": sharedTripsCount,
         "totalMeters": totalMeters,
       };
+}
+
+class BusesMap extends StatefulWidget {
+  const BusesMap({super.key});
+
+  @override
+  State<BusesMap> createState() => _BusesMapState();
+}
+
+class _BusesMapState extends State<BusesMap> {
+  late MapControllerCubit mapControllerCubit;
+
+  bool centerMarkers = true;
+
+  @override
+  void initState() {
+    mapControllerCubit = context.read<MapControllerCubit>();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<AtherCubit, AtherInitial>(
+          listener: (context, state) {
+            mapControllerCubit.addMarkers(
+                marker: state.result.mapIndexed(
+                  (i, e) {
+                    return MyMarker(
+                      point: e.getLatLng(),
+                      markerSize: Size(50.0.r, 50.0.r),
+                      costumeMarker: Transform.rotate(
+                        angle: -e.angle,
+                        child: InkWell(
+                          onTap: () {
+                            final driverId =
+                                context.read<DriversImeiCubit>().state.getIdByImei(e.ime);
+                            context.pushNamed(GoRouteName.driverInfo,
+                                queryParams: {'id': driverId.toString()});
+                          },
+                          child: ImageMultiType(
+                            url: Assets.iconsLocator,
+                            height: 50.0.spMin,
+                            width: 50.0.spMin,
+                            color:
+                                e.speed == '0' ? Colors.red : AppColorManager.mainColor,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ).toList()
+                  ..removeWhere((element) => element.point.latitude == 0),
+                update: true,
+                centerZoom: centerMarkers);
+          },
+        ),
+        BlocListener<DriversImeiCubit, DriversImeiInitial>(
+          listenWhen: (p, c) => c.statuses.done,
+          listener: (context, state) {
+            if (centerMarkers) {
+              context.read<AtherCubit>().getDriverLocation(state.getImeisListString);
+              centerMarkers = false;
+            }
+            Future.delayed(
+              const Duration(minutes: 1),
+              () {
+                context.read<AtherCubit>().getDriverLocation(state.getImeisListString);
+              },
+            );
+          },
+        )
+      ],
+      child: BlocBuilder<DriversImeiCubit, DriversImeiInitial>(
+        builder: (context, state) {
+          if (state.statuses.isLoading) {
+            return MyStyle.loadingWidget();
+          }
+          return const MapWidget(atherListener: false);
+        },
+      ),
+    );
+  }
 }

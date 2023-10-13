@@ -1,21 +1,21 @@
-part of 'all_messages_cubit.dart';
+part of 'financial_report_cubit.dart';
 
-class AllMessagesInitial extends Equatable {
+class FinancialReportInitial extends Equatable {
   final CubitStatuses statuses;
-  final List<MessageModel> result;
+  final List<FinancialResult> result;
   final String error;
   final Command command;
 
-  const AllMessagesInitial({
+  const FinancialReportInitial({
     required this.statuses,
     required this.result,
     required this.error,
     required this.command,
   });
 
-  factory AllMessagesInitial.initial() {
-    return  AllMessagesInitial(
-      result: const <MessageModel>[],
+  factory FinancialReportInitial.initial() {
+    return  FinancialReportInitial(
+      result: const[],
       error: '',
       command: Command.initial(),
       statuses: CubitStatuses.init,
@@ -25,13 +25,14 @@ class AllMessagesInitial extends Equatable {
   @override
   List<Object> get props => [statuses, result, error];
 
-  AllMessagesInitial copyWith({
+
+  FinancialReportInitial copyWith({
     CubitStatuses? statuses,
-    List<MessageModel>? result,
+    List<FinancialResult>? result,
     String? error,
     Command? command,
   }) {
-    return AllMessagesInitial(
+    return FinancialReportInitial(
       statuses: statuses ?? this.statuses,
       result: result ?? this.result,
       error: error ?? this.error,

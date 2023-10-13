@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:qareeb_dash/core/strings/app_color_manager.dart';
 import 'package:qareeb_dash/core/util/shared_preferences.dart';
@@ -12,6 +14,7 @@ final appTheme = ThemeData(
       backgroundColor: primaryColor,
       centerTitle: true,
     ),
+    textTheme: _fixBlurryTextIssue(const TextTheme()),
     scaffoldBackgroundColor: Colors.white,
     switchTheme: SwitchThemeData(
         thumbColor: MaterialStatePropertyAll(primaryColor),
@@ -35,3 +38,27 @@ final appTheme = ThemeData(
           borderSide: BorderSide(color: primaryColor),
           borderRadius: BorderRadius.circular(8),
         )));
+
+/// Fix sometimes blurry text when using HTML renderer on web by forcing usage of <p> elements.
+///
+/// TODO: Remove when upstream is fixed :) [flutter/flutter#81215](https://github.com/flutter/flutter/issues/81215)
+TextTheme _fixBlurryTextIssue(TextTheme theme) {
+  const style = TextStyle(fontFeatures: [FontFeature.proportionalFigures()]);
+  return theme.merge( const TextTheme(
+    displayLarge: style,
+    displayMedium: style,
+    displaySmall: style,
+    headlineLarge: style,
+    headlineMedium: style,
+    headlineSmall: style,
+    titleLarge: style,
+    titleMedium: style,
+    titleSmall: style,
+    bodyLarge: style,
+    bodyMedium: style,
+    bodySmall: style,
+    labelLarge: style,
+    labelMedium: style,
+    labelSmall: style,
+  ));
+}

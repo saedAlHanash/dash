@@ -22,48 +22,6 @@ class DriverFinancialInitial extends Equatable {
     );
   }
 
-  String get getMessage {
-    switch (summaryType) {
-      //السائق يجب أن يدفع للشركة
-      case SummaryPayToEnum.requiredFromDriver:
-        return 'يستوجب على السائق تسديد مبلغ للشركة وقدره   ';
-
-      //الشركة يجب انت تدفع للسائق
-      case SummaryPayToEnum.requiredFromCompany:
-        return 'يستوجب على الشركة تسديد مبلغ للسائق وقدره  ';
-
-      //الرصيد متكافئ
-      case SummaryPayToEnum.equal:
-        return 'ان مستحقات الشركة من السائق مساوية تماما لمستحقات السائق لدى الشركة';
-    }
-  }
-
-  num get price {
-    switch (summaryType) {
-      //السائق يجب أن يدفع للشركة
-      case SummaryPayToEnum.requiredFromDriver:
-        return result.requiredAmountFromDriver - result.requiredAmountFromCompany;
-
-      //الشركة يجب انت تدفع للسائق
-      case SummaryPayToEnum.requiredFromCompany:
-        return result.requiredAmountFromCompany - result.requiredAmountFromDriver;
-
-      //الرصيد متكافئ
-      case SummaryPayToEnum.equal:
-        return 0;
-    }
-  }
-
-  SummaryPayToEnum get summaryType {
-    if (result.requiredAmountFromCompany > result.requiredAmountFromDriver) {
-      return SummaryPayToEnum.requiredFromCompany;
-    } else if (result.requiredAmountFromDriver > result.requiredAmountFromCompany) {
-      return SummaryPayToEnum.requiredFromDriver;
-    } else {
-      return SummaryPayToEnum.equal;
-    }
-  }
-
   @override
   List<Object> get props => [statuses, result, error];
 

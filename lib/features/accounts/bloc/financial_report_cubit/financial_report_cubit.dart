@@ -12,7 +12,7 @@ import '../../../../core/api_manager/command.dart';
 import '../../../../core/error/error_manager.dart';
 import '../../../../core/util/note_message.dart';
 import '../../../../core/util/pair_class.dart';
-import '../../data/response/financial_report_response.dart';
+import 'package:qareeb_models/wallet/data/response/single_driver_financial.dart';
 
 part 'financial_report_state.dart';
 
@@ -55,7 +55,7 @@ class FinancialReportCubit extends Cubit<FinancialReportInitial> {
     return null;
   }
 
-  Pair<List<String>, List<List<dynamic>>> _getXlsData(List<FinancialReport> data) {
+  Pair<List<String>, List<List<dynamic>>> _getXlsData(List<FinancialResult> data) {
     return Pair(
         [
           '\tمعرف السائق\t',
@@ -94,7 +94,7 @@ class FinancialReportCubit extends Cubit<FinancialReportInitial> {
 
 }
 
-SummaryPayToEnum summaryType(FinancialReport report) {
+SummaryPayToEnum summaryType(FinancialResult report) {
   if (report.requiredAmountFromDriver > report.requiredAmountFromCompany) {
     return SummaryPayToEnum.requiredFromDriver;
   } else if (report.requiredAmountFromCompany > report.requiredAmountFromDriver) {
@@ -104,7 +104,7 @@ SummaryPayToEnum summaryType(FinancialReport report) {
   }
 }
 
-String getMessage(FinancialReport report) {
+String getMessage(FinancialResult report) {
   switch (summaryType(report)) {
   //السائق يجب أن يدفع للشركة
     case SummaryPayToEnum.requiredFromDriver:

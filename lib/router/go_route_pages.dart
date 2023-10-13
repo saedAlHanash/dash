@@ -149,9 +149,6 @@ final appGoRouter = GoRouter(
               create: (_) =>
                   di.sl<RedeemsHistoryCubit>()..getRedeemsHistory(_, driverId: id)),
           BlocProvider(
-              create: (_) =>
-                  di.sl<AccountAmountCubit>()..getAccountAmount(_, driverId: id)),
-          BlocProvider(
             create: (_) => di.sl<DriverFinancialCubit>()
               ..getDriverFinancial(_, request: FinancialFilterRequest(driverId: id)),
           ),
