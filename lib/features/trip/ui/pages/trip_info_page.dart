@@ -66,66 +66,13 @@ class _TripInfoPageState extends State<TripInfoPage> {
         body: Row(
           children: [
             Expanded(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0).r,
-                child: BlocBuilder<TripByIdCubit, TripByIdInitial>(
-                  builder: (context, state) {
-                    if (state.statuses.isLoading) {
-                      return MyStyle.loadingWidget();
-                    }
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        DrawableText(
-                          text: 'تفاصيل الطلب',
-                          matchParent: true,
-                          selectable: false,
-                          fontFamily: FontManager.cairoBold,
-                          textAlign: TextAlign.center,
-                          color: Colors.black,
-                          drawableEnd: (state.result.isCanceled || state.result.isDelved)
-                              ? null
-                              : BlocBuilder<ChangeTripStatusCubit,
-                                  ChangeTripStatusInitial>(
-                                  builder: (context, cState) {
-                                    if (cState.statuses.loading) {
-                                      return MyStyle.loadingWidget();
-                                    }
-                                    if (AppSharedPreference.getUser.roleName
-                                            .toLowerCase() !=
-                                        'admin') {
-                                      return 0.0.verticalSpace;
-                                    }
-                                    return MyButton(
-                                      width: 100.0.w,
-                                      text: 'إلغاء الرحلة',
-                                      color: Colors.black,
-                                      textColor: Colors.white,
-                                      onTap: () {
-                                        context
-                                            .read<ChangeTripStatusCubit>()
-                                            .changeTripStatus(
-                                              context,
-                                              request: UpdateTripRequest(
-                                                tripId: state.result.id,
-                                                status: TripStatus.canceledByAdmin,
-                                                note:
-                                                    'From Admin ${AppSharedPreference.getEmail}',
-                                              ),
-                                            );
-                                      },
-                                    );
-                                  },
-                                ),
-                        ),
-                        20.0.verticalSpace,
-                        TripInfoListWidget(trip: state.result),
-                      ],
-                    );
-                  },
-                ),
+              child: BlocBuilder<TripByIdCubit, TripByIdInitial>(
+                builder: (context, state) {
+                  if (state.statuses.isLoading) {
+                    return MyStyle.loadingWidget();
+                  }
+                  return TripInfoListWidget(trip: state.result);
+                },
               ),
             ),
             20.0.horizontalSpace,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:qareeb_dash/core/api_manager/api_service.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/widgets/auto_complete_widget.dart';
 import 'package:qareeb_dash/features/accounts/data/request/financial_filter_request.dart';
@@ -32,6 +33,29 @@ class _PayToDriverWidgetState extends State<PayToDriverWidget> {
   var request = SummaryModel();
 
   @override
+  void initState() {
+    request.type = widget.result.summaryType;
+    request.driverId = widget.result.driverId;
+    switch (widget.result.summaryType) {
+      //السائق يجب أن يدفع للشركة
+      case SummaryPayToEnum.requiredFromDriver:
+        request.cutAmount = widget.result.requiredAmountFromCompany;
+        break;
+
+      //الشركة يجب انت تدفع للسائق
+      case SummaryPayToEnum.requiredFromCompany:
+        request.cutAmount = widget.result.requiredAmountFromDriver;
+        break;
+
+      //الرصيد متكافئ
+      case SummaryPayToEnum.equal:
+        request.cutAmount = widget.result.requiredAmountFromCompany;
+        break;
+    }
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocListener<PayToCubit, PayToInitial>(
       listenWhen: (p, c) => c.statuses.done,
@@ -49,7 +73,10 @@ class _PayToDriverWidgetState extends State<PayToDriverWidget> {
               MyTextFormNoLabelWidget(
                 label:
                     ' قيمة الدفعة ${widget.result.summaryType.c2d ? 'المقدمة من الشركة' : 'المستلمة من السائق'}',
-                onChanged: (p0) => request.payAmount = num.tryParse(p0) ?? 0,
+                onChanged: (p0) {
+                  request.payAmount = num.tryParse(p0) ?? 0;
+                  loggerObject.w(request.payAmount);
+                },
               ),
               BlocConsumer<PayToCubit, PayToInitial>(
                 listenWhen: (p, c) => c.statuses.done,

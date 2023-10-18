@@ -16,7 +16,7 @@ class MyTableWidget extends StatelessWidget {
     required this.title,
   }) : super(key: key);
 
-  final Map<String, String> children;
+  final Map<String, dynamic> children;
   final String title;
 
   @override
@@ -43,28 +43,25 @@ class MyTableWidget extends StatelessWidget {
           ),
           divider,
           Expanded(
-            child: DrawableText(
-              text: value,
-              matchParent: true,
-              padding: const EdgeInsets.symmetric(horizontal: 10.0).w,
-              drawableEnd: AppStringManager.driverPhone == key
-                  ? InkWell(
-                      splashColor: Colors.transparent,
-                      onTap: () {
-                        _makePhoneCall('0$value');
-                      },
-                      child:  ImageMultiType(url:
-                        Assets.iconsCallDriver,
-                        height: 30.0.spMin,
-                        width: 30.0.spMin,
+            child: value is String
+                ? DrawableText(
+                    text: value,
+                    matchParent: true,
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0).w,
+                    textAlign: TextAlign.center,
+                    fontFamily: FontManager.cairoBold,
+                    color: AppColorManager.black,
+                  )
+                : (value is Widget)
+                    ? value
+                    : DrawableText(
+                        text: '-',
+                        matchParent: true,
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0).w,
+                        textAlign: TextAlign.center,
+                        fontFamily: FontManager.cairoBold,
+                        color: AppColorManager.black,
                       ),
-                    )
-                  : null,
-              textAlign: AppStringManager.driverPhone == key
-                  ? TextAlign.start
-                  : TextAlign.center,
-              color: AppColorManager.black,
-            ),
           )
         ],
       );

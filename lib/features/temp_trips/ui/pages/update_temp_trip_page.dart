@@ -116,7 +116,7 @@ class UpdateTempTripPageState extends State<UpdateTempTripPage> {
                             child: Column(
                               children: [
                                 ItemInfoInLine(
-                                    title: 'اسم النموذج', info: request.arName),
+                                    title: 'اسم النموذج', info: request.arName??'-'),
                                 ItemInfoInLine(
                                   title: 'النقاط',
                                   widget: PathPointsWidgetWrap(

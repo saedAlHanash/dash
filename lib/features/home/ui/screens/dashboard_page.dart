@@ -219,6 +219,8 @@ class _BusesMapState extends State<BusesMap> {
   @override
   void initState() {
     mapControllerCubit = context.read<MapControllerCubit>();
+
+    context.read<DriversImeiCubit>().getDriversImei(context);
     super.initState();
   }
 
@@ -228,36 +230,40 @@ class _BusesMapState extends State<BusesMap> {
       listeners: [
         BlocListener<AtherCubit, AtherInitial>(
           listener: (context, state) {
-            mapControllerCubit.addMarkers(
-                marker: state.result.mapIndexed(
-                  (i, e) {
-                    return MyMarker(
-                      point: e.getLatLng(),
-                      markerSize: Size(50.0.r, 50.0.r),
-                      costumeMarker: Transform.rotate(
-                        angle: -e.angle,
-                        child: InkWell(
-                          onTap: () {
-                            final driverId =
-                                context.read<DriversImeiCubit>().state.getIdByImei(e.ime);
-                            context.pushNamed(GoRouteName.driverInfo,
-                                queryParams: {'id': driverId.toString()});
-                          },
-                          child: ImageMultiType(
-                            url: Assets.iconsLocator,
-                            height: 50.0.spMin,
-                            width: 50.0.spMin,
-                            color:
-                                e.speed == '0' ? Colors.red : AppColorManager.mainColor,
+            mapControllerCubit
+              ..clearMap(true)
+              ..addMarkers(
+                  marker: state.result.mapIndexed(
+                    (i, e) {
+                      return MyMarker(
+                        point: e.getLatLng(),
+                        markerSize: Size(50.0.r, 50.0.r),
+                        costumeMarker: Transform.rotate(
+                          angle: -e.angle,
+                          child: InkWell(
+                            onTap: () {
+                              final driverId = context
+                                  .read<DriversImeiCubit>()
+                                  .state
+                                  .getIdByImei(e.ime);
+                              context.pushNamed(GoRouteName.driverInfo,
+                                  queryParams: {'id': driverId.toString()});
+                            },
+                            child: ImageMultiType(
+                              url: Assets.iconsLocator,
+                              height: 50.0.spMin,
+                              width: 50.0.spMin,
+                              color:
+                                  e.speed == '0' ? Colors.red : AppColorManager.mainColor,
+                            ),
                           ),
                         ),
-                      ),
-                    );
-                  },
-                ).toList()
-                  ..removeWhere((element) => element.point.latitude == 0),
-                update: true,
-                centerZoom: centerMarkers);
+                      );
+                    },
+                  ).toList()
+                    ..removeWhere((element) => element.point.latitude == 0),
+                  update: true,
+                  centerZoom: centerMarkers);
           },
         ),
         BlocListener<DriversImeiCubit, DriversImeiInitial>(

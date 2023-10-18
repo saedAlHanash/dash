@@ -54,7 +54,7 @@ class DriverTripsCard extends StatelessWidget {
               ),
               Expanded(
                 child: DrawableText(
-                  text: 'المرفوضة : ${driver.receivedTripsCount}',
+                  text: 'المرفوضة : ${driver.rejectedTripsCount}',
                   color: Colors.black,
                   fontFamily: FontManager.cairoBold,
                 ),

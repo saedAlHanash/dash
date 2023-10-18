@@ -42,12 +42,12 @@ class ItemInfoInLine extends StatelessWidget {
   const ItemInfoInLine({
     Key? key,
     required this.title,
-    this.info,
+    this.info = '',
     this.widget,
   }) : super(key: key);
 
   final String title;
-  final String? info;
+  final String info;
   final Widget? widget;
 
   @override
@@ -64,7 +64,7 @@ class ItemInfoInLine extends StatelessWidget {
           ? Directionality(
               textDirection: TextDirection.ltr,
               child: DrawableText(
-                text: info ?? '',
+                text: info.isEmpty ? '-' : info,
                 size: 24.0.sp,
                 selectable: false,
                 fontFamily: FontManager.cairoBold,
