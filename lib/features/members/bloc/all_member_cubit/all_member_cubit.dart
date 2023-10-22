@@ -219,6 +219,7 @@ Future<List<Member>> _showMultiSelect(BuildContext context, List<Member> items) 
           },
         ).toList(),
         initialValue: selected,
+        searchable: true,
         onConfirm: (values) {
           selected
             ..clear()

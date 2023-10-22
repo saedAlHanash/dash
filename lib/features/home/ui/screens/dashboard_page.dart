@@ -211,6 +211,7 @@ class _BusesMapState extends State<BusesMap> {
           command: Command.noPagination(),
         )
         .then((value) {
+
       context.read<AtherCubit>().getDriverLocation();
 
       stream.takeWhile((element) {
