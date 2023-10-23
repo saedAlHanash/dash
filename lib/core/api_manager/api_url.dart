@@ -262,9 +262,9 @@ class PatchUrl {
 
 String get baseUrl {
   final s = AppSharedPreference.isTestMode
-      ? 'livetest.qareeb-maas.com'
+      ? 'live.qareeb-maas.com'
       : 'livetest.qareeb-maas.com';
-  return s;
+  return 'live.qareeb-maas.com';
 }
 
 // const baseUrl = 'live.qareeb-maas.com';
