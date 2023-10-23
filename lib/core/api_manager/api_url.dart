@@ -264,7 +264,7 @@ String get baseUrl {
   final s = AppSharedPreference.isTestMode
       ? 'live.qareeb-maas.com'
       : 'livetest.qareeb-maas.com';
-  return 'live.qareeb-maas.com';
+  return 'livetest.qareeb-maas.com';
 }
 
 // const baseUrl = 'live.qareeb-maas.com';
