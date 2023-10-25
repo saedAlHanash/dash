@@ -217,9 +217,9 @@ class AppSharedPreference {
 
   static String get getEmail => _prefs?.getString(_email) ?? '';
 
-  static changeTestMode() {
-    _prefs?.setBool(_testMode, !isTestMode);
-  }
-
-  static bool get isTestMode => _prefs?.getBool(_testMode) ?? false;
+  // static changeTestMode() {
+  //   _prefs?.setBool(_testMode, !isTestMode);
+  // }
+  //
+  // static bool get isTestMode => _prefs?.getBool(_testMode) ?? false;
 }

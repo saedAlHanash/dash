@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:qareeb_dash/core/strings/app_color_manager.dart';
 import 'package:qareeb_dash/core/util/shared_preferences.dart';
 
-final primaryColor = AppSharedPreference.isTestMode
+final primaryColor = /*AppSharedPreference.isTestMode
     ? AppColorManager.mainColorLight
-    : AppColorManager.mainColor;
+    : */AppColorManager.mainColor;
 const secondaryColor = AppColorManager.mainColorDark;
 
 final appTheme = ThemeData(

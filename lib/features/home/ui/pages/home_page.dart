@@ -269,27 +269,27 @@ class _HomePageState extends State<HomePage> {
               color: AppColorManager.mainColor,
               child: Column(
                 children: [
-                  if (AppSharedPreference.getUser.roleName.toLowerCase() == 'admin')
-                    TextButton(
-                      onPressed: () {
-                        // popAllJs();
-                        AppSharedPreference.changeTestMode();
-                        AppSharedPreference.logout();
-                        APIService.reInitial();
-                        window.location.reload();
-                        // context.pushNamed(GoRouteName.loginPage);
-                      },
-                      child: DrawableText(
-                        text: AppSharedPreference.isTestMode
-                            ? 'التبديل للوضع الحي'
-                            : 'التبديل لوضع الاختبار',
-                        selectable: false,
-                        matchParent: true,
-                        color: Colors.white,
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  const Divider(color: Colors.white),
+                  // if (AppSharedPreference.getUser.roleName.toLowerCase() == 'admin')
+                  //   TextButton(
+                  //     onPressed: () {
+                  //       // popAllJs();
+                  //       AppSharedPreference.changeTestMode();
+                  //       AppSharedPreference.logout();
+                  //       APIService.reInitial();
+                  //       window.location.reload();
+                  //       // context.pushNamed(GoRouteName.loginPage);
+                  //     },
+                  //     child: DrawableText(
+                  //       text: AppSharedPreference.isTestMode
+                  //           ? 'التبديل للوضع الحي'
+                  //           : 'التبديل لوضع الاختبار',
+                  //       selectable: false,
+                  //       matchParent: true,
+                  //       color: Colors.white,
+                  //       textAlign: TextAlign.center,
+                  //     ),
+                  //   ),
+                  // const Divider(color: Colors.white),
                   InkWell(
                     onTap: () {
                       // popAllJs();
