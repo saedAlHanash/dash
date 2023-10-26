@@ -100,7 +100,7 @@ class GetUrl {
 
   static const agencies = 'api/services/app/AgenciesService/GetAll';
 
-  static var getDriversImei ='api/services/app/User/GetDriversImes';
+  static var getDriversImei = 'api/services/app/User/GetDriversImes';
 }
 
 class PostUrl {
@@ -172,7 +172,6 @@ class PostUrl {
 
   static const createAgency = 'api/services/app/AgenciesService/Create';
   static const reverseCharging = 'api/services/app/AccountsService/ReverseCharging';
-
 }
 
 class PutUrl {
@@ -257,7 +256,7 @@ class PatchUrl {
   static const changeProviderState =
       'api/services/app/EpaymentService/ChangeActiveStatus';
 
-  static const changeCouponState ='api/services/app/Coupons/ToggleActiveStatus';
+  static const changeCouponState = 'api/services/app/Coupons/ToggleActiveStatus';
 }
 
 String get baseUrl {
@@ -265,8 +264,8 @@ String get baseUrl {
   //     ? 'live.qareeb-maas.com'
   //     : 'livetest.qareeb-maas.com';
 
-  return 'live.qareeb-maas.com';
+  return testUrl;
 }
 
-// const baseUrl = 'live.qareeb-maas.com';
-// const baseUrl = 'livetest.qareeb-maas.com';
+const liveUrl = 'live.qareeb-maas.com';
+const testUrl = 'qareeb-api.first-pioneers.com.tr';
