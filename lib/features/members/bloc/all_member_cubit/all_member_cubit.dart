@@ -78,15 +78,25 @@ class AllMembersCubit extends Cubit<AllMembersInitial> {
     return null;
   }
 
-  Future<void> getMembersAsyncPdf(BuildContext context, {bool all = true}) async {
+  Future<void> getMembersAsyncPdf(BuildContext context, {bool all = true,Pair<int, int>? range}) async {
+
     var oldSkipCount = state.command.skipCount;
-    state.command
-      ..maxResultCount = 1.maxInt
-      ..skipCount = 0;
+
+    if(range!=null){
+      state.command
+        ..maxResultCount =range.second-range.first
+        ..skipCount = range.first;
+    }else{
+      state.command
+        ..maxResultCount = 1.maxInt
+        ..skipCount = 0;
+    }
+
 
     final pair = await _getMembersApi();
+
     state.command
-      ..maxResultCount = 20
+      ..maxResultCount = 40
       ..skipCount = oldSkipCount;
 
     if (pair.first == null) {
@@ -142,34 +152,40 @@ class AllMembersCubit extends Cubit<AllMembersInitial> {
 }
 
 Future<bool> createCard(List<Member> items) async {
-  final list = <pw.Widget>[];
 
-  for (var e in items) {
-    list.add(await getCardMember(e));
-  }
-  if (list.isEmpty) return false;
-  final pdf = pw.Document();
-  var gList = groupingList(5, list);
-  for (var e in gList) {
-    pdf.addPage(
-      pw.Page(
-        build: (context) {
-          return pw.Column(
-            children: e.map((e) => e).toList(),
-          );
-        },
-        pageFormat: const PdfPageFormat(
-          21.0 * PdfPageFormat.cm,
-          29.7 * PdfPageFormat.cm,
-          marginAll: 1.0 * PdfPageFormat.cm,
+  // final cutList = groupingList(50, items);
+
+  // for(var e  in items){
+    final list = <pw.Widget>[];
+    for (var e in items) {
+      list.add(await getCardMember(e));
+    }
+
+    if (list.isEmpty) return false;
+    final pdf = pw.Document();
+    var gList = groupingList(5, list);
+    for (var e in gList) {
+      pdf.addPage(
+        pw.Page(
+          build: (context) {
+            return pw.Column(
+              children: e.map((e) => e).toList(),
+            );
+          },
+          pageFormat: const PdfPageFormat(
+            21.0 * PdfPageFormat.cm,
+            29.7 * PdfPageFormat.cm,
+            marginAll: 1.0 * PdfPageFormat.cm,
+          ),
         ),
-      ),
-    );
-  }
+      );
+    }
 
-  final svgBytes = await pdf.save();
+    final svgBytes = await pdf.save();
 
-  saveFilePdf(pdfInBytes: svgBytes);
+    saveFilePdf(pdfInBytes: svgBytes);
+  // }
+
 
   return true;
 }

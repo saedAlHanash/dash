@@ -26,6 +26,7 @@ import '../../../buses/ui/pages/buses_page.dart';
 import '../../../map/bloc/ather_cubit/ather_cubit.dart';
 import '../../../map/bloc/map_controller_cubit/map_controller_cubit.dart';
 import '../../../map/bloc/set_point_cubit/map_control_cubit.dart';
+import '../../../members/bloc/delete_member_cubit/delete_member_cubit.dart';
 import '../../../members/ui/pages/memberss_page.dart';
 import '../../../roles/bloc/create_role_cubit/create_role_cubit.dart';
 import '../../../roles/bloc/delete_role_cubit/delete_role_cubit.dart';
@@ -278,7 +279,12 @@ class _HomePageState extends State<HomePage> {
                   return const FailedAttendancesPage();
 
                 case NamePaths.members:
-                  return const MembersPage();
+                  return MultiBlocProvider(
+                    providers: [
+                      BlocProvider(create: (context) => sl<DeleteMemberCubit>()),
+                    ],
+                    child: const MembersPage(),
+                  );
 
                 case NamePaths.subscriptions:
                   return BlocProvider(

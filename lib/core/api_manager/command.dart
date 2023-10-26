@@ -28,9 +28,9 @@ class Command {
   BusesFilterRequest? busesFilterRequest;
   TripsFilterRequest? tripsFilterRequest;
 
-  int get maxPages => ((totalCount ?? 0) / (maxResultCount??20)).myRound;
+  int get maxPages => ((totalCount ?? 0) / (maxResultCount ?? 40)).myRound;
 
-  int get currentPage => ((skipCount ?? 0) + 1 / (maxResultCount??20)).myRound;
+  int get currentPage => ((skipCount ?? 0) + 1 / (maxResultCount ?? 40)).myRound;
 
   List<SpinnerItem> get getSpinnerItems {
     final list = <SpinnerItem>[];
@@ -47,7 +47,7 @@ class Command {
   }
 
   void goToPage(int pageIndex) {
-    skipCount = (pageIndex - 1) * (maxResultCount??20);
+    skipCount = (pageIndex - 1) * (maxResultCount ?? 40);
   }
 
   factory Command.initial() {
@@ -60,7 +60,8 @@ class Command {
   bool get isInitial => skipCount == 0;
 
   factory Command.noPagination() {
-    return Command(skipCount: 0)..maxResultCount = 1.0.maxInt;
+    return Command(skipCount: 0)
+      ..maxResultCount = 1.0.maxInt;
   }
 
   Map<String, dynamic> toJson() {

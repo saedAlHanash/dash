@@ -1,38 +1,34 @@
-import 'dart:html';
 import 'dart:ui';
-import 'package:floating_action_bubble/floating_action_bubble.dart';
-import 'package:pdf/pdf.dart';
-import 'package:qareeb_dash/core/widgets/my_button.dart';
-import 'package:share_plus/share_plus.dart';
+
 import 'package:collection/collection.dart';
-import 'package:drawable_text/drawable_text.dart';
+import 'package:floating_action_bubble/floating_action_bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dialogs/flutter_dialogs.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/util/note_message.dart';
+import 'package:qareeb_dash/core/util/pair_class.dart';
 import 'package:qareeb_dash/core/widgets/item_info.dart';
 import 'package:qareeb_dash/core/widgets/not_found_widget.dart';
 import 'package:qareeb_dash/core/widgets/saed_taple_widget.dart';
 import 'package:qareeb_dash/features/members/ui/pages/create_subscreption_page.dart';
 import 'package:qareeb_dash/router/go_route_pages.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:screenshot/screenshot.dart';
 
 import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/file_util.dart';
 import '../../../../core/util/my_style.dart';
 import '../../../../generated/assets.dart';
-import '../../../home/bloc/home1_cubit/home1_cubit.dart';
 import '../../../home/bloc/home_cubit/home_cubit.dart';
 import '../../../home/ui/screens/dashboard_page.dart';
 import '../../bloc/all_member_cubit/all_member_cubit.dart';
 import '../../bloc/create_subscreption_cubit/create_subscreption_cubit.dart';
+import '../../bloc/delete_member_cubit/delete_member_cubit.dart';
 import '../../bloc/member_by_id_cubit/member_by_id_cubit.dart';
 import '../widget/member_filter_widget.dart';
-import 'package:pdf/widgets.dart' as pw;
 
 final _super_userList = [
   'ID',
@@ -41,6 +37,7 @@ final _super_userList = [
   'الكلية',
   'حالة الاشتراك في النقل',
   'عمليات الاشتراكات',
+  if (isAllowed(AppPermissions.members)) 'عمليات',
   if (isAllowed(AppPermissions.members)) 'عمليات',
 ];
 
@@ -55,6 +52,7 @@ class _MembersPageState extends State<MembersPage> with SingleTickerProviderStat
   var loading = false;
   var loading1 = false;
   var loading2 = false;
+  var loading3 = false;
   late Animation<double> _animation;
   late AnimationController _animationController;
 
@@ -121,6 +119,31 @@ class _MembersPageState extends State<MembersPage> with SingleTickerProviderStat
                         (value) {
                           mState(() => loading2 = false);
                         },
+                      );
+                    },
+                  ),
+                  Bubble(
+                    title: loading3 ? 'جاري التحميل...' : "تحميل ملف الطلاب ضمن مجال",
+                    iconColor: Colors.white,
+                    bubbleColor: AppColorManager.mainColor,
+                    icon: Icons.credit_card,
+                    titleStyle: const TextStyle(fontSize: 16, color: Colors.white),
+                    onPress: () {
+                      showDialog(
+                        context: context,
+                        builder: (_) => RangeInputDialog(
+                          onDone: (val) {
+                            mState(() => loading3 = true);
+                            context
+                                .read<AllMembersCubit>()
+                                .getMembersAsyncPdf(context, range: val)
+                                .then(
+                              (value) {
+                                mState(() => loading3 = false);
+                              },
+                            );
+                          },
+                        ),
                       );
                     },
                   ),
@@ -218,6 +241,7 @@ class _MembersPageState extends State<MembersPage> with SingleTickerProviderStat
                   fullHeight: 1.8.sh,
                   command: state.command,
                   title: _super_userList,
+
                   data: list
                       .mapIndexed(
                         (index, e) => [
@@ -278,6 +302,14 @@ class _MembersPageState extends State<MembersPage> with SingleTickerProviderStat
                                     icon: const Icon(Icons.credit_card,
                                         color: AppColorManager.mainColor),
                                   ),
+                                ],
+                              ),
+                            ),
+                          if (isAllowed(AppPermissions.members))
+                            Center(
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
                                   InkWell(
                                     onTap: () {
                                       context.pushNamed(GoRouteName.createMember,
@@ -288,9 +320,36 @@ class _MembersPageState extends State<MembersPage> with SingleTickerProviderStat
                                       color: Colors.amber,
                                     ),
                                   ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: BlocConsumer<DeleteMemberCubit,
+                                        DeleteMemberInitial>(
+                                      listener: (context, state) {
+                                        context.read<AllMembersCubit>().getMembers(context);
+                                      },
+                                      listenWhen: (p, c) => c.statuses.done,
+                                      buildWhen: (p, c) => c.id == e.id,
+                                      builder: (context, state) {
+                                        if (state.statuses.loading) {
+                                          return MyStyle.loadingWidget();
+                                        }
+                                        return InkWell(
+                                          onTap: () {
+                                            context
+                                                .read<DeleteMemberCubit>()
+                                                .deleteMember(context, id: e.id);
+                                          },
+                                          child: const Icon(
+                                            Icons.delete_forever,
+                                            color: Colors.red,
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  ),
                                 ],
                               ),
-                            )
+                            ),
                         ],
                       )
                       .toList(),
@@ -348,4 +407,78 @@ Future<void> downloadImage(int id, String name) async {
   // final anchor = AnchorElement(href: url)
   //   ..setAttribute('download', '$name.png')
   //   ..click();
+}
+
+class RangeInputDialog extends StatefulWidget {
+  const RangeInputDialog({super.key, required this.onDone});
+
+  final Function(Pair<int, int> val) onDone;
+
+  @override
+  _RangeInputDialogState createState() => _RangeInputDialogState();
+}
+
+class _RangeInputDialogState extends State<RangeInputDialog> {
+  final fromController = TextEditingController();
+  final toController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text('أدخل مجال'),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          TextField(
+            controller: fromController,
+            keyboardType: TextInputType.number,
+            decoration: const InputDecoration(labelText: 'من'),
+          ),
+          10.0.verticalSpace,
+          TextField(
+            controller: toController,
+            keyboardType: TextInputType.number,
+            decoration: const InputDecoration(labelText: 'إلى'),
+          ),
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: const Text('إلغاء'),
+        ),
+        TextButton(
+          onPressed: () {
+            int? from = int.tryParse(fromController.text);
+            int? to = int.tryParse(toController.text);
+
+            if (from != null && to != null && from <= to) {
+              widget.onDone.call(Pair(from, to));
+              Navigator.of(context).pop();
+            } else {
+              // Invalid range, show an error dialog
+              showPlatformDialog(
+                context: context,
+                builder: (_) => BasicDialogAlert(
+                  title: const Text('خطأ في المجال'),
+                  content: const Text('يرجى إدخال مجال صالح'),
+                  actions: [
+                    BasicDialogAction(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      title: const Text('تم'),
+                    ),
+                  ],
+                ),
+              );
+            }
+          },
+          child: const Text('تم'),
+        ),
+      ],
+    );
+  }
 }

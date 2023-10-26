@@ -48,6 +48,7 @@ import '../../features/map/bloc/set_point_cubit/map_control_cubit.dart';
 import '../../features/members/bloc/all_member_cubit/all_member_cubit.dart';
 import '../../features/members/bloc/create_member_cubit/create_member_cubit.dart';
 import '../../features/members/bloc/create_subscreption_cubit/create_subscreption_cubit.dart';
+import '../../features/members/bloc/delete_member_cubit/delete_member_cubit.dart';
 import '../../features/members/bloc/member_by_id_cubit/member_by_id_cubit.dart';
 import '../../features/messages/bloc/all_messages/all_messages_cubit.dart';
 import '../../features/points/bloc/creta_edge_cubit/create_edge_cubit.dart';
@@ -235,6 +236,7 @@ Future<void> init() async {
   sl.registerFactory(() => CreateMemberCubit());
   sl.registerFactory(() => AllMembersCubit());
   sl.registerFactory(() => MemberBuIdCubit());
+  sl.registerFactory(() => DeleteMemberCubit());
   //endregion
 
   sl.registerFactory(() => HomeCubit());
