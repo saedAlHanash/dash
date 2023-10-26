@@ -67,7 +67,7 @@ class Command {
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{
       'skipCount': skipCount,
-      'maxResultCount': maxResultCount,
+      'maxResultCount': maxResultCount??40,
       'InstitutionId': AppSharedPreference.getInstitutionId,
     };
 
