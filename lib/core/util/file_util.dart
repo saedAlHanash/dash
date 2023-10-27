@@ -1,15 +1,13 @@
 import 'dart:html';
 import 'dart:html' as html;
-import 'dart:typed_data';
-import 'package:flutter/services.dart' show ByteData, Uint8List, rootBundle;
-import 'package:pdf/widgets.dart' as pw;
-import 'package:collection/collection.dart';
-import 'package:drawable_text/drawable_text.dart';
+
 import 'package:excel/excel.dart';
+import 'package:flutter/services.dart' show ByteData, Uint8List, rootBundle;
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:qareeb_dash/core/util/shared_preferences.dart';
+import 'package:pdf/widgets.dart' as pw;
+
+import '../../main.dart';
 import '../api_manager/api_service.dart';
 
 saveXls(
@@ -111,27 +109,30 @@ saveImageFile({
   if (pngBytes != null) {
     final blob = Blob([pngBytes], 'image/jpg');
     final url = Url.createObjectUrlFromBlob(blob);
-    final anchor = AnchorElement(href: url)
+    AnchorElement(href: url)
       ..setAttribute('download', '$name.jpg')
       ..click();
   }
 }
 
-Future<Uint8List?> fetchImage(String imageUrl) async {
+Future<Uint8List?> fetchImage(String imageUrl, {bool withCompress = true}) async {
   if (imageUrl.isEmpty) return null;
 
-  final imageFromCash = AppSharedPreference.getImage(imageUrl);
+  final imageFromCash = hiveBox?.get(imageUrl);
 
   if (imageFromCash != null) {
-
-    return imageFromCash;
+    loggerObject.w('from hive ${imageFromCash!.length}');
+    final compressedImage = await testComporessList(imageFromCash);
+    return withCompress ? compressedImage : imageFromCash;
   }
 
   try {
-    final response = await APIService().getApiProxyPayed(url: imageUrl);
+    loggerObject.v(imageUrl);
+    final response = await http.get(Uri.parse(imageUrl));
     if (response.statusCode == 200) {
-      AppSharedPreference.cashImage(imageUrl, response.bodyBytes);
-      return response.bodyBytes;
+      final compressedImage = await testComporessList(response.bodyBytes);
+      hiveBox?.put(imageUrl, response.bodyBytes);
+      return withCompress ? compressedImage : response.bodyBytes;
     } else {
       return null;
     }
@@ -141,14 +142,36 @@ Future<Uint8List?> fetchImage(String imageUrl) async {
 }
 
 Future<pw.MemoryImage> assetImageToMemoryImage(String imagePath) async {
-  Uint8List bytes = await getImageBytes(imagePath);
-  return pw.MemoryImage(
-    bytes,
-  );
+  final bytes = await getImageBytes(imagePath);
+
+  return pw.MemoryImage(await testComparesListQuality(bytes));
 }
 
 Future<Uint8List> getImageBytes(String imagePath) async {
   final imageData = await rootBundle.load(imagePath);
   final bytes = imageData.buffer.asUint8List();
   return bytes;
+}
+
+Future<Uint8List> testComporessList(Uint8List list) async {
+  var result = await FlutterImageCompress.compressWithList(
+    list,
+    minHeight: 750 ~/ 5,
+    minWidth: 600 ~/ 5,
+    quality: 30,
+    format: CompressFormat.png,
+  );
+  return result;
+}
+
+//testComparesListQuality
+Future<Uint8List> testComparesListQuality(Uint8List list) async {
+  var result = await FlutterImageCompress.compressWithList(
+    list,
+    minWidth: 1920 ~/ 2,
+    minHeight: 1080 ~/ 2,
+    quality: 50,
+    format: CompressFormat.png,
+  );
+  return result;
 }

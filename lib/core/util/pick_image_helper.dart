@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:image_picker/image_picker.dart';
+import 'package:qareeb_dash/core/util/file_util.dart';
 
 class PickImageHelper {
   static final PickImageHelper _singleton = PickImageHelper._internal();
@@ -25,7 +26,9 @@ class PickImageHelper {
   Future<Uint8List?> pickImageBytes() async {
     final result = await pickImage();
 
-    return result?.readAsBytes();
+    if(result==null)return null;
+
+    return testComparesListQuality(await result.readAsBytes());
   }
 
 // // Pick an image

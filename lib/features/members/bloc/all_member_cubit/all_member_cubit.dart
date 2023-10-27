@@ -19,6 +19,13 @@ import '../../../../core/util/note_message.dart';
 import '../../../../core/util/pair_class.dart';
 import '../../../../core/widgets/spinner_widget.dart';
 import '../../data/response/member_response.dart';
+import 'dart:async';
+import 'dart:isolate';
+import 'dart:html';
+
+import 'dart:html';
+import 'dart:async';
+import 'dart:async';
 
 part 'all_member_state.dart';
 
@@ -78,20 +85,19 @@ class AllMembersCubit extends Cubit<AllMembersInitial> {
     return null;
   }
 
-  Future<void> getMembersAsyncPdf(BuildContext context, {bool all = true,Pair<int, int>? range}) async {
-
+  Future<void> getMembersAsyncPdf(BuildContext context,
+      {bool all = true, Pair<int, int>? range}) async {
     var oldSkipCount = state.command.skipCount;
 
-    if(range!=null){
+    if (range != null) {
       state.command
-        ..maxResultCount =range.second-range.first
+        ..maxResultCount = range.second - range.first
         ..skipCount = range.first;
-    }else{
+    } else {
       state.command
         ..maxResultCount = 1.maxInt
         ..skipCount = 0;
     }
-
 
     final pair = await _getMembersApi();
 
@@ -152,49 +158,42 @@ class AllMembersCubit extends Cubit<AllMembersInitial> {
 }
 
 Future<bool> createCard(List<Member> items) async {
-
   // final cutList = groupingList(50, items);
 
   // for(var e  in items){
-    final list = <pw.Widget>[];
-    for (var e in items) {
-      list.add(await getCardMember(e));
-    }
+  final list = await getCardMemberListDispatcher(items);
 
-    if (list.isEmpty) return false;
-    final pdf = pw.Document();
-    var gList = groupingList(5, list);
-    for (var e in gList) {
-      pdf.addPage(
-        pw.Page(
-          build: (context) {
-            return pw.Column(
-              children: e.map((e) => e).toList(),
-            );
-          },
-          pageFormat: const PdfPageFormat(
-            21.0 * PdfPageFormat.cm,
-            29.7 * PdfPageFormat.cm,
-            marginAll: 1.0 * PdfPageFormat.cm,
-          ),
+  if (list.isEmpty) return false;
+  final pdf = pw.Document();
+  var gList = groupingList(5, list);
+  for (var e in gList) {
+    pdf.addPage(
+      pw.Page(
+        build: (context) {
+          return pw.Column(
+            children: e.map((e) => e).toList(),
+          );
+        },
+        pageFormat: const PdfPageFormat(
+          21.0 * PdfPageFormat.cm,
+          29.7 * PdfPageFormat.cm,
+          marginAll: 1.0 * PdfPageFormat.cm,
         ),
-      );
-    }
+      ),
+    );
+  }
 
-    final svgBytes = await pdf.save();
+  final svgBytes = await pdf.save();
 
-    saveFilePdf(pdfInBytes: svgBytes);
+  saveFilePdf(pdfInBytes: svgBytes);
   // }
-
 
   return true;
 }
 
 Future<bool> createSingleCard(Member items) async {
-  final list = <pw.Widget>[];
-  for (var e in [items]) {
-    list.add(await getCardMember(e));
-  }
+  final list = <pw.Widget>[await getCardMember(items)];
+
   if (list.isEmpty) return false;
   final pdf = pw.Document();
   var gList = groupingList(5, list);
@@ -250,4 +249,41 @@ Future<List<Member>> _showMultiSelect(BuildContext context, List<Member> items) 
     }
   }
   return finalList;
+}
+
+Future<List<pw.Widget>> processBatch(List<Member> batch) async {
+  final cards = <pw.Widget>[];
+
+  for (var item in batch) {
+    final card = await getCardMember(item);
+    cards.add(card);
+  }
+
+  return cards;
+}
+
+Future<List<pw.Widget>> getCardMemberListDispatcher(List<Member> items) async {
+  var batchSize = items.length ~/ 2;
+  final batches = <List<Member>>[];
+
+  // Divide the items into batches
+  for (var i = 0; i < items.length; i += batchSize) {
+    final batch =
+        items.sublist(i, i + batchSize < items.length ? i + batchSize : items.length);
+    batches.add(batch);
+  }
+
+  final results = <Future<List<pw.Widget>>>[];
+
+  // Process each batch in parallel
+  for (var batch in batches) {
+    final result = processBatch(batch);
+    results.add(result);
+  }
+
+  final allCards = await Future.wait(results);
+  final flattenedCards = allCards.expand((cards) => cards).toList();
+
+  loggerObject.wtf(flattenedCards.length);
+  return flattenedCards;
 }

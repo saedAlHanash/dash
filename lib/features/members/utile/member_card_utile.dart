@@ -4,6 +4,7 @@ import 'package:flutter/services.dart' show Uint8List;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
+import 'package:qareeb_dash/core/api_manager/api_service.dart';
 import 'package:qareeb_dash/features/members/data/response/member_response.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
@@ -28,7 +29,7 @@ pw.SvgImage? logoSvg;
 Future<pw.Widget> getCardMember(Member member) async {
   final qrImage = await getQrImage(member.id);
 
-  Uint8List? memberImageBytes = await fetchImage(member.imageUrl);
+  var memberImageBytes = await fetchImage(member.imageUrl);
 
   ///style
   final textStyle =
@@ -106,16 +107,19 @@ Future<pw.Widget> getCardMember(Member member) async {
     ],
   );
 
+  ///qr image item
+  final qrItem = pw.Container(
+    width: PdfPageFormat.cm * 9.5,
+    height: PdfPageFormat.cm * 5.4,
+    decoration: border,
+    child: pw.Center(
+      child: pw.Image(pw.MemoryImage(qrImage), height: 120),
+    ),
+  );
+
   return pw.Row(
     children: [
-      pw.Container(
-        width: PdfPageFormat.cm * 9.5,
-        height: PdfPageFormat.cm * 5.4,
-        decoration: border,
-        child: pw.Center(
-          child: pw.Image(pw.MemoryImage(qrImage), height: 120),
-        ),
-      ),
+      qrItem,
       pw.Stack(children: [
         pw.Container(
           width: PdfPageFormat.cm * 9.5,
@@ -171,5 +175,5 @@ Future<Uint8List> getQrImage(int id) async {
   final image = await painter.toImage(100);
   final pngBytes = await image.toByteData(format: ImageByteFormat.png);
 
-  return pngBytes!.buffer.asUint8List();
+  return testComparesListQuality(pngBytes!.buffer.asUint8List());
 }

@@ -34,7 +34,7 @@ class Home1Cubit extends Cubit<Home1Initial> {
       }
       emit(state.copyWith(statuses: CubitStatuses.error, error: pair.second));
     } else {
-      fetchImage(pair.first!.imageUrl).then((value) {
+      fetchImage(pair.first!.imageUrl,withCompress: false).then((value) {
         if (value != null) {
           institutionsLogo = pw.MemoryImage(value);
         }
