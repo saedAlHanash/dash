@@ -30,12 +30,14 @@ Future<Pair<dynamic, String?>> getServerProxyApi(
   }
 }
 
+//GET
+// /
 Future<Response> getServerProxyRowApi({required String url}) async {
-
-  return await get(
-    Uri.parse(
-      'https://qareeb-api.first-pioneers.com.tr/'
-          'api/services/app/HttpRequestService/GetImageAsByteArray?imageUrl=$url',
-    ),
-  );
+  return await APIService().getApi(
+      hostName: 'qareeb-api.first-pioneers.com.tr',
+      url: 'api/services/app/HttpRequestService/GetImageAsByteArray',
+      query: {
+        'imageUrl': url,
+        'quality': 50,
+      });
 }

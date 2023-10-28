@@ -1,28 +1,28 @@
-#workflows:
-#  publish-to-firebase:
-#    name: Publish to Firebase hosting
-#    max_build_duration: 60
-#    environment:
-#      vars:
-#        FIREBASE_TOKEN: 1//099zkIr9dz08XCgYIARAAGAkSNwF-L9Ir0jeKfPgjOklvnim0V9ttesxMQxWSsTdDLlKHy3fZqQGpyTznxxTB1yoSAt1Dqxp4cFE
-#      flutter: beta
-#      xcode: latest
-#      cocoapods: default
-#    scripts:
-#      - flutter packages pub get
-#      - flutter config --enable-web
-#      - name: Build Web
-#        script: |
-#          flutter build web --release
-#          cd build/web
-#          7z a -r ../web.zip ./*
-#      - name: Publish to Firebase Hosting
-#        script: |
-#          firebase deploy --token "$FIREBASE_TOKEN"
-#    artifacts:
-#      - build/web.zip
-#      - flutter_drive.log
-#    publishing:
-#      email:
-#        recipients:
-#          - samersame404@gmail.com
+workflows:
+  publish-to-firebase:
+    name: Publish to Firebase hosting
+    max_build_duration: 60
+    environment:
+      vars:
+        FIREBASE_TOKEN: 1//09GqdizdTk0gYCgYIARAAGAkSNwF-L9IrjJkCbmBOEeih9EeMQyLxLR8q6XZbgBMHN7YictGOt5P0RQyjxL61eVJ_MrceNpf5q5g
+      flutter: beta
+      xcode: latest
+      cocoapods: default
+    scripts:
+      - flutter packages pub get
+      - flutter config --enable-web
+      - name: Build Web
+        script: |
+          flutter build web --release
+          cd build/web
+          7z a -r ../web.zip ./*
+      - name: Publish to Firebase Hosting
+        script: |
+          firebase deploy --token "$FIREBASE_TOKEN"
+    artifacts:
+      - build/web.zip
+      - flutter_drive.log
+    publishing:
+      email:
+        recipients:
+          - samersame404@gmail.com

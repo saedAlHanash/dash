@@ -159,8 +159,8 @@ Future<Uint8List> getImageBytes(String imagePath) async {
 Future<Uint8List> testComporessList(Uint8List list) async {
   var result = await FlutterImageCompress.compressWithList(
     list,
-    minHeight: 750 ~/ 5,
-    minWidth: 600 ~/ 5,
+    minHeight: 750 ~/ 3,
+    minWidth: 600 ~/ 3,
     quality: 30,
     format: CompressFormat.png,
   );
