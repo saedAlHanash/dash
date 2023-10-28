@@ -270,7 +270,7 @@ class APIService {
 
     final uri = Uri.https(baseUrl, url, query);
 
-    logRequest(url, body);
+    logRequest(url, query);
 
     final response =
         await http.delete(uri, body: jsonEncode(body), headers: innerHeader).timeout(

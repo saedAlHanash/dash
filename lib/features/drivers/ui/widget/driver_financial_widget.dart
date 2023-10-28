@@ -61,7 +61,7 @@ class DriverFinancialWidget extends StatelessWidget {
                         drawablePadding: 30.0.h,
                         drawableEnd: DrawableText(
                           text: state.result.lastTransferFromDriver.transferDate
-                                  ?.formatDuration(getServerDate) ??
+                                  ?.formatDuration(serverDate: getServerDate) ??
                               '',
                           color: Colors.grey,
                         ),
@@ -87,7 +87,7 @@ class DriverFinancialWidget extends StatelessWidget {
                         drawablePadding: 30.0.h,
                         drawableEnd: DrawableText(
                           text: state.result.lastTransferFromDriver.transferDate
-                                  ?.formatDuration(getServerDate) ??
+                                  ?.formatDuration(serverDate: getServerDate) ??
                               '',
                           color: Colors.grey,
                         ),

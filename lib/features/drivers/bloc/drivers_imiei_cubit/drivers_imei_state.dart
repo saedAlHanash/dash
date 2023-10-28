@@ -21,7 +21,7 @@ class DriversImeiInitial extends Equatable {
 
   List<String> get getImeisListString => List<String>.from(result.map((e) => e.imei));
 
-  int? getIdByImei(String imei) => result.firstWhereOrNull((e) => e.imei == imei)?.id;
+  DriverImei? getIdByImei(String imei) => result.firstWhereOrNull((e) => e.imei == imei);
 
   @override
   List<Object> get props => [statuses, result, error];

@@ -262,38 +262,71 @@ class _TripCost extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        ItemInfoInLine(title: 'الكلفة المقدرة', info: trip.estimatedCost.formatPrice),
-        ItemInfoInLine(title: 'الكلفة الفعلية', info: trip.actualCost.formatPrice),
-        ItemInfoInLine(title: 'الكلفة التعويضية', info: trip.driverCompensation.formatPrice),
-        ItemInfoInLine(
-          title: 'هل تم دفع الرحلة؟',
-          info: trip.isPaid ? 'تم الدفع' : 'لم يتم الدفع',
+        MyTableWidget(
+          children: {
+            'الكلفة المقدرة': trip.estimatedCost.formatPrice,
+            'الكلفة الفعلية': trip.actualCost.formatPrice,
+            'الكلفة التعويضية': trip.driverCompensation.formatPrice,
+            'هل تم دفع الرحلة؟': trip.isPaid ? 'تم الدفع' : 'لم يتم الدفع',
+          },
+          title: 'المحصلة المالية للرحلة',
         ),
-        ItemInfoInLine(
-            title: 'للزيت',
-            info: trip.estimatedCost
+        MyTableWidget(
+          children: {
+            'للزيت': trip.estimatedCost
                 .getPercentage(trip.carCategory.normalOilRatio)
-                .formatPrice),
-        ItemInfoInLine(
-            title: 'للإطارات',
-            info: trip.estimatedCost
+                .formatPrice,
+            'للإطارات': trip.estimatedCost
                 .getPercentage(trip.carCategory.normalTiresRatio)
-                .formatPrice),
-        ItemInfoInLine(
-            title: 'للمليون',
-            info: trip.estimatedCost
+                .formatPrice,
+            'للمليون': trip.estimatedCost
                 .getPercentage(trip.carCategory.normalGoldRatio)
-                .formatPrice),
-        ItemInfoInLine(
-            title: 'للبنزين',
-            info: trip.estimatedCost
+                .formatPrice,
+            'للبنزين': trip.estimatedCost
                 .getPercentage(trip.carCategory.normalGasRatio)
-                .formatPrice),
-        ItemInfoInLine(
-            title: 'للسائق',
-            info: trip.estimatedCost
+                .formatPrice,
+          },
+          title: 'المحصلة المالية للولاء',
+        ),
+        MyTableWidget(
+          children: {
+            'للسائق': trip.estimatedCost
                 .getPercentage(trip.carCategory.driverRatio)
-                .formatPrice),
+                .formatPrice,
+            if (trip.driver.isLoyaltySuperscript) ...{
+              'للزيت': trip.estimatedCost
+                  .getPercentage(trip.carCategory.normalOilRatio)
+                  .formatPrice,
+              'للإطارات': trip.estimatedCost
+                  .getPercentage(trip.carCategory.normalTiresRatio)
+                  .formatPrice,
+              'للمليون': trip.estimatedCost
+                  .getPercentage(trip.carCategory.normalGoldRatio)
+                  .formatPrice,
+              if (trip.driver.isGasIncluded)
+                'للبنزين': trip.estimatedCost
+                    .getPercentage(trip.carCategory.normalGasRatio)
+                    .formatPrice,
+            },
+            'صافي للسائق': trip.estimatedCost
+                .getPercentage(
+                  (!trip.driver.isLoyaltySuperscript)
+                      ? trip.carCategory.driverRatio
+                      : trip.driver.isGasIncluded
+                          ? (trip.carCategory.driverRatio -
+                              (trip.carCategory.normalTiresRatio +
+                                  trip.carCategory.normalGoldRatio +
+                                  trip.carCategory.normalOilRatio +
+                                  trip.carCategory.normalGasRatio))
+                          : (trip.carCategory.driverRatio -
+                              (trip.carCategory.normalTiresRatio +
+                                  trip.carCategory.normalGoldRatio +
+                                  trip.carCategory.normalOilRatio)),
+                )
+                .formatPrice,
+          },
+          title: 'محصلة السائق من العائدات',
+        ),
       ],
     );
   }

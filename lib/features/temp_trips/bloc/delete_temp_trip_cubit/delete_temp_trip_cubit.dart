@@ -31,8 +31,9 @@ class DeleteTempTripCubit extends Cubit<DeleteTempTripInitial> {
   }
 
   Future<Pair<bool?, String?>> _deleteTempTripApi({required int id}) async {
+
     final response = await APIService()
-        .deleteApi(url: DeleteUrl.deleteTempTrip, query: {'Id': id});
+        .deleteApi(url: DeleteUrl.deleteTempTrip, query: {'pathId': state.id});
 
     if (response.statusCode == 200) {
       return Pair(true, null);

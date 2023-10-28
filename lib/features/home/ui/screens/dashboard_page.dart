@@ -235,6 +235,8 @@ class _BusesMapState extends State<BusesMap> {
               ..addMarkers(
                   marker: state.result.mapIndexed(
                     (i, e) {
+                      final driver =
+                          context.read<DriversImeiCubit>().state.getIdByImei(e.ime);
                       return MyMarker(
                         point: e.getLatLng(),
                         markerSize: Size(50.0.r, 50.0.r),
@@ -242,19 +244,16 @@ class _BusesMapState extends State<BusesMap> {
                           angle: -e.angle,
                           child: InkWell(
                             onTap: () {
-                              final driverId = context
-                                  .read<DriversImeiCubit>()
-                                  .state
-                                  .getIdByImei(e.ime);
                               context.pushNamed(GoRouteName.driverInfo,
-                                  queryParams: {'id': driverId.toString()});
+                                  queryParams: {'id': driver?.id.toString()});
                             },
                             child: ImageMultiType(
                               url: Assets.iconsLocator,
                               height: 50.0.spMin,
                               width: 50.0.spMin,
-                              color:
-                                  e.speed == '0' ? Colors.red : AppColorManager.mainColor,
+                              color: driver?.status == DriverStatus.unAvailable
+                                  ? Colors.red
+                                  : AppColorManager.mainColor,
                             ),
                           ),
                         ),

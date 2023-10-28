@@ -27,7 +27,7 @@ class CreateCouponPage extends StatefulWidget {
 }
 
 class _CreateCouponPageState extends State<CreateCouponPage> {
-  var request = Coupon.fromJson({});
+  var request = Coupon.fromJson({'isActive':true});
 
   @override
   void initState() {
@@ -45,7 +45,7 @@ class _CreateCouponPageState extends State<CreateCouponPage> {
       },
       child: Scaffold(
         appBar: const AppBarWidget(
-          text: 'إنشاء مدير ',
+          text: 'إنشاء قسيمة حسم ',
         ),
         body: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 120.0).w,
@@ -117,6 +117,16 @@ class _CreateCouponPageState extends State<CreateCouponPage> {
                             initialValue: request.couponCode,
                             onChanged: (p0) {
                               request.couponCode = p0;
+                            },
+                          ),
+                        ),
+                        15.0.horizontalSpace,
+                        Expanded(
+                          child: MyTextFormNoLabelWidget(
+                            label: 'عدد مرات التفعيل',
+                            initialValue: request.couponCode,
+                            onChanged: (p0) {
+                              request.maxActivation = int.parse(p0);
                             },
                           ),
                         ),
