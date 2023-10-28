@@ -198,6 +198,38 @@ class APIService {
     return response;
   }
 
+  Future<http.Response> postRowApi({
+    required String url,
+    Map<String, dynamic>? body,
+    Map<String, dynamic>? query,
+    Map<String, String>? header,
+    String? hostName,
+    bool printResponse = true,
+  }) async {
+    if (body != null) body.removeWhere((key, value) => value == null);
+
+    if (query != null) {
+      query.removeWhere((key, value) => value == null);
+      query.forEach((key, value) => query[key] = value.toString());
+    }
+
+
+    final uri = Uri.https(hostName ?? baseUrl, url, query);
+
+    logRequest(url, (body ?? {})..addAll(query ?? {}));
+
+    final response =
+        await http.post(uri, body: jsonEncode(body), headers: {
+          'accept': '*/*',
+          'Content-Type': 'application/json-patch+json',
+        }).timeout(
+              const Duration(seconds: 40),
+              onTimeout: () => http.Response('connectionTimeOut', 481),
+            );
+
+    return response;
+  }
+
   Future<http.Response> puttApi({
     required String url,
     Map<String, dynamic>? body,

@@ -241,7 +241,6 @@ class _MembersPageState extends State<MembersPage> with SingleTickerProviderStat
                   fullHeight: 1.8.sh,
                   command: state.command,
                   title: _super_userList,
-
                   data: list
                       .mapIndexed(
                         (index, e) => [
@@ -291,13 +290,13 @@ class _MembersPageState extends State<MembersPage> with SingleTickerProviderStat
                                   ),
                                   IconButton(
                                     onPressed: () async {
-                                      downloadImage(e.id,e.fullName);
+                                      downloadImage(e.id, e.fullName);
                                     },
                                     icon: const Icon(Icons.qr_code, color: Colors.black),
                                   ),
                                   IconButton(
                                     onPressed: () async {
-                                      createCard([e]);
+                                      createSingleCard(e);
                                     },
                                     icon: const Icon(Icons.credit_card,
                                         color: AppColorManager.mainColor),
@@ -325,7 +324,9 @@ class _MembersPageState extends State<MembersPage> with SingleTickerProviderStat
                                     child: BlocConsumer<DeleteMemberCubit,
                                         DeleteMemberInitial>(
                                       listener: (context, state) {
-                                        context.read<AllMembersCubit>().getMembers(context);
+                                        context
+                                            .read<AllMembersCubit>()
+                                            .getMembers(context);
                                       },
                                       listenWhen: (p, c) => c.statuses.done,
                                       buildWhen: (p, c) => c.id == e.id,
@@ -387,7 +388,6 @@ void dialogSubscription(BuildContext context, int memberId) {
 Future<void> downloadImage(int id, String name) async {
   final painter = QrPainter(
     data: id.toString(),
-
     version: QrVersions.auto,
     eyeStyle: const QrEyeStyle(
       color: AppColorManager.black,
@@ -412,7 +412,8 @@ Future<void> downloadImage(int id, String name) async {
   final canvas = Canvas(recorder, Rect.fromPoints(Offset.zero, Offset.zero));
 
   // Draw the background color
-  canvas.drawRect(const Rect.fromLTWH(0, 0, canvasSize, canvasSize), Paint()..color = Colors.white);
+  canvas.drawRect(
+      const Rect.fromLTWH(0, 0, canvasSize, canvasSize), Paint()..color = Colors.white);
 
   // Calculate the position of the image with padding
   const double imageX = padding;

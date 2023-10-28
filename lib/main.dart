@@ -6,6 +6,7 @@ import 'package:qareeb_dash/core/util/file_util.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_strategy/url_strategy.dart';
 import 'package:universal_html/html.dart';
+import 'core/api_manager/server_proxy/server_proxy_service.dart';
 import 'core/app/app_widget.dart';
 
 import 'core/injection/injection_container.dart' as di;

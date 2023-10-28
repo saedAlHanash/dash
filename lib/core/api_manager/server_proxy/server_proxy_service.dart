@@ -1,4 +1,6 @@
-import 'package:flutter/material.dart';
+import 'dart:io';
+
+import 'package:http/http.dart';
 import 'package:qareeb_dash/core/api_manager/api_url.dart';
 import 'package:qareeb_dash/core/api_manager/server_proxy/server_proxy_request.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
@@ -13,10 +15,10 @@ import '../api_service.dart';
 final network = sl<NetworkInfo>();
 
 Future<Pair<dynamic, String?>> getServerProxyApi(
-    {required ApiServerRequest request,    bool printResponse= true,}) async {
+    {required ApiServerRequest request, bool printResponse = true}) async {
   if (await network.isConnected) {
-    final response = await APIService()
-        .postApi(url: PostUrl.serverProxy, body: request.toJson(), printResponse: printResponse);
+    final response = await APIService().postApi(
+        url: PostUrl.serverProxy, body: request.toJson(), printResponse: printResponse);
 
     if (response.statusCode == 200) {
       return Pair(response.jsonBody['result'], null);
@@ -26,4 +28,14 @@ Future<Pair<dynamic, String?>> getServerProxyApi(
   } else {
     return Pair(null, AppStringManager.noInternet);
   }
+}
+
+Future<Response> getServerProxyRowApi({required String url}) async {
+
+  return await get(
+    Uri.parse(
+      'https://qareeb-api.first-pioneers.com.tr/'
+          'api/services/app/HttpRequestService/GetImageAsByteArray?imageUrl=$url',
+    ),
+  );
 }

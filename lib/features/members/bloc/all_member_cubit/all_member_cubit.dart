@@ -161,6 +161,9 @@ Future<bool> createCard(List<Member> items) async {
   // final cutList = groupingList(50, items);
 
   // for(var e  in items){
+  if (items.length == 1) {
+    return await createSingleCard(items.first);
+  }
   final list = await getCardMemberListDispatcher(items);
 
   if (list.isEmpty) return false;

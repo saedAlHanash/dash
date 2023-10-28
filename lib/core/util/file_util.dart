@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:html';
 import 'dart:html' as html;
 
@@ -9,6 +10,7 @@ import 'package:pdf/widgets.dart' as pw;
 
 import '../../main.dart';
 import '../api_manager/api_service.dart';
+import '../api_manager/server_proxy/server_proxy_service.dart';
 
 saveXls(
     {required List<String> header, required List<List<dynamic>> data, String? fileName}) {
@@ -128,11 +130,12 @@ Future<Uint8List?> fetchImage(String imageUrl, {bool withCompress = true}) async
 
   try {
     loggerObject.v(imageUrl);
-    final response = await http.get(Uri.parse(imageUrl));
-    if (response.statusCode == 200) {
-      final compressedImage = await testComporessList(response.bodyBytes);
-      hiveBox?.put(imageUrl, response.bodyBytes);
-      return withCompress ? compressedImage : response.bodyBytes;
+    final response = await getServerProxyRowApi(url: imageUrl);
+    final b  =base64Decode(response.body);
+    if (response .statusCode == 200) {
+      final compressedImage = await testComporessList(b);
+      hiveBox?.put(imageUrl, b);
+      return withCompress ? compressedImage : b;
     } else {
       return null;
     }
