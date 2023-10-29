@@ -90,6 +90,7 @@ import '../../features/ticket/bloc/all_ticket_cubit/all_ticket_cubit.dart';
 import '../../features/ticket/bloc/replay_ticket_cubit/replay_ticket_cubit.dart';
 import '../../features/trip/bloc/active_trips/active_trips_cubit.dart';
 import '../../features/trip/bloc/trip_by_id/trip_by_id_cubit.dart';
+import '../../features/trip/bloc/trip_debit_cubit/trip_debit_cubit.dart';
 import '../../features/trip/bloc/trip_status_cubit/trip_status_cubit.dart';
 import '../../features/trip/bloc/trips_cubit/trips_cubit.dart';
 import '../../features/wallet/bloc/change_provider_state_cubit/change_provider_state_cubit.dart';
@@ -275,6 +276,7 @@ Future<void> init() async {
   sl.registerFactory(() => DriverFinancialCubit());
   sl.registerFactory(() => ReverseChargingCubit());
   sl.registerFactory(() => DriversImeiCubit());
+  sl.registerFactory(() => TripDebitCubit());
 
   //region Governorate
 

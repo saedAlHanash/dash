@@ -70,6 +70,7 @@ import '../features/temp_trips/bloc/temp_trip_by_id_cubit/temp_trip_by_id_cubit.
 import '../features/temp_trips/ui/pages/create_temp_trip_page.dart';
 import '../features/temp_trips/ui/pages/temp_trip_info_page.dart';
 import '../features/trip/bloc/trip_by_id/trip_by_id_cubit.dart';
+import '../features/trip/bloc/trip_debit_cubit/trip_debit_cubit.dart';
 import '../features/trip/bloc/trip_status_cubit/trip_status_cubit.dart';
 import '../features/trip/bloc/trips_cubit/trips_cubit.dart';
 import '../features/trip/data/request/filter_trip_request.dart';
@@ -332,6 +333,7 @@ final appGoRouter = GoRouter(
           BlocProvider(create: (_) => di.sl<ChangeTripStatusCubit>()),
           BlocProvider(create: (_) => di.sl<AtherCubit>()),
           BlocProvider(create: (_) => di.sl<TripByIdCubit>()..tripById(_, tripId: id)),
+          BlocProvider(create: (_) => di.sl<TripDebitCubit>()..tripDebit(_, tripId: id)),
         ];
         return MultiBlocProvider(
           providers: providers,

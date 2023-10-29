@@ -16,6 +16,7 @@ import '../../../../core/widgets/item_info.dart';
 import '../../../../core/widgets/my_button.dart';
 import '../../../../core/widgets/table_widget.dart';
 import '../../../../router/go_route_pages.dart';
+import '../../bloc/trip_debit_cubit/trip_debit_cubit.dart';
 import '../../bloc/trip_status_cubit/trip_status_cubit.dart';
 import '../../data/request/update_trip_request.dart';
 
@@ -288,45 +289,31 @@ class _TripCost extends StatelessWidget {
           },
           title: 'المحصلة المالية للولاء',
         ),
-        MyTableWidget(
-          children: {
-            'للسائق': trip.estimatedCost
-                .getPercentage(trip.carCategory.driverRatio)
-                .formatPrice,
-            if (trip.driver.isLoyaltySuperscript) ...{
-              'للزيت': trip.estimatedCost
-                  .getPercentage(trip.carCategory.normalOilRatio)
-                  .formatPrice,
-              'للإطارات': trip.estimatedCost
-                  .getPercentage(trip.carCategory.normalTiresRatio)
-                  .formatPrice,
-              'للمليون': trip.estimatedCost
-                  .getPercentage(trip.carCategory.normalGoldRatio)
-                  .formatPrice,
-              if (trip.driver.isGasIncluded)
-                'للبنزين': trip.estimatedCost
-                    .getPercentage(trip.carCategory.normalGasRatio)
-                    .formatPrice,
+        if (trip.isDelved)
+          BlocBuilder<TripDebitCubit, TripDebitInitial>(
+            builder: (context, state) {
+              if (state.statuses.isLoading) {
+                return MyStyle.loadingWidget();
+              }
+              return MyTableWidget(
+                children: {
+                  'للسائق': state.result.driverShare.formatPrice,
+                  'للزيت': state.result.oilShare.formatPrice,
+                  'للإطارات': state.result.tiresShare.formatPrice,
+                  'للمليون': state.result.goldShare.formatPrice,
+                  'للبنزين': state.result.gasShare.formatPrice,
+                },
+                title: 'محصلة السائق من العائدات',
+              );
             },
-            'صافي للسائق': trip.estimatedCost
-                .getPercentage(
-                  (!trip.driver.isLoyaltySuperscript)
-                      ? trip.carCategory.driverRatio
-                      : trip.driver.isGasIncluded
-                          ? (trip.carCategory.driverRatio -
-                              (trip.carCategory.normalTiresRatio +
-                                  trip.carCategory.normalGoldRatio +
-                                  trip.carCategory.normalOilRatio +
-                                  trip.carCategory.normalGasRatio))
-                          : (trip.carCategory.driverRatio -
-                              (trip.carCategory.normalTiresRatio +
-                                  trip.carCategory.normalGoldRatio +
-                                  trip.carCategory.normalOilRatio)),
-                )
-                .formatPrice,
-          },
-          title: 'محصلة السائق من العائدات',
-        ),
+          )
+        else
+          const MyTableWidget(
+            children: {
+              '':''
+            },
+            title: 'تظهر حصة السائق  بعد انتهاء الرحلة',
+          )
       ],
     );
   }
