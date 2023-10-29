@@ -161,7 +161,7 @@ Future<Uint8List> testComporessList(Uint8List list) async {
     list,
     minHeight: 750 ~/ 3,
     minWidth: 600 ~/ 3,
-    quality: 30,
+    quality: 50,
     format: CompressFormat.png,
   );
   return result;
