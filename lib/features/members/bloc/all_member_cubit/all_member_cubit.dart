@@ -18,6 +18,7 @@ import '../../../../core/util/file_util.dart';
 import '../../../../core/util/note_message.dart';
 import '../../../../core/util/pair_class.dart';
 import '../../../../core/widgets/spinner_widget.dart';
+import '../../data/request/member_filter_request.dart';
 import '../../data/response/member_response.dart';
 import 'dart:async';
 import 'dart:isolate';
@@ -89,18 +90,18 @@ class AllMembersCubit extends Cubit<AllMembersInitial> {
       {bool all = true, Pair<int, int>? range}) async {
     var oldSkipCount = state.command.skipCount;
 
+    state.command
+      ..maxResultCount = 1.0.maxInt
+      ..skipCount = 0;
     if (range != null) {
-      state.command
-        ..maxResultCount = range.second - range.first
-        ..skipCount = range.first;
-    } else {
-      state.command
-        ..maxResultCount = 1.maxInt
-        ..skipCount = 0;
+      state.command.memberFilterRequest ??= MemberFilterRequest();
+      state.command.memberFilterRequest?.fromId = range.first;
+      state.command.memberFilterRequest?.toId = range.second;
     }
 
     final pair = await _getMembersApi();
-
+    state.command.memberFilterRequest?.fromId = null;
+    state.command.memberFilterRequest?.toId = null;
     state.command
       ..maxResultCount = 40
       ..skipCount = oldSkipCount;

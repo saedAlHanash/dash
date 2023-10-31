@@ -131,8 +131,8 @@ Future<Uint8List?> fetchImage(String imageUrl, {bool withCompress = true}) async
   try {
     loggerObject.v(imageUrl);
     final response = await getServerProxyRowApi(url: imageUrl);
-    final b  =base64Decode(response.body);
-    if (response .statusCode == 200) {
+    final b = base64Decode(response.body);
+    if (response.statusCode == 200) {
       final compressedImage = await testComporessList(b);
       hiveBox?.put(imageUrl, b);
       return withCompress ? compressedImage : b;

@@ -6,6 +6,7 @@ import 'package:qareeb_dash/core/widgets/spinner_widget.dart';
 
 import '../api_manager/command.dart';
 import '../strings/app_color_manager.dart';
+import '../util/my_style.dart';
 import 'my_card_widget.dart';
 
 class SaedTableWidget extends StatelessWidget {
@@ -32,23 +33,19 @@ class SaedTableWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MyCardWidget(
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColorManager.lightGray,
+        borderRadius: BorderRadius.circular(12.0.r),
+      ),
+      padding: MyStyle.cardPadding,
       margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0).r,
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           filters ?? 0.0.verticalSpace,
           TitleWidget(title: title),
-          Container(
-            constraints: BoxConstraints(maxHeight: fullHeight ?? 0.6.sh),
-            child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: data.length,
-              itemBuilder: (context, i1) {
-                final e = data[i1];
-                return CellWidget(e: e);
-              },
-            ),
-          ),
+          ...data.map((e) => CellWidget(e: e)).toList(),
           30.0.verticalSpace,
           Align(
             alignment: Alignment.center,
@@ -65,7 +62,9 @@ class SaedTableWidget extends StatelessWidget {
                   ),
                 15.0.horizontalSpace,
                 if (command != null)
-                  DrawableText(text: 'عدد الصفحات الكلي: ${command?.maxPages}'),
+                  DrawableText(
+                      text:
+                          'الصفحات: ${command?.maxPages}   - النتائج : ${command?.totalCount}'),
                 // InkWell(onTap: () {}, child: Icon(Icons.search))
               ],
             ),
@@ -95,11 +94,12 @@ class CellWidget extends StatelessWidget {
                       textDirection: TextDirection.ltr,
                       child: DrawableText(
                         selectable: true,
-                        size: 16.0.sp,
+                        size: 17.0.sp,
                         matchParent: true,
                         textAlign: TextAlign.center,
-                        text: e.isEmpty ? '-' : e.replaceAll('spy', ''),
+                        text: e.isEmpty ? '-' : e,
                         color: Colors.black,
+                        fontFamily: FontManager.cairoBold,
                       ),
                     )
                   : e is Widget
@@ -131,7 +131,7 @@ class TitleWidget extends StatelessWidget {
           final widget = e is String
               ? DrawableText(
                   selectable: true,
-                  size: 18.0.sp,
+                  size: 20.0.sp,
                   matchParent: true,
                   textAlign: TextAlign.center,
                   text: e,

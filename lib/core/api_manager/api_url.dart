@@ -305,7 +305,15 @@ class PathUrl {
   static const changeProviderState = 'api/services/app/EpaymentService/ChangeActiveStatus';
 }
 
-const baseUrl = 'live.qareeb-maas.com';
+String get baseUrl {
+  // final s = AppSharedPreference.isTestMode
+  //     ? 'live.qareeb-maas.com'
+  //     : 'livetest.qareeb-maas.com';
+
+  return liveUrl;
+}
+const testUrl = 'qareeb-api.first-pioneers.com.tr';
+const liveUrl = 'live.qareeb-maas.com';
 
 /*
 POST

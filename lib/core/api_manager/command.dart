@@ -11,7 +11,7 @@ import '../widgets/spinner_widget.dart';
 class Command {
   Command({
     this.skipCount,
-    this.maxResultCount,
+    this.maxResultCount = 40,
     this.totalCount,
     this.historyRequest,
     this.memberFilterRequest,
@@ -20,7 +20,7 @@ class Command {
   });
 
   int? skipCount;
-  int? maxResultCount;
+  int maxResultCount;
 
   int? totalCount;
   FilterTripHistoryRequest? historyRequest;
@@ -28,13 +28,12 @@ class Command {
   BusesFilterRequest? busesFilterRequest;
   TripsFilterRequest? tripsFilterRequest;
 
-  int get maxPages => ((totalCount ?? 0) / (maxResultCount ?? 40)).myRound;
+  int get maxPages => ((totalCount ?? 0) / maxResultCount).myRound;
 
-  int get currentPage => ((skipCount ?? 0) + 1 / (maxResultCount ?? 40)).myRound;
+  int get currentPage => (((skipCount ?? 0) + 1) / maxResultCount).myRound;
 
   List<SpinnerItem> get getSpinnerItems {
     final list = <SpinnerItem>[];
-
     for (var i = 1; i <= maxPages; i++) {
       list.add(SpinnerItem(
         id: i,
@@ -47,7 +46,7 @@ class Command {
   }
 
   void goToPage(int pageIndex) {
-    skipCount = (pageIndex - 1) * (maxResultCount ?? 40);
+    skipCount = (pageIndex - 1) * maxResultCount;
   }
 
   factory Command.initial() {
@@ -60,14 +59,13 @@ class Command {
   bool get isInitial => skipCount == 0;
 
   factory Command.noPagination() {
-    return Command(skipCount: 0)
-      ..maxResultCount = 1.0.maxInt;
+    return Command(skipCount: 0)..maxResultCount = 1.0.maxInt;
   }
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{
       'skipCount': skipCount,
-      'maxResultCount': maxResultCount??40,
+      'maxResultCount': maxResultCount,
       'InstitutionId': AppSharedPreference.getInstitutionId,
     };
 

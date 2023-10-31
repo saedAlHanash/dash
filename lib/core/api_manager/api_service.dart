@@ -9,8 +9,8 @@ import 'package:logger/logger.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 
 import '../util/shared_preferences.dart';
+import 'api_url.dart';
 
-const baseUrl = 'live.qareeb-maas.com';
 
 DateTime? _serverDate;
 
@@ -99,7 +99,7 @@ class APIService {
     final uri = Uri.https(hostName ?? baseUrl, url, query);
 
     final response = await http.get(uri, headers: innerHeader).timeout(
-          const Duration(seconds: 40),
+          const Duration(seconds: 90),
           onTimeout: () => http.Response('connectionTimeOut', 481),
         );
 
@@ -131,7 +131,7 @@ class APIService {
     final proxyUri = Uri.https('api.allorigins.win', 'raw', {'url': uri.toString()});
 
     final response = await http.get(proxyUri, headers: innerHeader).timeout(
-          const Duration(seconds: 40),
+          const Duration(seconds: 90),
           onTimeout: () => http.Response('connectionTimeOut', 481),
         );
 
@@ -157,7 +157,7 @@ class APIService {
     final uri = Uri.https('proxy.cors.sh', url, query);
 
     final response =
-        await http.get(uri, headers: innerHeader).timeout(const Duration(seconds: 40));
+        await http.get(uri, headers: innerHeader).timeout(const Duration(seconds: 90));
 
     return response;
   }
@@ -185,7 +185,7 @@ class APIService {
 
     final response =
         await http.post(uri, body: jsonEncode(body), headers: innerHeader).timeout(
-              const Duration(seconds: 40),
+              const Duration(seconds: 90),
               onTimeout: () => http.Response('connectionTimeOut', 481),
             );
 
@@ -223,7 +223,7 @@ class APIService {
           'accept': '*/*',
           'Content-Type': 'application/json-patch+json',
         }).timeout(
-              const Duration(seconds: 40),
+              const Duration(seconds: 90),
               onTimeout: () => http.Response('connectionTimeOut', 481),
             );
 
@@ -252,7 +252,7 @@ class APIService {
 
     final response =
         await http.put(uri, body: jsonEncode(body), headers: innerHeader).timeout(
-              const Duration(seconds: 40),
+              const Duration(seconds: 90),
               onTimeout: () => http.Response('connectionTimeOut', 481),
             );
 
@@ -283,7 +283,7 @@ class APIService {
 
     final response =
         await http.patch(uri, body: jsonEncode(body), headers: innerHeader).timeout(
-              const Duration(seconds: 40),
+              const Duration(seconds: 90),
               onTimeout: () => http.Response('connectionTimeOut', 481),
             );
 
@@ -313,7 +313,7 @@ class APIService {
 
     final response =
         await http.delete(uri, body: jsonEncode(body), headers: innerHeader).timeout(
-              const Duration(seconds: 40),
+              const Duration(seconds: 90),
               onTimeout: () => http.Response('connectionTimeOut', 481),
             );
 
@@ -375,7 +375,7 @@ class APIService {
     var uri = Uri.https(baseUrl);
 
     final response = await http.get(uri, headers: innerHeader).timeout(
-          const Duration(seconds: 40),
+          const Duration(seconds: 90),
           onTimeout: () => http.Response('connectionTimeOut', 481),
         );
 
@@ -394,6 +394,11 @@ void logRequest(String url, Map<String, dynamic>? q, {String? additional}) {
 
 void logResponse(String url, http.Response response) {
   if (url.contains('api.php')) return;
+  if (url.contains('GetImageAsByteArray')) {
+    loggerObject.v('${response.statusCode} \n ${response.bodyBytes.length}');
+    return;
+  }
+
   var r = [];
   var res = '';
   if (response.body.length > 800) {

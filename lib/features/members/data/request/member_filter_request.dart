@@ -5,6 +5,8 @@ class MemberFilterRequest {
   String? facility;
   String? idNumber;
   String? address;
+  int? fromId;
+  int? toId;
 
   MemberFilterRequest({
     this.collegeIdNumber,
@@ -13,6 +15,8 @@ class MemberFilterRequest {
     this.facility,
     this.idNumber,
     this.address,
+    this.fromId,
+    this.toId,
   });
 
   bool isRequestData() {
@@ -21,6 +25,8 @@ class MemberFilterRequest {
         phoneNo != null &&
         facility != null &&
         idNumber != null &&
+        fromId != null &&
+        toId != null &&
         address != null;
   }
 
@@ -30,6 +36,8 @@ class MemberFilterRequest {
     phoneNo = null;
     facility = null;
     idNumber = null;
+    fromId = null;
+    toId = null;
     address = null;
   }
 
@@ -59,6 +67,8 @@ class MemberFilterRequest {
       'facility': facility,
       'idNumber': idNumber,
       'address': address,
+      'FromId': fromId,
+      'ToId': toId,
     };
   }
 
@@ -70,6 +80,8 @@ class MemberFilterRequest {
       facility: map['facility'] ?? '',
       idNumber: map['idNumber'] ?? '',
       address: map['address'] ?? '',
+      fromId: map['FromId'] ?? '',
+      toId: map['ToId'] ?? '',
     );
   }
 }
