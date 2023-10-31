@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qareeb_dash/core/api_manager/api_service.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/widgets/auto_complete_widget.dart';
-import 'package:qareeb_dash/features/accounts/data/request/financial_filter_request.dart';
+import 'package:qareeb_dash/features/accounts/data/request/driver_financial_filter_request.dart';
 import 'package:qareeb_dash/features/drivers/ui/widget/driver_financial_widget.dart';
 import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_models/global.dart';

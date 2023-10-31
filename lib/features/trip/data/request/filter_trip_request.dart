@@ -3,6 +3,7 @@ import 'package:qareeb_models/global.dart';
 class FilterTripRequest {
   int? clientId;
   int? driverId;
+  int? agencyId;
 
   String? driverName;
   String? clientName;
@@ -19,6 +20,7 @@ class FilterTripRequest {
   FilterTripRequest({
     this.clientId,
     this.driverId,
+    this.agencyId,
     this.clientName,
     this.driverName,
     this.clientPhone,
@@ -33,6 +35,7 @@ class FilterTripRequest {
     return {
       'ClientId': clientId,
       'DriverId': driverId,
+      'agencyId': agencyId,
       'DriverName': driverName,
       'ClientName': clientName,
       'DriverPhone': driverPhone,
@@ -47,6 +50,7 @@ class FilterTripRequest {
   void clearFilter() {
     clientId = null;
     driverId = null;
+    agencyId = null;
     driverName = null;
     clientName = null;
     driverPhone = null;

@@ -44,7 +44,6 @@ class ItemImageCreate extends StatelessWidget {
                   opacity: fileBytes == null ? 0.3 : 1,
                   child: RoundImageWidget(
                     url:fileBytes?? image,
-
                     height: fileBytes == null ? 100.0.r : 180.0.r,
                     width: fileBytes == null ? 100.0.r : 180.0.r,
                   ),

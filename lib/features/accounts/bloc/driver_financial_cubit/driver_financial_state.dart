@@ -4,7 +4,7 @@ class DriverFinancialInitial extends Equatable {
   final CubitStatuses statuses;
   final DriverFinancialResult result;
   final String error;
-  final FinancialFilterRequest request;
+  final DriverFinancialFilterRequest request;
 
   const DriverFinancialInitial({
     required this.statuses,
@@ -17,7 +17,7 @@ class DriverFinancialInitial extends Equatable {
     return DriverFinancialInitial(
       result: DriverFinancialResult.fromJson({}),
       error: '',
-      request: FinancialFilterRequest(),
+      request: DriverFinancialFilterRequest(),
       statuses: CubitStatuses.init,
     );
   }
@@ -29,7 +29,7 @@ class DriverFinancialInitial extends Equatable {
     CubitStatuses? statuses,
     DriverFinancialResult? result,
     String? error,
-    FinancialFilterRequest? request,
+    DriverFinancialFilterRequest? request,
   }) {
     return DriverFinancialInitial(
       statuses: statuses ?? this.statuses,

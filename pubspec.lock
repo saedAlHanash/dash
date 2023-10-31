@@ -178,7 +178,7 @@ packages:
     source: hosted
     version: "0.7.8"
   drawable_text:
-    dependency: "direct main"
+    dependency: transitive
     description:
       path: "."
       ref: html
@@ -509,10 +509,10 @@ packages:
     dependency: transitive
     description:
       name: flutter_widget_from_html_core
-      sha256: a7dc9eb4bfdef4ea06d114528bf52a7efcdfc6ba46d933957c25067f17c1c6b4
+      sha256: "22140caa191cb4bba0fe4d5e4ad875c7e8a9ba47d61517f56d733019cf76396d"
       url: "https://pub.dev"
     source: hosted
-    version: "0.10.5"
+    version: "0.10.6"
   geolocator:
     dependency: "direct main"
     description:
@@ -670,7 +670,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: ded9300b1b7b70b7e0d859f9f6b020305ebfb92c
+      resolved-ref: ee44f1a51d0feb827c76459286c538fb79f2bb18
       url: "https://github.com/saedAlHanash/image_multi_type"
     source: git
     version: "0.0.1"
@@ -821,11 +821,9 @@ packages:
   map_package:
     dependency: "direct main"
     description:
-      path: "."
-      ref: html
-      resolved-ref: "7fc28f2ee7b1354c1b30648da3082cd6f52ccb80"
-      url: "https://github.com/saedAlHanash/map_qareeb"
-    source: git
+      path: "../../packages/map_package"
+      relative: true
+    source: path
     version: "0.1.6"
   matcher:
     dependency: transitive
@@ -1030,11 +1028,9 @@ packages:
   qareeb_models:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "15226aab0a5533ee521a3ce7370af9605ff2605b"
-      url: "https://github.com/saedAlHanash/qareeb_models"
-    source: git
+      path: "../../packages/qareeb_models"
+      relative: true
+    source: path
     version: "0.1.5"
   rxdart:
     dependency: transitive
@@ -1044,15 +1040,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.27.7"
-  saed_http:
-    dependency: transitive
-    description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "098f378c886e582fbfe594bd7564fbed3d891eb7"
-      url: "https://github.com/saedAlHanash/saed_http"
-    source: git
-    version: "0.0.1"
   sanitize_html:
     dependency: transitive
     description:

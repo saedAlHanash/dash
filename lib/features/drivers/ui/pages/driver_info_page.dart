@@ -18,6 +18,7 @@ import 'package:qareeb_models/extensions.dart';
 
 import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/util/my_style.dart';
+import '../../../../core/util/shared_preferences.dart';
 import '../../../../core/widgets/app_bar_widget.dart';
 import 'package:image_multi_type/round_image_widget.dart';
 import '../../../../core/widgets/my_button.dart';
@@ -44,7 +45,7 @@ class _DriverInfoPageState extends State<DriverInfoPage>
 
   @override
   void initState() {
-    _tabController = TabController(length: 5, vsync: this);
+    _tabController = TabController(length: !isAgency ? 5 : 4, vsync: this);
     super.initState();
   }
 
@@ -76,12 +77,13 @@ class _DriverInfoPageState extends State<DriverInfoPage>
                   controller: _tabController,
                   labelColor: AppColorManager.mainColorDark,
                   unselectedLabelColor: AppColorManager.black,
-                  tabs: const [
-                    Tab(text: 'معلومات السائق'),
-                    Tab(text: 'الولاء'),
-                    Tab(text: 'الرحلات'),
-                    Tab(text: 'المحصلة المالية'),
-                    Tab(text: 'عائدات الرحلات'),
+                  tabs:  [
+                    const Tab(text: 'معلومات السائق'),
+                    if(!isAgency)
+                    const Tab(text: 'الولاء'),
+                    const Tab(text: 'الرحلات'),
+                    const Tab(text: 'المحصلة المالية'),
+                    const Tab(text: 'عائدات الرحلات'),
                   ],
                 ),
               ),
@@ -98,6 +100,7 @@ class _DriverInfoPageState extends State<DriverInfoPage>
                           _DriverTableInfo(driver: driver),
                         ],
                       ),
+                      if(!isAgency)
                       LoyaltyWidget(driverId: driver.id),
                       DriverTripsCard(driver: driver),
                       const DriverFinancialWidget(),

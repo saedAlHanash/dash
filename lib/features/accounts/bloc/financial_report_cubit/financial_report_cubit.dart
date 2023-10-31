@@ -30,7 +30,11 @@ class FinancialReportCubit extends Cubit<FinancialReportInitial> {
       emit(state.copyWith(statuses: CubitStatuses.error, error: pair.second));
     } else {
       state.command.totalCount = pair.first!.totalCount;
-      emit(state.copyWith(statuses: CubitStatuses.done, result: pair.first!.items));
+      emit(state.copyWith(
+        statuses: CubitStatuses.done,
+        result: pair.first!.items,
+        response: pair.first,
+      ));
     }
   }
 
@@ -86,12 +90,11 @@ class FinancialReportCubit extends Cubit<FinancialReportInitial> {
     );
 
     if (response.statusCode == 200) {
-      return Pair(FinancialReportResponse.fromJson(response.json).result, null);
+      return Pair(FinancialReportResult.fromJson(response.json), null);
     } else {
       return Pair(null, ErrorManager.getApiError(response));
     }
   }
-
 }
 
 SummaryPayToEnum summaryType(FinancialResult report) {
@@ -106,19 +109,18 @@ SummaryPayToEnum summaryType(FinancialResult report) {
 
 String getMessage(FinancialResult report) {
   switch (summaryType(report)) {
-  //السائق يجب أن يدفع للشركة
+    //السائق يجب أن يدفع للشركة
     case SummaryPayToEnum.requiredFromDriver:
       return 'يستوجب على السائق تسديد مبلغ للشركة وقدره :  \n'
           '${(report.requiredAmountFromDriver - report.requiredAmountFromCompany).formatPrice}\n  ليرة سورية ';
 
-  //الشركة يجب انت تدفع للسائق
+    //الشركة يجب انت تدفع للسائق
     case SummaryPayToEnum.requiredFromCompany:
       return 'يستوجب على الشركة تسديد مبلغ للسائق وقدره :   \n'
           ' ${(report.requiredAmountFromCompany - report.requiredAmountFromDriver).formatPrice}\n   ليرة سورية';
 
-  //الرصيد متكافئ
+    //الرصيد متكافئ
     case SummaryPayToEnum.equal:
       return 'ان مستحقات الشركة من السائق مساوية تماما لمستحقات السائق لدى الشركة';
   }
-
 }

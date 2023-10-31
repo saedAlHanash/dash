@@ -1,17 +1,22 @@
+import 'package:qareeb_dash/core/util/shared_preferences.dart';
 import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_models/global.dart';
 
 import '../../features/accounts/data/request/transfer_filter_request.dart';
 import '../../features/clients/data/request/clients_filter_request.dart';
 import '../../features/drivers/data/request/drivers_filter_request.dart';
+import '../../features/pay_to_drivers/data/request/financial_filter_request.dart';
 import '../../features/trip/data/request/filter_trip_request.dart';
 
 class Command {
+
+
   Command({
     this.skipCount,
     this.totalCount,
     this.clientsFilterRequest,
     this.driversFilterRequest,
+    this.financialFilterRequest,
     this.filterTripRequest,
     this.transferFilterRequest,
   });
@@ -21,6 +26,7 @@ class Command {
   int? totalCount;
   ClientsFilterRequest? clientsFilterRequest;
   DriversFilterRequest? driversFilterRequest;
+  FinancialFilterRequest? financialFilterRequest;
   FilterTripRequest? filterTripRequest;
 
   TransferFilterRequest? transferFilterRequest;
@@ -63,6 +69,8 @@ class Command {
     var json = <String, dynamic>{
       'skipCount': skipCount,
       'maxResultCount': maxResultCount,
+      if (AppSharedPreference.getAgencyId != 0)
+        'AgencyId': AppSharedPreference.getAgencyId,
     };
 
     if (filterTripRequest != null) {
@@ -78,6 +86,9 @@ class Command {
 
     if (driversFilterRequest != null) {
       json.addAll(driversFilterRequest!.toJson());
+    }
+    if (financialFilterRequest != null) {
+      json.addAll(financialFilterRequest!.toJson());
     }
 
     return json;
@@ -95,6 +106,7 @@ class Command {
     FilterTripRequest? filterTripRequest,
     ClientsFilterRequest? clientsFilterRequest,
     DriversFilterRequest? driversFilterRequest,
+    FinancialFilterRequest? financialFilterRequest,
     TransferFilterRequest? transferFilterRequest,
   }) {
     return Command(
@@ -103,6 +115,7 @@ class Command {
       filterTripRequest: filterTripRequest ?? this.filterTripRequest,
       clientsFilterRequest: clientsFilterRequest ?? this.clientsFilterRequest,
       driversFilterRequest: driversFilterRequest ?? this.driversFilterRequest,
+      financialFilterRequest: financialFilterRequest ?? this.financialFilterRequest,
       transferFilterRequest: transferFilterRequest ?? this.transferFilterRequest,
     );
   }

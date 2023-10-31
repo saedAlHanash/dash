@@ -1,62 +1,65 @@
 import 'package:qareeb_models/global.dart';
 
-class DriversFilterRequest {
+class FinancialFilterRequest {
   String? name;
   String? phoneNo;
+  bool? isAvailable;
   int? agencyId;
   Gender? gender;
-  DriverStatus? status;
 
-  DriversFilterRequest({
+  FinancialFilterRequest({
     this.name,
     this.phoneNo,
+    this.isAvailable,
     this.agencyId,
     this.gender,
-    this.status,
   });
 
+  bool isRequestData() {
+    return name != null && phoneNo != null && gender != null;
+  }
 
   void clearFilter() {
     name = null;
-    phoneNo = null;
+    isAvailable = null;
     agencyId = null;
+    phoneNo = null;
     gender = null;
-    status = null;
   }
 
-  DriversFilterRequest copyWith({
+  FinancialFilterRequest copyWith({
     String? name,
     String? phoneNo,
+    bool? isAvailable,
     int? agencyId,
     Gender? gender,
-    DriverStatus? status,
   }) {
-    return DriversFilterRequest(
+    return FinancialFilterRequest(
       name: name ?? this.name,
       phoneNo: phoneNo ?? this.phoneNo,
+      isAvailable: isAvailable ?? this.isAvailable,
       agencyId: agencyId ?? this.agencyId,
       gender: gender ?? this.gender,
-      status: status ?? this.status,
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'Name': name,
-      'Phone': phoneNo,
+      'name': name,
+      'phone': phoneNo,
+      'isAvailable': isAvailable,
       'agencyId': agencyId,
       'Gender': gender,
-      'Status': status?.index,
     };
   }
 
-  factory DriversFilterRequest.fromJson(Map<String, dynamic> map) {
-    return DriversFilterRequest(
+  factory FinancialFilterRequest.fromJson(Map<String, dynamic> map) {
+    return FinancialFilterRequest(
       name: map['name'] ?? '',
       phoneNo: map['phoneNo'] ?? '',
+      isAvailable: map['isAvailable'] ?? '',
       agencyId: map['agencyId'] ?? '',
       gender: map['gender'] ?? '',
-      status: map['status'] ?? '',
     );
   }
 }

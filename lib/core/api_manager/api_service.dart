@@ -199,7 +199,7 @@ class APIService {
     Map<String, dynamic>? query,
     Map<String, String>? header,
   }) async {
-    if (body != null) body.removeWhere((key, value) => value == null);
+    body?.removeWhere((key, value) => (value == null || value.toString().isEmpty));
 
     innerHeader.addAll(header ?? {});
 
@@ -292,6 +292,7 @@ class APIService {
     Map<String, String>? header,
   }) async {
     Map<String, String> f = {};
+    fields?.removeWhere((key, value) => (value == null || value.toString().isEmpty));
     (fields ?? {}).forEach((key, value) => f[key] = value.toString());
 
     innerHeader.addAll(header ?? {});

@@ -10,24 +10,29 @@ import 'package:qareeb_dash/core/strings/app_color_manager.dart';
 import 'package:qareeb_dash/core/widgets/saed_taple_widget.dart';
 import 'package:qareeb_dash/features/drivers/bloc/all_drivers/all_drivers_cubit.dart';
 import 'package:qareeb_models/extensions.dart';
+import 'package:qareeb_models/wallet/data/response/single_driver_financial.dart';
 
 import '../../../../core/util/file_util.dart';
 import '../../../../core/util/my_style.dart';
 import '../../../../core/util/note_message.dart';
+import '../../../../core/util/shared_preferences.dart';
+import '../../../../core/widgets/my_card_widget.dart';
+import '../../../../generated/assets.dart';
 import '../../../../router/go_route_pages.dart';
-import '../../../accounts/bloc/driver_financial_cubit/driver_financial_cubit.dart';
 import '../../../accounts/bloc/financial_report_cubit/financial_report_cubit.dart';
 import '../../../accounts/bloc/pay_to_cubit/pay_to_cubit.dart';
 import '../../../clients/ui/widget/clients_filter_widget.dart';
+import '../widget/financial_filter_widget.dart';
 import '../widget/pay_to_driver_widget.dart';
 
-const transfersHeaderTable = [
+final transfersHeaderTable = [
   'ID',
   'الاسم الكامل',
   'رقم الهاتف',
   'مستحقات الشركة',
   'مستحقات السائق',
   'الملخص',
+  if(!isAgency)
   'عمليات',
 ];
 
@@ -61,14 +66,12 @@ class _FinancialPageState extends State<FinancialPage> {
                 onPressed: () {
                   mState(() => loading = true);
                   context.read<FinancialReportCubit>().getDriversAsync(context).then(
-                        (value) {
+                    (value) {
                       if (value == null) return;
                       saveXls(
                         header: value.first,
                         data: value.second,
-                        fileName: 'التقرير المالي للسائقين${DateTime
-                            .now()
-                            .formatDate}',
+                        fileName: 'التقرير المالي للسائقين${DateTime.now().formatDate}',
                       );
                       mState(() => loading = false);
                     },
@@ -88,22 +91,18 @@ class _FinancialPageState extends State<FinancialPage> {
           children: [
             BlocBuilder<FinancialReportCubit, FinancialReportInitial>(
               builder: (context, state) {
-                return ClientsFilterWidget(
+                return FinancialFilterWidget(
                   command: state.command,
                   onApply: (request) {
                     context.read<FinancialReportCubit>().getReport(
-                      context,
-                      command:
-                      context
-                          .read<FinancialReportCubit>()
-                          .state
-                          .command
-                          .copyWith(
-                        clientsFilterRequest: request,
-                        skipCount: 0,
-                        totalCount: 0,
-                      ),
-                    );
+                          context,
+                          command:
+                              context.read<FinancialReportCubit>().state.command.copyWith(
+                                    financialFilterRequest: request,
+                                    skipCount: 0,
+                                    totalCount: 0,
+                                  ),
+                        );
                   },
                 );
               },
@@ -113,65 +112,164 @@ class _FinancialPageState extends State<FinancialPage> {
                 if (state.statuses.isLoading) {
                   return MyStyle.loadingWidget();
                 }
-                return SaedTableWidget(
-                    command: state.command,
-                    fullHeight: 1.8.sh,
-                    onChangePage: (command) {
-                      context
-                          .read<FinancialReportCubit>()
-                          .getReport(context, command: command);
-                    },
-                    title: transfersHeaderTable,
-                    data: state.result.mapIndexed((index, e) {
-                      return [
-                        InkWell(
-                          onTap: () {
-                            context.pushNamed(GoRouteName.driverInfo,
-                                queryParams: {'id': e.driverId.toString()});
-                          },
-                          child: DrawableText(
-                            selectable: false,
-                            size: 16.0.sp,
-                            matchParent: true,
-                            textAlign: TextAlign.center,
-                            underLine: true,
-                            text: e.driverId.toString(),
-                            color: Colors.blue,
-                          ),
-                        ),
-                        e.driverName,
-                        e.driverPhoneNo,
-                        e.requiredAmountFromDriver.formatPrice,
-                        e.requiredAmountFromCompany.formatPrice,
-                        getMessage(e),
-                        TextButton(
-                          onPressed: () {
-                            NoteMessage.showMyDialog(
-                              context,
-                              child: MultiBlocProvider(
-                                providers: [
-                                  BlocProvider.value(value: context.read<PayToCubit>()),
-                                ],
-                                child: PayToDriverWidget(result: e),
+                return Column(
+                  children: [
+                    SummaryFinancialWidget(result: state.response),
+                    10.0.verticalSpace,
+                    SaedTableWidget(
+                        command: state.command,
+                        fullHeight: 1.8.sh,
+                        onChangePage: (command) {
+                          context
+                              .read<FinancialReportCubit>()
+                              .getReport(context, command: command);
+                        },
+                        title: transfersHeaderTable,
+                        data: state.result.mapIndexed((index, e) {
+                          return [
+                            InkWell(
+                              onTap: () {
+                                context.pushNamed(GoRouteName.driverInfo,
+                                    queryParams: {'id': e.driverId.toString()});
+                              },
+                              child: DrawableText(
+                                selectable: false,
+                                size: 16.0.sp,
+                                matchParent: true,
+                                textAlign: TextAlign.center,
+                                underLine: true,
+                                text: e.driverId.toString(),
+                                color: Colors.blue,
                               ),
-                              onCancel: (val) {},
-                            );
-                          },
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStatePropertyAll(
-                              AppColorManager.mainColor.withOpacity(0.1),
                             ),
-                          ),
-                          child: const DrawableText(
-                            text: 'تفريغ الرصيد', selectable: false,),
-                        ),
-                      ];
-                    }).toList());
+                            e.driverName,
+                            e.driverPhoneNo,
+                            e.requiredAmountFromDriver.formatPrice,
+                            e.requiredAmountFromCompany.formatPrice,
+                            getMessage(e),
+                            if(!isAgency)
+                            TextButton(
+                              onPressed: () {
+                                NoteMessage.showMyDialog(
+                                  context,
+                                  child: MultiBlocProvider(
+                                    providers: [
+                                      BlocProvider.value(
+                                          value: context.read<PayToCubit>()),
+                                    ],
+                                    child: PayToDriverWidget(result: e),
+                                  ),
+                                  onCancel: (val) {},
+                                );
+                              },
+                              style: ButtonStyle(
+                                backgroundColor: MaterialStatePropertyAll(
+                                  AppColorManager.mainColor.withOpacity(0.1),
+                                ),
+                              ),
+                              child: const DrawableText(
+                                text: 'تفريغ الرصيد',
+                                selectable: false,
+                              ),
+                            ),
+                          ];
+                        }).toList()),
+                  ],
+                );
               },
             ),
           ],
         ),
       ),
+    );
+  }
+}
+
+class SummaryFinancialWidget extends StatelessWidget {
+  const SummaryFinancialWidget({super.key, required this.result});
+
+  final FinancialReportResult result;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        MyCardWidget(
+          elevation: 0.0,
+          margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0).r,
+          child: Row(
+            children: [
+              ImageMultiType(
+                url: Assets.iconsDriver,
+                width: 55.0.r,
+                height: 55.0.r,
+              ),
+              15.0.horizontalSpace,
+              const DrawableText(
+                text: 'رصيد السائقين لدى الشركة',
+                color: Colors.black,
+                fontFamily: FontManager.cairoBold,
+              ),
+              const Spacer(),
+              DrawableText(
+                text: result.totalRequiredAmountFromCompany.formatPrice,
+                color: Colors.black,
+                fontFamily: FontManager.cairoBold,
+              ),
+            ],
+          ),
+        ),
+        MyCardWidget(
+          elevation: 0.0,
+          margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0).r,
+          child: Row(
+            children: [
+              ImageMultiType(
+                url: Assets.iconsQareebPoint,
+                width: 55.0.r,
+                height: 55.0.r,
+              ),
+              15.0.horizontalSpace,
+              const DrawableText(
+                text: 'رصيد الشركة لدى السائقين',
+                color: Colors.black,
+                fontFamily: FontManager.cairoBold,
+              ),
+              const Spacer(),
+              DrawableText(
+                text: result.totalRequiredAmountFromDriver.formatPrice,
+                color: Colors.black,
+                fontFamily: FontManager.cairoBold,
+              ),
+            ],
+          ),
+        ),
+        MyCardWidget(
+          elevation: 0.0,
+          margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0).r,
+          child: Row(
+            children: [
+              ImageMultiType(
+                url: Assets.iconsCashSummary,
+                width: 55.0.r,
+                height: 55.0.r,
+              ),
+              15.0.horizontalSpace,
+              DrawableText(
+                text: result.getMessage,
+                color: Colors.black,
+                fontFamily: FontManager.cairoBold,
+              ),
+              const Spacer(),
+              DrawableText(
+                text: result.price.formatPrice,
+                color: Colors.black,
+                fontFamily: FontManager.cairoBold,
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

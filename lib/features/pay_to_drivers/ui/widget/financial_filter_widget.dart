@@ -12,21 +12,24 @@ import '../../../../core/util/shared_preferences.dart';
 import '../../../../core/widgets/my_text_form_widget.dart';
 import '../../../../core/widgets/spinner_widget.dart';
 import '../../../agencies/bloc/agencies_cubit/agencies_cubit.dart';
-import '../../data/request/drivers_filter_request.dart';
+import '../../data/request/financial_filter_request.dart';
 
-class DriversFilterWidget extends StatefulWidget {
-  const DriversFilterWidget({super.key, this.onApply, this.command});
+class FinancialFilterWidget extends StatefulWidget {
+  const FinancialFilterWidget(
+      {super.key, this.onApply, this.command, this.isDriver = false});
 
-  final Function(DriversFilterRequest request)? onApply;
+  final Function(FinancialFilterRequest request)? onApply;
 
   final Command? command;
 
+  final bool isDriver;
+
   @override
-  State<DriversFilterWidget> createState() => _DriversFilterWidgetState();
+  State<FinancialFilterWidget> createState() => _FinancialFilterWidgetState();
 }
 
-class _DriversFilterWidgetState extends State<DriversFilterWidget> {
-  late DriversFilterRequest request;
+class _FinancialFilterWidgetState extends State<FinancialFilterWidget> {
+  late FinancialFilterRequest request;
 
   late final TextEditingController phoneNoC;
   late final TextEditingController nameC;
@@ -34,7 +37,7 @@ class _DriversFilterWidgetState extends State<DriversFilterWidget> {
 
   @override
   void initState() {
-    request = widget.command?.driversFilterRequest ?? DriversFilterRequest();
+    request = widget.command?.financialFilterRequest ?? FinancialFilterRequest();
 
     phoneNoC = TextEditingController(text: request.phoneNo);
     nameC = TextEditingController(text: request.name);
@@ -68,27 +71,8 @@ class _DriversFilterWidgetState extends State<DriversFilterWidget> {
                   controller: phoneNoC,
                   onChanged: (p0) => request.phoneNo = p0,
                 ),
-              ),
-              15.0.horizontalSpace,
-              Expanded(
-                child: SpinnerWidget(
-                  key: key1,
-                  items: DriverStatus.values.spinnerItems(
-                    selected: request.status,
-                  )..insert(
-                      0,
-                      SpinnerItem(
-                          name: 'حالة السائق',
-                          item: null,
-                          id: -1,
-                          isSelected: request.status == null),
-                    ),
-                  onChanged: (p0) => request.status = p0.item,
-                ),
-              ),
-              if(!isAgency)
-              15.0.horizontalSpace,
-              if(!isAgency)
+              ),  if(!isAgency)
+              15.0.horizontalSpace,  if(!isAgency)
               Expanded(
                 child: BlocBuilder<AgenciesCubit, AgenciesInitial>(
                   builder: (context, state) {
@@ -138,7 +122,7 @@ class _DriversFilterWidgetState extends State<DriversFilterWidget> {
                       nameC.text = request.name ?? '';
                     });
                     widget.onApply?.call(request);
-                    key1.currentState?.clearSelect();
+                    if (widget.isDriver) key1.currentState?.clearSelect();
                   },
                 ),
               ),

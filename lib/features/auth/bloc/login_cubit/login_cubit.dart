@@ -38,6 +38,7 @@ class LoginCubit extends Cubit<LoginInitial> {
     } else {
       AppSharedPreference.cashToken(pair.first!.accessToken);
       AppSharedPreference.cashMyId(pair.first!.userId);
+      AppSharedPreference.cashAgencyId(pair.first!.agencyId);
       AppSharedPreference.cashUser(pair.first!);
       AppSharedPreference.cashRole(pair.first!.roleName);
       AppSharedPreference.cashEmail(request.email!);
@@ -60,7 +61,7 @@ class LoginCubit extends Cubit<LoginInitial> {
     }
   }
 
-  Future<Pair<LoginResult?, String?>> _loginApi() async {
+  Future<Pair<UserModel?, String?>> _loginApi() async {
     if (await network.isConnected) {
       final response = await APIService().postApi(
         url: PostUrl.login,
@@ -68,6 +69,10 @@ class LoginCubit extends Cubit<LoginInitial> {
       );
 
       if (response.statusCode == 200) {
+        final user = LoginResponse.fromJson(response.json).result;
+        // if (user.userType != UserType.admin || user.userType != UserType.agencyAdmin) {
+        //   return Pair(null, 'المستخدم الحالي غير مصرح له بالدخول');
+        // }
         return Pair(LoginResponse.fromJson(response.json).result, null);
       } else {
         return Pair(null, ErrorManager.getApiError(response));

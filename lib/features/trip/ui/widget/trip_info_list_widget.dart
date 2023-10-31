@@ -35,7 +35,7 @@ class _TripInfoListWidgetState extends State<TripInfoListWidget>
 
   @override
   void initState() {
-    _tabController = TabController(length: 5, vsync: this);
+    _tabController = TabController(length: !isAgency ? 5 : 3, vsync: this);
     super.initState();
   }
 
@@ -58,12 +58,12 @@ class _TripInfoListWidgetState extends State<TripInfoListWidget>
             controller: _tabController,
             labelColor: AppColorManager.mainColorDark,
             unselectedLabelColor: AppColorManager.black,
-            tabs: const [
-              Tab(text: 'معلومات'),
-              Tab(text: 'السائق والزبون'),
-              Tab(text: 'التاريخ والوقت'),
-              Tab(text: 'المحصلة المالية'),
-              Tab(text: 'عمليات'),
+            tabs: [
+              const Tab(text: 'معلومات'),
+              if (!isAgency) const Tab(text: 'السائق والزبون'),
+              const Tab(text: 'التاريخ والوقت'),
+              const Tab(text: 'المحصلة المالية'),
+              if (!isAgency) const Tab(text: 'عمليات'),
             ],
           ),
         ),
@@ -74,10 +74,10 @@ class _TripInfoListWidgetState extends State<TripInfoListWidget>
               controller: _tabController,
               children: [
                 _TripInfo(trip: widget.trip),
-                _DriverInfo(trip: widget.trip),
+                if (!isAgency) _DriverInfo(trip: widget.trip),
                 _TripDateInfo(trip: widget.trip),
                 _TripCost(trip: widget.trip),
-                _TripActions(trip: widget.trip),
+                if (!isAgency) _TripActions(trip: widget.trip),
               ],
             ),
           ),
@@ -309,9 +309,7 @@ class _TripCost extends StatelessWidget {
           )
         else
           const MyTableWidget(
-            children: {
-              '':''
-            },
+            children: {'': ''},
             title: 'تظهر حصة السائق  بعد انتهاء الرحلة',
           )
       ],

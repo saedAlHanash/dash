@@ -10,6 +10,7 @@ import 'package:qareeb_models/shared_trip/data/response/shared_trip.dart';
 import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/util/note_message.dart';
 import 'package:image_multi_type/image_multi_type.dart';
+import '../../../../core/util/shared_preferences.dart';
 import '../../../../core/widgets/item_info.dart';
 import '../../../../core/widgets/saed_taple_widget.dart';
 
@@ -64,18 +65,19 @@ class _TripInfoListWidgetState extends State<TripInfoListWidget> {
             title: 'تاريخ البداية', info: widget.trip.startDate?.formatDateTime ?? '-'),
         ItemInfoInLine(
             title: 'تاريخ النهاية', info: widget.trip.endDate?.formatDateTime ?? '-'),
-        ItemInfoInLine(
-          title: 'الزبائن',
-          widget: TextButton(
-            onPressed: () => showSharedRequest(widget.trip),
-            child: const DrawableText(
-              text: 'عرض',
-              selectable: false,
-              color: AppColorManager.mainColorDark,
-              fontFamily: FontManager.cairoBold,
+        if (!isAgency)
+          ItemInfoInLine(
+            title: 'الزبائن',
+            widget: TextButton(
+              onPressed: () => showSharedRequest(widget.trip),
+              child: const DrawableText(
+                text: 'عرض',
+                selectable: false,
+                color: AppColorManager.mainColorDark,
+                fontFamily: FontManager.cairoBold,
+              ),
             ),
           ),
-        ),
         PathPointsWidgetWrap(list: widget.trip.path.getTripPoints),
       ],
     );

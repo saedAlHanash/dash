@@ -3,7 +3,7 @@ part of 'login_cubit.dart';
 class LoginInitial extends Equatable {
 
   final CubitStatuses statuses;
-  final LoginResult result;
+  final UserModel result;
   final String error;
   final LoginRequest request;
 
@@ -17,7 +17,7 @@ class LoginInitial extends Equatable {
 
   factory LoginInitial.initial() {
     return  LoginInitial(
-      result: LoginResult.fromJson({}),
+      result: UserModel.fromJson({}),
       error: '',
       request: LoginRequest.fromJson({}),
       statuses: CubitStatuses.init,
@@ -29,7 +29,7 @@ class LoginInitial extends Equatable {
 
   LoginInitial copyWith({
     CubitStatuses? statuses,
-    LoginResult? result,
+    UserModel? result,
     String? error,
     LoginRequest? request,
   }) {

@@ -19,7 +19,9 @@ import 'package:qareeb_models/global.dart';
 import '../../../../core/api_manager/api_service.dart';
 import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/util/my_style.dart';
+import '../../../../core/util/shared_preferences.dart';
 import '../../../../core/widgets/app_bar_widget.dart';
+import '../../../agencies/bloc/agencies_cubit/agencies_cubit.dart';
 import '../../../car_catigory/bloc/all_car_categories_cubit/all_car_categories_cubit.dart';
 import '../../bloc/all_drivers/all_drivers_cubit.dart';
 import '../../bloc/create_driver_cubit/create_driver_cubit.dart';
@@ -255,6 +257,37 @@ class _CreateDriverPageState extends State<CreateDriverPage> {
                             ),
                             onChanged: (spinnerItem) {
                               request.gender = Gender.values[spinnerItem.id];
+                            },
+                          ),
+                        ),  if(!isAgency)
+                        15.0.horizontalSpace,
+                        if(!isAgency)
+                        Expanded(
+                          child: BlocBuilder<AgenciesCubit, AgenciesInitial>(
+                            builder: (context, state) {
+                              if (state.statuses .isLoading) {
+                                return MyStyle.loadingWidget();
+                              }
+                              return SpinnerWidget(
+                                items:
+                                    state.getSpinnerItems(selectedId: request.agencyId)..insert(
+                                      0,
+                                      SpinnerItem(
+                                          name: 'الوكيل',
+                                          item: null,
+                                          id: -1,
+                                          isSelected: request.agencyId == null),
+                                    ),
+                                width: 1.0.sw,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                      width: 1.0.spMin, color: AppColorManager.gray),
+                                  borderRadius: BorderRadius.circular(12.0.r),
+                                ),
+                                onChanged: (spinnerItem) {
+                                  request.agencyId = spinnerItem.id;
+                                },
+                              );
                             },
                           ),
                         ),

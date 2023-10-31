@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qareeb_dash/core/strings/app_color_manager.dart';
 import 'package:qareeb_dash/core/widgets/my_button.dart';
@@ -9,7 +10,9 @@ import 'package:qareeb_models/global.dart';
 
 import '../../../../../core/api_manager/command.dart';
 import '../../../../../core/util/my_style.dart';
+import '../../../../../core/util/shared_preferences.dart';
 import '../../../../../core/widgets/select_date.dart';
+import '../../../../agencies/bloc/agencies_cubit/agencies_cubit.dart';
 import '../../../../trip/data/request/filter_trip_request.dart';
 
 class TripsFilterWidget extends StatefulWidget {
@@ -175,7 +178,10 @@ class _TripsFilterWidgetState extends State<TripsFilterWidget> {
                   ),
                 ),
               ],
-              15.0.horizontalSpace,
+            ],
+          ),
+          Row(
+            children: [
               Expanded(
                 child: SpinnerWidget(
                   key: key2,
@@ -191,6 +197,32 @@ class _TripsFilterWidgetState extends State<TripsFilterWidget> {
                   onChanged: (item) => request.tripType = item.item,
                 ),
               ),
+              if (!isAgency) 15.0.horizontalSpace,
+              if (!isAgency)
+                Expanded(
+                  child: BlocBuilder<AgenciesCubit, AgenciesInitial>(
+                    builder: (context, state) {
+                      if (state.statuses.isLoading) {
+                        return MyStyle.loadingWidget();
+                      }
+                      return SpinnerWidget(
+                        items: state.getSpinnerItems(selectedId: request.agencyId)
+                          ..insert(
+                            0,
+                            SpinnerItem(
+                                name: 'الوكيل',
+                                item: null,
+                                id: -1,
+                                isSelected: request.agencyId == null),
+                          ),
+                        width: 1.0.sw,
+                        onChanged: (spinnerItem) {
+                          request.agencyId = spinnerItem.id;
+                        },
+                      );
+                    },
+                  ),
+                ),
             ],
           ),
           20.0.verticalSpace,

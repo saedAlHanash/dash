@@ -143,7 +143,7 @@ class User {
   final String phoneNumber;
   final String avatar;
   final String emergencyPhone;
-  final UserType userType;
+  final String userType;
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
@@ -154,7 +154,7 @@ class User {
       phoneNumber: json["phoneNumber"] ?? "",
       avatar: json["avatar"] ?? "",
       emergencyPhone: json["emergencyPhone"] ?? "",
-      userType: UserType.values[json["userType"] ?? 0],
+      userType: json["userType"] ?? "",
     );
   }
 
@@ -166,6 +166,6 @@ class User {
         "phoneNumber": phoneNumber,
         "avatar": avatar,
         "emergencyPhone": emergencyPhone,
-        "userType": userType.index,
+        "userType": userType,
       };
 }

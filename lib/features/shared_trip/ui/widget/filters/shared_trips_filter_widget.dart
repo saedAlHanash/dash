@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qareeb_dash/core/strings/app_color_manager.dart';
 import 'package:qareeb_dash/core/widgets/my_button.dart';
 import 'package:qareeb_dash/core/widgets/my_text_form_widget.dart';
 import 'package:qareeb_models/extensions.dart';
+import 'package:qareeb_models/global.dart';
 
 import '../../../../../core/api_manager/command.dart';
 import '../../../../../core/util/my_style.dart';
+import '../../../../../core/util/shared_preferences.dart';
 import '../../../../../core/widgets/select_date.dart';
+import '../../../../../core/widgets/spinner_widget.dart';
+import '../../../../agencies/bloc/agencies_cubit/agencies_cubit.dart';
 import '../../../../trip/data/request/filter_trip_request.dart';
 
 class SharedFilterWidget extends StatefulWidget {
@@ -149,6 +154,31 @@ class _SharedFilterWidgetState extends State<SharedFilterWidget> {
                       request.endTime = selected;
                     },
                   ),
+                ),
+              ),  if(!isAgency)
+              15.0.horizontalSpace,  if(!isAgency)
+              Expanded(
+                child: BlocBuilder<AgenciesCubit, AgenciesInitial>(
+                  builder: (context, state) {
+                    if (state.statuses.isLoading) {
+                      return MyStyle.loadingWidget();
+                    }
+                    return SpinnerWidget(
+                      items: state.getSpinnerItems(selectedId: request.agencyId)
+                        ..insert(
+                          0,
+                          SpinnerItem(
+                              name: 'الوكيل',
+                              item: null,
+                              id: -1,
+                              isSelected: request.agencyId == null),
+                        ),
+                      width: 1.0.sw,
+                      onChanged: (spinnerItem) {
+                        request.agencyId = spinnerItem.id;
+                      },
+                    );
+                  },
                 ),
               ),
             ],

@@ -7,11 +7,10 @@ import 'package:qareeb_models/global.dart';
 import 'package:qareeb_models/trip_process/data/response/trip_response.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../features/profile/data/response/profile_info_response.dart';
-
 class AppSharedPreference {
   static const _token = '1';
   static const _myId = '2';
+  static const _agencyId = '2851621';
   static const _phoneNumber = '3';
   static const _toScreen = '4';
   static const _policy = '5';
@@ -65,7 +64,15 @@ class AppSharedPreference {
     _prefs?.setInt(_myId, id);
   }
 
-  static cashUser(LoginResult user) async {
+  static int get getMyId => _prefs?.getInt(_myId) ?? 0;
+
+  static cashAgencyId(int id) {
+    _prefs?.setInt(_agencyId, id);
+  }
+
+  static int get getAgencyId => _prefs?.getInt(_agencyId) ?? 0;
+
+  static cashUser(UserModel user) async {
     final string = jsonEncode(user);
     await _prefs?.setString(_user, string);
   }
@@ -81,10 +88,10 @@ class AppSharedPreference {
     return s;
   }
 
-  static LoginResult get getUser {
+  static UserModel get getUser {
     final string = _prefs?.getString(_user) ?? '{}';
 
-    return LoginResult.fromJson(jsonDecode(string));
+    return UserModel.fromJson(jsonDecode(string));
   }
 
   static String getToken() {
@@ -94,8 +101,6 @@ class AppSharedPreference {
   static String getPhoneNumber() {
     return _prefs?.getString(_phoneNumber) ?? '';
   }
-
-  static int get getMyId => _prefs?.getInt(_myId) ?? 0;
 
   static cashStateScreen(StateScreen appState) {
     _prefs?.setInt(_toScreen, appState.index);
@@ -154,19 +159,6 @@ class AppSharedPreference {
     APIService.reInitial();
   }
 
-  static void cashProfileInfo(ProfileInfoResult result) {
-    final json = jsonEncode(result);
-    _prefs?.setString(_profileInfo, json);
-  }
-
-  static ProfileInfoResult? getProfileInfo() {
-    var json = _prefs?.getString(_profileInfo);
-    if (json == null || json.isEmpty) return null;
-
-    var result = ProfileInfoResult.fromJson(jsonDecode(json));
-    return result;
-  }
-
   static void cashTrip(Trip? trip) {
     if (trip == null) return;
     _prefs?.setString(_trip, jsonEncode(trip));
@@ -197,7 +189,6 @@ class AppSharedPreference {
 
   static String get ime => _prefs?.getString(_ime) ?? '';
 
-
   static void cashDriverAvailable(bool isAvailable) {
     _prefs?.setBool(_driverAvailable, isAvailable);
   }
@@ -217,9 +208,7 @@ class AppSharedPreference {
 
   static String get getEmail => _prefs?.getString(_email) ?? '';
 
-  // static changeTestMode() {
-  //   _prefs?.setBool(_testMode, !isTestMode);
-  // }
-  //
-  // static bool get isTestMode => _prefs?.getBool(_testMode) ?? false;
+
 }
+
+bool get isAgency => AppSharedPreference.getAgencyId != 0;

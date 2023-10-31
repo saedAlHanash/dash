@@ -1,35 +1,35 @@
 import 'package:qareeb_dash/core/api_manager/api_service.dart';
 import 'package:qareeb_models/extensions.dart';
 
-class FinancialFilterRequest {
+class DriverFinancialFilterRequest {
   int? driverId;
   DateTime? startTime;
   DateTime? endTime;
 
-  FinancialFilterRequest({
+  DriverFinancialFilterRequest({
     this.driverId,
     this.startTime,
     this.endTime,
   });
 
-  FinancialFilterRequest week() {
+  DriverFinancialFilterRequest week() {
     return copyWith(startTime: getServerDate.addFromNow(day: -7));
   }
 
-  FinancialFilterRequest month() {
+  DriverFinancialFilterRequest month() {
     return copyWith(startTime: getServerDate.addFromNow(month: -1));
   }
 
-  FinancialFilterRequest year() {
+  DriverFinancialFilterRequest year() {
     return copyWith(startTime: getServerDate.addFromNow(year: -1));
   }
 
-  FinancialFilterRequest copyWith({
+  DriverFinancialFilterRequest copyWith({
     int? driverId,
     DateTime? startTime,
     DateTime? endTime,
   }) {
-    return FinancialFilterRequest(
+    return DriverFinancialFilterRequest(
       driverId: driverId ?? this.driverId,
       startTime: startTime ?? this.startTime,
       endTime: endTime ?? this.endTime,

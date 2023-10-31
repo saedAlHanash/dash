@@ -7,7 +7,7 @@ import 'package:qareeb_models/global.dart';
 
 class CreateDriverRequest {
   CreateDriverRequest({
-    this.carGovernorate = 'ميكروباص',
+    this.carGovernorate,
     this.type = 'سياحي',
   });
 
@@ -24,6 +24,7 @@ class CreateDriverRequest {
   String? carNumber;
   num? carCategoryID;
   String? imei;
+  int? agencyId;
   int? id;
   String? carGovernorate;
   String? manufacturingYear;
@@ -53,6 +54,7 @@ class CreateDriverRequest {
       'carNumber': carNumber,
       'carCategoryID': carCategoryID,
       'imei': imei,
+      'AgencyId': agencyId,
       'id': id,
       'carGovernorate': carGovernorate,
       'manufacturingYear': manufacturingYear,
@@ -158,6 +160,7 @@ class CreateDriverRequest {
     r.carNumber = driver.carType.carNumber;
     r.carCategoryID = driver.carCategoryId;
     r.imei = driver.qarebDeviceimei;
+    r.agencyId = driver.agency.id;
     r.carGovernorate = driver.carType.carGovernorate;
     r.manufacturingYear = driver.carType.manufacturingYear;
     r.type = driver.carType.type;

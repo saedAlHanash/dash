@@ -1,3 +1,5 @@
+import 'package:qareeb_dash/core/strings/fix_url.dart';
+
 class AgenciesResponse {
   AgenciesResponse({
     required this.result,
@@ -7,7 +9,7 @@ class AgenciesResponse {
 
   factory AgenciesResponse.fromJson(Map<String, dynamic> json) {
     return AgenciesResponse(
-      result: AgenciesResult.fromJson(json["result"]??{}),
+      result: AgenciesResult.fromJson(json["result"] ?? {}),
     );
   }
 
@@ -44,20 +46,28 @@ class Agency {
   Agency({
     required this.id,
     required this.name,
+    required this.imageUrl,
+    required this.agencyRatio,
   });
 
   final int id;
   final String name;
+  final String imageUrl;
+  final num agencyRatio;
 
   factory Agency.fromJson(Map<String, dynamic> json) {
     return Agency(
       id: json["id"] ?? 0,
       name: json["name"] ?? "",
+      imageUrl: fixAvatarImage(json["imageUrl"] ?? ""),
+      agencyRatio: json["agencyRatio"] ?? 0,
     );
   }
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
+        "imageUrl": imageUrl,
+        "agencyRatio": agencyRatio,
       };
 }

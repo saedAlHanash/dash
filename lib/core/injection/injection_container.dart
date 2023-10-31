@@ -60,8 +60,7 @@ import '../../features/points/bloc/get_all_points_cubit/get_edged_point_cubit.da
 import '../../features/points/bloc/get_edged_point_cubit/get_all_points_cubit.dart';
 import '../../features/points/bloc/get_points_edge_cubit/get_points_edge_cubit.dart';
 import '../../features/points/bloc/point_by_id_cubit/point_by_id_cubit.dart';
-import '../../features/profile/bloc/profile_info_cubit/profile_info_cubit.dart';
-import '../../features/profile/bloc/update_profile_cubit/update_profile_cubit.dart';
+
 import '../../features/reasons/bloc/create_cubit/create_cubit.dart';
 import '../../features/reasons/bloc/delete_reason_cubit/delete_reason_cubit.dart';
 import '../../features/reasons/bloc/get_reasons_cubit/get_reasons_cubit.dart';
@@ -132,8 +131,7 @@ Future<void> init() async {
 
   //region profile
   /// Bloc
-  sl.registerFactory(() => ProfileInfoCubit());
-  sl.registerFactory(() => UpdateProfileCubit());
+
 
   //endregion
 

@@ -28,7 +28,5 @@ extension NormalTripMap on Trip {
     return ' $preAcceptDistance ${AppStringManager.km}';
   }
 
-  bool get iamDriver {
-    return (driver.id == 0) || (driver.id == AppSharedPreference.getMyId);
-  }
+
 }

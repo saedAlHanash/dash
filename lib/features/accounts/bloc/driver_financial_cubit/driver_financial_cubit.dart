@@ -10,7 +10,7 @@ import 'package:qareeb_models/wallet/data/response/driver_financial_response.dar
 import '../../../../core/api_manager/api_service.dart';
 import '../../../../core/util/note_message.dart';
 import '../../../../core/util/pair_class.dart';
-import '../../data/request/financial_filter_request.dart';
+import '../../data/request/driver_financial_filter_request.dart';
 
 part 'driver_financial_state.dart';
 
@@ -19,7 +19,7 @@ class DriverFinancialCubit extends Cubit<DriverFinancialInitial> {
 
   Future<void> getDriverFinancial(
     BuildContext context, {
-     FinancialFilterRequest? request,
+     DriverFinancialFilterRequest? request,
   }) async {
     emit(state.copyWith(statuses: CubitStatuses.loading, request: request));
     final pair = await _getDriverFinancialApi();

@@ -1,3 +1,4 @@
+import 'package:qareeb_dash/features/agencies/data/response/agency_response.dart';
 import 'package:qareeb_models/global.dart';
 
 import '../../../../core/strings/fix_url.dart';
@@ -76,6 +77,7 @@ class DriverModel {
     required this.driverStatus,
     required this.rejectedTripsCount,
     required this.receivedTripsCount,
+    required this.agency,
   });
 
   final int id;
@@ -111,6 +113,7 @@ class DriverModel {
   final DriverStatus driverStatus;
   final num rejectedTripsCount;
   final num receivedTripsCount;
+  final Agency agency;
 
   factory DriverModel.fromJson(Map<String, dynamic> json) {
     return DriverModel(
@@ -149,6 +152,7 @@ class DriverModel {
       driverStatus: DriverStatus.values[json["driverStatus"] ?? 0],
       rejectedTripsCount: json["rejectedTripsCount"] ?? 0,
       receivedTripsCount: json["receivedTripsCount"] ?? 0,
+      agency: Agency.fromJson(json["agency"] ?? {}),
     );
   }
 
@@ -186,6 +190,7 @@ class DriverModel {
         "driverStatus": driverStatus.index,
         "rejectedTripsCount": rejectedTripsCount,
         "receivedTripsCount": receivedTripsCount,
+        "agency": agency.toJson(),
       };
 }
 

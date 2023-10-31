@@ -6,7 +6,7 @@ import 'package:map_package/map/bloc/map_controller_cubit/map_controller_cubit.d
 import 'package:map_package/map/bloc/search_location/search_location_cubit.dart';
 import 'package:map_package/map/bloc/set_point_cubit/map_control_cubit.dart';
 import 'package:qareeb_dash/core/api_manager/command.dart';
-import 'package:qareeb_dash/features/accounts/data/request/financial_filter_request.dart';
+import 'package:qareeb_dash/features/accounts/data/request/driver_financial_filter_request.dart';
 import 'package:qareeb_dash/features/admins/bloc/create_admin_cubit/create_admin_cubit.dart';
 import 'package:qareeb_dash/features/admins/ui/pages/create_admin_page.dart';
 import 'package:qareeb_dash/features/car_catigory/data/response/car_categories_response.dart';
@@ -39,6 +39,7 @@ import '../features/clients/ui/pages/client_info_page.dart';
 import '../features/coupons/bloc/create_coupon_cubit/create_coupon_cubit.dart';
 import '../features/coupons/ui/pages/create_coupon_page.dart';
 import '../features/drivers/ui/pages/driver_info_page.dart';
+import '../features/home/ui/pages/agency_home_page.dart';
 import '../features/institutions/bloc/create_institution_cubit/create_institution_cubit.dart';
 import '../features/institutions/data/response/institutions_response.dart';
 import '../features/institutions/ui/pages/create_institution_page.dart';
@@ -121,7 +122,7 @@ final appGoRouter = GoRouter(
 
         return MultiBlocProvider(
           providers: providers,
-          child: const HomePage(),
+          child: isAgency ? const AgencyHomePage() : const HomePage(),
         );
       },
     ),
@@ -151,7 +152,8 @@ final appGoRouter = GoRouter(
                   di.sl<RedeemsHistoryCubit>()..getRedeemsHistory(_, driverId: id)),
           BlocProvider(
             create: (_) => di.sl<DriverFinancialCubit>()
-              ..getDriverFinancial(_, request: FinancialFilterRequest(driverId: id)),
+              ..getDriverFinancial(_,
+                  request: DriverFinancialFilterRequest(driverId: id)),
           ),
         ];
         return MultiBlocProvider(
