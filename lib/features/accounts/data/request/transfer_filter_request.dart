@@ -34,8 +34,8 @@ class TransferFilterRequest{
   Map<String, dynamic> toMap() {
     return {
       'userName': userName,
-      'startTime': startTime?.toIso8601String(),
-      'endTime': endTime?.toIso8601String(),
+      'FromDateTime': startTime?.toIso8601String(),
+      'ToDateTime': endTime?.toIso8601String(),
       'type': type?.index,
       'status': status?.index,
     };
