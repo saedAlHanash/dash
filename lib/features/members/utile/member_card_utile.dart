@@ -175,5 +175,5 @@ Future<Uint8List> getQrImage(int id) async {
   final image = await painter.toImage(100);
   final pngBytes = await image.toByteData(format: ImageByteFormat.png);
 
-  return testComparesListQuality(pngBytes!.buffer.asUint8List());
+  return pngBytes!.buffer.asUint8List();
 }

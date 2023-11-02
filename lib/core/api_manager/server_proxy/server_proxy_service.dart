@@ -38,6 +38,6 @@ Future<Response> getServerProxyRowApi({required String url}) async {
       url: 'api/services/app/HttpRequestService/GetImageAsByteArray',
       query: {
         'imageUrl': url,
-        'quality': 50,
+        // 'quality': 50,
       });
 }

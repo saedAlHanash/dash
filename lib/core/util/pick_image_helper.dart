@@ -28,7 +28,7 @@ class PickImageHelper {
 
     if(result==null)return null;
 
-    return testComparesListQuality(await result.readAsBytes());
+    return await result.readAsBytes();
   }
 
 // // Pick an image
