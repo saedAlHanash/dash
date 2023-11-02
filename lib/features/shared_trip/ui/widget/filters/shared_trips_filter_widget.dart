@@ -13,6 +13,7 @@ import '../../../../../core/util/shared_preferences.dart';
 import '../../../../../core/widgets/select_date.dart';
 import '../../../../../core/widgets/spinner_widget.dart';
 import '../../../../agencies/bloc/agencies_cubit/agencies_cubit.dart';
+import '../../../../car_catigory/bloc/all_car_categories_cubit/all_car_categories_cubit.dart';
 import '../../../../trip/data/request/filter_trip_request.dart';
 
 class SharedFilterWidget extends StatefulWidget {
@@ -37,7 +38,8 @@ class _SharedFilterWidgetState extends State<SharedFilterWidget> {
   late final TextEditingController driverNameC;
   late final TextEditingController clientPhoneC;
   late final TextEditingController driverPhoneC;
-
+  final key1 = GlobalKey<SpinnerWidgetState>();
+  final key3 = GlobalKey<SpinnerWidgetState>();
 
   @override
   void initState() {
@@ -155,32 +157,61 @@ class _SharedFilterWidgetState extends State<SharedFilterWidget> {
                     },
                   ),
                 ),
-              ),  if(!isAgency)
-              15.0.horizontalSpace,  if(!isAgency)
+              ),
+              15.0.horizontalSpace,
               Expanded(
-                child: BlocBuilder<AgenciesCubit, AgenciesInitial>(
+                child: BlocBuilder<AllCarCategoriesCubit, AllCarCategoriesInitial>(
                   builder: (context, state) {
                     if (state.statuses.isLoading) {
                       return MyStyle.loadingWidget();
                     }
                     return SpinnerWidget(
-                      items: state.getSpinnerItems(selectedId: request.agencyId)
+                      key: key3,
+                      items: state.getSpinnerItems(selectedId: request.carCategoryId)
                         ..insert(
                           0,
                           SpinnerItem(
-                              name: 'الوكيل',
+                              name: 'تصنيف السيارة',
                               item: null,
                               id: -1,
-                              isSelected: request.agencyId == null),
+                              isSelected: request.carCategoryId == null),
                         ),
                       width: 1.0.sw,
                       onChanged: (spinnerItem) {
-                        request.agencyId = spinnerItem.id;
+                        request.carCategoryId = spinnerItem.id;
                       },
                     );
                   },
                 ),
               ),
+              if (!isAgency) ...[
+                15.0.horizontalSpace,
+                Expanded(
+                  child: BlocBuilder<AgenciesCubit, AgenciesInitial>(
+                    builder: (context, state) {
+                      if (state.statuses.isLoading) {
+                        return MyStyle.loadingWidget();
+                      }
+                      return SpinnerWidget(
+                        key: key3,
+                        items: state.getSpinnerItems(selectedId: request.agencyId)
+                          ..insert(
+                            0,
+                            SpinnerItem(
+                                name: 'الوكيل',
+                                item: null,
+                                id: -1,
+                                isSelected: request.agencyId == null),
+                          ),
+                        width: 1.0.sw,
+                        onChanged: (spinnerItem) {
+                          request.agencyId = spinnerItem.id;
+                        },
+                      );
+                    },
+                  ),
+                ),
+              ],
             ],
           ),
           20.0.verticalSpace,
@@ -211,6 +242,9 @@ class _SharedFilterWidgetState extends State<SharedFilterWidget> {
                       driverPhoneC.text = '';
                       clientIdC.text = '';
                       driverIdC.text = '';
+                      key1.currentState?.clearSelect();
+
+                      key3.currentState?.clearSelect();
                     });
                     widget.onApply?.call(request);
                   },

@@ -4,6 +4,7 @@ class DriversFilterRequest {
   String? name;
   String? phoneNo;
   int? agencyId;
+  int? carCategoryId;
   Gender? gender;
   DriverStatus? status;
 
@@ -11,6 +12,7 @@ class DriversFilterRequest {
     this.name,
     this.phoneNo,
     this.agencyId,
+    this.carCategoryId,
     this.gender,
     this.status,
   });
@@ -20,6 +22,7 @@ class DriversFilterRequest {
     name = null;
     phoneNo = null;
     agencyId = null;
+    carCategoryId = null;
     gender = null;
     status = null;
   }
@@ -28,6 +31,7 @@ class DriversFilterRequest {
     String? name,
     String? phoneNo,
     int? agencyId,
+    int? carCategoryId,
     Gender? gender,
     DriverStatus? status,
   }) {
@@ -35,6 +39,7 @@ class DriversFilterRequest {
       name: name ?? this.name,
       phoneNo: phoneNo ?? this.phoneNo,
       agencyId: agencyId ?? this.agencyId,
+      carCategoryId: carCategoryId ?? this.carCategoryId,
       gender: gender ?? this.gender,
       status: status ?? this.status,
     );
@@ -45,6 +50,7 @@ class DriversFilterRequest {
       'Name': name,
       'Phone': phoneNo,
       'agencyId': agencyId,
+      'carCategoryId': carCategoryId,
       'Gender': gender,
       'Status': status?.index,
     };
@@ -55,6 +61,7 @@ class DriversFilterRequest {
       name: map['name'] ?? '',
       phoneNo: map['phoneNo'] ?? '',
       agencyId: map['agencyId'] ?? '',
+      carCategoryId: map['carCategoryId'] ?? '',
       gender: map['gender'] ?? '',
       status: map['status'] ?? '',
     );

@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_multi_type/image_multi_type.dart';
 import 'package:qareeb_dash/core/api_manager/api_service.dart';
+import 'package:qareeb_dash/core/util/shared_preferences.dart';
 import 'package:qareeb_dash/generated/assets.dart';
 import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_models/wallet/data/response/driver_financial_response.dart';
@@ -108,7 +109,7 @@ class DriverFinancialWidget extends StatelessWidget {
                       e.amount == 0 ? 'عملية استرجاع' : e.amount.formatPrice,
                       e.status.arabicName,
                       e.date?.formatDate,
-                      e.amount == 0
+                      (e.amount == 0 || isAgency)
                           ? 0.0.verticalSpace
                           : BlocBuilder<ReverseChargingCubit, ReverseChargingInitial>(
                               builder: (context, state) {

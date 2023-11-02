@@ -4,6 +4,7 @@ class FilterTripRequest {
   int? clientId;
   int? driverId;
   int? agencyId;
+  int? carCategoryId;
 
   String? driverName;
   String? clientName;
@@ -21,6 +22,7 @@ class FilterTripRequest {
     this.clientId,
     this.driverId,
     this.agencyId,
+    this.carCategoryId,
     this.clientName,
     this.driverName,
     this.clientPhone,
@@ -36,6 +38,7 @@ class FilterTripRequest {
       'ClientId': clientId,
       'DriverId': driverId,
       'agencyId': agencyId,
+      'carCategoryId': carCategoryId,
       'DriverName': driverName,
       'ClientName': clientName,
       'DriverPhone': driverPhone,
@@ -50,6 +53,7 @@ class FilterTripRequest {
   void clearFilter() {
     clientId = null;
     driverId = null;
+    carCategoryId = null;
     agencyId = null;
     driverName = null;
     clientName = null;

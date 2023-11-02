@@ -12,6 +12,7 @@ import '../../../../core/util/shared_preferences.dart';
 import '../../../../core/widgets/my_text_form_widget.dart';
 import '../../../../core/widgets/spinner_widget.dart';
 import '../../../agencies/bloc/agencies_cubit/agencies_cubit.dart';
+import '../../../car_catigory/bloc/all_car_categories_cubit/all_car_categories_cubit.dart';
 import '../../data/request/drivers_filter_request.dart';
 
 class DriversFilterWidget extends StatefulWidget {
@@ -31,6 +32,8 @@ class _DriversFilterWidgetState extends State<DriversFilterWidget> {
   late final TextEditingController phoneNoC;
   late final TextEditingController nameC;
   final key1 = GlobalKey<SpinnerWidgetState>();
+  final key2 = GlobalKey<SpinnerWidgetState>();
+  final key3 = GlobalKey<SpinnerWidgetState>();
 
   @override
   void initState() {
@@ -70,6 +73,10 @@ class _DriversFilterWidgetState extends State<DriversFilterWidget> {
                 ),
               ),
               15.0.horizontalSpace,
+            ],
+          ),
+          Row(
+            children: [
               Expanded(
                 child: SpinnerWidget(
                   key: key1,
@@ -86,33 +93,60 @@ class _DriversFilterWidgetState extends State<DriversFilterWidget> {
                   onChanged: (p0) => request.status = p0.item,
                 ),
               ),
-              if(!isAgency)
               15.0.horizontalSpace,
-              if(!isAgency)
               Expanded(
-                child: BlocBuilder<AgenciesCubit, AgenciesInitial>(
+                child: BlocBuilder<AllCarCategoriesCubit, AllCarCategoriesInitial>(
                   builder: (context, state) {
                     if (state.statuses.isLoading) {
                       return MyStyle.loadingWidget();
                     }
                     return SpinnerWidget(
-                      items: state.getSpinnerItems(selectedId: request.agencyId)
+                      key: key2,
+                      items: state.getSpinnerItems(selectedId: request.carCategoryId)
                         ..insert(
                           0,
                           SpinnerItem(
-                              name: 'الوكيل',
+                              name: 'تصنيف السيارة',
                               item: null,
                               id: -1,
-                              isSelected: request.agencyId == null),
+                              isSelected: request.carCategoryId == null),
                         ),
                       width: 1.0.sw,
                       onChanged: (spinnerItem) {
-                        request.agencyId = spinnerItem.id;
+                        request.carCategoryId = spinnerItem.id;
                       },
                     );
                   },
                 ),
               ),
+              if (!isAgency) ...[
+                15.0.horizontalSpace,
+                Expanded(
+                  child: BlocBuilder<AgenciesCubit, AgenciesInitial>(
+                    builder: (context, state) {
+                      if (state.statuses.isLoading) {
+                        return MyStyle.loadingWidget();
+                      }
+                      return SpinnerWidget(
+                        key: key3,
+                        items: state.getSpinnerItems(selectedId: request.agencyId)
+                          ..insert(
+                            0,
+                            SpinnerItem(
+                                name: 'الوكيل',
+                                item: null,
+                                id: -1,
+                                isSelected: request.agencyId == null),
+                          ),
+                        width: 1.0.sw,
+                        onChanged: (spinnerItem) {
+                          request.agencyId = spinnerItem.id;
+                        },
+                      );
+                    },
+                  ),
+                ),
+              ],
             ],
           ),
           Row(
@@ -139,6 +173,8 @@ class _DriversFilterWidgetState extends State<DriversFilterWidget> {
                     });
                     widget.onApply?.call(request);
                     key1.currentState?.clearSelect();
+                    key2.currentState?.clearSelect();
+                    key3.currentState?.clearSelect();
                   },
                 ),
               ),

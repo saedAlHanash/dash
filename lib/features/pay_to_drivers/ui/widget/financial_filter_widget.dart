@@ -12,6 +12,7 @@ import '../../../../core/util/shared_preferences.dart';
 import '../../../../core/widgets/my_text_form_widget.dart';
 import '../../../../core/widgets/spinner_widget.dart';
 import '../../../agencies/bloc/agencies_cubit/agencies_cubit.dart';
+import '../../../car_catigory/bloc/all_car_categories_cubit/all_car_categories_cubit.dart';
 import '../../data/request/financial_filter_request.dart';
 
 class FinancialFilterWidget extends StatefulWidget {
@@ -34,6 +35,7 @@ class _FinancialFilterWidgetState extends State<FinancialFilterWidget> {
   late final TextEditingController phoneNoC;
   late final TextEditingController nameC;
   final key1 = GlobalKey<SpinnerWidgetState>();
+  final key3 = GlobalKey<SpinnerWidgetState>();
 
   @override
   void initState() {
@@ -71,8 +73,37 @@ class _FinancialFilterWidgetState extends State<FinancialFilterWidget> {
                   controller: phoneNoC,
                   onChanged: (p0) => request.phoneNo = p0,
                 ),
-              ),  if(!isAgency)
-              15.0.horizontalSpace,  if(!isAgency)
+              ),
+              15.0.horizontalSpace,
+              Expanded(
+                child: BlocBuilder<AllCarCategoriesCubit, AllCarCategoriesInitial>(
+                  builder: (context, state) {
+                    if (state.statuses.isLoading) {
+                      return MyStyle.loadingWidget();
+                    }
+                    return SpinnerWidget(
+                      key: key3,
+                      items: state.getSpinnerItems(selectedId: request.carCategoryId)
+                        ..insert(
+                          0,
+                          SpinnerItem(
+                              name: 'تصنيف السيارة',
+                              item: null,
+                              id: -1,
+                              isSelected: request.carCategoryId == null),
+                        ),
+                      width: 1.0.sw,
+                      onChanged: (spinnerItem) {
+                        request.carCategoryId = spinnerItem.id;
+                      },
+                    );
+                  },
+                ),
+              ),
+              if(!isAgency)
+                ...[
+
+              15.0.horizontalSpace,
               Expanded(
                 child: BlocBuilder<AgenciesCubit, AgenciesInitial>(
                   builder: (context, state) {
@@ -80,6 +111,7 @@ class _FinancialFilterWidgetState extends State<FinancialFilterWidget> {
                       return MyStyle.loadingWidget();
                     }
                     return SpinnerWidget(
+                      key: key1 ,
                       items: state.getSpinnerItems(selectedId: request.agencyId)
                         ..insert(
                           0,
@@ -97,6 +129,7 @@ class _FinancialFilterWidgetState extends State<FinancialFilterWidget> {
                   },
                 ),
               ),
+                ],
             ],
           ),
           Row(
@@ -120,6 +153,8 @@ class _FinancialFilterWidgetState extends State<FinancialFilterWidget> {
                       request.clearFilter();
                       phoneNoC.text = request.phoneNo ?? '';
                       nameC.text = request.name ?? '';
+                      key1.currentState?.clearSelect();
+                      key3.currentState?.clearSelect();
                     });
                     widget.onApply?.call(request);
                     if (widget.isDriver) key1.currentState?.clearSelect();

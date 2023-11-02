@@ -13,6 +13,7 @@ import '../../../../../core/util/my_style.dart';
 import '../../../../../core/util/shared_preferences.dart';
 import '../../../../../core/widgets/select_date.dart';
 import '../../../../agencies/bloc/agencies_cubit/agencies_cubit.dart';
+import '../../../../car_catigory/bloc/all_car_categories_cubit/all_car_categories_cubit.dart';
 import '../../../../trip/data/request/filter_trip_request.dart';
 
 class TripsFilterWidget extends StatefulWidget {
@@ -42,6 +43,8 @@ class _TripsFilterWidgetState extends State<TripsFilterWidget> {
 
   final key1 = GlobalKey<SpinnerWidgetState>();
   final key2 = GlobalKey<SpinnerWidgetState>();
+  final key3 = GlobalKey<SpinnerWidgetState>();
+  final key4 = GlobalKey<SpinnerWidgetState>();
 
   @override
   void initState() {
@@ -197,8 +200,34 @@ class _TripsFilterWidgetState extends State<TripsFilterWidget> {
                   onChanged: (item) => request.tripType = item.item,
                 ),
               ),
-              if (!isAgency) 15.0.horizontalSpace,
-              if (!isAgency)
+              15.0.horizontalSpace,
+              Expanded(
+                child: BlocBuilder<AllCarCategoriesCubit, AllCarCategoriesInitial>(
+                  builder: (context, state) {
+                    if (state.statuses.isLoading) {
+                      return MyStyle.loadingWidget();
+                    }
+                    return SpinnerWidget(
+                      key: key3,
+                      items: state.getSpinnerItems(selectedId: request.carCategoryId)
+                        ..insert(
+                          0,
+                          SpinnerItem(
+                              name: 'تصنيف السيارة',
+                              item: null,
+                              id: -1,
+                              isSelected: request.carCategoryId == null),
+                        ),
+                      width: 1.0.sw,
+                      onChanged: (spinnerItem) {
+                        request.carCategoryId = spinnerItem.id;
+                      },
+                    );
+                  },
+                ),
+              ),
+              if (!isAgency) ...[
+                15.0.horizontalSpace,
                 Expanded(
                   child: BlocBuilder<AgenciesCubit, AgenciesInitial>(
                     builder: (context, state) {
@@ -206,6 +235,7 @@ class _TripsFilterWidgetState extends State<TripsFilterWidget> {
                         return MyStyle.loadingWidget();
                       }
                       return SpinnerWidget(
+                        key: key4,
                         items: state.getSpinnerItems(selectedId: request.agencyId)
                           ..insert(
                             0,
@@ -223,6 +253,7 @@ class _TripsFilterWidgetState extends State<TripsFilterWidget> {
                     },
                   ),
                 ),
+              ]
             ],
           ),
           20.0.verticalSpace,
@@ -246,6 +277,8 @@ class _TripsFilterWidgetState extends State<TripsFilterWidget> {
                     setState(() {
                       key1.currentState?.clearSelect();
                       key2.currentState?.clearSelect();
+                      key3.currentState?.clearSelect();
+                      key4.currentState?.clearSelect();
                       request.clearFilter();
                       startDateC.text = '';
                       endDateC.text = '';

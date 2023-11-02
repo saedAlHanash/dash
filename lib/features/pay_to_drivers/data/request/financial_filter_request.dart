@@ -5,6 +5,7 @@ class FinancialFilterRequest {
   String? phoneNo;
   bool? isAvailable;
   int? agencyId;
+  int? carCategoryId;
   Gender? gender;
 
   FinancialFilterRequest({
@@ -12,6 +13,7 @@ class FinancialFilterRequest {
     this.phoneNo,
     this.isAvailable,
     this.agencyId,
+    this.carCategoryId,
     this.gender,
   });
 
@@ -23,6 +25,7 @@ class FinancialFilterRequest {
     name = null;
     isAvailable = null;
     agencyId = null;
+    carCategoryId = null;
     phoneNo = null;
     gender = null;
   }
@@ -32,6 +35,7 @@ class FinancialFilterRequest {
     String? phoneNo,
     bool? isAvailable,
     int? agencyId,
+    int? carCategoryId,
     Gender? gender,
   }) {
     return FinancialFilterRequest(
@@ -39,6 +43,7 @@ class FinancialFilterRequest {
       phoneNo: phoneNo ?? this.phoneNo,
       isAvailable: isAvailable ?? this.isAvailable,
       agencyId: agencyId ?? this.agencyId,
+      carCategoryId: carCategoryId ?? this.carCategoryId,
       gender: gender ?? this.gender,
     );
   }
@@ -49,6 +54,7 @@ class FinancialFilterRequest {
       'phone': phoneNo,
       'isAvailable': isAvailable,
       'agencyId': agencyId,
+      'carCategoryId': carCategoryId,
       'Gender': gender,
     };
   }
@@ -59,6 +65,7 @@ class FinancialFilterRequest {
       phoneNo: map['phoneNo'] ?? '',
       isAvailable: map['isAvailable'] ?? '',
       agencyId: map['agencyId'] ?? '',
+      carCategoryId: map['carCategoryId'] ?? '',
       gender: map['gender'] ?? '',
     );
   }
