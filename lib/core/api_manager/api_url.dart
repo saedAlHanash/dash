@@ -1,6 +1,7 @@
 import '../util/shared_preferences.dart';
 
 class GetUrl {
+  static const getCandidateDrivers = 'api/services/app/TripsService/GetCandidateDrivers';
   static const getAvailableTrips = 'api/services/app/TripsService/GetAvailableTrips';
   static const getPolicy = 'api/services/app/Settings/Getsettings';
   static const getSharedTrips =
@@ -103,6 +104,10 @@ class GetUrl {
   static const getDriversImei = 'api/services/app/User/GetDriversImes';
 
   static const tripDebit = 'api/services/app/DebitServices/getTripFinancialDetails';
+
+  static var getHome = 'api/services/app/DashboardService/Index';
+
+  static var driverStatusHistory ='api/services/app/UserService/GetStatusHistory';
 }
 
 class PostUrl {

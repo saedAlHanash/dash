@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,6 +17,7 @@ import '../../../../core/widgets/item_info.dart';
 import '../../../../core/widgets/my_button.dart';
 import '../../../../core/widgets/table_widget.dart';
 import '../../../../router/go_route_pages.dart';
+import '../../bloc/candidate_drivers_cubit/candidate_drivers_cubit.dart';
 import '../../bloc/trip_debit_cubit/trip_debit_cubit.dart';
 import '../../bloc/trip_status_cubit/trip_status_cubit.dart';
 import '../../data/request/update_trip_request.dart';
@@ -35,7 +37,7 @@ class _TripInfoListWidgetState extends State<TripInfoListWidget>
 
   @override
   void initState() {
-    _tabController = TabController(length: !isAgency ? 5 : 3, vsync: this);
+    _tabController = TabController(length: !isAgency ? 6 : 4, vsync: this);
     super.initState();
   }
 
@@ -57,12 +59,14 @@ class _TripInfoListWidgetState extends State<TripInfoListWidget>
           child: TabBar(
             controller: _tabController,
             labelColor: AppColorManager.mainColorDark,
+            labelStyle: TextStyle(fontSize: 18.0.sp,color: Colors.black),
             unselectedLabelColor: AppColorManager.black,
             tabs: [
               const Tab(text: 'معلومات'),
               if (!isAgency) const Tab(text: 'السائق والزبون'),
               const Tab(text: 'التاريخ والوقت'),
               const Tab(text: 'المحصلة المالية'),
+              const Tab(text: 'السائقين المرتبطين'),
               if (!isAgency) const Tab(text: 'عمليات'),
             ],
           ),
@@ -77,6 +81,7 @@ class _TripInfoListWidgetState extends State<TripInfoListWidget>
                 if (!isAgency) _DriverInfo(trip: widget.trip),
                 _TripDateInfo(trip: widget.trip),
                 _TripCost(trip: widget.trip),
+                const _TripDrivers(),
                 if (!isAgency) _TripActions(trip: widget.trip),
               ],
             ),
@@ -183,7 +188,6 @@ class _DriverInfo extends StatelessWidget {
             },
             title: 'معلومات الزبون',
           ),
-          30.0.verticalSpace,
           MyTableWidget(
             children: {
               'تصنيف ': trip.carCategory.name,
@@ -357,6 +361,59 @@ class _TripActions extends StatelessWidget {
         else
           const DrawableText(text: 'لا توجد عمليات')
       ],
+    );
+  }
+}
+
+class _TripDrivers extends StatelessWidget {
+  const _TripDrivers();
+
+
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: BlocBuilder<CandidateDriversCubit, CandidateDriversInitial>(
+        builder: (context, state) {
+          if (state.statuses.isLoading) {
+            return MyStyle.loadingWidget();
+          }
+          return SaedTableWidget(
+            title: const [
+              'معرف السائق',
+              'اسم السائق',
+              'تاريخ',
+              'حالة القبول',
+              'حالة الرفض',
+            ],
+            data: state.result
+                .mapIndexed((i, e) => [
+                      InkWell(
+                        onTap: () {
+                          context.pushNamed(
+                            GoRouteName.driverInfo,
+                            queryParams: {'id': '${e.driverId}'},
+                          );
+                        },
+                        child: DrawableText(
+                          selectable: false,
+                          size: 16.0.sp,
+                          matchParent: true,
+                          textAlign: TextAlign.center,
+                          underLine: true,
+                          text: '${e.driverId}',
+                          color: Colors.blue,
+                        ),
+                      ),
+                      e.driverName,
+                      e.requestDate?.formatDate ?? '-',
+                      e.isAccepted == null ? '-' : e.isAccepted!.toString(),
+                      e.isRejected == null ? '-' : e.isRejected!.toString(),
+                    ])
+                .toList(),
+          );
+        },
+      ),
     );
   }
 }

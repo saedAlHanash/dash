@@ -30,3 +30,11 @@ extension NormalTripMap on Trip {
 
 
 }
+
+List<List<T>> groupingList<T>(int size, List<T> list) {
+  final List<List<T>> result = [];
+  for (int i = 0; i < list.length; i += size) {
+    result.add(list.sublist(i, i + size > list.length ? list.length : i + size));
+  }
+  return result;
+}

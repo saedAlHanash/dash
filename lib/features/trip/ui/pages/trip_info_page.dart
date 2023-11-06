@@ -66,6 +66,7 @@ class _TripInfoPageState extends State<TripInfoPage> {
         body: Row(
           children: [
             Expanded(
+              flex: 6,
               child: BlocBuilder<TripByIdCubit, TripByIdInitial>(
                 builder: (context, state) {
                   if (state.statuses.isLoading) {
@@ -76,12 +77,13 @@ class _TripInfoPageState extends State<TripInfoPage> {
               ),
             ),
             20.0.horizontalSpace,
-            const Expanded(child: MapWidget()),
+            const Expanded(
+              flex: 4,
+              child: MapWidget(),
+            ),
           ],
         ),
       ),
     );
   }
 }
-
-

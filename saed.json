@@ -1,51 +1,20 @@
 {
-  "result": {
-    "totalCount": 1,
-    "items": [
-      {
-        "description": "مرحبا",
-        "memberId": null,
-        "member": null,
-        "userId": 82,
-        "user": {
-          "id": 82,
-          "userName": "Qareeb963988774834@gmail.com",
-          "fullName": "qareeb qareeb",
-          "name": "qareeb",
-          "surname": "qareeb",
-          "phoneNumber": "963988774834",
-          "avatar": "16955506922034lPoEy8tmI.jpg",
-          "emergencyPhone": null,
-          "userType": "driver",
-          "accountBalance": null
-        },
-        "institutionId": null,
-        "date": "2023-10-18T11:07:10.760138",
-        "replies": [
-          {
-            "reply": "\\سيشسيشسيشس",
-            "adminId": 1,
-            "admin": {
-              "id": 1,
-              "userName": "admin",
-              "fullName": "qareeb qareeb",
-              "name": "qareeb",
-              "surname": "qareeb",
-              "phoneNumber": "963967502444",
-              "avatar": null,
-              "emergencyPhone": null,
-              "userType": "admin",
-              "accountBalance": null
-            },
-            "ticketId": 9,
-            "date": "2023-10-19T16:01:29.034254",
-            "id": 19
-          }
-        ],
-        "id": 9
-      }
-    ]
-  },
+  "result": [
+    {
+      "driverId": 16,
+      "tripId": 16,
+      "requestDate": "2023-10-15T12:04:01.144223",
+      "isRejected": false,
+      "id": 8
+    },
+    {
+      "driverId": 82,
+      "tripId": 16,
+      "requestDate": "2023-10-15T12:04:01.29931",
+      "isRejected": false,
+      "id": 9
+    }
+  ],
   "targetUrl": null,
   "success": true,
   "error": null,

@@ -15,8 +15,9 @@ import "package:universal_html/html.dart";
 import '../../../../core/util/my_style.dart';
 import '../../../../core/util/shared_preferences.dart';
 import '../../../../core/widgets/my_card_widget.dart';
-import '../../../../core/widgets/not_found_widget.dart';
+
 import '../../../../core/widgets/saed_taple_widget.dart';
+import '../../../home/ui/widget/statistics_widget.dart';
 import '../../bloc/create_redeem_cubit/create_redeem_cubit.dart';
 import '../../bloc/redeems_cubit/redeems_cubit.dart';
 import '../../bloc/redeems_history_cubit/redeems_history_cubit.dart';
@@ -39,44 +40,80 @@ class LoyaltyWidget extends StatelessWidget {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _TotalWidget(text: state.result.totalMeters, driverId: state.driverId),
-                ItemLoyal(
-                  driverId: state.driverId,
-                  text: 'المليون',
-                  count: state.result.goldCount,
-                  type: RedeemType.gold,
-                  oldCount: state.result.goldOldCount,
-                  p: state.result.goldPCount,
-                ),
-                ItemLoyal(
-                  driverId: state.driverId,
-                  text: 'زيت',
-                  count: state.result.oilCount,
-                  type: RedeemType.oil,
-                  oldCount: state.result.oilOldCount,
-                  p: state.result.oilPCount,
-                ),
-                ItemLoyal(
-                  driverId: state.driverId,
-                  text: 'إطارات',
-                  count: state.result.tiresCount,
-                  type: RedeemType.tire,
-                  oldCount: state.result.tiresOldCount,
-                  p: state.result.tiresPCount,
-                ),
-                ItemLoyal(
-                  driverId: state.driverId,
-                  text: 'بنزين',
-                  count: state.result.gasCount,
-                  type: RedeemType.gas,
-                  oldCount: state.result.gasOldCount,
-                  p: state.result.gasPCount,
-                ),
+                if (driverId == null)
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: MyGridWidget(
+                      columnCount: 5,
+                      children: [
+                        StatisticsCard(
+                          icon: Assets.iconsPath,
+                          label: 'الكيلو مترات',
+                          value: (state.result.totalMeters / 1000).round(),
+                        ),
+                        StatisticsCard(
+                          icon: Assets.iconsCoins,
+                          label: 'المليون',
+                          value: state.result.goldCount,
+                        ),
+                        StatisticsCard(
+                          icon: Assets.iconsOil,
+                          label: 'زيت',
+                          value: state.result.oilCount,
+                        ),
+                        StatisticsCard(
+                          icon: Assets.iconsTires,
+                          label: 'إطارات',
+                          value: state.result.tiresCount,
+                        ),
+                        StatisticsCard(
+                          icon: Assets.iconsGas,
+                          label: 'بنزين',
+                          value: state.result.gasCount,
+                        ),
+                      ],
+                    ),
+                  )
+                else ...[
+                  _TotalWidget(text: state.result.totalMeters, driverId: state.driverId),
+                  ItemLoyal(
+                    driverId: state.driverId,
+                    text: 'المليون',
+                    count: state.result.goldCount,
+                    type: RedeemType.gold,
+                    oldCount: state.result.goldOldCount,
+                    p: state.result.goldPCount,
+                  ),
+                  ItemLoyal(
+                    driverId: state.driverId,
+                    text: 'زيت',
+                    count: state.result.oilCount,
+                    type: RedeemType.oil,
+                    oldCount: state.result.oilOldCount,
+                    p: state.result.oilPCount,
+                  ),
+                  ItemLoyal(
+                    driverId: state.driverId,
+                    text: 'إطارات',
+                    count: state.result.tiresCount,
+                    type: RedeemType.tire,
+                    oldCount: state.result.tiresOldCount,
+                    p: state.result.tiresPCount,
+                  ),
+                  ItemLoyal(
+                    driverId: state.driverId,
+                    text: 'بنزين',
+                    count: state.result.gasCount,
+                    type: RedeemType.gas,
+                    oldCount: state.result.gasOldCount,
+                    p: state.result.gasPCount,
+                  ),
+                ],
               ],
             );
           },
         ),
-        30.0.verticalSpace,
+        if (driverId != null) 30.0.verticalSpace,
         if (driverId != null)
           BlocBuilder<RedeemsHistoryCubit, RedeemsHistoryInitial>(
             builder: (context, state) {
@@ -136,7 +173,7 @@ class ItemLoyal extends StatelessWidget {
     var url = '';
     switch (type) {
       case RedeemType.gold:
-        url = Assets.iconsGold;
+        url = Assets.iconsCoins;
         break;
       case RedeemType.oil:
         url = Assets.iconsOil;

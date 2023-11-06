@@ -26,6 +26,7 @@ import '../../../../core/injection/injection_container.dart';
 import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/util/my_style.dart';
 import '../../../../generated/assets.dart';
+import '../widget/statistics_widget.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
@@ -49,6 +50,7 @@ class _DashboardPageState extends State<DashboardPage> {
             16.0.verticalSpace,
             if (AppSharedPreference.getUser.roleName.toLowerCase() == 'admin')
               const LoyaltyWidget(),
+            DashboardScreen(statistics: statistics),
             FutureBuilder(
               future: getBestDriver(),
               builder: (context, snapShot) {

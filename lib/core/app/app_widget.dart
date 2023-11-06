@@ -16,6 +16,7 @@ import '../../features/coupons/bloc/all_coupons_vubit/all_coupons_cubit.dart';
 import '../../features/drivers/bloc/all_drivers/all_drivers_cubit.dart';
 import '../../features/drivers/bloc/drivers_imiei_cubit/drivers_imei_cubit.dart';
 import '../../features/governorates/bloc/governorates_cubit/governorates_cubit.dart';
+import '../../features/home/bloc/home_cubit/home_cubit/home_cubit.dart';
 import '../../features/home/bloc/nav_home_cubit/nav_home_cubit.dart';
 import '../../features/institutions/bloc/all_institutions_cubit/all_institutions_cubit.dart';
 
@@ -68,6 +69,7 @@ class MyApp extends StatelessWidget {
                 BlocProvider(create: (_) => sl<NavHomeCubit>()),
                 BlocProvider(create: (_) => sl<MapControlCubit>()),
                 BlocProvider(create: (_) => sl<CreatePolicyCubit>()),
+                BlocProvider(create: (_) => sl<HomeCubit>()..getHome(_)),
                 BlocProvider(create: (_) => sl<CreateNotificationCubit>()),
                 BlocProvider(create: (_) => sl<TripsCubit>()..getTrips(_)),
                 BlocProvider(create: (_) => sl<PolicyCubit>()..getPolicy(_)),

@@ -38,6 +38,7 @@ import '../features/clients/bloc/clients_by_id_cubit/clients_by_id_cubit.dart';
 import '../features/clients/ui/pages/client_info_page.dart';
 import '../features/coupons/bloc/create_coupon_cubit/create_coupon_cubit.dart';
 import '../features/coupons/ui/pages/create_coupon_page.dart';
+import '../features/drivers/bloc/driver_status_history_cubit/driver_status_history_cubit.dart';
 import '../features/drivers/ui/pages/driver_info_page.dart';
 import '../features/home/ui/pages/agency_home_page.dart';
 import '../features/institutions/bloc/create_institution_cubit/create_institution_cubit.dart';
@@ -70,6 +71,7 @@ import '../features/temp_trips/bloc/estimate_cubit/estimate_cubit.dart';
 import '../features/temp_trips/bloc/temp_trip_by_id_cubit/temp_trip_by_id_cubit.dart';
 import '../features/temp_trips/ui/pages/create_temp_trip_page.dart';
 import '../features/temp_trips/ui/pages/temp_trip_info_page.dart';
+import '../features/trip/bloc/candidate_drivers_cubit/candidate_drivers_cubit.dart';
 import '../features/trip/bloc/trip_by_id/trip_by_id_cubit.dart';
 import '../features/trip/bloc/trip_debit_cubit/trip_debit_cubit.dart';
 import '../features/trip/bloc/trip_status_cubit/trip_status_cubit.dart';
@@ -145,6 +147,9 @@ final appGoRouter = GoRouter(
           BlocProvider(create: (_) => di.sl<WalletCubit>()..getWallet(id: id)),
           BlocProvider(create: (_) => di.sl<DebtsCubit>()..getDebts(_, id: id)),
           BlocProvider(create: (_) => di.sl<RedeemsCubit>()..getRedeems(_, driverId: id)),
+          BlocProvider(
+              create: (_) => di.sl<DriverStatusHistoryCubit>()
+                ..getDriverStatusHistory(_, driverId: id)),
           BlocProvider(
               create: (_) => di.sl<DriverBuIdCubit>()..getDriverBuId(context, id: id)),
           BlocProvider(
@@ -336,6 +341,9 @@ final appGoRouter = GoRouter(
           BlocProvider(create: (_) => di.sl<AtherCubit>()),
           BlocProvider(create: (_) => di.sl<TripByIdCubit>()..tripById(_, tripId: id)),
           BlocProvider(create: (_) => di.sl<TripDebitCubit>()..tripDebit(_, tripId: id)),
+          BlocProvider(
+              create: (_) =>
+                  di.sl<CandidateDriversCubit>()..getCandidateDrivers(_, tripId: id)),
         ];
         return MultiBlocProvider(
           providers: providers,

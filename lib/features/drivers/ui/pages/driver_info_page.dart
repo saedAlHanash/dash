@@ -30,6 +30,7 @@ import '../../../accounts/bloc/reverse_charging_cubit/reverse_charging_cubit.dar
 import '../../../wallet/ui/pages/debts_page.dart';
 import '../../bloc/driver_by_id_cubit/driver_by_id_cubit.dart';
 import '../widget/driver_financial_widget.dart';
+import '../widget/driver_status_history.dart';
 import '../widget/driver_trips_card.dart';
 
 class DriverInfoPage extends StatefulWidget {
@@ -45,7 +46,7 @@ class _DriverInfoPageState extends State<DriverInfoPage>
 
   @override
   void initState() {
-    _tabController = TabController(length: !isAgency ? 5 : 4, vsync: this);
+    _tabController = TabController(length: !isAgency ? 6 : 5, vsync: this);
     super.initState();
   }
 
@@ -77,11 +78,11 @@ class _DriverInfoPageState extends State<DriverInfoPage>
                   controller: _tabController,
                   labelColor: AppColorManager.mainColorDark,
                   unselectedLabelColor: AppColorManager.black,
-                  tabs:  [
+                  tabs: [
                     const Tab(text: 'معلومات السائق'),
-                    if(!isAgency)
-                    const Tab(text: 'الولاء'),
+                    if (!isAgency) const Tab(text: 'الولاء'),
                     const Tab(text: 'الرحلات'),
+                    const Tab(text: 'سجل حالة السائق'),
                     const Tab(text: 'المحصلة المالية'),
                     const Tab(text: 'عائدات الرحلات'),
                   ],
@@ -100,9 +101,9 @@ class _DriverInfoPageState extends State<DriverInfoPage>
                           _DriverTableInfo(driver: driver),
                         ],
                       ),
-                      if(!isAgency)
-                      LoyaltyWidget(driverId: driver.id),
+                      if (!isAgency) LoyaltyWidget(driverId: driver.id),
                       DriverTripsCard(driver: driver),
+                      const DriverStatusHistory(),
                       const DriverFinancialWidget(),
                       const DebtsPage(),
                     ],
@@ -179,7 +180,7 @@ class _DriverTableInfo extends StatelessWidget {
 }
 
 class ItemImage extends StatelessWidget {
-  const ItemImage({ required this.image, required this.text});
+  const ItemImage({required this.image, required this.text});
 
   final String image;
 

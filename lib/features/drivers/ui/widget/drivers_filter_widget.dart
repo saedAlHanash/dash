@@ -149,6 +149,7 @@ class _DriversFilterWidgetState extends State<DriversFilterWidget> {
               ],
             ],
           ),
+          5.0.verticalSpace,
           Row(
             children: [
               Expanded(

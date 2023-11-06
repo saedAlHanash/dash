@@ -40,11 +40,13 @@ import '../../features/coupons/bloc/create_coupon_cubit/create_coupon_cubit.dart
 import '../../features/drivers/bloc/all_drivers/all_drivers_cubit.dart';
 import '../../features/drivers/bloc/create_driver_cubit/create_driver_cubit.dart';
 import '../../features/drivers/bloc/driver_by_id_cubit/driver_by_id_cubit.dart';
+import '../../features/drivers/bloc/driver_status_history_cubit/driver_status_history_cubit.dart';
 import '../../features/drivers/bloc/drivers_imiei_cubit/drivers_imei_cubit.dart';
 import '../../features/drivers/bloc/loyalty_cubit/loyalty_cubit.dart';
 import '../../features/governorates/bloc/create_governorate_cubit/create_governorate_cubit.dart';
 import '../../features/governorates/bloc/delete_governorate_cubit/delete_governorate_cubit.dart';
 import '../../features/governorates/bloc/governorates_cubit/governorates_cubit.dart';
+import '../../features/home/bloc/home_cubit/home_cubit/home_cubit.dart';
 import '../../features/home/bloc/nav_home_cubit/nav_home_cubit.dart';
 import '../../features/institutions/bloc/all_institutions_cubit/all_institutions_cubit.dart';
 import '../../features/institutions/bloc/create_institution_cubit/create_institution_cubit.dart';
@@ -88,6 +90,7 @@ import '../../features/temp_trips/bloc/temp_trip_by_id_cubit/temp_trip_by_id_cub
 import '../../features/ticket/bloc/all_ticket_cubit/all_ticket_cubit.dart';
 import '../../features/ticket/bloc/replay_ticket_cubit/replay_ticket_cubit.dart';
 import '../../features/trip/bloc/active_trips/active_trips_cubit.dart';
+import '../../features/trip/bloc/candidate_drivers_cubit/candidate_drivers_cubit.dart';
 import '../../features/trip/bloc/trip_by_id/trip_by_id_cubit.dart';
 import '../../features/trip/bloc/trip_debit_cubit/trip_debit_cubit.dart';
 import '../../features/trip/bloc/trip_status_cubit/trip_status_cubit.dart';
@@ -275,6 +278,9 @@ Future<void> init() async {
   sl.registerFactory(() => ReverseChargingCubit());
   sl.registerFactory(() => DriversImeiCubit());
   sl.registerFactory(() => TripDebitCubit());
+  sl.registerFactory(() => HomeCubit());
+  sl.registerFactory(() => CandidateDriversCubit());
+  sl.registerFactory(() => DriverStatusHistoryCubit());
 
   //region Governorate
 
