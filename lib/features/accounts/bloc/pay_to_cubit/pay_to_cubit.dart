@@ -38,6 +38,7 @@ class PayToCubit extends Cubit<PayToInitial> {
           driverId: request.driverId!,
           type: TransferPayType.companyToDriver,
           amount: request.cutAmount!,
+          note:request.note,
         );
 
         //دفعة بمستحقات الشركة من السائق
@@ -47,6 +48,7 @@ class PayToCubit extends Cubit<PayToInitial> {
             driverId: request.driverId!,
             type: TransferPayType.driverToCompany,
             amount: request.payAmount! + request.cutAmount!,
+            note:request.note,
           );
         }
         break;
@@ -61,6 +63,7 @@ class PayToCubit extends Cubit<PayToInitial> {
           driverId: request.driverId!,
           type: TransferPayType.driverToCompany,
           amount: request.cutAmount!,
+          note:request.note,
         );
         //دفعة بمستحقات السائق من الشركة
         //Company To Driver
@@ -69,6 +72,7 @@ class PayToCubit extends Cubit<PayToInitial> {
             driverId: request.driverId!,
             type: TransferPayType.companyToDriver,
             amount: request.payAmount! + request.cutAmount!,
+            note:request.note,
           );
         }
         break;
@@ -81,6 +85,7 @@ class PayToCubit extends Cubit<PayToInitial> {
           driverId: request.driverId!,
           type: TransferPayType.driverToCompany,
           amount: request.cutAmount!,
+          note:request.note,
         );
 
         if (checkResponse(pair)) {
@@ -88,6 +93,7 @@ class PayToCubit extends Cubit<PayToInitial> {
             driverId: request.driverId!,
             type: TransferPayType.companyToDriver,
             amount: request.cutAmount!,
+            note:request.note,
           );
         }
         break;

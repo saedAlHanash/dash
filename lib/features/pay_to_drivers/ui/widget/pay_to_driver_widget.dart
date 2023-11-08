@@ -8,6 +8,7 @@ import 'package:qareeb_dash/features/accounts/data/request/driver_financial_filt
 import 'package:qareeb_dash/features/drivers/ui/widget/driver_financial_widget.dart';
 import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_models/global.dart';
+import 'package:qareeb_models/wallet/data/response/driver_financial_response.dart';
 import 'package:qareeb_models/wallet/data/response/single_driver_financial.dart';
 
 import '../../../../core/util/my_style.dart';
@@ -34,6 +35,7 @@ class _PayToDriverWidgetState extends State<PayToDriverWidget> {
 
   @override
   void initState() {
+    loggerObject.w(widget.result.toJson());
     request.type = widget.result.summaryType;
     request.driverId = widget.result.driverId;
     switch (widget.result.summaryType) {
@@ -67,7 +69,8 @@ class _PayToDriverWidgetState extends State<PayToDriverWidget> {
           mainAxisSize: MainAxisSize.min,
           children: [
             10.0.verticalSpace,
-            SummaryFinancialWidget(result: widget.result.driverFinancial),
+            SummaryFinancialWidget(
+                result: DriverFinancialResult.fromFinancialResult(widget.result)),
             10.0.verticalSpace,
             MyTextFormNoLabelWidget(
               label: 'ملاحظات',

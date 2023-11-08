@@ -59,7 +59,7 @@ class _TripInfoListWidgetState extends State<TripInfoListWidget>
           child: TabBar(
             controller: _tabController,
             labelColor: AppColorManager.mainColorDark,
-            labelStyle: TextStyle(fontSize: 18.0.sp,color: Colors.black),
+            labelStyle: TextStyle(fontSize: 18.0.sp, color: Colors.black),
             unselectedLabelColor: AppColorManager.black,
             tabs: [
               const Tab(text: 'معلومات'),
@@ -368,8 +368,6 @@ class _TripActions extends StatelessWidget {
 class _TripDrivers extends StatelessWidget {
   const _TripDrivers();
 
-
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -405,10 +403,10 @@ class _TripDrivers extends StatelessWidget {
                           color: Colors.blue,
                         ),
                       ),
-                      e.driverName,
-                      e.requestDate?.formatDate ?? '-',
-                      e.isAccepted == null ? '-' : e.isAccepted!.toString(),
-                      e.isRejected == null ? '-' : e.isRejected!.toString(),
+                      e.driver.fullName,
+                      e.requestDate?.formatDateTime ?? '-',
+                      !e.isAccepted ? '-' : e.isAccepted.toString(),
+                      !e.isRejected ? '-' : e.isRejected.toString(),
                     ])
                 .toList(),
           );

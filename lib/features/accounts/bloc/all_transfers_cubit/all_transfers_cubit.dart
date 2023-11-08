@@ -78,6 +78,7 @@ class AllTransfersCubit extends Cubit<AllTransfersInitial> {
           '\tالمبلغ\t',
           '\tالحالة\t',
           '\tتاريخ العملية\t',
+          '\t ملاحظات \t',
         ],
         data
             .mapIndexed(
@@ -89,6 +90,7 @@ class AllTransfersCubit extends Cubit<AllTransfersInitial> {
                 e.amount.formatPrice,
                 e.status == TransferStatus.closed ? true : false,
                 e.transferDate?.toIso8601String(),
+                e.note,
               ],
             )
             .toList());

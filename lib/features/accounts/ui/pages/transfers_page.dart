@@ -128,7 +128,7 @@ class _TransfersPageState extends State<TransfersPage> {
                             ),
                           )
                         else
-                          0.0.verticalSpace,
+                          e.note.isEmpty ? 0.0.verticalSpace : e.note,
                       ];
                     }).toList());
               },

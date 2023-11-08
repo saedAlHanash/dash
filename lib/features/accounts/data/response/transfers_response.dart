@@ -51,6 +51,7 @@ class Transfer {
     required this.sourceName,
     required this.destinationId,
     required this.destinationName,
+    required this.note,
     required this.amount,
     required this.type,
     required this.tripId,
@@ -64,6 +65,7 @@ class Transfer {
   final String sourceName;
   final num destinationId;
   final String destinationName;
+  final String note;
   final num amount;
   final TransferType? type;
   final num tripId;
@@ -78,6 +80,7 @@ class Transfer {
       sourceName: json["sourceName"] ?? "قريب",
       destinationId: json["destinationId"] ?? 0,
       destinationName: json["destinationName"] ?? "",
+      note: json["note"] ?? "",
       amount: json["amount"] ?? 0,
       type: json["type"] == null ? null : TransferType.values[json["type"]],
       tripId: json["tripId"] ?? 0,
@@ -93,6 +96,7 @@ class Transfer {
         "sourceName": sourceName,
         "destinationId": destinationId,
         "destinationName": destinationName,
+        "note": note,
         "amount": amount,
         "type": type,
         "tripId": tripId,

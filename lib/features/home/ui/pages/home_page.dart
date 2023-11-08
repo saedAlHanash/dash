@@ -263,50 +263,25 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             footer: Container(
-              height: 150.h,
+              height: 50.h,
               alignment: Alignment.center,
               width: double.infinity,
               color: AppColorManager.mainColor,
-              child: Column(
-                children: [
-                  // if (AppSharedPreference.getUser.roleName.toLowerCase() == 'admin')
-                  //   TextButton(
-                  //     onPressed: () {
-                  //       // popAllJs();
-                  //       AppSharedPreference.changeTestMode();
-                  //       AppSharedPreference.logout();
-                  //       APIService.reInitial();
-                  //       window.location.reload();
-                  //       // context.pushNamed(GoRouteName.loginPage);
-                  //     },
-                  //     child: DrawableText(
-                  //       text: AppSharedPreference.isTestMode
-                  //           ? 'التبديل للوضع الحي'
-                  //           : 'التبديل لوضع الاختبار',
-                  //       selectable: false,
-                  //       matchParent: true,
-                  //       color: Colors.white,
-                  //       textAlign: TextAlign.center,
-                  //     ),
-                  //   ),
-                  // const Divider(color: Colors.white),
-                  InkWell(
-                    onTap: () {
-                      // popAllJs();
-                      AppSharedPreference.logout();
-                      APIService.reInitial();
-                      window.location.reload();
-                      // context.pushNamed(GoRouteName.loginPage);
-                    },
-                    child: const DrawableText(
-                      text: 'تسجيل الخروج',
-                      selectable: false,
-                      matchParent: true,
-                      color: Colors.white,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ],
+              child: InkWell(
+                onTap: () {
+                  // popAllJs();
+                  AppSharedPreference.logout();
+                  APIService.reInitial();
+                  window.location.reload();
+                  // context.pushNamed(GoRouteName.loginPage);
+                },
+                child: const DrawableText(
+                  text: 'تسجيل الخروج',
+                  selectable: false,
+                  matchParent: true,
+                  color: Colors.white,
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
           ),

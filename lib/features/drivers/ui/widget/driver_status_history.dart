@@ -35,8 +35,6 @@ import '../widget/driver_financial_widget.dart';
 class DriverStatusHistory extends StatelessWidget {
   const DriverStatusHistory({super.key});
 
-
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -46,19 +44,32 @@ class DriverStatusHistory extends StatelessWidget {
             return MyStyle.loadingWidget();
           }
           return SaedTableWidget(
+            onChangePage: (command) {
+              context
+                  .read<DriverStatusHistoryCubit>()
+                  .getDriverStatusHistory(context, command: command);
+            },
+            command: state.command,
             title: const [
               'تاريخ',
               'الحالة',
               'عدد الدقائق',
             ],
             data: state.result
-                .mapIndexed((i, e) => [
-                      e.date?.formatDate ?? '-',
-                      e.status.arabicName,
-                      if (i > state.result.length - 1 &&
-                          state.result[i + 1].date != null)
-                        e.date?.difference(state.result[i + 1].date!).inMinutes
-                    ])
+                .mapIndexed(
+                  (i, e) => [
+                    e.date?.formatDateTime ?? '-',
+                    e.status.arabicName,
+                    if (i < state.result.length - 1 && state.result[i + 1].date != null)
+                      e.date
+                          ?.difference(state.result[i + 1].date!)
+                          .inMinutes
+                          .abs()
+                          .toString()
+                    else
+                      '-'
+                  ],
+                )
                 .toList(),
           );
         },

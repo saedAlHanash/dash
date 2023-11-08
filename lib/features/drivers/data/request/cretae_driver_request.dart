@@ -54,7 +54,7 @@ class CreateDriverRequest {
       'carNumber': carNumber,
       'carCategoryID': carCategoryID,
       'imei': imei,
-      'AgencyId': agencyId,
+      'AgencyId': agencyId==0?null:agencyId,
       'id': id,
       'carGovernorate': carGovernorate,
       'manufacturingYear': manufacturingYear,
