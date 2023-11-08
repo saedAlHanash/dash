@@ -110,12 +110,15 @@ class PayToCubit extends Cubit<PayToInitial> {
   }
 
   Future<Pair<bool?, String?>> _payPayToApi(
-      {required num amount, required int driverId, required TransferPayType type}) async {
+      {required num amount,
+      required int driverId,
+      required TransferPayType type,
+      String? note}) async {
     final response = await APIService().postApi(
       url: type == TransferPayType.companyToDriver
           ? PostUrl.createFromCompany
           : PostUrl.createFromDriver,
-      body: {"amount": amount, "driverId": driverId},
+      body: {"amount": amount, "driverId": driverId, 'note': note},
     );
 
     if (response.statusCode == 200) {

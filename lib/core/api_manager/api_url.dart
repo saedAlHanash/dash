@@ -271,7 +271,7 @@ String get baseUrl {
   //     ? 'live.qareeb-maas.com'
   //     : 'livetest.qareeb-maas.com';
 
-  return testUrl;
+  return liveUrl;
 }
 
 const liveUrl = 'live.qareeb-maas.com';

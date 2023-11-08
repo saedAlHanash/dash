@@ -10,6 +10,8 @@ class SummaryModel {
   ///المبلغ الثاني في عملية التحويل
   num? payAmount;
 
+  String? note;
+
   ///
   SummaryPayToEnum? type;
 

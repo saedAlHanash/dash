@@ -1,23 +1,22 @@
 {
-  "result": [
-    {
-      "driverId": 16,
-      "tripId": 16,
-      "requestDate": "2023-10-15T12:04:01.144223",
-      "isRejected": false,
-      "id": 8
-    },
-    {
-      "driverId": 82,
-      "tripId": 16,
-      "requestDate": "2023-10-15T12:04:01.29931",
-      "isRejected": false,
-      "id": 9
-    }
-  ],
-  "targetUrl": null,
-  "success": true,
-  "error": null,
-  "unAuthorizedRequest": false,
-  "__abp": true
+  "plan": {
+    "name": "",
+    "price": "",
+    "maxDistance": "",
+    "desc": "",
+    "examples": [
+      {}
+    ],
+    "image": "",
+    "periodDate": "datTime"
+  },
+  "company": {
+    "companyName": "",
+    "desc": "",
+    "examples": [
+      {}
+    ],
+    "image": "",
+    "periodDate": "datTime"
+  }
 }

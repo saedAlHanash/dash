@@ -69,6 +69,12 @@ class _PayToDriverWidgetState extends State<PayToDriverWidget> {
             10.0.verticalSpace,
             SummaryFinancialWidget(result: widget.result.driverFinancial),
             10.0.verticalSpace,
+            MyTextFormNoLabelWidget(
+              label: 'ملاحظات',
+              maxLines: 5,
+              onChanged: (p0) => request.note = p0,
+            ),
+            10.0.verticalSpace,
             if (!widget.result.summaryType.eq) ...[
               MyTextFormNoLabelWidget(
                 label:
