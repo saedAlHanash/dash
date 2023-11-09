@@ -380,6 +380,7 @@ class _TripDrivers extends StatelessWidget {
             title: const [
               'معرف السائق',
               'اسم السائق',
+              'نوع السيارة',
               'تاريخ',
               'حالة القبول',
               'حالة الرفض',
@@ -404,6 +405,7 @@ class _TripDrivers extends StatelessWidget {
                         ),
                       ),
                       e.driver.fullName,
+                      e.driver.carType.carModel,
                       e.requestDate?.formatDateTime ?? '-',
                       !e.isAccepted ? '-' : e.isAccepted.toString(),
                       !e.isRejected ? '-' : e.isRejected.toString(),
