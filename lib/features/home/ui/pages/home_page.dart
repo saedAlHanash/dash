@@ -306,8 +306,8 @@ class _HomePageState extends State<HomePage> {
                 case "/drivers":
                   return MultiBlocProvider(
                     providers: [
-                      BlocProvider(create: (context) => sl<LoyaltyCubit>()),
-                      BlocProvider(create: (context) => sl<ChangeUserStateCubit>()),
+                      BlocProvider(create: (_) => sl<LoyaltyCubit>()),
+                      BlocProvider(create: (_) => sl<ChangeUserStateCubit>()),
                     ],
                     child: const DriverPage(),
                   );

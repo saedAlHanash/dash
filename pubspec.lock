@@ -178,7 +178,7 @@ packages:
     source: hosted
     version: "0.7.8"
   drawable_text:
-    dependency: "direct main"
+    dependency: transitive
     description:
       path: "."
       ref: html
@@ -821,11 +821,9 @@ packages:
   map_package:
     dependency: "direct main"
     description:
-      path: "."
-      ref: html
-      resolved-ref: b40d19d515721167c84ef6b0fb88b800401954f0
-      url: "https://github.com/saedAlHanash/map_qareeb"
-    source: git
+      path: "../../packages/map_package"
+      relative: true
+    source: path
     version: "0.1.6"
   matcher:
     dependency: transitive
@@ -1030,11 +1028,9 @@ packages:
   qareeb_models:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "000d0dba2f11f3e0950873bb1b1b5313bf4c9adc"
-      url: "https://github.com/saedAlHanash/qareeb_models"
-    source: git
+      path: "../../packages/qareeb_models"
+      relative: true
+    source: path
     version: "0.1.5"
   rxdart:
     dependency: transitive

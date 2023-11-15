@@ -1,11 +1,14 @@
 import 'package:collection/collection.dart';
+import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:map_package/map/bloc/ather_cubit/ather_cubit.dart';
 import 'package:qareeb_dash/core/widgets/not_found_widget.dart';
 import 'package:qareeb_models/extensions.dart';
 
+import '../../../../core/injection/injection_container.dart';
 import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/file_util.dart';
 import '../../../../core/util/my_style.dart';
@@ -18,6 +21,7 @@ import '../../bloc/all_drivers/all_drivers_cubit.dart';
 import '../widget/drivers_filter_widget.dart';
 
 final clientTableHeader = [
+  "حالة المحرك",
   "id",
   "اسم السائق",
   "رقم الهاتف",
@@ -43,132 +47,170 @@ class _DriverPageState extends State<DriverPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          if (isAllowed(AppPermissions.CREATION))
-            FloatingActionButton(
-              onPressed: () {
-                context.pushNamed(GoRouteName.createDriver);
-              },
-              child: const Icon(Icons.add, color: Colors.white),
-            ),
-          10.0.verticalSpace,
-          StatefulBuilder(
-            builder: (context, mState) {
-              return FloatingActionButton(
-                onPressed: () {
-                  mState(() => loading = true);
-                  context.read<AllDriversCubit>().getDriversAsync(context).then(
-                    (value) {
-                      if (value == null) return;
-                      saveXls(
-                        header: value.first,
-                        data: value.second,
-                        fileName: 'تقرير السائقين ${DateTime.now().formatDate}',
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => sl<AtherCubit>()),
+      ],
+      child: BlocListener<AllDriversCubit, AllDriversInitial>(
+        listenWhen: (p, c) => c.statuses.isDone,
+        listener: (context, state) {
+          context
+              .read<AtherCubit>()
+              .getDriverLocation(state.result.map((e) => e.qarebDeviceimei).toList());
+        },
+        child: Scaffold(
+          floatingActionButton: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (isAllowed(AppPermissions.CREATION))
+                FloatingActionButton(
+                  onPressed: () {
+                    context.pushNamed(GoRouteName.createDriver);
+                  },
+                  child: const Icon(Icons.add, color: Colors.white),
+                ),
+              10.0.verticalSpace,
+              StatefulBuilder(
+                builder: (context, mState) {
+                  return FloatingActionButton(
+                    onPressed: () {
+                      mState(() => loading = true);
+                      context.read<AllDriversCubit>().getDriversAsync(context).then(
+                        (value) {
+                          if (value == null) return;
+                          saveXls(
+                            header: value.first,
+                            data: value.second,
+                            fileName: 'تقرير السائقين ${DateTime.now().formatDate}',
+                          );
+                          mState(() => loading = false);
+                        },
                       );
-                      mState(() => loading = false);
                     },
+                    child: loading
+                        ? const CircularProgressIndicator.adaptive()
+                        : const Icon(Icons.file_download, color: Colors.white),
                   );
                 },
-                child: loading
-                    ? const CircularProgressIndicator.adaptive()
-                    : const Icon(Icons.file_download, color: Colors.white),
-              );
-            },
+              ),
+            ],
           ),
-        ],
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.only(bottom: 200.0).h,
-        child: Column(
-          children: [
-            BlocBuilder<AllDriversCubit, AllDriversInitial>(
-              builder: (context, state) {
-                return DriversFilterWidget(
-
-                  onApply: (request) {
-                    context.read<AllDriversCubit>().getAllDrivers(
-                          context,
-                          command: context.read<AllDriversCubit>().state.command.copyWith(
-                                driversFilterRequest: request,
-                                skipCount: 0,
-                                totalCount: 0,
-                              ),
-                        );
+          body: SingleChildScrollView(
+            padding: const EdgeInsets.only(bottom: 200.0).h,
+            child: Column(
+              children: [
+                BlocBuilder<AllDriversCubit, AllDriversInitial>(
+                  builder: (context, state) {
+                    return DriversFilterWidget(
+                      onApply: (request) {
+                        context.read<AllDriversCubit>().getAllDrivers(
+                              context,
+                              command:
+                                  context.read<AllDriversCubit>().state.command.copyWith(
+                                        driversFilterRequest: request,
+                                        skipCount: 0,
+                                        totalCount: 0,
+                                      ),
+                            );
+                      },
+                      command: state.command,
+                    );
                   },
-                  command: state.command,
-                );
-              },
-            ),
-            BlocBuilder<AllDriversCubit, AllDriversInitial>(
-              builder: (_, state) {
-                if (state.statuses.isLoading) {
-                  return MyStyle.loadingWidget();
-                }
-                if (state.result.isEmpty) {
-                  return const NotFoundWidget(text: 'لا يوجد سائقين');
-                }
-                final list = state.result;
-                return SaedTableWidget(
-                  fullHeight: 1.8.sh,
-                  command: state.command,
-                  title: clientTableHeader,
-
-                  data: list
-                      .mapIndexed(
-                        (index, e) => [
-                          e.id.toString(),
-                          e.fullName,
-                          e.phoneNumber,
-                          e.driverStatus.arabicName,
-                          e.qarebDeviceimei,
-                          e.creationTime?.formatDate,
-                          if (AppSharedPreference.getUser.roleName.toLowerCase() ==
-                              'admin') ...[
-                            LoyalSwitchWidget(driver: e),
-                            e.emailConfirmationCode,
-                          ],
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              ChangeUserStateBtn(user: e),
-                              if (isAllowed(AppPermissions.UPDATE))
-                                InkWell(
-                                  onTap: () {
-                                    context.pushNamed(GoRouteName.updateDriver, extra: e);
-                                  },
-                                  child: const CircleButton(
-                                      color: Colors.amber, icon: Icons.edit),
-                                ),
-                              InkWell(
-                                onTap: () {
-                                  context.pushNamed(GoRouteName.driverInfo,
-                                      queryParams: {'id': e.id.toString()});
-                                },
-                                child: const CircleButton(
-                                  color: Colors.grey,
-                                  icon: Icons.info_outline_rounded,
-                                ),
+                ),
+                BlocBuilder<AllDriversCubit, AllDriversInitial>(
+                  builder: (_, state) {
+                    if (state.statuses.isLoading) {
+                      return MyStyle.loadingWidget();
+                    }
+                    if (state.result.isEmpty) {
+                      return const NotFoundWidget(text: 'لا يوجد سائقين');
+                    }
+                    final list = state.result;
+                    return SaedTableWidget(
+                      fullHeight: 1.8.sh,
+                      command: state.command,
+                      title: clientTableHeader,
+                      data: list
+                          .mapIndexed(
+                            (index, e) => [
+                              EnginWidget(driverImei: e.qarebDeviceimei),
+                              e.id.toString(),
+                              e.fullName,
+                              e.phoneNumber,
+                              e.driverStatus.arabicName,
+                              e.qarebDeviceimei,
+                              e.creationTime?.formatDate,
+                              if (AppSharedPreference.getUser.roleName.toLowerCase() ==
+                                  'admin') ...[
+                                LoyalSwitchWidget(driver: e),
+                                e.emailConfirmationCode,
+                              ],
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: [
+                                  ChangeUserStateBtn(user: e),
+                                  if (isAllowed(AppPermissions.UPDATE))
+                                    InkWell(
+                                      onTap: () {
+                                        context.pushNamed(GoRouteName.updateDriver,
+                                            extra: e);
+                                      },
+                                      child: const CircleButton(
+                                          color: Colors.amber, icon: Icons.edit),
+                                    ),
+                                  InkWell(
+                                    onTap: () {
+                                      context.pushNamed(GoRouteName.driverInfo,
+                                          queryParams: {'id': e.id.toString()});
+                                    },
+                                    child: const CircleButton(
+                                      color: Colors.grey,
+                                      icon: Icons.info_outline_rounded,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
-                          ),
-                        ],
-                      )
-                      .toList(),
-                  onChangePage: (command) {
-                    context
-                        .read<AllDriversCubit>()
-                        .getAllDrivers(context, command: command);
+                          )
+                          .toList(),
+                      onChangePage: (command) {
+                        context
+                            .read<AllDriversCubit>()
+                            .getAllDrivers(context, command: command);
+                      },
+                    );
                   },
-                );
-              },
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
+    );
+  }
+}
+
+class EnginWidget extends StatelessWidget {
+  const EnginWidget({super.key, required this.driverImei});
+
+  final String driverImei;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<AtherCubit, AtherInitial>(
+      builder: (context, state) {
+        if (state.statuses.isLoading) {
+          return const DrawableText(text: '-');
+        }
+        final myDriver = state.result.firstWhereOrNull((e1) => e1.ime == driverImei);
+        var enginWork = myDriver?.params.acc == '1';
+
+        return Icon(
+          Icons.radio_button_on_sharp,
+          color: enginWork ? Colors.green : Colors.red,
+        );
+      },
     );
   }
 }
