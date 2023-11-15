@@ -39,95 +39,81 @@ class TempTripsPage extends StatelessWidget {
           }
           final list = state.result;
           if (list.isEmpty) return const NotFoundWidget(text: 'يرجى إضافة نماذج للرحلات');
-          return Column(
-            children: [
-              SaedTableWidget(
-                command: state.command,
-                title: _titleList,
-                data: list
-                    .mapIndexed(
-                      (i, e) => [
-                        e.id.toString(),
-                        e.arName,
-                        (e.edges.length + 1).toString(),
-                        '${(e.distance / 1000).round()} km',
-                        // '${(e.duration / 60).round()} min',
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                context.pushNamed(
-                                  GoRouteName.tempTripInfo,
-                                  queryParams: {'id': e.id.toString()},
+          return SingleChildScrollView(
+            child: SaedTableWidget(
+              command: state.command,
+              title: _titleList,
+              data: list
+                  .mapIndexed(
+                    (i, e) => [
+                      e.id.toString(),
+                      e.arName,
+                      (e.edges.length + 1).toString(),
+                      '${(e.distance / 1000).round()} km',
+                      // '${(e.duration / 60).round()} min',
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              context.pushNamed(
+                                GoRouteName.tempTripInfo,
+                                queryParams: {'id': e.id.toString()},
+                              );
+                            },
+                            child: const Icon(
+                              Icons.info_outline_rounded,
+                              color: Colors.grey,
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              context.pushNamed(
+                                GoRouteName.createTempTrip,
+                                queryParams: {'id': e.id.toString()},
+                              );
+                            },
+                            child: const Icon(
+                              Icons.edit,
+                              color: Colors.amber,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child:
+                                BlocConsumer<DeleteTempTripCubit, DeleteTempTripInitial>(
+                              listener: (context, state) {
+                                context.read<AllTempTripsCubit>().getTempTrips(context);
+                              },
+                              listenWhen: (p, c) => c.statuses.done,
+                              buildWhen: (p, c) => c.id == e.id,
+                              builder: (context, state) {
+                                if (state.statuses.loading) {
+                                  return MyStyle.loadingWidget();
+                                }
+                                return InkWell(
+                                  onTap: () {
+                                    context
+                                        .read<DeleteTempTripCubit>()
+                                        .deleteTempTrip(context, id: e.id);
+                                  },
+                                  child: const Icon(
+                                    Icons.delete_forever,
+                                    color: Colors.red,
+                                  ),
                                 );
                               },
-                              child: const Icon(
-                                Icons.info_outline_rounded,
-                                color: Colors.grey,
-                              ),
                             ),
-                            InkWell(
-                              onTap: () {
-                                context.pushNamed(
-                                  GoRouteName.createTempTrip,
-                                  queryParams: {'id': e.id.toString()},
-                                );
-                              },
-                              child: const Icon(
-                                Icons.edit,
-                                color: Colors.amber,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: BlocConsumer<DeleteTempTripCubit,
-                                  DeleteTempTripInitial>(
-                                listener: (context, state) {
-                                  context.read<AllTempTripsCubit>().getTempTrips(context);
-                                },
-                                listenWhen: (p, c) => c.statuses.done,
-                                buildWhen: (p, c) => c.id == e.id,
-                                builder: (context, state) {
-                                  if (state.statuses.loading) {
-                                    return MyStyle.loadingWidget();
-                                  }
-                                  return InkWell(
-                                    onTap: () {
-                                      context
-                                          .read<DeleteTempTripCubit>()
-                                          .deleteTempTrip(context, id: e.id);
-                                    },
-                                    child: const Icon(
-                                      Icons.delete_forever,
-                                      color: Colors.red,
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                          ],
-                        )
-                      ],
-                    )
-                    .toList(),
-                onChangePage: (command) {
-                  context
-                      .read<AllTempTripsCubit>()
-                      .getTempTrips(context, command: command);
-                },
-              ),
-
-              // Expanded(
-              //   child: ListView.builder(
-              //     itemCount: list.length,
-              //     itemBuilder: (context, i) {
-              //       final item = list[i];
-              //       return ItemTempTrip(item: item);
-              //     },
-              //   ),
-              // ),
-            ],
+                          ),
+                        ],
+                      )
+                    ],
+                  )
+                  .toList(),
+              onChangePage: (command) {
+                context.read<AllTempTripsCubit>().getTempTrips(context, command: command);
+              },
+            ),
           );
         },
       ),

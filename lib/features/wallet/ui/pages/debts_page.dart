@@ -44,6 +44,7 @@ class DebtsPage extends StatelessWidget {
               'للذهب',
               'للإطارات',
               'بنزين',
+              'للوكيل',
               'تاريخ'
             ],
             data: list.mapIndexed(
@@ -81,6 +82,7 @@ class DebtsPage extends StatelessWidget {
                   e.goldShare.formatPrice,
                   e.tiresShare.formatPrice,
                   e.gasShare.formatPrice,
+                  e.agencyShare.formatPrice,
                   e.date?.formatDate ?? '-',
                 ];
               },

@@ -18,7 +18,7 @@ extension CubitStateHelper1 on CubitStatuses {
 }
 
 extension MapResponse on http.Response {
-  dynamic get json => jsonDecode(body);
+  dynamic get json => jsonDecode(utf8.decode(bodyBytes));
 }
 
 extension NormalTripMap on Trip {
