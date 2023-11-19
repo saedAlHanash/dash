@@ -17,7 +17,7 @@ class AllSubscriberInitial extends Equatable {
     return AllSubscriberInitial(
       result: const <Subscriber>[],
       error: '',
-      command: Command.noPagination(),
+      command: Command.initial(),
       statuses: CubitStatuses.init,
     );
   }

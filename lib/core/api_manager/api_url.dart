@@ -209,7 +209,8 @@ class PostUrl {
       'api/services/app/InstitutionSubscriptionsService/Create';
   static const createBusTrip = 'api/services/app/InstitutionBusTripsService/Create';
 
-  static const replayTicket = 'api/services/app/InstitutionTicketsService/AddReplyToTicket';
+  static const replayTicket =
+      'api/services/app/InstitutionTicketsService/AddReplyToTicket';
 
   static const createSubscriptionFromTemplate =
       'api/services/app/InstitutionSubscriptionsService/CreateFromTemplate';
@@ -302,7 +303,8 @@ class PathUrl {
 
   static const changeLoyalty = 'api/services/app/UserService/ChangeSubscriptionInLoyalty';
 
-  static const changeProviderState = 'api/services/app/EpaymentService/ChangeActiveStatus';
+  static const changeProviderState =
+      'api/services/app/EpaymentService/ChangeActiveStatus';
 }
 
 String get baseUrl {
@@ -312,6 +314,7 @@ String get baseUrl {
 
   return liveUrl;
 }
+
 const testUrl = 'qareeb-api.first-pioneers.com.tr';
 const liveUrl = 'live.qareeb-maas.com';
 

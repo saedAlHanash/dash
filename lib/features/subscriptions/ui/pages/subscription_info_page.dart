@@ -104,6 +104,11 @@ class _CreateSubscriptionPageState extends State<SubscriptionInfoPage> {
                         ),
                         StatefulBuilder(builder: (context, mState) {
                           return SaedTableWidget(
+                            command: state.command,
+                            onChangePage: (command) {
+                              context.read<AllSubscriberCubit>().getSubscriber(context,
+                                  tId: widget.id, command: command);
+                            },
                             filters: Row(
                               children: [
                                 SizedBox(
@@ -163,6 +168,7 @@ class _CreateSubscriptionPageState extends State<SubscriptionInfoPage> {
                     var q = '';
                     return StatefulBuilder(builder: (context, mState) {
                       return SaedTableWidget(
+
                         filters: Row(
                           children: [
                             SizedBox(

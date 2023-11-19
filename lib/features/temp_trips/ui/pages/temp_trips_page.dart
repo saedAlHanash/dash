@@ -16,13 +16,13 @@ import '../../../../core/util/my_style.dart';
 import '../../../buses/bloc/delete_buss_cubit/delete_buss_cubit.dart';
 import '../../bloc/all_temp_trips_cubit/all_temp_trips_cubit.dart';
 import '../../bloc/delete_temp_trip_cubit/delete_temp_trip_cubit.dart';
+import '../../data/response/temp_trips_response.dart';
 
 final _super_userList = [
   'ID',
   'اسم النموذج',
   'المسافة الكلية',
-  if(isAllowed(AppPermissions.tempTrips))
-  'عمليات',
+  if (isAllowed(AppPermissions.tempTrips)) 'عمليات',
 ];
 
 class TempTripsPage extends StatelessWidget {
@@ -31,7 +31,7 @@ class TempTripsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton:  (isAllowed(AppPermissions.tempTrips))
+      floatingActionButton: (isAllowed(AppPermissions.tempTrips))
           ? FloatingActionButton(
               onPressed: () => context.pushNamed(GoRouteName.createTempTrip),
               child: const Icon(Icons.add, color: Colors.white),
@@ -44,28 +44,27 @@ class TempTripsPage extends StatelessWidget {
           }
           final list = state.result;
           if (list.isEmpty) return const NotFoundWidget(text: 'يرجى إضافة نماذج للرحلات');
-          return Column(
-            children: [
-              SaedTableWidget(
-                command: state.command,
-                title: _super_userList,
-                data: list
-                    .mapIndexed(
-                      (i, e) => [
-                        e.id.toString(),
-                        e.description,
-                        e.distance.toString(),
-                        if(isAllowed(AppPermissions.tempTrips))
+          return SingleChildScrollView(
+            child: SaedTableWidget(
+              command: state.command,
+              title: _super_userList,
+              data: list
+                  .mapIndexed(
+                    (i, e) => [
+                      e.id.toString(),
+                      e.description,
+                      e.distance.toString(),
+                      if (isAllowed(AppPermissions.tempTrips))
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             InkWell(
                               onTap: () {
-                                      context.pushNamed(
-                                        GoRouteName.tempTripInfo,
-                                        queryParams: {'id': e.id.toString()},
-                                      );
-                                    },
+                                context.pushNamed(
+                                  GoRouteName.tempTripInfo,
+                                  queryParams: {'id': e.id.toString()},
+                                );
+                              },
                               child: const Icon(
                                 Icons.info_outline_rounded,
                                 color: Colors.grey,
@@ -73,11 +72,11 @@ class TempTripsPage extends StatelessWidget {
                             ),
                             InkWell(
                               onTap: () {
-                                      context.pushNamed(
-                                        GoRouteName.createTempTrip,
-                                        queryParams: {'id': e.id.toString()},
-                                      );
-                                    },
+                                context.pushNamed(
+                                  GoRouteName.createTempTrip,
+                                  queryParams: {'id': e.id.toString()},
+                                );
+                              },
                               child: const Icon(
                                 Icons.edit,
                                 color: Colors.amber,
@@ -112,26 +111,13 @@ class TempTripsPage extends StatelessWidget {
                             ),
                           ],
                         )
-                      ],
-                    )
-                    .toList(),
-                onChangePage: (command) {
-                  context
-                      .read<AllTempTripsCubit>()
-                      .getTempTrips(context, command: command);
-                },
-              ),
-
-              // Expanded(
-              //   child: ListView.builder(
-              //     itemCount: list.length,
-              //     itemBuilder: (context, i) {
-              //       final item = list[i];
-              //       return ItemTempTrip(item: item);
-              //     },
-              //   ),
-              // ),
-            ],
+                    ],
+                  )
+                  .toList(),
+              onChangePage: (command) {
+                context.read<AllTempTripsCubit>().getTempTrips(context, command: command);
+              },
+            ),
           );
         },
       ),

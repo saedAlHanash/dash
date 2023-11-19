@@ -23,7 +23,7 @@ class SubscriberResult {
   });
 
   final List<Subscriber> items;
-  final num totalCount;
+  final int totalCount;
 
   factory SubscriberResult.fromJson(Map<String, dynamic> json) {
     return SubscriberResult(
