@@ -11,6 +11,7 @@ import '../../../../core/error/error_manager.dart';
 import '../../../../core/strings/enum_manager.dart';
 import '../../../../core/util/note_message.dart';
 import '../../../../core/util/pair_class.dart';
+import '../../../../core/util/shared_preferences.dart';
 import '../../data/response/trip_history_response.dart';
 
 part 'trip_history_state.dart';
@@ -56,7 +57,7 @@ class AllTripHistoryCubit extends Cubit<AllTripHistoryInitial> {
     final pair = await _getTripHistoryApi();
 
     state.command
-      ..maxResultCount = 20
+      ..maxResultCount = AppSharedPreference.getTotalCount
       ..skipCount = oldSkipCount;
 
     if (pair.first == null) {

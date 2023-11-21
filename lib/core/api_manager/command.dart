@@ -11,16 +11,18 @@ import '../widgets/spinner_widget.dart';
 class Command {
   Command({
     this.skipCount,
-    this.maxResultCount = 40,
+    this.maxResultCount,
     this.totalCount,
     this.historyRequest,
     this.memberFilterRequest,
     this.busesFilterRequest,
     this.tripsFilterRequest,
-  });
+  }) {
+    maxResultCount ??= AppSharedPreference.getTotalCount;
+  }
 
   int? skipCount;
-  int maxResultCount;
+  int? maxResultCount;
 
   int? totalCount;
   FilterTripHistoryRequest? historyRequest;
@@ -28,9 +30,9 @@ class Command {
   BusesFilterRequest? busesFilterRequest;
   TripsFilterRequest? tripsFilterRequest;
 
-  int get maxPages => ((totalCount ?? 0) / maxResultCount).myRound;
+  int get maxPages => ((totalCount ?? 0) / maxResultCount!).myRound;
 
-  int get currentPage => (((skipCount ?? 0) + 1) / maxResultCount).myRound;
+  int get currentPage => (((skipCount ?? 0) + 1) / maxResultCount!).myRound;
 
   List<SpinnerItem> get getSpinnerItems {
     final list = <SpinnerItem>[];
@@ -46,7 +48,7 @@ class Command {
   }
 
   void goToPage(int pageIndex) {
-    skipCount = (pageIndex - 1) * maxResultCount;
+    skipCount = (pageIndex - 1) * maxResultCount!;
   }
 
   factory Command.initial() {

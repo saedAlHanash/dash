@@ -8,6 +8,7 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:qareeb_dash/core/api_manager/api_url.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_dash/core/util/shared_preferences.dart';
 import 'package:qareeb_dash/features/members/utile/member_card_utile.dart';
 
 import '../../../../core/api_manager/api_service.dart';
@@ -74,7 +75,7 @@ class AllMembersCubit extends Cubit<AllMembersInitial> {
 
     final pair = await _getMembersApi();
     state.command
-      ..maxResultCount = 20
+      ..maxResultCount = AppSharedPreference.getTotalCount
       ..skipCount = oldSkipCount;
     if (pair.first == null) {
       if (context.mounted) {
@@ -103,7 +104,7 @@ class AllMembersCubit extends Cubit<AllMembersInitial> {
     state.command.memberFilterRequest?.fromId = null;
     state.command.memberFilterRequest?.toId = null;
     state.command
-      ..maxResultCount = 40
+      ..maxResultCount = AppSharedPreference.getTotalCount
       ..skipCount = oldSkipCount;
 
     if (pair.first == null) {

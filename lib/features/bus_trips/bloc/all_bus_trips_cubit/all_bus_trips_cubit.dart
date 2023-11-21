@@ -11,6 +11,7 @@ import '../../../../core/error/error_manager.dart';
 import '../../../../core/strings/enum_manager.dart';
 import '../../../../core/util/note_message.dart';
 import '../../../../core/util/pair_class.dart';
+import '../../../../core/util/shared_preferences.dart';
 import '../../../../core/widgets/spinner_widget.dart';
 import '../../data/response/bus_trips_response.dart';
 
@@ -57,7 +58,7 @@ class AllBusTripsCubit extends Cubit<AllBusTripsInitial> {
 
     final pair = await _getBusTripsApi();
     state.command
-      ..maxResultCount = 20
+      ..maxResultCount = AppSharedPreference.getTotalCount
       ..skipCount = oldSkipCount;
     if (pair.first == null) {
       if (context.mounted) {

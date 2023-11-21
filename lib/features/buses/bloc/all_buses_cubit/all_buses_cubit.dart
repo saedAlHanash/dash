@@ -45,7 +45,7 @@ class AllBusesCubit extends Cubit<AllBusesInitial> {
 
     final pair = await _getBusesApi();
     state.command
-      ..maxResultCount = 20
+      ..maxResultCount = AppSharedPreference.getTotalCount
       ..skipCount = oldSkipCount; if (pair.first == null) {
       if (context.mounted) {
         NoteMessage.showSnakeBar(message: pair.second ?? '', context: context);

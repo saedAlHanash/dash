@@ -10,6 +10,9 @@ import 'package:go_router/go_router.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/util/note_message.dart';
 import 'package:qareeb_dash/core/util/pair_class.dart';
+import 'package:qareeb_dash/core/widgets/images/image_multi_type.dart';
+import 'package:qareeb_dash/core/widgets/images/image_multi_type.dart';
+import 'package:qareeb_dash/core/widgets/images/image_multi_type.dart';
 import 'package:qareeb_dash/core/widgets/item_info.dart';
 import 'package:qareeb_dash/core/widgets/not_found_widget.dart';
 import 'package:qareeb_dash/core/widgets/saed_taple_widget.dart';
@@ -286,20 +289,33 @@ class _MembersPageState extends State<MembersPage> with SingleTickerProviderStat
                                         ),
                                       );
                                     },
-                                    icon: const Icon(Icons.key),
+                                    icon: ImageMultiType(
+                                      url: Assets.iconsKey,
+                                      width: 40.0.r,
+                                      height: 40.0.r,
+                                    ),
                                   ),
                                   IconButton(
                                     onPressed: () async {
                                       downloadImage(e.id, e.fullName);
                                     },
-                                    icon: const Icon(Icons.qr_code, color: Colors.black),
+                                    icon: ImageMultiType(
+                                      url: Assets.iconsQrCode,
+                                      color: Colors.black,
+                                      width: 40.0.r,
+                                      height: 40.0.r,
+                                    ),
                                   ),
                                   IconButton(
                                     onPressed: () async {
                                       createSingleCard(e);
                                     },
-                                    icon: const Icon(Icons.credit_card,
-                                        color: AppColorManager.mainColor),
+                                    icon: ImageMultiType(
+                                      url: Assets.iconsCard,
+                                      color: AppColorManager.mainColor,
+                                      width: 40.0.r,
+                                      height: 40.0.r,
+                                    ),
                                   ),
                                 ],
                               ),

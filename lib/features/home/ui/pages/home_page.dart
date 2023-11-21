@@ -31,6 +31,7 @@ import '../../../members/ui/pages/memberss_page.dart';
 import '../../../roles/bloc/create_role_cubit/create_role_cubit.dart';
 import '../../../roles/bloc/delete_role_cubit/delete_role_cubit.dart';
 import '../../../roles/ui/pages/roles_page.dart';
+import '../../../settings/ui/pages/settings.dart';
 import '../../../subscriptions/bloc/delete_subscription_cubit/delete_subscription_cubit.dart';
 import '../../../subscriptions/ui/pages/subscriptions_page.dart';
 import '../../../super_user/bloc/delete_super_user_cubit/delete_super_user_cubit.dart';
@@ -180,6 +181,8 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
               const AdminMenuItem(title: 'الشكاوى', route: '/ticket'),
+              const AdminMenuItem(
+                  title: 'إعدادات', route: NamePaths.settings, icon: Icons.settings),
             ],
             selectedRoute: state.page,
             onSelected: (item) {
@@ -291,6 +294,9 @@ class _HomePageState extends State<HomePage> {
                     create: (context) => DeleteSubscriptionCubit(),
                     child: const SubscriptionsPage(),
                   );
+
+                case NamePaths.settings:
+                  return const SettingsPage();
                 case "/roles":
                   return MultiBlocProvider(
                     providers: [
@@ -345,6 +351,7 @@ class NamePaths {
   static const subscriptions = '/subscriptions';
   static const tripHistory = '/tripHistory';
   static const roles = '/roles';
+  static const settings = '/settings';
 
   static const failedAttendances = '/failed_attendancesPage';
 }

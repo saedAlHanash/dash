@@ -26,7 +26,7 @@ final _super_userList = [
   'نوع',
   'اسم',
   'وصف',
-  'الباصات',
+  'عدد باصات الرحلة',
   'تاريخ الرحلة',
   'وقت الرحلة',
   'عدد اشتراكات الطلاب',
@@ -54,7 +54,7 @@ class _BusTripsPageState extends State<BusTripsPage> with SingleTickerProviderSt
     );
 
     final curvedAnimation =
-    CurvedAnimation(curve: Curves.easeInOut, parent: _animationController);
+        CurvedAnimation(curve: Curves.easeInOut, parent: _animationController);
     _animation = Tween<double>(begin: 0, end: 1).animate(curvedAnimation);
 
     super.initState();
@@ -177,16 +177,12 @@ class _BusTripsPageState extends State<BusTripsPage> with SingleTickerProviderSt
                   title: _super_userList,
                   data: list.mapIndexed(
                     (i, e) {
-                      var busesS = '';
-                      for (var e in e.buses) {
-                        busesS += '${e.driverName}\n';
-                      }
                       return [
                         e.id.toString(),
                         e.category.index == 0 ? 'نقاط تجمع' : 'منازل طلاب',
                         e.name,
                         e.description,
-                        busesS,
+                        e.buses.length.toString(),
                         '${e.startDate?.formatDate} \n\n ${e.endDate?.formatDate}',
                         '${e.startDate?.formatTime} \n\n ${e.endDate?.formatTime}',
                         e.numberOfParticipation.toString(),

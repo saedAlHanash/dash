@@ -25,6 +25,7 @@ class AppSharedPreference {
   static const _user = '14';
   static const _email = '15';
   static const _institutionId = 'iid';
+  static const _totalCount = '1215';
 
   static SharedPreferences? _prefs;
 
@@ -163,6 +164,13 @@ class AppSharedPreference {
   }
 
   static String get getEmail => _prefs?.getString(_email) ?? '';
+
+  static void cashTotalCount(int? count) {
+    if (count == null) return;
+    _prefs?.setInt(_totalCount, count);
+  }
+
+  static int get getTotalCount => _prefs?.getInt(_totalCount) ?? 40;
 
   static List<String> getIme() {
     return _prefs?.getStringList(_ime) ?? [];
