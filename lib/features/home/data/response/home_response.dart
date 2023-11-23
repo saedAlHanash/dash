@@ -31,7 +31,7 @@ class HomeResult {
   final num membersCount;
   final num membersWithSubscription;
   final num membersWithoutSubscription;
-  final List<String> imeis;
+  final List<Imei> imeis;
   final List<NotificationPoint> notificationPoints;
   final List<CurrentAttendencesInBus> currentAttendencesInBuses;
 
@@ -51,7 +51,9 @@ class HomeResult {
       membersCount: json["membersCount"] ?? 0,
       membersWithSubscription: json["membersWithSubscription"] ?? 0,
       membersWithoutSubscription: json["membersWithoutSubscription"] ?? 0,
-      imeis: json["imeis"] == null ? [] : List<String>.from(json["imeis"]!.map((x) => x)),
+      imeis: json["imeis"] == null
+          ? []
+          : List<Imei>.from(json["imeis"]!.map((x) => Imei.fromJson(x))),
       notificationPoints: json["notificationPoints"] == null
           ? []
           : List<NotificationPoint>.from(
@@ -67,7 +69,7 @@ class HomeResult {
         "membersCount": membersCount,
         "membersWithSubscription": membersWithSubscription,
         "membersWithoutSubscription": membersWithoutSubscription,
-        "imeis": imeis.map((x) => x).toList(),
+        "imeis": imeis.map((x) => x.toJson()).toList(),
         "notificationPoints": notificationPoints.map((x) => x.toJson()).toList(),
         "currentAttendencesInBuses":
             currentAttendencesInBuses.map((x) => x.toJson()).toList(),
@@ -133,5 +135,27 @@ class CurrentAttendencesInBus {
   Map<String, dynamic> toJson() => {
         "imei": imei,
         "countOfAttendence": countOfAttendence,
+      };
+}
+
+class Imei {
+  Imei({
+    required this.id,
+    required this.ime,
+  });
+
+  final int id;
+  final String ime;
+
+  factory Imei.fromJson(Map<String, dynamic> json) {
+    return Imei(
+      id: json["id"] ?? 0,
+      ime: json["ime"] ?? "",
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "ime": ime,
       };
 }

@@ -28,7 +28,7 @@ class HomeCubit extends Cubit<HomeInitial> {
       }
       emit(state.copyWith(statuses: CubitStatuses.error, error: pair.second));
     } else {
-      AppSharedPreference.cashIme(pair.first?.imeis ?? []);
+      AppSharedPreference.cashIme(pair.first?.imeis.map((e) => e.ime).toList() ?? []);
       emit(state.copyWith(statuses: CubitStatuses.done, result: pair.first));
     }
   }

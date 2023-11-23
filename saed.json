@@ -1,300 +1,53 @@
 {
   "result": {
-    "totalCount": 6,
-    "items": [
+    "signature": null,
+    "membersCount": 7,
+    "membersWithSubscription": 0,
+    "membersWithoutSubscription": 7,
+    "imeis": [
       {
-        "fullName": "عبدالمهين حمدون",
-        "imageUrl": null,
-        "address": "البرامكة",
-        "late": null,
-        "longe": null,
-        "userName": "12118884",
-        "password": "59184963",
-        "phoneNo": "963955881099",
-        "facility": "سائق",
-        "idNumber": null,
-        "collegeIdNumber": null,
-        "emergencyPhone": null,
-        "session": null,
-        "institutionId": 8,
-        "subscriptions": [
-          {
-            "institutionId": 8,
-            "institution": null,
-            "memberId": 55,
-            "member": {
-              "fullName": "عبدالمهين حمدون",
-              "imageUrl": null,
-              "address": "البرامكة",
-              "late": null,
-              "longe": null,
-              "userName": "12118884",
-              "password": "59184963",
-              "phoneNo": "963955881099",
-              "facility": "سائق",
-              "idNumber": null,
-              "collegeIdNumber": null,
-              "session": null,
-              "institutionId": 8,
-              "emergencyPhone": null,
-              "id": 55
-            },
-            "supscriptionDate": "2023-10-01T00:00:00",
-            "expirationDate": "2023-12-31T00:00:00",
-            "isActive": true,
-            "semester": null,
-            "id": 63
-          }
-        ],
-        "tickets": [],
-        "pickupPoints": [],
-        "id": 55
+        "id": 7,
+        "ime": "354778341875188"
       },
       {
-        "fullName": "فداء دوفش",
-        "imageUrl": null,
-        "address": "ضاحية قدسيا",
-        "late": null,
-        "longe": null,
-        "userName": "71463947",
-        "password": "71225741",
-        "phoneNo": "963933343225",
-        "facility": "سائق",
-        "idNumber": null,
-        "collegeIdNumber": null,
-        "emergencyPhone": null,
-        "session": null,
-        "institutionId": 8,
-        "subscriptions": [
-          {
-            "institutionId": 8,
-            "institution": null,
-            "memberId": 54,
-            "member": {
-              "fullName": "فداء دوفش",
-              "imageUrl": null,
-              "address": "ضاحية قدسيا",
-              "late": null,
-              "longe": null,
-              "userName": "71463947",
-              "password": "71225741",
-              "phoneNo": "963933343225",
-              "facility": "سائق",
-              "idNumber": null,
-              "collegeIdNumber": null,
-              "session": null,
-              "institutionId": 8,
-              "emergencyPhone": null,
-              "id": 54
-            },
-            "supscriptionDate": "2023-10-01T00:00:00",
-            "expirationDate": "2023-12-31T00:00:00",
-            "isActive": true,
-            "semester": null,
-            "id": 62
-          }
-        ],
-        "tickets": [],
-        "pickupPoints": [],
-        "id": 54
-      },
-      {
-        "fullName": "يارا حسن",
-        "imageUrl": null,
-        "address": "تضامن كسوة",
-        "late": null,
-        "longe": null,
-        "userName": "96921462",
-        "password": "97447428",
-        "phoneNo": "963952695418",
-        "facility": null,
-        "idNumber": null,
-        "collegeIdNumber": null,
-        "emergencyPhone": null,
-        "session": null,
-        "institutionId": 8,
-        "subscriptions": [
-          {
-            "institutionId": 8,
-            "institution": null,
-            "memberId": 53,
-            "member": {
-              "fullName": "يارا حسن",
-              "imageUrl": null,
-              "address": "تضامن كسوة",
-              "late": null,
-              "longe": null,
-              "userName": "96921462",
-              "password": "97447428",
-              "phoneNo": "963952695418",
-              "facility": null,
-              "idNumber": null,
-              "collegeIdNumber": null,
-              "session": null,
-              "institutionId": 8,
-              "emergencyPhone": null,
-              "id": 53
-            },
-            "supscriptionDate": "2023-08-24T00:00:00",
-            "expirationDate": "2023-09-15T00:00:00",
-            "isActive": true,
-            "semester": null,
-            "id": 61
-          }
-        ],
-        "tickets": [],
-        "pickupPoints": [],
-        "id": 53
-      },
-      {
-        "fullName": "نورما محمود",
-        "imageUrl": null,
-        "address": "تضامن كسوة",
-        "late": null,
-        "longe": null,
-        "userName": "31931854",
-        "password": "26918585",
-        "phoneNo": "963997752113",
-        "facility": null,
-        "idNumber": null,
-        "collegeIdNumber": null,
-        "emergencyPhone": null,
-        "session": null,
-        "institutionId": 8,
-        "subscriptions": [
-          {
-            "institutionId": 8,
-            "institution": null,
-            "memberId": 52,
-            "member": {
-              "fullName": "نورما محمود",
-              "imageUrl": null,
-              "address": "تضامن كسوة",
-              "late": null,
-              "longe": null,
-              "userName": "31931854",
-              "password": "26918585",
-              "phoneNo": "963997752113",
-              "facility": null,
-              "idNumber": null,
-              "collegeIdNumber": null,
-              "session": null,
-              "institutionId": 8,
-              "emergencyPhone": null,
-              "id": 52
-            },
-            "supscriptionDate": "2023-08-24T00:00:00",
-            "expirationDate": "2023-09-15T00:00:00",
-            "isActive": true,
-            "semester": null,
-            "id": 60
-          }
-        ],
-        "tickets": [],
-        "pickupPoints": [],
-        "id": 52
-      },
-      {
-        "fullName": "احمد حيدر",
-        "imageUrl": null,
-        "address": "تضامن كسوة",
-        "late": null,
-        "longe": null,
-        "userName": "43552226",
-        "password": "24551584",
-        "phoneNo": "963944251865",
-        "facility": null,
-        "idNumber": null,
-        "collegeIdNumber": null,
-        "emergencyPhone": null,
-        "session": null,
-        "institutionId": 8,
-        "subscriptions": [
-          {
-            "institutionId": 8,
-            "institution": null,
-            "memberId": 51,
-            "member": {
-              "fullName": "احمد حيدر",
-              "imageUrl": null,
-              "address": "تضامن كسوة",
-              "late": null,
-              "longe": null,
-              "userName": "43552226",
-              "password": "24551584",
-              "phoneNo": "963944251865",
-              "facility": null,
-              "idNumber": null,
-              "collegeIdNumber": null,
-              "session": null,
-              "institutionId": 8,
-              "emergencyPhone": null,
-              "id": 51
-            },
-            "supscriptionDate": "2023-08-24T00:00:00",
-            "expirationDate": "2023-09-15T00:00:00",
-            "isActive": true,
-            "semester": null,
-            "id": 59
-          }
-        ],
-        "tickets": [],
-        "pickupPoints": [],
-        "id": 51
-      },
-      {
-        "fullName": "فرح نويدر",
-        "imageUrl": null,
-        "address": "تضامن كسوة",
-        "late": null,
-        "longe": null,
-        "userName": "73898479",
-        "password": "52617311",
-        "phoneNo": "963936807116",
-        "facility": null,
-        "idNumber": null,
-        "collegeIdNumber": null,
-        "emergencyPhone": null,
-        "session": null,
-        "institutionId": 8,
-        "subscriptions": [
-          {
-            "institutionId": 8,
-            "institution": null,
-            "memberId": 50,
-            "member": {
-              "fullName": "فرح نويدر",
-              "imageUrl": null,
-              "address": "تضامن كسوة",
-              "late": null,
-              "longe": null,
-              "userName": "73898479",
-              "password": "52617311",
-              "phoneNo": "963936807116",
-              "facility": null,
-              "idNumber": null,
-              "collegeIdNumber": null,
-              "session": null,
-              "institutionId": 8,
-              "emergencyPhone": null,
-              "id": 50
-            },
-            "supscriptionDate": "2023-08-24T00:00:00",
-            "expirationDate": "2023-09-15T00:00:00",
-            "isActive": true,
-            "semester": null,
-            "id": 58
-          }
-        ],
-        "tickets": [],
-        "pickupPoints": [],
-        "id": 50
+        "id": 9,
+        "ime": "354017116595949"
       }
-    ]
-  },
-  "targetUrl": null,
-  "success": true,
-  "error": null,
-  "unAuthorizedRequest": false,
-  "__abp": true
+    ],
+    "notificationPoints": [
+      {
+        "pointId": 103,
+        "pointName": "110 Damascus Damascus ",
+        "pointArName": "مفرق القزاز",
+        "latitude": 33.48950452398503,
+        "longitude": 36.32357430620943,
+        "subscriperCount": 2
+      },
+      {
+        "pointId": 168,
+        "pointName": "   AlRaaees Square",
+        "pointArName": "جرمانا ساحة الرئيس",
+        "latitude": 33.488817,
+        "longitude": 36.339898,
+        "subscriperCount": 1
+      },
+      {
+        "pointId": 46,
+        "pointName": "AL Abaseen ",
+        "pointArName": "ساحة العباسيين",
+        "latitude": 33.524419799984635,
+        "longitude": 36.319204297128984,
+        "subscriperCount": 2
+      },
+      {
+        "pointId": 40,
+        "pointName": "Baramkeh",
+        "pointArName": "مجمع الامويين ",
+        "latitude": 33.50776372967414,
+        "longitude": 36.28786488846712,
+        "subscriperCount": 1
+      }
+    ],
+    "currentAttendencesInBuses": []
+  }
 }

@@ -20,7 +20,8 @@ extension PwHelper on double {
 }
 
 pw.MemoryImage? institutionsLogo;
-pw.MemoryImage? stamp;
+pw.MemoryImage? signature;
+
 
 pw.Font? arabicFont;
 
@@ -148,11 +149,11 @@ Future<pw.Widget> getCardMember(Member member) async {
             ],
           ),
         ),
-        if (stamp != null)
+        if (signature != null)
           pw.Positioned(
             bottom: 10.0,
             left: 35.0,
-            child: pw.Image(stamp!, height: 50, width: 50),
+            child: pw.Image(signature!, height: 50, width: 50),
           ),
       ]),
     ],
@@ -172,7 +173,7 @@ Future<Uint8List> getQrImage(int id) async {
       dataModuleShape: QrDataModuleShape.square,
     ),
   );
-  final image = await painter.toImage(100);
+  final image = await painter.toImage(200);
   final pngBytes = await image.toByteData(format: ImageByteFormat.png);
 
   return pngBytes!.buffer.asUint8List();

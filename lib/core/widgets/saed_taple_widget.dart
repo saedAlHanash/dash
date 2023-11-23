@@ -7,7 +7,6 @@ import 'package:qareeb_dash/core/widgets/spinner_widget.dart';
 import '../api_manager/command.dart';
 import '../strings/app_color_manager.dart';
 import '../util/my_style.dart';
-import 'my_card_widget.dart';
 
 class SaedTableWidget extends StatelessWidget {
   const SaedTableWidget({

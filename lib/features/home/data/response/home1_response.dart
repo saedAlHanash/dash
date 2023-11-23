@@ -24,6 +24,7 @@ class Home1Result {
     required this.government,
     required this.type,
     required this.imageUrl,
+    required this.signature,
     required this.atharKey,
     required this.isActive,
     required this.id,
@@ -33,6 +34,7 @@ class Home1Result {
   final num government;
   final num type;
   final String imageUrl;
+  final String signature;
   final String atharKey;
   final bool isActive;
   final int id;
@@ -43,6 +45,7 @@ class Home1Result {
       government: json["government"] ?? 0,
       type: json["type"] ?? 0,
       imageUrl: fixAvatarImage(json["imageUrl"]),
+      signature: fixAvatarImage(json["signature"]),
       atharKey: json["atharKey"] ?? "",
       isActive: json["isActive"] ?? false,
       id: json["id"] ?? 0,
@@ -54,6 +57,7 @@ class Home1Result {
         "government": government,
         "type": type,
         "imageUrl": imageUrl,
+        "signature": signature,
         "atharKey": atharKey,
         "isActive": isActive,
         "id": id,

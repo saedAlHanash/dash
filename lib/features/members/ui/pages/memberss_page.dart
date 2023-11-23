@@ -297,7 +297,7 @@ class _MembersPageState extends State<MembersPage> with SingleTickerProviderStat
                                   ),
                                   IconButton(
                                     onPressed: () async {
-                                      downloadImage(e.id, e.fullName);
+                                      downloadImageMargin(e.id, e.fullName);
                                     },
                                     icon: ImageMultiType(
                                       url: Assets.iconsQrCode,
@@ -432,8 +432,8 @@ Future<void> downloadImage(int id, String name) async {
       const Rect.fromLTWH(0, 0, canvasSize, canvasSize), Paint()..color = Colors.white);
 
   // Calculate the position of the image with padding
-  const double imageX = padding;
-  const double imageY = padding;
+  const  imageX = padding;
+  const  imageY = padding;
 
   // Draw the image on top of the background with padding
   final imageCodec = await instantiateImageCodec(pngBytes!.buffer.asUint8List());
@@ -444,7 +444,64 @@ Future<void> downloadImage(int id, String name) async {
   // Finalize the canvas and obtain the resulting image
   final picture = recorder.endRecording();
   final resultingImage = await picture.toImage(canvasSize.toInt(), canvasSize.toInt());
-  final resultingPngBytes = await resultingImage.toByteData(format: ImageByteFormat.png);
+
+
+  // Use the resultingPngBytes as needed (e.g., save to a file, send over the network, etc.)
+  final resultingPngByte = await resultingImage.toByteData(format: ImageByteFormat.png);
+
+  saveImageFile(name: name, pngBytes: resultingPngByte!.buffer.asUint8List());
+
+  // final blob = Blob([], 'image/png');
+  // final url = Url.createObjectUrlFromBlob(blob);
+  // final anchor = AnchorElement(href: url)
+  //   ..setAttribute('download', '$name.png')
+  //   ..click();
+}
+
+Future<void> downloadImageMargin(int id, String name) async {
+  final painter = QrPainter(
+    data: id.toString(),
+    version: QrVersions.auto,
+    eyeStyle: const QrEyeStyle(
+      color: AppColorManager.black,
+      eyeShape: QrEyeShape.square,
+    ),
+    dataModuleStyle: const QrDataModuleStyle(
+      color: AppColorManager.black,
+      dataModuleShape: QrDataModuleShape.square,
+    ),
+  );
+  final image = await painter.toImage(600);
+  final pngBytes = await image.toByteData(format: ImageByteFormat.png);
+
+  // Define the margin
+  const double margin = 35.0;
+
+  // Calculate the new canvas size with margin
+  const double canvasSize = 600 + (2 * margin);
+
+  // Create a new canvas with the desired background color and margin
+  final recorder = PictureRecorder();
+  final canvas = Canvas(recorder, Rect.fromPoints(Offset.zero, Offset.zero));
+
+  // Draw the background color
+  canvas.drawRect(
+      const Rect.fromLTWH(0, 0, canvasSize, canvasSize), Paint()..color = Colors.white);
+
+  // Calculate the position of the image with margin
+  const double imageX = margin;
+  const double imageY = margin;
+
+  // Draw the image on top of the background with margin
+  final imageCodec = await instantiateImageCodec(pngBytes!.buffer.asUint8List());
+  final frame = await imageCodec.getNextFrame();
+  final imagePaint = Paint();
+  canvas.drawImage(frame.image, Offset(imageX, imageY), imagePaint);
+
+  // Finalize the canvas and obtain the resulting image
+  final picture = recorder.endRecording();
+  final resultingImage = await picture.toImage(canvasSize.toInt(), canvasSize.toInt());
+
 
   // Use the resultingPngBytes as needed (e.g., save to a file, send over the network, etc.)
   final resultingPngByte = await resultingImage.toByteData(format: ImageByteFormat.png);

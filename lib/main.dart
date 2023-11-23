@@ -35,7 +35,7 @@ void main() async {
     logoSvg = pw.SvgImage(
         svg: await rootBundle.loadString('assets/icons/logo_with_text.svg'),
         height: 35.0);
-    stamp = await assetImageToMemoryImage('assets/icons/stamp.png');
+    // stamp = await assetImageToMemoryImage('assets/icons/stamp.png');
   } on Exception {}
 
   var e = document.getElementById('loading');

@@ -39,6 +39,12 @@ class Home1Cubit extends Cubit<Home1Initial> {
           institutionsLogo = pw.MemoryImage(value);
         }
       });
+          loggerObject.w(pair.first!.signature);
+      fetchImage(pair.first!.signature,withCompress: false).then((value) {
+        if (value != null) {
+          signature = pw.MemoryImage(value);
+        }
+      });
       emit(state.copyWith(statuses: CubitStatuses.done, result: pair.first));
     }
   }

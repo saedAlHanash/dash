@@ -241,7 +241,8 @@ class _CreateBusTripPageState extends State<CreateBusTripPage> {
                                 return SpinnerOutlineTitle(
                                   sendFirstItem: true,
                                   width: double.infinity,
-                                  items: state.getSpinnerItem,
+                                  items: state.getSpinnerItems(
+                                      selectedId: request.tripTemplateId as int),
                                   label: 'نموذج الرحلة',
                                   onChanged: (spinnerItem) {
                                     var tempTrip = spinnerItem.item as TempTripModel;

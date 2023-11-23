@@ -75,7 +75,7 @@ class _DashboardPageState extends State<DashboardPage> {
                 20.0.verticalSpace,
                 BlocBuilder<Home1Cubit, Home1Initial>(
                   builder: (context, state1) {
-                    return  MyExpansionWidget(
+                    return MyExpansionWidget(
                       items: [
                         ItemExpansion(
                             body: Column(
@@ -105,33 +105,7 @@ class _DashboardPageState extends State<DashboardPage> {
                               ],
                             ),
                             isExpanded: false,
-
                             headerText: 'التفاصيل'),
-
-                      ],
-                    );
-                    return Column(
-                      children: [
-                        TotalWidget(
-                          text: 'عدد باصات ${state1.result.name}',
-                          icon: Assets.iconsBuses,
-                          number: state.result.imeis.length,
-                        ),
-                        TotalWidget(
-                          text: 'عدد طلاب ${state1.result.name}',
-                          icon: Assets.iconsStudents,
-                          number: state.result.membersCount,
-                        ),
-                        TotalWidget(
-                          text: 'عدد طلاب ${state1.result.name} المشتركين في النقل',
-                          icon: Assets.iconsCheckCircle,
-                          number: state.result.membersWithSubscription,
-                        ),
-                        TotalWidget(
-                          text: 'عدد طلاب ${state1.result.name} الغير مشتركين في النقل',
-                          icon: Assets.iconsReject,
-                          number: state.result.membersWithoutSubscription,
-                        ),
                       ],
                     );
                   },
