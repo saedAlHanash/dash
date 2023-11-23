@@ -14,6 +14,7 @@ import '../../../../core/api_manager/command.dart';
 import '../../../../core/error/error_manager.dart';
 import '../../../../core/util/note_message.dart';
 import '../../../../core/util/pair_class.dart';
+import '../../../../core/util/shared_preferences.dart';
 
 part 'all_drivers_state.dart';
 
@@ -82,9 +83,13 @@ class AllDriversCubit extends Cubit<AllDriversInitial> {
           '\t عدد مقاعد السيارة \t',
           '\t ماركة السيارة \t',
           '\t لون السيارة \t',
+          '\t حالة فحص السيارة\t',
           '\t حالة الزبون \t',
-          '\t اشتراك الولاء \t',
-          '\t OTP \t',
+          if (isQareebAdmin) ...[
+            '\t اشتراك الولاء \t',
+            '\t اشتراك البنزين\t',
+            '\t OTP \t',
+          ],
           '\t محافظة السيارة \t',
           '\t سنة صنع السيارة \t',
           '\t التصنيف الحكومي \t',
@@ -105,9 +110,13 @@ class AllDriversCubit extends Cubit<AllDriversInitial> {
                 element.carType.seatsNumber,
                 element.carType.carBrand,
                 element.carType.carColor,
+                element.isExamined,
                 element.isActive,
-                element.loyalty,
-                element.emailConfirmationCode,
+                if (isQareebAdmin) ...[
+                  element.loyalty,
+                  element.isGasIncluded,
+                  element.emailConfirmationCode,
+                ],
                 element.carType.carGovernorate,
                 element.carType.manufacturingYear,
                 element.carType.type,

@@ -48,7 +48,7 @@ class _DashboardPageState extends State<DashboardPage> {
         child: Column(
           children: [
             16.0.verticalSpace,
-            if (AppSharedPreference.getUser.roleName.toLowerCase() == 'admin')
+            if (isQareebAdmin)
               const LoyaltyWidget(),
             DashboardScreen(statistics: statistics),
             FutureBuilder(

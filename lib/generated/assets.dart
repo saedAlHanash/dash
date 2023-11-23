@@ -66,6 +66,8 @@ class Assets {
   static const String iconsC = 'assets/icons/c.svg';
   static const String iconsCallDriver = 'assets/icons/call_driver.svg';
   static const String iconsCarPlaceHolder = 'assets/icons/car_place_holder.svg';
+  static const String iconsStamp = 'assets/icons/stamp.svg';
+  static const String iconsSubscription = 'assets/icons/subscription.svg';
   static const String iconsCarTopView = 'assets/icons/car_top_view.png';
   static const String iconsCashSummary = 'assets/icons/cash_summary.svg';
   static const String iconsCheckCircle = 'assets/icons/check_circle.svg';
@@ -74,6 +76,7 @@ class Assets {
   static const String iconsD = 'assets/icons/d.svg';
   static const String iconsDelete = 'assets/icons/delete.svg';
   static const String iconsDriver = 'assets/icons/driver.svg';
+  static const String iconsExamination = 'assets/icons/examination.svg';
   static const String iconsDrivingLicence = 'assets/icons/driving_licence.jpg';
   static const String iconsE = 'assets/icons/e.svg';
   static const String iconsEdit = 'assets/icons/edit.svg';

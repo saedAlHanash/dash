@@ -10,6 +10,7 @@ import 'package:qareeb_dash/features/car_catigory/bloc/all_car_categories_cubit/
 import 'package:qareeb_dash/features/car_catigory/data/response/car_categories_response.dart';
 import 'package:qareeb_dash/generated/assets.dart';
 import 'package:qareeb_models/extensions.dart';
+import 'package:qareeb_models/car_catigory/data/response/car_categories_response.dart';
 
 import '../../../../core/api_manager/api_service.dart';
 import '../../../../core/strings/app_color_manager.dart';
@@ -270,6 +271,47 @@ class _CreateCarCategoryPageState extends State<CreateCarCategoryPage> {
                             initialValue: request.normalGasRatio?.toString(),
                             onChanged: (p0) {
                               request.normalGasRatio = num.tryParse(p0);
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                    DrawableText(
+                      text: 'الاشتراكات',
+                      size: 25.0.sp,
+                      padding: const EdgeInsets.symmetric(vertical: 30.0).h,
+                      matchParent: true,
+                      textAlign: TextAlign.center,
+                      fontFamily: FontManager.cairoBold,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: MyTextFormNoLabelWidget(
+                            label: 'سعر الكيلو متر (عدد صحيح بدون فاصلة)',
+                            initialValue: request.planKmCost?.toString(),
+                            onChanged: (p0) {
+                              request.planKmCost = int.tryParse(p0);
+                            },
+                          ),
+                        ),
+                        15.0.horizontalSpace,
+                        Expanded(
+                          child: MyTextFormNoLabelWidget(
+                            label: 'أقل كلفة للرحلة (عدد صحيح بدون فاصلة)',
+                            initialValue: request.planMinimumCost?.toString(),
+                            onChanged: (p0) {
+                              request.planMinimumCost = double.tryParse(p0);
+                            },
+                          ),
+                        ),
+                        15.0.horizontalSpace,
+                        Expanded(
+                          child: MyTextFormNoLabelWidget(
+                            label: 'نسبة السائق من الرحلات (1 -> 100) %',
+                            initialValue: request.planDriverRation?.toString(),
+                            onChanged: (p0) {
+                              request.planDriverRation = double.tryParse(p0);
                             },
                           ),
                         ),

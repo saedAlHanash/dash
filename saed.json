@@ -1,1 +1,46 @@
-{"TotalRequiredAmountFromDriver":9012521.0,"TotalRequiredAmountFromCompany":7366865.0,"reports":[{"DriverId":12,"DriverName":"محمد جهاد  الهندي الهندي","DriverPhoneNo":"963933215432","RequiredAmountFromDriver":7487900.0,"RequiredAmountFromCompany":6425230.0},{"DriverId":16,"DriverName":"سعيد الحنش ","DriverPhoneNo":"963938891523","RequiredAmountFromDriver":1103400.0,"RequiredAmountFromCompany":135290.0},{"DriverId":63,"DriverName":" ","DriverPhoneNo":"963981361411","RequiredAmountFromDriver":0.0,"RequiredAmountFromCompany":0.0},{"DriverId":73,"DriverName":"store Test","DriverPhoneNo":"963756490918","RequiredAmountFromDriver":0.0,"RequiredAmountFromCompany":0.0},{"DriverId":74,"DriverName":"eyad agha","DriverPhoneNo":"963944222803","RequiredAmountFromDriver":22110.0,"RequiredAmountFromCompany":244015.0},{"DriverId":82,"DriverName":"فراس زكريا ","DriverPhoneNo":"963993370529","RequiredAmountFromDriver":264000.0,"RequiredAmountFromCompany":208330.0},{"DriverId":94,"DriverName":"خالد الرهونجي محمد وليد ","DriverPhoneNo":"963955268205","RequiredAmountFromDriver":0.0,"RequiredAmountFromCompany":17850.0},{"DriverId":119,"DriverName":"محمد يزن عرمان عرمان","DriverPhoneNo":"963997104052","RequiredAmountFromDriver":0.0,"RequiredAmountFromCompany":0.0},{"DriverId":185,"DriverName":"عبد المجيد  صيداوي صيداوي","DriverPhoneNo":"963933641542","RequiredAmountFromDriver":9500.0,"RequiredAmountFromCompany":0.0},{"DriverId":257,"DriverName":"محمد ماهر  مطر مطر","DriverPhoneNo":"963932769985","RequiredAmountFromDriver":0.0,"RequiredAmountFromCompany":0.0},{"DriverId":306,"DriverName":"محمد انس  هدايا","DriverPhoneNo":"963945500008","RequiredAmountFromDriver":0.0,"RequiredAmountFromCompany":0.0},{"DriverId":382,"DriverName":"محمد القاري محمد منير","DriverPhoneNo":"963988718278","RequiredAmountFromDriver":0.0,"RequiredAmountFromCompany":0.0},{"DriverId":385,"DriverName":"نضال عدي    وائل","DriverPhoneNo":"963966279515","RequiredAmountFromDriver":0.0,"RequiredAmountFromCompany":0.0},{"DriverId":391,"DriverName":"محمد الحداوي  صالح صالح صالح","DriverPhoneNo":"963932948324","RequiredAmountFromDriver":0.0,"RequiredAmountFromCompany":0.0},{"DriverId":393,"DriverName":"أحمد جمال أيبش  محمد عزت ","DriverPhoneNo":"963944504910","RequiredAmountFromDriver":24000.0,"RequiredAmountFromCompany":14110.0},{"DriverId":394,"DriverName":"محمد هاني شرفه باسل ","DriverPhoneNo":"963932696805","RequiredAmountFromDriver":0.0,"RequiredAmountFromCompany":0.0},{"DriverId":434,"DriverName":"محمد علاء الدين أبو أرشيد أبو أرشيد","DriverPhoneNo":"963991282096","RequiredAmountFromDriver":0.0,"RequiredAmountFromCompany":0.0},{"DriverId":435,"DriverName":"مححمد يحيى  الشعيري الشعيري","DriverPhoneNo":"963999892034","RequiredAmountFromDriver":14000.0,"RequiredAmountFromCompany":84245.0},{"DriverId":436,"DriverName":"فادي  عواد","DriverPhoneNo":"963944966611","RequiredAmountFromDriver":0.0,"RequiredAmountFromCompany":0.0},{"DriverId":438,"DriverName":"qareeb  mass mass","DriverPhoneNo":"963988774834","RequiredAmountFromDriver":87611.0,"RequiredAmountFromCompany":237795.0}],"totalCount":79}
+{
+  "name": "بلايبلا",
+  "tripTemplateId": 0,
+  "institutionId": 4,
+  "pathId": 0,
+  "path": null,
+  "description": "يبلايبل",
+  "distance": 0,
+  "buses": [
+    {
+      "ime": "354778341875188",
+      "driverName": "سعيد الحنش ",
+      "driverPhone": "963933635246",
+      "busModel": "مارسيدي",
+      "busColor": "أبيض",
+      "busNumber": "357073299579843",
+      "busName": null,
+      "seatsNumber": 40,
+      "institutionId": 4,
+      "institution": null,
+      "supervisors": null,
+      "id": 7
+    }
+  ],
+  "creationDate": "2023-09-19T23:42:33.375105",
+  "startDate": "2023-09-19T05:25:00",
+  "endDate": "2023-09-30T06:30:00",
+  "busTripType": 0,
+  "days": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "category": 1,
+  "numberOfParticipation": 0,
+  "pickupPointsCount": 0,
+  "isActive": false,
+  "attendances": [],
+  "participations": [],
+  "pickupPoints": [],
+  "id": 21
+}

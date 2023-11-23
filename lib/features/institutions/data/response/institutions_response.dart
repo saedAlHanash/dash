@@ -68,6 +68,7 @@ class InstitutionModel {
     required this.government,
     required this.type,
     required this.imageUrl,
+    required this.signature,
     required this.atharKey,
     required this.isActive,
   });
@@ -77,6 +78,7 @@ class InstitutionModel {
   final int government;
   final int type;
   final String imageUrl;
+  final String signature;
   final String atharKey;
   final bool isActive;
 
@@ -87,6 +89,7 @@ class InstitutionModel {
       government: json["government"] ?? "",
       type: json["type"] ?? "",
       imageUrl: fixAvatarImage(json["imageUrl"]),
+      signature: fixAvatarImage(json["signature"]),
       atharKey: json["atharKey"] ?? "",
       isActive: json["isActive"] ?? false,
     );
@@ -98,6 +101,7 @@ class InstitutionModel {
         "government": government,
         "type": type,
         "imageUrl": imageUrl,
+        "signature": signature,
         "atharKey": atharKey,
         "isActive": isActive,
       };

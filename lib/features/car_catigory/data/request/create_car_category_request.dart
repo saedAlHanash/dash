@@ -1,44 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:qareeb_dash/features/car_catigory/data/response/car_categories_response.dart';
+import 'package:qareeb_models/car_catigory/data/response/car_categories_response.dart';
 import 'package:qareeb_models/extensions.dart';
+import 'package:qareeb_models/car_catigory/data/response/car_categories_response.dart';
+import 'package:qareeb_models/car_catigory/data/response/car_categories_response.dart';
+import 'package:qareeb_models/trip_process/data/response/trip_response.dart';
 
 import '../../../../core/api_manager/api_service.dart';
 import '../../../../core/util/note_message.dart';
 
 class CreateCarCatRequest {
+  int? id;
   String? name;
-
-  num? driverRatio;
-
   UploadFile? file;
 
-  num? nightKMOverCost;
 
+  //Driver ration
+  num? driverRatio;
+  num? sharedDriverRatio;
+  num? planDriverRation;
+
+  //km cost
+  num? dayKMOverCost;
+  num? nightKMOverCost;
+  num? sharedKMOverCost;
+  num? planKmCost;
   num? nightSharedKMOverCost;
 
-  num? dayKMOverCost;
-
-  num? sharedKMOverCost;
-
-  num? sharedDriverRatio;
-
+  //min price
   num? minimumDayPrice;
-
   num? minimumNightPrice;
+  num? planMinimumCost;
 
-  int? id;
-
+  //loyalty
   num? normalOilRatio;
   num? normalGoldRatio;
   num? normalTiresRatio;
   num? normalGasRatio;
-
-
   num? sharedOilRatio;
   num? sharedGoldRatio;
   num? sharedTiresRatio;
   num? sharedGasRatio;
-
 
 
   num? priceVariant;
@@ -68,6 +70,9 @@ class CreateCarCatRequest {
     this.priceVariant,
     this.sharedMinimumDistanceInMeters,
     this.seatNumber,
+    this.planDriverRation,
+    this.planKmCost,
+    this.planMinimumCost,
   });
 
   Map<String, dynamic> toMap() {
@@ -93,6 +98,9 @@ class CreateCarCatRequest {
       'priceVariant': priceVariant,
       'sharedMinimumDistanceInMeters': sharedMinimumDistanceInMeters,
       'seatNumber': seatNumber,
+      'PlanDriverRation': planDriverRation,
+      'PlanKmCost': planKmCost,
+      'PlanMinimumCost': planMinimumCost,
     };
   }
 
@@ -119,6 +127,9 @@ class CreateCarCatRequest {
       priceVariant: carCategory.priceVariant,
       sharedMinimumDistanceInMeters: carCategory.sharedMinimumDistanceInMeters,
       seatNumber: carCategory.seatNumber,
+      planDriverRation: carCategory.planDriverRation,
+      planKmCost: carCategory.planKmCost,
+      planMinimumCost: carCategory.planMinimumCost,
     )..file = UploadFile(fileBytes: null, initialImage: carCategory.imageUrl);
   }
 
@@ -198,6 +209,18 @@ class CreateCarCatRequest {
     }
 
     if (priceVariant == 0) {
+      NoteMessage.showErrorSnackBar(message: 'خطأ في متغير السعر', context: context);
+      return false;
+    }
+    if (planDriverRation == 0) {
+      NoteMessage.showErrorSnackBar(message: 'خطأ في متغير السعر', context: context);
+      return false;
+    }
+    if (planKmCost == 0) {
+      NoteMessage.showErrorSnackBar(message: 'خطأ في متغير السعر', context: context);
+      return false;
+    }
+    if (planMinimumCost == 0) {
       NoteMessage.showErrorSnackBar(message: 'خطأ في متغير السعر', context: context);
       return false;
     }

@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -48,7 +50,7 @@ class _CreateInstitutionPageState extends State<CreateInstitutionPage> {
       listenWhen: (p, c) => c.statuses.done,
       listener: (context, state) {
         context.read<AllInstitutionsCubit>().getInstitutions(context);
-       context.pop();
+        window.history.back();
       },
       child: Scaffold(
         appBar: const AppBarWidget(
@@ -61,20 +63,40 @@ class _CreateInstitutionPageState extends State<CreateInstitutionPage> {
             children: [
               30.0.verticalSpace,
               Center(
-                child: ItemImageCreate(
-                  onLoad: (bytes) {
-                    setState(() {
-                      request.file = UploadFile(
-                        fileBytes: bytes,
-                        nameField: 'File',
-                      );
-                    });
-                  },
-                  image: request.file?.initialImage != null
-                      ? request.file!.initialImage!
-                      : Assets.iconsCarPlaceHolder,
-                  text: 'الصورة',
-                  fileBytes: request.file?.fileBytes,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ItemImageCreate(
+                      onLoad: (bytes) {
+                        setState(() {
+                          request.file = UploadFile(
+                            fileBytes: bytes,
+                            nameField: 'File',
+                          );
+                        });
+                      },
+                      image: request.file?.initialImage != null
+                          ? request.file!.initialImage!
+                          : Assets.iconsCarPlaceHolder,
+                      text: 'الصورة',
+                      fileBytes: request.file?.fileBytes,
+                    ),
+                    ItemImageCreate(
+                      onLoad: (bytes) {
+                        setState(() {
+                          request.signature = UploadFile(
+                            fileBytes: bytes,
+                            nameField: 'Signature',
+                          );
+                        });
+                      },
+                      image: request.signature?.initialImage != null
+                          ? request.signature!.initialImage!
+                          : Assets.iconsStamp,
+                      text: 'الختم',
+                      fileBytes: request.signature?.fileBytes,
+                    ),
+                  ],
                 ),
               ),
               MyCardWidget(

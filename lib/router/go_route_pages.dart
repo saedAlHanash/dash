@@ -10,6 +10,7 @@ import 'package:qareeb_dash/features/accounts/data/request/driver_financial_filt
 import 'package:qareeb_dash/features/admins/bloc/create_admin_cubit/create_admin_cubit.dart';
 import 'package:qareeb_dash/features/admins/ui/pages/create_admin_page.dart';
 import 'package:qareeb_dash/features/car_catigory/data/response/car_categories_response.dart';
+import 'package:qareeb_models/car_catigory/data/response/car_categories_response.dart';
 import 'package:qareeb_dash/features/coupons/data/response/coupons_response.dart';
 import 'package:qareeb_dash/features/drivers/bloc/create_driver_cubit/create_driver_cubit.dart';
 import 'package:qareeb_dash/features/drivers/bloc/driver_by_id_cubit/driver_by_id_cubit.dart';
@@ -19,10 +20,10 @@ import 'package:qareeb_dash/features/home/ui/pages/home_page.dart';
 import 'package:qareeb_dash/features/points/bloc/creta_edge_cubit/create_edge_cubit.dart';
 import 'package:qareeb_dash/features/points/bloc/point_by_id_cubit/point_by_id_cubit.dart';
 import 'package:qareeb_dash/features/trip/ui/pages/trips_page.dart';
+import 'package:qareeb_models/companies/data/response/companies_response.dart';
 
 import '../core/injection/injection_container.dart' as di;
 import '../core/util/shared_preferences.dart';
-import '../features/accounts/bloc/account_amount_cubit/account_amount_cubit.dart';
 import '../features/accounts/bloc/driver_financial_cubit/driver_financial_cubit.dart';
 import '../features/accounts/bloc/reverse_charging_cubit/reverse_charging_cubit.dart';
 import '../features/admins/ui/pages/admin_info_page.dart';
@@ -36,6 +37,8 @@ import '../features/car_catigory/bloc/create_car_category_cubit/create_car_categ
 import '../features/car_catigory/ui/pages/create_car_category_page.dart';
 import '../features/clients/bloc/clients_by_id_cubit/clients_by_id_cubit.dart';
 import '../features/clients/ui/pages/client_info_page.dart';
+import '../features/companies/bloc/create_company_cubit/create_company_cubit.dart';
+import '../features/companies/ui/pages/create_company_page.dart';
 import '../features/coupons/bloc/create_coupon_cubit/create_coupon_cubit.dart';
 import '../features/coupons/ui/pages/create_coupon_page.dart';
 import '../features/drivers/bloc/driver_status_history_cubit/driver_status_history_cubit.dart';
@@ -44,6 +47,9 @@ import '../features/home/ui/pages/agency_home_page.dart';
 import '../features/institutions/bloc/create_institution_cubit/create_institution_cubit.dart';
 import '../features/institutions/data/response/institutions_response.dart';
 import '../features/institutions/ui/pages/create_institution_page.dart';
+import '../features/plans/bloc/create_plan_cubit/create_plan_cubit.dart';
+import '../features/plans/data/response/plans_response.dart';
+import '../features/plans/ui/pages/create_plan_page.dart';
 import '../features/points/bloc/creta_point_cubit/create_point_cubit.dart';
 import '../features/points/bloc/delete_edge_cubit/delete_edge_cubit.dart';
 import '../features/points/bloc/delete_point_cubit/delete_point_cubit.dart';
@@ -466,6 +472,44 @@ final appGoRouter = GoRouter(
     ),
     //endregion
 
+    //region companies
+
+    ///createCompany
+    GoRoute(
+      name: GoRouteName.createCompany,
+      path: _GoRoutePath.createCompany,
+      builder: (BuildContext context, GoRouterState state) {
+        final company = state.extra == null ? null : (state.extra) as CompanyModel;
+        final providers = [
+          BlocProvider(create: (_) => di.sl<CreateCompanyCubit>()),
+        ];
+        return MultiBlocProvider(
+          providers: providers,
+          child: CreateCompanyPage(company: company),
+        );
+      },
+    ),
+    //endregion
+
+    //region plans
+
+    ///createPlan
+    GoRoute(
+      name: GoRouteName.createPlan,
+      path: _GoRoutePath.createPlan,
+      builder: (BuildContext context, GoRouterState state) {
+        final plan = state.extra == null ? null : (state.extra) as PlanModel;
+        final providers = [
+          BlocProvider(create: (_) => di.sl<CreatePlanCubit>()),
+        ];
+        return MultiBlocProvider(
+          providers: providers,
+          child: CreatePlanPage(plan: plan),
+        );
+      },
+    ),
+    //endregion
+
     //region temp trips
 
     ///createTempTrip
@@ -617,9 +661,13 @@ class GoRouteName {
   static const tempTripInfo = 'tempTripInfo';
   static const area = 'area';
   static const redeems = 'redeems';
+
+  static const createCompany = 'createCompany';
+  static const createPlan = 'createPlan';
 }
 
 class _GoRoutePath {
+  static const createCompany = '/createCompany';
   static const homePage = '/Home';
   static const driverInfo = '/DriverInfo';
   static const loginPage = '/';
@@ -642,4 +690,5 @@ class _GoRoutePath {
   static const tempTripInfo = '/tempTripInfo';
   static const area = '/area';
   static const redeems = '/redeems';
+  static const createPlan = '/createPlan';
 }

@@ -60,6 +60,7 @@ class DriverModel {
     required this.userType,
     required this.roleNames,
     required this.isActive,
+    required this.isExamined,
     required this.loyalty,
     required this.isGasIncluded,
     required this.emailConfirmationCode,
@@ -73,6 +74,7 @@ class DriverModel {
     required this.contract,
     required this.drivingLicence,
     required this.carMechanic,
+    required this.examination,
     required this.password,
     required this.driverStatus,
     required this.rejectedTripsCount,
@@ -96,6 +98,7 @@ class DriverModel {
   final UserType userType;
   final List<String> roleNames;
   bool isActive;
+
   bool loyalty;
   bool isGasIncluded;
   final String emailConfirmationCode;
@@ -109,11 +112,13 @@ class DriverModel {
   final String contract;
   final String drivingLicence;
   final String carMechanic;
+  final String examination;
   final String password;
   final DriverStatus driverStatus;
   final num rejectedTripsCount;
   final num receivedTripsCount;
   final Agency agency;
+  final bool isExamined;
 
   factory DriverModel.fromJson(Map<String, dynamic> json) {
     return DriverModel(
@@ -135,6 +140,7 @@ class DriverModel {
           ? []
           : List<String>.from(json["roleNames"]!.map((x) => x)),
       isActive: json["isActive"] ?? false,
+      isExamined: json["isExaminated"] ?? false,
       loyalty: json["isLoyaltySupscriper"] ?? false,
       isGasIncluded: json["isGasIncluded"] ?? false,
       emailConfirmationCode: json["emailConfirmationCode"] ?? "",
@@ -148,6 +154,7 @@ class DriverModel {
       contract: fixAvatarImage(json["contract"] ?? ""),
       drivingLicence: fixAvatarImage(json["drivingLicence"] ?? ""),
       carMechanic: fixAvatarImage(json["carMechanic"] ?? ""),
+      examination: fixAvatarImage(json["examination"] ?? ""),
       password: json["password"] ?? "",
       driverStatus: DriverStatus.values[json["driverStatus"] ?? 0],
       rejectedTripsCount: json["rejectedTripsCount"] ?? 0,
@@ -173,6 +180,7 @@ class DriverModel {
         "userType": userType.index,
         "roleNames": roleNames.map((x) => x).toList(),
         "isActive": isActive,
+        "isExaminated": isExamined,
         "emailConfirmationCode": emailConfirmationCode,
         "creationTime": creationTime,
         "emailAddress": emailAddress,
@@ -186,6 +194,7 @@ class DriverModel {
         "contract": contract,
         "drivingLicence": drivingLicence,
         "carMechanic": carMechanic,
+        "examination": examination,
         "password": password,
         "driverStatus": driverStatus.index,
         "rejectedTripsCount": rejectedTripsCount,

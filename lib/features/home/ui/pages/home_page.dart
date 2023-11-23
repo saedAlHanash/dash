@@ -37,6 +37,8 @@ import '../../../auth/bloc/change_user_state_cubit/change_user_state_cubit.dart'
 import '../../../auth/ui/pages/policy_page.dart';
 import '../../../car_catigory/ui/pages/car_categories_page.dart';
 import '../../../clients/ui/pages/clients_page.dart';
+import '../../../companies/bloc/delete_company_cubit/delete_company_cubit.dart';
+import '../../../companies/ui/pages/companies_page.dart';
 import '../../../coupons/bloc/change_coupon_state_cubit/change_coupon_state_cubit.dart';
 import '../../../coupons/bloc/create_coupon_cubit/create_coupon_cubit.dart';
 import '../../../drivers/bloc/loyalty_cubit/loyalty_cubit.dart';
@@ -48,6 +50,8 @@ import '../../../institutions/bloc/delete_institution_cubit/delete_institution_c
 import '../../../institutions/ui/pages/institutions_page.dart';
 import '../../../notifications/ui/pages/notifications_page.dart';
 import '../../../pay_to_drivers/ui/pages/financial_page.dart';
+import '../../../plans/bloc/delete_plan_cubit/delete_plan_cubit.dart';
+import '../../../plans/ui/pages/plans_page.dart';
 import '../../../points/ui/pages/points_page.dart';
 import '../../../reasons/bloc/create_cubit/create_cubit.dart';
 import '../../../reasons/bloc/delete_reason_cubit/delete_reason_cubit.dart';
@@ -160,22 +164,31 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
 
-              if (AppSharedPreference.getUser.roleName.toLowerCase() == 'admin') ...[
+              if (isQareebAdmin) ...[
                 AdminMenuItem(
                   title: 'الطلبات',
+                  icon: Icons.reorder_sharp,
                   children: [
                     if (isAllowed(AppPermissions.EPAYMENT))
                       const AdminMenuItem(
-                          title: 'مزودي الدفع', route: '/epayments_provider'),
+                          title: 'مزودي الدفع',
+                          route: '/epayments_provider',
+                          icon: Icons.paypal),
                     if (isAllowed(AppPermissions.COUPON))
-                      const AdminMenuItem(title: 'قسائم الحسم', route: '/coupons'),
+                      const AdminMenuItem(
+                          title: 'قسائم الحسم',
+                          route: '/coupons',
+                          icon: Icons.candlestick_chart),
                     if (isAllowed(AppPermissions.CAR_CATEGORY))
                       const AdminMenuItem(
-                          title: 'أصناف السيارات', route: '/car_categories'),
+                          title: 'أصناف السيارات',
+                          route: '/car_categories',
+                          icon: Icons.directions_car_filled_sharp),
                   ],
                 ),
                 AdminMenuItem(
                   title: 'النقاط والمسارات',
+                  icon: Icons.timeline_sharp,
                   children: [
                     if (isAllowed(AppPermissions.POINTS))
                       const AdminMenuItem(
@@ -192,14 +205,25 @@ class _HomePageState extends State<HomePage> {
                 ),
                 AdminMenuItem(
                   title: 'عمليات إدارية',
+                  icon: Icons.manage_accounts,
                   children: [
-                    const AdminMenuItem(title: 'المحافظات', route: '/government'),
+                    const AdminMenuItem(
+                      title: 'المحافظات',
+                      route: '/government',
+                    ),
                     if (isAllowed(AppPermissions.CAR_CATEGORY))
-                      const AdminMenuItem(title: 'المؤسسات', route: '/institutions'),
+                      const AdminMenuItem(
+                          title: 'المؤسسات',
+                          route: '/institutions',
+                          icon: Icons.home_work_outlined),
                     if (isAllowed(AppPermissions.CAR_CATEGORY))
-                      const AdminMenuItem(title: 'الوكلاء', route: '/agencies'),
+                      const AdminMenuItem(
+                          title: 'الوكلاء',
+                          route: '/agencies',
+                          icon: Icons.person_pin_outlined),
                     if (isAllowed(AppPermissions.ROLES))
-                      const AdminMenuItem(title: 'الأدوار', route: '/roles'),
+                      const AdminMenuItem(
+                          title: 'الأدوار', route: '/roles', icon: Icons.menu_book),
                     const AdminMenuItem(
                       title: 'إعدادات',
                       route: '/systemParams',
@@ -209,6 +233,27 @@ class _HomePageState extends State<HomePage> {
                         title: 'إدارة الإصدارات', route: '/systemVersion'),
                   ],
                 ),
+                const AdminMenuItem(
+                  title: 'الاشتراكات',
+                  icon: Icons.ads_click,
+                  children: [
+                    AdminMenuItem(
+                      title: 'الخطط',
+                      route: '/allPlans',
+                      icon: Icons.stay_primary_landscape_sharp,
+                    ),
+                    AdminMenuItem(
+                      title: 'الشركات',
+                      route: '/companies',
+                      icon: Icons.home_repair_service,
+                    ),
+                    AdminMenuItem(
+                      icon: Icons.linear_scale_rounded,
+                      title: 'مسارات الشركات',
+                      route: '/subscriptions',
+                    ),
+                  ],
+                ),
                 AdminMenuItem(
                   title: 'عمليات مالية',
                   icon: Icons.payments_outlined,
@@ -216,13 +261,16 @@ class _HomePageState extends State<HomePage> {
                     if (isAllowed(AppPermissions.REPORTS))
                       const AdminMenuItem(
                         title: 'التحويلات',
-                        //   icon:Icons.,
+                        icon: Icons.mobiledata_off,
                         route: "/transactions",
                       ),
 
                     if (isAllowed(AppPermissions.SETTINGS))
                       const AdminMenuItem(
-                          title: 'محاسبة السائقين', route: "/payToDrivers"),
+                        title: 'محاسبة السائقين',
+                        route: "/payToDrivers",
+                        icon: Icons.attach_money_outlined,
+                      ),
 
                     // const AdminMenuItem(title: 'التقاص', route: "/payToDrivers"),
                   ],
@@ -437,17 +485,41 @@ class _HomePageState extends State<HomePage> {
                     ],
                     child: const TempTripsPage(),
                   );
-                case "/payToDrivers":
-                  final request = TransferFilterRequest();
-                  request.type = TransferType.debit;
 
+                case "/subscriptions":
+                  return MultiBlocProvider(
+                    providers: [
+                      BlocProvider(create: (_) => sl<DeletePlanCubit>()),
+                    ],
+                    child: const PlansPage(),
+                  );
+
+                case "/allPlans":
+                  return MultiBlocProvider(
+                    providers: [
+                      BlocProvider(create: (_) => sl<DeletePlanCubit>()),
+                    ],
+                    child: const PlansPage(),
+                  );
+
+                case "/companies":
+                  return MultiBlocProvider(
+                    providers: [
+                      BlocProvider(create: (_) => sl<DeleteCompanyCubit>()),
+                    ],
+                    child: const CompaniesPage(),
+                  );
+
+                case "/payToDrivers":
                   return MultiBlocProvider(
                     providers: [
                       BlocProvider(
                         create: (_) => sl<AllTransfersCubit>()
                           ..getAllTransfers(
                             _,
-                            command: Command.initial()..transferFilterRequest = request,
+                            command: Command.initial()
+                              ..transferFilterRequest =
+                                  TransferFilterRequest(type: TransferType.debit),
                           ),
                       ),
                       BlocProvider(create: (_) => sl<PayToCubit>()),

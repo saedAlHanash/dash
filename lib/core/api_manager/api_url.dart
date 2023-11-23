@@ -105,9 +105,13 @@ class GetUrl {
 
   static const tripDebit = 'api/services/app/DebitServices/getTripFinancialDetails';
 
-  static var getHome = 'api/services/app/DashboardService/Index';
+  static const getHome = 'api/services/app/DashboardService/Index';
 
-  static var driverStatusHistory ='api/services/app/UserService/GetStatusHistory';
+  static const driverStatusHistory = 'api/services/app/UserService/GetStatusHistory';
+
+  static const companies = 'api/services/app/CompaniesService/GetAll';
+
+  static const plans = 'api/services/app/PlansService/GetAll';
 }
 
 class PostUrl {
@@ -179,6 +183,9 @@ class PostUrl {
 
   static const createAgency = 'api/services/app/AgenciesService/Create';
   static const reverseCharging = 'api/services/app/AccountsService/ReverseCharging';
+
+  static const createCompany = 'api/services/app/CompaniesService/Create';
+  static const createPlan = 'api/services/app/PlansService/Create';
 }
 
 class PutUrl {
@@ -211,6 +218,9 @@ class PutUrl {
   static const updateTempTrip = 'api/services/app/PathService/UpdatePath';
 
   static const updateAgency = 'api/services/app/AgenciesService/Update';
+
+  static const updateCompany = 'api/services/app/CompaniesService/Update';
+  static const updatePlan = 'api/services/app/PlansService/Update';
 }
 
 class DeleteUrl {
@@ -234,6 +244,9 @@ class DeleteUrl {
   static const deleteCancelCoupon = 'api/services/app/Cupons/Delete';
 
   static const deleteCancelAgency = 'api/services/app/AgenciesService/Delete';
+
+  static const deleteCompany = 'api/services/app/CompaniesService/Delete';
+  static const deletePlan = 'api/services/app/PlansService/Delete';
 }
 
 class OrsUrl {
@@ -271,7 +284,7 @@ String get baseUrl {
   //     ? 'live.qareeb-maas.com'
   //     : 'livetest.qareeb-maas.com';
 
-  // return testUrl;
+  return testUrl;
   return liveUrl;
 }
 

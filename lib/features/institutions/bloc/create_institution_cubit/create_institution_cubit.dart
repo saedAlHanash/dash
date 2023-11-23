@@ -38,6 +38,7 @@ class CreateInstitutionCubit extends Cubit<CreateInstitutionInitial> {
       fields: state.request.toMap(),
       files: [
         state.request.file,
+        state.request.signature,
       ],
     );
 

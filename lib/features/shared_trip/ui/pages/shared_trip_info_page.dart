@@ -107,9 +107,7 @@ class _SharedTripInfoPageState extends State<SharedTripInfoPage> {
                                     if (cState.statuses.loading) {
                                       return MyStyle.loadingWidget();
                                     }
-                                    if (AppSharedPreference.getUser.roleName
-                                            .toLowerCase() !=
-                                        'admin') {
+                                    if (isQareebAdmin) {
                                       return 0.0.verticalSpace;
                                     }
 

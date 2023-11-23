@@ -235,7 +235,7 @@ class ItemLoyal extends StatelessWidget {
               ),
             ),
           if (driverId != 0)
-            if (AppSharedPreference.getUser.roleName.toLowerCase() == 'admin')
+            if (isQareebAdmin)
               Expanded(
                 child: BlocConsumer<CreateRedeemCubit, CreateRedeemInitial>(
                   listenWhen: (p, c) => c.statuses.done,

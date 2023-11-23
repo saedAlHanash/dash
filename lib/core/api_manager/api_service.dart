@@ -175,7 +175,9 @@ class APIService {
 
     if (query != null) {
       query.removeWhere((key, value) => (value == null || value.toString().isEmpty));
-      query.forEach((key, value) => query[key] = value.toString());
+      query.forEach((key, value) {
+        if (value is! List) query[key] = value.toString();
+      });
     }
 
     innerHeader.addAll(header ?? {});

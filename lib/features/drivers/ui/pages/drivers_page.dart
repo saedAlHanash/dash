@@ -28,7 +28,7 @@ final clientTableHeader = [
   "حالة السائق",
   "IMEI",
   "تاريخ التسجيل",
-  if (AppSharedPreference.getUser.roleName.toLowerCase() == 'admin') ...[
+  if (isQareebAdmin) ...[
     "الولاء",
     "OTP",
   ],
@@ -64,6 +64,7 @@ class _DriverPageState extends State<DriverPage> {
             children: [
               if (isAllowed(AppPermissions.CREATION))
                 FloatingActionButton(
+                  heroTag: '1',
                   onPressed: () {
                     context.pushNamed(GoRouteName.createDriver);
                   },
@@ -73,6 +74,7 @@ class _DriverPageState extends State<DriverPage> {
               StatefulBuilder(
                 builder: (context, mState) {
                   return FloatingActionButton(
+                    heroTag: '2',
                     onPressed: () {
                       mState(() => loading = true);
                       context.read<AllDriversCubit>().getDriversAsync(context).then(
@@ -140,8 +142,7 @@ class _DriverPageState extends State<DriverPage> {
                               e.driverStatus.arabicName,
                               e.qarebDeviceimei,
                               e.creationTime?.formatDate,
-                              if (AppSharedPreference.getUser.roleName.toLowerCase() ==
-                                  'admin') ...[
+                              if (isQareebAdmin) ...[
                                 LoyalSwitchWidget(driver: e),
                                 e.emailConfirmationCode,
                               ],

@@ -29,6 +29,7 @@ class CreateDriverRequest {
   String? carGovernorate;
   String? manufacturingYear;
   String? type;
+  bool? isExamined;
 
   //------------------------
   bool isLoyaltySubscriber = false;
@@ -38,6 +39,7 @@ class CreateDriverRequest {
   UploadFile? contractFile;
   UploadFile? drivingLicenceFile;
   UploadFile? carMechanicFile;
+  UploadFile? examinationFile;
 
   Map<String, dynamic> toMap() {
     return {
@@ -54,7 +56,8 @@ class CreateDriverRequest {
       'carNumber': carNumber,
       'carCategoryID': carCategoryID,
       'imei': imei,
-      'AgencyId': agencyId==0?null:agencyId,
+      'AgencyId': agencyId == 0 ? null : agencyId,
+      'isExaminated': isExamined,
       'id': id,
       'carGovernorate': carGovernorate,
       'manufacturingYear': manufacturingYear,
@@ -161,6 +164,7 @@ class CreateDriverRequest {
     r.carCategoryID = driver.carCategoryId;
     r.imei = driver.qarebDeviceimei;
     r.agencyId = driver.agency.id;
+    r.isExamined = driver.isExamined;
     r.carGovernorate = driver.carType.carGovernorate;
     r.manufacturingYear = driver.carType.manufacturingYear;
     r.type = driver.carType.type;
@@ -171,6 +175,7 @@ class CreateDriverRequest {
     r.drivingLicenceFile =
         UploadFile(fileBytes: null, initialImage: driver.drivingLicence);
     r.carMechanicFile = UploadFile(fileBytes: null, initialImage: driver.carMechanic);
+    r.examinationFile = UploadFile(fileBytes: null, initialImage: driver.examination);
 
     return r;
   }

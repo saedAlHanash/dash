@@ -19,6 +19,7 @@ class CreateInstitutionRequest {
   String? password;
   int? id;
   UploadFile? file;
+  UploadFile? signature;
 
   CreateInstitutionRequest({
     this.id,
@@ -33,12 +34,13 @@ class CreateInstitutionRequest {
     this.address,
     this.phoneNumber,
     this.password,
+    this.signature,
   });
 
   Map<String, dynamic> toMap() {
     return {
       'Name': name,
-      'Governorate': government.index,
+      'Government': government.index,
       'Type': type.index,
       'AtharKey': atharKey,
       'AdminFirstName': adminFirstName,
@@ -58,7 +60,9 @@ class CreateInstitutionRequest {
       government: Governorate.values[model.government],
       type: InstitutionType.values[model.type],
       atharKey: model.atharKey,
-    )..file = UploadFile(fileBytes: null, initialImage: model.imageUrl);
+    )
+      ..file = UploadFile(fileBytes: null, initialImage: model.imageUrl)
+      ..signature = UploadFile(fileBytes: null, initialImage: model.signature);
   }
 
   bool validateRequest(BuildContext context) {
@@ -76,7 +80,7 @@ class CreateInstitutionRequest {
       return false;
     }
 
-    if(id ==null||id==0){
+    if (id == null || id == 0) {
       if (adminFirstName.isBlank || adminSurname.isBlank) {
         NoteMessage.showErrorSnackBar(message: 'خطأ في اسم المدير', context: context);
         return false;
@@ -90,16 +94,15 @@ class CreateInstitutionRequest {
         return false;
       }
       if (phoneNumber.isBlank) {
-        NoteMessage.showErrorSnackBar(message: 'خطأ في رقم هاتف المدير', context: context);
+        NoteMessage.showErrorSnackBar(
+            message: 'خطأ في رقم هاتف المدير', context: context);
         return false;
       }
       if (password.isBlank) {
         NoteMessage.showErrorSnackBar(message: 'خطأ في كلمة المرور ', context: context);
         return false;
       }
-
     }
-
 
     return true;
   }

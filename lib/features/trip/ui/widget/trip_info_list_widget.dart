@@ -337,7 +337,7 @@ class _TripActions extends StatelessWidget {
               if (cState.statuses.isLoading) {
                 return MyStyle.loadingWidget();
               }
-              if (AppSharedPreference.getUser.roleName.toLowerCase() != 'admin') {
+              if (isQareebAdmin) {
                 return 0.0.verticalSpace;
               }
               return MyButton(

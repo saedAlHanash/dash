@@ -11,6 +11,7 @@ import '../../../../core/error/error_manager.dart';
 import '../../../../core/util/note_message.dart';
 import '../../../../core/util/pair_class.dart';
 import '../../data/response/car_categories_response.dart';
+import 'package:qareeb_models/car_catigory/data/response/car_categories_response.dart';
 
 part 'all_car_categories_state.dart';
 

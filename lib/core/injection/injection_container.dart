@@ -34,6 +34,9 @@ import '../../features/car_catigory/bloc/delete_car_cat_cubit/delete_car_cat_cub
 import '../../features/clients/bloc/all_clients/all_clients_cubit.dart';
 import '../../features/clients/bloc/clients_by_id_cubit/clients_by_id_cubit.dart';
 
+import '../../features/companies/bloc/companies_cubit/companies_cubit.dart';
+import '../../features/companies/bloc/create_company_cubit/create_company_cubit.dart';
+import '../../features/companies/bloc/delete_company_cubit/delete_company_cubit.dart';
 import '../../features/coupons/bloc/all_coupons_vubit/all_coupons_cubit.dart';
 import '../../features/coupons/bloc/change_coupon_state_cubit/change_coupon_state_cubit.dart';
 import '../../features/coupons/bloc/create_coupon_cubit/create_coupon_cubit.dart';
@@ -54,6 +57,9 @@ import '../../features/institutions/bloc/delete_institution_cubit/delete_institu
 
 import '../../features/notifications/bloc/notification_cubit/notification_cubit.dart';
 import '../../features/accounts/bloc/financial_report_cubit/financial_report_cubit.dart';
+import '../../features/plans/bloc/create_plan_cubit/create_plan_cubit.dart';
+import '../../features/plans/bloc/delete_plan_cubit/delete_plan_cubit.dart';
+import '../../features/plans/bloc/plans_cubit/plans_cubit.dart';
 import '../../features/points/bloc/creta_edge_cubit/create_edge_cubit.dart';
 import '../../features/points/bloc/creta_point_cubit/create_point_cubit.dart';
 import '../../features/points/bloc/delete_edge_cubit/delete_edge_cubit.dart';
@@ -245,6 +251,21 @@ Future<void> init() async {
   sl.registerFactory(() => AllInstitutionsCubit());
   sl.registerFactory(() => CreateInstitutionCubit());
   sl.registerFactory(() => DeleteInstitutionCubit());
+
+  //endregion
+
+
+  // region Companies
+  sl.registerFactory(() => AllCompaniesCubit());
+  sl.registerFactory(() => CreateCompanyCubit());
+  sl.registerFactory(() => DeleteCompanyCubit());
+
+  //endregion
+
+  // region plans
+  sl.registerFactory(() => AllPlansCubit());
+  sl.registerFactory(() => CreatePlanCubit());
+  sl.registerFactory(() => DeletePlanCubit());
 
   //endregion
 

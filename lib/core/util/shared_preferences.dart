@@ -207,8 +207,8 @@ class AppSharedPreference {
   }
 
   static String get getEmail => _prefs?.getString(_email) ?? '';
-
-
 }
 
 bool get isAgency => AppSharedPreference.getAgencyId != 0;
+
+bool get isQareebAdmin => AppSharedPreference.getUser.roleName.toLowerCase() == 'admin';

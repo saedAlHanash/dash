@@ -15,6 +15,7 @@ import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/my_style.dart';
 import 'package:image_multi_type/image_multi_type.dart';
 import '../../bloc/all_institutions_cubit/all_institutions_cubit.dart';
+import '../../bloc/delete_institution_cubit/delete_institution_cubit.dart';
 
 const institutionList = [
   'صورة',
@@ -44,98 +45,79 @@ class InstitutionsPage extends StatelessWidget {
           }
           final list = state.result;
           if (list.isEmpty) return const NotFoundWidget(text: 'لا يوجد تصنيفات');
-          return Column(
-            children: [
-              DrawableText(
-                text: 'المؤسسات',
-                matchParent: true,
-                size: 28.0.sp,
-                textAlign: TextAlign.center,
-                padding: const EdgeInsets.symmetric(vertical: 15.0).h,
-              ),
-              SaedTableWidget(
-                command: state.command,
-                title: institutionList,
-                data: list
-                    .mapIndexed(
-                      (index, e) => [
-                        Center(
-                          child: RoundImageWidget(
-                            url: e.imageUrl,
-                            height: 70.0.r,
-                            width: 70.0.r,
-                          ),
+          return SingleChildScrollView(
+            child: SaedTableWidget(
+              command: state.command,
+              title: institutionList,
+              data: list
+                  .mapIndexed(
+                    (index, e) => [
+                      Center(
+                        child: RoundImageWidget(
+                          url: e.imageUrl,
+                          height: 70.0.r,
+                          width: 70.0.r,
                         ),
-                        e.name,
-                        Governorate.values[e.government].arabicName,
-                        InstitutionType.values[e.type].arabicName,
-                        e.atharKey,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            InkWell(
-                              onTap: !isAllowed(AppPermissions.UPDATE)
-                                  ? null
-                                  : () {
-                                      context.pushNamed(GoRouteName.createInstitution,
-                                          extra: e);
-                                    },
-                              child: const Icon(
-                                Icons.edit,
-                                color: Colors.amber,
-                              ),
+                      ),
+                      e.name,
+                      Governorate.values[e.government].arabicName,
+                      InstitutionType.values[e.type].arabicName,
+                      e.atharKey,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          InkWell(
+                            onTap: !isAllowed(AppPermissions.UPDATE)
+                                ? null
+                                : () {
+                                    context.pushNamed(GoRouteName.createInstitution,
+                                        extra: e);
+                                  },
+                            child: const Icon(
+                              Icons.edit,
+                              color: Colors.amber,
                             ),
-                            // Padding(
-                            //   padding: const EdgeInsets.all(8.0),
-                            //   child: BlocConsumer<DeleteInstitutionCubit,
-                            //       DeleteInstitutionInitial>(
-                            //     listener: (context, state) {
-                            //       context
-                            //           .read<AllInstitutionsCubit>()
-                            //           .getInstitutions(context);
-                            //     },
-                            //     listenWhen: (p, c) => c.statuses.done,
-                            //     buildWhen: (p, c) => c.id == e.id,
-                            //     builder: (context, state) {
-                            //       if (state.statuses.isLoading) {
-                            //         return MyStyle.loadingWidget();
-                            //       }
-                            //       return InkWell(
-                            //         onTap: () {
-                            //           context
-                            //               .read<DeleteInstitutionCubit>()
-                            //               .deleteInstitution(context, id: e.id);
-                            //         },
-                            //         child: const Icon(
-                            //           Icons.delete_forever,
-                            //           color: Colors.red,
-                            //         ),
-                            //       );
-                            //     },
-                            //   ),
-                            // ),
-                          ],
-                        )
-                      ],
-                    )
-                    .toList(),
-                onChangePage: (command) {
-                  context
-                      .read<AllInstitutionsCubit>()
-                      .getInstitutions(context, command: command);
-                },
-              ),
-
-              // Expanded(
-              //   child: ListView.builder(
-              //     itemCount: list.length,
-              //     itemBuilder: (context, i) {
-              //       final item = list[i];
-              //       return ItemInstitution(item: item);
-              //     },
-              //   ),
-              // ),
-            ],
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: BlocConsumer<DeleteInstitutionCubit,
+                                DeleteInstitutionInitial>(
+                              listener: (context, state) {
+                                context
+                                    .read<AllInstitutionsCubit>()
+                                    .getInstitutions(context);
+                              },
+                              listenWhen: (p, c) => c.statuses.isDone,
+                              buildWhen: (p, c) => c.id == e.id,
+                              builder: (context, state) {
+                                if (state.statuses.isLoading) {
+                                  return MyStyle.loadingWidget();
+                                }
+                                return InkWell(
+                                  onTap: () {
+                                    context
+                                        .read<DeleteInstitutionCubit>()
+                                        .deleteInstitution(context, id: e.id);
+                                  },
+                                  child: const Icon(
+                                    Icons.delete_forever,
+                                    color: Colors.red,
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  )
+                  .toList(),
+              onChangePage: (command) {
+                context
+                    .read<AllInstitutionsCubit>()
+                    .getInstitutions(context, command: command);
+              },
+            ),
           );
         },
       ),

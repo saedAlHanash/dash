@@ -1,32 +1,18 @@
-import 'dart:typed_data';
-
-import 'package:collection/collection.dart';
 import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
-import 'package:image_multi_type/image_multi_type.dart';
-import 'package:qareeb_dash/core/api_manager/api_service.dart';
+import 'package:image_multi_type/round_image_widget.dart';
 import 'package:qareeb_dash/core/util/note_message.dart';
-import 'package:image_multi_type/image_multi_type.dart';
 import 'package:qareeb_dash/core/widgets/table_widget.dart';
 import 'package:qareeb_dash/features/drivers/data/response/drivers_response.dart';
 import 'package:qareeb_dash/features/redeems/ui/widget/loyalty_widget.dart';
-import 'package:qareeb_dash/generated/assets.dart';
 import 'package:qareeb_models/extensions.dart';
 
 import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/util/my_style.dart';
 import '../../../../core/util/shared_preferences.dart';
 import '../../../../core/widgets/app_bar_widget.dart';
-import 'package:image_multi_type/round_image_widget.dart';
-import '../../../../core/widgets/my_button.dart';
-import '../../../../core/widgets/my_card_widget.dart';
-import '../../../../core/widgets/saed_taple_widget.dart';
-import '../../../../router/go_route_pages.dart';
-import '../../../accounts/bloc/driver_financial_cubit/driver_financial_cubit.dart';
-import '../../../accounts/bloc/reverse_charging_cubit/reverse_charging_cubit.dart';
 import '../../../wallet/ui/pages/debts_page.dart';
 import '../../bloc/driver_by_id_cubit/driver_by_id_cubit.dart';
 import '../widget/driver_financial_widget.dart';
@@ -134,6 +120,7 @@ class _DriverImages extends StatelessWidget {
           ItemImage(image: driver.contract, text: 'صورة العقد'),
           ItemImage(image: driver.drivingLicence, text: 'رخصة القيادة'),
           ItemImage(image: driver.carMechanic, text: 'ميكانيك السيارة'),
+          ItemImage(image: driver.examination, text: 'فحص السيارة'),
         ],
       ),
     );
@@ -158,6 +145,7 @@ class _DriverTableInfo extends StatelessWidget {
               'الشركة الصانعة': driver.carType.carBrand,
               'لون': driver.carType.carColor,
               'IMEI': driver.qarebDeviceimei,
+              'حالة الفحص': driver.isExamined ? 'تم' : 'غير مفحوصة',
             },
             title: 'معلومات السيارة',
           ),

@@ -44,6 +44,7 @@ class CreateDriverCubit extends Cubit<CreateDriverInitial> {
         request.contractFile,
         request.drivingLicenceFile,
         request.carMechanicFile,
+        request.examinationFile,
       ],
     );
 

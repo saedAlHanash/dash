@@ -142,6 +142,21 @@ class _CreateDriverPageState extends State<CreateDriverPage> {
                       text: 'ميكانيك السيارة',
                       fileBytes: request.carMechanicFile?.fileBytes,
                     ),
+                    ItemImageCreate(
+                      onLoad: (bytes) {
+                        setState(() {
+                          request.examinationFile = UploadFile(
+                            fileBytes: bytes,
+                            nameField: 'ExaminationFile',
+                          );
+                        });
+                      },
+                      image: request.examinationFile?.initialImage != null
+                          ? request.examinationFile!.initialImage!
+                          : Assets.iconsExamination,
+                      text: 'فحص السيارة',
+                      fileBytes: request.examinationFile?.fileBytes,
+                    ),
                   ],
                 ),
               ),
@@ -259,38 +274,39 @@ class _CreateDriverPageState extends State<CreateDriverPage> {
                               request.gender = Gender.values[spinnerItem.id];
                             },
                           ),
-                        ),  if(!isAgency)
-                        15.0.horizontalSpace,
-                        if(!isAgency)
-                        Expanded(
-                          child: BlocBuilder<AgenciesCubit, AgenciesInitial>(
-                            builder: (context, state) {
-                              if (state.statuses .isLoading) {
-                                return MyStyle.loadingWidget();
-                              }
-                              return SpinnerWidget(
-                                items:
-                                    state.getSpinnerItems(selectedId: request.agencyId)..insert(
-                                      0,
-                                      SpinnerItem(
-                                          name: 'الوكيل',
-                                          item: null,
-                                          id: -1,
-                                          isSelected: request.agencyId == null),
-                                    ),
-                                width: 1.0.sw,
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                      width: 1.0.spMin, color: AppColorManager.gray),
-                                  borderRadius: BorderRadius.circular(12.0.r),
-                                ),
-                                onChanged: (spinnerItem) {
-                                  request.agencyId = spinnerItem.id;
-                                },
-                              );
-                            },
-                          ),
                         ),
+                        if (!isAgency) 15.0.horizontalSpace,
+                        if (!isAgency)
+                          Expanded(
+                            child: BlocBuilder<AgenciesCubit, AgenciesInitial>(
+                              builder: (context, state) {
+                                if (state.statuses.isLoading) {
+                                  return MyStyle.loadingWidget();
+                                }
+                                return SpinnerWidget(
+                                  items:
+                                      state.getSpinnerItems(selectedId: request.agencyId)
+                                        ..insert(
+                                          0,
+                                          SpinnerItem(
+                                              name: 'الوكيل',
+                                              item: null,
+                                              id: -1,
+                                              isSelected: request.agencyId == null),
+                                        ),
+                                  width: 1.0.sw,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                        width: 1.0.spMin, color: AppColorManager.gray),
+                                    borderRadius: BorderRadius.circular(12.0.r),
+                                  ),
+                                  onChanged: (spinnerItem) {
+                                    request.agencyId = spinnerItem.id;
+                                  },
+                                );
+                              },
+                            ),
+                          ),
                       ],
                     ),
                     const Divider(),
@@ -301,6 +317,21 @@ class _CreateDriverPageState extends State<CreateDriverPage> {
                       matchParent: true,
                       textAlign: TextAlign.center,
                       fontFamily: FontManager.cairoBold,
+                    ),
+                    StatefulBuilder(
+                      builder: (context, mState) {
+                        return CheckboxListTile(
+                          title: const DrawableText(
+                            text: 'هل تم فحص السيارة؟',
+                            selectable: false,
+                            color: Colors.black,
+                          ),
+                          value: request.isExamined ?? false,
+                          onChanged: (value) {
+                            mState(() => request.isExamined = value);
+                          },
+                        );
+                      },
                     ),
                     Row(
                       children: [
