@@ -9,7 +9,6 @@ import 'package:qareeb_dash/core/util/shared_preferences.dart';
 import 'package:qareeb_dash/generated/assets.dart';
 import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_models/wallet/data/response/driver_financial_response.dart';
-import 'package:qareeb_models/wallet/data/response/single_driver_financial.dart';
 
 import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/util/my_style.dart';

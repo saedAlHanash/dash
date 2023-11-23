@@ -1,4 +1,4 @@
-import '../util/shared_preferences.dart';
+
 
 class GetUrl {
   static const getCandidateDrivers = 'api/services/app/TripsService/GetCandidateDrivers';

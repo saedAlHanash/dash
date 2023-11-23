@@ -21,7 +21,6 @@ import '../../../../generated/assets.dart';
 import '../../../../router/go_route_pages.dart';
 import '../../../accounts/bloc/financial_report_cubit/financial_report_cubit.dart';
 import '../../../accounts/bloc/pay_to_cubit/pay_to_cubit.dart';
-import '../../../clients/ui/widget/clients_filter_widget.dart';
 import '../widget/financial_filter_widget.dart';
 import '../widget/pay_to_driver_widget.dart';
 

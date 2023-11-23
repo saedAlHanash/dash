@@ -10,7 +10,6 @@ import '../../../../core/util/note_message.dart';
 import '../../../../core/util/pair_class.dart';
 import '../../data/request/agency_request.dart';
 
-
 part 'create_agency_state.dart';
 
 class CreateAgencyCubit extends Cubit<CreateAgencyInitial> {

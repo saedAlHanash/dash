@@ -1,5 +1,3 @@
-import "package:universal_html/html.dart";
-
 import 'package:collection/collection.dart';
 import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +13,7 @@ import 'package:qareeb_dash/features/drivers/data/response/drivers_response.dart
 import 'package:qareeb_dash/generated/assets.dart';
 import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_models/global.dart';
+import "package:universal_html/html.dart";
 
 import '../../../../core/api_manager/api_service.dart';
 import '../../../../core/strings/app_color_manager.dart';

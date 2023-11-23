@@ -6,7 +6,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_multi_type/round_image_widget.dart';
 
 import '../../../../core/util/pick_image_helper.dart';
-import 'package:image_multi_type/image_multi_type.dart';
 
 class ItemImageCreate extends StatelessWidget {
   const ItemImageCreate({

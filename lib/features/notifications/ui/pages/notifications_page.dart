@@ -1,5 +1,3 @@
-import "package:universal_html/html.dart";
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,6 +6,7 @@ import 'package:qareeb_dash/core/util/note_message.dart';
 import 'package:qareeb_dash/core/widgets/my_button.dart';
 import 'package:qareeb_dash/core/widgets/my_text_form_widget.dart';
 import 'package:qareeb_models/extensions.dart';
+import "package:universal_html/html.dart";
 
 import '../../../../core/util/my_style.dart';
 import '../../bloc/notification_cubit/notification_cubit.dart';

@@ -7,8 +7,8 @@ import 'package:go_router/go_router.dart';
 import 'package:image_multi_type/image_multi_type.dart';
 import 'package:map_package/map/bloc/ather_cubit/ather_cubit.dart';
 import 'package:map_package/map/bloc/map_controller_cubit/map_controller_cubit.dart';
-import 'package:map_package/map/bloc/set_point_cubit/map_control_cubit.dart';
 import 'package:map_package/map/data/models/my_marker.dart';
+import 'package:map_package/map/data/response/ather_response.dart';
 import 'package:map_package/map/ui/widget/map_widget.dart';
 import 'package:qareeb_dash/core/api_manager/api_service.dart';
 import 'package:qareeb_dash/core/api_manager/api_url.dart';
@@ -48,8 +48,7 @@ class _DashboardPageState extends State<DashboardPage> {
         child: Column(
           children: [
             16.0.verticalSpace,
-            if (isQareebAdmin)
-              const LoyaltyWidget(),
+            if (isQareebAdmin) const LoyaltyWidget(),
             DashboardScreen(statistics: statistics),
             FutureBuilder(
               future: getBestDriver(),
@@ -135,6 +134,40 @@ class _DashboardPageState extends State<DashboardPage> {
                   child: const BusesMap(),
                 ),
               ),
+            ),
+            10.0.verticalSpace,
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                DrawableText(
+                  text: ' متاح ومحرك يعمل',
+                  drawableStart: Icon(
+                    Icons.circle,
+                    color: AppColorManager.mainColor,
+                  ),
+                ),
+                DrawableText(
+                  text: 'متاح محرك لا يعمل',
+                  drawableStart: Icon(
+                    Icons.circle,
+                    color: AppColorManager.ampere,
+                  ),
+                ),
+                DrawableText(
+                  text: ' غير متاح والمحرك يعمل',
+                  drawableStart: Icon(
+                    Icons.circle,
+                    color: Colors.blue,
+                  ),
+                ),
+                DrawableText(
+                  text: ' غير متاح والمحرك لا يعمل',
+                  drawableStart: Icon(
+                    Icons.circle,
+                    color: AppColorManager.red,
+                  ),
+                ),
+              ],
             ),
             150.0.verticalSpace,
           ],
@@ -253,9 +286,7 @@ class _BusesMapState extends State<BusesMap> {
                               url: Assets.iconsLocator,
                               height: 50.0.spMin,
                               width: 50.0.spMin,
-                              color: driver?.status == DriverStatus.unAvailable
-                                  ? Colors.red
-                                  : AppColorManager.mainColor,
+                              color: getColor(e, driver),
                             ),
                           ),
                         ),
@@ -292,5 +323,19 @@ class _BusesMapState extends State<BusesMap> {
         },
       ),
     );
+  }
+}
+
+Color getColor(Ime e, DriverImei? driver) {
+  final isEnginOn = e.params.acc == '1';
+  final driverUnAvailable = driver?.status == DriverStatus.unAvailable;
+  if (!driverUnAvailable && isEnginOn) {
+    return AppColorManager.mainColor; // متاح ومحرك يعمل
+  } else if (!driverUnAvailable && !isEnginOn) {
+    return AppColorManager.ampere; //متاح محرك لا يعمل
+  } else if (driverUnAvailable && isEnginOn) {
+    return Colors.blue; // غير متاح والمحرك يعمل
+  } else {
+    return AppColorManager.red; // غير متاح والمحرك لا يعمل
   }
 }

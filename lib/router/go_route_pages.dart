@@ -9,8 +9,6 @@ import 'package:qareeb_dash/core/api_manager/command.dart';
 import 'package:qareeb_dash/features/accounts/data/request/driver_financial_filter_request.dart';
 import 'package:qareeb_dash/features/admins/bloc/create_admin_cubit/create_admin_cubit.dart';
 import 'package:qareeb_dash/features/admins/ui/pages/create_admin_page.dart';
-import 'package:qareeb_dash/features/car_catigory/data/response/car_categories_response.dart';
-import 'package:qareeb_models/car_catigory/data/response/car_categories_response.dart';
 import 'package:qareeb_dash/features/coupons/data/response/coupons_response.dart';
 import 'package:qareeb_dash/features/drivers/bloc/create_driver_cubit/create_driver_cubit.dart';
 import 'package:qareeb_dash/features/drivers/bloc/driver_by_id_cubit/driver_by_id_cubit.dart';
@@ -20,6 +18,7 @@ import 'package:qareeb_dash/features/home/ui/pages/home_page.dart';
 import 'package:qareeb_dash/features/points/bloc/creta_edge_cubit/create_edge_cubit.dart';
 import 'package:qareeb_dash/features/points/bloc/point_by_id_cubit/point_by_id_cubit.dart';
 import 'package:qareeb_dash/features/trip/ui/pages/trips_page.dart';
+import 'package:qareeb_models/car_catigory/data/response/car_categories_response.dart';
 import 'package:qareeb_models/companies/data/response/companies_response.dart';
 
 import '../core/injection/injection_container.dart' as di;

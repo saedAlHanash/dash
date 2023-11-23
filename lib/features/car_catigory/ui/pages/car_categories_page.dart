@@ -1,9 +1,9 @@
 import 'package:collection/collection.dart';
-import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:image_multi_type/round_image_widget.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/widgets/not_found_widget.dart';
 import 'package:qareeb_dash/core/widgets/saed_taple_widget.dart';
@@ -12,7 +12,6 @@ import 'package:qareeb_models/extensions.dart';
 
 import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/my_style.dart';
-import 'package:image_multi_type/round_image_widget.dart';
 import '../../bloc/all_car_categories_cubit/all_car_categories_cubit.dart';
 import '../../bloc/delete_car_cat_cubit/delete_car_cat_cubit.dart';
 

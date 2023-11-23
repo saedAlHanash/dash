@@ -63,7 +63,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '92692714826',
     projectId: 'qareeb-29b73',
     storageBucket: 'qareeb-29b73.appspot.com',
-    iosClientId: '92692714826-v4nbftc4im11utmfng1c4jsfi5e5bn27.apps.googleusercontent.com',
+    iosClientId:
+        '92692714826-v4nbftc4im11utmfng1c4jsfi5e5bn27.apps.googleusercontent.com',
     iosBundleId: 'qareep.driver.qareepDriverFlutter',
   );
 }

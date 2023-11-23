@@ -1,46 +1,60 @@
 {
-  "name": "بلايبلا",
-  "tripTemplateId": 0,
-  "institutionId": 4,
-  "pathId": 0,
-  "path": null,
-  "description": "يبلايبل",
-  "distance": 0,
-  "buses": [
-    {
-      "ime": "354778341875188",
-      "driverName": "سعيد الحنش ",
-      "driverPhone": "963933635246",
-      "busModel": "مارسيدي",
-      "busColor": "أبيض",
-      "busNumber": "357073299579843",
-      "busName": null,
-      "seatsNumber": 40,
-      "institutionId": 4,
-      "institution": null,
-      "supervisors": null,
-      "id": 7
-    }
-  ],
-  "creationDate": "2023-09-19T23:42:33.375105",
-  "startDate": "2023-09-19T05:25:00",
-  "endDate": "2023-09-30T06:30:00",
-  "busTripType": 0,
-  "days": [
-    0,
-    1,
-    2,
-    3,
-    4,
-    5,
-    6
-  ],
-  "category": 1,
-  "numberOfParticipation": 0,
-  "pickupPointsCount": 0,
-  "isActive": false,
-  "attendances": [],
-  "participations": [],
-  "pickupPoints": [],
-  "id": 21
+  "result": {
+    "totalCount": 1,
+    "items": [
+      {
+        "fullName": "محمد محمد زهير لالا",
+        "imageUrl": "1699596769668GMy7gU7XKE.jpg",
+        "address": "قرى الأسد",
+        "late": null,
+        "longe": null,
+        "userName": "97232981",
+        "password": "84889922",
+        "phoneNo": "963937267400",
+        "facility": "الصيدلة",
+        "idNumber": "01020311970",
+        "collegeIdNumber": "01903654",
+        "emergencyPhone": null,
+        "session": "الفصل الاول",
+        "institutionId": 8,
+        "subscriptions": [
+          {
+            "institutionId": 8,
+            "institution": null,
+            "memberId": 1325,
+            "member": {
+              "fullName": "محمد محمد زهير لالا",
+              "imageUrl": "1699596769668GMy7gU7XKE.jpg",
+              "address": "قرى الأسد",
+              "late": null,
+              "longe": null,
+              "userName": "97232981",
+              "password": "84889922",
+              "phoneNo": "963937267400",
+              "facility": "الصيدلة",
+              "idNumber": "01020311970",
+              "collegeIdNumber": "01903654",
+              "session": "الفصل الاول",
+              "institutionId": 8,
+              "emergencyPhone": null,
+              "id": 1325
+            },
+            "supscriptionDate": "2023-10-20T00:00:00",
+            "expirationDate": "2024-02-09T00:00:00",
+            "isActive": true,
+            "semester": null,
+            "id": 1399
+          }
+        ],
+        "tickets": [],
+        "pickupPoints": [],
+        "id": 1325
+      }
+    ]
+  },
+  "targetUrl": null,
+  "success": true,
+  "error": null,
+  "unAuthorizedRequest": false,
+  "__abp": true
 }

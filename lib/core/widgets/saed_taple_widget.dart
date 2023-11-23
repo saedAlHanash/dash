@@ -8,7 +8,6 @@ import '../api_manager/command.dart';
 import '../strings/app_color_manager.dart';
 import '../util/my_style.dart';
 
-
 class SaedTableWidget extends StatelessWidget {
   const SaedTableWidget({
     super.key,
@@ -57,16 +56,14 @@ class SaedTableWidget extends StatelessWidget {
                   SpinnerWidget(
                     items: command!.getSpinnerItems,
                     onChanged: (spinnerItem) {
-                      onChangePage?.call(command!
-                        ..goToPage(spinnerItem.id));
+                      onChangePage?.call(command!..goToPage(spinnerItem.id));
                     },
                   ),
                 15.0.horizontalSpace,
                 if (command != null)
                   DrawableText(
                       text:
-                      'الصفحات: ${command?.maxPages}   - النتائج : ${command
-                          ?.totalCount}'),
+                          'الصفحات: ${command?.maxPages}   - النتائج : ${command?.totalCount}'),
                 // InkWell(onTap: () {}, child: Icon(Icons.search))
               ],
             ),
@@ -90,26 +87,26 @@ class CellWidget extends StatelessWidget {
         const Divider(),
         Row(
           children: e.mapIndexed(
-                (i, e) {
+            (i, e) {
               final widget = e is String
                   ? Directionality(
-                textDirection: TextDirection.ltr,
-                child: DrawableText(
-                  selectable: true,
-                  size: 17.0.sp,
-                  matchParent: true,
-                  textAlign: TextAlign.center,
-                  text: e.isEmpty ? '-' : e,
-                  color: Colors.black,
-                  fontFamily: FontManager.cairoBold,
-                ),
-              )
+                      textDirection: TextDirection.ltr,
+                      child: DrawableText(
+                        selectable: true,
+                        size: 17.0.sp,
+                        matchParent: true,
+                        textAlign: TextAlign.center,
+                        text: e.isEmpty ? '-' : e,
+                        color: Colors.black,
+                        fontFamily: FontManager.cairoBold,
+                      ),
+                    )
                   : e is Widget
-                  ? e
-                  : Container(
-                height: 10,
-                color: Colors.red,
-              );
+                      ? e
+                      : Container(
+                          height: 10,
+                          color: Colors.red,
+                        );
 
               return Expanded(child: widget);
             },
@@ -129,23 +126,23 @@ class TitleWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: title.mapIndexed(
-            (i, e) {
+        (i, e) {
           final widget = e is String
               ? DrawableText(
-            selectable: true,
-            size: 20.0.sp,
-            matchParent: true,
-            textAlign: TextAlign.center,
-            text: e,
-            color: Colors.black,
-            fontFamily: FontManager.cairoBold,
-          )
+                  selectable: true,
+                  size: 20.0.sp,
+                  matchParent: true,
+                  textAlign: TextAlign.center,
+                  text: e,
+                  color: Colors.black,
+                  fontFamily: FontManager.cairoBold,
+                )
               : title is Widget
-              ? title as Widget
-              : Container(
-            color: Colors.red,
-            height: 10,
-          );
+                  ? title as Widget
+                  : Container(
+                      color: Colors.red,
+                      height: 10,
+                    );
 
           return Expanded(child: widget);
         },

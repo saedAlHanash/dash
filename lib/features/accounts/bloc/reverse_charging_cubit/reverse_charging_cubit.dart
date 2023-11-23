@@ -8,7 +8,6 @@ import '../../../../core/api_manager/api_service.dart';
 import '../../../../core/error/error_manager.dart';
 import '../../../../core/util/note_message.dart';
 import '../../../../core/util/pair_class.dart';
-import '../../../wallet/data/summary_model.dart';
 
 part 'reverse_charging_state.dart';
 

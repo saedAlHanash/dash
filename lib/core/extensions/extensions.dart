@@ -5,7 +5,6 @@ import 'package:qareeb_models/global.dart';
 import 'package:qareeb_models/trip_process/data/response/trip_response.dart';
 
 import '../strings/app_string_manager.dart';
-import '../util/shared_preferences.dart';
 
 extension CubitStateHelper1 on CubitStatuses {
   bool get loading => this == CubitStatuses.loading;

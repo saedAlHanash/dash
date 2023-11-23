@@ -13,7 +13,6 @@ import '../../../../core/injection/injection_container.dart';
 import '../../../../core/network/network_info.dart';
 import '../../../../core/util/note_message.dart';
 import '../../../../core/util/pair_class.dart';
-import '../../../../core/util/shared_preferences.dart';
 
 part 'candidate_drivers_state.dart';
 

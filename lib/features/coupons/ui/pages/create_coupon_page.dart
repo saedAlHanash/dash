@@ -1,5 +1,3 @@
-import "package:universal_html/html.dart";
-
 import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,6 +7,7 @@ import 'package:qareeb_dash/core/widgets/my_button.dart';
 import 'package:qareeb_dash/core/widgets/my_card_widget.dart';
 import 'package:qareeb_dash/core/widgets/my_text_form_widget.dart';
 import 'package:qareeb_models/extensions.dart';
+import "package:universal_html/html.dart";
 
 import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/util/my_style.dart';

@@ -4,14 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qareeb_dash/core/api_manager/api_url.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
-import 'package:qareeb_dash/core/util/shared_preferences.dart';
 import 'package:qareeb_models/global.dart';
+import 'package:qareeb_models/home/data/response/drivers_imei_response.dart';
 
 import '../../../../core/api_manager/api_service.dart';
 import '../../../../core/error/error_manager.dart';
 import '../../../../core/util/note_message.dart';
 import '../../../../core/util/pair_class.dart';
-import 'package:qareeb_models/home/data/response/drivers_imei_response.dart';
 
 part 'drivers_imei_state.dart';
 

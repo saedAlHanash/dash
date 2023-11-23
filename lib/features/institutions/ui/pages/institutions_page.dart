@@ -1,5 +1,4 @@
 import 'package:collection/collection.dart';
-import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,7 +12,6 @@ import 'package:qareeb_models/global.dart';
 
 import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/my_style.dart';
-import 'package:image_multi_type/image_multi_type.dart';
 import '../../bloc/all_institutions_cubit/all_institutions_cubit.dart';
 import '../../bloc/delete_institution_cubit/delete_institution_cubit.dart';
 

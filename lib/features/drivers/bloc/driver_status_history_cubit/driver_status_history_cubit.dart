@@ -1,12 +1,9 @@
-import 'package:collection/collection.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qareeb_dash/core/api_manager/api_url.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
-import 'package:qareeb_dash/features/drivers/data/response/drivers_response.dart';
 import 'package:qareeb_dash/features/drivers/data/response/status_history_response.dart';
-
 import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_models/global.dart';
 

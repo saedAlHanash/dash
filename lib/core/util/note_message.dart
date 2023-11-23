@@ -1,15 +1,14 @@
-import "package:universal_html/html.dart";
-
 import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_multi_type/image_multi_type.dart';
 import 'package:lottie/lottie.dart';
 import 'package:qareeb_dash/core/strings/app_color_manager.dart';
 import 'package:qareeb_dash/core/strings/app_string_manager.dart';
 import 'package:qareeb_dash/core/widgets/my_button.dart';
+import "package:universal_html/html.dart";
 
 import '../../generated/assets.dart';
-import 'package:image_multi_type/image_multi_type.dart';
 import '../widgets/snake_bar_widget.dart';
 
 class NoteMessage {

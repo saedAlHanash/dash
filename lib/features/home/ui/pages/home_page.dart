@@ -1,4 +1,3 @@
-import "package:universal_html/html.dart";
 import 'dart:math';
 
 import 'package:drawable_text/drawable_text.dart';
@@ -19,13 +18,13 @@ import 'package:qareeb_dash/features/redeems/bloc/redeems_cubit/redeems_cubit.da
 import 'package:qareeb_dash/features/shared_trip/ui/pages/shared_trips_page.dart';
 import 'package:qareeb_dash/features/trip/ui/pages/trips_page.dart';
 import 'package:qareeb_models/global.dart';
+import "package:universal_html/html.dart";
 
 import '../../../../core/injection/injection_container.dart';
 import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/shared_preferences.dart';
 import '../../../../core/widgets/logo_text.dart';
-import '../../../accounts/bloc/account_amount_cubit/account_amount_cubit.dart';
 import '../../../accounts/bloc/all_transfers_cubit/all_transfers_cubit.dart';
 import '../../../accounts/bloc/pay_to_cubit/pay_to_cubit.dart';
 import '../../../accounts/data/request/transfer_filter_request.dart';

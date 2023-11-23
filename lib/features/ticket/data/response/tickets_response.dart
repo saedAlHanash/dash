@@ -1,4 +1,4 @@
-import 'package:qareeb_models/global.dart';
+
 
 class TicketsResponse {
   TicketsResponse({

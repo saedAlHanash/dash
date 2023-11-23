@@ -3,6 +3,7 @@ import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_multi_type/image_multi_type.dart';
 import 'package:map_package/map/data/models/my_marker.dart';
 import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_models/points/data/model/trip_point.dart';
@@ -10,7 +11,6 @@ import 'package:qareeb_models/trip_path/data/models/trip_path.dart';
 
 import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/util/my_style.dart';
-import 'package:image_multi_type/image_multi_type.dart';
 import '../../../../core/widgets/my_card_widget.dart';
 import '../../../../generated/assets.dart';
 import '../../../points/bloc/delete_edge_cubit/delete_edge_cubit.dart';

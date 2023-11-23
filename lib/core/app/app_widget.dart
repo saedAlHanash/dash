@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:map_package/map/bloc/set_point_cubit/map_control_cubit.dart';
 
 import '../../features/accounts/bloc/all_transfers_cubit/all_transfers_cubit.dart';
+import '../../features/accounts/bloc/financial_report_cubit/financial_report_cubit.dart';
 import '../../features/admins/bloc/all_admins/all_admins_cubit.dart';
 import '../../features/agencies/bloc/agencies_cubit/agencies_cubit.dart';
 import '../../features/auth/bloc/create_policy_cubit/policy_cubit.dart';
@@ -20,10 +21,7 @@ import '../../features/governorates/bloc/governorates_cubit/governorates_cubit.d
 import '../../features/home/bloc/home_cubit/home_cubit/home_cubit.dart';
 import '../../features/home/bloc/nav_home_cubit/nav_home_cubit.dart';
 import '../../features/institutions/bloc/all_institutions_cubit/all_institutions_cubit.dart';
-
 import '../../features/notifications/bloc/notification_cubit/notification_cubit.dart';
-import '../../features/accounts/bloc/financial_report_cubit/financial_report_cubit.dart';
-import '../../features/accounts/bloc/financial_report_cubit/financial_report_cubit.dart';
 import '../../features/plans/bloc/plans_cubit/plans_cubit.dart';
 import '../../features/points/bloc/get_edged_point_cubit/get_all_points_cubit.dart';
 import '../../features/roles/bloc/all_roles/all_roles_cubit.dart';

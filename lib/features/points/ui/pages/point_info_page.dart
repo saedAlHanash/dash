@@ -1,5 +1,3 @@
-import "package:universal_html/html.dart";
-
 import 'package:collection/collection.dart';
 import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +23,7 @@ import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_models/global.dart';
 import 'package:qareeb_models/points/data/model/trip_point.dart';
 import 'package:qareeb_models/trip_path/data/models/trip_path.dart';
+import "package:universal_html/html.dart";
 
 import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/my_style.dart';

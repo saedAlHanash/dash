@@ -1,4 +1,3 @@
-import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -21,7 +20,6 @@ import '../../../../generated/assets.dart';
 import '../../../drivers/ui/widget/item_image_create.dart';
 import '../../bloc/agencies_cubit/agencies_cubit.dart';
 import '../../bloc/create_agency_cubit/create_agency_cubit.dart';
-import '../../bloc/delete_agency_cubit/delete_agency_cubit.dart';
 import '../../data/request/agency_request.dart';
 
 class AgenciesPage extends StatefulWidget {
