@@ -131,29 +131,25 @@ class _AgencyHomePageState extends State<AgencyHomePage> {
               ),
             ),
             footer: Container(
-              height: 150.h,
+              height: 50.h,
               alignment: Alignment.center,
               width: double.infinity,
               color: AppColorManager.mainColor,
-              child: Column(
-                children: [
-                  InkWell(
-                    onTap: () {
-                      // popAllJs();
-                      AppSharedPreference.logout();
-                      APIService.reInitial();
-                      window.location.reload();
-                      // context.pushNamed(GoRouteName.loginPage);
-                    },
-                    child: const DrawableText(
-                      text: 'تسجيل الخروج',
-                      selectable: false,
-                      matchParent: true,
-                      color: Colors.white,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ],
+              child: InkWell(
+                onTap: () {
+                  // popAllJs();
+                  AppSharedPreference.logout();
+                  APIService.reInitial();
+                  window.location.reload();
+                  // context.pushNamed(GoRouteName.loginPage);
+                },
+                child: const DrawableText(
+                  text: 'تسجيل الخروج',
+                  selectable: false,
+                  matchParent: true,
+                  color: Colors.white,
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
           ),

@@ -34,6 +34,7 @@ class CreateAgencyCubit extends Cubit<CreateAgencyInitial> {
     final response = await APIService().uploadMultiPart(
       url: state.request.id != null ? PutUrl.updateAgency : PostUrl.createAgency,
       fields: state.request.toJson(),
+      type: state.request.id != null?'PUT':'POST',
       files: [state.request.file],
     );
 

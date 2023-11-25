@@ -88,7 +88,7 @@ class _TransfersPageState extends State<TransfersPage> {
                   return MyStyle.loadingWidget();
                 }
                 final list = state.result;
-                if (list.isEmpty) return const NotFoundWidget(text: 'لا يوجد تصنيفات');
+                if (list.isEmpty) return const NotFoundWidget(text: 'لا يوجد عمليات');
                 return SaedTableWidget(
                     command: state.command,
                     fullHeight: 1.5.sh,

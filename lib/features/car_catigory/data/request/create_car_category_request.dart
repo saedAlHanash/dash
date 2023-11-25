@@ -41,6 +41,7 @@ class CreateCarCatRequest {
 
   num? priceVariant;
   num? sharedMinimumDistanceInMeters;
+  num? planMinimumDistanceInMeters;
   num? seatNumber;
 
   CreateCarCatRequest({
@@ -65,6 +66,7 @@ class CreateCarCatRequest {
     this.sharedGasRatio,
     this.priceVariant,
     this.sharedMinimumDistanceInMeters,
+    this.planMinimumDistanceInMeters,
     this.seatNumber,
     this.planDriverRation,
     this.planKmCost,
@@ -93,6 +95,7 @@ class CreateCarCatRequest {
       'sharedGasRatio': sharedGasRatio,
       'priceVariant': priceVariant,
       'sharedMinimumDistanceInMeters': sharedMinimumDistanceInMeters,
+      'PlanMinimumDistanceInMeters': planMinimumDistanceInMeters,
       'seatNumber': seatNumber,
       'PlanDriverRation': planDriverRation,
       'PlanKmCost': planKmCost,
@@ -122,6 +125,7 @@ class CreateCarCatRequest {
       sharedGasRatio: carCategory.sharedGasRatio,
       priceVariant: carCategory.priceVariant,
       sharedMinimumDistanceInMeters: carCategory.sharedMinimumDistanceInMeters,
+      planMinimumDistanceInMeters: carCategory.planMinimumDistanceInMeters,
       seatNumber: carCategory.seatNumber,
       planDriverRation: carCategory.planDriverRation,
       planKmCost: carCategory.planKmCost,
@@ -224,6 +228,11 @@ class CreateCarCatRequest {
     if (sharedMinimumDistanceInMeters == 0) {
       NoteMessage.showErrorSnackBar(
           message: 'خطأ في أقل مسافة للرحلة التشاركية', context: context);
+      return false;
+    }
+    if (planMinimumDistanceInMeters == 0) {
+      NoteMessage.showErrorSnackBar(
+          message: 'خطأ في أقل مسافة لرحلة الاشتراكات', context: context);
       return false;
     }
 

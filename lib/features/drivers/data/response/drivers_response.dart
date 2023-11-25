@@ -1,4 +1,4 @@
-import 'package:qareeb_dash/features/agencies/data/response/agency_response.dart';
+import 'package:qareeb_models/agencies/data/response/agency_response.dart';
 import 'package:qareeb_models/global.dart';
 
 import '../../../../core/strings/fix_url.dart';

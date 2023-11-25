@@ -97,7 +97,7 @@ class _CreateTempTripPageState extends State<CreateTempTripPage> {
                           margin: const EdgeInsets.only(bottom: 30.0).h,
                           child: SizedBox(
                             height: 500.0.h,
-                            child: const CreateTempTripWidget(),
+                            child: const CreateTempPathWidget(),
                           ),
                         ),
                         MyTextFormNoLabelWidget(

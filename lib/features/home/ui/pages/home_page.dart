@@ -10,14 +10,12 @@ import 'package:map_package/map/bloc/ather_cubit/ather_cubit.dart';
 import 'package:map_package/map/bloc/map_controller_cubit/map_controller_cubit.dart';
 import 'package:map_package/map/bloc/search_location/search_location_cubit.dart';
 import 'package:qareeb_dash/core/api_manager/api_service.dart';
-import 'package:qareeb_dash/core/api_manager/command.dart';
 import 'package:qareeb_dash/features/accounts/ui/pages/transfers_page.dart';
 import 'package:qareeb_dash/features/car_catigory/bloc/delete_car_cat_cubit/delete_car_cat_cubit.dart';
 import 'package:qareeb_dash/features/coupons/ui/pages/coupons_page.dart';
 import 'package:qareeb_dash/features/redeems/bloc/redeems_cubit/redeems_cubit.dart';
 import 'package:qareeb_dash/features/shared_trip/ui/pages/shared_trips_page.dart';
 import 'package:qareeb_dash/features/trip/ui/pages/trips_page.dart';
-import 'package:qareeb_models/global.dart';
 import "package:universal_html/html.dart";
 
 import '../../../../core/injection/injection_container.dart';
@@ -25,19 +23,20 @@ import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/shared_preferences.dart';
 import '../../../../core/widgets/logo_text.dart';
-import '../../../accounts/bloc/all_transfers_cubit/all_transfers_cubit.dart';
 import '../../../accounts/bloc/pay_to_cubit/pay_to_cubit.dart';
-import '../../../accounts/data/request/transfer_filter_request.dart';
 import '../../../admins/ui/pages/admins_page.dart';
 import '../../../agencies/bloc/create_agency_cubit/create_agency_cubit.dart';
 import '../../../agencies/bloc/delete_agency_cubit/delete_agency_cubit.dart';
 import '../../../agencies/ui/pages/agencies_page.dart';
+import '../../../agencies/ui/pages/agencies_financial_page.dart';
 import '../../../auth/bloc/change_user_state_cubit/change_user_state_cubit.dart';
 import '../../../auth/ui/pages/policy_page.dart';
 import '../../../car_catigory/ui/pages/car_categories_page.dart';
 import '../../../clients/ui/pages/clients_page.dart';
 import '../../../companies/bloc/delete_company_cubit/delete_company_cubit.dart';
 import '../../../companies/ui/pages/companies_page.dart';
+import '../../../company_paths/bloc/delete_compane_path_cubit/delete_company_path_cubit.dart';
+import '../../../company_paths/ui/pages/company_paths_page.dart';
 import '../../../coupons/bloc/change_coupon_state_cubit/change_coupon_state_cubit.dart';
 import '../../../coupons/bloc/create_coupon_cubit/create_coupon_cubit.dart';
 import '../../../drivers/bloc/loyalty_cubit/loyalty_cubit.dart';
@@ -265,11 +264,19 @@ class _HomePageState extends State<HomePage> {
                       ),
 
                     if (isAllowed(AppPermissions.SETTINGS))
-                      const AdminMenuItem(
-                        title: 'محاسبة السائقين',
-                        route: "/payToDrivers",
-                        icon: Icons.attach_money_outlined,
-                      ),
+                      ...[
+                        const AdminMenuItem(
+                          title: 'محاسبة السائقين',
+                          route: "/payToDrivers",
+                          icon: Icons.attach_money_outlined,
+                        ),
+                        const AdminMenuItem(
+                          title: 'محاسبة الوكلاء',
+                          route: "/payToAgency",
+                          icon: Icons.attach_money_outlined,
+                        ),
+                      ],
+
 
                     // const AdminMenuItem(title: 'التقاص', route: "/payToDrivers"),
                   ],
@@ -488,9 +495,9 @@ class _HomePageState extends State<HomePage> {
                 case "/subscriptions":
                   return MultiBlocProvider(
                     providers: [
-                      BlocProvider(create: (_) => sl<DeletePlanCubit>()),
+                      BlocProvider(create: (context) => sl<DeleteCompanyPathCubit>()),
                     ],
-                    child: const PlansPage(),
+                    child: const CompanyPathsPage(),
                   );
 
                 case "/allPlans":
@@ -512,18 +519,26 @@ class _HomePageState extends State<HomePage> {
                 case "/payToDrivers":
                   return MultiBlocProvider(
                     providers: [
-                      BlocProvider(
-                        create: (_) => sl<AllTransfersCubit>()
-                          ..getAllTransfers(
-                            _,
-                            command: Command.initial()
-                              ..transferFilterRequest =
-                                  TransferFilterRequest(type: TransferType.debit),
-                          ),
-                      ),
+                      // BlocProvider(
+                      //   create: (_) => sl<AllTransfersCubit>()
+                      //     ..getAllTransfers(
+                      //       _,
+                      //       command: Command.initial()
+                      //         ..transferFilterRequest =
+                      //             TransferFilterRequest(type: TransferType.debit),
+                      //     ),
+                      // ),
                       BlocProvider(create: (_) => sl<PayToCubit>()),
                     ],
                     child: const FinancialPage(),
+                  );
+
+                case "/payToAgency":
+                  return MultiBlocProvider(
+                    providers: [
+                      BlocProvider(create: (_) => sl<PayToCubit>()),
+                    ],
+                    child: const AgencyFinancialPage(),
                   );
               }
               return SingleChildScrollView(

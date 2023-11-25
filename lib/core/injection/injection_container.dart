@@ -15,6 +15,8 @@ import '../../features/accounts/bloc/reverse_charging_cubit/reverse_charging_cub
 import '../../features/admins/bloc/all_admins/all_admins_cubit.dart';
 import '../../features/admins/bloc/create_admin_cubit/create_admin_cubit.dart';
 import '../../features/agencies/bloc/agencies_cubit/agencies_cubit.dart';
+import '../../features/agencies/bloc/agencies_financial_report_cubit/agencies_financial_report_cubit.dart';
+import '../../features/agencies/bloc/agency_report_cubit/agency_report_cubit.dart';
 import '../../features/agencies/bloc/create_agency_cubit/create_agency_cubit.dart';
 import '../../features/agencies/bloc/delete_agency_cubit/delete_agency_cubit.dart';
 import '../../features/areas/bloc/areas_cubit/areas_cubit.dart';
@@ -36,6 +38,11 @@ import '../../features/clients/bloc/clients_by_id_cubit/clients_by_id_cubit.dart
 import '../../features/companies/bloc/companies_cubit/companies_cubit.dart';
 import '../../features/companies/bloc/create_company_cubit/create_company_cubit.dart';
 import '../../features/companies/bloc/delete_company_cubit/delete_company_cubit.dart';
+import '../../features/company_paths/bloc/all_compane_paths_cubit/all_company_paths_cubit.dart';
+import '../../features/company_paths/bloc/company_path_by_id_cubit/company_path_by_id_cubit.dart';
+import '../../features/company_paths/bloc/create_compane_path_cubit/create_company_path_cubit.dart';
+import '../../features/company_paths/bloc/delete_compane_path_cubit/delete_company_path_cubit.dart';
+import '../../features/company_paths/bloc/estimate_cubit/estimate_company_cubit.dart';
 import '../../features/coupons/bloc/all_coupons_vubit/all_coupons_cubit.dart';
 import '../../features/coupons/bloc/change_coupon_state_cubit/change_coupon_state_cubit.dart';
 import '../../features/coupons/bloc/create_coupon_cubit/create_coupon_cubit.dart';
@@ -241,8 +248,6 @@ Future<void> init() async {
 
   //endregion
 
-
-
   //region institution
   sl.registerFactory(() => AllInstitutionsCubit());
   sl.registerFactory(() => CreateInstitutionCubit());
@@ -250,11 +255,22 @@ Future<void> init() async {
 
   //endregion
 
-
   // region Companies
   sl.registerFactory(() => AllCompaniesCubit());
   sl.registerFactory(() => CreateCompanyCubit());
   sl.registerFactory(() => DeleteCompanyCubit());
+  sl.registerFactory(() => AllCompanyPathsCubit());
+  sl.registerFactory(() => CompanyPathBuIdCubit());
+  sl.registerFactory(() => CreateCompanyPathCubit());
+  sl.registerFactory(() => DeleteCompanyPathCubit());
+  sl.registerFactory(() => EstimateCompanyCubit());
+
+  //endregion
+
+  // region agency
+  sl.registerFactory(() => AgenciesReportCubit());
+  sl.registerFactory(() => AgencyReportCubit());
+
 
   //endregion
 

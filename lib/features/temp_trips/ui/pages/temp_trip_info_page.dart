@@ -11,9 +11,9 @@ import 'package:qareeb_models/extensions.dart';
 import '../../../../core/util/my_style.dart';
 import '../../../../core/widgets/app_bar_widget.dart';
 import '../../../../core/widgets/saed_taple_widget.dart';
+import '../../../shared_trip/ui/widget/path_points_widget.dart';
 import '../../bloc/estimate_cubit/estimate_cubit.dart';
 import '../../bloc/temp_trip_by_id_cubit/temp_trip_by_id_cubit.dart';
-import '../widget/path_points_widget.dart';
 
 class TempTripInfoPage extends StatefulWidget {
   const TempTripInfoPage({super.key});

@@ -12,6 +12,7 @@ import 'package:qareeb_models/extensions.dart';
 import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/my_style.dart';
 import '../../bloc/companies_cubit/companies_cubit.dart';
+import '../widget/companies_filter_widget.dart';
 
 const companyList = [
   'ID',
@@ -109,7 +110,9 @@ class CompaniesPage extends StatelessWidget {
                   )
                   .toList(),
               onChangePage: (command) {
-                context.read<AllCompaniesCubit>().getCompanies(context, command: command);
+                context
+                    .read<AllCompaniesCubit>()
+                    .getCompanies(context, command: command);
               },
             ),
           );

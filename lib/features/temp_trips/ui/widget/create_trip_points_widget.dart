@@ -13,18 +13,18 @@ import '../../../../core/widgets/my_text_form_widget.dart';
 import '../../../points/bloc/get_edged_point_cubit/get_all_points_cubit.dart';
 import '../../../points/bloc/get_points_edge_cubit/get_points_edge_cubit.dart';
 import '../../../shared_trip/bloc/add_point_cubit/add_point_cubit.dart';
+import '../../../shared_trip/ui/widget/path_points_widget.dart';
 import '../../bloc/create_temp_trip_cubit/create_temp_trip_cubit.dart';
-import 'path_points_widget.dart';
 import 'search_points_widget.dart';
 
-class CreateTempTripWidget extends StatefulWidget {
-  const CreateTempTripWidget({Key? key}) : super(key: key);
+class CreateTempPathWidget extends StatefulWidget {
+  const CreateTempPathWidget({Key? key}) : super(key: key);
 
   @override
-  State<CreateTempTripWidget> createState() => _CreateTempTripWidgetState();
+  State<CreateTempPathWidget> createState() => _CreateTempPathWidgetState();
 }
 
-class _CreateTempTripWidgetState extends State<CreateTempTripWidget> {
+class _CreateTempPathWidgetState extends State<CreateTempPathWidget> {
   /// Start Text Controller
   final searchController = TextEditingController();
 
@@ -32,7 +32,7 @@ class _CreateTempTripWidgetState extends State<CreateTempTripWidget> {
   late AddPointCubit addPointCubit;
   late PointsCubit pointsCubit;
   late PointsEdgeCubit pointsEdgeCubit;
-  late CreateTempTripCubit createTempCubit;
+
 
   final List<TripPoint> finalList = [];
   final List<TripPoint> list = [];
@@ -57,7 +57,7 @@ class _CreateTempTripWidgetState extends State<CreateTempTripWidget> {
     addPointCubit = context.read<AddPointCubit>();
     pointsCubit = context.read<PointsCubit>();
     pointsEdgeCubit = context.read<PointsEdgeCubit>();
-    createTempCubit = context.read<CreateTempTripCubit>();
+
 
     super.initState();
   }

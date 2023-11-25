@@ -11,7 +11,7 @@ import '../../../../core/api_manager/command.dart';
 import '../../../../core/error/error_manager.dart';
 import '../../../../core/util/note_message.dart';
 import '../../../../core/util/pair_class.dart';
-import '../../data/response/agency_response.dart';
+import 'package:qareeb_models/agencies/data/response/agency_response.dart';
 
 part 'agencies_state.dart';
 

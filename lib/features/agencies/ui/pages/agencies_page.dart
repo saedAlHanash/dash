@@ -8,7 +8,7 @@ import 'package:qareeb_dash/core/widgets/my_button.dart';
 import 'package:qareeb_dash/core/widgets/my_text_form_widget.dart';
 import 'package:qareeb_dash/core/widgets/not_found_widget.dart';
 import 'package:qareeb_dash/core/widgets/saed_taple_widget.dart';
-import 'package:qareeb_dash/features/agencies/data/response/agency_response.dart';
+import 'package:qareeb_models/agencies/data/response/agency_response.dart';
 import 'package:qareeb_models/extensions.dart';
 
 import '../../../../core/api_manager/api_service.dart';
@@ -63,6 +63,7 @@ class _AgenciesPageState extends State<AgenciesPage> {
               'صورة',
               'اسم',
               'نسبة',
+              'عمليات',
             ],
             data: state.result
                 .map(
@@ -76,7 +77,22 @@ class _AgenciesPageState extends State<AgenciesPage> {
                       ),
                     ),
                     e.name,
-                    '${e.agencyRatio}%'
+                    '${e.agencyRatio}%',
+                    IconButton(
+                      onPressed: () {
+                        NoteMessage.showMyDialog(
+                          context,
+                          child: BlocProvider.value(
+                            value: context.read<CreateAgencyCubit>(),
+                            child:  CreateAgencyDialog(agency: e),
+                          ),
+                          onCancel: (val) {
+                            if (val) context.read<AgenciesCubit>().getAgencies(context);
+                          },
+                        );
+                      },
+                      icon: Icon(Icons.edit, color: AppColorManager.ampere),
+                    ),
                   ],
                 )
                 .toList(),

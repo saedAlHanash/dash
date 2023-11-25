@@ -3,7 +3,7 @@ import 'package:qareeb_dash/core/api_manager/api_service.dart';
 import 'package:qareeb_models/extensions.dart';
 
 import '../../../../core/util/note_message.dart';
-import '../response/agency_response.dart';
+import 'package:qareeb_models/agencies/data/response/agency_response.dart';
 
 class AgencyRequest {
   AgencyRequest({

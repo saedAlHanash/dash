@@ -28,6 +28,21 @@ class PayToCubit extends Cubit<PayToInitial> {
     Pair? pair;
 
     switch (request.type!) {
+      //مطلوب من الشركة للوكيل
+      case SummaryPayToEnum.agency:
+        //region
+
+        //دفعة بمستحقات السائق من الشركة
+        //Company To Driver
+        pair = await _payPayToAgencyApi(
+          agencyId: request.agencyId!,
+          amount: request.cutAmount!,
+          note: request.note,
+        );
+
+        break;
+      //endregion
+
       //مطلوب من السائق
       case SummaryPayToEnum.requiredFromDriver:
         //region
@@ -38,7 +53,7 @@ class PayToCubit extends Cubit<PayToInitial> {
           driverId: request.driverId!,
           type: TransferPayType.companyToDriver,
           amount: request.cutAmount!,
-          note:request.note,
+          note: request.note,
         );
 
         //دفعة بمستحقات الشركة من السائق
@@ -48,7 +63,7 @@ class PayToCubit extends Cubit<PayToInitial> {
             driverId: request.driverId!,
             type: TransferPayType.driverToCompany,
             amount: request.payAmount! + request.cutAmount!,
-            note:request.note,
+            note: request.note,
           );
         }
         break;
@@ -63,7 +78,7 @@ class PayToCubit extends Cubit<PayToInitial> {
           driverId: request.driverId!,
           type: TransferPayType.driverToCompany,
           amount: request.cutAmount!,
-          note:request.note,
+          note: request.note,
         );
         //دفعة بمستحقات السائق من الشركة
         //Company To Driver
@@ -72,7 +87,7 @@ class PayToCubit extends Cubit<PayToInitial> {
             driverId: request.driverId!,
             type: TransferPayType.companyToDriver,
             amount: request.payAmount! + request.cutAmount!,
-            note:request.note,
+            note: request.note,
           );
         }
         break;
@@ -85,7 +100,7 @@ class PayToCubit extends Cubit<PayToInitial> {
           driverId: request.driverId!,
           type: TransferPayType.driverToCompany,
           amount: request.cutAmount!,
-          note:request.note,
+          note: request.note,
         );
 
         if (checkResponse(pair)) {
@@ -93,7 +108,7 @@ class PayToCubit extends Cubit<PayToInitial> {
             driverId: request.driverId!,
             type: TransferPayType.companyToDriver,
             amount: request.cutAmount!,
-            note:request.note,
+            note: request.note,
           );
         }
         break;
@@ -125,6 +140,20 @@ class PayToCubit extends Cubit<PayToInitial> {
           ? PostUrl.createFromCompany
           : PostUrl.createFromDriver,
       body: {"amount": amount, "driverId": driverId, 'note': note},
+    );
+
+    if (response.statusCode == 200) {
+      return Pair(true, null);
+    } else {
+      return Pair(null, ErrorManager.getApiError(response));
+    }
+  }
+
+  Future<Pair<bool?, String?>> _payPayToAgencyApi(
+      {required num amount, required int agencyId, String? note}) async {
+    final response = await APIService().postApi(
+      url: PostUrl.createToAgency,
+      body: {"amount": amount, "agencyId": agencyId, 'note': note},
     );
 
     if (response.statusCode == 200) {

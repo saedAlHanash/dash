@@ -62,68 +62,72 @@ class ItemSharedTrip extends StatelessWidget {
                 title: 'المقاعد المحجوزة', info: trip.reservedSeats.toString()),
             TextButton(
               onPressed: () {
-                NoteMessage.showCustomBottomSheet(
+                NoteMessage.showMyDialog(
                   context,
-                  child: ListView.builder(
-                    itemCount: trip.sharedRequests.length,
-                    itemBuilder: (context, index) {
-                      final item = trip.sharedRequests[index].client;
-                      var tripIconId = 0;
-                      trip.path.getTripPoints.forEachIndexed((i, e1) {
-                        if (e1.id == trip.sharedRequests[index].pickupPoint.id) {
-                          tripIconId = i;
-                        }
-                      });
-                      return MyCardWidget(
-                        elevation: 0.0,
-                        margin: const EdgeInsets.all(20),
-                        child: Column(
-                          children: [
-                            DrawableText(
-                              text:
-                                  '${item.fullName}  ( ${trip.sharedRequests[index].seatNumber} مقعد )',
-                              color: Colors.black,
-                              matchParent: true,
-                              fontFamily: FontManager.cairoBold,
-                              drawableAlin: DrawableAlin.between,
-                              drawableEnd: IconButton(
-                                onPressed: () {
-                                  LauncherHelper.callPhone('+${item.phoneNumber}');
-                                },
-                                icon: const Icon(
-                                  Icons.phone,
-                                  color: AppColorManager.mainColor,
-                                ),
-                              ),
-                            ),
-                            const Divider(),
-                            DrawableText(
-                              text: 'نقطة الركوب: ',
-                              color: Colors.black,
-                              matchParent: true,
-                              fontFamily: FontManager.cairoBold,
-                              drawableAlin: DrawableAlin.between,
-                              drawableEnd: DrawableText(
-                                text: trip.sharedRequests[index].pickupPoint.arName,
+                  child: SizedBox(
+                    height: 0.5.sh,
+                    child: ListView.builder(
+                      itemCount: trip.sharedRequests.length,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        final item = trip.sharedRequests[index].client;
+                        var tripIconId = 0;
+                        trip.path.getTripPoints.forEachIndexed((i, e1) {
+                          if (e1.id == trip.sharedRequests[index].pickupPoint.id) {
+                            tripIconId = i;
+                          }
+                        });
+                        return MyCardWidget(
+                          elevation: 0.0,
+                          margin: const EdgeInsets.all(20),
+                          child: Column(
+                            children: [
+                              DrawableText(
+                                text:
+                                    '${item.fullName}  ( ${trip.sharedRequests[index].seatNumber} مقعد )',
                                 color: Colors.black,
-                                drawablePadding: 5.0.w,
-                                drawableEnd: ImageMultiType(
-                                  url: tripIconId.iconPoint,
-                                  height: 20.0.r,
-                                  width: 20.0.r,
+                                matchParent: true,
+                                fontFamily: FontManager.cairoBold,
+                                drawableAlin: DrawableAlin.between,
+                                drawableEnd: IconButton(
+                                  onPressed: () {
+                                    LauncherHelper.callPhone('+${item.phoneNumber}');
+                                  },
+                                  icon: const Icon(
+                                    Icons.phone,
+                                    color: AppColorManager.mainColor,
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                      );
-                    },
+                              const Divider(),
+                              DrawableText(
+                                text: 'نقطة الركوب: ',
+                                color: Colors.black,
+                                matchParent: true,
+                                fontFamily: FontManager.cairoBold,
+                                drawableAlin: DrawableAlin.between,
+                                drawableEnd: DrawableText(
+                                  text: trip.sharedRequests[index].pickupPoint.arName,
+                                  color: Colors.black,
+                                  drawablePadding: 5.0.w,
+                                  drawableEnd: ImageMultiType(
+                                    url: tripIconId.iconPoint,
+                                    height: 20.0.r,
+                                    width: 20.0.r,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 );
               },
               child: const DrawableText(
                 text: 'عرض الزبائن',
-                selectable: false ,
+                selectable: false,
                 color: AppColorManager.mainColorDark,
                 fontFamily: FontManager.cairoBold,
               ),
@@ -169,9 +173,7 @@ class ItemSharedTrip1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-
-      },
+      onTap: () {},
       child: MyCardWidget(
         margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0).r,
         child: Row(
@@ -261,7 +263,8 @@ class ItemSharedTrip1 extends StatelessWidget {
                           matchParent: true,
                           size: 18.0.sp,
                           textAlign: TextAlign.center,
-                          text: (item.driver.carType.seatsNumber - item.availableSeats).toString(),
+                          text: (item.driver.carType.seatsNumber - item.availableSeats)
+                              .toString(),
                           color: Colors.black,
                           fontFamily: FontManager.cairoBold,
                         ),
@@ -332,22 +335,20 @@ class ItemSharedTrip1 extends StatelessWidget {
                           children: [
                             Expanded(
                               child: DrawableText(
-                                text:
-                                itemRequest.fullName,
+                                text: itemRequest.fullName,
                                 color: Colors.black,
                                 matchParent: true,
                                 drawablePadding: 15.0.w,
-                                drawableAlin:  DrawableAlin.withText,
+                                drawableAlin: DrawableAlin.withText,
                                 fontFamily: FontManager.cairoBold,
                                 drawableEnd: DrawableText(
                                   text:
-                                  'عدد المقاعد:  ${item.sharedRequests[index].seatNumber}',
+                                      'عدد المقاعد:  ${item.sharedRequests[index].seatNumber}',
                                   color: Colors.black,
                                   fontFamily: FontManager.cairoBold,
                                 ),
                               ),
                             ),
-
                             Expanded(
                               child: DrawableText(
                                 text: 'نقطة الركوب: ',

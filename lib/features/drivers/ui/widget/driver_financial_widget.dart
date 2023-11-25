@@ -7,6 +7,7 @@ import 'package:image_multi_type/image_multi_type.dart';
 import 'package:qareeb_dash/core/api_manager/api_service.dart';
 import 'package:qareeb_dash/core/util/shared_preferences.dart';
 import 'package:qareeb_dash/generated/assets.dart';
+import 'package:qareeb_models/agencies/data/response/agencies_financial_response.dart';
 import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_models/wallet/data/response/driver_financial_response.dart';
 
@@ -227,6 +228,41 @@ class SummaryFinancialWidget extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class SummaryAgencyWidget extends StatelessWidget {
+  const SummaryAgencyWidget({super.key, required this.result});
+
+  final AgencyReport result;
+
+  @override
+  Widget build(BuildContext context) {
+    return MyCardWidget(
+      elevation: 0.0,
+      margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0).r,
+      child: Row(
+        children: [
+          ImageMultiType(
+            url: Assets.iconsDriver,
+            width: 55.0.r,
+            height: 55.0.r,
+          ),
+          15.0.horizontalSpace,
+          const DrawableText(
+            text: 'رصيد الوكيل لدى الشركة',
+            color: Colors.black,
+            fontFamily: FontManager.cairoBold,
+          ),
+          const Spacer(),
+          DrawableText(
+            text: result.requiredAmountFromCompany.formatPrice,
+            color: Colors.black,
+            fontFamily: FontManager.cairoBold,
+          ),
+        ],
+      ),
     );
   }
 }

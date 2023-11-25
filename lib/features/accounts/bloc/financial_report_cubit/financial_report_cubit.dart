@@ -122,5 +122,8 @@ String getMessage(FinancialResult report) {
     //الرصيد متكافئ
     case SummaryPayToEnum.equal:
       return 'ان مستحقات الشركة من السائق مساوية تماما لمستحقات السائق لدى الشركة';
+
+    case SummaryPayToEnum.agency:
+      return 'يستوجب على الشركة تسديد مبلغ للوكيل';
   }
 }

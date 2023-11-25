@@ -27,7 +27,21 @@ class AllCompaniesInitial extends Equatable {
     for (var e in result) {
       list.add(SpinnerItem(id: e.id, name: e.name, item: e));
     }
-    return list;
+    return list.isEmpty ? [SpinnerItem(name: 'لا يوجد')] : list;
+  }
+
+  List<SpinnerItem> getSpinnerItems({int? selectedId}) {
+    if (result.isEmpty) {
+      return [SpinnerItem(name: 'لا توجد شركات', id: 0)];
+    }
+    return result
+        .map((e) => SpinnerItem(
+      id: e.id,
+      name: e.name,
+      item: e,
+      isSelected: e.id == selectedId,
+    ))
+        .toList();
   }
 
   @override

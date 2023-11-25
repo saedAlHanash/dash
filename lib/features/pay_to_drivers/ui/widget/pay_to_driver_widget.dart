@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qareeb_dash/core/api_manager/api_service.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/features/drivers/ui/widget/driver_financial_widget.dart';
+import 'package:qareeb_models/agencies/data/response/agencies_financial_response.dart';
 import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_models/global.dart';
 import 'package:qareeb_models/wallet/data/response/driver_financial_response.dart';
@@ -17,9 +18,10 @@ import '../../../accounts/bloc/pay_to_cubit/pay_to_cubit.dart';
 import '../../../wallet/data/summary_model.dart';
 
 class PayToDriverWidget extends StatefulWidget {
-  const PayToDriverWidget({super.key, required this.result});
+  const PayToDriverWidget({super.key, required this.result, this.agency});
 
   final FinancialResult result;
+  final AgencyReport? agency;
 
   @override
   State<PayToDriverWidget> createState() => _PayToDriverWidgetState();
@@ -31,9 +33,13 @@ class _PayToDriverWidgetState extends State<PayToDriverWidget> {
   @override
   void initState() {
     loggerObject.w(widget.result.toJson());
-    request.type = widget.result.summaryType;
+    request.type =
+        widget.agency == null ? widget.result.summaryType : widget.agency?.summaryType;
+
     request.driverId = widget.result.driverId;
-    switch (widget.result.summaryType) {
+    request.agencyId = widget.agency?.agencyId;
+
+    switch (request.type!) {
       //السائق يجب أن يدفع للشركة
       case SummaryPayToEnum.requiredFromDriver:
         request.cutAmount = widget.result.requiredAmountFromCompany;
@@ -46,6 +52,10 @@ class _PayToDriverWidgetState extends State<PayToDriverWidget> {
 
       //الرصيد متكافئ
       case SummaryPayToEnum.equal:
+        request.cutAmount = widget.result.requiredAmountFromCompany;
+        break;
+
+      case SummaryPayToEnum.agency:
         request.cutAmount = widget.result.requiredAmountFromCompany;
         break;
     }
@@ -64,8 +74,11 @@ class _PayToDriverWidgetState extends State<PayToDriverWidget> {
           mainAxisSize: MainAxisSize.min,
           children: [
             10.0.verticalSpace,
-            SummaryFinancialWidget(
-                result: DriverFinancialResult.fromFinancialResult(widget.result)),
+            if (widget.agency == null)
+              SummaryFinancialWidget(
+                  result: DriverFinancialResult.fromFinancialResult(widget.result))
+            else
+              SummaryAgencyWidget(result: widget.agency!),
             10.0.verticalSpace,
             MyTextFormNoLabelWidget(
               label: 'ملاحظات',
@@ -73,10 +86,10 @@ class _PayToDriverWidgetState extends State<PayToDriverWidget> {
               onChanged: (p0) => request.note = p0,
             ),
             10.0.verticalSpace,
-            if (!widget.result.summaryType.eq) ...[
+            if (!request.type!.eq || widget.agency != null) ...[
               MyTextFormNoLabelWidget(
-                label:
-                    ' قيمة الدفعة ${widget.result.summaryType.c2d ? 'المقدمة من الشركة' : 'المستلمة من السائق'}',
+                label: ' قيمة الدفعة '
+                    '${request.type!.c2d ? 'المقدمة من الشركة' : 'المستلمة من السائق'}',
                 onChanged: (p0) {
                   request.payAmount = num.tryParse(p0) ?? 0;
                   loggerObject.w(request.payAmount);
@@ -90,7 +103,7 @@ class _PayToDriverWidgetState extends State<PayToDriverWidget> {
                     return MyStyle.loadingWidget();
                   }
                   return MyButton(
-                    text: widget.result.summaryType.c2d ? 'تسديد' : 'استلام',
+                    text: request.type!.c2d ? 'تسديد' : 'استلام',
                     onTap: () {
                       context.read<PayToCubit>().payTo(
                             context,

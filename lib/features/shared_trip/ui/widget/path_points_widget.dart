@@ -17,17 +17,53 @@ import '../../../points/bloc/delete_edge_cubit/delete_edge_cubit.dart';
 import '../../../points/bloc/get_edged_point_cubit/get_all_points_cubit.dart';
 import '../../bloc/add_point_cubit/add_point_cubit.dart';
 
-class PathPointsWidget extends StatelessWidget {
+class PathPointsWidget extends StatefulWidget {
   const PathPointsWidget({super.key});
+
+  @override
+  State<PathPointsWidget> createState() => _PathPointsWidgetState();
+}
+
+class _PathPointsWidgetState extends State<PathPointsWidget> {
+  final scrollController = ScrollController();
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    Future.delayed(
+      const Duration(seconds: 1),
+      () {
+        scrollController.animateTo(
+          1.maxInt as double,
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.easeInOut,
+        );
+      },
+    );
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     final addPointCubit = context.read<AddPointCubit>();
     final pointsCubit = context.read<PointsCubit>();
 
-    return BlocBuilder<AddPointCubit, AddPointInitial>(
+    return BlocConsumer<AddPointCubit, AddPointInitial>(
+      listener: (context, state) {
+        scrollController.animateTo(
+          1.maxInt as double,
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.easeInOut,
+        );
+      },
       builder: (_, state) {
         return PathPointsWidget1(
+          scrollController: scrollController,
           list: state.addedPoints,
           onTap: (e) {
             var latestPoint = addPointCubit.removePoint(id: e.id);
@@ -41,16 +77,19 @@ class PathPointsWidget extends StatelessWidget {
 }
 
 class PathPointsWidget1 extends StatelessWidget {
-  const PathPointsWidget1({super.key, required this.list, this.onTap});
+  const PathPointsWidget1(
+      {super.key, required this.list, this.onTap, required this.scrollController});
 
   final List<TripPoint> list;
   final Function(TripPoint e)? onTap;
+  final ScrollController scrollController;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 50.0.h,
       child: ListView.separated(
+        controller: scrollController,
         itemBuilder: (context, i) {
           final item = list[i];
           return TextButton(
@@ -62,16 +101,17 @@ class PathPointsWidget1 extends StatelessWidget {
             child: DrawableText(
               drawablePadding: 3.0.w,
               text: item.arName,
+              selectable: false,
               color: Colors.black,
               drawableStart: ImageMultiType(
                 url: i.iconPoint,
-                height: 25.0.spMin,
-                width: 25.0.spMin,
+                height: 40.0.spMin,
+                width: 40.0.spMin,
               ),
-              drawableEnd: i == list.length - 1
+              drawableEnd: (i == list.length - 1)
                   ? Icon(
                       Icons.cancel_outlined,
-                      size: 12.0.r,
+                      size: 25.0.r,
                       color: Colors.red,
                     )
                   : null,
@@ -101,34 +141,32 @@ class PathPointsWidgetWrap extends StatelessWidget {
       direction: Axis.horizontal,
       runAlignment: WrapAlignment.start,
       alignment: WrapAlignment.start,
-      children: list
-          .mapIndexed((i, e) {
-
-            return Row(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  DrawableText(
-                    drawablePadding: 3.0.w,
-                    text: e.arName,
-                    color: Colors.black,
-                    drawableStart: ImageMultiType(
-                      url: i.iconPoint,
-                      height: 40.0.spMin,
-                      width: 40.0.spMin,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 5.0).w,
-                    child: Icon(
-                      Icons.navigate_next,
-                      color: i != list.length - 1 ? Colors.black : Colors.transparent,
-                    ),
-                  ),
-                ],
-              );
-          })
-          .toList(),
+      children: list.mapIndexed((i, e) {
+        return Row(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            DrawableText(
+              selectable: false,
+              drawablePadding: 3.0.w,
+              text: e.arName,
+              color: Colors.black,
+              drawableStart: ImageMultiType(
+                url: i.iconPoint,
+                height: 40.0.spMin,
+                width: 40.0.spMin,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 5.0).w,
+              child: Icon(
+                Icons.navigate_next,
+                color: i != list.length - 1 ? Colors.black : Colors.transparent,
+              ),
+            ),
+          ],
+        );
+      }).toList(),
     );
   }
 }
@@ -143,6 +181,7 @@ class PathPointsWidgetWrap1 extends StatelessWidget {
   Widget build(BuildContext context) {
     if (list.isEmpty) {
       return const DrawableText(
+        selectable: false,
         text: 'لا يوجد',
         matchParent: true,
         textAlign: TextAlign.center,
@@ -156,6 +195,7 @@ class PathPointsWidgetWrap1 extends StatelessWidget {
         return TextButton(
           onPressed: () => onTap?.call(e),
           child: DrawableText(
+            selectable: false,
             drawablePadding: 3.0.w,
             text: e.arName,
             color: Colors.black,
@@ -195,6 +235,7 @@ class EdgesPointWidget extends StatelessWidget {
       child: Row(
         children: [
           DrawableText(
+            selectable: false,
             text: 'id: ${item.id}',
             color: Colors.black,
             fontFamily: FontManager.cairoBold,
@@ -202,6 +243,7 @@ class EdgesPointWidget extends StatelessWidget {
           20.0.horizontalSpace,
           Expanded(
             child: DrawableText(
+              selectable: false,
               text: item.endPoint.arName,
               color: Colors.black,
               fontFamily: FontManager.cairoBold,
@@ -209,6 +251,7 @@ class EdgesPointWidget extends StatelessWidget {
           ),
           Expanded(
             child: DrawableText(
+              selectable: false,
               text: 'البعد : ${item.distance.toInt()} متر',
               color: Colors.black,
               fontFamily: FontManager.cairoBold,

@@ -9,11 +9,13 @@ import '../../features/accounts/bloc/all_transfers_cubit/all_transfers_cubit.dar
 import '../../features/accounts/bloc/financial_report_cubit/financial_report_cubit.dart';
 import '../../features/admins/bloc/all_admins/all_admins_cubit.dart';
 import '../../features/agencies/bloc/agencies_cubit/agencies_cubit.dart';
+import '../../features/agencies/bloc/agencies_financial_report_cubit/agencies_financial_report_cubit.dart';
 import '../../features/auth/bloc/create_policy_cubit/policy_cubit.dart';
 import '../../features/auth/bloc/policy_cubit/create_policy_cubit.dart';
 import '../../features/car_catigory/bloc/all_car_categories_cubit/all_car_categories_cubit.dart';
 import '../../features/clients/bloc/all_clients/all_clients_cubit.dart';
 import '../../features/companies/bloc/companies_cubit/companies_cubit.dart';
+import '../../features/company_paths/bloc/all_compane_paths_cubit/all_company_paths_cubit.dart';
 import '../../features/coupons/bloc/all_coupons_vubit/all_coupons_cubit.dart';
 import '../../features/drivers/bloc/all_drivers/all_drivers_cubit.dart';
 import '../../features/drivers/bloc/drivers_imiei_cubit/drivers_imei_cubit.dart';
@@ -83,6 +85,9 @@ class MyApp extends StatelessWidget {
                 BlocProvider(create: (_) => sl<AllClientsCubit>()..getAllClients(_)),
                 BlocProvider(create: (_) => sl<AllCouponsCubit>()..getAllCoupons(_)),
                 BlocProvider(create: (_) => sl<FinancialReportCubit>()..getReport(_)),
+                BlocProvider(
+                  create: (_) => sl<AgenciesReportCubit>()..getReport(_),
+                ),
                 BlocProvider(create: (_) => sl<AllTempTripsCubit>()..getTempTrips(_)),
                 BlocProvider(create: (_) => sl<AllCompaniesCubit>()..getCompanies(_)),
                 BlocProvider(create: (_) => sl<ActiveTripsCubit>()..getActiveTrips(_)),
@@ -92,6 +97,9 @@ class MyApp extends StatelessWidget {
                 BlocProvider(create: (_) => sl<GetSharedTripsCubit>()..getSharesTrip(_)),
                 BlocProvider(create: (_) => sl<SystemParamsCubit>()..getSystemParams(_)),
                 BlocProvider(create: (_) => sl<ProvidersCubit>()..getAllEpayProviders(_)),
+                BlocProvider(
+                  create: (_) => sl<AllCompanyPathsCubit>()..getCompanyPaths(_),
+                ),
                 BlocProvider(
                   create: (_) => sl<SystemSettingsCubit>()..getSystemSettings(_),
                 ),

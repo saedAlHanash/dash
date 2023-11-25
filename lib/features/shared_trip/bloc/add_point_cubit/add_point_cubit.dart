@@ -25,6 +25,9 @@ class AddPointCubit extends Cubit<AddPointInitial> {
     state.edges.removeLast();
   }
 
+  void update(){
+    emit(state.copyWith());
+  }
   void fromTempModel({required TripPath model}) {
     model.edges.forEachIndexed((i, e) {
       if (i == 0) {

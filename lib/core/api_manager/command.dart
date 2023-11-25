@@ -4,13 +4,12 @@ import 'package:qareeb_models/global.dart';
 
 import '../../features/accounts/data/request/transfer_filter_request.dart';
 import '../../features/clients/data/request/clients_filter_request.dart';
+import '../../features/companies/data/request/companies_filter_request.dart';
 import '../../features/drivers/data/request/drivers_filter_request.dart';
 import '../../features/pay_to_drivers/data/request/financial_filter_request.dart';
 import '../../features/trip/data/request/filter_trip_request.dart';
 
 class Command {
-
-
   Command({
     this.skipCount,
     this.totalCount,
@@ -19,6 +18,7 @@ class Command {
     this.financialFilterRequest,
     this.filterTripRequest,
     this.transferFilterRequest,
+    this.companiesFilterRequest,
   });
 
   int? skipCount;
@@ -28,8 +28,8 @@ class Command {
   DriversFilterRequest? driversFilterRequest;
   FinancialFilterRequest? financialFilterRequest;
   FilterTripRequest? filterTripRequest;
-
   TransferFilterRequest? transferFilterRequest;
+  CompaniesFilterRequest? companiesFilterRequest;
 
   int get maxPages => ((totalCount ?? 0) / maxResultCount).myRound;
 
@@ -91,6 +91,10 @@ class Command {
       json.addAll(financialFilterRequest!.toJson());
     }
 
+    if (companiesFilterRequest != null) {
+      json.addAll(companiesFilterRequest!.toJson());
+    }
+
     return json;
   }
 
@@ -108,6 +112,7 @@ class Command {
     DriversFilterRequest? driversFilterRequest,
     FinancialFilterRequest? financialFilterRequest,
     TransferFilterRequest? transferFilterRequest,
+    CompaniesFilterRequest? companiesFilterRequest,
   }) {
     return Command(
       skipCount: skipCount ?? this.skipCount,
@@ -117,6 +122,7 @@ class Command {
       driversFilterRequest: driversFilterRequest ?? this.driversFilterRequest,
       financialFilterRequest: financialFilterRequest ?? this.financialFilterRequest,
       transferFilterRequest: transferFilterRequest ?? this.transferFilterRequest,
+      companiesFilterRequest: companiesFilterRequest ?? this.companiesFilterRequest,
     );
   }
 }

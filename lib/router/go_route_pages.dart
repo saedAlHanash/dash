@@ -9,6 +9,7 @@ import 'package:qareeb_dash/core/api_manager/command.dart';
 import 'package:qareeb_dash/features/accounts/data/request/driver_financial_filter_request.dart';
 import 'package:qareeb_dash/features/admins/bloc/create_admin_cubit/create_admin_cubit.dart';
 import 'package:qareeb_dash/features/admins/ui/pages/create_admin_page.dart';
+import 'package:qareeb_dash/features/agencies/bloc/agency_report_cubit/agency_report_cubit.dart';
 import 'package:qareeb_dash/features/coupons/data/response/coupons_response.dart';
 import 'package:qareeb_dash/features/drivers/bloc/create_driver_cubit/create_driver_cubit.dart';
 import 'package:qareeb_dash/features/drivers/bloc/driver_by_id_cubit/driver_by_id_cubit.dart';
@@ -18,6 +19,7 @@ import 'package:qareeb_dash/features/home/ui/pages/home_page.dart';
 import 'package:qareeb_dash/features/points/bloc/creta_edge_cubit/create_edge_cubit.dart';
 import 'package:qareeb_dash/features/points/bloc/point_by_id_cubit/point_by_id_cubit.dart';
 import 'package:qareeb_dash/features/trip/ui/pages/trips_page.dart';
+import 'package:qareeb_models/agencies/data/response/agencies_financial_response.dart';
 import 'package:qareeb_models/car_catigory/data/response/car_categories_response.dart';
 import 'package:qareeb_models/companies/data/response/companies_response.dart';
 
@@ -26,6 +28,7 @@ import '../core/util/shared_preferences.dart';
 import '../features/accounts/bloc/driver_financial_cubit/driver_financial_cubit.dart';
 import '../features/accounts/bloc/reverse_charging_cubit/reverse_charging_cubit.dart';
 import '../features/admins/ui/pages/admin_info_page.dart';
+import '../features/agencies/ui/pages/agency_report_page.dart';
 import '../features/areas/bloc/areas_cubit/areas_cubit.dart';
 import '../features/areas/bloc/create_area_cubit/create_area_cubit.dart';
 import '../features/areas/bloc/delete_area_cubit/delete_area_cubit.dart';
@@ -38,6 +41,11 @@ import '../features/clients/bloc/clients_by_id_cubit/clients_by_id_cubit.dart';
 import '../features/clients/ui/pages/client_info_page.dart';
 import '../features/companies/bloc/create_company_cubit/create_company_cubit.dart';
 import '../features/companies/ui/pages/create_company_page.dart';
+import '../features/company_paths/bloc/company_path_by_id_cubit/company_path_by_id_cubit.dart';
+import '../features/company_paths/bloc/create_compane_path_cubit/create_company_path_cubit.dart';
+import '../features/company_paths/bloc/estimate_cubit/estimate_company_cubit.dart';
+import '../features/company_paths/ui/pages/company_path_info_page.dart';
+import '../features/company_paths/ui/pages/create_company_path_page.dart';
 import '../features/coupons/bloc/create_coupon_cubit/create_coupon_cubit.dart';
 import '../features/coupons/ui/pages/create_coupon_page.dart';
 import '../features/drivers/bloc/driver_status_history_cubit/driver_status_history_cubit.dart';
@@ -223,6 +231,29 @@ final appGoRouter = GoRouter(
         return MultiBlocProvider(
           providers: providers,
           child: const DebtsPage(),
+        );
+      },
+    ),
+
+    //endregion
+
+    //region agency
+
+    ///agencyReport
+    GoRoute(
+      name: GoRouteName.agencyReport,
+      path: _GoRoutePath.agencyReport,
+      builder: (BuildContext context, GoRouterState state) {
+        final id = int.tryParse(state.queryParams['id'] ?? '0') ?? 0;
+
+        // final driver = DriverModel.fromJson(jsonDecode(json));
+        final providers = [
+          BlocProvider(
+              create: (_) => di.sl<AgencyReportCubit>()..getAgencyReport(_, id: id)),
+        ];
+        return MultiBlocProvider(
+          providers: providers,
+          child: const AgencyReportPage(),
         );
       },
     ),
@@ -488,6 +519,58 @@ final appGoRouter = GoRouter(
         );
       },
     ),
+
+    ///createCompanyPath
+    GoRoute(
+      name: GoRouteName.createCompanyPath,
+      path: _GoRoutePath.createCompanyPath,
+      builder: (BuildContext context, GoRouterState state) {
+        final id = int.tryParse(state.queryParams['id'] ?? '') ?? 0;
+        final providers = [
+          BlocProvider(create: (_) => di.sl<MapControlCubit>()),
+          BlocProvider(create: (_) => di.sl<AddPointCubit>()),
+          BlocProvider(create: (_) => di.sl<MapControllerCubit>()),
+          BlocProvider(create: (_) => di.sl<PointsEdgeCubit>()),
+          BlocProvider(create: (_) => di.sl<AtherCubit>()),
+          BlocProvider(create: (_) => di.sl<CreateCompanyPathCubit>()),
+          BlocProvider(create: (_) => di.sl<EstimateCompanyCubit>()),
+          if (id != 0)
+            BlocProvider(create: (_) => di.sl<PointsCubit>())
+          else
+            BlocProvider(create: (_) => di.sl<PointsCubit>()..getAllPoints(_)),
+          BlocProvider(
+            create: (_) => di.sl<CompanyPathBuIdCubit>()..getCompanyPathBuId(context, id: id),
+          ),
+        ];
+        return MultiBlocProvider(
+          providers: providers,
+          child: const CreateCompanyPathPage(),
+        );
+      },
+    ),
+
+    ///companyPathInfo
+    GoRoute(
+      name: GoRouteName.companyPathInfo,
+      path: _GoRoutePath.companyPathInfo,
+      builder: (BuildContext context, GoRouterState state) {
+        final id = int.tryParse(state.queryParams['id'] ?? '') ?? 0;
+        final providers = [
+          BlocProvider(create: (_) => di.sl<MapControlCubit>()),
+          BlocProvider(create: (_) => di.sl<MapControllerCubit>()),
+          BlocProvider(create: (_) => di.sl<AtherCubit>()),
+          BlocProvider(create: (_) => di.sl<EstimateCompanyCubit>()),
+          BlocProvider(
+            create: (_) => di.sl<CompanyPathBuIdCubit>()..getCompanyPathBuId(context, id: id),
+          ),
+        ];
+        return MultiBlocProvider(
+          providers: providers,
+          child: const CompanyPathInfoPage(),
+        );
+      },
+    ),
+
     //endregion
 
     //region plans
@@ -561,6 +644,7 @@ final appGoRouter = GoRouter(
         );
       },
     ),
+
     //endregion
 
     ///createCoupon
@@ -663,6 +747,9 @@ class GoRouteName {
 
   static const createCompany = 'createCompany';
   static const createPlan = 'createPlan';
+  static const agencyReport = 'agencyReport';
+  static const createCompanyPath = 'createCompanyPath';
+  static const companyPathInfo = 'companyPathInfo';
 }
 
 class _GoRoutePath {
@@ -690,4 +777,7 @@ class _GoRoutePath {
   static const area = '/area';
   static const redeems = '/redeems';
   static const createPlan = '/createPlan';
+  static const agencyReport = '/agencyReport';
+  static const createCompanyPath = '/createCompanyPath';
+  static const companyPathInfo = '/companyPathInfo';
 }

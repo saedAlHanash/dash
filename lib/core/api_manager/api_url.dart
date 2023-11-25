@@ -112,6 +112,14 @@ class GetUrl {
   static const companies = 'api/services/app/CompaniesService/GetAll';
 
   static const plans = 'api/services/app/PlansService/GetAll';
+
+  static var agenciesFinancialReport ='api/services/app/AccountsService/AgenciesFinancialReports';
+
+  static var agencyFinancialReport='api/services/app/AccountsService/AgencyFinancialReport';
+
+  static var companyPaths='api/services/app/CompanyPathService/GetAll';
+
+  static var companyPathById ='api/services/app/CompanyPathService/Get';
 }
 
 class PostUrl {
@@ -169,6 +177,7 @@ class PostUrl {
   static const createPolicy = 'api/services/app/Settings/Updatesettings';
 
   static const createFromDriver = 'api/services/app/PaymentService/CreatePayOffPayment';
+  static const createToAgency = 'api/services/app/PaymentService/CreateAgencyPayOffPayment';
   static const createFromCompany = 'api/services/app/PaymentService/CreateDebtPayment';
   static const createCoupon = 'api/services/app/Coupons/Create';
 
@@ -186,6 +195,10 @@ class PostUrl {
 
   static const createCompany = 'api/services/app/CompaniesService/Create';
   static const createPlan = 'api/services/app/PlansService/Create';
+
+  static var createCompanyPath ='api/services/app/CompanyPathService/Create';
+
+  static var estimateCompanyPath ='api/services/app/PathService/GetPlansPathEstimation';
 }
 
 class PutUrl {
@@ -221,6 +234,8 @@ class PutUrl {
 
   static const updateCompany = 'api/services/app/CompaniesService/Update';
   static const updatePlan = 'api/services/app/PlansService/Update';
+
+  static var updateCompanyPath='api/services/app/CompanyPathService/Update';
 }
 
 class DeleteUrl {
@@ -247,6 +262,8 @@ class DeleteUrl {
 
   static const deleteCompany = 'api/services/app/CompaniesService/Delete';
   static const deletePlan = 'api/services/app/PlansService/Delete';
+
+  static var deleteCompanyPath='api/services/app/CompanyPathService/Delete';
 }
 
 class OrsUrl {

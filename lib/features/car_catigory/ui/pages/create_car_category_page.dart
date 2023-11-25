@@ -315,6 +315,16 @@ class _CreateCarCategoryPageState extends State<CreateCarCategoryPage> {
                             },
                           ),
                         ),
+                        15.0.horizontalSpace,
+                        Expanded(
+                          child: MyTextFormNoLabelWidget(
+                            label: 'أقل مسافة مسار لرحلة الاشتراكات (متر)',
+                            initialValue: request.planMinimumDistanceInMeters?.toString(),
+                            onChanged: (p0) {
+                              request.planMinimumDistanceInMeters = double.tryParse(p0);
+                            },
+                          ),
+                        ),
                       ],
                     ),
                     MyTextFormNoLabelWidget(
