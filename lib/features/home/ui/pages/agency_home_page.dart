@@ -20,13 +20,17 @@ import '../../../../core/widgets/logo_text.dart';
 import '../../../accounts/bloc/all_transfers_cubit/all_transfers_cubit.dart';
 import '../../../accounts/bloc/pay_to_cubit/pay_to_cubit.dart';
 import '../../../accounts/data/request/transfer_filter_request.dart';
+import '../../../agencies/bloc/agency_report_cubit/agency_report_cubit.dart';
+import '../../../agencies/ui/pages/agency_report_page.dart';
 import '../../../auth/bloc/change_user_state_cubit/change_user_state_cubit.dart';
 import '../../../drivers/bloc/loyalty_cubit/loyalty_cubit.dart';
 import '../../../drivers/ui/pages/drivers_page.dart';
 import '../../../pay_to_drivers/ui/pages/financial_page.dart';
+import '../../../redeems/bloc/redeems_cubit/redeems_cubit.dart';
 import '../../../ticket/bloc/replay_ticket_cubit/replay_ticket_cubit.dart';
 import '../../../ticket/ui/pages/tickets_page.dart';
 import '../../bloc/nav_home_cubit/nav_home_cubit.dart';
+import '../screens/dashboard_page.dart';
 
 class AgencyHomePage extends StatefulWidget {
   const AgencyHomePage({Key? key}) : super(key: key);
@@ -88,18 +92,24 @@ class _AgencyHomePageState extends State<AgencyHomePage> {
             ),
             items: const [
               AdminMenuItem(
+                title: 'الرئيسية',
+                route: '/',
+                icon: Icons.dashboard,
+              ),
+              //المستخدمين
+              AdminMenuItem(
+                title: 'السائقين',
+                route: '/drivers',
+                icon: Icons.supervised_user_circle_sharp,
+              ),
+
+              AdminMenuItem(
                 title: 'الرحلات',
                 icon: Icons.turn_right_sharp,
                 children: [
                   AdminMenuItem(title: 'الرحلات التشاركية', route: '/shared_trips'),
                   AdminMenuItem(title: 'الرحلات العادية', route: '/trips'),
                 ],
-              ),
-              //المستخدمين
-              AdminMenuItem(
-                title: 'السائقين',
-                route: '/',
-                icon: Icons.supervised_user_circle_sharp,
               ),
 
               AdminMenuItem(
@@ -108,8 +118,13 @@ class _AgencyHomePageState extends State<AgencyHomePage> {
                 icon: Icons.payments_outlined,
               ),
 
-                AdminMenuItem(
-                    icon: Icons.message, title: 'الشكاوى', route: "/ticket"),
+              AdminMenuItem(
+                title: 'سجل دفعاتي',
+                route: "/payToAgency",
+                icon: Icons.history,
+              ),
+
+              AdminMenuItem(icon: Icons.message, title: 'الشكاوى', route: "/ticket"),
             ],
             selectedRoute: state.page,
             onSelected: (item) {
@@ -161,6 +176,15 @@ class _AgencyHomePageState extends State<AgencyHomePage> {
                 case "/":
                   return MultiBlocProvider(
                     providers: [
+                      BlocProvider(
+                          create: (context) => sl<RedeemsCubit>()..getRedeems(context)),
+                      BlocProvider(create: (context) => sl<LoyaltyCubit>()),
+                    ],
+                    child: const DashboardPage(),
+                  );
+                case "/drivers":
+                  return MultiBlocProvider(
+                    providers: [
                       BlocProvider(create: (context) => sl<LoyaltyCubit>()),
                       BlocProvider(create: (context) => sl<ChangeUserStateCubit>()),
                     ],
@@ -195,6 +219,20 @@ class _AgencyHomePageState extends State<AgencyHomePage> {
                       BlocProvider(create: (_) => sl<PayToCubit>()),
                     ],
                     child: const FinancialPage(),
+                  );
+
+                case "/payToAgency":
+                  return MultiBlocProvider(
+                    providers: [
+                      BlocProvider(
+                        create: (_) => sl<AgencyReportCubit>()
+                          ..getAgencyReport(
+                            _,
+                            id: AppSharedPreference.getAgencyId,
+                          ),
+                      ),
+                    ],
+                    child: const AgencyReportPage(),
                   );
               }
 

@@ -16,7 +16,7 @@ import '../../bloc/delete_compane_path_cubit/delete_company_path_cubit.dart';
 final _titleList = [
   'ID',
   'اسم المسار',
-  'عدد النقاط',
+  'الشركة',
   'طول المسار',
   // 'الوقت المقدر للمسار',
   'عمليات',
@@ -34,118 +34,121 @@ class CompanyPathsPage extends StatelessWidget {
         },
         child: const Icon(Icons.add, color: Colors.white),
       ),
-      body: Column(
-        children: [
-          BlocBuilder<AllCompanyPathsCubit, AllCompanyPathsInitial>(
-            builder: (context, state) {
-              return CompanyPathesFilterWidget(
-                onApply: (request) {
-                  context.read<AllCompanyPathsCubit>().getCompanyPaths(
-                        context,
-                        command:
-                            context.read<AllCompanyPathsCubit>().state.command.copyWith(
-                                  companiesFilterRequest: request,
-                                  skipCount: 0,
-                                  totalCount: 0,
-                                ),
-                      );
-                },
-                command: state.command,
-              );
-            },
-          ),
-          10.0.verticalSpace,
-          BlocBuilder<AllCompanyPathsCubit, AllCompanyPathsInitial>(
-            builder: (context, state) {
-              if (state.statuses.loading) {
-                return MyStyle.loadingWidget();
-              }
-              final list = state.result;
-              if (list.isEmpty)
-                return const NotFoundWidget(text: 'يرجى إضافة نماذج للرحلات');
-              return SingleChildScrollView(
-                child: SaedTableWidget(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            BlocBuilder<AllCompanyPathsCubit, AllCompanyPathsInitial>(
+              builder: (context, state) {
+                return CompanyPathesFilterWidget(
+                  onApply: (request) {
+                    context.read<AllCompanyPathsCubit>().getCompanyPaths(
+                          context,
+                          command:
+                              context.read<AllCompanyPathsCubit>().state.command.copyWith(
+                                    companiesFilterRequest: request,
+                                    skipCount: 0,
+                                    totalCount: 0,
+                                  ),
+                        );
+                  },
                   command: state.command,
-                  title: _titleList,
-                  data: list
-                      .mapIndexed(
-                        (i, e) => [
-                          e.id.toString(),
-                          e.description,
-                          (e.path.edges.length + 1).toString(),
-                          '${(e.distance / 1000).round()} km',
-                          // '${(e.duration / 60).round()} min',
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  context.pushNamed(
-                                    GoRouteName.companyPathInfo,
-                                    queryParams: {'id': e.id.toString()},
-                                  );
-                                },
-                                child: const Icon(
-                                  Icons.info_outline_rounded,
-                                  color: Colors.grey,
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  context.pushNamed(
-                                    GoRouteName.createCompanyPath,
-                                    queryParams: {'id': e.id.toString()},
-                                  );
-                                },
-                                child: const Icon(
-                                  Icons.edit,
-                                  color: Colors.amber,
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: BlocConsumer<DeleteCompanyPathCubit,
-                                    DeleteCompanyPathInitial>(
-                                  listener: (context, state) {
-                                    context
-                                        .read<AllCompanyPathsCubit>()
-                                        .getCompanyPaths(context);
-                                  },
-                                  listenWhen: (p, c) => c.statuses.done,
-                                  buildWhen: (p, c) => c.id == e.id,
-                                  builder: (context, state) {
-                                    if (state.statuses.loading) {
-                                      return MyStyle.loadingWidget();
-                                    }
-                                    return InkWell(
-                                      onTap: () {
-                                        context
-                                            .read<DeleteCompanyPathCubit>()
-                                            .deleteCompanyPath(context, id: e.id);
-                                      },
-                                      child: const Icon(
-                                        Icons.delete_forever,
-                                        color: Colors.red,
-                                      ),
+                );
+              },
+            ),
+            10.0.verticalSpace,
+            BlocBuilder<AllCompanyPathsCubit, AllCompanyPathsInitial>(
+              builder: (context, state) {
+                if (state.statuses.loading) {
+                  return MyStyle.loadingWidget();
+                }
+                final list = state.result;
+                if (list.isEmpty) {
+                  return const NotFoundWidget(text: 'يرجى إضافة نماذج للرحلات');
+                }
+                return SingleChildScrollView(
+                  child: SaedTableWidget(
+                    command: state.command,
+                    title: _titleList,
+                    data: list
+                        .mapIndexed(
+                          (i, e) => [
+                            e.id.toString(),
+                            e.companyName,
+                            e.description,
+                            '${(e.distance / 1000).round()} km',
+                            // '${(e.duration / 60).round()} min',
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    context.pushNamed(
+                                      GoRouteName.companyPathInfo,
+                                      queryParams: {'id': e.id.toString()},
                                     );
                                   },
+                                  child: const Icon(
+                                    Icons.info_outline_rounded,
+                                    color: Colors.grey,
+                                  ),
                                 ),
-                              ),
-                            ],
-                          )
-                        ],
-                      )
-                      .toList(),
-                  onChangePage: (command) {
-                    context
-                        .read<AllCompanyPathsCubit>()
-                        .getCompanyPaths(context, command: command);
-                  },
-                ),
-              );
-            },
-          ),
-        ],
+                                InkWell(
+                                  onTap: () {
+                                    context.pushNamed(
+                                      GoRouteName.createCompanyPath,
+                                      queryParams: {'id': e.id.toString()},
+                                    );
+                                  },
+                                  child: const Icon(
+                                    Icons.edit,
+                                    color: Colors.amber,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: BlocConsumer<DeleteCompanyPathCubit,
+                                      DeleteCompanyPathInitial>(
+                                    listener: (context, state) {
+                                      context
+                                          .read<AllCompanyPathsCubit>()
+                                          .getCompanyPaths(context);
+                                    },
+                                    listenWhen: (p, c) => c.statuses.done,
+                                    buildWhen: (p, c) => c.id == e.id,
+                                    builder: (context, state) {
+                                      if (state.statuses.loading) {
+                                        return MyStyle.loadingWidget();
+                                      }
+                                      return InkWell(
+                                        onTap: () {
+                                          context
+                                              .read<DeleteCompanyPathCubit>()
+                                              .deleteCompanyPath(context, id: e.id);
+                                        },
+                                        child: const Icon(
+                                          Icons.delete_forever,
+                                          color: Colors.red,
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ],
+                            )
+                          ],
+                        )
+                        .toList(),
+                    onChangePage: (command) {
+                      context
+                          .read<AllCompanyPathsCubit>()
+                          .getCompanyPaths(context, command: command);
+                    },
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -26,6 +26,7 @@ import '../../../../core/injection/injection_container.dart';
 import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/util/my_style.dart';
 import '../../../../generated/assets.dart';
+import '../../bloc/update_bloc/update_cubit.dart';
 import '../widget/statistics_widget.dart';
 
 class DashboardPage extends StatefulWidget {
@@ -43,134 +44,149 @@ class _DashboardPageState extends State<DashboardPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            16.0.verticalSpace,
-            if (isQareebAdmin) const LoyaltyWidget(),
-            DashboardScreen(statistics: statistics),
-            FutureBuilder(
-              future: getBestDriver(),
-              builder: (context, snapShot) {
-                if (!snapShot.hasData) return MyStyle.loadingWidget();
+    return BlocProvider(
+      create: (context) => UpdateCubit(),
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              16.0.verticalSpace,
+              if (isQareebAdmin && !isAgency) const LoyaltyWidget(),
+              DashboardScreen(statistics: statistics),
+              if (!isAgency)
+                FutureBuilder(
+                  future: getBestDriver(),
+                  builder: (context, snapShot) {
+                    if (!snapShot.hasData) return MyStyle.loadingWidget();
 
-                final bestDriver = snapShot.data!;
-                if (bestDriver.driverId == 0) return 0.0.verticalSpace;
-                return Column(
-                  children: [
-                    30.0.verticalSpace,
-                    DrawableText(
-                      text: 'أفضل سائق',
-                      matchParent: true,
-                      size: 28.0.sp,
-                      textAlign: TextAlign.center,
-                      padding: const EdgeInsets.symmetric(vertical: 15.0).h,
-                    ),
-                    MyCardWidget(
-                      margin:
-                          const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0).r,
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: DrawableText(
-                              text: 'اسم السائق: ${bestDriver.driverName}',
-                              color: Colors.black,
-                              fontFamily: FontManager.cairoBold,
-                            ),
+                    final bestDriver = snapShot.data!;
+                    if (bestDriver.driverId == 0) return 0.0.verticalSpace;
+                    return Column(
+                      children: [
+                        30.0.verticalSpace,
+                        DrawableText(
+                          text: 'أفضل سائق',
+                          matchParent: true,
+                          size: 28.0.sp,
+                          textAlign: TextAlign.center,
+                          padding: const EdgeInsets.symmetric(vertical: 15.0).h,
+                        ),
+                        MyCardWidget(
+                          margin:
+                              const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0)
+                                  .r,
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: DrawableText(
+                                  text: 'اسم السائق: ${bestDriver.driverName}',
+                                  color: Colors.black,
+                                  fontFamily: FontManager.cairoBold,
+                                ),
+                              ),
+                              Expanded(
+                                child: DrawableText(
+                                  text: 'عدد الرحلات: ${bestDriver.tripsCount}',
+                                  color: Colors.black,
+                                  fontFamily: FontManager.cairoBold,
+                                ),
+                              ),
+                              Expanded(
+                                child: DrawableText(
+                                  text:
+                                      'عدد الرحلات التشاركية: ${bestDriver.sharedTripsCount}',
+                                  color: Colors.black,
+                                  fontFamily: FontManager.cairoBold,
+                                ),
+                              ),
+                              Expanded(
+                                child: DrawableText(
+                                  text:
+                                      'الكيلومترات: ${(bestDriver.totalMeters / 1000).round()}',
+                                  color: Colors.black,
+                                  fontFamily: FontManager.cairoBold,
+                                ),
+                              ),
+                              IconButton(
+                                  onPressed: () {
+                                    context.pushNamed(GoRouteName.driverInfo,
+                                        queryParams: {
+                                          'id': bestDriver.driverId.toString()
+                                        });
+                                  },
+                                  icon: const Icon(Icons.info_outline_rounded))
+                            ],
                           ),
-                          Expanded(
-                            child: DrawableText(
-                              text: 'عدد الرحلات: ${bestDriver.tripsCount}',
-                              color: Colors.black,
-                              fontFamily: FontManager.cairoBold,
-                            ),
-                          ),
-                          Expanded(
-                            child: DrawableText(
-                              text:
-                                  'عدد الرحلات التشاركية: ${bestDriver.sharedTripsCount}',
-                              color: Colors.black,
-                              fontFamily: FontManager.cairoBold,
-                            ),
-                          ),
-                          Expanded(
-                            child: DrawableText(
-                              text:
-                                  'الكيلومترات: ${(bestDriver.totalMeters / 1000).round()}',
-                              color: Colors.black,
-                              fontFamily: FontManager.cairoBold,
-                            ),
-                          ),
-                          IconButton(
-                              onPressed: () {
-                                context.pushNamed(GoRouteName.driverInfo,
-                                    queryParams: {'id': bestDriver.driverId.toString()});
-                              },
-                              icon: const Icon(Icons.info_outline_rounded))
-                        ],
-                      ),
-                    ),
-                    30.0.verticalSpace,
+                        ),
+                        30.0.verticalSpace,
+                      ],
+                    );
+                  },
+                ),
+              DrawableText(
+                text: 'التتبع المباشر',
+                size: 24.0.sp,
+                fontFamily: FontManager.cairoBold,
+              ),
+              10.0.verticalSpace,
+              SizedBox(
+                height: 500.0.h,
+                child: MultiBlocProvider(
+                  providers: [
+                    BlocProvider(create: (_) => sl<MapControllerCubit>()),
+                    BlocProvider(create: (_) => sl<AtherCubit>()),
                   ],
-                );
-              },
-            ),
-            DrawableText(
-              text: 'التتبع المباشر',
-              size: 24.0.sp,
-              fontFamily: FontManager.cairoBold,
-            ),
-            10.0.verticalSpace,
-            SizedBox(
-              height: 500.0.h,
-              child: MultiBlocProvider(
-                providers: [
-                  BlocProvider(create: (_) => sl<MapControllerCubit>()),
-                  BlocProvider(create: (_) => sl<AtherCubit>()),
-                ],
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 128.0).r,
-                  child: const BusesMap(),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 128.0).r,
+                    child: const BusesMap(),
+                  ),
                 ),
               ),
-            ),
-            10.0.verticalSpace,
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                DrawableText(
-                  text: ' متاح ومحرك يعمل',
-                  drawableStart: Icon(
-                    Icons.circle,
-                    color: AppColorManager.mainColor,
-                  ),
-                ),
-                DrawableText(
-                  text: 'متاح محرك لا يعمل',
-                  drawableStart: Icon(
-                    Icons.circle,
-                    color: AppColorManager.ampere,
-                  ),
-                ),
-                DrawableText(
-                  text: ' غير متاح والمحرك يعمل',
-                  drawableStart: Icon(
-                    Icons.circle,
-                    color: Colors.blue,
-                  ),
-                ),
-                DrawableText(
-                  text: ' غير متاح والمحرك لا يعمل',
-                  drawableStart: Icon(
-                    Icons.circle,
-                    color: AppColorManager.red,
-                  ),
-                ),
-              ],
-            ),
-            150.0.verticalSpace,
-          ],
+              10.0.verticalSpace,
+              BlocBuilder<UpdateCubit, UpdateState>(
+                builder: (context, mState) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      DrawableText(
+                        text: ' متاح ومحرك يعمل',
+                        drawableStart: const Icon(
+                          Icons.circle,
+                          color: AppColorManager.mainColor,
+                        ),
+                        drawableEnd: DrawableText(text: _mainColor.toString()),
+                      ),
+                      DrawableText(
+                        text: 'متاح محرك لا يعمل',
+                        drawableStart: const Icon(
+                          Icons.circle,
+                          color: AppColorManager.ampere,
+                        ),
+                        drawableEnd: DrawableText(text: _ampere.toString()),
+                      ),
+                      DrawableText(
+                        text: ' غير متاح والمحرك يعمل',
+                        drawableStart: const Icon(
+                          Icons.circle,
+                          color: Colors.blue,
+                        ),
+                        drawableEnd: DrawableText(text: _blue.toString()),
+                      ),
+                      DrawableText(
+                        text: ' غير متاح والمحرك لا يعمل',
+                        drawableStart: const Icon(
+                          Icons.circle,
+                          color: AppColorManager.red,
+                        ),
+                        drawableEnd: DrawableText(text: _red.toString()),
+                      ),
+                    ],
+                  );
+                },
+              ),
+              150.0.verticalSpace,
+            ],
+          ),
         ),
       ),
     );
@@ -239,6 +255,13 @@ class BestDriver {
       };
 }
 
+int _mainColor = 0;
+int _ampere = 0;
+int _blue = 0;
+int _red = 0;
+
+VoidCallback? callBack;
+
 class BusesMap extends StatefulWidget {
   const BusesMap({super.key});
 
@@ -296,6 +319,7 @@ class _BusesMapState extends State<BusesMap> {
                     ..removeWhere((element) => element.point.latitude == 0),
                   update: true,
                   centerZoom: centerMarkers);
+            context.read<UpdateCubit>().update();
           },
         ),
         BlocListener<DriversImeiCubit, DriversImeiInitial>(
@@ -330,12 +354,16 @@ Color getColor(Ime e, DriverImei? driver) {
   final isEnginOn = e.params.acc == '1';
   final driverUnAvailable = driver?.status == DriverStatus.unAvailable;
   if (!driverUnAvailable && isEnginOn) {
+    _mainColor++;
     return AppColorManager.mainColor; // متاح ومحرك يعمل
   } else if (!driverUnAvailable && !isEnginOn) {
+    _ampere++;
     return AppColorManager.ampere; //متاح محرك لا يعمل
   } else if (driverUnAvailable && isEnginOn) {
+    _blue++;
     return Colors.blue; // غير متاح والمحرك يعمل
   } else {
+    _red++;
     return AppColorManager.red; // غير متاح والمحرك لا يعمل
   }
 }

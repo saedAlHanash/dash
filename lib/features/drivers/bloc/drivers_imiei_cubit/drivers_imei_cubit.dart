@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qareeb_dash/core/api_manager/api_url.dart';
+import 'package:qareeb_dash/core/api_manager/command.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_models/global.dart';
 import 'package:qareeb_models/home/data/response/drivers_imei_response.dart';
@@ -34,6 +35,7 @@ class DriversImeiCubit extends Cubit<DriversImeiInitial> {
   Future<Pair<List<DriverImei>?, String?>> _getDriversImeiApi() async {
     final response = await APIService().getApi(
       url: GetUrl.getDriversImei,
+      query: Command.initial().toJson(),
     );
 
     if (response.statusCode == 200) {

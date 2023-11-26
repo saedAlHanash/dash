@@ -31,8 +31,8 @@ final transfersHeaderTable = [
   'الاسم الكامل',
   'نسبة الوكيل',
   'مستحقات الوكيل',
-   'عمليات',
-   'السجل',
+  'عمليات',
+  'السجل',
 ];
 
 class AgencyFinancialPage extends StatefulWidget {
@@ -52,63 +52,74 @@ class _AgencyFinancialPageState extends State<AgencyFinancialPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          StatefulBuilder(
-            builder: (context, mState) {
-              return FloatingActionButton(
-                onPressed: () {
-                  mState(() => loading = true);
-                  context.read<FinancialReportCubit>().getDriversAsync(context).then(
-                    (value) {
-                      if (value == null) return;
-                      saveXls(
-                        header: value.first,
-                        data: value.second,
-                        fileName: 'التقرير المالي للوكلاء${DateTime.now().formatDate}',
-                      );
-                      mState(() => loading = false);
-                    },
-                  );
-                },
-                child: loading
-                    ? const CircularProgressIndicator.adaptive()
-                    : const Icon(Icons.file_download, color: Colors.white),
-              );
-            },
-          ),
-        ],
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.only(bottom: 200.0).h,
-        child: Column(
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<PayToCubit, PayToInitial>(
+          listenWhen: (p, c) => c.statuses.isDone,
+          listener: (context, state) {
+            context.read<AgenciesReportCubit>().getReport(context);
+          },
+        ),
+      ],
+      child: Scaffold(
+        floatingActionButton: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            BlocBuilder<AgenciesReportCubit, AgenciesReportInitial>(
-              builder: (context, state) {
-                if (state.statuses.isLoading) {
-                  return MyStyle.loadingWidget();
-                }
-                return Column(
-                  children: [
-                    SummaryFinancialWidget(result: state.result),
-                    10.0.verticalSpace,
-                    SaedTableWidget(
-                        command: state.command,
-                        fullHeight: 1.8.sh,
-                        onChangePage: (command) {
-                          context
-                              .read<FinancialReportCubit>()
-                              .getReport(context, command: command);
-                        },
-                        title: transfersHeaderTable,
-                        data: state.result.reports.mapIndexed((i, e) {
-                          return [
-                            e.agencyId.toString(),
-                            e.agencyName,
-                            '${e.agencyRatio} %',
-                            e.requiredAmountFromCompany.formatPrice,
+            StatefulBuilder(
+              builder: (context, mState) {
+                return FloatingActionButton(
+                  onPressed: () {
+                    mState(() => loading = true);
+                    context.read<AgenciesReportCubit>().getReportAsync(context).then(
+                          (value) {
+                        if (value == null) return;
+                        saveXls(
+                          header: value.first,
+                          data: value.second,
+                          fileName: 'التقرير المالي للوكلاء${DateTime
+                              .now()
+                              .formatDate}',
+                        );
+                        mState(() => loading = false);
+                      },
+                    );
+                  },
+                  child: loading
+                      ? const CircularProgressIndicator.adaptive()
+                      : const Icon(Icons.file_download, color: Colors.white),
+                );
+              },
+            ),
+          ],
+        ),
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.only(bottom: 200.0).h,
+          child: Column(
+            children: [
+              BlocBuilder<AgenciesReportCubit, AgenciesReportInitial>(
+                builder: (context, state) {
+                  if (state.statuses.isLoading) {
+                    return MyStyle.loadingWidget();
+                  }
+                  return Column(
+                    children: [
+                      SummaryFinancialWidget(result: state.result),
+                      10.0.verticalSpace,
+                      SaedTableWidget(
+                          command: state.command,
+                          fullHeight: 1.8.sh,
+                          onChangePage: (command) {
+                            context
+                                .read<FinancialReportCubit>()
+                                .getReport(context, command: command);
+                          },
+                          title: transfersHeaderTable,
+                          data: state.result.reports.mapIndexed((i, e) {
+                            return [
+                              e.agencyId.toString(),
+                              e.agencyName,
+                              '${e.agencyRatio} %',
+                              e.requiredAmountFromCompany.formatPrice,
                               TextButton(
                                 onPressed: () {
                                   NoteMessage.showMyDialog(
@@ -123,7 +134,9 @@ class _AgencyFinancialPageState extends State<AgencyFinancialPage> {
                                         agency: e,
                                       ),
                                     ),
-                                    onCancel: (val) {},
+                                    onCancel: (val) {
+
+                                    },
                                   );
                                 },
                                 style: ButtonStyle(
@@ -137,20 +150,21 @@ class _AgencyFinancialPageState extends State<AgencyFinancialPage> {
                                 ),
                               ),
 
-                            IconButton(
-                              onPressed: () {
-                                context.pushNamed(GoRouteName.agencyReport,
-                                    queryParams: {'id': e.agencyId.toString()});
-                              },
-                              icon: const Icon(Icons.info_outline),
-                            ),
-                          ];
-                        }).toList()),
-                  ],
-                );
-              },
-            ),
-          ],
+                              IconButton(
+                                onPressed: () {
+                                  context.pushNamed(GoRouteName.agencyReport,
+                                      queryParams: {'id': e.agencyId.toString()});
+                                },
+                                icon: const Icon(Icons.info_outline),
+                              ),
+                            ];
+                          }).toList()),
+                    ],
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

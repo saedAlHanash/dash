@@ -36,7 +36,7 @@ class PayToCubit extends Cubit<PayToInitial> {
         //Company To Driver
         pair = await _payPayToAgencyApi(
           agencyId: request.agencyId!,
-          amount: request.cutAmount!,
+          amount: request.payAmount!,
           note: request.note,
         );
 

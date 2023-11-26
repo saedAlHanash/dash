@@ -20,6 +20,7 @@ import '../../../../generated/assets.dart';
 import '../../../drivers/ui/widget/item_image_create.dart';
 import '../../bloc/agencies_cubit/agencies_cubit.dart';
 import '../../bloc/create_agency_cubit/create_agency_cubit.dart';
+import '../../bloc/delete_agency_cubit/delete_agency_cubit.dart';
 import '../../data/request/agency_request.dart';
 
 class AgenciesPage extends StatefulWidget {
@@ -32,72 +33,110 @@ class AgenciesPage extends StatefulWidget {
 class _AgenciesPageState extends State<AgenciesPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: isAllowed(AppPermissions.CREATION)
-          ? FloatingActionButton(
-              onPressed: () {
-                NoteMessage.showMyDialog(
-                  context,
-                  child: BlocProvider.value(
-                    value: context.read<CreateAgencyCubit>(),
-                    child: const CreateAgencyDialog(),
-                  ),
-                  onCancel: (val) {
-                    if (val) context.read<AgenciesCubit>().getAgencies(context);
-                  },
-                );
-              },
-              child: const Icon(Icons.add, color: Colors.white),
-            )
-          : null,
-      body: BlocBuilder<AgenciesCubit, AgenciesInitial>(
-        builder: (context, state) {
-          if (state.statuses.isLoading) {
-            return MyStyle.loadingWidget();
-          }
-          final list = state.result;
-          if (list.isEmpty) return const NotFoundWidget(text: 'لا يوجد وكلاء');
-          return SaedTableWidget(
-            title: const [
-              'ID',
-              'صورة',
-              'اسم',
-              'نسبة',
-              'عمليات',
-            ],
-            data: state.result
-                .map(
-                  (e) => [
-                    e.id.toString(),
-                    Center(
-                      child: RoundImageWidget(
-                        url: e.imageUrl,
-                        height: 70.0.r,
-                        width: 70.0.r,
-                      ),
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<DeleteAgencyCubit, DeleteAgencyInitial>(
+          listener: (context, state) {
+            context.read<AgenciesCubit>().getAgencies(context);
+          },
+          listenWhen: (p, c) => c.statuses.done,
+        ),
+      ],
+      child: Scaffold(
+        floatingActionButton: isAllowed(AppPermissions.CREATION)
+            ? FloatingActionButton(
+                onPressed: () {
+                  NoteMessage.showMyDialog(
+                    context,
+                    child: BlocProvider.value(
+                      value: context.read<CreateAgencyCubit>(),
+                      child: const CreateAgencyDialog(),
                     ),
-                    e.name,
-                    '${e.agencyRatio}%',
-                    IconButton(
-                      onPressed: () {
-                        NoteMessage.showMyDialog(
-                          context,
-                          child: BlocProvider.value(
-                            value: context.read<CreateAgencyCubit>(),
-                            child:  CreateAgencyDialog(agency: e),
+                    onCancel: (val) {
+                      if (val) context.read<AgenciesCubit>().getAgencies(context);
+                    },
+                  );
+                },
+                child: const Icon(Icons.add, color: Colors.white),
+              )
+            : null,
+        body: BlocBuilder<AgenciesCubit, AgenciesInitial>(
+          builder: (context, state) {
+            if (state.statuses.isLoading) {
+              return MyStyle.loadingWidget();
+            }
+            final list = state.result;
+            if (list.isEmpty) return const NotFoundWidget(text: 'لا يوجد وكلاء');
+            return SingleChildScrollView(
+              child: SaedTableWidget(
+                title: const [
+                  'ID',
+                  'صورة',
+                  'اسم',
+                  'نسبة',
+                  'عمليات',
+                ],
+                data: state.result
+                    .map(
+                      (e) => [
+                        e.id.toString(),
+                        Center(
+                          child: RoundImageWidget(
+                            url: e.imageUrl,
+                            height: 70.0.r,
+                            width: 70.0.r,
                           ),
-                          onCancel: (val) {
-                            if (val) context.read<AgenciesCubit>().getAgencies(context);
-                          },
-                        );
-                      },
-                      icon: Icon(Icons.edit, color: AppColorManager.ampere),
-                    ),
-                  ],
-                )
-                .toList(),
-          );
-        },
+                        ),
+                        e.name,
+                        '${e.agencyRatio}%',
+                        Center(
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              IconButton(
+                                onPressed: () {
+                                  NoteMessage.showMyDialog(
+                                    context,
+                                    child: BlocProvider.value(
+                                      value: context.read<CreateAgencyCubit>(),
+                                      child: CreateAgencyDialog(agency: e),
+                                    ),
+                                    onCancel: (val) {
+                                      if (val) {
+                                        context.read<AgenciesCubit>().getAgencies(context);
+                                      }
+                                    },
+                                  );
+                                },
+                                icon: const Icon(Icons.edit, color: AppColorManager.ampere),
+                              ),
+                              BlocBuilder<DeleteAgencyCubit, DeleteAgencyInitial>(
+                                buildWhen: (p, c) => c.id == e.id,
+                                builder: (context, state) {
+                                  if (state.statuses.loading) {
+                                    return MyStyle.loadingWidget();
+                                  }
+                                  return IconButton(
+                                    onPressed: () {
+                                      context
+                                          .read<DeleteAgencyCubit>()
+                                          .deleteAgency(context, id: e.id);
+                                    },
+                                    icon: const Icon(Icons.delete_forever,
+                                        color: AppColorManager.red),
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    )
+                    .toList(),
+              ),
+            );
+          },
+        ),
       ),
     );
   }

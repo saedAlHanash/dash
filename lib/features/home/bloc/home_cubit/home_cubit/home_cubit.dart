@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qareeb_dash/core/api_manager/api_url.dart';
+import 'package:qareeb_dash/core/api_manager/command.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/features/home/data/response/home_response.dart';
 import 'package:qareeb_models/global.dart';
@@ -33,6 +34,7 @@ class HomeCubit extends Cubit<HomeInitial> {
   Future<Pair<HomeResult?, String?>> _getHomeApi() async {
     final response = await APIService().getApi(
       url: GetUrl.getHome,
+      query: Command.initial().toJson(),
     );
 
     if (response.statusCode == 200) {

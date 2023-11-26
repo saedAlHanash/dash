@@ -37,12 +37,19 @@ class _CreateCompanyPathPageState extends State<CreateCompanyPathPage> {
   late final AddPointCubit addPointCubit;
   late final EstimateCompanyCubit estimateCompanyCubit;
   late final MapControllerCubit mapControllerCubit;
+  late final AllCompaniesCubit allCompaniesCubit;
 
   @override
   void initState() {
     addPointCubit = context.read<AddPointCubit>();
     estimateCompanyCubit = context.read<EstimateCompanyCubit>();
     mapControllerCubit = context.read<MapControllerCubit>();
+    allCompaniesCubit = context.read<AllCompaniesCubit>();
+
+    if (allCompaniesCubit.state.result.isEmpty) {
+      allCompaniesCubit.getCompanies(context);
+    }
+
     super.initState();
   }
 
@@ -120,7 +127,8 @@ class _CreateCompanyPathPageState extends State<CreateCompanyPathPage> {
                                   return SpinnerOutlineTitle(
                                     width: 1.0.sw,
                                     label: 'اختر الشركة',
-                                    items: state.getSpinnerItem,
+                                    items: state.getSpinnerItems(
+                                        selectedId: request.companyId),
                                     onChanged: (item) => request.companyId = item.id,
                                     expanded: true,
                                     sendFirstItem: true,

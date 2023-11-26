@@ -36,11 +36,11 @@ class AllCompaniesInitial extends Equatable {
     }
     return result
         .map((e) => SpinnerItem(
-      id: e.id,
-      name: e.name,
-      item: e,
-      isSelected: e.id == selectedId,
-    ))
+              id: e.id,
+              name: e.name,
+              item: e,
+              isSelected: e.id == selectedId,
+            ))
         .toList();
   }
 

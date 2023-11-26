@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_multi_type/image_multi_type.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/strings/app_color_manager.dart';
+import 'package:qareeb_dash/core/util/shared_preferences.dart';
 import 'package:qareeb_models/extensions.dart';
 
 import '../../../../core/util/my_style.dart';
@@ -83,11 +84,12 @@ class DashboardScreen extends StatelessWidget {
           child: MyGridWidget(
             columnCount: 5,
             children: [
-              StatisticsCard(
-                icon: Assets.iconsUsers,
-                label: 'عدد الزبائن',
-                value: state.result.statistics.clients,
-              ),
+              if (!isAgency)
+                StatisticsCard(
+                  icon: Assets.iconsUsers,
+                  label: 'عدد الزبائن',
+                  value: state.result.statistics.clients,
+                ),
               StatisticsCard(
                 icon: Assets.iconsDriver,
                 label: 'عدد السائقين',
@@ -108,28 +110,31 @@ class DashboardScreen extends StatelessWidget {
                 label: 'السائقين المتاحين',
                 value: state.result.statistics.activeDrivers,
               ),
-              StatisticsCard(
-                icon: Icons.business,
-                label: 'المؤسسات',
-                value: state.result.statistics.institutions,
-              ),
-              StatisticsCard(
-                icon: Icons.store,
-                label: 'الوكلاء',
-                value: state.result.statistics.agencies,
-              ),
+              if (!isAgency)
+                StatisticsCard(
+                  icon: Icons.business,
+                  label: 'المؤسسات',
+                  value: state.result.statistics.institutions,
+                ),
+              if (!isAgency)
+                StatisticsCard(
+                  icon: Icons.store,
+                  label: 'الوكلاء',
+                  value: state.result.statistics.agencies,
+                ),
               StatisticsCard(
                 icon: Icons.attach_money,
                 color: AppColorManager.mainColorDark,
-                label: 'اجمالي الدخل',
+                label: isAgency ? 'رصيدي الحالي' : 'اجمالي الدخل',
                 value: (state.result.statistics.incoms).formatPrice,
               ),
-              StatisticsCard(
-                icon: Icons.star,
-                color: Colors.amber,
-                label: 'إجمالي المكافئات',
-                value: (state.result.statistics.awards).formatPrice,
-              ),
+              if (!isAgency)
+                StatisticsCard(
+                  icon: Icons.star,
+                  color: Colors.amber,
+                  label: 'إجمالي المكافئات',
+                  value: (state.result.statistics.awards).formatPrice,
+                ),
             ],
           ),
         );
