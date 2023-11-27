@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,11 +8,13 @@ import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/widgets/my_button.dart';
 import 'package:qareeb_dash/core/widgets/my_card_widget.dart';
 import 'package:qareeb_dash/core/widgets/my_text_form_widget.dart';
+import 'package:qareeb_dash/core/widgets/spinner_widget.dart';
 import 'package:qareeb_dash/features/car_catigory/bloc/all_car_categories_cubit/all_car_categories_cubit.dart';
 import 'package:qareeb_dash/features/car_catigory/data/response/car_categories_response.dart';
 import 'package:qareeb_dash/generated/assets.dart';
 import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_models/car_catigory/data/response/car_categories_response.dart';
+import 'package:qareeb_models/global.dart';
 
 import '../../../../core/api_manager/api_service.dart';
 import '../../../../core/strings/app_color_manager.dart';
@@ -46,7 +50,7 @@ class _CreateCarCategoryPageState extends State<CreateCarCategoryPage> {
       listenWhen: (p, c) => c.statuses.done,
       listener: (context, state) {
         context.read<AllCarCategoriesCubit>().getCarCategories(context);
-        Navigator.pop(context, true);
+        window.history.back();
       },
       child: Scaffold(
         appBar: const AppBarWidget(
@@ -98,6 +102,17 @@ class _CreateCarCategoryPageState extends State<CreateCarCategoryPage> {
                             initialValue: request.seatNumber?.toString(),
                             onChanged: (p0) {
                               request.seatNumber = int.tryParse(p0);
+                            },
+                          ),
+                        ),
+                        15.0.horizontalSpace,
+                        Expanded(
+                          child: SpinnerWidget(
+                            items: CarCategoryType.values.spinnerItems(
+                              selected: request.carCategoryType,
+                            ),
+                            onChanged: (p0) {
+                              request.carCategoryType = p0.item;
                             },
                           ),
                         ),

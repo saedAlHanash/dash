@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qareeb_models/car_catigory/data/response/car_categories_response.dart';
 import 'package:qareeb_models/extensions.dart';
+import 'package:qareeb_models/global.dart';
 
 import '../../../../core/api_manager/api_service.dart';
 import '../../../../core/util/note_message.dart';
@@ -9,7 +10,6 @@ class CreateCarCatRequest {
   int? id;
   String? name;
   UploadFile? file;
-
 
   //Driver ration
   num? driverRatio;
@@ -38,11 +38,11 @@ class CreateCarCatRequest {
   num? sharedTiresRatio;
   num? sharedGasRatio;
 
-
   num? priceVariant;
   num? sharedMinimumDistanceInMeters;
   num? planMinimumDistanceInMeters;
   num? seatNumber;
+  CarCategoryType carCategoryType;
 
   CreateCarCatRequest({
     this.id,
@@ -68,6 +68,7 @@ class CreateCarCatRequest {
     this.sharedMinimumDistanceInMeters,
     this.planMinimumDistanceInMeters,
     this.seatNumber,
+    this.carCategoryType = CarCategoryType.trips,
     this.planDriverRation,
     this.planKmCost,
     this.planMinimumCost,
@@ -100,6 +101,7 @@ class CreateCarCatRequest {
       'PlanDriverRation': planDriverRation,
       'PlanKmCost': planKmCost,
       'PlanMinimumCost': planMinimumCost,
+      'carCategoryType': carCategoryType.index,
     };
   }
 
@@ -127,6 +129,7 @@ class CreateCarCatRequest {
       sharedMinimumDistanceInMeters: carCategory.sharedMinimumDistanceInMeters,
       planMinimumDistanceInMeters: carCategory.planMinimumDistanceInMeters,
       seatNumber: carCategory.seatNumber,
+      carCategoryType: carCategory.carCategoryType,
       planDriverRation: carCategory.planDriverRation,
       planKmCost: carCategory.planKmCost,
       planMinimumCost: carCategory.planMinimumCost,

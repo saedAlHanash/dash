@@ -125,8 +125,15 @@ class DashboardScreen extends StatelessWidget {
               StatisticsCard(
                 icon: Icons.attach_money,
                 color: AppColorManager.mainColorDark,
-                label: isAgency ? 'رصيدي الحالي' : 'اجمالي الدخل',
+                label: 'اجمالي الدخل',
                 value: (state.result.statistics.incoms).formatPrice,
+              ),
+              if (isAgency)
+              StatisticsCard(
+                icon: Icons.wallet,
+                color: AppColorManager.mainColorDark,
+                label: 'رصيدي الحالي',
+                value: (state.result.statistics.requiredAmountFromComapnay).formatPrice,
               ),
               if (!isAgency)
                 StatisticsCard(

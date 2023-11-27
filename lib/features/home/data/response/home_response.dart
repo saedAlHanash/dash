@@ -5,16 +5,15 @@ class HomeResponse {
 
   final HomeResult result;
 
-  factory HomeResponse.fromJson(Map<String, dynamic> json){
+  factory HomeResponse.fromJson(Map<String, dynamic> json) {
     return HomeResponse(
-      result: HomeResult.fromJson(json["result"]??{}),
+      result: HomeResult.fromJson(json["result"] ?? {}),
     );
   }
 
   Map<String, dynamic> toJson() => {
-    "result": result.toJson(),
-  };
-
+        "result": result.toJson(),
+      };
 }
 
 class HomeResult {
@@ -24,16 +23,15 @@ class HomeResult {
 
   final Statistics statistics;
 
-  factory HomeResult.fromJson(Map<String, dynamic> json){
+  factory HomeResult.fromJson(Map<String, dynamic> json) {
     return HomeResult(
-      statistics: Statistics.fromJson(json["statistics"]??{}),
+      statistics: Statistics.fromJson(json["statistics"] ?? {}),
     );
   }
 
   Map<String, dynamic> toJson() => {
-    "statistics": statistics.toJson(),
-  };
-
+        "statistics": statistics.toJson(),
+      };
 }
 
 class Statistics {
@@ -47,6 +45,7 @@ class Statistics {
     required this.agencies,
     required this.incoms,
     required this.awards,
+    required this.requiredAmountFromComapnay,
   });
 
   final num clients;
@@ -58,8 +57,9 @@ class Statistics {
   final num agencies;
   final num incoms;
   final num awards;
+  final num requiredAmountFromComapnay;
 
-  factory Statistics.fromJson(Map<String, dynamic> json){
+  factory Statistics.fromJson(Map<String, dynamic> json) {
     return Statistics(
       clients: json["clients"] ?? 0,
       drivers: json["drivers"] ?? 0,
@@ -70,19 +70,20 @@ class Statistics {
       agencies: json["agencies"] ?? 0,
       incoms: json["incoms"] ?? 0,
       awards: json["awards"] ?? 0,
+      requiredAmountFromComapnay: json["requiredAmountFromComapnay"] ?? 0,
     );
   }
 
   Map<String, dynamic> toJson() => {
-    "clients": clients,
-    "drivers": drivers,
-    "trips": trips,
-    "sharedTrips": sharedTrips,
-    "activeDrivers": activeDrivers,
-    "institutions": institutions,
-    "agencies": agencies,
-    "incoms": incoms,
-    "awards": awards,
-  };
-
+        "clients": clients,
+        "drivers": drivers,
+        "trips": trips,
+        "sharedTrips": sharedTrips,
+        "activeDrivers": activeDrivers,
+        "institutions": institutions,
+        "agencies": agencies,
+        "incoms": incoms,
+        "awards": awards,
+        "requiredAmountFromComapnay": requiredAmountFromComapnay,
+      };
 }
