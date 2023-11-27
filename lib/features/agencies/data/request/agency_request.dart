@@ -18,6 +18,7 @@ class AgencyRequest {
     this.phoneNumber,
     this.password,
     this.agencyRatio,
+    this.isActive,
   });
 
   String? name;
@@ -31,6 +32,7 @@ class AgencyRequest {
   String? phoneNumber;
   String? password;
   num? agencyRatio;
+  bool? isActive;
 
   Map<String, dynamic> toJson() {
     return {
@@ -44,6 +46,7 @@ class AgencyRequest {
       'phoneNumber': phoneNumber,
       'password': password,
       'agencyRatio': agencyRatio,
+      'IsActive': isActive,
     };
   }
 
@@ -53,6 +56,7 @@ class AgencyRequest {
     name = agency.name;
     file = UploadFile(fileBytes: null, initialImage: agency.imageUrl);
     agencyRatio = agency.agencyRatio;
+    isActive = agency.isActive;
   }
 
   bool validateRequest(BuildContext context) {

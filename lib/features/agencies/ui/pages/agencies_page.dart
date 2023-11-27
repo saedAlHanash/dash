@@ -22,6 +22,7 @@ import '../../bloc/agencies_cubit/agencies_cubit.dart';
 import '../../bloc/create_agency_cubit/create_agency_cubit.dart';
 import '../../bloc/delete_agency_cubit/delete_agency_cubit.dart';
 import '../../data/request/agency_request.dart';
+import '../widget/change_agency_state_btn.dart';
 
 class AgenciesPage extends StatefulWidget {
   const AgenciesPage({super.key});
@@ -93,6 +94,7 @@ class _AgenciesPageState extends State<AgenciesPage> {
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
+                              ChangeAgencyStateBtn(user: e),
                               IconButton(
                                 onPressed: () {
                                   NoteMessage.showMyDialog(
@@ -103,12 +105,15 @@ class _AgenciesPageState extends State<AgenciesPage> {
                                     ),
                                     onCancel: (val) {
                                       if (val) {
-                                        context.read<AgenciesCubit>().getAgencies(context);
+                                        context
+                                            .read<AgenciesCubit>()
+                                            .getAgencies(context);
                                       }
                                     },
                                   );
                                 },
-                                icon: const Icon(Icons.edit, color: AppColorManager.ampere),
+                                icon:
+                                    const Icon(Icons.edit, color: AppColorManager.ampere),
                               ),
                               BlocBuilder<DeleteAgencyCubit, DeleteAgencyInitial>(
                                 buildWhen: (p, c) => c.id == e.id,
