@@ -413,3 +413,51 @@
 //     );
 //   }
 // }
+
+
+class CreatePlanTripRequest {
+  CreatePlanTripRequest({
+    required this.name,
+    required this.companyPathId,
+    required this.companyId,
+    required this.description,
+    required this.driversIds,
+    required this.startDate,
+    required this.endDate,
+    required this.days,
+  });
+
+  final String name;
+  final num companyPathId;
+  final num companyId;
+  final String description;
+  final List<num> driversIds;
+  final DateTime? startDate;
+  final DateTime? endDate;
+  final List<String> days;
+
+  factory CreatePlanTripRequest.fromJson(Map<String, dynamic> json){
+    return CreatePlanTripRequest(
+      name: json["name"] ?? "",
+      companyPathId: json["companyPathId"] ?? 0,
+      companyId: json["companyId"] ?? 0,
+      description: json["description"] ?? "",
+      driversIds: json["driversIds"] == null ? [] : List<num>.from(json["driversIds"]!.map((x) => x)),
+      startDate: DateTime.tryParse(json["startDate"] ?? ""),
+      endDate: DateTime.tryParse(json["endDate"] ?? ""),
+      days: json["days"] == null ? [] : List<String>.from(json["days"]!.map((x) => x)),
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+    "name": name,
+    "companyPathId": companyPathId,
+    "companyId": companyId,
+    "description": description,
+    "driversIds": driversIds.map((x) => x).toList(),
+    "startDate": startDate?.toIso8601String(),
+    "endDate": endDate?.toIso8601String(),
+    "days": days.map((x) => x).toList(),
+  };
+
+}

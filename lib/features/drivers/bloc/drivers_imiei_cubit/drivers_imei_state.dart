@@ -19,9 +19,27 @@ class DriversImeiInitial extends Equatable {
     );
   }
 
+
+  List<String> getNames(List<int> selected) {
+    final list = <String>[];
+    for (var e in result) {
+      if (!selected.contains(e.id)) continue;
+      list.add(e.name);
+    }
+    return list;
+  }
+
   List<String> get getImeisListString => List<String>.from(result.map((e) => e.imei));
 
   DriverImei? getIdByImei(String imei) => result.firstWhereOrNull((e) => e.imei == imei);
+
+  List<SpinnerItem> get getSpinnerItem {
+    final list = <SpinnerItem>[];
+    for (var e in result) {
+      list.add(SpinnerItem(id: e.id, name: e.name, item: e));
+    }
+    return list;
+  }
 
   @override
   List<Object> get props => [statuses, result, error];

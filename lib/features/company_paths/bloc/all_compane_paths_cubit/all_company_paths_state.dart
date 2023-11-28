@@ -22,6 +22,20 @@ class AllCompanyPathsInitial extends Equatable {
     );
   }
 
+  List<SpinnerItem> getSpinnerItems({int? selectedId}) {
+    if (result.isEmpty) {
+      return [SpinnerItem(name: 'لا يوجد', id: 0)];
+    }
+    return result
+        .map((e) => SpinnerItem(
+      id: e.id,
+      name: e.description,
+      item: e,
+      isSelected: e.id == selectedId,
+    ))
+        .toList();
+  }
+
   @override
   List<Object> get props => [statuses, result, error];
 
