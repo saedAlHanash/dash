@@ -110,9 +110,7 @@ class BusTripModel {
       startDate: DateTime.tryParse(json["startDate"] ?? ""),
       endDate: DateTime.tryParse(json["endDate"] ?? ""),
       busTripType: BusTripType.values[json["busTripType"] ?? 0],
-      days: json["days"] == null
-          ? []
-          : List<WeekDays>.from(json["days"]!.map((x) => WeekDays.values[x])),
+      days: json["days"] == null ? [] : List<WeekDays>.from(json["days"]!.map((x) => WeekDays.values[x])),
       id: json["id"] ?? 0,
       category: BusTripCategory.values[json["category"] ?? 0],
       numberOfParticipation: json["numberOfParticipation"] ?? 0,
