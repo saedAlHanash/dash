@@ -114,7 +114,8 @@ class _DashboardPageState extends State<DashboardPage> {
                                           'id': bestDriver.driverId.toString()
                                         });
                                   },
-                                  icon: const Icon(Icons.info_outline_rounded))
+                                  icon: const ImageMultiType(
+                                      url: Icons.info_outline_rounded))
                             ],
                           ),
                         ),
@@ -150,32 +151,32 @@ class _DashboardPageState extends State<DashboardPage> {
                     children: [
                       DrawableText(
                         text: ' متاح ومحرك يعمل',
-                        drawableStart: const Icon(
-                          Icons.circle,
+                        drawableStart: const ImageMultiType(
+                          url: Assets.iconsCircle,
                           color: AppColorManager.mainColor,
                         ),
                         drawableEnd: DrawableText(text: _mainColor.toString()),
                       ),
                       DrawableText(
                         text: 'متاح محرك لا يعمل',
-                        drawableStart: const Icon(
-                          Icons.circle,
+                        drawableStart: const ImageMultiType(
+                          url: Assets.iconsCircle,
                           color: AppColorManager.ampere,
                         ),
                         drawableEnd: DrawableText(text: _ampere.toString()),
                       ),
                       DrawableText(
                         text: ' غير متاح والمحرك يعمل',
-                        drawableStart: const Icon(
-                          Icons.circle,
+                        drawableStart: const ImageMultiType(
+                          url: Assets.iconsCircle,
                           color: Colors.blue,
                         ),
                         drawableEnd: DrawableText(text: _blue.toString()),
                       ),
                       DrawableText(
                         text: ' غير متاح والمحرك لا يعمل',
-                        drawableStart: const Icon(
-                          Icons.circle,
+                        drawableStart: const ImageMultiType(
+                          url: Assets.iconsCircle,
                           color: AppColorManager.red,
                         ),
                         drawableEnd: DrawableText(text: _red.toString()),

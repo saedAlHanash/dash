@@ -121,6 +121,7 @@ class _CreateCompanyPathPageState extends State<CreateCompanyPathPage> {
                                 onChanged: (p0) => request.description = p0,
                               ),
                             ),
+                            15.0.horizontalSpace,
                             Expanded(
                               child: BlocBuilder<AllCompaniesCubit, AllCompaniesInitial>(
                                 builder: (context, state) {

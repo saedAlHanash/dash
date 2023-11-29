@@ -159,6 +159,7 @@ class _SharedFilterWidgetState extends State<SharedFilterWidget> {
                 ),
               ),
               15.0.horizontalSpace,
+              if(!isTrans)
               Expanded(
                 child: BlocBuilder<AllCarCategoriesCubit, AllCarCategoriesInitial>(
                   builder: (context, state) {
@@ -184,7 +185,7 @@ class _SharedFilterWidgetState extends State<SharedFilterWidget> {
                   },
                 ),
               ),
-              if (!isAgency) ...[
+              if (!isAgency&&!isTrans) ...[
                 15.0.horizontalSpace,
                 Expanded(
                   child: BlocBuilder<AgenciesCubit, AgenciesInitial>(

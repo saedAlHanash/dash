@@ -34,6 +34,7 @@ class _DriversFilterWidgetState extends State<DriversFilterWidget> {
   final key1 = GlobalKey<SpinnerWidgetState>();
   final key2 = GlobalKey<SpinnerWidgetState>();
   final key3 = GlobalKey<SpinnerWidgetState>();
+  final key4 = GlobalKey<SpinnerWidgetState>();
 
   @override
   void initState() {
@@ -91,6 +92,32 @@ class _DriversFilterWidgetState extends State<DriversFilterWidget> {
                           isSelected: request.status == null),
                     ),
                   onChanged: (p0) => request.status = p0.item,
+                ),
+              ),
+              15.0.horizontalSpace,
+              Expanded(
+                child: SpinnerWidget(
+                  key: key4,
+                  items: [
+                    SpinnerItem(
+                        name: 'حالة الفحص',
+                        item: null,
+                        id: -1,
+                        isSelected: request.isExamined == null),
+                    SpinnerItem(
+                      name: 'تم الفحص',
+                      item: true,
+                      id: 1,
+                      isSelected: request.isExamined == true,
+                    ),
+                    SpinnerItem(
+                      name: 'لم يتم الفحص',
+                      item: false,
+                      id: 2,
+                      isSelected: request.isExamined == false,
+                    ),
+                  ],
+                  onChanged: (p0) => request.isExamined = p0.item,
                 ),
               ),
               15.0.horizontalSpace,
@@ -176,6 +203,7 @@ class _DriversFilterWidgetState extends State<DriversFilterWidget> {
                     key1.currentState?.clearSelect();
                     key2.currentState?.clearSelect();
                     key3.currentState?.clearSelect();
+                    key4.currentState?.clearSelect();
                   },
                 ),
               ),

@@ -61,6 +61,10 @@ import '../../features/institutions/bloc/all_institutions_cubit/all_institutions
 import '../../features/institutions/bloc/create_institution_cubit/create_institution_cubit.dart';
 import '../../features/institutions/bloc/delete_institution_cubit/delete_institution_cubit.dart';
 import '../../features/notifications/bloc/notification_cubit/notification_cubit.dart';
+import '../../features/plan_trips/bloc/all_plan_trips_cubit/all_plan_trips_cubit.dart';
+import '../../features/plan_trips/bloc/create_plan_trip_cubit/create_plan_trip_cubit.dart';
+import '../../features/plan_trips/bloc/delete_plan_trip_cubit/delete_plan_trip_cubit.dart';
+import '../../features/plan_trips/bloc/plan_trip_by_id_cubit/plan_trip_by_id_cubit.dart';
 import '../../features/plans/bloc/create_plan_cubit/create_plan_cubit.dart';
 import '../../features/plans/bloc/delete_plan_cubit/delete_plan_cubit.dart';
 import '../../features/plans/bloc/plans_cubit/plans_cubit.dart';
@@ -87,6 +91,7 @@ import '../../features/shared_trip/bloc/create_shared_trip_cubit/create_shared_t
 import '../../features/shared_trip/bloc/get_shared_trips_cubit/get_shared_trips_cubit.dart';
 import '../../features/shared_trip/bloc/shared_trip_by_id_cubit/shared_trip_by_id_cubit.dart';
 import '../../features/shared_trip/bloc/update_shared_cubit/update_shared_cubit.dart';
+import '../../features/sos/bloc/all_sos_cubit/all_sos_cubit.dart';
 import '../../features/system_params/bloc/system_params_cubit/system_params_cubit.dart';
 import '../../features/system_params/bloc/update_system_params_cubit/update_system_params_cubit.dart';
 import '../../features/system_settings/bloc/system_settings_cubit/system_settings_cubit.dart';
@@ -295,6 +300,15 @@ Future<void> init() async {
   sl.registerFactory(() => CreateCouponCubit());
   //endregion
 
+  //region PlanTrip
+  sl.registerFactory(() => CreatePlanTripCubit());
+  sl.registerFactory(() => AllPlanTripsCubit());
+  sl.registerFactory(() => DeletePlanTripCubit());
+  sl.registerFactory(() => PlanTripBuIdCubit());
+  //endregion
+
+
+  sl.registerFactory(() => AllSosCubit());
   sl.registerFactory(() => AllClientsCubit());
   sl.registerFactory(() => ClientByIdCubit());
   sl.registerFactory(() => AllTransfersCubit());

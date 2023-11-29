@@ -88,7 +88,7 @@ class CellWidget extends StatelessWidget {
         Row(
           children: e.mapIndexed(
             (i, e) {
-              final widget = e is String
+              final widget = e is String?
                   ? Directionality(
                       textDirection: TextDirection.ltr,
                       child: DrawableText(
@@ -96,7 +96,7 @@ class CellWidget extends StatelessWidget {
                         size: 17.0.sp,
                         matchParent: true,
                         textAlign: TextAlign.center,
-                        text: e.isEmpty ? '-' : e,
+                        text: (e == null || e.isEmpty) ? '-' : e,
                         color: Colors.black,
                         fontFamily: FontManager.cairoBold,
                       ),

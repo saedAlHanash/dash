@@ -1,14 +1,41 @@
 {
-  "name": "string",
-  "companyPathId": 0,
-  "companyId": 0,
-  "description": "string",
-  "driversIds": [
-    0
-  ],
-  "startDate": "2023-11-28T09:17:27.414Z",
-  "endDate": "2023-11-28T09:17:27.414Z",
-  "days": [
-    "Sunday"
-  ]
+  "result": {
+    "items": [
+      {
+        "id": 0,
+        "memberId": 0,
+        "user": {
+          "id": 0,
+          "userName": "string",
+          "fullName": "string",
+          "name": "string",
+          "surname": "string",
+          "phoneNumber": "string",
+          "avatar": "string",
+          "emergencyPhone": "string",
+          "userType": "string",
+          "accountBalance": 0
+        },
+        "member":   {
+          "id": 0,
+          "fullName": "string",
+          "imageUrl": "string",
+          "address": "string",
+          "late": 0,
+          "longe": 0,
+          "userName": "string",
+          "password": "string",
+          "phoneNo": "string",
+          "facility": "string",
+          "idNumber": "string",
+          "collegeIdNumber": "string",
+          "session": "string",
+          "institutionId": 0,
+          "emergencyPhone": "string"
+        },
+        "date": "2023-11-28T12:30:49.690Z"
+      }
+    ],
+    "totalCount": 0
+  }
 }

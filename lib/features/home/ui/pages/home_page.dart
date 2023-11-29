@@ -15,6 +15,7 @@ import 'package:qareeb_dash/features/car_catigory/bloc/delete_car_cat_cubit/dele
 import 'package:qareeb_dash/features/coupons/ui/pages/coupons_page.dart';
 import 'package:qareeb_dash/features/redeems/bloc/redeems_cubit/redeems_cubit.dart';
 import 'package:qareeb_dash/features/shared_trip/ui/pages/shared_trips_page.dart';
+import 'package:qareeb_dash/features/sos/ui/pages/soss_page.dart';
 import 'package:qareeb_dash/features/trip/ui/pages/trips_page.dart';
 import "package:universal_html/html.dart";
 
@@ -48,6 +49,8 @@ import '../../../institutions/bloc/delete_institution_cubit/delete_institution_c
 import '../../../institutions/ui/pages/institutions_page.dart';
 import '../../../notifications/ui/pages/notifications_page.dart';
 import '../../../pay_to_drivers/ui/pages/financial_page.dart';
+import '../../../plan_trips/bloc/delete_plan_trip_cubit/delete_plan_trip_cubit.dart';
+import '../../../plan_trips/ui/pages/plan_trips_page.dart';
 import '../../../plans/bloc/delete_plan_cubit/delete_plan_cubit.dart';
 import '../../../plans/ui/pages/plans_page.dart';
 import '../../../points/ui/pages/points_page.dart';
@@ -250,6 +253,11 @@ class _HomePageState extends State<HomePage> {
                       title: 'مسارات الشركات',
                       route: '/subscriptions',
                     ),
+                    AdminMenuItem(
+                      icon: Icons.line_axis_sharp,
+                      title: 'الرحلات',
+                      route: '/planTrips',
+                    ),
                   ],
                 ),
                 AdminMenuItem(
@@ -283,19 +291,26 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],
 
+              if (isAllowed(AppPermissions.MESSAGES))
+                AdminMenuItem(
+                    children: [
+                      if (isAllowed(AppPermissions.SETTINGS))
+                        const AdminMenuItem(
+                            icon: Icons.notification_add,
+                            title: 'إشعارات الزبائن',
+                            route: "/notification"),
+                      const AdminMenuItem(
+                          icon: Icons.message, title: 'الشكاوى', route: "/ticket"),
+                      const AdminMenuItem(
+                          icon: Icons.sos, title: 'رسائل الاستغاثة', route: "/sos"),
+                    ],
+                    icon: Icons.support_agent, title: 'التواصل'),
+
               if (isAllowed(AppPermissions.SETTINGS))
                 const AdminMenuItem(
                     icon: Icons.privacy_tip_rounded,
                     title: 'سياسة الخصوصية',
                     route: "/policy"),
-              if (isAllowed(AppPermissions.SETTINGS))
-                const AdminMenuItem(
-                    icon: Icons.notification_add,
-                    title: 'إشعارات الزبائن',
-                    route: "/notification"),
-              if (isAllowed(AppPermissions.MESSAGES))
-                const AdminMenuItem(
-                    icon: Icons.message, title: 'الشكاوى', route: "/ticket"),
             ],
             selectedRoute: state.page,
             onSelected: (item) {
@@ -484,6 +499,8 @@ class _HomePageState extends State<HomePage> {
                     ],
                     child: const TicketsPage(),
                   );
+                case "/sos":
+                  return const SosPage();
                 case "/paths":
                   return MultiBlocProvider(
                     providers: [
@@ -499,6 +516,15 @@ class _HomePageState extends State<HomePage> {
                     ],
                     child: const CompanyPathsPage(),
                   );
+
+                case '/planTrips':
+                  return MultiBlocProvider(
+                    providers: [
+                      BlocProvider(create: (context) => sl<DeletePlanTripCubit>()),
+                    ],
+                    child: const PlanTripsPage(),
+                  );
+
 
                 case "/allPlans":
                   return MultiBlocProvider(

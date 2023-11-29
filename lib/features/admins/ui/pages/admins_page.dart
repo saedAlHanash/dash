@@ -50,53 +50,55 @@ class _AdminPageState extends State<AdminPage> {
             return const NotFoundWidget(text: 'لا يوجد مدراء');
           }
           final list = state.result;
-          return SaedTableWidget(
-            onChangePage: (command) {
-              context
-                  .read<AllAdminsCubit>()
-                  .getAllAdmins(context, command: command);
-            },
-            command: state.command,
-            title: adminsEableHeader,
-            fullSizeIndex: const [5],
-            data: list
-                .mapIndexed(
-                  (index, e) => [
-                    e.id.toString(),
-                    e.fullName,
-                    e.phoneNumber,
-                    e.isActive ? 'مفعل' : 'غير مفعل',
-                    e.emailAddress,
-                    e.creationTime?.formatDate,
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        if (!e.emailAddress.contains('info@first-pioneers'))
-                          ChangeUserStateBtn(user: e),
-                        if (!e.emailAddress.contains('info@first-pioneers'))
-                          if (isAllowed(AppPermissions.UPDATE))
-                            InkWell(
-                              onTap: () {
-                                context.pushNamed(GoRouteName.createAdmin, extra: e);
-                              },
-                              child: const CircleButton(
-                                  color: Colors.amber, icon: Icons.edit),
+          return SingleChildScrollView(
+            child: SaedTableWidget(
+              onChangePage: (command) {
+                context
+                    .read<AllAdminsCubit>()
+                    .getAllAdmins(context, command: command);
+              },
+              command: state.command,
+              title: adminsEableHeader,
+              fullSizeIndex: const [5],
+              data: list
+                  .mapIndexed(
+                    (index, e) => [
+                      e.id.toString(),
+                      e.fullName,
+                      e.phoneNumber,
+                      e.isActive ? 'مفعل' : 'غير مفعل',
+                      e.emailAddress,
+
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          if (!e.emailAddress.contains('info@first-pioneers'))
+                            ChangeUserStateBtn(user: e),
+                          if (!e.emailAddress.contains('info@first-pioneers'))
+                            if (isAllowed(AppPermissions.UPDATE))
+                              InkWell(
+                                onTap: () {
+                                  context.pushNamed(GoRouteName.createAdmin, extra: e);
+                                },
+                                child: const CircleButton(
+                                    color: Colors.amber, icon: Icons.edit),
+                              ),
+                          InkWell(
+                            onTap: () {
+                              context.pushNamed(GoRouteName.adminInfo, extra: e);
+                            },
+                            child: const CircleButton(
+                              color: Colors.grey,
+                              icon: Icons.info_outline_rounded,
                             ),
-                        InkWell(
-                          onTap: () {
-                            context.pushNamed(GoRouteName.adminInfo, extra: e);
-                          },
-                          child: const CircleButton(
-                            color: Colors.grey,
-                            icon: Icons.info_outline_rounded,
                           ),
-                        ),
-                      ],
-                    )
-                  ],
-                )
-                .toList(),
+                        ],
+                      )
+                    ],
+                  )
+                  .toList(),
+            ),
           );
 
         },

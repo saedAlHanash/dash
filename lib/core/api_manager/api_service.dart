@@ -101,15 +101,19 @@ class APIService {
 
     final uri = Uri.https(hostName ?? baseUrl, url, query);
 
-    final response = await http.get(uri, headers: innerHeader).timeout(
-          const Duration(seconds: 40),
-          onTimeout: () => http.Response('connectionTimeOut', 481),
-        );
+    try {
+      final response = await http.get(uri, headers: innerHeader).timeout(
+            const Duration(seconds: 40),
+            onTimeout: () => http.Response('connectionTimeOut', 481),
+          );
 
-    logResponse(url, response);
-    _serverDate = getDateTimeFromHeaders(response);
+      logResponse(url, response);
+      _serverDate = getDateTimeFromHeaders(response);
 
-    return response;
+      return response;
+    } on Exception {
+      return http.Response('{}', 481);
+    }
   }
 
   Future<http.Response> getApiProxy({
@@ -133,14 +137,18 @@ class APIService {
     final uri = Uri.https(hostName ?? baseUrl, url, query);
     final proxyUri = Uri.https('api.allorigins.win', 'raw', {'url': uri.toString()});
 
-    final response = await http.get(proxyUri, headers: innerHeader).timeout(
-          const Duration(seconds: 40),
-          onTimeout: () => http.Response('connectionTimeOut', 481),
-        );
+    try {
+      final response = await http.get(proxyUri, headers: innerHeader).timeout(
+            const Duration(seconds: 40),
+            onTimeout: () => http.Response('connectionTimeOut', 481),
+          );
 
-    logResponse(url, response);
-    _serverDate = getDateTimeFromHeaders(response);
-    return response;
+      logResponse(url, response);
+      _serverDate = getDateTimeFromHeaders(response);
+      return response;
+    } on Exception {
+      return http.Response('{}', 481);
+    }
   }
 
   Future<http.Response> getApiProxyPayed({
@@ -158,10 +166,14 @@ class APIService {
 
     final uri = Uri.https('proxy.cors.sh', url, query);
 
-    final response =
-        await http.get(uri, headers: innerHeader).timeout(const Duration(seconds: 40));
-    _serverDate = getDateTimeFromHeaders(response);
-    return response;
+    try {
+      final response =
+          await http.get(uri, headers: innerHeader).timeout(const Duration(seconds: 40));
+      _serverDate = getDateTimeFromHeaders(response);
+      return response;
+    } on Exception {
+      return http.Response('{}', 481);
+    }
   }
 
   Future<http.Response> postApi({
@@ -186,15 +198,19 @@ class APIService {
 
     logRequest(url, (body ?? {})..addAll(query ?? {}));
 
-    final response =
-        await http.post(uri, body: jsonEncode(body), headers: innerHeader).timeout(
-              const Duration(seconds: 40),
-              onTimeout: () => http.Response('connectionTimeOut', 481),
-            );
+    try {
+      final response =
+          await http.post(uri, body: jsonEncode(body), headers: innerHeader).timeout(
+                const Duration(seconds: 40),
+                onTimeout: () => http.Response('connectionTimeOut', 481),
+              );
 
-    logResponse(url, response);
-    _serverDate = getDateTimeFromHeaders(response);
-    return response;
+      logResponse(url, response);
+      _serverDate = getDateTimeFromHeaders(response);
+      return response;
+    } on Exception {
+      return http.Response('{}', 481);
+    }
   }
 
   Future<http.Response> puttApi({
@@ -216,15 +232,19 @@ class APIService {
 
     logRequest(url, body);
 
-    final response =
-        await http.put(uri, body: jsonEncode(body), headers: innerHeader).timeout(
-              const Duration(seconds: 40),
-              onTimeout: () => http.Response('connectionTimeOut', 481),
-            );
+    try {
+      final response =
+          await http.put(uri, body: jsonEncode(body), headers: innerHeader).timeout(
+                const Duration(seconds: 40),
+                onTimeout: () => http.Response('connectionTimeOut', 481),
+              );
 
-    logResponse(url, response);
-    _serverDate = getDateTimeFromHeaders(response);
-    return response;
+      logResponse(url, response);
+      _serverDate = getDateTimeFromHeaders(response);
+      return response;
+    } on Exception {
+      return http.Response('{}', 481);
+    }
   }
 
   Future<http.Response> patchApi({
@@ -246,15 +266,19 @@ class APIService {
 
     logRequest(url, body);
 
-    final response =
-        await http.patch(uri, body: jsonEncode(body), headers: innerHeader).timeout(
-              const Duration(seconds: 40),
-              onTimeout: () => http.Response('connectionTimeOut', 481),
-            );
+    try {
+      final response =
+          await http.patch(uri, body: jsonEncode(body), headers: innerHeader).timeout(
+                const Duration(seconds: 40),
+                onTimeout: () => http.Response('connectionTimeOut', 481),
+              );
 
-    logResponse(url, response);
-    _serverDate = getDateTimeFromHeaders(response);
-    return response;
+      logResponse(url, response);
+      _serverDate = getDateTimeFromHeaders(response);
+      return response;
+    } on Exception {
+      return http.Response('{}', 481);
+    }
   }
 
   Future<http.Response> deleteApi({
@@ -276,15 +300,19 @@ class APIService {
 
     logRequest(url, query);
 
-    final response =
-        await http.delete(uri, body: jsonEncode(body), headers: innerHeader).timeout(
-              const Duration(seconds: 40),
-              onTimeout: () => http.Response('connectionTimeOut', 481),
-            );
+    try {
+      final response =
+          await http.delete(uri, body: jsonEncode(body), headers: innerHeader).timeout(
+                const Duration(seconds: 40),
+                onTimeout: () => http.Response('connectionTimeOut', 481),
+              );
 
-    logResponse(url, response);
-    _serverDate = getDateTimeFromHeaders(response);
-    return response;
+      logResponse(url, response);
+      _serverDate = getDateTimeFromHeaders(response);
+      return response;
+    } on Exception {
+      return http.Response('{}', 481);
+    }
   }
 
   Future<http.Response> uploadMultiPart({
@@ -304,7 +332,6 @@ class APIService {
 
     var request = http.MultipartRequest(type, uri);
 
-    ///log
     logRequest(url, fields, additional: files?.firstOrNull?.nameField);
 
     for (var uploadFile in (files ?? <UploadFile?>[])) {
@@ -323,14 +350,17 @@ class APIService {
 
     request.fields.addAll(f);
 
-    final stream = await request.send();
+    try {
+      final stream = await request.send();
 
-    final response = await http.Response.fromStream(stream);
+      final response = await http.Response.fromStream(stream);
 
-    ///log
-    logResponse(url, response);
-    _serverDate = getDateTimeFromHeaders(response);
-    return response;
+      logResponse(url, response);
+      _serverDate = getDateTimeFromHeaders(response);
+      return response;
+    } on Exception {
+      return http.Response('{}', 481);
+    }
   }
 
   Future<DateTime> getServerTime() async {

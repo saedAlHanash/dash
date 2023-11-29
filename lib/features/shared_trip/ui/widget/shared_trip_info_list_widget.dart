@@ -87,13 +87,15 @@ class _TripInfoListWidgetState extends State<TripInfoListWidget> {
     NoteMessage.showMyDialog(
       context,
       child: SaedTableWidget(
-        title: const [
+        title: [
           'اسم الزبون',
-          'رقم الهاتف',
-          'عدد المقاعد',
-          'نقطة الركوب',
-          'رمز النقطة',
-          'حالة الدفع',
+          if (!isTrans) ...[
+            'رقم الهاتف',
+            'عدد المقاعد',
+            'نقطة الركوب',
+            'رمز النقطة',
+            'حالة الدفع',
+          ]
         ],
         data: e.sharedRequests.mapIndexed(
           (index, element) {
@@ -106,16 +108,18 @@ class _TripInfoListWidgetState extends State<TripInfoListWidget> {
             });
             return [
               client.fullName,
-              client.phoneNumber,
-              element.seatNumber.toString(),
-              element.pickupPoint.arName,
-              ImageMultiType(
-                url: tripIconId.iconPoint,
-                height: 40.0.r,
-                width: 40.0.r,
-                fit: BoxFit.contain,
-              ),
-              element.status.arabicName,
+              if (!isTrans) ...[
+                client.phoneNumber,
+                element.seatNumber.toString(),
+                element.pickupPoint.arName,
+                ImageMultiType(
+                  url: tripIconId.iconPoint,
+                  height: 40.0.r,
+                  width: 40.0.r,
+                  fit: BoxFit.contain,
+                ),
+                element.status.arabicName,
+              ],
             ];
           },
         ).toList(),

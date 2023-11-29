@@ -183,6 +183,7 @@ class _TripsFilterWidgetState extends State<TripsFilterWidget> {
               ],
             ],
           ),
+          if(!isTrans)
           Row(
             children: [
               Expanded(

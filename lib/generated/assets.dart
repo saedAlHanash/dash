@@ -119,6 +119,7 @@ class Assets {
   static const String iconsStar = 'assets/icons/star.svg';
   static const String iconsTaxi = 'assets/icons/taxi.png';
   static const String iconsTextLogo = 'assets/icons/text_logo.svg';
+  static const String iconsCircle = 'assets/icons/circle.svg';
   static const String iconsTires = 'assets/icons/tires.svg';
   static const String iconsTrips = 'assets/icons/trips.svg';
   static const String iconsTwitter = 'assets/icons/twitter.svg';

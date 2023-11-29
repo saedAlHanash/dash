@@ -79,7 +79,7 @@ class _TripInfoListWidgetState extends State<TripInfoListWidget>
               children: [
                 _TripInfo(trip: widget.trip),
                 if (!isAgency) _DriverInfo(trip: widget.trip),
-                _TripDateInfo(trip: widget.trip),
+                TripDateInfo(trip: widget.trip),
                 _TripCost(trip: widget.trip),
                 const _TripDrivers(),
                 if (!isAgency) _TripActions(trip: widget.trip),
@@ -208,8 +208,8 @@ class _DriverInfo extends StatelessWidget {
   }
 }
 
-class _TripDateInfo extends StatelessWidget {
-  const _TripDateInfo({super.key, required this.trip});
+class TripDateInfo extends StatelessWidget {
+  const TripDateInfo({super.key, required this.trip});
 
   final Trip trip;
 

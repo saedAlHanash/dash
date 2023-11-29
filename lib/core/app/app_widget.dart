@@ -24,10 +24,12 @@ import '../../features/home/bloc/home_cubit/home_cubit/home_cubit.dart';
 import '../../features/home/bloc/nav_home_cubit/nav_home_cubit.dart';
 import '../../features/institutions/bloc/all_institutions_cubit/all_institutions_cubit.dart';
 import '../../features/notifications/bloc/notification_cubit/notification_cubit.dart';
+import '../../features/plan_trips/bloc/all_plan_trips_cubit/all_plan_trips_cubit.dart';
 import '../../features/plans/bloc/plans_cubit/plans_cubit.dart';
 import '../../features/points/bloc/get_edged_point_cubit/get_all_points_cubit.dart';
 import '../../features/roles/bloc/all_roles/all_roles_cubit.dart';
 import '../../features/shared_trip/bloc/get_shared_trips_cubit/get_shared_trips_cubit.dart';
+import '../../features/sos/bloc/all_sos_cubit/all_sos_cubit.dart';
 import '../../features/system_params/bloc/system_params_cubit/system_params_cubit.dart';
 import '../../features/system_settings/bloc/system_settings_cubit/system_settings_cubit.dart';
 import '../../features/temp_trips/bloc/all_temp_trips_cubit/all_temp_trips_cubit.dart';
@@ -72,6 +74,7 @@ class MyApp extends StatelessWidget {
                 BlocProvider(create: (_) => sl<MapControlCubit>()),
                 BlocProvider(create: (_) => sl<CreatePolicyCubit>()),
                 BlocProvider(create: (_) => sl<HomeCubit>()..getHome(_)),
+                BlocProvider(create: (_) => sl<AllSosCubit>()..getSos(_)),
                 BlocProvider(create: (_) => sl<CreateNotificationCubit>()),
                 BlocProvider(create: (_) => sl<TripsCubit>()..getTrips(_)),
                 BlocProvider(create: (_) => sl<PolicyCubit>()..getPolicy(_)),
@@ -84,6 +87,7 @@ class MyApp extends StatelessWidget {
                 BlocProvider(create: (_) => sl<AllDriversCubit>()..getAllDrivers(_)),
                 BlocProvider(create: (_) => sl<AllClientsCubit>()..getAllClients(_)),
                 BlocProvider(create: (_) => sl<AllCouponsCubit>()..getAllCoupons(_)),
+                BlocProvider(create: (_) => sl<AllPlanTripsCubit>()..getPlanTrips(_)),
                 BlocProvider(create: (_) => sl<FinancialReportCubit>()..getReport(_)),
                 BlocProvider(
                   create: (_) => sl<AgenciesReportCubit>()..getReport(_),

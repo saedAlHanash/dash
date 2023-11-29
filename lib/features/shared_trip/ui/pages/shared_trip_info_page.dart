@@ -50,7 +50,7 @@ class _SharedTripInfoPageState extends State<SharedTripInfoPage> {
           listenWhen: (p, c) => c.statuses.done,
           listener: (context, state) {
             mapController.addPath(path: state.result.path);
-            if (state.result.tripStatus == SharedTripStatus.started) {
+            if (!isTrans && state.result.tripStatus == SharedTripStatus.started) {
               context.read<AtherCubit>().getDriverLocation([state.result.driver.imei]);
               MapWidget.initImeis([state.result.driver.imei]);
             }
@@ -98,50 +98,52 @@ class _SharedTripInfoPageState extends State<SharedTripInfoPage> {
                           fontFamily: FontManager.cairoBold,
                           textAlign: TextAlign.center,
                           color: Colors.black,
-                          drawableEnd: (state.result.tripStatus ==
-                                      SharedTripStatus.closed ||
-                                  state.result.tripStatus == SharedTripStatus.canceled)
+                          drawableEnd: isTrans
                               ? null
-                              : BlocBuilder<UpdateSharedCubit, UpdateSharedInitial>(
-                                  builder: (context, cState) {
-                                    if (cState.statuses.loading) {
-                                      return MyStyle.loadingWidget();
-                                    }
-                                    if (isQareebAdmin) {
-                                      return 0.0.verticalSpace;
-                                    }
+                              : (state.result.tripStatus == SharedTripStatus.closed ||
+                                      state.result.tripStatus ==
+                                          SharedTripStatus.canceled)
+                                  ? null
+                                  : BlocBuilder<UpdateSharedCubit, UpdateSharedInitial>(
+                                      builder: (context, cState) {
+                                        if (cState.statuses.loading) {
+                                          return MyStyle.loadingWidget();
+                                        }
+                                        if (isQareebAdmin) {
+                                          return 0.0.verticalSpace;
+                                        }
 
-                                    return Row(
-                                      children: [
-                                        MyButton(
-                                          width: 100.0.w,
-                                          text: 'إلغاء الرحلة',
-                                          color: Colors.black,
-                                          textColor: Colors.white,
-                                          onTap: () {
-                                            context
-                                                .read<UpdateSharedCubit>()
-                                                .updateSharedTrip(
-                                                  context,
-                                                  trip: state.result,
-                                                  tState: SharedTripStatus.canceled,
-                                                );
-                                          },
-                                        ),
-                                        10.0.horizontalSpace,
-                                        MyButton(
-                                          width: 100.0.w,
-                                          text: 'تعديل وقت الرحلة',
-                                          color: AppColorManager.mainColor,
-                                          textColor: Colors.white,
-                                          onTap: () async {
-                                            await updateTripTime(context, state);
-                                          },
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                ),
+                                        return Row(
+                                          children: [
+                                            MyButton(
+                                              width: 100.0.w,
+                                              text: 'إلغاء الرحلة',
+                                              color: Colors.black,
+                                              textColor: Colors.white,
+                                              onTap: () {
+                                                context
+                                                    .read<UpdateSharedCubit>()
+                                                    .updateSharedTrip(
+                                                      context,
+                                                      trip: state.result,
+                                                      tState: SharedTripStatus.canceled,
+                                                    );
+                                              },
+                                            ),
+                                            10.0.horizontalSpace,
+                                            MyButton(
+                                              width: 100.0.w,
+                                              text: 'تعديل وقت الرحلة',
+                                              color: AppColorManager.mainColor,
+                                              textColor: Colors.white,
+                                              onTap: () async {
+                                                await updateTripTime(context, state);
+                                              },
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    ),
                         ),
                         TripInfoListWidget(trip: state.result),
                       ],

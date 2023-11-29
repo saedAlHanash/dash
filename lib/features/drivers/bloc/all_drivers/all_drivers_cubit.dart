@@ -78,12 +78,14 @@ class AllDriversCubit extends Cubit<AllDriversInitial> {
           '\t تاريخ الميلاد \t',
           '\t العنوان \t',
           '\t رقم الهاتف \t',
+          if(!isTrans)
           '\t تصنيف السيارة \t',
           '\t عدد مقاعد السيارة \t',
           '\t ماركة السيارة \t',
           '\t لون السيارة \t',
           '\t حالة فحص السيارة\t',
-          '\t حالة الزبون \t',
+          if(!isTrans)
+          '\t حالة السائق \t',
           if (isQareebAdmin) ...[
             '\t اشتراك الولاء \t',
             '\t اشتراك البنزين\t',
@@ -92,6 +94,7 @@ class AllDriversCubit extends Cubit<AllDriversInitial> {
           '\t محافظة السيارة \t',
           '\t سنة صنع السيارة \t',
           '\t التصنيف الحكومي \t',
+          if(!isTrans)
           '\t تاريخ الاشتراك \t',
           '\t معرف جهاز التتبع IMEI \t',
           '\t الجنس \t',
@@ -102,14 +105,17 @@ class AllDriversCubit extends Cubit<AllDriversInitial> {
               (index, element) => [
                 element.id,
                 element.fullName,
+
                 element.birthdate?.formatDate,
                 element.address,
                 element.phoneNumber,
+                if(!isTrans)
                 element.carCategories.name,
                 element.carType.seatsNumber,
                 element.carType.carBrand,
                 element.carType.carColor,
                 element.isExamined,
+                if(!isTrans)
                 element.isActive,
                 if (isQareebAdmin) ...[
                   element.loyalty,
@@ -119,6 +125,7 @@ class AllDriversCubit extends Cubit<AllDriversInitial> {
                 element.carType.carGovernorate,
                 element.carType.manufacturingYear,
                 element.carType.type,
+                if(!isTrans)
                 element.creationTime?.formatDate,
                 element.qarebDeviceimei,
                 element.gender == 0 ? 'M' : 'F',

@@ -50,10 +50,15 @@ import '../features/coupons/bloc/create_coupon_cubit/create_coupon_cubit.dart';
 import '../features/coupons/ui/pages/create_coupon_page.dart';
 import '../features/drivers/bloc/driver_status_history_cubit/driver_status_history_cubit.dart';
 import '../features/drivers/ui/pages/driver_info_page.dart';
+import '../features/drivers/ui/pages/trans_driver_info_page.dart';
 import '../features/home/ui/pages/agency_home_page.dart';
+import '../features/home/ui/pages/trans_home_page.dart';
 import '../features/institutions/bloc/create_institution_cubit/create_institution_cubit.dart';
 import '../features/institutions/data/response/institutions_response.dart';
 import '../features/institutions/ui/pages/create_institution_page.dart';
+import '../features/plan_trips/bloc/create_plan_trip_cubit/create_plan_trip_cubit.dart';
+import '../features/plan_trips/bloc/plan_trip_by_id_cubit/plan_trip_by_id_cubit.dart';
+import '../features/plan_trips/ui/pages/create_plan_trip_page.dart';
 import '../features/plans/bloc/create_plan_cubit/create_plan_cubit.dart';
 import '../features/plans/data/response/plans_response.dart';
 import '../features/plans/ui/pages/create_plan_page.dart';
@@ -90,6 +95,7 @@ import '../features/trip/bloc/trip_debit_cubit/trip_debit_cubit.dart';
 import '../features/trip/bloc/trip_status_cubit/trip_status_cubit.dart';
 import '../features/trip/bloc/trips_cubit/trips_cubit.dart';
 import '../features/trip/data/request/filter_trip_request.dart';
+import '../features/trip/ui/pages/trans_trip_info_page.dart';
 import '../features/trip/ui/pages/trip_info_page.dart';
 import '../features/wallet/bloc/debt_cubit/debts_cubit.dart';
 import '../features/wallet/bloc/my_wallet_cubit/my_wallet_cubit.dart';
@@ -134,10 +140,14 @@ final appGoRouter = GoRouter(
         final providers = [
           BlocProvider(create: (_) => di.sl<LoginCubit>()),
         ];
-
+//if (isQareebAdmin && !isAgency)
         return MultiBlocProvider(
           providers: providers,
-          child: isAgency ? const AgencyHomePage() : const HomePage(),
+          child: isTrans
+              ? const TransHomePage()
+              : isAgency
+                  ? const AgencyHomePage()
+                  : const HomePage(),
         );
       },
     ),
@@ -176,7 +186,7 @@ final appGoRouter = GoRouter(
         ];
         return MultiBlocProvider(
           providers: providers,
-          child: const DriverInfoPage(),
+          child: isTrans ? const TransDriverInfoPage() : const DriverInfoPage(),
         );
       },
     ),
@@ -383,7 +393,7 @@ final appGoRouter = GoRouter(
         ];
         return MultiBlocProvider(
           providers: providers,
-          child: const TripInfoPage(),
+          child: (isTrans) ? const TransTripInfoPage() : const TripInfoPage(),
         );
       },
     ),
@@ -539,7 +549,8 @@ final appGoRouter = GoRouter(
           else
             BlocProvider(create: (_) => di.sl<PointsCubit>()..getAllPoints(_)),
           BlocProvider(
-            create: (_) => di.sl<CompanyPathBuIdCubit>()..getCompanyPathBuId(context, id: id),
+            create: (_) =>
+                di.sl<CompanyPathBuIdCubit>()..getCompanyPathBuId(context, id: id),
           ),
         ];
         return MultiBlocProvider(
@@ -561,7 +572,8 @@ final appGoRouter = GoRouter(
           BlocProvider(create: (_) => di.sl<AtherCubit>()),
           BlocProvider(create: (_) => di.sl<EstimateCompanyCubit>()),
           BlocProvider(
-            create: (_) => di.sl<CompanyPathBuIdCubit>()..getCompanyPathBuId(context, id: id),
+            create: (_) =>
+                di.sl<CompanyPathBuIdCubit>()..getCompanyPathBuId(context, id: id),
           ),
         ];
         return MultiBlocProvider(
@@ -645,6 +657,30 @@ final appGoRouter = GoRouter(
       },
     ),
 
+    //endregion
+
+    //region bus trips
+
+    ///createPlanTrip
+    GoRoute(
+      name: GoRouteName.createPlanTrip,
+      path: _GoRoutePath.createPlanTrip,
+      builder: (BuildContext context, GoRouterState state) {
+        final id = int.tryParse(state.queryParams['id'] ?? '') ?? 0;
+        final tIndex = int.tryParse(state.queryParams['t_index'] ?? '') ?? 0;
+
+        final providers = [
+          BlocProvider(create: (_) => di.sl<CreatePlanTripCubit>()),
+          BlocProvider(
+            create: (_) => di.sl<PlanTripBuIdCubit>()..getPlanTripBuId(context, id: id),
+          ),
+        ];
+        return MultiBlocProvider(
+          providers: providers,
+          child: const CreatePlanTripPage(),
+        );
+      },
+    ),
     //endregion
 
     ///createCoupon
@@ -750,6 +786,7 @@ class GoRouteName {
   static const agencyReport = 'agencyReport';
   static const createCompanyPath = 'createCompanyPath';
   static const companyPathInfo = 'companyPathInfo';
+  static const createPlanTrip = 'createPlanTrip';
 }
 
 class _GoRoutePath {
@@ -780,4 +817,5 @@ class _GoRoutePath {
   static const agencyReport = '/agencyReport';
   static const createCompanyPath = '/createCompanyPath';
   static const companyPathInfo = '/companyPathInfo';
+  static const createPlanTrip = '/createPlanTrip';
 }
