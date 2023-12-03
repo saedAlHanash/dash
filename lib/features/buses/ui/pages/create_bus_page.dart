@@ -17,8 +17,6 @@ import '../../bloc/create_bus_cubit/create_bus_cubit.dart';
 import '../../data/request/create_bus_request.dart';
 import '../../data/response/buses_response.dart';
 
-
-
 class CreateBusPage extends StatefulWidget {
   const CreateBusPage({super.key, this.bus});
 

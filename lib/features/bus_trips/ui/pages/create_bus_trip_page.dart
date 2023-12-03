@@ -12,6 +12,7 @@ import 'package:qareeb_dash/core/widgets/my_checkbox_widget.dart';
 import 'package:qareeb_dash/core/widgets/my_text_form_widget.dart';
 import 'package:qareeb_dash/core/widgets/spinner_widget.dart';
 
+import '../../../../core/api_manager/command.dart';
 import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/strings/enum_manager.dart';
 import '../../../../core/util/my_style.dart';
@@ -49,6 +50,9 @@ class _CreateBusTripPageState extends State<CreateBusTripPage> {
   void initState() {
     request.category =
         widget.qareebPoints ? BusTripCategory.qareebPoints : BusTripCategory.customPoints;
+
+    context.read<AllBusesCubit>().getBuses(context, command: Command.noPagination());
+
     super.initState();
   }
 
