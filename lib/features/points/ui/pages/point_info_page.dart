@@ -91,15 +91,15 @@ class _PointInfoPageState extends State<PointInfoPage> {
         },
       );
 
-    if (widget.mapMediator != null && widget.mapMediator!.center != null) {
-      Future.delayed(
-        const Duration(seconds: 1),
-        () {
-          mapController.movingCamera(
-              point: widget.mapMediator!.center!, zoom: widget.mapMediator!.zoom ?? 14);
-        },
-      );
-    }
+    // if (widget.mapMediator != null && widget.mapMediator!.center != null) {
+    //   Future.delayed(
+    //     const Duration(seconds: 1),
+    //     () {
+    //       mapController.movingCamera(
+    //           point: widget.mapMediator!.center!, zoom: widget.mapMediator!.zoom ?? 14);
+    //     },
+    //   );
+    // }
     super.initState();
   }
 
@@ -191,6 +191,16 @@ class _PointInfoPageState extends State<PointInfoPage> {
                 item: state.result,
               ),
             );
+
+            if (widget.mapMediator != null && widget.mapMediator!.center != null) {
+              Future.delayed(
+                const Duration(seconds: 1),
+                    () {
+                  mapController.movingCamera(
+                      point: widget.mapMediator!.center!, zoom: widget.mapMediator!.zoom ?? 14);
+                },
+              );
+            }
           },
         ),
       ],

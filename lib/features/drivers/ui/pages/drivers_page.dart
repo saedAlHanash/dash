@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:image_multi_type/image_multi_type.dart';
 import 'package:map_package/map/bloc/ather_cubit/ather_cubit.dart';
 import 'package:qareeb_dash/core/widgets/not_found_widget.dart';
 import 'package:qareeb_models/extensions.dart';
@@ -16,22 +17,20 @@ import '../../../../core/util/shared_preferences.dart';
 import '../../../../core/widgets/change_user_state_btn.dart';
 import '../../../../core/widgets/my_button.dart';
 import '../../../../core/widgets/saed_taple_widget.dart';
+import '../../../../generated/assets.dart';
 import '../../../../router/go_route_pages.dart';
 import '../../bloc/all_drivers/all_drivers_cubit.dart';
 import '../widget/drivers_filter_widget.dart';
 import '../widget/trans_drivers_filter_widget.dart';
 
 final clientTableHeader = [
-  if(!isTrans)
-  "حالة المحرك",
+  if (!isTrans) "حالة المحرك",
   "id",
   "اسم السائق",
   "رقم الهاتف",
-  if(!isTrans)
-  "حالة السائق",
+  if (!isTrans) "حالة السائق",
   "IMEI",
-  if(!isTrans)
-  "تاريخ التسجيل",
+  if (!isTrans) "تاريخ التسجيل",
   if (isQareebAdmin) ...[
     "الولاء",
     "OTP",
@@ -107,8 +106,26 @@ class _DriverPageState extends State<DriverPage> {
               children: [
                 BlocBuilder<AllDriversCubit, AllDriversInitial>(
                   builder: (context, state) {
-                    if(isTrans) {
+                    if (isTrans) {
                       return TransDriversFilterWidget(
+                        onApply: (request) {
+                          context.read<AllDriversCubit>().getAllDrivers(
+                                context,
+                                command: context
+                                    .read<AllDriversCubit>()
+                                    .state
+                                    .command
+                                    .copyWith(
+                                      driversFilterRequest: request,
+                                      skipCount: 0,
+                                      totalCount: 0,
+                                    ),
+                              );
+                        },
+                        command: state.command,
+                      );
+                    }
+                    return DriversFilterWidget(
                       onApply: (request) {
                         context.read<AllDriversCubit>().getAllDrivers(
                               context,
@@ -119,21 +136,6 @@ class _DriverPageState extends State<DriverPage> {
                                         totalCount: 0,
                                       ),
                             );
-                      },
-                      command: state.command,
-                    );
-                    }
-                    return DriversFilterWidget(
-                      onApply: (request) {
-                        context.read<AllDriversCubit>().getAllDrivers(
-                          context,
-                          command:
-                          context.read<AllDriversCubit>().state.command.copyWith(
-                            driversFilterRequest: request,
-                            skipCount: 0,
-                            totalCount: 0,
-                          ),
-                        );
                       },
                       command: state.command,
                     );
@@ -155,16 +157,13 @@ class _DriverPageState extends State<DriverPage> {
                       data: list
                           .mapIndexed(
                             (index, e) => [
-                              if(!isTrans)
-                              EnginWidget(driverImei: e.qarebDeviceimei),
+                              if (!isTrans) EnginWidget(engineStatus: e.engineStatus),
                               e.id.toString(),
                               e.fullName,
                               e.phoneNumber,
-                              if(!isTrans)
-                              e.driverStatus.arabicName,
+                              if (!isTrans) e.driverStatus.arabicName,
                               e.qarebDeviceimei,
-                              if(!isTrans)
-                              e.creationTime?.formatDate,
+                              if (!isTrans) e.creationTime?.formatDate,
                               if (isQareebAdmin) ...[
                                 LoyalSwitchWidget(driver: e),
                                 e.emailConfirmationCode,
@@ -216,25 +215,17 @@ class _DriverPageState extends State<DriverPage> {
 }
 
 class EnginWidget extends StatelessWidget {
-  const EnginWidget({super.key, required this.driverImei});
+  const EnginWidget({super.key, required this.engineStatus});
 
-  final String driverImei;
+  final bool engineStatus;
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AtherCubit, AtherInitial>(
-      builder: (context, state) {
-        if (state.statuses.isLoading) {
-          return const DrawableText(text: '-');
-        }
-        final myDriver = state.result.firstWhereOrNull((e1) => e1.ime == driverImei);
-        var enginWork = myDriver?.params.acc == '1';
-
-        return Icon(
-          Icons.radio_button_on_sharp,
-          color: enginWork ? Colors.green : Colors.red,
-        );
-      },
+    return ImageMultiType(
+      height: 30.0.r,
+      width: 30.0.r,
+      url: Assets.iconsCircle,
+      color: engineStatus ? Colors.green : Colors.red,
     );
   }
 }

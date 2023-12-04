@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_multi_type/image_multi_type.dart';
 import 'package:map_package/map/bloc/set_point_cubit/map_control_cubit.dart';
 
 import '../../features/accounts/bloc/all_transfers_cubit/all_transfers_cubit.dart';
@@ -37,6 +38,7 @@ import '../../features/ticket/bloc/all_ticket_cubit/all_ticket_cubit.dart';
 import '../../features/trip/bloc/active_trips/active_trips_cubit.dart';
 import '../../features/trip/bloc/trips_cubit/trips_cubit.dart';
 import '../../features/wallet/bloc/providers_cubit/providers_cubit.dart';
+import '../../generated/assets.dart';
 import '../../router/go_route_pages.dart';
 import '../app_theme.dart';
 import '../injection/injection_container.dart';
@@ -62,7 +64,9 @@ class MyApp extends StatelessWidget {
           renderHtml: true,
           // textDirection: TextDirection.ltr,
         );
-
+        ImageMultiType.initial(
+          errorImage: const ImageMultiType(url: Assets.iconsLogoWithoutText),
+        );
         return MaterialApp.router(
           scrollBehavior: MyCustomScrollBehavior(),
           debugShowCheckedModeBanner: false,

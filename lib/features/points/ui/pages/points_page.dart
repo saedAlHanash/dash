@@ -31,10 +31,27 @@ class _PointsPageState extends State<PointsPage> {
   void initState() {
     mapController = context.read<MapControllerCubit>();
     Future.delayed(
-      const Duration(seconds: 5),
+      const Duration(seconds: 1),
       () {
         if (context.read<PointsCubit>().state.result.isEmpty) {
           context.read<PointsCubit>().getAllPoints(context);
+        }else{
+          mapController
+            ..clearMap(false)
+            ..addAllPoints(
+              points: context.read<PointsCubit>().state.result,
+              onTapMarker: (item) {
+                final c = MapMediator(
+                  zoom: mapKey.currentState?.controller.zoom,
+                  center: mapKey.currentState?.controller.center.gll,
+                );
+                context.pushNamed(
+                  GoRouteName.pointInfo,
+                  queryParams: {'id': item.id.toString()},
+                  extra: c,
+                );
+              },
+            );
         }
       },
     );

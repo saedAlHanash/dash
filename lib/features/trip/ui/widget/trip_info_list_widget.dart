@@ -142,29 +142,30 @@ class _DriverInfo extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          MyTableWidget(
-            children: {
-              'ID': InkWell(
-                onTap: () {
-                  context.pushNamed(GoRouteName.driverInfo,
-                      queryParams: {'id': trip.driverId.toString()});
-                },
-                child: DrawableText(
-                  selectable: false,
-                  size: 16.0.sp,
-                  matchParent: true,
-                  textAlign: TextAlign.center,
-                  underLine: true,
-                  text: trip.driverId.toString(),
-                  color: Colors.blue,
+          if (!trip.driverId.isEmpty)
+            MyTableWidget(
+              children: {
+                'ID': InkWell(
+                  onTap: () {
+                    context.pushNamed(GoRouteName.driverInfo,
+                        queryParams: {'id': trip.driverId.toString()});
+                  },
+                  child: DrawableText(
+                    selectable: false,
+                    size: 16.0.sp,
+                    matchParent: true,
+                    textAlign: TextAlign.center,
+                    underLine: true,
+                    text: trip.driverId.toString(),
+                    color: Colors.blue,
+                  ),
                 ),
-              ),
-              'IMEI': trip.driver.imei,
-              'اسم ': trip.driver.fullName,
-              'رقم هاتف  ': trip.driver.phoneNumber,
-            },
-            title: 'معلومات السائق',
-          ),
+                'IMEI': trip.driver.imei,
+                'اسم ': trip.driver.fullName,
+                'رقم هاتف  ': trip.driver.phoneNumber,
+              },
+              title: 'معلومات السائق',
+            ),
           30.0.verticalSpace,
           MyTableWidget(
             children: {
@@ -188,20 +189,21 @@ class _DriverInfo extends StatelessWidget {
             },
             title: 'معلومات الزبون',
           ),
-          MyTableWidget(
-            children: {
-              'تصنيف ': trip.carCategory.name,
-              'ماركة': trip.driver.carType.carBrand,
-              'موديل  ': trip.driver.carType.carModel,
-              'لون': trip.driver.carType.carColor,
-              'رقم اللوحة': trip.driver.carType.carNumber,
-              'عدد المقاعد': trip.driver.carType.seatsNumber.toString(),
-              'محافظة السيارة': trip.driver.carType.carGovernorate,
-              'الشركة الصانعة': trip.driver.carType.manufacturingYear,
-              'النوع': trip.driver.carType.type,
-            },
-            title: 'معلومات السيارة',
-          ),
+          if (!trip.driverId.isEmpty)
+            MyTableWidget(
+              children: {
+                'تصنيف ': trip.carCategory.name,
+                'ماركة': trip.driver.carType.carBrand,
+                'موديل  ': trip.driver.carType.carModel,
+                'لون': trip.driver.carType.carColor,
+                'رقم اللوحة': trip.driver.carType.carNumber,
+                'عدد المقاعد': trip.driver.carType.seatsNumber.toString(),
+                'محافظة السيارة': trip.driver.carType.carGovernorate,
+                'الشركة الصانعة': trip.driver.carType.manufacturingYear,
+                'النوع': trip.driver.carType.type,
+              },
+              title: 'معلومات السيارة',
+            ),
         ],
       ),
     );
@@ -236,20 +238,20 @@ class TripDateInfo extends StatelessWidget {
             trip.endDate?.formatDateTime,
           ],
           [
-            'وقت الانتظار',
-            '${trip.acceptDate?.difference(trip.reqestDate!).inMinutes.round()} دقيقة',
-          ],
-          [
-            'الوقت الفعلي لوصول السائق',
-            '${trip.startDate?.difference(trip.acceptDate!).inMinutes.round()} دقيقة',
-          ],
-          [
             'الوقت المقدر للرحلة',
             '${(trip.estimatedDuration ~/ 60)} دقيقة',
           ],
           [
+            'وقت الانتظار',
+            '${trip.acceptDate.getMinDifference(trip.reqestDate)} دقيقة',
+          ],
+          [
+            'الوقت الفعلي لوصول السائق',
+            '${trip.startDate.getMinDifference(trip.acceptDate)} دقيقة',
+          ],
+          [
             'الوقت الفعلي للرحلة',
-            '${trip.endDate?.difference(trip.startDate!).inMinutes.round()} دقيقة',
+            '${trip.endDate.getMinDifference(trip.startDate)} دقيقة',
           ],
         ],
       ),
@@ -337,7 +339,7 @@ class _TripActions extends StatelessWidget {
               if (cState.statuses.isLoading) {
                 return MyStyle.loadingWidget();
               }
-              if (isQareebAdmin) {
+              if (!isQareebAdmin) {
                 return 0.0.verticalSpace;
               }
               return MyButton(

@@ -7,6 +7,7 @@ class DriversFilterRequest {
   int? carCategoryId;
   Gender? gender;
   bool? isExamined;
+  bool? engineStatus;
   DriverStatus? status;
 
   DriversFilterRequest({
@@ -16,6 +17,7 @@ class DriversFilterRequest {
     this.carCategoryId,
     this.gender,
     this.isExamined,
+    this.engineStatus,
     this.status,
   });
 
@@ -27,6 +29,7 @@ class DriversFilterRequest {
     carCategoryId = null;
     gender = null;
     isExamined = null;
+    engineStatus = null;
     status = null;
   }
 
@@ -37,6 +40,7 @@ class DriversFilterRequest {
     int? carCategoryId,
     Gender? gender,
     bool? isExamined,
+    bool? engineStatus,
     DriverStatus? status,
   }) {
     return DriversFilterRequest(
@@ -46,6 +50,7 @@ class DriversFilterRequest {
       carCategoryId: carCategoryId ?? this.carCategoryId,
       gender: gender ?? this.gender,
       isExamined: isExamined ?? this.isExamined,
+      engineStatus: engineStatus ?? this.engineStatus,
       status: status ?? this.status,
     );
   }
@@ -58,6 +63,7 @@ class DriversFilterRequest {
       'carCategoryId': carCategoryId,
       'Gender': gender?.index,
       'isExaminated': isExamined,
+      'engineStatus': engineStatus,
       'Status': status?.index,
     };
   }
@@ -70,6 +76,7 @@ class DriversFilterRequest {
       carCategoryId: map['carCategoryId'] ?? '',
       gender: map['gender'] ?? '',
       isExamined: map['isExaminated'] ?? '',
+      engineStatus: map['engineStatus'] ?? '',
       status: map['status'] ?? '',
     );
   }
