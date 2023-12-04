@@ -6,6 +6,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:map_package/map/bloc/map_controller_cubit/map_controller_cubit.dart';
 import 'package:map_package/map/bloc/search_location/search_location_cubit.dart';
 import 'package:map_package/map/ui/widget/map_widget.dart';
+import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_models/points/data/model/trip_point.dart';
 
 import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/note_message.dart';
@@ -27,6 +29,27 @@ class _PointsPageState extends State<PointsPage> {
 
   final mapKey = GlobalKey<MapWidgetState>();
 
+  void addPoints(List<TripPoint> result) {
+    mapController
+      ..clearMap(false)
+      ..addAllPoints(
+        points: result,
+        onTapMarker: (item) {
+          final c = MapMediator(
+            zoom: mapKey.currentState?.controller.zoom,
+            center: mapKey.currentState?.controller.center.gll,
+            pointId: (item as TripPoint).id,
+          );
+
+          context.pushNamed(
+            GoRouteName.pointInfo,
+            queryParams: {'id': item.id.toString()},
+            extra: c,
+          );
+        },
+      );
+  }
+
   @override
   void initState() {
     mapController = context.read<MapControllerCubit>();
@@ -35,23 +58,8 @@ class _PointsPageState extends State<PointsPage> {
       () {
         if (context.read<PointsCubit>().state.result.isEmpty) {
           context.read<PointsCubit>().getAllPoints(context);
-        }else{
-          mapController
-            ..clearMap(false)
-            ..addAllPoints(
-              points: context.read<PointsCubit>().state.result,
-              onTapMarker: (item) {
-                final c = MapMediator(
-                  zoom: mapKey.currentState?.controller.zoom,
-                  center: mapKey.currentState?.controller.center.gll,
-                );
-                context.pushNamed(
-                  GoRouteName.pointInfo,
-                  queryParams: {'id': item.id.toString()},
-                  extra: c,
-                );
-              },
-            );
+        } else {
+          addPoints(context.read<PointsCubit>().state.result);
         }
       },
     );
@@ -63,24 +71,8 @@ class _PointsPageState extends State<PointsPage> {
     return MultiBlocListener(
       listeners: [
         BlocListener<PointsCubit, PointsInitial>(
-          listener: (context, state) {
-            mapController
-              ..clearMap(false)
-              ..addAllPoints(
-                points: state.result,
-                onTapMarker: (item) {
-                  final c = MapMediator(
-                    zoom: mapKey.currentState?.controller.zoom,
-                    center: mapKey.currentState?.controller.center.gll,
-                  );
-                  context.pushNamed(
-                    GoRouteName.pointInfo,
-                    queryParams: {'id': item.id.toString()},
-                    extra: c,
-                  );
-                },
-              );
-          },
+          listenWhen: (p, c) => c.statuses.done,
+          listener: (context, state) => addPoints(state.result),
         ),
       ],
       child: Scaffold(
@@ -120,6 +112,7 @@ class _PointsPageState extends State<PointsPage> {
                                   final c = MapMediator(
                                     zoom: mapKey.currentState?.controller.zoom,
                                     center: mapKey.currentState?.controller.center.gll,
+                                    pointId: spinnerItem.id,
                                   );
                                   context.pushNamed(
                                     GoRouteName.pointInfo,
@@ -144,7 +137,7 @@ class _PointsPageState extends State<PointsPage> {
             : null,
         body: MapWidget(
           key: mapKey,
-          updateMarkerWithZoom: true,
+          // updateMarkerWithZoom: true,
           search: () async {
             NoteMessage.showCustomBottomSheet(
               context,
@@ -170,8 +163,10 @@ class _PointsPageState extends State<PointsPage> {
 class MapMediator {
   LatLng? center;
   double? zoom;
+  int pointId;
 
   MapMediator({
+    this.pointId = 0,
     required this.center,
     required this.zoom,
   });
@@ -180,6 +175,7 @@ class MapMediator {
     return {
       'center': center,
       'zoom': zoom,
+      'pointId': pointId,
     };
   }
 }

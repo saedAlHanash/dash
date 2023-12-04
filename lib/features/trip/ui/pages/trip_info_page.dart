@@ -74,7 +74,9 @@ class _TripInfoPageState extends State<TripInfoPage> {
             20.0.horizontalSpace,
             const Expanded(
               flex: 4,
-              child: MapWidget(),
+              child: MapWidget(
+                clustering: false,
+              ),
             ),
           ],
         ),

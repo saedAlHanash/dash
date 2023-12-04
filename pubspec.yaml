@@ -31,26 +31,26 @@ dependencies:
     git:
       url: https://github.com/saedAlHanash/image_multi_type
 
-  drawable_text:
-    git:
-      url: https://github.com/saedAlHanash/drawable_text
-      ref: html
+#  drawable_text:
+#    git:
+#      url: https://github.com/saedAlHanash/drawable_text
+#      ref: html
+#
+#  qareeb_models:
+#    git:
+#      url: https://github.com/saedAlHanash/qareeb_models
+#
+#  map_package:
+#    git:
+#      url: https://github.com/saedAlHanash/map_qareeb
+#      ref: html
 
-  qareeb_models:
-    git:
-      url: https://github.com/saedAlHanash/qareeb_models
 
   map_package:
-    git:
-      url: https://github.com/saedAlHanash/map_qareeb
-      ref: html
+    path: ../../packages/map_package
 
-  #  #
-  #  map_package:
-  #    path: ../../packages/map_package
-  #
-  #  qareeb_models:
-  #    path: ../../packages/qareeb_models
+  qareeb_models:
+    path: ../../packages/qareeb_models
 
   floating_action_bubble: ^1.1.4
   excel: ^2.1.0

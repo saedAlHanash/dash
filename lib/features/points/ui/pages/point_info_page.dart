@@ -74,15 +74,24 @@ class _PointInfoPageState extends State<PointInfoPage> {
 
     mapController = context.read<MapControllerCubit>();
 
+    addPoints(context.read<PointsCubit>().state.result);
+
+    super.initState();
+  }
+
+  void addPoints(List<TripPoint> result) {
+    result.removeWhere((e) => e.id == widget.mapMediator?.pointId);
     mapController
       ..clearMap(false)
       ..addAllPoints(
-        points: context.read<PointsCubit>().state.result,
+        points: result,
         onTapMarker: (item) {
           final c = MapMediator(
             zoom: mapKey.currentState?.controller.zoom,
             center: mapKey.currentState?.controller.center.gll,
+            pointId: (item as TripPoint).id,
           );
+
           context.pushNamed(
             GoRouteName.pointInfo,
             queryParams: {'id': item.id.toString()},
@@ -90,17 +99,6 @@ class _PointInfoPageState extends State<PointInfoPage> {
           );
         },
       );
-
-    // if (widget.mapMediator != null && widget.mapMediator!.center != null) {
-    //   Future.delayed(
-    //     const Duration(seconds: 1),
-    //     () {
-    //       mapController.movingCamera(
-    //           point: widget.mapMediator!.center!, zoom: widget.mapMediator!.zoom ?? 14);
-    //     },
-    //   );
-    // }
-    super.initState();
   }
 
   @override
@@ -125,24 +123,8 @@ class _PointInfoPageState extends State<PointInfoPage> {
           },
         ),
         BlocListener<PointsCubit, PointsInitial>(
-          listener: (context, state) {
-            mapController
-              ..clearMap(false)
-              ..addAllPoints(
-                points: state.result,
-                onTapMarker: (item) {
-                  final c = MapMediator(
-                    zoom: mapKey.currentState?.controller.zoom,
-                    center: mapKey.currentState?.controller.center.gll,
-                  );
-                  context.pushNamed(
-                    GoRouteName.pointInfo,
-                    queryParams: {'id': item.id.toString()},
-                    extra: c,
-                  );
-                },
-              );
-          },
+          listenWhen: (p, c) => c.statuses.done,
+          listener: (context, state) => addPoints(state.result),
         ),
         BlocListener<CreatePointCubit, CreatePointInitial>(
           listenWhen: (p, c) => c.statuses.done,
@@ -195,9 +177,10 @@ class _PointInfoPageState extends State<PointInfoPage> {
             if (widget.mapMediator != null && widget.mapMediator!.center != null) {
               Future.delayed(
                 const Duration(seconds: 1),
-                    () {
+                () {
                   mapController.movingCamera(
-                      point: widget.mapMediator!.center!, zoom: widget.mapMediator!.zoom ?? 14);
+                      point: widget.mapMediator!.center!,
+                      zoom: widget.mapMediator!.zoom ?? 14);
                 },
               );
             }
@@ -230,7 +213,6 @@ class _PointInfoPageState extends State<PointInfoPage> {
                 Expanded(
                   child: MapWidget(
                     key: mapKey,
-                    updateMarkerWithZoom: true,
                     initialPoint: request.getLatLng,
                     search: search,
                     onMapClick: !canEdit && !createMode

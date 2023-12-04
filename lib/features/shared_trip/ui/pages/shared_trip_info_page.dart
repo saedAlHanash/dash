@@ -154,7 +154,7 @@ class _SharedTripInfoPageState extends State<SharedTripInfoPage> {
             ),
             20.0.horizontalSpace,
             const Expanded(
-              child: MapWidget(),
+              child: MapWidget(    clustering: false,),
             ),
           ],
         ),

@@ -101,7 +101,7 @@ class _CreateTempTripPageState extends State<TempTripInfoPage> {
                         ),
                       ),
                       const Expanded(
-                        child: MapWidget(),
+                        child: MapWidget(    clustering: false,),
                       ),
                     ],
                   ),

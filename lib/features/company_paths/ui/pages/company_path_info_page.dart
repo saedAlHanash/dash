@@ -98,7 +98,7 @@ class _CreateCompanyPathPageState extends State<CompanyPathInfoPage> {
                         ),
                       ),
                       const Expanded(
-                        child: MapWidget(),
+                        child: MapWidget(    clustering: false,),
                       ),
                     ],
                   ),

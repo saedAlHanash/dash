@@ -1,41 +1,71 @@
 {
   "result": {
-    "items": [
+    "debts": [
       {
-        "id": 0,
-        "memberId": 0,
-        "user": {
-          "id": 0,
-          "userName": "string",
-          "fullName": "string",
-          "name": "string",
-          "surname": "string",
-          "phoneNumber": "string",
-          "avatar": "string",
-          "emergencyPhone": "string",
-          "userType": "string",
-          "accountBalance": 0
-        },
-        "member":   {
-          "id": 0,
-          "fullName": "string",
-          "imageUrl": "string",
-          "address": "string",
-          "late": 0,
-          "longe": 0,
-          "userName": "string",
-          "password": "string",
-          "phoneNo": "string",
-          "facility": "string",
-          "idNumber": "string",
-          "collegeIdNumber": "string",
-          "session": "string",
-          "institutionId": 0,
-          "emergencyPhone": "string"
-        },
-        "date": "2023-11-28T12:30:49.690Z"
+        "driverShare": 11620.0,
+        "totalCost": 14000.0,
+        "costAfterDiscount": null,
+        "discountAmount": null,
+        "sharedRequestId": null,
+        "tripId": null,
+        "driverId": 949,
+        "date": "2023-09-29T18:21:18.692398",
+        "oilShare": 140.0,
+        "goldShare": 140.0,
+        "tiresShare": 140.0,
+        "gasShare": null,
+        "agencyShare": null,
+        "id": 162
+      },
+      {
+        "driverShare": 31540.0,
+        "totalCost": 38000.0,
+        "costAfterDiscount": null,
+        "discountAmount": null,
+        "sharedRequestId": null,
+        "tripId": null,
+        "driverId": 949,
+        "date": "2023-09-29T17:25:22.053247",
+        "oilShare": 380.0,
+        "goldShare": 380.0,
+        "tiresShare": 380.0,
+        "gasShare": null,
+        "agencyShare": null,
+        "id": 161
       }
     ],
-    "totalCount": 0
-  }
+    "chargings": [
+      {
+        "date": "2023-09-29T17:20:08.219122",
+        "status": 1,
+        "amount": 38000,
+        "accountId": 921,
+        "type": 1,
+        "paymentSourceId": null,
+        "proccessId": null,
+        "chargerId": 949,
+        "id": 286
+      },
+      {
+        "date": "2023-09-29T17:18:14.348967",
+        "status": 1,
+        "amount": 38000,
+        "accountId": 921,
+        "type": 1,
+        "paymentSourceId": null,
+        "proccessId": null,
+        "chargerId": 949,
+        "id": 284
+      }
+    ],
+    "lastTransferFromDriver": null,
+    "lastTransferFromCompanyToDriver": null,
+    "requiredAmountFromDriver": 76000.0,
+    "requiredAmountFromCompany": 43160.0
+  },
+  "targetUrl": null,
+  "success": true,
+  "error": null,
+  "unAuthorizedRequest": false,
+  "__abp": true
 }

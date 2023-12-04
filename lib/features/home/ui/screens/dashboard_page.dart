@@ -344,7 +344,7 @@ class _BusesMapState extends State<BusesMap> {
           if (state.statuses.isLoading) {
             return MyStyle.loadingWidget();
           }
-          return const MapWidget(atherListener: false);
+          return const MapWidget(atherListener: false,);
         },
       ),
     );
