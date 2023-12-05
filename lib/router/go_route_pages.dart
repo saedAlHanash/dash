@@ -26,6 +26,7 @@ import '../features/auth/ui/pages/login_page.dart';
 import '../features/bus_trips/bloc/bus_trip_by_id_cubit/bus_trip_by_id_cubit.dart';
 import '../features/bus_trips/bloc/create_bus_trip_cubit/create_bus_trip_cubit.dart';
 import '../features/bus_trips/ui/pages/create_bus_trip_page.dart';
+import '../features/buses/bloc/all_buses_cubit/all_buses_cubit.dart';
 import '../features/buses/bloc/create_bus_cubit/create_bus_cubit.dart';
 import '../features/buses/ui/pages/create_bus_page.dart';
 import '../features/car_catigory/bloc/create_car_category_cubit/create_car_category_cubit.dart';
@@ -62,6 +63,7 @@ import '../features/subscriptions/ui/pages/subscription_info_page.dart';
 import '../features/super_user/bloc/create_super_user_cubit/create_super_user_cubit.dart';
 import '../features/super_user/data/response/super_users_response.dart';
 import '../features/temp_trips/bloc/add_point_cubit/add_point_cubit.dart';
+import '../features/temp_trips/bloc/all_temp_trips_cubit/all_temp_trips_cubit.dart';
 import '../features/temp_trips/bloc/create_temp_trip_cubit/create_temp_trip_cubit.dart';
 import '../features/temp_trips/bloc/temp_trip_by_id_cubit/temp_trip_by_id_cubit.dart';
 import '../features/temp_trips/ui/pages/create_temp_trip_page.dart';
@@ -377,6 +379,8 @@ final appGoRouter = GoRouter(
         final tIndex = int.tryParse(state.queryParams['t_index'] ?? '') ?? 0;
 
         final providers = [
+          BlocProvider(create: (_) => di.sl<AllBusesCubit>()),
+          BlocProvider(create: (_) => di.sl<AllTempTripsCubit>()),
           BlocProvider(create: (_) => di.sl<CreateBusTripCubit>()),
           BlocProvider(
             create: (_) => di.sl<BusTripBuIdCubit>()..getBusTripBuId(context, id: id),

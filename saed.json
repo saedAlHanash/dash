@@ -1,53 +1,35 @@
 {
-  "result": {
-    "signature": null,
-    "membersCount": 7,
-    "membersWithSubscription": 0,
-    "membersWithoutSubscription": 7,
-    "imeis": [
-      {
-        "id": 7,
-        "ime": "354778341875188"
-      },
-      {
-        "id": 9,
-        "ime": "354017116595949"
-      }
-    ],
-    "notificationPoints": [
-      {
-        "pointId": 103,
-        "pointName": "110 Damascus Damascus ",
-        "pointArName": "مفرق القزاز",
-        "latitude": 33.48950452398503,
-        "longitude": 36.32357430620943,
-        "subscriperCount": 2
-      },
-      {
-        "pointId": 168,
-        "pointName": "   AlRaaees Square",
-        "pointArName": "جرمانا ساحة الرئيس",
-        "latitude": 33.488817,
-        "longitude": 36.339898,
-        "subscriperCount": 1
-      },
-      {
-        "pointId": 46,
-        "pointName": "AL Abaseen ",
-        "pointArName": "ساحة العباسيين",
-        "latitude": 33.524419799984635,
-        "longitude": 36.319204297128984,
-        "subscriperCount": 2
-      },
-      {
-        "pointId": 40,
-        "pointName": "Baramkeh",
-        "pointArName": "مجمع الامويين ",
-        "latitude": 33.50776372967414,
-        "longitude": 36.28786488846712,
-        "subscriperCount": 1
-      }
-    ],
-    "currentAttendencesInBuses": []
-  }
+  "result": [
+    "354778341879115",
+    "354778341879594",
+    "354778343135813",
+    "354778343134253",
+    "354778343135714",
+    "354778343136118",
+    "354778343135995",
+    "354778343135730",
+    "354778343135961",
+    "354778343136597",
+    "354778343138114",
+    "354778343135573",
+    "354778343133362",
+    "354778343134113",
+    "354778343137991",
+    "354778343134162",
+    "354778343137033",
+    "354778343137082",
+    "354778343136316",
+    "354778343133636",
+    "354778343133370",
+    "354778343134204",
+    "354778343135680",
+    "354778343134949",
+    "354778343135326",
+    "354778343133685"
+  ],
+  "targetUrl": null,
+  "success": true,
+  "error": null,
+  "unAuthorizedRequest": false,
+  "__abp": true
 }

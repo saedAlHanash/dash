@@ -49,9 +49,10 @@ class _CreateBusTripPageState extends State<CreateBusTripPage> {
   @override
   void initState() {
     request.category =
-        widget.qareebPoints ? BusTripCategory.qareebPoints : BusTripCategory.customPoints;
+    widget.qareebPoints ? BusTripCategory.qareebPoints : BusTripCategory.customPoints;
 
     context.read<AllBusesCubit>().getBuses(context, command: Command.noPagination());
+    context.read<AllTempTripsCubit>().getTempTrips(context, command: Command.noPagination());
 
     super.initState();
   }
@@ -218,7 +219,7 @@ class _CreateBusTripPageState extends State<CreateBusTripPage> {
                                 buttonText: const Text('الباصات'),
                                 searchable: true,
                                 items: state.getSpinnerItem.mapIndexed(
-                                  (i, e) {
+                                      (i, e) {
                                     return MultiSelectItem<int>(e.id, e.name);
                                   },
                                 ).toList(),
@@ -250,7 +251,8 @@ class _CreateBusTripPageState extends State<CreateBusTripPage> {
                                   ),
                                   label: 'نموذج الرحلة',
                                   onChanged: (spinnerItem) {
-                                    var tempTrip = spinnerItem.item as TempTripModel;
+                                    var tempTrip = (spinnerItem.item ??
+                                        TempTripModel.fromJson({})) as TempTripModel;
                                     request.tripTemplateId = tempTrip.id;
                                     request.pathId = tempTrip.pathId;
                                     request.distance = tempTrip.distance;
@@ -269,7 +271,7 @@ class _CreateBusTripPageState extends State<CreateBusTripPage> {
                             items: BusTripType.values
                                 .spinnerItems(selected: [request.busTripType]),
                             onChanged: (spinnerItem) =>
-                                request.busTripType = spinnerItem.item,
+                            request.busTripType = spinnerItem.item,
                           ),
                         ),
                       ],
