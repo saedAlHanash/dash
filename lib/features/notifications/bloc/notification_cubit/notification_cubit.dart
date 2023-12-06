@@ -33,8 +33,7 @@ class CreateNotificationCubit extends Cubit<CreateNotificationInitial> {
   Future<Pair<bool?, String?>> _createNotificationApi() async {
     final response = await APIService().postApi(
       url: PostUrl.sendNotificaion,
-      query: state.request.toMap(),
-      body: state.request.toMapBody(),
+      body: state.request.toMap(),
     );
 
     if (response.statusCode == 200) {

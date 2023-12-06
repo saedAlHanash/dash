@@ -26,10 +26,9 @@ class _NotificationPageState extends State<NotificationPage> {
       body: BlocListener<CreateNotificationCubit, CreateNotificationInitial>(
         listenWhen: (p, c) => c.statuses.done,
         listener: (context, state) {
-          NoteMessage.showDoneDialog(
-            context,
-            text: 'تم ارسال الاشعار',
-            onCancel: () => window.history.back(),
+          NoteMessage.showSuccessSnackBar(
+            context: context,
+            message: 'تم ارسال الاشعار',
           );
         },
         child: BlocBuilder<CreateNotificationCubit, CreateNotificationInitial>(
