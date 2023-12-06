@@ -310,11 +310,7 @@ class PatchUrl {
 }
 
 String get baseUrl {
-  // final s = AppSharedPreference.isTestMode
-  //     ? 'live.qareeb-maas.com'
-  //     : 'livetest.qareeb-maas.com';
-
-  return testUrl;
+  // return testUrl;
   return liveUrl;
 }
 
