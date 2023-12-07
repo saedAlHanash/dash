@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:drawable_text/drawable_text.dart';
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_admin_scaffold/admin_scaffold.dart';
+import '../../../../core/widgets/admin_side_bar_widget/admin_scaffold.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:map_package/map/bloc/ather_cubit/ather_cubit.dart';
@@ -271,20 +271,18 @@ class _HomePageState extends State<HomePage> {
                         route: "/transactions",
                       ),
 
-                    if (isAllowed(AppPermissions.SETTINGS))
-                      ...[
-                        const AdminMenuItem(
-                          title: 'محاسبة السائقين',
-                          route: "/payToDrivers",
-                          icon: Icons.attach_money_outlined,
-                        ),
-                        const AdminMenuItem(
-                          title: 'محاسبة الوكلاء',
-                          route: "/payToAgency",
-                          icon: Icons.attach_money_outlined,
-                        ),
-                      ],
-
+                    if (isAllowed(AppPermissions.SETTINGS)) ...[
+                      const AdminMenuItem(
+                        title: 'محاسبة السائقين',
+                        route: "/payToDrivers",
+                        icon: Icons.attach_money_outlined,
+                      ),
+                      const AdminMenuItem(
+                        title: 'محاسبة الوكلاء',
+                        route: "/payToAgency",
+                        icon: Icons.attach_money_outlined,
+                      ),
+                    ],
 
                     // const AdminMenuItem(title: 'التقاص', route: "/payToDrivers"),
                   ],
@@ -292,19 +290,17 @@ class _HomePageState extends State<HomePage> {
               ],
 
               if (isAllowed(AppPermissions.MESSAGES))
-                AdminMenuItem(
-                    children: [
-                      if (isAllowed(AppPermissions.SETTINGS))
-                        const AdminMenuItem(
-                            icon: Icons.notification_add,
-                            title: 'إشعارات الزبائن',
-                            route: "/notification"),
-                      const AdminMenuItem(
-                          icon: Icons.message, title: 'الشكاوى', route: "/ticket"),
-                      const AdminMenuItem(
-                          icon: Icons.sos, title: 'رسائل الاستغاثة', route: "/sos"),
-                    ],
-                    icon: Icons.support_agent, title: 'التواصل'),
+                AdminMenuItem(children: [
+                  if (isAllowed(AppPermissions.SETTINGS))
+                    const AdminMenuItem(
+                        icon: Icons.notification_add,
+                        title: 'إشعارات الزبائن',
+                        route: "/notification"),
+                  const AdminMenuItem(
+                      icon: Icons.message, title: 'الشكاوى', route: "/ticket"),
+                  const AdminMenuItem(
+                      icon: Icons.sos, title: 'رسائل الاستغاثة', route: "/sos"),
+                ], icon: Icons.support_agent, title: 'التواصل'),
 
               if (isAllowed(AppPermissions.SETTINGS))
                 const AdminMenuItem(
@@ -524,7 +520,6 @@ class _HomePageState extends State<HomePage> {
                     ],
                     child: const PlanTripsPage(),
                   );
-
 
                 case "/allPlans":
                   return MultiBlocProvider(

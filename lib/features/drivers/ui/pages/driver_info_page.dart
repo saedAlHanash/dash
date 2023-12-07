@@ -168,7 +168,7 @@ class _DriverTableInfo extends StatelessWidget {
 }
 
 class ItemImage extends StatelessWidget {
-  const ItemImage({required this.image, required this.text});
+  const ItemImage({super.key, required this.image, required this.text});
 
   final String image;
 

@@ -64,7 +64,6 @@ dependencies:
   #  responsive_sizer: ^3.1.1
   shared_preferences: any
   bloc: ^8.1.2
-  flutter_admin_scaffold: ^1.2.0
   lottie: any
   flutter_svg: any
   cached_network_image: any

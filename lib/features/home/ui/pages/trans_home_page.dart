@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:drawable_text/drawable_text.dart';
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_admin_scaffold/admin_scaffold.dart';
+import '../../../../core/widgets/admin_side_bar_widget/admin_scaffold.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:map_package/map/bloc/ather_cubit/ather_cubit.dart';
