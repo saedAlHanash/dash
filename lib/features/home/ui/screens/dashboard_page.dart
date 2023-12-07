@@ -16,7 +16,7 @@ import '../../../../core/injection/injection_container.dart';
 import '../../../../core/strings/enum_manager.dart';
 import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/my_style.dart';
-import '../../../../core/widgets/images/image_multi_type.dart';
+import 'package:image_multi_type/image_multi_type.dart';
 import '../../../../core/widgets/my_card_widget.dart';
 import '../../../buses/bloc/all_buses_cubit/all_buses_cubit.dart';
 import '../../../map/bloc/ather_cubit/ather_cubit.dart';

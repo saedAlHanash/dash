@@ -75,6 +75,7 @@ final appGoRouter = GoRouter(
     //Sign in status, then return the appropriate route you want to redirect to,
     //make sure your login/authentication bloc is provided at the top level
     //of your app
+
     if (!AppSharedPreference.isLogin) {
       return _GoRoutePath.loginPage;
     } else {

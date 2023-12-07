@@ -3,41 +3,34 @@ import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/widgets/not_found_widget.dart';
 import 'package:qareeb_dash/core/widgets/saed_taple_widget.dart';
-import 'package:qareeb_dash/features/bus_trips/ui/widget/trips_history_filter_widget.dart';
-
-import 'package:qareeb_dash/router/go_route_pages.dart';
+import 'package:qareeb_dash/features/bus_trips/ui/widget/attendances_filter_widget.dart';
 
 import '../../../../core/strings/app_color_manager.dart';
-import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/file_util.dart';
 import '../../../../core/util/my_style.dart';
-
-import '../../bloc/all_bus_trips_cubit/all_bus_trips_cubit.dart';
-import '../../bloc/delete_bus_trip_cubit/delete_bus_trip_cubit.dart';
-import '../../bloc/trip_history_cubit/trip_history_cubit.dart';
+import '../../bloc/attendances_cubit/attendances_cubit.dart';
+import '../../bloc/record_check_cubit/record_check_cubit.dart';
+import '../widget/record_check_filter_widget.dart';
 
 final _super_userList = [
   'ID',
   'اسم الطالب',
-  'اسم الرحلة',
-  'اسم الباص',
-  'نوع العملية',
+  'اسم المفتش',
   'حالة اشتراك الطالب',
   'تاريخ العملية',
 ];
 
-class TripHistoryPage extends StatefulWidget {
-  const TripHistoryPage({super.key});
+class RecordCheckPage extends StatefulWidget {
+  const RecordCheckPage({super.key});
 
   @override
-  State<TripHistoryPage> createState() => _TripHistoryPageState();
+  State<RecordCheckPage> createState() => _RecordCheckPageState();
 }
 
-class _TripHistoryPageState extends State<TripHistoryPage> {
+class _RecordCheckPageState extends State<RecordCheckPage> {
   var loading = false;
 
   @override
@@ -48,13 +41,13 @@ class _TripHistoryPageState extends State<TripHistoryPage> {
           return FloatingActionButton(
             onPressed: () {
               mState(() => loading = true);
-              context.read<AllTripHistoryCubit>().getTripHistoryAsync(context).then(
+              context.read<RecordCheckCubit>().getRecordsAsync(context).then(
                 (value) {
                   if (value == null) return;
                   saveXls(
                     header: value.first,
                     data: value.second,
-                    fileName: 'تقرير سجلات الصعود والنزول ${DateTime.now().formatDate}',
+                    fileName: 'تقرير سجل التفتيش${DateTime.now().formatDate}',
                   );
 
                   mState(
@@ -72,25 +65,26 @@ class _TripHistoryPageState extends State<TripHistoryPage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            TripsHistoryFilterWidget(
+            RecordCheckFilterWidget(
               onApply: (request) {
-                context.read<AllTripHistoryCubit>().getTripHistory(
+                context.read<RecordCheckCubit>().getRecords(
                       context,
-                      command: context.read<AllTripHistoryCubit>().state.command.copyWith(
-                            historyRequest: request,
+                      command: context.read<RecordCheckCubit>().state.command.copyWith(
+                            recordCheckRequest: request,
                             skipCount: 0,
                             totalCount: 0,
                           ),
                     );
               },
             ),
-            BlocBuilder<AllTripHistoryCubit, AllTripHistoryInitial>(
+            BlocBuilder<RecordCheckCubit, RecordCheckInitial>(
               builder: (context, state) {
                 if (state.statuses.loading) {
                   return MyStyle.loadingWidget();
                 }
                 final list = state.result;
-                if (list.isEmpty) return const NotFoundWidget(text: 'يرجى إضافة رحلات');
+                if (list.isEmpty)
+                  return const NotFoundWidget(text: 'لم يتم اي عملية تفتيش');
                 return SaedTableWidget(
                   command: state.command,
                   title: _super_userList,
@@ -99,9 +93,7 @@ class _TripHistoryPageState extends State<TripHistoryPage> {
                         (i, e) => [
                           e.id.toString(),
                           e.busMember.fullName,
-                          e.busTrip.name,
-                          e.bus.driverName,
-                          e.attendanceType.arabicName,
+                          e.supervisor.fullName,
                           e.isSubscribed
                               ? const DrawableText(
                                   text: 'مشترك',
@@ -121,8 +113,8 @@ class _TripHistoryPageState extends State<TripHistoryPage> {
                       .toList(),
                   onChangePage: (command) {
                     context
-                        .read<AllTripHistoryCubit>()
-                        .getTripHistory(context, command: command);
+                        .read<RecordCheckCubit>()
+                        .getRecords(context, command: command);
                   },
                 );
               },

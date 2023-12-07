@@ -1,20 +1,20 @@
-part of 'failed_attendances_cubit.dart';
+part of 'attendances_cubit.dart';
 
-class FailedAttendancesInitial extends Equatable {
+class AllAttendancesInitial extends Equatable {
   final CubitStatuses statuses;
   final List<AttendancesItem> result;
   final String error;
   final Command command;
 
-  const FailedAttendancesInitial({
+  const AllAttendancesInitial({
     required this.statuses,
     required this.result,
     required this.error,
     required this.command,
   });
 
-  factory FailedAttendancesInitial.initial() {
-    return FailedAttendancesInitial(
+  factory AllAttendancesInitial.initial() {
+    return AllAttendancesInitial(
       result: const <AttendancesItem>[],
       error: '',
       command: Command.initial(),
@@ -26,13 +26,13 @@ class FailedAttendancesInitial extends Equatable {
   @override
   List<Object> get props => [statuses, result, error];
 
-  FailedAttendancesInitial copyWith({
+  AllAttendancesInitial copyWith({
     CubitStatuses? statuses,
     List<AttendancesItem>? result,
     String? error,
     Command? command,
   }) {
-    return FailedAttendancesInitial(
+    return AllAttendancesInitial(
       statuses: statuses ?? this.statuses,
       result: result ?? this.result,
       error: error ?? this.error,

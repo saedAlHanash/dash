@@ -14,14 +14,15 @@ import '../../../../core/util/pair_class.dart';
 import '../../../../core/util/shared_preferences.dart';
 import '../../data/response/attendances_response.dart';
 
-part 'failed_attendances_state.dart';
+part 'attendances_state.dart';
+// part 'attendances_state.dart';
 
-class FailedAttendancesCubit extends Cubit<FailedAttendancesInitial> {
-  FailedAttendancesCubit() : super(FailedAttendancesInitial.initial());
+class AllAttendancesCubit extends Cubit<AllAttendancesInitial> {
+  AllAttendancesCubit() : super(AllAttendancesInitial.initial());
 
-  Future<void> getFailedAttendances(BuildContext context, {Command? command}) async {
+  Future<void> getAttendances(BuildContext context, {Command? command}) async {
     emit(state.copyWith(statuses: CubitStatuses.loading, command: command));
-    final pair = await _getFailedAttendancesApi();
+    final pair = await _getAttendancesApi();
 
     if (pair.first == null) {
       if (context.mounted) {
@@ -34,9 +35,9 @@ class FailedAttendancesCubit extends Cubit<FailedAttendancesInitial> {
     }
   }
 
-  Future<Pair<AttendancesResult?, String?>> _getFailedAttendancesApi() async {
+  Future<Pair<AttendancesResult?, String?>> _getAttendancesApi() async {
     final response = await APIService().getApi(
-      url: GetUrl.failedAttendances,
+      url: GetUrl.attendances,
       query: state.command.toJson(),
     );
 
@@ -47,14 +48,14 @@ class FailedAttendancesCubit extends Cubit<FailedAttendancesInitial> {
     }
   }
 
-  Future<Pair<List<String>, List<List<dynamic>>>?> getFailedAttendancesAsync(
+  Future<Pair<List<String>, List<List<dynamic>>>?> getAttendancesAsync(
       BuildContext context) async {
     var oldSkipCount = state.command.skipCount;
     state.command
       ..maxResultCount = 1.maxInt
       ..skipCount = 0;
 
-    final pair = await _getFailedAttendancesApi();
+    final pair = await _getAttendancesApi();
 
     state.command
       ..maxResultCount = AppSharedPreference.getTotalCount

@@ -15,6 +15,11 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.2
+
+  image_multi_type:
+    git:
+      url: https://github.com/saedAlHanash/image_multi_type
+
   drawable_text:
     git:
       url: https://github.com/saedAlHanash/drawable_text
@@ -32,7 +37,7 @@ dependencies:
   #  responsive_sizer: ^3.1.1
   shared_preferences: any
   bloc: ^8.1.2
-  flutter_admin_scaffold: ^1.2.0
+
   lottie: any
   flutter_dialogs: any
   flutter_svg: any

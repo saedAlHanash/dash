@@ -11,7 +11,7 @@ import 'package:qareeb_dash/core/widgets/table_widget.dart';
 
 import '../../../../core/util/my_style.dart';
 import '../../../../core/widgets/app_bar_widget.dart';
-import '../../../../core/widgets/images/round_image_widget.dart';
+import 'package:image_multi_type/round_image_widget.dart';
 import '../../../../core/widgets/item_info.dart';
 import '../../../../core/widgets/my_button.dart';
 import '../../../../router/go_route_pages.dart';
@@ -145,8 +145,7 @@ class ItemImage extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             RoundImageWidget(
-              url: image,
-              fileBytes: fileBytes,
+              url:fileBytes?? image,
               height: 180.0.r,
               width: 180.0.r,
             ),

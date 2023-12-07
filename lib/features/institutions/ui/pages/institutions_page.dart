@@ -13,7 +13,7 @@ import 'package:qareeb_dash/router/go_route_pages.dart';
 import '../../../../core/strings/enum_manager.dart';
 import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/my_style.dart';
-import '../../../../core/widgets/images/round_image_widget.dart';
+import 'package:image_multi_type/round_image_widget.dart';
 
 import '../../bloc/all_institutions_cubit/all_institutions_cubit.dart';
 import '../../bloc/delete_institution_cubit/delete_institution_cubit.dart';

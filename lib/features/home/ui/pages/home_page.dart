@@ -3,24 +3,23 @@ import 'dart:html';
 import 'package:drawable_text/drawable_text.dart';
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_admin_scaffold/admin_scaffold.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:qareeb_dash/core/widgets/images/image_multi_type.dart';
+import 'package:image_multi_type/image_multi_type.dart';
+import 'package:qareeb_dash/features/bus_trips/ui/pages/record_check_page.dart';
 
 import '../../../../core/injection/injection_container.dart';
 import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/shared_preferences.dart';
-import '../../../../router/go_route_pages.dart';
 import '../../../admins/ui/pages/admins_page.dart';
 import '../../../auth/bloc/change_user_state_cubit/change_user_state_cubit.dart';
-import '../../../auth/ui/pages/login_page.dart';
 import '../../../bus_trips/bloc/delete_bus_trip_cubit/delete_bus_trip_cubit.dart';
+import '../../../bus_trips/ui/pages/attendances_page.dart';
 import '../../../bus_trips/ui/pages/bus_trips_page.dart';
 import '../../../bus_trips/ui/pages/failed_attendances_page.dart';
-import '../../../bus_trips/ui/pages/trip_history_page.dart';
 import '../../../buses/bloc/delete_buss_cubit/delete_buss_cubit.dart';
 import '../../../buses/ui/pages/buses_page.dart';
 import '../../../map/bloc/ather_cubit/ather_cubit.dart';
@@ -42,6 +41,7 @@ import '../../../ticket/bloc/replay_ticket_cubit/replay_ticket_cubit.dart';
 import '../../../ticket/ui/pages/tickets_page.dart';
 import '../../bloc/home1_cubit/home1_cubit.dart';
 import '../../bloc/nav_home_cubit/nav_home_cubit.dart';
+import 'package:qareeb_dash/features/admin_side_bar_widget/admin_scaffold.dart';
 import '../screens/dashboard_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -149,13 +149,26 @@ class _HomePageState extends State<HomePage> {
                   const AdminMenuItem(title: 'نماذج الرحلات', route: NamePaths.tempTrips),
                   if (isAllowed(AppPermissions.tapTripsTable))
                     const AdminMenuItem(title: 'جدول الرحلات', route: NamePaths.trips),
-                  if (isAllowed(AppPermissions.tapTripsHistory))
+                ],
+              ),
+              AdminMenuItem(
+                title: 'عمليات المسح',
+                icon: Icons.qr_code_scanner,
+                children: [
+                  if (isAllowed(AppPermissions.tapTripsHistory)) ...[
                     const AdminMenuItem(
-                        title: 'عمليات المسح', route: NamePaths.tripHistory),
-                  if (isAllowed(AppPermissions.tapTripsHistory))
+                      title: 'سجل المسح',
+                      route: NamePaths.attendances,
+                    ),
                     const AdminMenuItem(
-                        title: 'عمليات المسح الغير مرتبطة',
-                        route: NamePaths.failedAttendances),
+                      title: 'سجل المسح الغير مرتبطة',
+                      route: NamePaths.failedAttendances,
+                    ),
+                    const AdminMenuItem(
+                      title: 'سجل التفتيش',
+                      route: NamePaths.recordCheck,
+                    ),
+                  ]
                 ],
               ),
               AdminMenuItem(
@@ -271,15 +284,18 @@ class _HomePageState extends State<HomePage> {
                     child: const BusTripsPage(),
                   );
 
-                case NamePaths.tripHistory:
+                case NamePaths.attendances:
                   return MultiBlocProvider(
                     providers: [
                       BlocProvider(create: (context) => sl<DeleteBusTripCubit>()),
                     ],
-                    child: const TripHistoryPage(),
+                    child: const AttendancesPage(),
                   );
+
                 case NamePaths.failedAttendances:
                   return const FailedAttendancesPage();
+                case NamePaths.recordCheck:
+                  return const RecordCheckPage();
 
                 case NamePaths.members:
                   return MultiBlocProvider(
@@ -349,11 +365,12 @@ class NamePaths {
   static const trips = '/trips';
   static const members = '/members';
   static const subscriptions = '/subscriptions';
-  static const tripHistory = '/tripHistory';
+  static const attendances = '/attendances';
   static const roles = '/roles';
   static const settings = '/settings';
 
   static const failedAttendances = '/failed_attendancesPage';
+  static const recordCheck = '/record_check';
 }
 
 void addQueryParameters({required Map<String, dynamic> params}) {

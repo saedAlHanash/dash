@@ -9,7 +9,7 @@ import 'package:go_router/go_router.dart';
 import '../../features/auth/ui/pages/login_page.dart';
 import '../../features/home/bloc/home1_cubit/home1_cubit.dart';
 import '../strings/app_color_manager.dart';
-import 'images/image_multi_type.dart';
+import 'package:image_multi_type/image_multi_type.dart';
 import 'logo_text.dart';
 
 class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {

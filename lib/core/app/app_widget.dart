@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_multi_type/image_multi_type.dart';
 import 'package:qareeb_dash/core/api_manager/api_service.dart';
 
 import '../../features/accounts/bloc/all_transfers_cubit/all_transfers_cubit.dart';
@@ -11,7 +12,8 @@ import '../../features/auth/bloc/create_policy_cubit/policy_cubit.dart';
 import '../../features/auth/bloc/policy_cubit/create_policy_cubit.dart';
 import '../../features/bus_trips/bloc/all_bus_trips_cubit/all_bus_trips_cubit.dart';
 import '../../features/bus_trips/bloc/failed_attendances_cubit/failed_attendances_cubit.dart';
-import '../../features/bus_trips/bloc/trip_history_cubit/trip_history_cubit.dart';
+import '../../features/bus_trips/bloc/attendances_cubit/attendances_cubit.dart';
+import '../../features/bus_trips/bloc/record_check_cubit/record_check_cubit.dart';
 import '../../features/buses/bloc/all_buses_cubit/all_buses_cubit.dart';
 import '../../features/buses/bloc/bus_by_imei_cubti/bus_by_imei_cubit.dart';
 import '../../features/car_catigory/bloc/all_car_categories_cubit/all_car_categories_cubit.dart';
@@ -32,6 +34,7 @@ import '../../features/super_user/bloc/all_super_users_cubit/all_super_users_cub
 import '../../features/temp_trips/bloc/all_temp_trips_cubit/all_temp_trips_cubit.dart';
 import '../../features/ticket/bloc/all_ticket_cubit/all_ticket_cubit.dart';
 
+import '../../generated/assets.dart';
 import '../../router/go_route_pages.dart';
 import '../app_theme.dart';
 import '../injection/injection_container.dart';
@@ -48,6 +51,16 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     APIService().getServerTime();
+    setImageMultiTypeErrorImage(
+      const Opacity(
+        opacity: 0.8,
+        child: ImageMultiType(
+          url: Assets.iconsLogoWithoutText,
+          height: 30.0,
+          width: 30.0,
+        ),
+      ),
+    );
     super.initState();
   }
 
@@ -90,11 +103,12 @@ class _MyAppState extends State<MyApp> {
                 BlocProvider(create: (_) => sl<AllTicketsCubit>()..getTickets(_)),
                 BlocProvider(create: (_) => sl<AllMembersCubit>()..getMembers(_)),
                 BlocProvider(create: (_) => sl<AllAdminsCubit>()..getAllAdmins(_)),
+                BlocProvider(create: (_) => sl<RecordCheckCubit>()..getRecords(_)),
                 BlocProvider(create: (_) => sl<AllBusTripsCubit>()..getBusTrips(_)),
                 BlocProvider(create: (_) => sl<AllDriversCubit>()..getAllDrivers(_)),
                 BlocProvider(create: (_) => sl<AllTempTripsCubit>()..getTempTrips(_)),
                 BlocProvider(create: (_) => sl<AllSuperUsersCubit>()..getSuperUsers(_)),
-                BlocProvider(create: (_) => sl<AllTripHistoryCubit>()..getTripHistory(_)),
+                BlocProvider(create: (_) => sl<AllAttendancesCubit>()..getAttendances(_)),
                 BlocProvider(create: (_) => sl<AllMemberWithoutSubscriptionCubit>()),
                 BlocProvider(
                   create: (_) => sl<FailedAttendancesCubit>()..getFailedAttendances(_),

@@ -1,21 +1,21 @@
-part of 'trip_history_cubit.dart';
+part of 'record_check_cubit.dart';
 
-class AllTripHistoryInitial extends Equatable {
+class RecordCheckInitial extends Equatable {
   final CubitStatuses statuses;
-  final List<TripHistoryItem> result;
+  final List<RecordCheck> result;
   final String error;
   final Command command;
 
-  const AllTripHistoryInitial({
+  const RecordCheckInitial({
     required this.statuses,
     required this.result,
     required this.error,
     required this.command,
   });
 
-  factory AllTripHistoryInitial.initial() {
-    return AllTripHistoryInitial(
-      result: const <TripHistoryItem>[],
+  factory RecordCheckInitial.initial() {
+    return RecordCheckInitial(
+      result: const <RecordCheck>[],
       error: '',
       command: Command.initial(),
       statuses: CubitStatuses.init,
@@ -26,13 +26,13 @@ class AllTripHistoryInitial extends Equatable {
   @override
   List<Object> get props => [statuses, result, error];
 
-  AllTripHistoryInitial copyWith({
+  RecordCheckInitial copyWith({
     CubitStatuses? statuses,
-    List<TripHistoryItem>? result,
+    List<RecordCheck>? result,
     String? error,
     Command? command,
   }) {
-    return AllTripHistoryInitial(
+    return RecordCheckInitial(
       statuses: statuses ?? this.statuses,
       result: result ?? this.result,
       error: error ?? this.error,

@@ -12,7 +12,7 @@ import 'package:qareeb_dash/router/go_route_pages.dart';
 
 import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/my_style.dart';
-import '../../../../core/widgets/images/round_image_widget.dart';
+import 'package:image_multi_type/round_image_widget.dart';
 import '../../bloc/all_car_categories_cubit/all_car_categories_cubit.dart';
 import '../../bloc/delete_car_cat_cubit/delete_car_cat_cubit.dart';
 

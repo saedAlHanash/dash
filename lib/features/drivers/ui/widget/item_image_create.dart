@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/util/pick_image_helper.dart';
-import '../../../../core/widgets/images/round_image_widget.dart';
+import 'package:image_multi_type/round_image_widget.dart';
 
 class ItemImageCreate extends StatelessWidget {
   const ItemImageCreate({
@@ -42,8 +42,7 @@ class ItemImageCreate extends StatelessWidget {
                 child: Opacity(
                   opacity: fileBytes == null ? 0.3 : 1,
                   child: RoundImageWidget(
-                    url: image,
-                    fileBytes: fileBytes,
+                    url: fileBytes??image,
                     height: fileBytes == null ? 100.0.r : 180.0.r,
                     width: fileBytes == null ? 100.0.r : 180.0.r,
                   ),

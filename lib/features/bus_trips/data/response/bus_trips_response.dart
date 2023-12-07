@@ -1,5 +1,5 @@
 import 'package:collection/collection.dart';
-import 'package:qareeb_dash/features/bus_trips/data/response/trip_history_response.dart';
+import 'package:qareeb_dash/features/bus_trips/data/response/attendances_response.dart';
 import 'package:qareeb_dash/features/buses/data/response/buses_response.dart';
 import 'package:qareeb_dash/services/trip_path/data/models/trip_path.dart';
 
@@ -90,7 +90,7 @@ class BusTripModel {
   final BusTripCategory category;
   final num numberOfParticipation;
   final bool isActive;
-  final List<TripHistoryItem> attendances;
+  final List<AttendancesItem> attendances;
   final List<Participation> participations;
 
   factory BusTripModel.fromJson(Map<String, dynamic> json) {
@@ -117,8 +117,8 @@ class BusTripModel {
       isActive: json["isActive"] ?? false,
       attendances: json["attendances"] == null
           ? []
-          : List<TripHistoryItem>.from(
-              json["attendances"]!.map((x) => TripHistoryItem.fromJson(x))),
+          : List<AttendancesItem>.from(
+              json["attendances"]!.map((x) => AttendancesItem.fromJson(x))),
       participations: json["participations"] == null
           ? []
           : List<Participation>.from(

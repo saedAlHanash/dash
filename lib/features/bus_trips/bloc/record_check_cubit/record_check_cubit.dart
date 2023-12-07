@@ -12,16 +12,18 @@ import '../../../../core/strings/enum_manager.dart';
 import '../../../../core/util/note_message.dart';
 import '../../../../core/util/pair_class.dart';
 import '../../../../core/util/shared_preferences.dart';
-import '../../data/response/trip_history_response.dart';
+import '../../data/response/attendances_response.dart';
+import '../../data/response/record_check_response.dart';
 
-part 'trip_history_state.dart';
+part 'record_check_state.dart';
+// part 'attendances_state.dart';
 
-class AllTripHistoryCubit extends Cubit<AllTripHistoryInitial> {
-  AllTripHistoryCubit() : super(AllTripHistoryInitial.initial());
+class RecordCheckCubit extends Cubit<RecordCheckInitial> {
+  RecordCheckCubit() : super(RecordCheckInitial.initial());
 
-  Future<void> getTripHistory(BuildContext context, {Command? command}) async {
+  Future<void> getRecords(BuildContext context, {Command? command}) async {
     emit(state.copyWith(statuses: CubitStatuses.loading, command: command));
-    final pair = await _getTripHistoryApi();
+    final pair = await _getRecordsApi();
 
     if (pair.first == null) {
       if (context.mounted) {
@@ -34,27 +36,27 @@ class AllTripHistoryCubit extends Cubit<AllTripHistoryInitial> {
     }
   }
 
-  Future<Pair<TripHistoryResult?, String?>> _getTripHistoryApi() async {
+  Future<Pair<RecordCheckResult?, String?>> _getRecordsApi() async {
     final response = await APIService().getApi(
-      url: GetUrl.tripHistory,
+      url: GetUrl.recordCheck,
       query: state.command.toJson(),
     );
 
     if (response.statusCode == 200) {
-      return Pair(TripHistoryResponse.fromJson(response.jsonBody).result, null);
+      return Pair(RecordCheckResponse.fromJson(response.jsonBody).result, null);
     } else {
       return Pair(null, ErrorManager.getApiError(response));
     }
   }
 
-  Future<Pair<List<String>, List<List<dynamic>>>?> getTripHistoryAsync(
+  Future<Pair<List<String>, List<List<dynamic>>>?> getRecordsAsync(
       BuildContext context) async {
     var oldSkipCount = state.command.skipCount;
     state.command
       ..maxResultCount = 1.maxInt
       ..skipCount = 0;
 
-    final pair = await _getTripHistoryApi();
+    final pair = await _getRecordsApi();
 
     state.command
       ..maxResultCount = AppSharedPreference.getTotalCount
@@ -70,30 +72,26 @@ class AllTripHistoryCubit extends Cubit<AllTripHistoryInitial> {
     return null;
   }
 
-  Pair<List<String>, List<List<dynamic>>> _getXlsData(List<TripHistoryItem> data) {
+  Pair<List<String>, List<List<dynamic>>> _getXlsData(List<RecordCheck> data) {
     return Pair(
         [
           '\tID\t',
-          '\tID الباص\t',
-          '\tاسم الباص\t',
-          '\tاسم الرحلة\t',
+          '\tID المفتش\t',
+          '\tاسم المفتش\t',
           '\tاسم الطالب\t',
           '\tتاريخ العملية\t',
           '\tوقت العملية العملية\t',
-          '\tنوع المعملية\t',
           '\tحالة الاشتراك بالنقل\t',
         ],
         data
             .mapIndexed(
               (index, element) => [
                 element.id,
-                element.busId,
-                element.bus.driverName,
-                element.busTrip.name,
+                element.supervisor.id,
+                element.supervisor.fullName,
                 element.busMember.fullName,
                 element.date?.formatDate,
                 element.date?.formatTime,
-                element.attendanceType.arabicName,
                 element.isSubscribed ,
               ],
             )

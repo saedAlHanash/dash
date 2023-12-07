@@ -11,25 +11,26 @@ import 'package:qareeb_dash/features/bus_trips/ui/widget/attendances_filter_widg
 import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/util/file_util.dart';
 import '../../../../core/util/my_style.dart';
-import '../../bloc/failed_attendances_cubit/failed_attendances_cubit.dart';
+import '../../bloc/attendances_cubit/attendances_cubit.dart';
 
 final _super_userList = [
   'ID',
   'اسم الطالب',
+  'اسم الرحلة',
   'اسم الباص',
   'نوع العملية',
   'حالة اشتراك الطالب',
   'تاريخ العملية',
 ];
 
-class FailedAttendancesPage extends StatefulWidget {
-  const FailedAttendancesPage({super.key});
+class AttendancesPage extends StatefulWidget {
+  const AttendancesPage({super.key});
 
   @override
-  State<FailedAttendancesPage> createState() => _FailedAttendancesPageState();
+  State<AttendancesPage> createState() => _AttendancesPageState();
 }
 
-class _FailedAttendancesPageState extends State<FailedAttendancesPage> {
+class _AttendancesPageState extends State<AttendancesPage> {
   var loading = false;
 
   @override
@@ -40,17 +41,13 @@ class _FailedAttendancesPageState extends State<FailedAttendancesPage> {
           return FloatingActionButton(
             onPressed: () {
               mState(() => loading = true);
-              context
-                  .read<FailedAttendancesCubit>()
-                  .getFailedAttendancesAsync(context)
-                  .then(
+              context.read<AllAttendancesCubit>().getAttendancesAsync(context).then(
                 (value) {
                   if (value == null) return;
                   saveXls(
                     header: value.first,
                     data: value.second,
-                    fileName:
-                        'تقرير سجلات الصعود والنزول الغير مرتبطة برحلة${DateTime.now().formatDate}',
+                    fileName: 'تقرير سجلات الصعود والنزول ${DateTime.now().formatDate}',
                   );
 
                   mState(
@@ -70,18 +67,17 @@ class _FailedAttendancesPageState extends State<FailedAttendancesPage> {
           children: [
             AttendancesFilterWidget(
               onApply: (request) {
-                context.read<FailedAttendancesCubit>().getFailedAttendances(
+                context.read<AllAttendancesCubit>().getAttendances(
                       context,
-                      command:
-                          context.read<FailedAttendancesCubit>().state.command.copyWith(
-                                historyRequest: request,
-                                skipCount: 0,
-                                totalCount: 0,
-                              ),
+                      command: context.read<AllAttendancesCubit>().state.command.copyWith(
+                            historyRequest: request,
+                            skipCount: 0,
+                            totalCount: 0,
+                          ),
                     );
               },
             ),
-            BlocBuilder<FailedAttendancesCubit, FailedAttendancesInitial>(
+            BlocBuilder<AllAttendancesCubit, AllAttendancesInitial>(
               builder: (context, state) {
                 if (state.statuses.loading) {
                   return MyStyle.loadingWidget();
@@ -96,6 +92,7 @@ class _FailedAttendancesPageState extends State<FailedAttendancesPage> {
                         (i, e) => [
                           e.id.toString(),
                           e.busMember.fullName,
+                          e.busTrip.name,
                           e.bus.driverName,
                           e.attendanceType.arabicName,
                           e.isSubscribed
@@ -117,13 +114,22 @@ class _FailedAttendancesPageState extends State<FailedAttendancesPage> {
                       .toList(),
                   onChangePage: (command) {
                     context
-                        .read<FailedAttendancesCubit>()
-                        .getFailedAttendances(context, command: command);
+                        .read<AllAttendancesCubit>()
+                        .getAttendances(context, command: command);
                   },
                 );
               },
             ),
             50.0.verticalSpace,
+            // Expanded(
+            //   child: ListView.builder(
+            //     itemCount: list.length,
+            //     itemBuilder: (context, i) {
+            //       final item = list[i];
+            //       return ItemBusTrip(item: item);
+            //     },
+            //   ),
+            // ),
           ],
         ),
       ),

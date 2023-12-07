@@ -108,7 +108,7 @@ class GetUrl {
   static const subscriptionById =
       'api/services/app/InstituionSubscriptionTemplateService/Get';
 
-  static const tripHistory = 'api/services/app/InstitutionAttendancesService/GetAll';
+  static const attendances = 'api/services/app/InstitutionAttendancesService/GetAll';
 
   static const allTickets = 'api/services/app/InstitutionTicketsService/GetAll';
 
@@ -120,6 +120,8 @@ class GetUrl {
 
   static const failedAttendances =
       'api/services/app/InstitutionAttendancesService/GetFaildAttendances';
+
+  static var recordCheck = 'api/services/app/InstitutionSupervisorCheckService/GetAll';
 //GET
 //
 }

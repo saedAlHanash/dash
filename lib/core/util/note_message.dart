@@ -7,7 +7,7 @@ import 'package:qareeb_dash/core/strings/app_string_manager.dart';
 import 'package:qareeb_dash/core/widgets/my_button.dart';
 
 import '../../generated/assets.dart';
-import '../widgets/images/image_multi_type.dart';
+import 'package:image_multi_type/image_multi_type.dart';
 import '../widgets/snake_bar_widget.dart';
 import 'dart:html';
 

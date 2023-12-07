@@ -4,16 +4,16 @@ import 'package:qareeb_dash/features/buses/data/response/buses_response.dart';
 import '../../../../core/strings/enum_manager.dart';
 import '../../../members/data/response/member_response.dart';
 
-class TripHistoryResponse {
-  TripHistoryResponse({
+class AttendancesResponse {
+  AttendancesResponse({
     required this.result,
   });
 
-  final TripHistoryResult result;
+  final AttendancesResult result;
 
-  factory TripHistoryResponse.fromJson(Map<String, dynamic> json) {
-    return TripHistoryResponse(
-      result: TripHistoryResult.fromJson(json["result"] ?? {}),
+  factory AttendancesResponse.fromJson(Map<String, dynamic> json) {
+    return AttendancesResponse(
+      result: AttendancesResult.fromJson(json["result"] ?? {}),
     );
   }
 
@@ -22,21 +22,21 @@ class TripHistoryResponse {
       };
 }
 
-class TripHistoryResult {
-  TripHistoryResult({
+class AttendancesResult {
+  AttendancesResult({
     required this.items,
     required this.totalCount,
   });
 
-  final List<TripHistoryItem> items;
+  final List<AttendancesItem> items;
   final int totalCount;
 
-  factory TripHistoryResult.fromJson(Map<String, dynamic> json) {
-    return TripHistoryResult(
+  factory AttendancesResult.fromJson(Map<String, dynamic> json) {
+    return AttendancesResult(
       items: json["items"] == null
           ? []
-          : List<TripHistoryItem>.from(
-              json["items"]!.map((x) => TripHistoryItem.fromJson(x))),
+          : List<AttendancesItem>.from(
+              json["items"]!.map((x) => AttendancesItem.fromJson(x))),
       totalCount: json["totalCount"] ?? 0,
     );
   }
@@ -47,8 +47,8 @@ class TripHistoryResult {
       };
 }
 
-class TripHistoryItem {
-  TripHistoryItem({
+class AttendancesItem {
+  AttendancesItem({
     required this.id,
     required this.busId,
     required this.bus,
@@ -74,8 +74,8 @@ class TripHistoryItem {
   final bool isParticipated;
   final bool isSubscribed;
 
-  factory TripHistoryItem.fromJson(Map<String, dynamic> json) {
-    return TripHistoryItem(
+  factory AttendancesItem.fromJson(Map<String, dynamic> json) {
+    return AttendancesItem(
       id: json["id"] ?? 0,
       busId: json["busId"] ?? 0,
       bus: BusModel.fromJson(json["bus"] ?? {}),

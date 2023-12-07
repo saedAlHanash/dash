@@ -2,6 +2,7 @@ import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/util/shared_preferences.dart';
 
 import '../../features/accounts/data/request/transfer_filter_request.dart';
+import '../../features/bus_trips/data/request/filter_record_check_request.dart';
 import '../../features/bus_trips/data/request/filter_trip_history_request.dart';
 import '../../features/bus_trips/data/request/trips_filter_request.dart';
 import '../../features/buses/data/request/buses_filter_request.dart';
@@ -9,6 +10,8 @@ import '../../features/members/data/request/member_filter_request.dart';
 import '../widgets/spinner_widget.dart';
 
 class Command {
+
+
   Command({
     this.skipCount,
     this.maxResultCount,
@@ -17,6 +20,7 @@ class Command {
     this.memberFilterRequest,
     this.busesFilterRequest,
     this.tripsFilterRequest,
+    this.recordCheckRequest,
   }) {
     maxResultCount ??= AppSharedPreference.getTotalCount;
   }
@@ -25,10 +29,11 @@ class Command {
   int? maxResultCount;
 
   int? totalCount;
-  FilterTripHistoryRequest? historyRequest;
+  FilterAttendancesRequest? historyRequest;
   MemberFilterRequest? memberFilterRequest;
   BusesFilterRequest? busesFilterRequest;
   TripsFilterRequest? tripsFilterRequest;
+  FilterRecordCheckRequest? recordCheckRequest;
 
   int get maxPages => ((totalCount ?? 0) / maxResultCount!).myRound;
 
@@ -85,6 +90,9 @@ class Command {
     if (tripsFilterRequest != null) {
       json.addAll(tripsFilterRequest!.toJson());
     }
+    if (recordCheckRequest != null) {
+      json.addAll(recordCheckRequest!.toJson());
+    }
 
     return json;
   }
@@ -99,10 +107,11 @@ class Command {
     int? skipCount,
     int? totalCount,
     int? maxResultCount,
-    FilterTripHistoryRequest? historyRequest,
+    FilterAttendancesRequest? historyRequest,
     MemberFilterRequest? memberFilterRequest,
     BusesFilterRequest? busesFilterRequest,
     TripsFilterRequest? tripsFilterRequest,
+    FilterRecordCheckRequest? recordCheckRequest,
   }) {
     return Command(
       skipCount: skipCount ?? this.skipCount,
@@ -111,6 +120,7 @@ class Command {
       memberFilterRequest: memberFilterRequest ?? this.memberFilterRequest,
       busesFilterRequest: busesFilterRequest ?? this.busesFilterRequest,
       tripsFilterRequest: tripsFilterRequest ?? this.tripsFilterRequest,
+      recordCheckRequest: recordCheckRequest ?? this.recordCheckRequest,
       maxResultCount: maxResultCount ?? this.maxResultCount,
     );
   }

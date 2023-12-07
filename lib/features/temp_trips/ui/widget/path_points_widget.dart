@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 
-import '../../../../core/widgets/images/image_multi_type.dart';
+import 'package:image_multi_type/image_multi_type.dart';
 
 import '../../../points/bloc/get_edged_point_cubit/get_all_points_cubit.dart';
 import '../../../points/data/response/points_response.dart';

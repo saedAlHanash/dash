@@ -1,6 +1,6 @@
 import '../../../../core/strings/enum_manager.dart';
 
-class FilterTripHistoryRequest {
+class FilterAttendancesRequest {
   AttendanceType? attendanceType;
   bool? isParticipated;
   bool? isSubscribed;
@@ -11,7 +11,7 @@ class FilterTripHistoryRequest {
   String? busName;
   String? busNumber;
 
-  FilterTripHistoryRequest({
+  FilterAttendancesRequest({
     this.attendanceType,
     this.isParticipated,
     this.isSubscribed,
@@ -23,7 +23,7 @@ class FilterTripHistoryRequest {
     this.busNumber,
   });
 
-  FilterTripHistoryRequest copyWith({
+  FilterAttendancesRequest copyWith({
     AttendanceType? attendanceType,
     bool? isParticipated,
     bool? isSubscribed,
@@ -34,7 +34,7 @@ class FilterTripHistoryRequest {
     String? busName,
     String? busNumber,
   }) {
-    return FilterTripHistoryRequest(
+    return FilterAttendancesRequest(
       attendanceType: attendanceType ?? this.attendanceType,
       isParticipated: isParticipated ?? this.isParticipated,
       isSubscribed: isSubscribed ?? this.isSubscribed,
@@ -61,8 +61,8 @@ class FilterTripHistoryRequest {
     };
   }
 
-  factory FilterTripHistoryRequest.fromMap(Map<String, dynamic> map) {
-    return FilterTripHistoryRequest(
+  factory FilterAttendancesRequest.fromMap(Map<String, dynamic> map) {
+    return FilterAttendancesRequest(
       attendanceType: map['attendanceType'] as AttendanceType,
       isParticipated: map['isParticipated'] as bool,
       isSubscribed: map['isSubscribed'] as bool,

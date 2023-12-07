@@ -13,7 +13,7 @@ import 'package:qareeb_dash/features/map/bloc/map_controller_cubit/map_controlle
 import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/strings/enum_manager.dart';
 import '../../../../core/util/my_style.dart';
-import '../../../../core/widgets/images/image_multi_type.dart';
+import 'package:image_multi_type/image_multi_type.dart';
 import '../../../../generated/assets.dart';
 import '../../../../router/go_route_pages.dart';
 import '../../../buses/bloc/bus_by_imei_cubti/bus_by_imei_cubit.dart';
