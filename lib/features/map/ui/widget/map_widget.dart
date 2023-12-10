@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/plugin_api.dart';
 import 'package:flutter_map_animations/flutter_map_animations.dart';
+import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:qareeb_dash/features/map/data/models/my_marker.dart';
@@ -36,6 +37,7 @@ class MapWidget extends StatefulWidget {
     this.onMapClick,
     this.search,
     this.ime,
+    this.clustering = false,
   }) : super(key: key);
 
   final Function(MapController controller)? onMapReady;
@@ -43,6 +45,7 @@ class MapWidget extends StatefulWidget {
   final LatLng? initialPoint;
   final Function()? search;
   final String? ime;
+  final bool clustering;
 
   GlobalKey<MapWidgetState> getKey() {
     return GlobalKey<MapWidgetState>();
@@ -171,7 +174,6 @@ class MapWidgetState extends State<MapWidget> with TickerProviderStateMixin {
                 ),
               ),
             ),
-
         ],
         children: [
           TileLayer(
@@ -191,8 +193,39 @@ class MapWidgetState extends State<MapWidget> with TickerProviderStateMixin {
           BlocBuilder<MapControllerCubit, MapControllerInitial>(
             buildWhen: (p, c) => p.markerNotifier != c.markerNotifier,
             builder: (context, state) {
-              return MarkerLayer(
-                markers: MapHelper.initMarker(state),
+              if (!widget.clustering) {
+                return MarkerLayer(markers: MapHelper.initMarker(state));
+              }
+              return MarkerClusterLayerWidget(
+                options: MarkerClusterLayerOptions(
+                  centerMarkerOnClick: true,
+                  zoomToBoundsOnClick: true,
+                  maxClusterRadius: 70.0.r.toInt(),
+                  size: Size(50.r, 50.r),
+                  anchor: AnchorPos.align(AnchorAlign.center),
+                  fitBoundsOptions: const FitBoundsOptions(
+                    padding: EdgeInsets.all(50),
+                    maxZoom: 15,
+                  ),
+                  markers: MapHelper.initMarker(state),
+                  builder: (context, markers) {
+                    return Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.black,
+                      ),
+                      child: Center(
+                        child: Text(
+                          markers.length.toString(),
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18.0.sp,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
               );
             },
           ),

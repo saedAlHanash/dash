@@ -141,7 +141,7 @@ class _DashboardPageState extends State<DashboardPage> {
                 if (isAllowed(AppPermissions.membersPoints))
                   SizedBox(
                     height: 500.0.h,
-                    child: const MapWidget(),
+                    child: const MapWidget(clustering: true),
                   ),
                 100.0.verticalSpace,
               ],
@@ -268,7 +268,7 @@ class _BusesMapState extends State<BusesMap> {
           },
         ),
       ],
-      child: const MapWidget(),
+      child: const MapWidget(clustering: true),
     );
   }
 }
