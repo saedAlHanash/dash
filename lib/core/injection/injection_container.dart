@@ -8,6 +8,7 @@ import 'package:map_package/map/bloc/set_point_cubit/map_control_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../features/accounts/bloc/all_transfers_cubit/all_transfers_cubit.dart';
+import '../../features/accounts/bloc/company_transfers_cubit/company_transfers_cubit.dart';
 import '../../features/accounts/bloc/driver_financial_cubit/driver_financial_cubit.dart';
 import '../../features/accounts/bloc/financial_report_cubit/financial_report_cubit.dart';
 import '../../features/accounts/bloc/pay_to_cubit/pay_to_cubit.dart';
@@ -312,6 +313,7 @@ Future<void> init() async {
   sl.registerFactory(() => AllClientsCubit());
   sl.registerFactory(() => ClientByIdCubit());
   sl.registerFactory(() => AllTransfersCubit());
+  sl.registerFactory(() => CompanyTransfersCubit());
   sl.registerFactory(() => ProvidersCubit());
   sl.registerFactory(() => ChangeProviderStateCubit());
   sl.registerFactory(() => PayToCubit());

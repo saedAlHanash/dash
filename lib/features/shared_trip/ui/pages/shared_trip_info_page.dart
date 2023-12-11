@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:map_package/map/bloc/ather_cubit/ather_cubit.dart';
 import 'package:map_package/map/bloc/map_controller_cubit/map_controller_cubit.dart';
 import 'package:map_package/map/ui/widget/map_widget.dart';
+import 'package:qareeb_dash/core/api_manager/api_service.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/strings/app_color_manager.dart';
 import 'package:qareeb_dash/features/shared_trip/ui/widget/shared_trip_info_list_widget.dart';
@@ -88,6 +89,10 @@ class _SharedTripInfoPageState extends State<SharedTripInfoPage> {
                     if (state.statuses.loading) {
                       return MyStyle.loadingWidget();
                     }
+                    loggerObject.w((state.result.tripStatus == SharedTripStatus.closed ||
+                        state.result.tripStatus ==
+                            SharedTripStatus.canceled));
+                    loggerObject.w('dsadas$isTrans');
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -109,7 +114,8 @@ class _SharedTripInfoPageState extends State<SharedTripInfoPage> {
                                         if (cState.statuses.loading) {
                                           return MyStyle.loadingWidget();
                                         }
-                                        if (isQareebAdmin) {
+
+                                        if (!isQareebAdmin) {
                                           return 0.0.verticalSpace;
                                         }
 

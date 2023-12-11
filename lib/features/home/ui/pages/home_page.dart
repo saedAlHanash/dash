@@ -25,6 +25,7 @@ import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/shared_preferences.dart';
 import '../../../../core/widgets/logo_text.dart';
 import '../../../accounts/bloc/pay_to_cubit/pay_to_cubit.dart';
+import '../../../accounts/ui/pages/company_transfers_page.dart';
 import '../../../admins/ui/pages/admins_page.dart';
 import '../../../agencies/bloc/create_agency_cubit/create_agency_cubit.dart';
 import '../../../agencies/bloc/delete_agency_cubit/delete_agency_cubit.dart';
@@ -264,13 +265,18 @@ class _HomePageState extends State<HomePage> {
                   title: 'عمليات مالية',
                   icon: Icons.payments_outlined,
                   children: [
-                    if (isAllowed(AppPermissions.REPORTS))
+                    if (isAllowed(AppPermissions.REPORTS)) ...[
                       const AdminMenuItem(
                         title: 'التحويلات',
                         icon: Icons.mobiledata_off,
                         route: "/transactions",
                       ),
-
+                      const AdminMenuItem(
+                        title: 'عائدات الشركة',
+                        icon: Icons.incomplete_circle,
+                        route: "/company_transfers",
+                      ),
+                    ],
                     if (isAllowed(AppPermissions.SETTINGS)) ...[
                       const AdminMenuItem(
                         title: 'محاسبة السائقين',
@@ -442,8 +448,11 @@ class _HomePageState extends State<HomePage> {
                     ],
                     child: const ProvidersPage(),
                   );
+
                 case "/transactions":
                   return const TransfersPage();
+                case "/company_transfers":
+                  return const CompanyTransfersPage();
 
                 case "/car_categories":
                   return MultiBlocProvider(

@@ -7,6 +7,7 @@ import 'package:image_multi_type/image_multi_type.dart';
 import 'package:map_package/map/bloc/set_point_cubit/map_control_cubit.dart';
 
 import '../../features/accounts/bloc/all_transfers_cubit/all_transfers_cubit.dart';
+import '../../features/accounts/bloc/company_transfers_cubit/company_transfers_cubit.dart';
 import '../../features/accounts/bloc/financial_report_cubit/financial_report_cubit.dart';
 import '../../features/admins/bloc/all_admins/all_admins_cubit.dart';
 import '../../features/agencies/bloc/agencies_cubit/agencies_cubit.dart';
@@ -105,6 +106,9 @@ class MyApp extends StatelessWidget {
                 BlocProvider(create: (_) => sl<GetSharedTripsCubit>()..getSharesTrip(_)),
                 BlocProvider(create: (_) => sl<SystemParamsCubit>()..getSystemParams(_)),
                 BlocProvider(create: (_) => sl<ProvidersCubit>()..getAllEpayProviders(_)),
+                BlocProvider(
+                  create: (_) => sl<CompanyTransfersCubit>()..getCompanyTransfers(_),
+                ),
                 BlocProvider(
                   create: (_) => sl<AllCompanyPathsCubit>()..getCompanyPaths(_),
                 ),

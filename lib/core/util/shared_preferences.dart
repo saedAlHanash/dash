@@ -210,6 +210,7 @@ class AppSharedPreference {
 }
 
 bool get isTrans => !isQareebAdmin && !isAgency;
+
 bool get isAgency => AppSharedPreference.getAgencyId != 0;
 
 bool get isQareebAdmin => AppSharedPreference.getUser.roleName.toLowerCase() == 'admin';

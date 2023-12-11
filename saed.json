@@ -1,67 +1,188 @@
 {
   "result": {
-    "debts": [
+    "driverId": 16,
+    "pathId": 947,
+    "path": {
+      "name": null,
+      "arName": null,
+      "distance": null,
+      "duration": null,
+      "edgesOrder": "184,185,186",
+      "edges": [
+        {
+          "startPoint": {
+            "name": "Al-Mujtahid Hospital Corner - Al-Mujtahid Gas Station",
+            "arName": "زاوية مشفى المجتهد-كازية المجتهد",
+            "latitude": 33.50097455973937,
+            "langitude": 36.29491316274718,
+            "tags": "المجتهد,القنوات,صيدلية الملقي",
+            "zoneId": 10424,
+            "id": 16
+          },
+          "startPointId": 16,
+          "endPoint": {
+            "name": "Khaled Ibn Al-Walid Street - Bab Srija Market",
+            "arName": "شارع خالد ابن الوليد-سوق باب سريجة",
+            "latitude": 33.50539448857521,
+            "langitude": 36.295385522660126,
+            "tags": "مشفى الكندي,باب سريجة,محل الحبال",
+            "zoneId": 10427,
+            "id": 19
+          },
+          "endPointId": 19,
+          "distance": 494.8,
+          "duration": 0.0,
+          "price": 0.0,
+          "steps": "cdnkEuyo|EiHg@wOu@m@E@K",
+          "name": null,
+          "arName": null,
+          "id": 184
+        },
+        {
+          "startPoint": {
+            "name": "KhaledIbn Al-Walid Street - Bab Srija Market",
+            "arName": "شارع خالد ابن الوليد-سوق باب سريجة",
+            "latitude": 33.50539448857521,
+            "langitude": 36.295385522660126,
+            "tags": "مشفى الكندي,باب سريجة,محل الحبال",
+            "zoneId": 10427,
+            "id": 19
+          },
+          "startPointId": 19,
+          "endPoint": {
+            "name": "Police Headquarters - Khaled Ibn Al Waleed Street",
+            "arName": "قيادة الشرطة-شارع خالد ابن الوليد",
+            "latitude": 33.50841173004249,
+            "langitude": 36.29568969835164,
+            "tags": "قيادة الشرطة,الانصاري,حديقة الحلبوني",
+            "zoneId": 10428,
+            "id": 20
+          },
+          "endPointId": 20,
+          "distance": 343.9,
+          "duration": 0.0,
+          "price": 0.0,
+          "steps": "q_okEe}o|EAJ}QkA",
+          "name": null,
+          "arName": null,
+          "id": 185
+        },
+        {
+          "startPoint": {
+            "name": "Police Headquarters - Khaled Ibn Al Waleed Street",
+            "arName": "قيادة الشرطة-شارع خالد ابن الوليد",
+            "latitude": 33.50841173004249,
+            "langitude": 36.29568969835164,
+            "tags": "قيادة الشرطة,الانصاري,حديقة الحلبوني",
+            "zoneId": 10428,
+            "id": 20
+          },
+          "startPointId": 20,
+          "endPoint": {
+            "name": "Al-Tal _ Alsham Private University",
+            "arName": "التل _ جامعة الشام الخاصة ",
+            "latitude": 33.60058805373889,
+            "langitude": 36.32920487786143,
+            "tags": "المعهد الوطني للادارة العامة ",
+            "zoneId": 10431,
+            "id": 23
+          },
+          "endPointId": 23,
+          "distance": 15118.4,
+          "duration": 0.0,
+          "price": 0.0,
+          "steps": "qrokEe_p|EcQqAJa[qxA}GuGwb@}k@mvAw@yRkhAwEwrApSeTlO}b@n{@vFlZgTsBqi@v^sa@ef@g\\iFsCuSyTiTsScaAoV{R}CtHiCoE",
+          "name": null,
+          "arName": null,
+          "id": 186
+        }
+      ],
+      "id": 947
+    },
+    "sharedRequests": [
       {
-        "driverShare": 11620.0,
-        "totalCost": 14000.0,
-        "costAfterDiscount": null,
-        "discountAmount": null,
-        "sharedRequestId": null,
-        "tripId": null,
-        "driverId": 949,
-        "date": "2023-09-29T18:21:18.692398",
-        "oilShare": 140.0,
-        "goldShare": 140.0,
-        "tiresShare": 140.0,
-        "gasShare": null,
-        "agencyShare": null,
-        "id": 162
-      },
-      {
-        "driverShare": 31540.0,
-        "totalCost": 38000.0,
-        "costAfterDiscount": null,
-        "discountAmount": null,
-        "sharedRequestId": null,
-        "tripId": null,
-        "driverId": 949,
-        "date": "2023-09-29T17:25:22.053247",
-        "oilShare": 380.0,
-        "goldShare": 380.0,
-        "tiresShare": 380.0,
-        "gasShare": null,
-        "agencyShare": null,
-        "id": 161
+        "id": 310,
+        "sharedTripId": 867,
+        "clientId": 23,
+        "client": {
+          "id": 23,
+          "userName": "Qareeb963956490918@gmail.com",
+          "fullName": "سعيد الحبش",
+          "name": "سعيد",
+          "surname": "الحبش",
+          "phoneNumber": "963956490918",
+          "avatar": "1691343266401scaled_٢٠٢٣٠٧٠٢_١٦١٩٢٩.jpg",
+          "emergencyPhone": "963938891523",
+          "userType": "client",
+          "accountBalance": null
+        },
+        "status": 2,
+        "seatNumber": 2,
+        "dropPointId": 23,
+        "dropPoint": {
+          "name": "Al-Tal _ Alsham Private University",
+          "arName": "التل _ جامعة الشام الخاصة ",
+          "latitude": 33.60058805373889,
+          "langitude": 36.32920487786143,
+          "tags": "المعهد الوطني للادارة العامة ",
+          "zoneId": 10431,
+          "id": 23
+        },
+        "pickupPointId": 19,
+        "pickupPoint": {
+          "name": "Khaled Ibn Al-Walid Street - Bab Srija Market",
+          "arName": "شارع خالد ابن الوليد-سوق باب سريجة",
+          "latitude": 33.50539448857521,
+          "langitude": 36.295385522660126,
+          "tags": "مشفى الكندي,باب سريجة,محل الحبال",
+          "zoneId": 10427,
+          "id": 19
+        },
+        "amount": 30000.0,
+        "couponCode": null,
+        "discountValue": 0
       }
     ],
-    "chargings": [
-      {
-        "date": "2023-09-29T17:20:08.219122",
-        "status": 1,
-        "amount": 38000,
-        "accountId": 921,
-        "type": 1,
-        "paymentSourceId": null,
-        "proccessId": null,
-        "chargerId": 949,
-        "id": 286
+    "creationDate": "2023-12-11T10:04:04.124724",
+    "schedulingDate": "2023-12-25T17:03:00",
+    "startDate": null,
+    "endDate": null,
+    "tripStatus": 0,
+    "seatCost": 15000,
+    "totalCost": 60000,
+    "distance": 15957,
+    "availableSeats": 2,
+    "reservedSeats": 2,
+    "seatNumber": 4,
+    "note": null,
+    "driver": {
+      "fullName": "سعيد الحنش ",
+      "name": "سعيد",
+      "surname": "الحنش ",
+      "phoneNumber": "963938891523",
+      "imei": "354017116595949",
+      "avatar": "1693224380040scaled_IMG-20230824-WA0059.jpg",
+      "rating": 0.0,
+      "lastSeen": "2023-12-05T11:29:40.492612",
+      "activeFrom": "2023-12-11T10:01:02.293864",
+      "isLoyaltySupscriper": true,
+      "isGasIncluded": null,
+      "carType": {
+        "userId": 16,
+        "carBrand": "kia",
+        "carModel": "kia",
+        "carColor": "red",
+        "carNumber": "5444",
+        "seatsNumber": 5,
+        "carGovernorate": null,
+        "manufacturingYear": null,
+        "type": null
       },
-      {
-        "date": "2023-09-29T17:18:14.348967",
-        "status": 1,
-        "amount": 38000,
-        "accountId": 921,
-        "type": 1,
-        "paymentSourceId": null,
-        "proccessId": null,
-        "chargerId": 949,
-        "id": 284
-      }
-    ],
-    "lastTransferFromDriver": null,
-    "lastTransferFromCompanyToDriver": null,
-    "requiredAmountFromDriver": 76000.0,
-    "requiredAmountFromCompany": 43160.0
+      "isExaminated": false,
+      "examination": null,
+      "id": 16
+    },
+    "id": 867
   },
   "targetUrl": null,
   "success": true,

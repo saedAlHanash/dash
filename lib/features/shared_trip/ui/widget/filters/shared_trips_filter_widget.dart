@@ -39,6 +39,7 @@ class _SharedFilterWidgetState extends State<SharedFilterWidget> {
   late final TextEditingController clientPhoneC;
   late final TextEditingController driverPhoneC;
   final key1 = GlobalKey<SpinnerWidgetState>();
+  final key2 = GlobalKey<SpinnerWidgetState>();
   final key3 = GlobalKey<SpinnerWidgetState>();
 
   @override
@@ -194,7 +195,7 @@ class _SharedFilterWidgetState extends State<SharedFilterWidget> {
                         return MyStyle.loadingWidget();
                       }
                       return SpinnerWidget(
-                        key: key3,
+                        key: key2,
                         items: state.getSpinnerItems(selectedId: request.agencyId)
                           ..insert(
                             0,
@@ -244,7 +245,7 @@ class _SharedFilterWidgetState extends State<SharedFilterWidget> {
                       clientIdC.text = '';
                       driverIdC.text = '';
                       key1.currentState?.clearSelect();
-
+                      key2.currentState?.clearSelect();
                       key3.currentState?.clearSelect();
                     });
                     widget.onApply?.call(request);
