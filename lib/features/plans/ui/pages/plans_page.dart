@@ -23,6 +23,7 @@ const PlanList = [
   'طول مسار',
   'تفعيل يومي',
   'تفعيل شهري',
+  'عدد أيام الخطة',
   'عمليات',
 ];
 
@@ -66,6 +67,7 @@ class PlansPage extends StatelessWidget {
                       e.maxPathMeters.toString(),
                       e.maxDailyUsage.toString(),
                       e.maxMonthlyUsage.toString(),
+                      e.activationDayNumber.toString(),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [

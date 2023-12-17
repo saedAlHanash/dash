@@ -89,10 +89,6 @@ class _SharedTripInfoPageState extends State<SharedTripInfoPage> {
                     if (state.statuses.loading) {
                       return MyStyle.loadingWidget();
                     }
-                    loggerObject.w((state.result.tripStatus == SharedTripStatus.closed ||
-                        state.result.tripStatus ==
-                            SharedTripStatus.canceled));
-                    loggerObject.w('dsadas$isTrans');
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -160,7 +156,9 @@ class _SharedTripInfoPageState extends State<SharedTripInfoPage> {
             ),
             20.0.horizontalSpace,
             const Expanded(
-              child: MapWidget(    clustering: false,),
+              child: MapWidget(
+                clustering: false,
+              ),
             ),
           ],
         ),

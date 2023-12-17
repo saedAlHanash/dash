@@ -11,6 +11,7 @@ import 'package:qareeb_dash/core/widgets/spinner_widget.dart';
 import 'package:qareeb_dash/generated/assets.dart';
 import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_models/global.dart';
+import 'package:qareeb_models/plans/data/response/plans_response.dart';
 
 import '../../../../core/api_manager/api_service.dart';
 import '../../../../core/strings/app_color_manager.dart';
@@ -107,6 +108,15 @@ class _CreatePlanPageState extends State<CreatePlanPage> {
                             label: 'وصف مختصر',
                             initialValue: request.description,
                             onChanged: (p0) => request.description = p0,
+                          ),
+                        ),
+                        15.0.horizontalSpace,
+                        Expanded(
+                          child: MyTextFormNoLabelWidget(
+                            label: 'عدد أيام الخطة',
+                            initialValue: request.activationDayNumber.toString(),
+                            onChanged: (p0) =>
+                                request.activationDayNumber = num.tryParse(p0),
                           ),
                         ),
                       ],

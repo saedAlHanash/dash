@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_models/global.dart';
+import 'package:qareeb_models/plans/data/response/plans_response.dart';
 
 import '../../../../core/api_manager/api_service.dart';
 import '../../../../core/util/note_message.dart';
@@ -15,6 +16,7 @@ class CreatePlanRequest {
   num? maxPathMeters;
   num? maxDailyUsage;
   num? maxMonthlyUsage;
+  num? activationDayNumber;
   PlanType type;
 
   CreatePlanRequest({
@@ -26,6 +28,7 @@ class CreatePlanRequest {
     this.maxPathMeters,
     this.maxDailyUsage,
     this.maxMonthlyUsage,
+    this.activationDayNumber,
   });
 
   Map<String, dynamic> toMap() {
@@ -38,6 +41,7 @@ class CreatePlanRequest {
       'MaxPathMeters': maxPathMeters,
       'MaxDailyUsage': maxDailyUsage,
       'maxMonthlyUsage': maxMonthlyUsage,
+      'activationDayNumber': activationDayNumber,
     };
   }
 
@@ -51,6 +55,7 @@ class CreatePlanRequest {
       maxPathMeters: model.maxPathMeters,
       maxDailyUsage: model.maxDailyUsage,
       maxMonthlyUsage: model.maxMonthlyUsage,
+      activationDayNumber: model.activationDayNumber,
     )..file =
         UploadFile(fileBytes: null, initialImage: model.imageUrl, nameField: 'ImageFile');
   }
@@ -63,6 +68,10 @@ class CreatePlanRequest {
 
     if (price == null || price == 0) {
       NoteMessage.showErrorSnackBar(message: 'خطأ في السعر', context: context);
+      return false;
+    }
+    if (activationDayNumber == null || activationDayNumber == 0) {
+      NoteMessage.showErrorSnackBar(message: 'خطأ في أيام الخطة', context: context);
       return false;
     }
 

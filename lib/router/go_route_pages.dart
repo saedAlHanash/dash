@@ -22,6 +22,7 @@ import 'package:qareeb_dash/features/trip/ui/pages/trips_page.dart';
 import 'package:qareeb_models/agencies/data/response/agencies_financial_response.dart';
 import 'package:qareeb_models/car_catigory/data/response/car_categories_response.dart';
 import 'package:qareeb_models/companies/data/response/companies_response.dart';
+import 'package:qareeb_models/plans/data/response/plans_response.dart';
 
 import '../core/injection/injection_container.dart' as di;
 import '../core/util/shared_preferences.dart';
