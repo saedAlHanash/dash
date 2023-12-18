@@ -32,6 +32,10 @@ class AllDriversCubit extends Cubit<AllDriversInitial> {
     } else {
       state.command.totalCount = pair.first!.totalCount;
 
+      if (isTrans) {
+        pair.first!.items.removeWhere((element) => !element.isActive);
+      }
+
       emit(state.copyWith(statuses: CubitStatuses.done, result: pair.first!.items));
     }
   }
@@ -71,6 +75,8 @@ class AllDriversCubit extends Cubit<AllDriversInitial> {
   }
 
   Pair<List<String>, List<List<dynamic>>> _getXlsData(List<DriverModel> data) {
+    if (isTrans) data.removeWhere((element) => !element.isActive);
+
     return Pair(
         [
           '\t ID \t',
@@ -84,7 +90,7 @@ class AllDriversCubit extends Cubit<AllDriversInitial> {
           '\t لون السيارة \t',
           '\t رقم اللوحة \t',
           '\t حالة فحص السيارة\t',
-          '\t حالة اشتراك السائق \t',
+          if (!isTrans) '\t حالة اشتراك السائق \t',
           if (!isTrans) '\t حالة السائق \t',
           if (isQareebAdmin) ...[
             '\t اشتراك الولاء \t',
@@ -113,7 +119,7 @@ class AllDriversCubit extends Cubit<AllDriversInitial> {
                 element.carType.carColor,
                 element.carType.carNumber,
                 element.isExamined,
-                element.isActive,
+                if (!isTrans) element.isActive,
                 if (!isTrans) element.isActive,
                 if (isQareebAdmin) ...[
                   element.loyalty,
