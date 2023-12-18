@@ -136,6 +136,7 @@ class _PointsPageState extends State<PointsPage> {
               )
             : null,
         body: MapWidget(
+          clustering: true,
           key: mapKey,
           // updateMarkerWithZoom: true,
           search: () async {

@@ -212,6 +212,7 @@ class _PointInfoPageState extends State<PointInfoPage> {
                 20.0.horizontalSpace,
                 Expanded(
                   child: MapWidget(
+                    clustering: true,
                     key: mapKey,
                     initialPoint: request.getLatLng,
                     search: search,

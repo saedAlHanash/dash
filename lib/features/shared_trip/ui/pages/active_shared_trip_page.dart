@@ -41,7 +41,7 @@ class _ActiveSharedPageState extends State<ActiveSharedPage> {
       child: Scaffold(
         body: Column(
           children: [
-            const Expanded(child: MapWidget(    clustering: false,)),
+            const Expanded(child: MapWidget( )),
             BlocBuilder<SharedTripByIdCubit, SharedTripByIdInitial>(
               builder: (context, state) {
                 if (state.statuses == CubitStatuses.loading) {

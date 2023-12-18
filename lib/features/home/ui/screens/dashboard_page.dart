@@ -289,6 +289,7 @@ class _BusesMapState extends State<BusesMap> {
       listeners: [
         BlocListener<AtherCubit, AtherInitial>(
           listener: (context, state) {
+            _mainColor = _ampere = _blue = _red = 0;
             mapControllerCubit
               ..clearMap(true)
               ..addMarkers(
@@ -344,7 +345,10 @@ class _BusesMapState extends State<BusesMap> {
           if (state.statuses.isLoading) {
             return MyStyle.loadingWidget();
           }
-          return const MapWidget(atherListener: false,);
+          return const MapWidget(
+            atherListener: false,
+            clustering: true,
+          );
         },
       ),
     );
