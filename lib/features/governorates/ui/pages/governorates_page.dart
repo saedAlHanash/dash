@@ -109,7 +109,7 @@ class _GovernoratesPageState extends State<GovernoratesPage> {
                       child: DrawableText(
                         text: item.name,
                         color: Colors.black,
-                        fontFamily: FontManager.cairoBold,
+                        fontFamily: FontManager.cairoBold.name,
                       ),
                     ),
                     BlocConsumer<DeleteGovernorateCubit, DeleteGovernorateInitial>(

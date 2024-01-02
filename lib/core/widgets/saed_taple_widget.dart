@@ -98,7 +98,7 @@ class CellWidget extends StatelessWidget {
                         textAlign: TextAlign.center,
                         text: (e == null || e.isEmpty) ? '-' : e,
                         color: Colors.black,
-                        fontFamily: FontManager.cairoBold,
+                        fontFamily: FontManager.cairoBold.name,
                       ),
                     )
                   : e is Widget
@@ -135,7 +135,7 @@ class TitleWidget extends StatelessWidget {
                   textAlign: TextAlign.center,
                   text: e,
                   color: Colors.black,
-                  fontFamily: FontManager.cairoBold,
+                  fontFamily: FontManager.cairoBold.name,
                 )
               : title is Widget
                   ? title as Widget

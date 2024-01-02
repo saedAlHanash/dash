@@ -96,7 +96,7 @@ class _SharedTripInfoPageState extends State<SharedTripInfoPage> {
                           text: 'تفاصيل الطلب',
                           matchParent: true,
                           selectable: false,
-                          fontFamily: FontManager.cairoBold,
+                          fontFamily: FontManager.cairoBold.name,
                           textAlign: TextAlign.center,
                           color: Colors.black,
                           drawableEnd: isTrans
@@ -200,7 +200,7 @@ class _SharedTripInfoPageState extends State<SharedTripInfoPage> {
 // DrawableText(
 //   text: trip.currentLocationName,
 //
-//   fontFamily: FontManager.cairoBold,
+//   fontFamily: FontManager.cairoBold.name,
 //   color: AppColorManager.gray,
 //   padding: const EdgeInsets.only(right: 10.0, bottom: 20.0, top: 5.0).r,
 // ),
@@ -211,7 +211,7 @@ class _SharedTripInfoPageState extends State<SharedTripInfoPage> {
 // DrawableText(
 //   text: trip.destinationName,
 //
-//   fontFamily: FontManager.cairoBold,
+//   fontFamily: FontManager.cairoBold.name,
 //   color: AppColorManager.gray,
 //   padding: const EdgeInsets.only(right: 10.0, bottom: 20.0, top: 5.0).r,
 // ),
@@ -223,7 +223,7 @@ class _SharedTripInfoPageState extends State<SharedTripInfoPage> {
 // DrawableText(
 //   text: trip.driverName,
 //
-//   fontFamily: FontManager.cairoBold,
+//   fontFamily: FontManager.cairoBold.name,
 //   color: AppColorManager.gray,
 //   padding: const EdgeInsets.only(right: 10.0, bottom: 20.0, top: 5.0).r,
 // ),
@@ -234,7 +234,7 @@ class _SharedTripInfoPageState extends State<SharedTripInfoPage> {
 // DrawableText(
 //   text: trip.carType.carBrand,
 //
-//   fontFamily: FontManager.cairoBold,
+//   fontFamily: FontManager.cairoBold.name,
 //   color: AppColorManager.gray,
 //   padding: const EdgeInsets.only(right: 10.0, bottom: 20.0, top: 5.0).r,
 // ),
@@ -245,7 +245,7 @@ class _SharedTripInfoPageState extends State<SharedTripInfoPage> {
 // DrawableText(
 //   text: trip.carType.carNumber,
 //
-//   fontFamily: FontManager.cairoBold,
+//   fontFamily: FontManager.cairoBold.name,
 //   color: AppColorManager.gray,
 //   padding: const EdgeInsets.only(right: 10.0, bottom: 20.0, top: 5.0).r,
 // ),
@@ -256,7 +256,7 @@ class _SharedTripInfoPageState extends State<SharedTripInfoPage> {
 // DrawableText(
 //   text: trip.clientPhoneNumber,
 //
-//   fontFamily: FontManager.cairoBold,
+//   fontFamily: FontManager.cairoBold.name,
 //   color: AppColorManager.mainColor,
 //   padding: const EdgeInsets.only(right: 10.0, bottom: 20.0, top: 5.0).r,
 // ),
@@ -267,7 +267,7 @@ class _SharedTripInfoPageState extends State<SharedTripInfoPage> {
 // DrawableText(
 //   text: trip.getCost,
 //
-//   fontFamily: FontManager.cairoBold,
+//   fontFamily: FontManager.cairoBold.name,
 //   color: AppColorManager.mainColor,
 //   padding: const EdgeInsets.only(right: 10.0, bottom: 20.0, top: 5.0).r,
 // ),

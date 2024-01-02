@@ -93,7 +93,7 @@
 //                     child: DrawableText(
 //                       text: state.price.formatPrice,
 //                       size: 24.0.sp,
-//                       fontFamily: FontManager.cairoBold,
+//                       fontFamily: FontManager.cairoBold.name,
 //                       color: AppColorManager.mainColor,
 //                     ),
 //                   ),

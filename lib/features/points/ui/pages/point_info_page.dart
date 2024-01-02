@@ -262,7 +262,7 @@ class _PointInfoPageState extends State<PointInfoPage> {
         DrawableText(
           text: 'معلومات النقطة ',
           matchParent: true,
-          fontFamily: FontManager.cairoBold,
+          fontFamily: FontManager.cairoBold.name,
           size: 28.0.sp,
           padding: const EdgeInsets.symmetric(vertical: 15.0).h,
           textAlign: TextAlign.center,

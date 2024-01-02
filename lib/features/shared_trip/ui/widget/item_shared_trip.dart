@@ -33,7 +33,7 @@ class ItemSharedTrip extends StatelessWidget {
         DrawableText(
           text: trip.dateTrip,
           color: AppColorManager.gray,
-          fontFamily: FontManager.cairoBold,
+          fontFamily: FontManager.cairoBold.name,
           matchParent: true,
           textAlign: TextAlign.center,
           drawableEnd: (trip.isStart || trip.isEnd)
@@ -87,7 +87,7 @@ class ItemSharedTrip extends StatelessWidget {
                                     '${item.fullName}  ( ${trip.sharedRequests[index].seatNumber} مقعد )',
                                 color: Colors.black,
                                 matchParent: true,
-                                fontFamily: FontManager.cairoBold,
+                                fontFamily: FontManager.cairoBold.name,
                                 drawableAlin: DrawableAlin.between,
                                 drawableEnd: IconButton(
                                   onPressed: () {
@@ -104,7 +104,7 @@ class ItemSharedTrip extends StatelessWidget {
                                 text: 'نقطة الركوب: ',
                                 color: Colors.black,
                                 matchParent: true,
-                                fontFamily: FontManager.cairoBold,
+                                fontFamily: FontManager.cairoBold.name,
                                 drawableAlin: DrawableAlin.between,
                                 drawableEnd: DrawableText(
                                   text: trip.sharedRequests[index].pickupPoint.arName,
@@ -125,11 +125,11 @@ class ItemSharedTrip extends StatelessWidget {
                   ),
                 );
               },
-              child: const DrawableText(
+              child:  DrawableText(
                 text: 'عرض الزبائن',
                 selectable: false,
                 color: AppColorManager.mainColorDark,
-                fontFamily: FontManager.cairoBold,
+                fontFamily: FontManager.cairoBold.name,
               ),
             ),
           ],
@@ -190,7 +190,7 @@ class ItemSharedTrip1 extends StatelessWidget {
                           textAlign: TextAlign.center,
                           text: 'السائق',
                           color: Colors.black,
-                          fontFamily: FontManager.cairoBold,
+                          fontFamily: FontManager.cairoBold.name,
                         ),
                       ),
                       Expanded(
@@ -200,7 +200,7 @@ class ItemSharedTrip1 extends StatelessWidget {
                           textAlign: TextAlign.center,
                           text: 'المقاعد المحجوزة',
                           color: Colors.black,
-                          fontFamily: FontManager.cairoBold,
+                          fontFamily: FontManager.cairoBold.name,
                         ),
                       ),
                       Expanded(
@@ -210,7 +210,7 @@ class ItemSharedTrip1 extends StatelessWidget {
                           textAlign: TextAlign.center,
                           text: 'كلفة المقعد',
                           color: Colors.black,
-                          fontFamily: FontManager.cairoBold,
+                          fontFamily: FontManager.cairoBold.name,
                         ),
                       ),
                       Expanded(
@@ -220,7 +220,7 @@ class ItemSharedTrip1 extends StatelessWidget {
                           textAlign: TextAlign.center,
                           text: 'عدد النقاط',
                           color: Colors.black,
-                          fontFamily: FontManager.cairoBold,
+                          fontFamily: FontManager.cairoBold.name,
                         ),
                       ),
                       Expanded(
@@ -230,7 +230,7 @@ class ItemSharedTrip1 extends StatelessWidget {
                           textAlign: TextAlign.center,
                           text: 'تاريخ',
                           color: Colors.black,
-                          fontFamily: FontManager.cairoBold,
+                          fontFamily: FontManager.cairoBold.name,
                         ),
                       ),
                       Expanded(
@@ -240,7 +240,7 @@ class ItemSharedTrip1 extends StatelessWidget {
                           textAlign: TextAlign.center,
                           text: 'الحالة',
                           color: Colors.black,
-                          fontFamily: FontManager.cairoBold,
+                          fontFamily: FontManager.cairoBold.name,
                         ),
                       ),
                     ],
@@ -255,7 +255,7 @@ class ItemSharedTrip1 extends StatelessWidget {
                           textAlign: TextAlign.center,
                           text: item.driver.fullName,
                           color: Colors.black,
-                          fontFamily: FontManager.cairoBold,
+                          fontFamily: FontManager.cairoBold.name,
                         ),
                       ),
                       Expanded(
@@ -266,7 +266,7 @@ class ItemSharedTrip1 extends StatelessWidget {
                           text: (item.driver.carType.seatsNumber - item.availableSeats)
                               .toString(),
                           color: Colors.black,
-                          fontFamily: FontManager.cairoBold,
+                          fontFamily: FontManager.cairoBold.name,
                         ),
                       ),
                       Expanded(
@@ -276,7 +276,7 @@ class ItemSharedTrip1 extends StatelessWidget {
                           textAlign: TextAlign.center,
                           text: (item.seatCost).formatPrice,
                           color: Colors.black,
-                          fontFamily: FontManager.cairoBold,
+                          fontFamily: FontManager.cairoBold.name,
                         ),
                       ),
                       Expanded(
@@ -286,7 +286,7 @@ class ItemSharedTrip1 extends StatelessWidget {
                           textAlign: TextAlign.center,
                           text: item.path.edges.length.toString(),
                           color: Colors.black,
-                          fontFamily: FontManager.cairoBold,
+                          fontFamily: FontManager.cairoBold.name,
                         ),
                       ),
                       Expanded(
@@ -296,7 +296,7 @@ class ItemSharedTrip1 extends StatelessWidget {
                           textAlign: TextAlign.center,
                           text: item.schedulingDate?.formatDateTime ?? '',
                           color: Colors.black,
-                          fontFamily: FontManager.cairoBold,
+                          fontFamily: FontManager.cairoBold.name,
                         ),
                       ),
                       Expanded(
@@ -306,7 +306,7 @@ class ItemSharedTrip1 extends StatelessWidget {
                           textAlign: TextAlign.center,
                           text: item.tripStatus.sharedTripName(),
                           color: Colors.black,
-                          fontFamily: FontManager.cairoBold,
+                          fontFamily: FontManager.cairoBold.name,
                         ),
                       ),
                     ],
@@ -340,12 +340,12 @@ class ItemSharedTrip1 extends StatelessWidget {
                                 matchParent: true,
                                 drawablePadding: 15.0.w,
                                 drawableAlin: DrawableAlin.withText,
-                                fontFamily: FontManager.cairoBold,
+                                fontFamily: FontManager.cairoBold.name,
                                 drawableEnd: DrawableText(
                                   text:
                                       'عدد المقاعد:  ${item.sharedRequests[index].seatNumber}',
                                   color: Colors.black,
-                                  fontFamily: FontManager.cairoBold,
+                                  fontFamily: FontManager.cairoBold.name,
                                 ),
                               ),
                             ),
@@ -353,7 +353,7 @@ class ItemSharedTrip1 extends StatelessWidget {
                               child: DrawableText(
                                 text: 'نقطة الركوب: ',
                                 color: Colors.black,
-                                fontFamily: FontManager.cairoBold,
+                                fontFamily: FontManager.cairoBold.name,
                                 drawableEnd: DrawableText(
                                   text: item.sharedRequests[index].pickupPoint.arName,
                                   color: Colors.black,
@@ -373,10 +373,10 @@ class ItemSharedTrip1 extends StatelessWidget {
                   ),
                 );
               },
-              child: const DrawableText(
+              child:  DrawableText(
                 text: 'الزبائن',
                 color: AppColorManager.mainColorDark,
-                fontFamily: FontManager.cairoBold,
+                fontFamily: FontManager.cairoBold.name,
               ),
             ),
           ],

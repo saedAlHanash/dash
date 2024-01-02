@@ -204,16 +204,16 @@ class SummaryFinancialWidget extends StatelessWidget {
                 height: 55.0.r,
               ),
               15.0.horizontalSpace,
-              const DrawableText(
+               DrawableText(
                 text: 'رصيد السائقين لدى الشركة',
                 color: Colors.black,
-                fontFamily: FontManager.cairoBold,
+                fontFamily: FontManager.cairoBold.name,
               ),
               const Spacer(),
               DrawableText(
                 text: result.totalRequiredAmountFromCompany.formatPrice,
                 color: Colors.black,
-                fontFamily: FontManager.cairoBold,
+                fontFamily: FontManager.cairoBold.name,
               ),
             ],
           ),
@@ -229,16 +229,16 @@ class SummaryFinancialWidget extends StatelessWidget {
                 height: 55.0.r,
               ),
               15.0.horizontalSpace,
-              const DrawableText(
+               DrawableText(
                 text: 'رصيد الشركة لدى السائقين',
                 color: Colors.black,
-                fontFamily: FontManager.cairoBold,
+                fontFamily: FontManager.cairoBold.name,
               ),
               const Spacer(),
               DrawableText(
                 text: result.totalRequiredAmountFromDriver.formatPrice,
                 color: Colors.black,
-                fontFamily: FontManager.cairoBold,
+                fontFamily: FontManager.cairoBold.name,
               ),
             ],
           ),
@@ -257,13 +257,13 @@ class SummaryFinancialWidget extends StatelessWidget {
               DrawableText(
                 text: result.getMessage,
                 color: Colors.black,
-                fontFamily: FontManager.cairoBold,
+                fontFamily: FontManager.cairoBold.name,
               ),
               const Spacer(),
               DrawableText(
                 text: result.price.formatPrice,
                 color: Colors.black,
-                fontFamily: FontManager.cairoBold,
+                fontFamily: FontManager.cairoBold.name,
               ),
             ],
           ),

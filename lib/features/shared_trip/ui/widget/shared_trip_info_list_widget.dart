@@ -70,11 +70,11 @@ class _TripInfoListWidgetState extends State<TripInfoListWidget> {
             title: 'الزبائن',
             widget: TextButton(
               onPressed: () => showSharedRequest(widget.trip),
-              child: const DrawableText(
+              child:  DrawableText(
                 text: 'عرض',
                 selectable: false,
                 color: AppColorManager.mainColorDark,
-                fontFamily: FontManager.cairoBold,
+                fontFamily: FontManager.cairoBold.name,
               ),
             ),
           ),

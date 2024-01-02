@@ -55,7 +55,7 @@ class ItemPayed extends StatelessWidget {
           if (isClient)
             DrawableText(
               text: (item.sharedRequestId != 0) ? 'رحلة تشاركية:' : 'رحلة عادية:',
-              fontFamily: FontManager.cairoBold,
+              fontFamily: FontManager.cairoBold.name,
               color: AppColorManager.black,
             ),
           5.0.horizontalSpace,

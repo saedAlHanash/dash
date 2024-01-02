@@ -58,7 +58,7 @@ class StatisticsCard extends StatelessWidget {
                 : (value is String)
                     ? value
                     : '-',
-            fontFamily: FontManager.cairoBold,
+            fontFamily: FontManager.cairoBold.name,
             size: 24.0.sp,
           ),
         ],

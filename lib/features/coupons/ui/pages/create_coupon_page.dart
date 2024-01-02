@@ -63,7 +63,7 @@ class _CreateCouponPageState extends State<CreateCouponPage> {
                       padding: const EdgeInsets.symmetric(vertical: 30.0).h,
                       matchParent: true,
                       textAlign: TextAlign.center,
-                      fontFamily: FontManager.cairoBold,
+                      fontFamily: FontManager.cairoBold.name,
                     ),
                     10.0.verticalSpace,
                     Row(

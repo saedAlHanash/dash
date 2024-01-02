@@ -50,20 +50,29 @@ class SystemParam {
     required this.autoCancelTripAfterMinutes,
     required this.sosMessage,
     required this.tripSearchRadius,
-    required this.onlySelectedCarCategory ,
+    required this.onlySelectedCarCategory,
+    required this.companyPhoneNumber,
+    required this.minDriverCompensationDistance,
+    required this.maxDriverCompensationDistance,
+    required this.driverCompensationKmPrice,
   });
 
-   int id;
-   num? gold;
-   num? oil;
-   num? tire;
-   num? gas;
-   num? autoCancelTripAfterMinutes;
-   String sosMessage;
-   num? tripSearchRadius;
-   bool onlySelectedCarCategory;
+  int id;
+  num? gold;
+  num? oil;
+  num? tire;
+  num? gas;
+  num? autoCancelTripAfterMinutes;
+  String sosMessage;
+  num? tripSearchRadius;
+  bool onlySelectedCarCategory;
 
-  factory SystemParam.fromJson(Map<String, dynamic> json){
+  String? companyPhoneNumber;
+  num? minDriverCompensationDistance;
+  num? maxDriverCompensationDistance;
+  num? driverCompensationKmPrice;
+
+  factory SystemParam.fromJson(Map<String, dynamic> json) {
     return SystemParam(
       id: json["id"] ?? 0,
       gold: json["gold"] ?? 0,
@@ -74,20 +83,28 @@ class SystemParam {
       sosMessage: json["sosMessage"] ?? "",
       tripSearchRadius: json["tripSearchRadius"] ?? 0,
       onlySelectedCarCategory: json["onlySelectedCarCategory"] ?? false,
+      companyPhoneNumber: json["companyPhoneNumber"] ?? '',
+      minDriverCompensationDistance: json["minDriverCompensationDistance"] ?? 0,
+      maxDriverCompensationDistance: json["maxDriverCompensationDistance"] ?? 0,
+      driverCompensationKmPrice: json["driverCompensationKmPrice"] ?? 0,
     );
   }
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "gold": gold,
-    "oil": oil,
-    "tire": tire,
-    "gas": gas,
-    "autoCancelTripAfterMinutes": autoCancelTripAfterMinutes,
-    "sosMessage": sosMessage,
-    "tripSearchRadius": tripSearchRadius,
-    "onlySelectedCarCategory": onlySelectedCarCategory,
-  };
+        "id": id,
+        "gold": gold,
+        "oil": oil,
+        "tire": tire,
+        "gas": gas,
+        "autoCancelTripAfterMinutes": autoCancelTripAfterMinutes,
+        "sosMessage": sosMessage,
+        "tripSearchRadius": tripSearchRadius,
+        "onlySelectedCarCategory": onlySelectedCarCategory,
+        "companyPhoneNumber": companyPhoneNumber,
+        "minDriverCompensationDistance": minDriverCompensationDistance,
+        "maxDriverCompensationDistance": maxDriverCompensationDistance,
+        "driverCompensationKmPrice": driverCompensationKmPrice,
+      };
 
   SystemParam copyWith({
     int? id,
@@ -99,6 +116,10 @@ class SystemParam {
     String? sosMessage,
     num? tripSearchRadius,
     bool? onlySelectedCarCategory,
+    String? companyPhoneNumber,
+    num? minDriverCompensationDistance,
+    num? maxDriverCompensationDistance,
+    num? driverCompensationKmPrice,
   }) {
     return SystemParam(
       id: id ?? this.id,
@@ -106,11 +127,18 @@ class SystemParam {
       oil: oil ?? this.oil,
       tire: tire ?? this.tire,
       gas: gas ?? this.gas,
-      autoCancelTripAfterMinutes: autoCancelTripAfterMinutes ?? this.autoCancelTripAfterMinutes,
+      autoCancelTripAfterMinutes:
+          autoCancelTripAfterMinutes ?? this.autoCancelTripAfterMinutes,
       sosMessage: sosMessage ?? this.sosMessage,
       tripSearchRadius: tripSearchRadius ?? this.tripSearchRadius,
       onlySelectedCarCategory: onlySelectedCarCategory ?? this.onlySelectedCarCategory,
+      companyPhoneNumber: companyPhoneNumber ?? this.companyPhoneNumber,
+      minDriverCompensationDistance:
+          minDriverCompensationDistance ?? this.minDriverCompensationDistance,
+      maxDriverCompensationDistance:
+          maxDriverCompensationDistance ?? this.maxDriverCompensationDistance,
+      driverCompensationKmPrice:
+          driverCompensationKmPrice ?? this.driverCompensationKmPrice,
     );
   }
 }
-

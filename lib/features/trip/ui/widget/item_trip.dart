@@ -36,7 +36,7 @@
 //                           textAlign: TextAlign.center,
 //                           text: 'انطلاق',
 //                           color: Colors.black,
-//                           fontFamily: FontManager.cairoBold,
+//                           fontFamily: FontManager.cairoBold.name,
 //                         ),
 //                       ),
 //                       Expanded(
@@ -46,7 +46,7 @@
 //                           textAlign: TextAlign.center,
 //                           text: 'وجهة',
 //                           color: Colors.black,
-//                           fontFamily: FontManager.cairoBold,
+//                           fontFamily: FontManager.cairoBold.name,
 //                         ),
 //                       ),
 //                       Expanded(
@@ -56,7 +56,7 @@
 //                           textAlign: TextAlign.center,
 //                           text: 'الزبون',
 //                           color: Colors.black,
-//                           fontFamily: FontManager.cairoBold,
+//                           fontFamily: FontManager.cairoBold.name,
 //                         ),
 //                       ),
 //                       Expanded(
@@ -66,7 +66,7 @@
 //                           textAlign: TextAlign.center,
 //                           text: 'السائق',
 //                           color: Colors.black,
-//                           fontFamily: FontManager.cairoBold,
+//                           fontFamily: FontManager.cairoBold.name,
 //                         ),
 //                       ),
 //                       Expanded(
@@ -76,7 +76,7 @@
 //                           textAlign: TextAlign.center,
 //                           text: 'الكلفة',
 //                           color: Colors.black,
-//                           fontFamily: FontManager.cairoBold,
+//                           fontFamily: FontManager.cairoBold.name,
 //                         ),
 //                       ),
 //                       Expanded(
@@ -86,7 +86,7 @@
 //                           textAlign: TextAlign.center,
 //                           text: 'الحالة',
 //                           color: Colors.black,
-//                           fontFamily: FontManager.cairoBold,
+//                           fontFamily: FontManager.cairoBold.name,
 //                         ),
 //                       ),
 //                     ],
@@ -101,7 +101,7 @@
 //                           textAlign: TextAlign.center,
 //                           text: item.currentLocationName,
 //                           color: Colors.black,
-//                           fontFamily: FontManager.cairoBold,
+//                           fontFamily: FontManager.cairoBold.name,
 //                         ),
 //                       ),
 //                       Expanded(
@@ -111,7 +111,7 @@
 //                           textAlign: TextAlign.center,
 //                           text: item.destinationName,
 //                           color: Colors.black,
-//                           fontFamily: FontManager.cairoBold,
+//                           fontFamily: FontManager.cairoBold.name,
 //                         ),
 //                       ),
 //                       Expanded(
@@ -121,7 +121,7 @@
 //                           textAlign: TextAlign.center,
 //                           text: item.clientName,
 //                           color: Colors.black,
-//                           fontFamily: FontManager.cairoBold,
+//                           fontFamily: FontManager.cairoBold.name,
 //                         ),
 //                       ),
 //                       Expanded(
@@ -133,7 +133,7 @@
 //                               ? 'لم يتم قبولها'
 //                               : item.driver.fullName,
 //                           color: Colors.black,
-//                           fontFamily: FontManager.cairoBold,
+//                           fontFamily: FontManager.cairoBold.name,
 //                         ),
 //                       ),
 //                       Expanded(
@@ -143,7 +143,7 @@
 //                           textAlign: TextAlign.center,
 //                           text: item.getTripsCost,
 //                           color: Colors.black,
-//                           fontFamily: FontManager.cairoBold,
+//                           fontFamily: FontManager.cairoBold.name,
 //                         ),
 //                       ),
 //                       Expanded(
@@ -167,7 +167,7 @@
 //                                         : Colors.amber,
 //                               ),
 //                             ),
-//                             fontFamily: FontManager.cairoBold,
+//                             fontFamily: FontManager.cairoBold.name,
 //                           ),
 //                         ),
 //                       ),

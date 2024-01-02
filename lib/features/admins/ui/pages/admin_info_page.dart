@@ -53,7 +53,7 @@ class AdminInfoPageState extends State<AdminInfoPage> {
                     padding: const EdgeInsets.symmetric(vertical: 30.0).h,
                     matchParent: true,
                     textAlign: TextAlign.center,
-                    fontFamily: FontManager.cairoBold,
+                    fontFamily: FontManager.cairoBold.name,
                   ),
                   Row(
                     children: [
@@ -148,7 +148,7 @@ class AdminInfoPageState extends State<AdminInfoPage> {
                     padding: const EdgeInsets.symmetric(vertical: 30.0).h,
                     matchParent: true,
                     textAlign: TextAlign.center,
-                    fontFamily: FontManager.cairoBold,
+                    fontFamily: FontManager.cairoBold.name,
                   ),
                   Row(
                     children: [
@@ -179,7 +179,7 @@ class AdminInfoPageState extends State<AdminInfoPage> {
                     padding: const EdgeInsets.symmetric(vertical: 30.0).h,
                     matchParent: true,
                     textAlign: TextAlign.center,
-                    fontFamily: FontManager.cairoBold,
+                    fontFamily: FontManager.cairoBold.name,
                   ),
                   Builder(
                     builder: (context) {

@@ -64,9 +64,9 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const DrawableText(
+                 DrawableText(
                   text: AppStringManager.login,
-                  fontFamily: FontManager.cairoBold,
+                  fontFamily: FontManager.cairoBold.name,
                   color: AppColorManager.mainColor,
                 ),
                 10.0.verticalSpace,

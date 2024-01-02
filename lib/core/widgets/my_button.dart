@@ -41,7 +41,7 @@ class MyButton extends StatelessWidget {
           text: text,
           selectable: false,
           color: textColor ?? AppColorManager.whit,
-          fontFamily: FontManager.cairoBold,
+          fontFamily: FontManager.cairoBold.name,
           size: 17.0.sp,
         );
 

@@ -51,6 +51,7 @@ import '../../../institutions/ui/pages/institutions_page.dart';
 import '../../../notifications/ui/pages/notifications_page.dart';
 import '../../../pay_to_drivers/ui/pages/financial_page.dart';
 import '../../../plan_trips/bloc/delete_plan_trip_cubit/delete_plan_trip_cubit.dart';
+import '../../../plan_trips/ui/pages/attendances_page.dart';
 import '../../../plan_trips/ui/pages/plan_trips_page.dart';
 import '../../../plans/bloc/delete_plan_cubit/delete_plan_cubit.dart';
 import '../../../plans/ui/pages/plans_page.dart';
@@ -258,6 +259,11 @@ class _HomePageState extends State<HomePage> {
                       icon: Icons.line_axis_sharp,
                       title: 'الرحلات',
                       route: '/planTrips',
+                    ),
+                    AdminMenuItem(
+                      icon: Icons.history,
+                      title: 'السجل',
+                      route: '/planTripsHistory',
                     ),
                   ],
                 ),
@@ -529,6 +535,9 @@ class _HomePageState extends State<HomePage> {
                     ],
                     child: const PlanTripsPage(),
                   );
+
+                case '/planTripsHistory':
+                  return const AttendancesPage();
 
                 case "/allPlans":
                   return MultiBlocProvider(

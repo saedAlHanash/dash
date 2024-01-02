@@ -44,7 +44,7 @@ class ItemCarCategory extends StatelessWidget {
                         textAlign: TextAlign.center,
                         text: item.name,
                         color: Colors.black,
-                        fontFamily: FontManager.cairoBold,
+                        fontFamily: FontManager.cairoBold.name,
                       ),
                     ),
                     Expanded(
@@ -54,7 +54,7 @@ class ItemCarCategory extends StatelessWidget {
                         textAlign: TextAlign.center,
                         text: item.dayKmOverCost.formatPrice,
                         color: Colors.black,
-                        fontFamily: FontManager.cairoBold,
+                        fontFamily: FontManager.cairoBold.name,
                       ),
                     ),
                     Expanded(
@@ -64,7 +64,7 @@ class ItemCarCategory extends StatelessWidget {
                         textAlign: TextAlign.center,
                         text: item.sharedKmOverCost.formatPrice,
                         color: Colors.black,
-                        fontFamily: FontManager.cairoBold,
+                        fontFamily: FontManager.cairoBold.name,
                       ),
                     ),
                     Expanded(
@@ -74,7 +74,7 @@ class ItemCarCategory extends StatelessWidget {
                         textAlign: TextAlign.center,
                         text: item.minimumDayPrice.formatPrice,
                         color: Colors.black,
-                        fontFamily: FontManager.cairoBold,
+                        fontFamily: FontManager.cairoBold.name,
                       ),
                     ),
                     Expanded(
@@ -84,7 +84,7 @@ class ItemCarCategory extends StatelessWidget {
                         textAlign: TextAlign.center,
                         text: '${item.driverRatio} %',
                         color: Colors.black,
-                        fontFamily: FontManager.cairoBold,
+                        fontFamily: FontManager.cairoBold.name,
                       ),
                     ),
                     Expanded(
@@ -94,7 +94,7 @@ class ItemCarCategory extends StatelessWidget {
                         textAlign: TextAlign.center,
                         text: '${item.sharedDriverRatio} %',
                         color: Colors.black,
-                        fontFamily: FontManager.cairoBold,
+                        fontFamily: FontManager.cairoBold.name,
                       ),
                     ),
                     Expanded(
@@ -104,7 +104,7 @@ class ItemCarCategory extends StatelessWidget {
                         textAlign: TextAlign.center,
                         text: '${item.companyLoyaltyRatio} %',
                         color: Colors.black,
-                        fontFamily: FontManager.cairoBold,
+                        fontFamily: FontManager.cairoBold.name,
                       ),
                     ),
                   ],

@@ -29,7 +29,7 @@ class ItemTransfer extends StatelessWidget {
                         textAlign: TextAlign.center,
                         text: 'ID',
                         color: Colors.black,
-                        fontFamily: FontManager.cairoBold,
+                        fontFamily: FontManager.cairoBold.name,
                       ),
                     ),
                     Expanded(
@@ -39,7 +39,7 @@ class ItemTransfer extends StatelessWidget {
                         textAlign: TextAlign.center,
                         text: 'النوع',
                         color: Colors.black,
-                        fontFamily: FontManager.cairoBold,
+                        fontFamily: FontManager.cairoBold.name,
                       ),
                     ),
                     Expanded(
@@ -49,7 +49,7 @@ class ItemTransfer extends StatelessWidget {
                         textAlign: TextAlign.center,
                         text: 'المرسل',
                         color: Colors.black,
-                        fontFamily: FontManager.cairoBold,
+                        fontFamily: FontManager.cairoBold.name,
                       ),
                     ),
                     Expanded(
@@ -59,7 +59,7 @@ class ItemTransfer extends StatelessWidget {
                         textAlign: TextAlign.center,
                         text: 'المستقبل',
                         color: Colors.black,
-                        fontFamily: FontManager.cairoBold,
+                        fontFamily: FontManager.cairoBold.name,
                       ),
                     ),
                     Expanded(
@@ -69,7 +69,7 @@ class ItemTransfer extends StatelessWidget {
                         textAlign: TextAlign.center,
                         text: 'المبلغ',
                         color: Colors.black,
-                        fontFamily: FontManager.cairoBold,
+                        fontFamily: FontManager.cairoBold.name,
                       ),
                     ),
                     Expanded(
@@ -79,7 +79,7 @@ class ItemTransfer extends StatelessWidget {
                         textAlign: TextAlign.center,
                         text: 'الحالة',
                         color: Colors.black,
-                        fontFamily: FontManager.cairoBold,
+                        fontFamily: FontManager.cairoBold.name,
                       ),
                     ),
                     Expanded(
@@ -89,7 +89,7 @@ class ItemTransfer extends StatelessWidget {
                         textAlign: TextAlign.center,
                         text: 'التاريخ',
                         color: Colors.black,
-                        fontFamily: FontManager.cairoBold,
+                        fontFamily: FontManager.cairoBold.name,
                       ),
                     ),
                   ],
@@ -104,7 +104,7 @@ class ItemTransfer extends StatelessWidget {
                         textAlign: TextAlign.center,
                         text: item.id.toString(),
                         color: Colors.black,
-                        fontFamily: FontManager.cairoBold,
+                        fontFamily: FontManager.cairoBold.name,
                       ),
                     ),
                     Expanded(
@@ -114,7 +114,7 @@ class ItemTransfer extends StatelessWidget {
                         textAlign: TextAlign.center,
                         text: item.sharedRequestId != 0 ? 'تشاركي' : 'عادي',
                         color: Colors.black,
-                        fontFamily: FontManager.cairoBold,
+                        fontFamily: FontManager.cairoBold.name,
                       ),
                     ),
                     Expanded(
@@ -124,7 +124,7 @@ class ItemTransfer extends StatelessWidget {
                         textAlign: TextAlign.center,
                         text: item.sourceName,
                         color: Colors.black,
-                        fontFamily: FontManager.cairoBold,
+                        fontFamily: FontManager.cairoBold.name,
                       ),
                     ),
                     Expanded(
@@ -134,7 +134,7 @@ class ItemTransfer extends StatelessWidget {
                         textAlign: TextAlign.center,
                         text: item.destinationName,
                         color: Colors.black,
-                        fontFamily: FontManager.cairoBold,
+                        fontFamily: FontManager.cairoBold.name,
                       ),
                     ),
                     Expanded(
@@ -144,7 +144,7 @@ class ItemTransfer extends StatelessWidget {
                         textAlign: TextAlign.center,
                         text: item.amount.formatPrice,
                         color: Colors.black,
-                        fontFamily: FontManager.cairoBold,
+                        fontFamily: FontManager.cairoBold.name,
                       ),
                     ),
                     Expanded(
@@ -154,7 +154,7 @@ class ItemTransfer extends StatelessWidget {
                         textAlign: TextAlign.center,
                         text: item.status?.arabicName??'',
                         color: Colors.black,
-                        fontFamily: FontManager.cairoBold,
+                        fontFamily: FontManager.cairoBold.name,
                       ),
                     ),
                     Expanded(
@@ -164,7 +164,7 @@ class ItemTransfer extends StatelessWidget {
                         textAlign: TextAlign.center,
                         text: item.transferDate?.formatDateTime ?? '',
                         color: Colors.black,
-                        fontFamily: FontManager.cairoBold,
+                        fontFamily: FontManager.cairoBold.name,
                       ),
                     ),
                   ],

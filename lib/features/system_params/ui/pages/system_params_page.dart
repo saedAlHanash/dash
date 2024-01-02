@@ -98,7 +98,8 @@ class _ParamsPageState extends State<ParamsPage> {
                             Expanded(
                               child: MyTextFormNoLabelWidget(
                                 label: 'عدد الدقائق المنتظرة قبل إلغاء الرحلة',
-                                initialValue: request.autoCancelTripAfterMinutes.toString(),
+                                initialValue:
+                                    request.autoCancelTripAfterMinutes.toString(),
                                 onChanged: (p0) =>
                                     request.autoCancelTripAfterMinutes = num.tryParse(p0),
                               ),
@@ -122,6 +123,47 @@ class _ParamsPageState extends State<ParamsPage> {
                                 onChanged: (spinnerItem) {
                                   request.onlySelectedCarCategory = spinnerItem.item;
                                 },
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: MyTextFormNoLabelWidget(
+                                label: 'رقم هاتف الشركة',
+                                initialValue: request.companyPhoneNumber.toString(),
+                                onChanged: (p0) => request.companyPhoneNumber = p0,
+                              ),
+                            ),
+                            15.0.horizontalSpace,
+                            Expanded(
+                              child: MyTextFormNoLabelWidget(
+                                label: 'أقل مسافة تعويضية بالمتر',
+                                initialValue:
+                                    request.minDriverCompensationDistance.toString(),
+                                onChanged: (p0) => request.minDriverCompensationDistance =
+                                    num.tryParse(p0),
+                              ),
+                            ),
+                            15.0.horizontalSpace,
+                            Expanded(
+                              child: MyTextFormNoLabelWidget(
+                                label: 'أكبر مسافة تعويضية بالمتر',
+                                initialValue:
+                                    request.maxDriverCompensationDistance.toString(),
+                                onChanged: (p0) => request.maxDriverCompensationDistance =
+                                    num.tryParse(p0),
+                              ),
+                            ),
+                            15.0.horizontalSpace,
+                            Expanded(
+                              child: MyTextFormNoLabelWidget(
+                                label: 'سعر كيلو المسافة التعويضية',
+                                initialValue:
+                                    request.driverCompensationKmPrice.toString(),
+                                onChanged: (p0) =>
+                                    request.driverCompensationKmPrice = num.tryParse(p0),
                               ),
                             ),
                           ],

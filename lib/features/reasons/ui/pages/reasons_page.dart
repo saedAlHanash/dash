@@ -97,7 +97,7 @@ class ReasonsPage extends StatelessWidget {
                             child: DrawableText(
                               text: 'السبب : ${item.name}',
                               color: Colors.black,
-                              fontFamily: FontManager.cairoBold,
+                              fontFamily: FontManager.cairoBold.name,
                             ),
                           ),
                           BlocConsumer<DeleteReasonCubit, DeleteReasonInitial>(

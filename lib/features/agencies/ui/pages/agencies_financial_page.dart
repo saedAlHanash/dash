@@ -191,16 +191,16 @@ class SummaryFinancialWidget extends StatelessWidget {
                 height: 55.0.r,
               ),
               15.0.horizontalSpace,
-              const DrawableText(
+               DrawableText(
                 text: 'مستحقات الوكلاء لدى الشركة',
                 color: Colors.black,
-                fontFamily: FontManager.cairoBold,
+                fontFamily: FontManager.cairoBold.name,
               ),
               const Spacer(),
               DrawableText(
                 text: result.totalRequiredAmountFromCompany.formatPrice,
                 color: Colors.black,
-                fontFamily: FontManager.cairoBold,
+                fontFamily: FontManager.cairoBold.name,
               ),
             ],
           ),

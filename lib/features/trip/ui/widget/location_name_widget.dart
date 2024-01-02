@@ -30,7 +30,7 @@ class LocationNameWidget extends StatelessWidget {
         matchParent: true,
         color: AppColorManager.black,
         size: 18.0.sp,
-        fontFamily: FontManager.cairoBold,
+        fontFamily: FontManager.cairoBold.name,
         drawablePadding: 15.0.w,
         drawableStart:  ImageMultiType(url:
           isStart ? Assets.iconsMarkerStart : Assets.iconsMarkerEnd,

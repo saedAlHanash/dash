@@ -23,7 +23,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
             ? const LogoText()
             : DrawableText(
                 text: text!,
-                fontFamily: FontManager.cairoBold,
+                fontFamily: FontManager.cairoBold.name,
               ),
         backgroundColor: AppColorManager.f1,
         actions: actions,

@@ -106,7 +106,7 @@ class _MyCheckboxWidgetState extends State<MyCheckboxWidget> {
                           ? AppColorManager.mainColorDark
                           : AppColorManager.black,
                   size: 24.0.sp,
-                  fontFamily: FontManager.cairoBold,
+                  fontFamily: FontManager.cairoBold.name,
                   drawableStart: Checkbox(
                     value: selected,
                     activeColor: AppColorManager.mainColorDark,

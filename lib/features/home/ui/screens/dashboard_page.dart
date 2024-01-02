@@ -81,14 +81,14 @@ class _DashboardPageState extends State<DashboardPage> {
                                 child: DrawableText(
                                   text: 'اسم السائق: ${bestDriver.driverName}',
                                   color: Colors.black,
-                                  fontFamily: FontManager.cairoBold,
+                                  fontFamily: FontManager.cairoBold.name,
                                 ),
                               ),
                               Expanded(
                                 child: DrawableText(
                                   text: 'عدد الرحلات: ${bestDriver.tripsCount}',
                                   color: Colors.black,
-                                  fontFamily: FontManager.cairoBold,
+                                  fontFamily: FontManager.cairoBold.name,
                                 ),
                               ),
                               Expanded(
@@ -96,7 +96,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                   text:
                                       'عدد الرحلات التشاركية: ${bestDriver.sharedTripsCount}',
                                   color: Colors.black,
-                                  fontFamily: FontManager.cairoBold,
+                                  fontFamily: FontManager.cairoBold.name,
                                 ),
                               ),
                               Expanded(
@@ -104,7 +104,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                   text:
                                       'الكيلومترات: ${(bestDriver.totalMeters / 1000).round()}',
                                   color: Colors.black,
-                                  fontFamily: FontManager.cairoBold,
+                                  fontFamily: FontManager.cairoBold.name,
                                 ),
                               ),
                               IconButton(
@@ -127,7 +127,7 @@ class _DashboardPageState extends State<DashboardPage> {
               DrawableText(
                 text: 'التتبع المباشر',
                 size: 24.0.sp,
-                fontFamily: FontManager.cairoBold,
+                fontFamily: FontManager.cairoBold.name,
               ),
               10.0.verticalSpace,
               SizedBox(

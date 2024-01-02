@@ -22,11 +22,11 @@ class DriverTripsCard extends StatelessWidget {
           margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0).r,
           child: Row(
             children: [
-              const Expanded(
+               Expanded(
                 child: DrawableText(
                   text: 'الرحلات العادية',
                   color: Colors.black,
-                  fontFamily: FontManager.cairoBold,
+                  fontFamily: FontManager.cairoBold.name,
                   matchParent: true,
                 ),
               ),
@@ -34,14 +34,14 @@ class DriverTripsCard extends StatelessWidget {
                 child: DrawableText(
                   text: 'المرفوضة : ${driver.rejectedTripsCount}',
                   color: Colors.black,
-                  fontFamily: FontManager.cairoBold,
+                  fontFamily: FontManager.cairoBold.name,
                 ),
               ),
               Expanded(
                 child: DrawableText(
                   text: 'الرحلات المرسلة  : ${driver.receivedTripsCount}',
                   color: Colors.black,
-                  fontFamily: FontManager.cairoBold,
+                  fontFamily: FontManager.cairoBold.name,
                 ),
               ),
               MyButton(
@@ -65,11 +65,11 @@ class DriverTripsCard extends StatelessWidget {
           margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0).r,
           child: Row(
             children: [
-              const Expanded(
+               Expanded(
                 child: DrawableText(
                   text: 'الرحلات التشاركية',
                   color: Colors.black,
-                  fontFamily: FontManager.cairoBold,
+                  fontFamily: FontManager.cairoBold.name,
                   matchParent: true,
                 ),
               ),

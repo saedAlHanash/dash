@@ -21,7 +21,7 @@ class SnakeBarWidget extends StatelessWidget {
 
     final textWidget = DrawableText(
       text: text,
-      fontFamily: FontManager.cairoBold,
+      fontFamily: FontManager.cairoBold.name,
       size: 14.0.sp,
       color: Colors.white,
     );

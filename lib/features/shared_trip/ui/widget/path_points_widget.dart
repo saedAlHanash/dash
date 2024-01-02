@@ -238,7 +238,7 @@ class EdgesPointWidget extends StatelessWidget {
             selectable: false,
             text: 'id: ${item.id}',
             color: Colors.black,
-            fontFamily: FontManager.cairoBold,
+            fontFamily: FontManager.cairoBold.name,
           ),
           20.0.horizontalSpace,
           Expanded(
@@ -246,7 +246,7 @@ class EdgesPointWidget extends StatelessWidget {
               selectable: false,
               text: item.endPoint.arName,
               color: Colors.black,
-              fontFamily: FontManager.cairoBold,
+              fontFamily: FontManager.cairoBold.name,
             ),
           ),
           Expanded(
@@ -254,7 +254,7 @@ class EdgesPointWidget extends StatelessWidget {
               selectable: false,
               text: 'البعد : ${item.distance.toInt()} متر',
               color: Colors.black,
-              fontFamily: FontManager.cairoBold,
+              fontFamily: FontManager.cairoBold.name,
             ),
           ),
           BlocBuilder<DeleteEdgeCubit, DeleteEdgeInitial>(

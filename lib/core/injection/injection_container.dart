@@ -65,6 +65,7 @@ import '../../features/notifications/bloc/notification_cubit/notification_cubit.
 import '../../features/plan_trips/bloc/all_plan_trips_cubit/all_plan_trips_cubit.dart';
 import '../../features/plan_trips/bloc/create_plan_trip_cubit/create_plan_trip_cubit.dart';
 import '../../features/plan_trips/bloc/delete_plan_trip_cubit/delete_plan_trip_cubit.dart';
+import '../../features/plan_trips/bloc/plan_attendances_cubit/plan_attendances_cubit.dart';
 import '../../features/plan_trips/bloc/plan_trip_by_id_cubit/plan_trip_by_id_cubit.dart';
 import '../../features/plans/bloc/create_plan_cubit/create_plan_cubit.dart';
 import '../../features/plans/bloc/delete_plan_cubit/delete_plan_cubit.dart';
@@ -306,6 +307,7 @@ Future<void> init() async {
   sl.registerFactory(() => AllPlanTripsCubit());
   sl.registerFactory(() => DeletePlanTripCubit());
   sl.registerFactory(() => PlanTripBuIdCubit());
+  sl.registerFactory(() => PlanAttendancesCubit());
   //endregion
 
 

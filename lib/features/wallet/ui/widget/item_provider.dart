@@ -40,7 +40,7 @@ class ItemProvider extends StatelessWidget {
                         textAlign: TextAlign.center,
                         text: 'ID',
                         color: Colors.black,
-                        fontFamily: FontManager.cairoBold,
+                        fontFamily: FontManager.cairoBold.name,
                       ),
                     ),
                     Expanded(
@@ -50,7 +50,7 @@ class ItemProvider extends StatelessWidget {
                         textAlign: TextAlign.center,
                         text: 'الاسم',
                         color: Colors.black,
-                        fontFamily: FontManager.cairoBold,
+                        fontFamily: FontManager.cairoBold.name,
                       ),
                     ),
                     Expanded(
@@ -60,7 +60,7 @@ class ItemProvider extends StatelessWidget {
                         textAlign: TextAlign.center,
                         text: 'النوع',
                         color: Colors.black,
-                        fontFamily: FontManager.cairoBold,
+                        fontFamily: FontManager.cairoBold.name,
                       ),
                     ),
                     Expanded(
@@ -70,7 +70,7 @@ class ItemProvider extends StatelessWidget {
                         textAlign: TextAlign.center,
                         text: 'الحالة',
                         color: Colors.black,
-                        fontFamily: FontManager.cairoBold,
+                        fontFamily: FontManager.cairoBold.name,
                       ),
                     ),
                     Expanded(
@@ -80,7 +80,7 @@ class ItemProvider extends StatelessWidget {
                         textAlign: TextAlign.center,
                         text: 'العمليات',
                         color: Colors.black,
-                        fontFamily: FontManager.cairoBold,
+                        fontFamily: FontManager.cairoBold.name,
                       ),
                     ),
                   ],
@@ -95,7 +95,7 @@ class ItemProvider extends StatelessWidget {
                         textAlign: TextAlign.center,
                         text: item.id.toString(),
                         color: Colors.black,
-                        fontFamily: FontManager.cairoBold,
+                        fontFamily: FontManager.cairoBold.name,
                       ),
                     ),
                     Expanded(
@@ -105,7 +105,7 @@ class ItemProvider extends StatelessWidget {
                         textAlign: TextAlign.center,
                         text: item.name,
                         color: Colors.black,
-                        fontFamily: FontManager.cairoBold,
+                        fontFamily: FontManager.cairoBold.name,
                       ),
                     ),
                     Expanded(
@@ -115,7 +115,7 @@ class ItemProvider extends StatelessWidget {
                         textAlign: TextAlign.center,
                         text: item.isWebView ? 'صفحة ويب' : 'OTP',
                         color: Colors.black,
-                        fontFamily: FontManager.cairoBold,
+                        fontFamily: FontManager.cairoBold.name,
                       ),
                     ),
                     Expanded(
@@ -125,7 +125,7 @@ class ItemProvider extends StatelessWidget {
                         textAlign: TextAlign.center,
                         text: item.isActive ? 'فعال' : 'متوقف',
                         color: Colors.black,
-                        fontFamily: FontManager.cairoBold,
+                        fontFamily: FontManager.cairoBold.name,
                       ),
                     ),
                     Expanded(

@@ -61,7 +61,7 @@ class _ChargeClientPageState extends State<ChargeClientPage> {
               DrawableText(
                 text: 'يرجى إدخال رقم الزبون وقيمة الشحن',
                 size: 18.0.sp,
-                fontFamily: FontManager.cairoBold,
+                fontFamily: FontManager.cairoBold.name,
                 color: AppColorManager.mainColor,
               ),
               10.0.verticalSpace,

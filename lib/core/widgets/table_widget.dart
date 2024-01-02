@@ -49,7 +49,7 @@ class MyTableWidget extends StatelessWidget {
                     matchParent: true,
                     padding: const EdgeInsets.symmetric(horizontal: 10.0).w,
                     textAlign: TextAlign.center,
-                    fontFamily: FontManager.cairoBold,
+                    fontFamily: FontManager.cairoBold.name,
                     color: AppColorManager.black,
                   )
                 : (value is Widget)
@@ -59,7 +59,7 @@ class MyTableWidget extends StatelessWidget {
                         matchParent: true,
                         padding: const EdgeInsets.symmetric(horizontal: 10.0).w,
                         textAlign: TextAlign.center,
-                        fontFamily: FontManager.cairoBold,
+                        fontFamily: FontManager.cairoBold.name,
                         color: AppColorManager.black,
                       ),
           )

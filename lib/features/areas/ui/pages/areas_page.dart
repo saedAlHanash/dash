@@ -123,7 +123,7 @@ class _AreasPageState extends State<AreasPage> {
                             child: DrawableText(
                               text: item.name,
                               color: Colors.black,
-                              fontFamily: FontManager.cairoBold,
+                              fontFamily: FontManager.cairoBold.name,
                             ),
                           ),
                           BlocConsumer<DeleteAreaCubit, DeleteAreaInitial>(

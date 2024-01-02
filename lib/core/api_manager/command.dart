@@ -7,6 +7,7 @@ import '../../features/clients/data/request/clients_filter_request.dart';
 import '../../features/companies/data/request/companies_filter_request.dart';
 import '../../features/drivers/data/request/drivers_filter_request.dart';
 import '../../features/pay_to_drivers/data/request/financial_filter_request.dart';
+import '../../features/plan_trips/data/request/plan_attendances_filter.dart';
 import '../../features/trip/data/request/filter_trip_request.dart';
 
 class Command {
@@ -19,6 +20,7 @@ class Command {
     this.filterTripRequest,
     this.transferFilterRequest,
     this.companiesFilterRequest,
+    this.planAttendanceFilter,
   });
 
   int? skipCount;
@@ -30,6 +32,7 @@ class Command {
   FilterTripRequest? filterTripRequest;
   TransferFilterRequest? transferFilterRequest;
   CompaniesFilterRequest? companiesFilterRequest;
+  PlanAttendanceFilter? planAttendanceFilter;
 
   int get maxPages => ((totalCount ?? 0) / maxResultCount).myRound;
 
@@ -94,6 +97,9 @@ class Command {
     if (companiesFilterRequest != null) {
       json.addAll(companiesFilterRequest!.toJson());
     }
+    if (planAttendanceFilter != null) {
+      json.addAll(planAttendanceFilter!.toJson());
+    }
 
     return json;
   }
@@ -113,6 +119,7 @@ class Command {
     FinancialFilterRequest? financialFilterRequest,
     TransferFilterRequest? transferFilterRequest,
     CompaniesFilterRequest? companiesFilterRequest,
+    PlanAttendanceFilter? planAttendanceFilter,
   }) {
     return Command(
       skipCount: skipCount ?? this.skipCount,
@@ -123,6 +130,7 @@ class Command {
       financialFilterRequest: financialFilterRequest ?? this.financialFilterRequest,
       transferFilterRequest: transferFilterRequest ?? this.transferFilterRequest,
       companiesFilterRequest: companiesFilterRequest ?? this.companiesFilterRequest,
+      planAttendanceFilter: planAttendanceFilter ?? this.planAttendanceFilter,
     );
   }
 }

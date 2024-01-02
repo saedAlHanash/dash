@@ -127,6 +127,7 @@ class GetUrl {
   static const gerAllSos = 'api/services/app/EmergencyService/GetAll';
   static const getCompanyTransfers =
       'api/services/app/AccountsService/GetCompanyTransfers';
+  static const planAttendance = 'api/services/app/EnrollmentRecordService/GetAll';
 }
 
 class PostUrl {
@@ -312,8 +313,8 @@ class PatchUrl {
 }
 
 String get baseUrl {
-  // return testUrl;
-  return liveUrl;
+  return testUrl;
+  // return liveUrl;
 }
 
 const liveUrl = 'live.qareeb-maas.com';

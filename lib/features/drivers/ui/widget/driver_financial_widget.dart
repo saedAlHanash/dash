@@ -45,7 +45,7 @@ class DriverFinancialWidget extends StatelessWidget {
                       DrawableText(
                         text: 'آخر شحنة من السائق للشركة',
                         color: Colors.black,
-                        fontFamily: FontManager.cairoBold,
+                        fontFamily: FontManager.cairoBold.name,
                         drawablePadding: 30.0.h,
                         drawableEnd: DrawableText(
                           text: state.result.lastTransferFromDriver.transferDate
@@ -58,7 +58,7 @@ class DriverFinancialWidget extends StatelessWidget {
                       DrawableText(
                         text: state.result.lastTransferFromDriver.amount.formatPrice,
                         color: Colors.black,
-                        fontFamily: FontManager.cairoBold,
+                        fontFamily: FontManager.cairoBold.name,
                       ),
                     ],
                   ),
@@ -71,7 +71,7 @@ class DriverFinancialWidget extends StatelessWidget {
                       DrawableText(
                         text: 'آخر شحنة من الشركة للسائق',
                         color: Colors.black,
-                        fontFamily: FontManager.cairoBold,
+                        fontFamily: FontManager.cairoBold.name,
                         drawablePadding: 30.0.h,
                         drawableEnd: DrawableText(
                           text: state.result.lastTransferFromDriver.transferDate
@@ -85,7 +85,7 @@ class DriverFinancialWidget extends StatelessWidget {
                         text: state
                             .result.lastTransferFromCompanyToDriver.amount.formatPrice,
                         color: Colors.black,
-                        fontFamily: FontManager.cairoBold,
+                        fontFamily: FontManager.cairoBold.name,
                       ),
                     ],
                   ),
@@ -163,16 +163,16 @@ class SummaryFinancialWidget extends StatelessWidget {
                 height: 55.0.r,
               ),
               15.0.horizontalSpace,
-              const DrawableText(
+               DrawableText(
                 text: 'رصيد السائق لدى الشركة',
                 color: Colors.black,
-                fontFamily: FontManager.cairoBold,
+                fontFamily: FontManager.cairoBold.name,
               ),
               const Spacer(),
               DrawableText(
                 text: result.requiredAmountFromCompany.formatPrice,
                 color: Colors.black,
-                fontFamily: FontManager.cairoBold,
+                fontFamily: FontManager.cairoBold.name,
               ),
             ],
           ),
@@ -188,16 +188,16 @@ class SummaryFinancialWidget extends StatelessWidget {
                 height: 55.0.r,
               ),
               15.0.horizontalSpace,
-              const DrawableText(
+               DrawableText(
                 text: 'رصيد الشركة لدى السائق',
                 color: Colors.black,
-                fontFamily: FontManager.cairoBold,
+                fontFamily: FontManager.cairoBold.name,
               ),
               const Spacer(),
               DrawableText(
                 text: result.requiredAmountFromDriver.formatPrice,
                 color: Colors.black,
-                fontFamily: FontManager.cairoBold,
+                fontFamily: FontManager.cairoBold.name,
               ),
             ],
           ),
@@ -216,13 +216,13 @@ class SummaryFinancialWidget extends StatelessWidget {
               DrawableText(
                 text: result.getMessage,
                 color: Colors.black,
-                fontFamily: FontManager.cairoBold,
+                fontFamily: FontManager.cairoBold.name,
               ),
               const Spacer(),
               DrawableText(
                 text: result.price.formatPrice,
                 color: Colors.black,
-                fontFamily: FontManager.cairoBold,
+                fontFamily: FontManager.cairoBold.name,
               ),
             ],
           ),
@@ -250,16 +250,16 @@ class SummaryAgencyWidget extends StatelessWidget {
             height: 55.0.r,
           ),
           15.0.horizontalSpace,
-          const DrawableText(
+           DrawableText(
             text: 'رصيد الوكيل لدى الشركة',
             color: Colors.black,
-            fontFamily: FontManager.cairoBold,
+            fontFamily: FontManager.cairoBold.name,
           ),
           const Spacer(),
           DrawableText(
             text: result.requiredAmountFromCompany.formatPrice,
             color: Colors.black,
-            fontFamily: FontManager.cairoBold,
+            fontFamily: FontManager.cairoBold.name,
           ),
         ],
       ),

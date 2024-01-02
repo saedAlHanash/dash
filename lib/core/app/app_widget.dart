@@ -27,6 +27,7 @@ import '../../features/home/bloc/nav_home_cubit/nav_home_cubit.dart';
 import '../../features/institutions/bloc/all_institutions_cubit/all_institutions_cubit.dart';
 import '../../features/notifications/bloc/notification_cubit/notification_cubit.dart';
 import '../../features/plan_trips/bloc/all_plan_trips_cubit/all_plan_trips_cubit.dart';
+import '../../features/plan_trips/bloc/plan_attendances_cubit/plan_attendances_cubit.dart';
 import '../../features/plans/bloc/plans_cubit/plans_cubit.dart';
 import '../../features/points/bloc/get_edged_point_cubit/get_all_points_cubit.dart';
 import '../../features/roles/bloc/all_roles/all_roles_cubit.dart';
@@ -65,8 +66,8 @@ class MyApp extends StatelessWidget {
           renderHtml: true,
           // textDirection: TextDirection.ltr,
         );
-        ImageMultiType.initial(
-          errorImage: const ImageMultiType(url: Assets.iconsLogoWithoutText),
+        setImageMultiTypeErrorImage(
+          const ImageMultiType(url: Assets.iconsLogoWithoutText),
         );
         return MaterialApp.router(
           scrollBehavior: MyCustomScrollBehavior(),
@@ -106,6 +107,8 @@ class MyApp extends StatelessWidget {
                 BlocProvider(create: (_) => sl<GetSharedTripsCubit>()..getSharesTrip(_)),
                 BlocProvider(create: (_) => sl<SystemParamsCubit>()..getSystemParams(_)),
                 BlocProvider(create: (_) => sl<ProvidersCubit>()..getAllEpayProviders(_)),
+                BlocProvider(
+                    create: (_) => sl<PlanAttendancesCubit>()..getAttendances(_)),
                 BlocProvider(
                   create: (_) => sl<CompanyTransfersCubit>()..getCompanyTransfers(_),
                 ),

@@ -193,7 +193,7 @@ class ItemLoyal extends StatelessWidget {
             child: DrawableText(
               text: text,
               color: Colors.black,
-              fontFamily: FontManager.cairoBold,
+              fontFamily: FontManager.cairoBold.name,
               drawablePadding: 10.0.w,
               drawableAlin: DrawableAlin.withText,
               matchParent: true,
@@ -209,7 +209,7 @@ class ItemLoyal extends StatelessWidget {
             child: DrawableText(
               text: 'تم استبدال : $oldCount',
               color: Colors.black,
-              fontFamily: FontManager.cairoBold,
+              fontFamily: FontManager.cairoBold.name,
             ),
           ),
           if (driverId != 0)
@@ -217,7 +217,7 @@ class ItemLoyal extends StatelessWidget {
               child: DrawableText(
                 text: 'يمكن استبدال : $count',
                 color: Colors.black,
-                fontFamily: FontManager.cairoBold,
+                fontFamily: FontManager.cairoBold.name,
               ),
             ),
           if (driverId != 0)
@@ -229,7 +229,7 @@ class ItemLoyal extends StatelessWidget {
                   textAlign: TextAlign.center,
                   matchParent: true,
                   color: Colors.black,
-                  fontFamily: FontManager.cairoBold,
+                  fontFamily: FontManager.cairoBold.name,
                 ),
               ),
             ),
@@ -297,7 +297,7 @@ class _TotalWidget extends StatelessWidget {
             child: DrawableText(
               text: 'الكيلو مترات',
               color: Colors.black,
-              fontFamily: FontManager.cairoBold,
+              fontFamily: FontManager.cairoBold.name,
               drawablePadding: 10.0.w,
               drawableStart: ImageMultiType(
                 url: Assets.iconsPath,
@@ -310,7 +310,7 @@ class _TotalWidget extends StatelessWidget {
             child: DrawableText(
               text: '${(text / 1000).round()} (كيلو متر)',
               color: Colors.black,
-              fontFamily: FontManager.cairoBold,
+              fontFamily: FontManager.cairoBold.name,
             ),
           ),
         ],

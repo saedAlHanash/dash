@@ -170,7 +170,7 @@ class _CreateDriverPageState extends State<CreateDriverPage> {
                       padding: const EdgeInsets.symmetric(vertical: 30.0).h,
                       matchParent: true,
                       textAlign: TextAlign.center,
-                      fontFamily: FontManager.cairoBold,
+                      fontFamily: FontManager.cairoBold.name,
                     ),
                     Row(
                       children: [
@@ -315,7 +315,7 @@ class _CreateDriverPageState extends State<CreateDriverPage> {
                       padding: const EdgeInsets.symmetric(vertical: 30.0).h,
                       matchParent: true,
                       textAlign: TextAlign.center,
-                      fontFamily: FontManager.cairoBold,
+                      fontFamily: FontManager.cairoBold.name,
                     ),
                     StatefulBuilder(
                       builder: (context, mState) {
