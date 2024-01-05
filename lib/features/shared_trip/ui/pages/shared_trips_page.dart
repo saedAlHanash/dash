@@ -24,20 +24,15 @@ const _tripsTableHeader = [
   'العمليات',
 ];
 
-class SharedTripsPage extends StatefulWidget {
-  const SharedTripsPage({super.key, this.isClientTrips});
+class SharedTripsPage extends StatelessWidget {
+  const SharedTripsPage({super.key, this.withAppBar = false});
 
-  final bool? isClientTrips;
+  final bool withAppBar;
 
-  @override
-  State<SharedTripsPage> createState() => _SharedTripsPageState();
-}
-
-class _SharedTripsPageState extends State<SharedTripsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarWidget(text: 'الرحلات التشاركية '),
+      appBar: withAppBar?const AppBarWidget(text: 'الرحلات التشاركية '):null,
       body: SingleChildScrollView(
         padding: const EdgeInsets.only(bottom: 100.0).h,
         child: Column(

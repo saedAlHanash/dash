@@ -174,7 +174,7 @@ class _TripsFilterWidgetState extends State<TripsFilterWidget> {
                           0,
                           SpinnerItem(
                             name: 'حالة الرحلة',
-                            id: -1,
+                            /*id: -1,*/
                             isSelected: request.tripStatus == null,
                           )),
                     onChanged: (item) => request.tripStatus = item.item,
@@ -195,7 +195,7 @@ class _TripsFilterWidgetState extends State<TripsFilterWidget> {
                         0,
                         SpinnerItem(
                           name: 'نوع الرحلة',
-                          id: -1,
+                          /*id: -1,*/
                           isSelected: request.tripType == null,
                         )),
                   onChanged: (item) => request.tripType = item.item,
@@ -216,7 +216,7 @@ class _TripsFilterWidgetState extends State<TripsFilterWidget> {
                           SpinnerItem(
                               name: 'تصنيف السيارة',
                               item: null,
-                              id: -1,
+                              /*id: -1,*/
                               isSelected: request.carCategoryId == null),
                         ),
                       width: 1.0.sw,
@@ -243,7 +243,7 @@ class _TripsFilterWidgetState extends State<TripsFilterWidget> {
                             SpinnerItem(
                                 name: 'الوكيل',
                                 item: null,
-                                id: -1,
+                                /*id: -1,*/
                                 isSelected: request.agencyId == null),
                           ),
                         width: 1.0.sw,

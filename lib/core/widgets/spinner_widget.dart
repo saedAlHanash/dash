@@ -54,7 +54,7 @@ class SpinnerWidgetState<T> extends State<SpinnerWidget<T>> {
             selectable: false,
             text: item.name ?? '',
             padding: padding,
-            color: (item.id != -1)
+            color: (item.id != null)
                 ? (item.enable)
                     ? Colors.black
                     : AppColorManager.gray.withOpacity(0.7)

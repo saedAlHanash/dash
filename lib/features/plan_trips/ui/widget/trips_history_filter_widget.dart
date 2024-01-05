@@ -140,7 +140,7 @@
 //                   width: 1.0.sw,
 //                   items: AttendanceType.values.spinnerItems(
 //                     selected: [request.attendanceType],
-//                   )..insert(0, SpinnerItem(name: 'نوع العملية', id: -1)),
+//                   )..insert(0, SpinnerItem(name: 'نوع العملية', /*id: -1,*/)),
 //                   onChanged: (item) => request.attendanceType = item.item,
 //                 ),
 //               ),
@@ -168,7 +168,7 @@
 //                         0,
 //                         SpinnerItem(
 //                           name: 'حالة الاشتراك في النقل',
-//                           id: -1,
+//                           /*id: -1,*/
 //                           isSelected: request.isSubscribed == null,
 //                         ),
 //                       ),
@@ -198,7 +198,7 @@
 //               //         0,
 //               //         SpinnerItem(
 //               //           name: 'حالة الاشتراك في الرحلات',
-//               //           id: -1,
+//               //           /*id: -1,*/
 //               //           isSelected: request.isParticipated == null,
 //               //         ),
 //               //       ),

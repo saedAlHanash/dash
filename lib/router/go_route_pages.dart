@@ -168,6 +168,8 @@ final appGoRouter = GoRouter(
         final providers = [
           BlocProvider(create: (_) => di.sl<CreateRedeemCubit>()),
           BlocProvider(create: (_) => di.sl<ReverseChargingCubit>()),
+          BlocProvider(create: (_) => di.sl<AtherCubit>()),
+          BlocProvider(create: (_) => di.sl<MapControllerCubit>()),
           BlocProvider(create: (_) => di.sl<WalletCubit>()..getWallet(id: id)),
           BlocProvider(create: (_) => di.sl<DebtsCubit>()..getDebts(_, id: id)),
           BlocProvider(create: (_) => di.sl<RedeemsCubit>()..getRedeems(_, driverId: id)),
@@ -427,7 +429,7 @@ final appGoRouter = GoRouter(
         ];
         return MultiBlocProvider(
           providers: providers,
-          child: const TripsPage(),
+          child: const TripsPage(withAppBar: true),
         );
       },
     ),
@@ -487,7 +489,7 @@ final appGoRouter = GoRouter(
         ];
         return MultiBlocProvider(
           providers: providers,
-          child: const SharedTripsPage(isClientTrips: true),
+          child: const SharedTripsPage(withAppBar: true),
         );
       },
     ),

@@ -35,7 +35,10 @@ class _TransDriversFilterWidgetState extends State<TransDriversFilterWidget> {
 
   @override
   void initState() {
-    request = widget.command?.driversFilterRequest ?? DriversFilterRequest();
+    request = widget.command?.driversFilterRequest ??
+        DriversFilterRequest(
+          isActive: true,
+        );
 
     phoneNoC = TextEditingController(text: request.phoneNo);
     nameC = TextEditingController(text: request.name);
@@ -78,7 +81,7 @@ class _TransDriversFilterWidgetState extends State<TransDriversFilterWidget> {
                     SpinnerItem(
                         name: 'حالة الفحص',
                         item: null,
-                        id: -1,
+                        /*id: -1,*/
                         isSelected: request.isExamined == null),
                     SpinnerItem(
                       name: 'تم الفحص',
@@ -96,10 +99,8 @@ class _TransDriversFilterWidgetState extends State<TransDriversFilterWidget> {
                   onChanged: (p0) => request.isExamined = p0.item,
                 ),
               ),
-
             ],
           ),
-
           5.0.verticalSpace,
           Row(
             children: [

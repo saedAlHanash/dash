@@ -27,12 +27,13 @@ const _tripsTableHeader = [
 ];
 
 class TripsPage extends StatelessWidget {
-  const TripsPage({super.key});
+  const TripsPage({super.key,  this.withAppBar = false});
 
+  final bool withAppBar;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarWidget(text: 'الرحلات'),
+      appBar: withAppBar?const AppBarWidget(text: 'الرحلات'):null,
       body: SingleChildScrollView(
         padding: const EdgeInsets.only(bottom: 100.0).h,
         child: Column(

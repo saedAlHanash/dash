@@ -76,7 +76,7 @@ class _CompanyPathesFilterWidgetState extends State<CompanyPathesFilterWidget> {
                           SpinnerItem(
                               name: 'الشركة',
                               item: null,
-                              id: -1,
+                              /*id: -1,*/
                               isSelected: request.companyId == null),
                         ),
                       width: 1.0.sw,

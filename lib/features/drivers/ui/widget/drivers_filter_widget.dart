@@ -36,6 +36,7 @@ class _DriversFilterWidgetState extends State<DriversFilterWidget> {
   final key3 = GlobalKey<SpinnerWidgetState>();
   final key4 = GlobalKey<SpinnerWidgetState>();
   final key5 = GlobalKey<SpinnerWidgetState>();
+  final key6 = GlobalKey<SpinnerWidgetState>();
 
   @override
   void initState() {
@@ -80,55 +81,13 @@ class _DriversFilterWidgetState extends State<DriversFilterWidget> {
           Row(
             children: [
               Expanded(
-                child: SpinnerWidget(
-                  key: key1,
-                  items: DriverStatus.values.spinnerItems(
-                    selected: request.status,
-                  )..insert(
-                      0,
-                      SpinnerItem(
-                          name: 'حالة السائق',
-                          item: null,
-                          id: -1,
-                          isSelected: request.status == null),
-                    ),
-                  onChanged: (p0) => request.status = p0.item,
-                ),
-              ),
-              15.0.horizontalSpace,
-              Expanded(
-                child: SpinnerWidget(
-                  key: key4,
-                  items: [
-                    SpinnerItem(
-                        name: 'حالة الفحص',
-                        item: null,
-                        id: -1,
-                        isSelected: request.isExamined == null),
-                    SpinnerItem(
-                      name: 'تم الفحص',
-                      item: true,
-                      id: 1,
-                      isSelected: request.isExamined == true,
-                    ),
-                    SpinnerItem(
-                      name: 'لم يتم الفحص',
-                      item: false,
-                      id: 2,
-                      isSelected: request.isExamined == false,
-                    ),
-                  ],
-                  onChanged: (p0) => request.isExamined = p0.item,
-                ),
-              ),
-              15.0.horizontalSpace,
-              Expanded(
                 child: BlocBuilder<AllCarCategoriesCubit, AllCarCategoriesInitial>(
                   builder: (context, state) {
                     if (state.statuses.isLoading) {
                       return MyStyle.loadingWidget();
                     }
                     return SpinnerWidget(
+                         width: 1.0.sw,
                       key: key2,
                       items: state.getSpinnerItems(selectedId: request.carCategoryId)
                         ..insert(
@@ -136,10 +95,9 @@ class _DriversFilterWidgetState extends State<DriversFilterWidget> {
                           SpinnerItem(
                               name: 'تصنيف السيارة',
                               item: null,
-                              id: -1,
+                              /*id: -1,*/
                               isSelected: request.carCategoryId == null),
                         ),
-                      width: 1.0.sw,
                       onChanged: (spinnerItem) {
                         request.carCategoryId = spinnerItem.id;
                       },
@@ -156,6 +114,7 @@ class _DriversFilterWidgetState extends State<DriversFilterWidget> {
                         return MyStyle.loadingWidget();
                       }
                       return SpinnerWidget(
+                           width: 1.0.sw,
                         key: key3,
                         items: state.getSpinnerItems(selectedId: request.agencyId)
                           ..insert(
@@ -163,10 +122,10 @@ class _DriversFilterWidgetState extends State<DriversFilterWidget> {
                             SpinnerItem(
                                 name: 'الوكيل',
                                 item: null,
-                                id: -1,
+                                /*id: -1,*/
                                 isSelected: request.agencyId == null),
                           ),
-                        width: 1.0.sw,
+
                         onChanged: (spinnerItem) {
                           request.agencyId = spinnerItem.id;
                         },
@@ -177,6 +136,7 @@ class _DriversFilterWidgetState extends State<DriversFilterWidget> {
                 15.0.horizontalSpace,
                 Expanded(
                   child: SpinnerWidget(
+                       width: 1.0.sw,
                     key: key5,
                     items: [
                       SpinnerItem(
@@ -196,10 +156,10 @@ class _DriversFilterWidgetState extends State<DriversFilterWidget> {
                         SpinnerItem(
                             name: 'حالة المحرك',
                             item: false,
-                            id: -1,
+                            /*id: -1,*/
                             isSelected: request.engineStatus == null),
                       ),
-                    width: 1.0.sw,
+
                     onChanged: (spinnerItem) {
                       request.agencyId = spinnerItem.id;
                     },
@@ -208,7 +168,85 @@ class _DriversFilterWidgetState extends State<DriversFilterWidget> {
               ],
             ],
           ),
-          5.0.verticalSpace,
+
+          10.0.verticalSpace,
+
+          Row(
+            children: [
+              Expanded(
+                child: SpinnerWidget(
+                     width: 1.0.sw,
+                  key: key1,
+                  items: DriverStatus.values.spinnerItems(
+                    selected: request.status,
+                  )..insert(
+                      0,
+                      SpinnerItem(
+                          name: 'حالة السائق',
+                          item: null,
+                          /*id: -1,*/
+                          isSelected: request.status == null),
+                    ),
+                  onChanged: (p0) => request.status = p0.item,
+                ),
+              ),
+              15.0.horizontalSpace,
+              Expanded(
+                child: SpinnerWidget(
+                     width: 1.0.sw,
+                  key: key4,
+                  items: [
+                    SpinnerItem(
+                        name: 'حالة الفحص',
+                        item: null,
+                        /*id: -1,*/
+                        isSelected: request.isExamined == null),
+                    SpinnerItem(
+                      name: 'تم الفحص',
+                      item: true,
+                      id: 1,
+                      isSelected: request.isExamined == true,
+                    ),
+                    SpinnerItem(
+                      name: 'لم يتم الفحص',
+                      item: false,
+                      id: 2,
+                      isSelected: request.isExamined == false,
+                    ),
+                  ],
+                  onChanged: (p0) => request.isExamined = p0.item,
+                ),
+              ),
+              15.0.horizontalSpace,
+              Expanded(
+                child: SpinnerWidget(
+                     width: 1.0.sw,
+                  key: key6,
+                  items: [
+                    SpinnerItem(
+                        name: 'فعالية السائق',
+                        item: null,
+                        /*id: -1,*/
+                        isSelected: request.isActive == null),
+                    SpinnerItem(
+                      name: 'يعمل مع قريب',
+                      item: true,
+                      id: 1,
+                      isSelected: request.isActive == true,
+                    ),
+                    SpinnerItem(
+                      name: 'أنهى العقد',
+                      item: false,
+                      id: 2,
+                      isSelected: request.isActive == false,
+                    ),
+                  ],
+                  onChanged: (p0) => request.isActive = p0.item,
+                ),
+              ),
+            ],
+          ),
+          10.0.verticalSpace,
           Row(
             children: [
               Expanded(
@@ -236,6 +274,8 @@ class _DriversFilterWidgetState extends State<DriversFilterWidget> {
                     key2.currentState?.clearSelect();
                     key3.currentState?.clearSelect();
                     key4.currentState?.clearSelect();
+                    key5.currentState?.clearSelect();
+                    key6.currentState?.clearSelect();
                   },
                 ),
               ),

@@ -89,7 +89,7 @@ class _FinancialFilterWidgetState extends State<FinancialFilterWidget> {
                           SpinnerItem(
                               name: 'تصنيف السيارة',
                               item: null,
-                              id: -1,
+                              /*id: -1,*/
                               isSelected: request.carCategoryId == null),
                         ),
                       width: 1.0.sw,
@@ -118,7 +118,7 @@ class _FinancialFilterWidgetState extends State<FinancialFilterWidget> {
                           SpinnerItem(
                               name: 'الوكيل',
                               item: null,
-                              id: -1,
+                              /*id: -1,*/
                               isSelected: request.agencyId == null),
                         ),
                       width: 1.0.sw,

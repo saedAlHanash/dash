@@ -56,7 +56,7 @@ class SaedTableWidget extends StatelessWidget {
                   SpinnerWidget(
                     items: command!.getSpinnerItems,
                     onChanged: (spinnerItem) {
-                      onChangePage?.call(command!..goToPage(spinnerItem.id));
+                      onChangePage?.call(command!..goToPage(spinnerItem.id ?? 0));
                     },
                   ),
                 15.0.horizontalSpace,

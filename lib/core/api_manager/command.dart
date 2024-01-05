@@ -106,7 +106,7 @@ class Command {
 
   factory Command.fromJson(Map<String, dynamic> map) {
     return Command(
-      skipCount: map['skipCount'] as int,
+      skipCount: map['skipCount'] ??0,
     );
   }
 

@@ -19,6 +19,19 @@ class CandidateDriversInitial extends Equatable {
     );
   }
 
+  List<String> get getImeisListString {
+    final l = <String>[];
+    for (var e in result) {
+      if (!e.isAccepted) l.add(e.driver.imei);
+    }
+    return l;
+  }
+
+  List<int> get getDriverIds => List<int>.from(result.map((e) => e.driverId));
+
+  CandidateDriver? getIdByImei(String imei) =>
+      result.firstWhereOrNull((e) => e.driver.imei == imei);
+
   @override
   List<Object> get props => [statuses, result, error];
 

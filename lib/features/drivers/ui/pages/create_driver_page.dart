@@ -270,7 +270,7 @@ class _CreateDriverPageState extends State<CreateDriverPage> {
                               borderRadius: BorderRadius.circular(12.0.r),
                             ),
                             onChanged: (spinnerItem) {
-                              request.gender = Gender.values[spinnerItem.id];
+                              request.gender = Gender.values[spinnerItem.id??0];
                             },
                           ),
                         ),
@@ -290,7 +290,7 @@ class _CreateDriverPageState extends State<CreateDriverPage> {
                                           SpinnerItem(
                                               name: 'الوكيل',
                                               item: null,
-                                              id: -1,
+                                              /*id: -1,*/
                                               isSelected: request.agencyId == null),
                                         ),
                                   width: 1.0.sw,
@@ -438,7 +438,7 @@ class _CreateDriverPageState extends State<CreateDriverPage> {
                                   );
                                 },
                               ).toList()
-                                ..insert(0, SpinnerItem(name: 'تصنيف السيارة', id: -1));
+                                ..insert(0, SpinnerItem(name: 'تصنيف السيارة', /*id: -1,*/));
                               return SpinnerWidget(
                                 items: list,
                                 width: 1.0.sw,

@@ -103,7 +103,7 @@ class _TransfersFilterWidgetState extends State<TransfersFilterWidget> {
                   width: 1.0.sw,
                   items: TransferType.values.spinnerItems(
                     selected: request.type,
-                  )..insert(0, SpinnerItem(name: 'نوع العملية', id: -1)),
+                  )..insert(0, SpinnerItem(name: 'نوع العملية', /*id: -1,*/)),
                   onChanged: (item) => request.type = item.item,
                 ),
               ),
@@ -114,7 +114,7 @@ class _TransfersFilterWidgetState extends State<TransfersFilterWidget> {
                   width: 1.0.sw,
                   items: TransferStatus.values.spinnerItems(
                     selected: request.status,
-                  )..insert(0, SpinnerItem(name: 'حالة العملية', id: -1)),
+                  )..insert(0, SpinnerItem(name: 'حالة العملية', /*id: -1,*/)),
                   onChanged: (item) => request.status = item.item,
                 ),
               ),

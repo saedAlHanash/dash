@@ -21,7 +21,7 @@ class CreateCompanyPathRequest {
     final m = CreateCompanyPathRequest(
       description: model.description,
       id: model.id,
-      companyId: model.companyId as int,
+      companyId: model.companyId,
     );
 
     m.pathEdgesIds
@@ -41,7 +41,7 @@ class CreateCompanyPathRequest {
       NoteMessage.showErrorSnackBar(message: 'خطأ في  النقاط', context: context);
       return false;
     }
-    if (companyId ==null ) {
+    if (companyId == null) {
       NoteMessage.showErrorSnackBar(message: 'يرجى اختيار شركة', context: context);
       return false;
     }

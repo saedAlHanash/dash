@@ -89,7 +89,7 @@ class _ClientsFilterWidgetState extends State<ClientsFilterWidget> {
                         0,
                         SpinnerItem(
                           name: 'حالة السائق',
-                          id: -1,
+                          /*id: -1,*/
                           isSelected: request.isAvailable == null,
                         )),
                     onChanged: (item) => request.isAvailable = item.item,

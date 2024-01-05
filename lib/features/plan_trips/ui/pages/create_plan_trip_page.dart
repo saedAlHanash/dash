@@ -4,9 +4,8 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:qareeb_dash/core/api_manager/api_service.dart';
+import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
-import 'package:qareeb_dash/core/util/note_message.dart';
 import 'package:qareeb_dash/core/widgets/my_card_widget.dart';
 import 'package:qareeb_dash/core/widgets/my_checkbox_widget.dart';
 import 'package:qareeb_dash/core/widgets/my_text_form_widget.dart';
@@ -15,8 +14,8 @@ import 'package:qareeb_models/company_paths/data/response/company_paths_response
 import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_models/global.dart';
 
+import '../../../../core/api_manager/command.dart';
 import '../../../../core/strings/app_color_manager.dart';
-import '../../../../core/strings/enum_manager.dart';
 import '../../../../core/util/my_style.dart';
 import '../../../../core/widgets/app_bar_widget.dart';
 import '../../../../core/widgets/my_button.dart';
@@ -24,14 +23,10 @@ import '../../../../core/widgets/select_date.dart';
 import '../../../companies/bloc/companies_cubit/companies_cubit.dart';
 import '../../../company_paths/bloc/all_compane_paths_cubit/all_company_paths_cubit.dart';
 import '../../../drivers/bloc/drivers_imiei_cubit/drivers_imei_cubit.dart';
-import '../../../plans/bloc/plans_cubit/plans_cubit.dart';
-import '../../../temp_trips/bloc/all_temp_trips_cubit/all_temp_trips_cubit.dart';
-import '../../../temp_trips/data/response/temp_trips_response.dart';
 import '../../bloc/all_plan_trips_cubit/all_plan_trips_cubit.dart';
-import '../../bloc/plan_trip_by_id_cubit/plan_trip_by_id_cubit.dart';
 import '../../bloc/create_plan_trip_cubit/create_plan_trip_cubit.dart';
+import '../../bloc/plan_trip_by_id_cubit/plan_trip_by_id_cubit.dart';
 import '../../data/request/create_plan_trip_request.dart';
-import 'package:multi_select_flutter/multi_select_flutter.dart';
 
 class CreatePlanTripPage extends StatefulWidget {
   const CreatePlanTripPage({super.key, this.qareebPoints = true});
@@ -57,9 +52,8 @@ class _CreatePlanTripPageState extends State<CreatePlanTripPage> {
   void initState() {
     allCompaniesCubit = context.read<AllCompaniesCubit>();
 
-    if (allCompaniesCubit.state.result.isEmpty) {
-      allCompaniesCubit.getCompanies(context);
-    }
+    allCompaniesCubit.getCompanies(context, command: Command.noPagination());
+
     super.initState();
   }
 
@@ -228,7 +222,7 @@ class _CreatePlanTripPageState extends State<CreatePlanTripPage> {
                                 searchable: true,
                                 items: state.getSpinnerItem.mapIndexed(
                                   (i, e) {
-                                    return MultiSelectItem<int>(e.id, e.name ?? '');
+                                    return MultiSelectItem<int>(e.id ?? 0, e.name ?? '');
                                   },
                                 ).toList(),
                                 initialValue: request.driversIds,
@@ -255,7 +249,7 @@ class _CreatePlanTripPageState extends State<CreatePlanTripPage> {
                                 sendFirstItem: true,
                                 width: double.infinity,
                                 items: state.getSpinnerItems(
-                                    selectedId: (request.companyPathId ?? -1) as int),
+                                    selectedId: (request.companyPathId ?? 0)),
                                 label: 'مسار الرحلة',
                                 onChanged: (spinnerItem) {
                                   var tempTrip = spinnerItem.item as CompanyPath;
@@ -269,6 +263,9 @@ class _CreatePlanTripPageState extends State<CreatePlanTripPage> {
                         Expanded(
                           child: BlocBuilder<AllCompaniesCubit, AllCompaniesInitial>(
                             builder: (context, state) {
+                              if (state.statuses.loading) {
+                                return MyStyle.loadingWidget();
+                              }
                               return SpinnerOutlineTitle(
                                 width: 1.0.sw,
                                 label: 'اختر الشركة',

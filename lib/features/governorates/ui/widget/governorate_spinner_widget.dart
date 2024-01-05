@@ -39,8 +39,8 @@ class _GovernorateSpinnerWidgetState extends State<GovernorateSpinnerWidget> {
               width: 500.0.w,
               sendFirstItem: state.result.isNotEmpty,
               onChanged: (spinnerItem) {
-                gIds = spinnerItem.id;
-                context.read<AreasCubit>().getArea(context, id: spinnerItem.id);
+                gIds = spinnerItem.id??0;
+                context.read<AreasCubit>().getArea(context, id: spinnerItem.id??0);
               },
             );
           },
@@ -58,7 +58,7 @@ class _GovernorateSpinnerWidgetState extends State<GovernorateSpinnerWidget> {
               searchable: true,
               items: state.getSpinnerItems().mapIndexed(
                 (i, e) {
-                  return MultiSelectItem<int>(e.id, e.name ?? '-');
+                  return MultiSelectItem<int>(e.id??0, e.name ?? '-');
                 },
               ).toList(),
               initialValue: aIds,

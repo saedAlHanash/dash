@@ -16,6 +16,7 @@ import '../../../../core/widgets/app_bar_widget.dart';
 import '../../../wallet/ui/pages/debts_page.dart';
 import '../../bloc/driver_by_id_cubit/driver_by_id_cubit.dart';
 import '../widget/driver_financial_widget.dart';
+import '../widget/driver_live_tracking.dart';
 import '../widget/driver_status_history.dart';
 import '../widget/driver_trips_card.dart';
 
@@ -32,7 +33,7 @@ class _DriverInfoPageState extends State<DriverInfoPage>
 
   @override
   void initState() {
-    _tabController = TabController(length: !isAgency ? 6 : 5, vsync: this);
+    _tabController = TabController(length: !isAgency ? 7 : 6, vsync: this);
     super.initState();
   }
 
@@ -71,6 +72,7 @@ class _DriverInfoPageState extends State<DriverInfoPage>
                     const Tab(text: 'سجل حالة السائق'),
                     const Tab(text: 'المحصلة المالية'),
                     const Tab(text: 'عائدات الرحلات'),
+                    const Tab(text: 'تتبع مباشر'),
                   ],
                 ),
               ),
@@ -92,6 +94,7 @@ class _DriverInfoPageState extends State<DriverInfoPage>
                       const DriverStatusHistory(),
                       const DriverFinancialWidget(),
                       const DebtsPage(),
+                       DriverLiveTracking(imei: driver.qarebDeviceimei),
                     ],
                   ),
                 ),

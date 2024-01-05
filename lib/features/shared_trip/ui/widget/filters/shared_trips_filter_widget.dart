@@ -160,32 +160,6 @@ class _SharedFilterWidgetState extends State<SharedFilterWidget> {
                 ),
               ),
               15.0.horizontalSpace,
-              if(!isTrans)
-              Expanded(
-                child: BlocBuilder<AllCarCategoriesCubit, AllCarCategoriesInitial>(
-                  builder: (context, state) {
-                    if (state.statuses.isLoading) {
-                      return MyStyle.loadingWidget();
-                    }
-                    return SpinnerWidget(
-                      key: key3,
-                      items: state.getSpinnerItems(selectedId: request.carCategoryId)
-                        ..insert(
-                          0,
-                          SpinnerItem(
-                              name: 'تصنيف السيارة',
-                              item: null,
-                              id: -1,
-                              isSelected: request.carCategoryId == null),
-                        ),
-                      width: 1.0.sw,
-                      onChanged: (spinnerItem) {
-                        request.carCategoryId = spinnerItem.id;
-                      },
-                    );
-                  },
-                ),
-              ),
               if (!isAgency&&!isTrans) ...[
                 15.0.horizontalSpace,
                 Expanded(
@@ -202,7 +176,7 @@ class _SharedFilterWidgetState extends State<SharedFilterWidget> {
                             SpinnerItem(
                                 name: 'الوكيل',
                                 item: null,
-                                id: -1,
+                                /*id: -1,*/
                                 isSelected: request.agencyId == null),
                           ),
                         width: 1.0.sw,

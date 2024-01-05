@@ -112,7 +112,7 @@ class _PointsPageState extends State<PointsPage> {
                                   final c = MapMediator(
                                     zoom: mapKey.currentState?.controller.zoom,
                                     center: mapKey.currentState?.controller.center.gll,
-                                    pointId: spinnerItem.id,
+                                    pointId: spinnerItem.id??0,
                                   );
                                   context.pushNamed(
                                     GoRouteName.pointInfo,
