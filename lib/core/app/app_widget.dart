@@ -1,4 +1,8 @@
+import 'dart:html' as web;
+import 'package:audioplayers/audioplayers.dart';
 import 'package:drawable_text/drawable_text.dart';
+import 'package:elegant_notification/resources/arrays.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -42,12 +46,56 @@ import '../../features/trip/bloc/trips_cubit/trips_cubit.dart';
 import '../../features/wallet/bloc/providers_cubit/providers_cubit.dart';
 import '../../generated/assets.dart';
 import '../../router/go_route_pages.dart';
+import '../api_manager/api_service.dart';
 import '../app_theme.dart';
 import '../injection/injection_container.dart';
 import '../strings/app_color_manager.dart';
+import 'package:elegant_notification/elegant_notification.dart';
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  BuildContext? ctx;
+  final player = AudioPlayer();
+
+  @override
+  void initState() {
+    ctx = context;
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      loggerObject.w('Got a message whilst in the foreground!');
+
+      final notification = message.notification;
+
+      String title = '';
+      String body = '';
+
+      if (notification != null) {
+        title = notification.title ?? '';
+        body = notification.body ?? '';
+      } else {
+        title = message.data['title'] ?? '';
+        body = message.data['body'] ?? '';
+      }
+
+      player.play(AssetSource('sounds/sound.wav'));
+
+      web.Notification(
+        'message',
+        icon: Assets.iconsLogoPng,
+        body: body,
+
+      );
+
+    });
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,6 +122,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           theme: appTheme,
           builder: (context, child) {
+            ctx = context;
             return MultiBlocProvider(
               providers: [
                 BlocProvider(create: (_) => sl<NavHomeCubit>()),

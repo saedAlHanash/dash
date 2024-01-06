@@ -119,6 +119,7 @@ import '../../features/wallet/bloc/providers_cubit/providers_cubit.dart';
 import '../../services/osrm/bloc/get_route_point_cubit/get_route_point_cubit.dart';
 import '../../services/osrm/bloc/location_name_cubit/location_name_cubit.dart';
 import '../../services/trip_path/bloc/path_by_id_cubit/path_by_id_cubit.dart';
+import '../firebase/insert_firebase_token_service.dart';
 import '../network/network_info.dart';
 
 final sl = GetIt.instance;
@@ -141,6 +142,7 @@ Future<void> init() async {
   //region Core
 
   sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl());
+  sl.registerLazySingleton(() => InsertFirebaseTokenService());
 
   sl.registerFactory(() => GetRoutePointCubit());
 

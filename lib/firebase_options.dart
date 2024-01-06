@@ -17,16 +17,19 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
-        return android;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for android - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.iOS:
-        return ios;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for ios - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.macOS:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for macos - '
@@ -49,22 +52,13 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyASgUmIGohZBGEENiwBtAMz9EAzoC4Ll_8',
-    appId: '1:92692714826:android:f5e6f462ef2959f4dc5db3',
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyARO4cr5YLVo_sUgvE-vsIFJUvdEyTYChg',
+    appId: '1:92692714826:web:20205958a38d44a8dc5db3',
     messagingSenderId: '92692714826',
     projectId: 'qareeb-29b73',
+    authDomain: 'qareeb-29b73.firebaseapp.com',
     storageBucket: 'qareeb-29b73.appspot.com',
-  );
-
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCG2E7VkWGGWV-lIu6VxeoWexyHxclT-1E',
-    appId: '1:92692714826:ios:fe301c1fbd5df4a0dc5db3',
-    messagingSenderId: '92692714826',
-    projectId: 'qareeb-29b73',
-    storageBucket: 'qareeb-29b73.appspot.com',
-    iosClientId:
-        '92692714826-v4nbftc4im11utmfng1c4jsfi5e5bn27.apps.googleusercontent.com',
-    iosBundleId: 'qareep.driver.qareepDriverFlutter',
+    measurementId: 'G-C5BQ0PPL1T',
   );
 }

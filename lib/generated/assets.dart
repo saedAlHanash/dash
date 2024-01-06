@@ -71,6 +71,7 @@ class Assets {
   static const String iconsCarTopView = 'assets/icons/car_top_view.png';
   static const String iconsCashSummary = 'assets/icons/cash_summary.svg';
   static const String iconsCheckCircle = 'assets/icons/check_circle.svg';
+  static const String iconsLogoPng = 'assets/icons/logo_png.png';
   static const String iconsCoins = 'assets/icons/coins.svg';
   static const String iconsContract = 'assets/icons/contract.svg';
   static const String iconsD = 'assets/icons/d.svg';
@@ -138,4 +139,5 @@ class Assets {
   static const String lottiesMochup03Done = 'assets/lotties/mochup_03_done.json';
   static const String lottiesSample = 'assets/lotties/sample.json';
   static const String soundsSound = 'assets/sounds/sound.wav';
+  static const String soundsPeen = 'sounds/peen.mp3';
 }

@@ -1,14 +1,20 @@
 import 'package:drawable_text/drawable_text.dart';
+import 'package:elegant_notification/resources/arrays.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:image_multi_type/image_multi_type.dart';
 import 'package:qareeb_dash/core/util/shared_preferences.dart';
 import 'package:qareeb_dash/core/widgets/app_bar_widget.dart';
+import 'package:qareeb_dash/generated/assets.dart';
 import 'package:qareeb_dash/router/go_route_pages.dart';
 import 'package:qareeb_models/global.dart';
 import "package:universal_html/html.dart";
-
+import 'package:audioplayers/audioplayers.dart';
+import 'package:elegant_notification/elegant_notification.dart';
+import '../../../../core/api_manager/api_service.dart';
 import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/strings/app_string_manager.dart';
 import '../../../../core/util/my_style.dart';
@@ -64,7 +70,7 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                 DrawableText(
+                DrawableText(
                   text: AppStringManager.login,
                   fontFamily: FontManager.cairoBold.name,
                   color: AppColorManager.mainColor,

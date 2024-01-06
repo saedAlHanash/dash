@@ -2,7 +2,11 @@ import 'dart:math';
 
 import 'package:drawable_text/drawable_text.dart';
 import 'package:easy_sidemenu/easy_sidemenu.dart';
+import 'package:elegant_notification/elegant_notification.dart';
+import 'package:elegant_notification/resources/arrays.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:image_multi_type/image_multi_type.dart';
 import '../../../../core/widgets/admin_side_bar_widget/admin_scaffold.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -24,6 +28,7 @@ import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/shared_preferences.dart';
 import '../../../../core/widgets/logo_text.dart';
+import '../../../../generated/assets.dart';
 import '../../../accounts/bloc/pay_to_cubit/pay_to_cubit.dart';
 import '../../../accounts/ui/pages/company_transfers_page.dart';
 import '../../../admins/ui/pages/admins_page.dart';
@@ -94,6 +99,32 @@ class _HomePageState extends State<HomePage> {
         .read<NavHomeCubit>()
         .changePage('/${getCurrentQueryParameters()['key'] ?? ''}');
 
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      final notification = message.notification;
+
+      String title = '';
+      String body = '';
+
+      if (notification != null) {
+        title = notification.title ?? '';
+        body = notification.body ?? '';
+      } else {
+        title = message.data['title'] ?? '';
+        body = message.data['body'] ?? '';
+      }
+
+      ElegantNotification(
+        title: Text(title),
+        notificationPosition: NotificationPosition.bottomLeft,
+        animation: AnimationType.fromLeft,
+        width: 0.5.sw,
+        iconSize: 15.0.r,
+        progressIndicatorColor: AppColorManager.mainColor,
+        toastDuration: const Duration(seconds: 25),
+        description: Text(body),
+        icon: const ImageMultiType(url: Assets.iconsLogoWithoutText),
+      ).show(context);
+    });
     sideMenu.addListener((p0) {
       page.jumpToPage(p0);
     });
