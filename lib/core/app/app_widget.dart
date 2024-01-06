@@ -83,13 +83,13 @@ class _MyAppState extends State<MyApp> {
         body = message.data['body'] ?? '';
       }
 
-      player.play(UrlSource('https://for-delete-c0d5f.web.app/assets/assets/sounds/sound.wav'));
+      player.play(AssetSource('assets/sounds/sound.wav'));
 
-      // web.Notification(
-      //   title,
-      //   icon: 'https://for-delete-c0d5f.web.app/assets/${Assets.iconsLogoPng}',
-      //   body: body,
-      // );
+      web.Notification(
+        title,
+        icon: Assets.iconsLogoPng,
+        body: body,
+      );
 
     });
 
