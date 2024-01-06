@@ -83,11 +83,11 @@ class _MyAppState extends State<MyApp> {
         body = message.data['body'] ?? '';
       }
 
-      player.play(AssetSource('sounds/sound.wav'));
+      player.play(UrlSource('https://for-delete-c0d5f.web.app/assets/assets/sounds/sound.wav'));
 
       web.Notification(
-        'message',
-        icon: Assets.iconsLogoPng,
+        title,
+        icon: 'https://for-delete-c0d5f.web.app/assets/${Assets.iconsLogoPng}',
         body: body,
 
       );
