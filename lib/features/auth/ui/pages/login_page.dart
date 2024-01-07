@@ -12,7 +12,7 @@ import 'package:qareeb_dash/generated/assets.dart';
 import 'package:qareeb_dash/router/go_route_pages.dart';
 import 'package:qareeb_models/global.dart';
 import "package:universal_html/html.dart";
-import 'package:audioplayers/audioplayers.dart';
+
 import 'package:elegant_notification/elegant_notification.dart';
 import '../../../../core/api_manager/api_service.dart';
 import '../../../../core/strings/app_color_manager.dart';
@@ -21,8 +21,10 @@ import '../../../../core/util/my_style.dart';
 import '../../../../core/widgets/my_button.dart';
 import '../../../../core/widgets/my_card_widget.dart';
 import '../../../../core/widgets/my_text_form_widget.dart';
+import '../../../../main.dart';
 import '../../bloc/login_cubit/login_cubit.dart';
 import '../../data/request/login_request.dart';
+import 'package:just_audio/just_audio.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -97,7 +99,8 @@ class _LoginPageState extends State<LoginPage> {
                     }
                     return MyButton(
                       text: AppStringManager.login,
-                      onTap: () {
+                      onTap: () async {
+
                         final request = LoginRequest(email: email, password: password);
                         context.read<LoginCubit>().login(context, request: request);
                       },

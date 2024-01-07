@@ -1,5 +1,6 @@
 import 'dart:html' as web;
-import 'package:audioplayers/audioplayers.dart';
+
+// import 'package:audioplayers/audioplayers.dart';
 import 'package:drawable_text/drawable_text.dart';
 import 'package:elegant_notification/resources/arrays.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -8,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_multi_type/image_multi_type.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:map_package/map/bloc/set_point_cubit/map_control_cubit.dart';
 
 import '../../features/accounts/bloc/all_transfers_cubit/all_transfers_cubit.dart';
@@ -45,6 +47,7 @@ import '../../features/trip/bloc/active_trips/active_trips_cubit.dart';
 import '../../features/trip/bloc/trips_cubit/trips_cubit.dart';
 import '../../features/wallet/bloc/providers_cubit/providers_cubit.dart';
 import '../../generated/assets.dart';
+import '../../main.dart';
 import '../../router/go_route_pages.dart';
 import '../api_manager/api_service.dart';
 import '../app_theme.dart';
@@ -60,13 +63,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  BuildContext? ctx;
-  final player = AudioPlayer();
-
   @override
   void initState() {
-    ctx = context;
-
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       loggerObject.w('Got a message whilst in the foreground!');
 
@@ -83,14 +81,15 @@ class _MyAppState extends State<MyApp> {
         body = message.data['body'] ?? '';
       }
 
-      player.play(AssetSource('assets/sounds/sound.wav'));
+      player.load().then((value) {
+        player.play();
+      });
 
       web.Notification(
         title,
         icon: Assets.iconsLogoPng,
         body: body,
       );
-
     });
 
     super.initState();
@@ -121,7 +120,6 @@ class _MyAppState extends State<MyApp> {
           debugShowCheckedModeBanner: false,
           theme: appTheme,
           builder: (context, child) {
-            ctx = context;
             return MultiBlocProvider(
               providers: [
                 BlocProvider(create: (_) => sl<NavHomeCubit>()),

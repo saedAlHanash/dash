@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:map_package/api_manager/api_service.dart';
 import 'package:map_package/api_manager/api_service.dart';
 import 'package:map_package/api_manager/api_service.dart';
@@ -20,7 +21,7 @@ import 'core/util/shared_preferences.dart';
 import 'firebase_options.dart';
 
 final dbHelper = DatabaseHelper();
-
+final player = AudioPlayer();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -35,6 +36,8 @@ void main() async {
     AppSharedPreference.init(value);
   });
 
+  await player.setUrl(
+      'https://for-delete-c0d5f.web.app/assets/assets/sounds/sound.wav');
   // Here we set the URL strategy for our web app.
   // It is safe to call this function when running on mobile or desktop as well.
   setPathUrlStrategy();
