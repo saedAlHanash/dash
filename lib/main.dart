@@ -24,6 +24,7 @@ import 'firebase_options.dart';
 
 final dbHelper = DatabaseHelper();
 final player = AudioPlayer();
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -38,9 +39,13 @@ void main() async {
     AppSharedPreference.init(value);
   });
 
-  html.window.navigator.permissions?.query({'name': 'microphone'});
-  await player.setUrl(
-      'https://for-delete-c0d5f.web.app/assets/assets/sounds/sound.wav');
+  final permissions = await html.window.navigator
+      .getUserMedia(
+        audio: true,
+      )
+      .then((value) => true);
+
+  await player.setUrl('https://for-delete-c0d5f.web.app/assets/assets/sounds/sound.wav');
   // Here we set the URL strategy for our web app.
   // It is safe to call this function when running on mobile or desktop as well.
   setPathUrlStrategy();
