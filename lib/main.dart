@@ -38,13 +38,7 @@ void main() async {
   await SharedPreferences.getInstance().then((value) {
     AppSharedPreference.init(value);
   });
-
-  final permissions = await html.window.navigator
-      .getUserMedia(
-        audio: true,
-      )
-      .then((value) => true);
-
+  
   await player.setUrl('https://for-delete-c0d5f.web.app/assets/assets/sounds/sound.wav');
   // Here we set the URL strategy for our web app.
   // It is safe to call this function when running on mobile or desktop as well.

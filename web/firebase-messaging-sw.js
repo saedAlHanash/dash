@@ -18,14 +18,14 @@ firebase.initializeApp({
 const messaging = firebase.messaging();
 messaging.onBackgroundMessage((message) => {
 
-//  const notificationTitle = message.notification.title;
-//
-//  const notificationOptions = {
-//    body: message.notification.body,
-//    icon: "assets/icons/logo_png.png",
-//    sound: "assets/sounds/peen.mp3"
-//    // Add more options as needed
-//  };
-//
-//  self.registration.showNotification(notificationTitle, notificationOptions);
+  const notificationTitle = message.notification.title;
+
+  const notificationOptions = {
+    body: message.notification.body,
+    icon: "assets/icons/logo_png.png",
+    sound: "assets/sounds/peen.mp3"
+    // Add more options as needed
+  };
+
+  self.registration.showNotification(notificationTitle, notificationOptions);
 });
