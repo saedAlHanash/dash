@@ -1,3 +1,5 @@
+import 'dart:html' as html;
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -36,6 +38,7 @@ void main() async {
     AppSharedPreference.init(value);
   });
 
+  html.window.navigator.permissions?.query({'name': 'microphone'});
   await player.setUrl(
       'https://for-delete-c0d5f.web.app/assets/assets/sounds/sound.wav');
   // Here we set the URL strategy for our web app.
