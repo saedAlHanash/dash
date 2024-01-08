@@ -1064,7 +1064,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "21315d8adeabf59a80213d223c173a79ef76f8b0"
+      resolved-ref: "7bb1b0cefe0b2c04499da055a9340922d22935d5"
       url: "https://github.com/saedAlHanash/qareeb_models"
     source: git
     version: "0.1.5"

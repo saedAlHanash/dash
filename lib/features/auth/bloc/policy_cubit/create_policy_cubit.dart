@@ -21,6 +21,7 @@ class CreatePolicyCubit extends Cubit<CreatePolicyInitial> {
   final NetworkInfo network;
 
   Future<void> createPolicy(BuildContext context, {required String policy}) async {
+    if(policy.isEmpty)return;
     emit(state.copyWith(statuses: CubitStatuses.loading));
 
     final pair = await _createPolicyApi(policy: policy);

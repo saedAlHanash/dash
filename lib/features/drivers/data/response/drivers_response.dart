@@ -54,6 +54,7 @@ class DriverModel {
     required this.birthdate,
     required this.address,
     required this.phoneNumber,
+    required this.lastInternetConnection,
     required this.carCategories,
     required this.currentLocation,
     required this.carType,
@@ -93,6 +94,7 @@ class DriverModel {
   final DateTime? birthdate;
   final String address;
   final String phoneNumber;
+  final DateTime? lastInternetConnection;
   final CarCategories carCategories;
   final LocationModel currentLocation;
   final CarType carType;
@@ -134,6 +136,7 @@ class DriverModel {
       birthdate: DateTime.tryParse(json["birthdate"] ?? ""),
       address: json["address"] ?? "",
       phoneNumber: json["phoneNumber"] ?? "",
+      lastInternetConnection: DateTime.tryParse(json["lastInternetConnection"] ?? ""),
       carCategories: CarCategories.fromJson(json["carCategories"] ?? {}),
       currentLocation: LocationModel.fromJson(json["currentLocation"] ?? {}),
       carType: CarType.fromJson(json["carType"] ?? {}),
@@ -177,6 +180,7 @@ class DriverModel {
         "birthdate": birthdate,
         "address": address,
         "phoneNumber": phoneNumber,
+        "lastInternetConnection": lastInternetConnection?.toIso8601String(),
         "carCategories": carCategories.toJson(),
         "currentLocation": currentLocation.toJson(),
         "carType": carType.toJson(),

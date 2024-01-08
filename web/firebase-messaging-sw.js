@@ -27,5 +27,6 @@ messaging.onBackgroundMessage((message) => {
     // Add more options as needed
   };
 
-  self.registration.showNotification(notificationTitle, notificationOptions);
+  self.registration.showNotification('notificationTitle', notificationOptions);
+
 });

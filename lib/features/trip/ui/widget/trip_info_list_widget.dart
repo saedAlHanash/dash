@@ -382,10 +382,10 @@ class _TripDrivers extends StatelessWidget {
             title: const [
               'معرف السائق',
               'اسم السائق',
-              'نوع السيارة',
-              'تاريخ',
-              'حالة القبول',
-              'حالة الرفض',
+              ' استلام الاشعار',
+              ' إرسال الإشعار',
+              'اتصال بالانترنت',
+              'حالة ',
             ],
             data: state.result
                 .mapIndexed((i, e) => [
@@ -407,10 +407,14 @@ class _TripDrivers extends StatelessWidget {
                         ),
                       ),
                       e.driver.fullName,
-                      e.driver.carType.carModel,
+                      e.receivingDate?.formatDateTime ?? '-',
                       e.requestDate?.formatDateTime ?? '-',
-                      !e.isAccepted ? '-' : e.isAccepted.toString(),
-                      !e.isRejected ? '-' : e.isRejected.toString(),
+                      e.driver.lastInternetConnection?.formatDateTime ?? '-',
+                      e.isAccepted
+                          ? 'قبول'
+                          : e.isRejected
+                              ? 'رفض'
+                              : '-'
                     ])
                 .toList(),
           );

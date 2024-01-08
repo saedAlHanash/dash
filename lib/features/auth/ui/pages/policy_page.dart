@@ -27,17 +27,18 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
         listener: (context, state) {
           context.read<PolicyCubit>().getPolicy(context);
         },
-        child: BlocBuilder<PolicyCubit, PolicyInitial>(builder: (_, state) {
-          if (state.statuses.isLoading) {
-            return MyStyle.loadingWidget();
-          }
-          return Center(
-            child: Column(
+        child: BlocBuilder<PolicyCubit, PolicyInitial>(
+          builder: (_, state) {
+            policy = state.result.policy;
+            if (state.statuses.isLoading) {
+              return MyStyle.loadingWidget();
+            }
+            return Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(
-                  height: 300.h,
+                  height: 600.h,
                   child: MyEditTextWidget(
                     initialValue: state.result.policy,
                     onChanged: (p0) => policy = p0,
@@ -62,9 +63,9 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
                   },
                 )
               ],
-            ),
-          );
-        }),
+            );
+          },
+        ),
       ),
     );
   }
