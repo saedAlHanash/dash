@@ -80,7 +80,7 @@ class _TripInfoPageState extends State<TripInfoPage> {
                   return MyMarker(
                     key: driver?.driverId,
                     point: e.getLatLng(),
-                    markerSize: Size(100.0.r, 100.0.r),
+                    markerSize: Size(120.0.r, 120.0.r),
                     costumeMarker: Column(
                       children: [
                         InkWell(
@@ -99,11 +99,15 @@ class _TripInfoPageState extends State<TripInfoPage> {
                           ),
                         ),
                         5.0.verticalSpace,
-                        DrawableText(
-                          text: driver?.driver.name ?? '-',
-                          color: Colors.black,
-                          size: 14.0.sp,
-                          fontFamily: FontManager.cairoBold.name,
+                        Container(
+                          color:AppColorManager.mainColorDark,
+                          padding:const EdgeInsets.all(1.0).r,
+                          child: DrawableText(
+                            text: driver?.driver.name ?? '-',
+                            color: Colors.white,
+                            size: 17.0.sp,
+                            fontFamily: FontManager.cairoBold.name,
+                          ),
                         ),
                       ],
                     ),

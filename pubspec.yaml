@@ -67,7 +67,7 @@ dependencies:
   bloc: ^8.1.2
   lottie: any
   flutter_svg: any
-  cached_network_image: any
+#  cached_network_image: ^
   flutter_screenutil: any
   #  animated_snack_bar: ^0.3.0
   pinput: ^2.2.21

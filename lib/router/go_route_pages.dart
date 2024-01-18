@@ -104,8 +104,11 @@ import '../features/wallet/bloc/my_wallet_cubit/my_wallet_cubit.dart';
 import '../features/wallet/ui/pages/debts_page.dart';
 import '../services/osrm/bloc/location_name_cubit/location_name_cubit.dart';
 
+int initialTapNumber = 0;
+
 final appGoRouter = GoRouter(
   redirect: (BuildContext context, GoRouterState state) {
+    // initialTapNumber = int.tryParse(state.queryParams['tap'].toString()) ?? 0;
     //Replace this method depends on how you are managing your user's
     //Sign in status, then return the appropriate route you want to redirect to,
     //make sure your login/authentication bloc is provided at the top level
@@ -117,7 +120,6 @@ final appGoRouter = GoRouter(
       return null;
     }
   },
-
   routes: <GoRoute>[
     //region auth
     ///login

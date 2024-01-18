@@ -77,7 +77,7 @@ class _FinancialPageState extends State<FinancialPage> {
                   );
                 },
                 child: loading
-                    ? const CircularProgressIndicator.adaptive()
+                    ?const CircularProgressIndicator.adaptive(backgroundColor: Colors.white)
                     : const Icon(Icons.file_download, color: Colors.white),
               );
             },

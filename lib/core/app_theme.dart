@@ -5,13 +5,17 @@ import 'package:qareeb_dash/core/strings/app_color_manager.dart';
 
 final primaryColor = /*AppSharedPreference.isTestMode
     ? AppColorManager.mainColorLight
-    : */AppColorManager.mainColor;
+    : */
+    AppColorManager.mainColor;
 const secondaryColor = AppColorManager.mainColorDark;
 
 final appTheme = ThemeData(
     appBarTheme: AppBarTheme(
       backgroundColor: primaryColor,
       centerTitle: true,
+    ),
+    dividerTheme: DividerThemeData(
+      color: AppColorManager.cardColor,
     ),
     textTheme: _fixBlurryTextIssue(const TextTheme()),
     scaffoldBackgroundColor: Colors.white,
@@ -43,7 +47,7 @@ final appTheme = ThemeData(
 /// TODO: Remove when upstream is fixed :) [flutter/flutter#81215](https://github.com/flutter/flutter/issues/81215)
 TextTheme _fixBlurryTextIssue(TextTheme theme) {
   const style = TextStyle(fontFeatures: [FontFeature.proportionalFigures()]);
-  return theme.merge( const TextTheme(
+  return theme.merge(const TextTheme(
     displayLarge: style,
     displayMedium: style,
     displaySmall: style,

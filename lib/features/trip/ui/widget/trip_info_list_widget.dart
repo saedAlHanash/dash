@@ -38,6 +38,7 @@ class _TripInfoListWidgetState extends State<TripInfoListWidget>
   @override
   void initState() {
     _tabController = TabController(length: !isAgency ? 6 : 4, vsync: this);
+
     super.initState();
   }
 
@@ -380,10 +381,10 @@ class _TripDrivers extends StatelessWidget {
           }
           return SaedTableWidget(
             title: const [
-              'معرف السائق',
               'اسم السائق',
-              ' استلام الاشعار',
-              ' إرسال الإشعار',
+              'رقم هاتف',
+              'استلام الرحلة',
+              'إرسال الرحلة',
               'اتصال بالانترنت',
               'حالة ',
             ],
@@ -401,15 +402,17 @@ class _TripDrivers extends StatelessWidget {
                           size: 16.0.sp,
                           matchParent: true,
                           textAlign: TextAlign.center,
-                          underLine: true,
-                          text: '${e.driverId}',
+                          text: e.driver.fullName,
                           color: Colors.blue,
                         ),
                       ),
-                      e.driver.fullName,
-                      e.receivingDate?.formatDateTime ?? '-',
-                      e.requestDate?.formatDateTime ?? '-',
-                      e.driver.lastInternetConnection?.formatDateTime ?? '-',
+                      e.driver.phoneNumber,
+                      '${e.receivingDate?.formatDate ?? ' - '}'
+                          '\n${e.receivingDate?.formatTime ?? ''}',
+                      '${e.requestDate?.formatDate ?? ' - '}'
+                          '\n${e.requestDate?.formatTime ?? ''}',
+                      '${e.driver.lastInternetConnection?.formatDate ?? ' - '}'
+                          '\n${e.driver.lastInternetConnection?.formatTime ?? ' '}',
                       e.isAccepted
                           ? 'قبول'
                           : e.isRejected

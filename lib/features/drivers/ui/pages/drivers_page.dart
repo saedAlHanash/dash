@@ -30,7 +30,7 @@ final clientTableHeader = [
   "رقم الهاتف",
   if (!isTrans) "حالة السائق",
   "IMEI",
-  if (!isTrans) "تاريخ التسجيل",
+  if (!isTrans) "آخر ظهور",
   if (isQareebAdmin) ...[
     "الولاء",
     "OTP",
@@ -93,7 +93,8 @@ class _DriverPageState extends State<DriverPage> {
                       );
                     },
                     child: loading
-                        ? const CircularProgressIndicator.adaptive()
+                        ? const CircularProgressIndicator.adaptive(
+                            backgroundColor: Colors.white)
                         : const Icon(Icons.file_download, color: Colors.white),
                   );
                 },
@@ -163,7 +164,9 @@ class _DriverPageState extends State<DriverPage> {
                               e.phoneNumber,
                               if (!isTrans) e.driverStatus.arabicName,
                               e.qarebDeviceimei,
-                              if (!isTrans) e.creationTime?.formatDate,
+                              if (!isTrans)
+                                '${e.lastInternetConnection?.formatDate ?? '-'}'
+                                    '\n${e.lastInternetConnection?.formatTime ?? '-'}',
                               if (isQareebAdmin) ...[
                                 LoyalSwitchWidget(driver: e),
                                 e.emailConfirmationCode,
