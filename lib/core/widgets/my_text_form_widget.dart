@@ -21,11 +21,13 @@ class MyTextFormWidget extends StatelessWidget {
     this.icon,
     this.enable,
     this.initialValue,
+    this.autofillHints,
   }) : super(key: key);
 
   final String liable;
   final String hint;
   final String? initialValue;
+  final List<String>? autofillHints;
   final String? icon;
   final int maxLines;
   final int maxLength;
@@ -82,6 +84,7 @@ class MyTextFormWidget extends StatelessWidget {
     return StatefulBuilder(builder: (context, state) {
       onChangeObscure = () => state(() {});
       return TextFormField(
+        autofillHints: autofillHints,
         decoration: inputDecoration,
         maxLines: maxLines,
         obscureText: obscureText,
@@ -442,6 +445,7 @@ class MyTextFormNoLabelWidget extends StatelessWidget {
     });
   }
 }
+
 class AlwaysDisabledFocusNode extends FocusNode {
   @override
   bool get hasFocus => false;
