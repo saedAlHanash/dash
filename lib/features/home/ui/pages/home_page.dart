@@ -124,6 +124,7 @@ class _HomePageState extends State<HomePage> {
         description: Text(body),
         icon: const ImageMultiType(url: Assets.iconsLogoWithoutText),
       ).show(context);
+
     });
     sideMenu.addListener((p0) {
       page.jumpToPage(p0);

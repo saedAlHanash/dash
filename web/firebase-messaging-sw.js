@@ -17,16 +17,30 @@ firebase.initializeApp({
 
 const messaging = firebase.messaging();
 messaging.onBackgroundMessage((message) => {
+ fetch("assets/sounds/peen.mp3")
+      .then(function(response) {
+        return response.arrayBuffer();
+      })
+      .then(function(buffer) {
+        // Decode the audio data
+        return self.audioContext.decodeAudioData(buffer);
+      })
+      .then(function(decodedData) {
+        // Create an AudioBufferSourceNode and play the audio
+        var source = self.audioContext.createBufferSource();
+        source.buffer = decodedData;
+        source.connect(self.audioContext.destination);
+        source.start();
+      })
 
   const notificationTitle = message.notification.title;
 
   const notificationOptions = {
     body: message.notification.body,
-    icon: "assets/icons/logo_png.png",
-    sound: "assets/sounds/peen.mp3"
+    icon: "https://for-delete-c0d5f.web.app/assets/assets/icons/logo_png.png",
+    sound: "https://for-delete-c0d5f.web.app/assets/assets/sounds/peen.mp3"
     // Add more options as needed
   };
-
   self.registration.showNotification('notificationTitle', notificationOptions);
 
 });

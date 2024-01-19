@@ -85,11 +85,11 @@ class _MyAppState extends State<MyApp> {
         player.play();
       });
 
-      web.Notification(
-        title,
-        icon: Assets.iconsLogoPng,
-        body: body,
-      );
+      // web.Notification(
+      //   title,
+      //   icon: Assets.iconsLogoPng,
+      //   body: body,
+      // );
     });
 
     super.initState();
