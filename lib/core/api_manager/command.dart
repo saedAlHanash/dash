@@ -8,6 +8,7 @@ import '../../features/companies/data/request/companies_filter_request.dart';
 import '../../features/drivers/data/request/drivers_filter_request.dart';
 import '../../features/pay_to_drivers/data/request/financial_filter_request.dart';
 import '../../features/plan_trips/data/request/plan_attendances_filter.dart';
+import '../../features/syrian_agency/data/request/syrian_filter_request.dart';
 import '../../features/trip/data/request/filter_trip_request.dart';
 
 class Command {
@@ -17,6 +18,7 @@ class Command {
     this.clientsFilterRequest,
     this.driversFilterRequest,
     this.financialFilterRequest,
+    this.syrianFilterRequest,
     this.filterTripRequest,
     this.transferFilterRequest,
     this.companiesFilterRequest,
@@ -29,6 +31,7 @@ class Command {
   ClientsFilterRequest? clientsFilterRequest;
   DriversFilterRequest? driversFilterRequest;
   FinancialFilterRequest? financialFilterRequest;
+  SyrianFilterRequest? syrianFilterRequest;
   FilterTripRequest? filterTripRequest;
   TransferFilterRequest? transferFilterRequest;
   CompaniesFilterRequest? companiesFilterRequest;
@@ -94,6 +97,10 @@ class Command {
       json.addAll(financialFilterRequest!.toJson());
     }
 
+    if (syrianFilterRequest != null) {
+      json.addAll(syrianFilterRequest!.toMap());
+    }
+
     if (companiesFilterRequest != null) {
       json.addAll(companiesFilterRequest!.toJson());
     }
@@ -117,6 +124,7 @@ class Command {
     ClientsFilterRequest? clientsFilterRequest,
     DriversFilterRequest? driversFilterRequest,
     FinancialFilterRequest? financialFilterRequest,
+    SyrianFilterRequest? syrianFilterRequest,
     TransferFilterRequest? transferFilterRequest,
     CompaniesFilterRequest? companiesFilterRequest,
     PlanAttendanceFilter? planAttendanceFilter,
@@ -128,6 +136,7 @@ class Command {
       clientsFilterRequest: clientsFilterRequest ?? this.clientsFilterRequest,
       driversFilterRequest: driversFilterRequest ?? this.driversFilterRequest,
       financialFilterRequest: financialFilterRequest ?? this.financialFilterRequest,
+      syrianFilterRequest: syrianFilterRequest ?? this.syrianFilterRequest,
       transferFilterRequest: transferFilterRequest ?? this.transferFilterRequest,
       companiesFilterRequest: companiesFilterRequest ?? this.companiesFilterRequest,
       planAttendanceFilter: planAttendanceFilter ?? this.planAttendanceFilter,

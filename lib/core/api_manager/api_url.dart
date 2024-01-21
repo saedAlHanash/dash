@@ -128,6 +128,11 @@ class GetUrl {
   static const getCompanyTransfers =
       'api/services/app/AccountsService/GetCompanyTransfers';
   static const planAttendance = 'api/services/app/EnrollmentRecordService/GetAll';
+
+  static const syrianAgencyFinancialReport =
+      'api/services/app/AccountsService/GetSyrianAuthorityReport';
+  static var syrianAgenciesFinancialReport =
+      'api/services/app/AccountsService/SyrianAuthorityFinancialReport';
 }
 
 class PostUrl {
@@ -211,6 +216,9 @@ class PostUrl {
       'api/services/app/PathService/GetPlansPathEstimation';
 
   static const createPlanTrip = 'api/services/app/PlanTripsService/Create';
+
+  static var createFromSyrian =
+      'api/services/app/PaymentService/CreateSyrianAuthorityPayOffPayment';
 }
 
 class PutUrl {

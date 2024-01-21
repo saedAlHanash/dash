@@ -68,6 +68,9 @@ import '../../../reasons/ui/pages/reasons_page.dart';
 import '../../../roles/bloc/create_role_cubit/create_role_cubit.dart';
 import '../../../roles/bloc/delete_role_cubit/delete_role_cubit.dart';
 import '../../../roles/ui/pages/roles_page.dart';
+import '../../../syrian_agency/bloc/pay_to_syrian_cubit/pay_to_syrian_cubit.dart';
+import '../../../syrian_agency/ui/pages/syrian_agencies_financial_page.dart';
+import '../../../syrian_agency/ui/pages/syrian_agency_report_page.dart';
 import '../../../system_params/bloc/update_system_params_cubit/update_system_params_cubit.dart';
 import '../../../system_params/ui/pages/system_params_page.dart';
 import '../../../system_settings/bloc/update_system_params_cubit/update_system_settings_cubit.dart';
@@ -124,7 +127,6 @@ class _HomePageState extends State<HomePage> {
         description: Text(body),
         icon: const ImageMultiType(url: Assets.iconsLogoWithoutText),
       ).show(context);
-
     });
     sideMenu.addListener((p0) {
       page.jumpToPage(p0);
@@ -314,8 +316,18 @@ class _HomePageState extends State<HomePage> {
                         icon: Icons.incomplete_circle,
                         route: "/company_transfers",
                       ),
+                      const AdminMenuItem(
+                        title: 'عائدات الهيئة الناظمة',
+                        icon: Assets.iconsSyrianAgency,
+                        route: "/syrian_agency_transfers",
+                      ),
                     ],
                     if (isAllowed(AppPermissions.SETTINGS)) ...[
+                      const AdminMenuItem(
+                        title: 'محاسبة الهيئة',
+                        route: "/pay_to_syrian_agency_transfers",
+                        icon: Assets.iconsSyrianAgency,
+                      ),
                       const AdminMenuItem(
                         title: 'محاسبة السائقين',
                         route: "/payToDrivers",
@@ -489,8 +501,17 @@ class _HomePageState extends State<HomePage> {
 
                 case "/transactions":
                   return const TransfersPage();
+
                 case "/company_transfers":
                   return const CompanyTransfersPage();
+
+                case "/syrian_agency_transfers":
+                  return const SyrianAgencyReportPage();
+                case "/pay_to_syrian_agency_transfers":
+                  return BlocProvider(
+                    create: (_) => sl<PayToSyrianCubit>(),
+                    child: const SyrianAgencyFinancialPage(),
+                  );
 
                 case "/car_categories":
                   return MultiBlocProvider(

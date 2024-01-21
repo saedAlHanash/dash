@@ -94,6 +94,9 @@ import '../../features/shared_trip/bloc/get_shared_trips_cubit/get_shared_trips_
 import '../../features/shared_trip/bloc/shared_trip_by_id_cubit/shared_trip_by_id_cubit.dart';
 import '../../features/shared_trip/bloc/update_shared_cubit/update_shared_cubit.dart';
 import '../../features/sos/bloc/all_sos_cubit/all_sos_cubit.dart';
+import '../../features/syrian_agency/bloc/pay_to_syrian_cubit/pay_to_syrian_cubit.dart';
+import '../../features/syrian_agency/bloc/syrian_agencies_financial_report_cubit/syrian_agencies_financial_report_cubit.dart';
+import '../../features/syrian_agency/bloc/syrian_agency_report_cubit/syrian_agency_report_cubit.dart';
 import '../../features/system_params/bloc/system_params_cubit/system_params_cubit.dart';
 import '../../features/system_params/bloc/update_system_params_cubit/update_system_params_cubit.dart';
 import '../../features/system_settings/bloc/system_settings_cubit/system_settings_cubit.dart';
@@ -153,7 +156,6 @@ Future<void> init() async {
   //region profile
   /// Bloc
 
-
   //endregion
 
   //region map
@@ -171,7 +173,6 @@ Future<void> init() async {
 
   ///bloc
   //endregion
-
 
   //region points
   sl.registerFactory(() => PointsCubit());
@@ -279,7 +280,9 @@ Future<void> init() async {
   // region agency
   sl.registerFactory(() => AgenciesReportCubit());
   sl.registerFactory(() => AgencyReportCubit());
-
+  sl.registerFactory(() => SyrianAgenciesFinancialReportCubit());
+  sl.registerFactory(() => SyrianAgencyReportCubit());
+  sl.registerFactory(() => PayToSyrianCubit());
 
   //endregion
 
@@ -311,7 +314,6 @@ Future<void> init() async {
   sl.registerFactory(() => PlanTripBuIdCubit());
   sl.registerFactory(() => PlanAttendancesCubit());
   //endregion
-
 
   sl.registerFactory(() => AllSosCubit());
   sl.registerFactory(() => AllClientsCubit());

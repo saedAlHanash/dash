@@ -128,6 +128,7 @@ class Assets {
   static const String iconsUser = 'assets/icons/user.svg';
   static const String iconsUsers = 'assets/icons/users.svg';
   static const String iconsWallet = 'assets/icons/wallet.svg';
+  static const String iconsSyrianAgency = 'assets/icons/syrian_agency.png';
   static const String lottiesAccountsLoginPleasewait =
       'assets/lotties/accounts_login_pleasewait.json';
   static const String lottiesError = 'assets/lotties/error.json';

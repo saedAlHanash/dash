@@ -11,6 +11,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_multi_type/image_multi_type.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:map_package/map/bloc/set_point_cubit/map_control_cubit.dart';
+import 'package:qareeb_dash/core/api_manager/command.dart';
+import 'package:qareeb_dash/features/syrian_agency/data/request/syrian_filter_request.dart';
 
 import '../../features/accounts/bloc/all_transfers_cubit/all_transfers_cubit.dart';
 import '../../features/accounts/bloc/company_transfers_cubit/company_transfers_cubit.dart';
@@ -39,6 +41,8 @@ import '../../features/points/bloc/get_edged_point_cubit/get_all_points_cubit.da
 import '../../features/roles/bloc/all_roles/all_roles_cubit.dart';
 import '../../features/shared_trip/bloc/get_shared_trips_cubit/get_shared_trips_cubit.dart';
 import '../../features/sos/bloc/all_sos_cubit/all_sos_cubit.dart';
+import '../../features/syrian_agency/bloc/syrian_agencies_financial_report_cubit/syrian_agencies_financial_report_cubit.dart';
+import '../../features/syrian_agency/bloc/syrian_agency_report_cubit/syrian_agency_report_cubit.dart';
 import '../../features/system_params/bloc/system_params_cubit/system_params_cubit.dart';
 import '../../features/system_settings/bloc/system_settings_cubit/system_settings_cubit.dart';
 import '../../features/temp_trips/bloc/all_temp_trips_cubit/all_temp_trips_cubit.dart';
@@ -141,9 +145,7 @@ class _MyAppState extends State<MyApp> {
                 BlocProvider(create: (_) => sl<AllCouponsCubit>()..getAllCoupons(_)),
                 BlocProvider(create: (_) => sl<AllPlanTripsCubit>()..getPlanTrips(_)),
                 BlocProvider(create: (_) => sl<FinancialReportCubit>()..getReport(_)),
-                BlocProvider(
-                  create: (_) => sl<AgenciesReportCubit>()..getReport(_),
-                ),
+                BlocProvider(create: (_) => sl<AgenciesReportCubit>()..getReport(_)),
                 BlocProvider(create: (_) => sl<AllTempTripsCubit>()..getTempTrips(_)),
                 BlocProvider(create: (_) => sl<AllCompaniesCubit>()..getCompanies(_)),
                 BlocProvider(create: (_) => sl<ActiveTripsCubit>()..getActiveTrips(_)),
@@ -153,6 +155,17 @@ class _MyAppState extends State<MyApp> {
                 BlocProvider(create: (_) => sl<GetSharedTripsCubit>()..getSharesTrip(_)),
                 BlocProvider(create: (_) => sl<SystemParamsCubit>()..getSystemParams(_)),
                 BlocProvider(create: (_) => sl<ProvidersCubit>()..getAllEpayProviders(_)),
+                BlocProvider(
+                    create: (_) =>
+                        sl<SyrianAgenciesFinancialReportCubit>()..getReport(_)),
+                BlocProvider(
+                  create: (_) => sl<SyrianAgencyReportCubit>()
+                    ..getSyrianAgencyReport(
+                      _,
+                      command: Command.initial()
+                          .copyWith(syrianFilterRequest: SyrianFilterRequest()),
+                    ),
+                ),
                 BlocProvider(
                     create: (_) => sl<PlanAttendancesCubit>()..getAttendances(_)),
                 BlocProvider(
