@@ -43,7 +43,7 @@
 //                         textAlign: TextAlign.center,
 //                         text: item.name,
 //                         color: Colors.black,
-//                         fontFamily: FontManager.cairoBold,
+//                         fontFamily: FontManager.cairoBold.name,
 //                       ),
 //                     ),
 //                     Expanded(
@@ -53,7 +53,7 @@
 //                         textAlign: TextAlign.center,
 //                         text: item.type,
 //                         color: Colors.black,
-//                         fontFamily: FontManager.cairoBold,
+//                         fontFamily: FontManager.cairoBold.name,
 //                       ),
 //                     ),
 //                     Expanded(
@@ -63,7 +63,7 @@
 //                         textAlign: TextAlign.center,
 //                         text: item.type,
 //                         color: Colors.black,
-//                         fontFamily: FontManager.cairoBold,
+//                         fontFamily: FontManager.cairoBold.name,
 //                       ),
 //                     ),
 //                     Expanded(
@@ -73,7 +73,7 @@
 //                         textAlign: TextAlign.center,
 //                         text: item.type,
 //                         color: Colors.black,
-//                         fontFamily: FontManager.cairoBold,
+//                         fontFamily: FontManager.cairoBold.name,
 //                       ),
 //                     ),
 //                     Expanded(
@@ -83,7 +83,7 @@
 //                         textAlign: TextAlign.center,
 //                         text: '${item.type} %',
 //                         color: Colors.black,
-//                         fontFamily: FontManager.cairoBold,
+//                         fontFamily: FontManager.cairoBold.name,
 //                       ),
 //                     ),
 //                     Expanded(
@@ -93,7 +93,7 @@
 //                         textAlign: TextAlign.center,
 //                         text: '${item.type} %',
 //                         color: Colors.black,
-//                         fontFamily: FontManager.cairoBold,
+//                         fontFamily: FontManager.cairoBold.name,
 //                       ),
 //                     ),
 //                     Expanded(
@@ -103,7 +103,7 @@
 //                         textAlign: TextAlign.center,
 //                         text: '${item.type} %',
 //                         color: Colors.black,
-//                         fontFamily: FontManager.cairoBold,
+//                         fontFamily: FontManager.cairoBold.name,
 //                       ),
 //                     ),
 //                   ],

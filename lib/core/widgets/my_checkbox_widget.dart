@@ -96,7 +96,7 @@ class _MyCheckboxWidgetState extends State<MyCheckboxWidget> {
                   maxLines: 1,
                   color: Colors.black,
                   size: 24.0.sp,
-                  fontFamily: FontManager.cairoBold,
+                  fontFamily: FontManager.cairoBold.name,
                   drawableStart: Checkbox(
                     value: selected,
                     fillColor: const MaterialStatePropertyAll(primaryColor),

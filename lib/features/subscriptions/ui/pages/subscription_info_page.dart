@@ -97,7 +97,7 @@ class _CreateSubscriptionPageState extends State<SubscriptionInfoPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         DrawableText(
-                          fontFamily: FontManager.cairoBold,
+                          fontFamily: FontManager.cairoBold.name,
                           text:
                               'الطلاب المشتركين بهذا النموذج   ( ${state.result.length} طالب )',
                           color: Colors.black,
@@ -155,8 +155,8 @@ class _CreateSubscriptionPageState extends State<SubscriptionInfoPage> {
                   },
                 ),
                 const Divider(),
-                const DrawableText(
-                    fontFamily: FontManager.cairoBold,
+                 DrawableText(
+                    fontFamily: FontManager.cairoBold.name,
                     text: 'الطلاب الغير مشتركين ',
                     color: Colors.black),
                 BlocBuilder<AllMemberWithoutSubscriptionCubit,

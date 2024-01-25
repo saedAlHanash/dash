@@ -66,7 +66,7 @@ class _CreateBusPageState extends State<CreateBusPage> {
                       padding: const EdgeInsets.symmetric(vertical: 30.0).h,
                       matchParent: true,
                       textAlign: TextAlign.center,
-                      fontFamily: FontManager.cairoBold,
+                      fontFamily: FontManager.cairoBold.name,
                     ),
                     Row(
                       children: [
@@ -94,7 +94,7 @@ class _CreateBusPageState extends State<CreateBusPage> {
                       padding: const EdgeInsets.symmetric(vertical: 30.0).h,
                       matchParent: true,
                       textAlign: TextAlign.center,
-                      fontFamily: FontManager.cairoBold,
+                      fontFamily: FontManager.cairoBold.name,
                     ),
                     Row(
                       children: [

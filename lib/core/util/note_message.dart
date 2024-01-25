@@ -165,7 +165,7 @@ class NoteMessage {
               children: [
                 DrawableText(
                   text: text,
-                  fontFamily: FontManager.cairoBold,
+                  fontFamily: FontManager.cairoBold.name,
                   color: AppColorManager.mainColorDark,
                 ),
                 40.0.verticalSpace,

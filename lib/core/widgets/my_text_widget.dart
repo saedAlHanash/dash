@@ -9,7 +9,7 @@
 //     Key? key,
 //     required this.text,
 //     this.size,
-//     this.fontFamily = FontManager.cairoSemiBold,
+//     this.fontFamily = FontManager.cairoSemiBold.name,
 //     this.color = AppColorManager.mainColor,
 //     this.textAlign = TextAlign.start,
 //     this.maxLines = 100,
@@ -39,7 +39,7 @@
 //   factory DrawableText.header({required String text}) {
 //     return DrawableText(
 //       text: text,
-//       fontFamily: FontManager.cairoBold,
+//       fontFamily: FontManager.cairoBold.name,
 //       color: AppColorManager.mainColor,
 //       size: 20.sp,
 //     );
@@ -53,7 +53,7 @@
 //       EdgeInsets? padding}) {
 //     return DrawableText(
 //       text: text ?? '',
-//       fontFamily: FontManager.cairoBold,
+//       fontFamily: FontManager.cairoBold.name,
 //       color: color ?? AppColorManager.mainColor,
 //       size: size ?? 20.0.sp,
 //       maxLines: 1,
@@ -72,7 +72,7 @@
 //   }) {
 //     return DrawableText(
 //       text: text,
-//       fontFamily: FontManager.cairoBold,
+//       fontFamily: FontManager.cairoBold.name,
 //       color: color ?? AppColorManager.black,
 //       size: 20.0.sp,
 //       maxLines: 1,

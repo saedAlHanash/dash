@@ -72,7 +72,7 @@ class BusTripModel {
   });
 
   final String name;
-  final num tripTemplateId;
+  final int tripTemplateId;
   final num institutionId;
   final num pathId;
   final TripPath path;

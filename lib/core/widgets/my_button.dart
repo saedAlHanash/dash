@@ -39,7 +39,7 @@ class MyButton extends StatelessWidget {
         DrawableText(
           text: text,
           color: textColor ?? AppColorManager.whit,
-          fontFamily: FontManager.cairoBold,
+          fontFamily: FontManager.cairoBold.name,
           size: 17.0.sp,
         );
 

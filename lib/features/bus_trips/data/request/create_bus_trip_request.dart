@@ -25,7 +25,7 @@ class CreateBusTripRequest {
 
   int? id;
   String? name;
-  num? tripTemplateId;
+  int? tripTemplateId;
   num? pathId;
   String? description;
   num? distance;

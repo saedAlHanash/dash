@@ -91,7 +91,7 @@ class NotificationPoint {
   final String pointArName;
   final double latitude;
   final double longitude;
-  final num subscriperCount;
+  final int subscriperCount;
 
   LatLng get getLatLng => LatLng(latitude, longitude);
 

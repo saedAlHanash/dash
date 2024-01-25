@@ -36,7 +36,7 @@ class TopTitleWidget extends StatelessWidget {
           DrawableText(
             text: text,
             color: AppColorManager.gray,
-            fontFamily: FontManager.cairoBold,
+            fontFamily: FontManager.cairoBold.name,
             size: 18.0.sp,
           ),
           ImageMultiType(

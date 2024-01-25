@@ -63,7 +63,7 @@ class _MessagesPageState extends State<MessagesPage> {
                       drawableAlin: DrawableAlin.withText,
                       text: 'المرسل',
                       color: Colors.black,
-                      fontFamily: FontManager.cairoBold,
+                      fontFamily: FontManager.cairoBold.name,
                       drawableEnd: DrawableText(
                         size: 18.0.sp,
                         textAlign: TextAlign.center,
@@ -79,7 +79,7 @@ class _MessagesPageState extends State<MessagesPage> {
                       drawableAlin: DrawableAlin.withText,
                       text: 'العنوان',
                       color: Colors.black,
-                      fontFamily: FontManager.cairoBold,
+                      fontFamily: FontManager.cairoBold.name,
                       drawableEnd: DrawableText(
                         size: 18.0.sp,
                         textAlign: TextAlign.center,
@@ -95,7 +95,7 @@ class _MessagesPageState extends State<MessagesPage> {
                       drawableAlin: DrawableAlin.withText,
                       text: 'المحتوى',
                       color: Colors.black,
-                      fontFamily: FontManager.cairoBold,
+                      fontFamily: FontManager.cairoBold.name,
                       drawableEnd: DrawableText(
                         size: 18.0.sp,
                         textAlign: TextAlign.center,

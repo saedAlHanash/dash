@@ -17,6 +17,7 @@ import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/strings/enum_manager.dart';
 import '../../../../core/util/my_style.dart';
 import '../../../../core/widgets/app_bar_widget.dart';
+import '../../../../core/widgets/auto_complete_widget.dart';
 import '../../../../core/widgets/my_button.dart';
 import '../../../buses/bloc/all_buses_cubit/all_buses_cubit.dart';
 import '../../../members/ui/pages/create_member_page.dart';
@@ -49,10 +50,12 @@ class _CreateBusTripPageState extends State<CreateBusTripPage> {
   @override
   void initState() {
     request.category =
-    widget.qareebPoints ? BusTripCategory.qareebPoints : BusTripCategory.customPoints;
+        widget.qareebPoints ? BusTripCategory.qareebPoints : BusTripCategory.customPoints;
 
     context.read<AllBusesCubit>().getBuses(context, command: Command.noPagination());
-    context.read<AllTempTripsCubit>().getTempTrips(context, command: Command.noPagination());
+    context
+        .read<AllTempTripsCubit>()
+        .getTempTrips(context, command: Command.noPagination());
 
     super.initState();
   }
@@ -219,7 +222,7 @@ class _CreateBusTripPageState extends State<CreateBusTripPage> {
                                 buttonText: const Text('الباصات'),
                                 searchable: true,
                                 items: state.getSpinnerItem.mapIndexed(
-                                      (i, e) {
+                                  (i, e) {
                                     return MultiSelectItem<int>(e.id, e.name);
                                   },
                                 ).toList(),
@@ -245,14 +248,12 @@ class _CreateBusTripPageState extends State<CreateBusTripPage> {
                                 }
                                 return SpinnerOutlineTitle(
                                   sendFirstItem: true,
+                                  searchable:true,
                                   width: double.infinity,
-                                  items: state.getSpinnerItems(
-                                    selectedId: (request.tripTemplateId ?? 0) as int,
-                                  ),
+                                  items: state.getSpinnerItems(selectedId: request.tripTemplateId),
                                   label: 'نموذج الرحلة',
                                   onChanged: (spinnerItem) {
-                                    var tempTrip = (spinnerItem.item ??
-                                        TempTripModel.fromJson({})) as TempTripModel;
+                                    var tempTrip = spinnerItem.item as TempTripModel;
                                     request.tripTemplateId = tempTrip.id;
                                     request.pathId = tempTrip.pathId;
                                     request.distance = tempTrip.distance;
@@ -266,12 +267,13 @@ class _CreateBusTripPageState extends State<CreateBusTripPage> {
                         Expanded(
                           child: SpinnerOutlineTitle(
                             sendFirstItem: true,
+                            searchable:true,
                             width: double.infinity,
-                            label: 'نوع الرحلة',
+                            // label: 'نوع الرحلة',
                             items: BusTripType.values
                                 .spinnerItems(selected: [request.busTripType]),
                             onChanged: (spinnerItem) =>
-                            request.busTripType = spinnerItem.item,
+                                request.busTripType = spinnerItem.item,
                           ),
                         ),
                       ],

@@ -32,7 +32,7 @@ class _SwitchWidgetState extends State<SwitchWidget> {
         ),
         DrawableText(
           text: widget.text,
-          fontFamily: FontManager.cairoSemiBold,
+          fontFamily: FontManager.cairoSemiBold.name,
           color: switchState ? AppColorManager.mainColor : AppColorManager.gray,
         )
       ],

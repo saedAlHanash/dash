@@ -66,7 +66,7 @@ class _CreateSuperUserPageState extends State<CreateSuperUserPage> {
                       padding: const EdgeInsets.symmetric(vertical: 30.0).h,
                       matchParent: true,
                       textAlign: TextAlign.center,
-                      fontFamily: FontManager.cairoBold,
+                      fontFamily: FontManager.cairoBold.name,
                     ),
                     Row(
                       children: [
@@ -108,20 +108,20 @@ class _CreateSuperUserPageState extends State<CreateSuperUserPage> {
                       ],
                     ),
                     const Divider(),
-                    ItemInfoInLine(
-                      title: 'الباص',
-                      widget: BlocBuilder<AllBusesCubit, AllBusesInitial>(
-                        builder: (context, state) {
-                          if (state.statuses.loading) {
-                            return MyStyle.loadingWidget();
-                          }
-                          return SpinnerOutlineTitle(
-                            items: state.getSpinnerSuperUser(selected: request.busId),
-                            label: 'الباص',
-                            onChanged: (spinnerItem) => request.busId = spinnerItem.id,
-                          );
-                        },
-                      ),
+                    BlocBuilder<AllBusesCubit, AllBusesInitial>(
+                      builder: (context, state) {
+                        if (state.statuses.loading) {
+                          return MyStyle.loadingWidget();
+                        }
+                        return SpinnerOutlineTitle(
+                          searchable: true,
+                          width: 0.6.sw,
+                          hint: DrawableText(text: 'حدد باص المشرف',color: Colors.grey,),
+                          items: state.getSpinnerSuperUser(selected: request.busId),
+                          label: 'الباص',
+                          onChanged: (spinnerItem) => request.busId = spinnerItem.id,
+                        );
+                      },
                     ),
                   ],
                 ),

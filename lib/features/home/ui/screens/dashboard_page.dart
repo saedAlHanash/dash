@@ -56,7 +56,7 @@ class _DashboardPageState extends State<DashboardPage> {
                       point: e.getLatLng,
                       item: e,
                       type: MyMarkerType.point,
-                      nou: e.subscriperCount as int,
+                      nou: e.subscriperCount ,
                     ),
                   )
                   .toList(),
@@ -115,7 +115,7 @@ class _DashboardPageState extends State<DashboardPage> {
                   DrawableText(
                     text: 'التتبع المباشر',
                     size: 24.0.sp,
-                    fontFamily: FontManager.cairoBold,
+                    fontFamily: FontManager.cairoBold.name,
                   ),
                   10.0.verticalSpace,
                   SizedBox(
@@ -135,7 +135,7 @@ class _DashboardPageState extends State<DashboardPage> {
                   DrawableText(
                     text: 'نقاط الطلاب',
                     size: 24.0.sp,
-                    fontFamily: FontManager.cairoBold,
+                    fontFamily: FontManager.cairoBold.name,
                   ),
                 10.0.verticalSpace,
                 if (isAllowed(AppPermissions.membersPoints))
@@ -176,7 +176,7 @@ class TotalWidget extends StatelessWidget {
             child: DrawableText(
               text: text,
               color: Colors.black,
-              fontFamily: FontManager.cairoBold,
+              fontFamily: FontManager.cairoBold.name,
               drawablePadding: 10.0.w,
               drawableStart: ImageMultiType(
                 url: icon,
@@ -188,7 +188,7 @@ class TotalWidget extends StatelessWidget {
           DrawableText(
             text: number.toString(),
             color: Colors.black,
-            fontFamily: FontManager.cairoBold,
+            fontFamily: FontManager.cairoBold.name,
           ),
           40.0.horizontalSpace,
         ],

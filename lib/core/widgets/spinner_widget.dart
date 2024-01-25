@@ -2,7 +2,6 @@ import 'package:drawable_text/drawable_text.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:qareeb_dash/core/api_manager/api_service.dart';
 
 import '../strings/app_color_manager.dart';
 
@@ -18,6 +17,7 @@ class SpinnerWidget<T> extends StatefulWidget {
     this.sendFirstItem,
     this.expanded,
     this.decoration,
+    this.searchable = false,
   }) : super(key: key);
 
   final List<SpinnerItem> items;
@@ -28,6 +28,7 @@ class SpinnerWidget<T> extends StatefulWidget {
   final double? dropdownWidth;
   final bool? sendFirstItem;
   final bool? expanded;
+  final bool searchable;
   final BoxDecoration? decoration;
 
   @override
@@ -51,14 +52,11 @@ class SpinnerWidgetState<T> extends State<SpinnerWidget<T>> {
         return DropdownMenuItem(
           value: item,
           child: DrawableText(
-            text: item.name,
+            selectable: false,
+            text: item.name ?? '',
             padding: padding,
-            color: (item.id != -1)
-                ? (item.enable)
-                    ? Colors.black
-                    : AppColorManager.gray.withOpacity(0.7)
-                : AppColorManager.gray.withOpacity(0.7),
-            fontFamily: FontManager.cairoBold,
+            color: (item.enable) ? Colors.black : AppColorManager.gray.withOpacity(0.7),
+            fontFamily: FontManager.cairoBold.name,
             drawableStart: item.icon,
             drawablePadding: 15.0.w,
           ),
@@ -83,11 +81,19 @@ class SpinnerWidgetState<T> extends State<SpinnerWidget<T>> {
     }
   }
 
+  final textEditingController = TextEditingController();
+
+  @override
+  void dispose() {
+    textEditingController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return StatefulBuilder(
       builder: (_, state) {
-        return DropdownButton2(
+        return DropdownButton2<SpinnerItem>(
           items: list,
           value: selectedItem,
           hint: widget.hint,
@@ -127,6 +133,48 @@ class SpinnerWidgetState<T> extends State<SpinnerWidget<T>> {
           isExpanded: widget.expanded ?? false,
           customButton: widget.customButton,
           underline: 0.0.verticalSpace,
+          dropdownSearchData: !widget.searchable
+              ? null
+              : DropdownSearchData<SpinnerItem>(
+                  searchController: textEditingController,
+                  searchInnerWidgetHeight: 50,
+                  searchInnerWidget: Container(
+                    height: 50,
+                    padding: const EdgeInsets.only(
+                      top: 8,
+                      bottom: 4,
+                      right: 8,
+                      left: 8,
+                    ),
+                    child: TextFormField(
+                      expands: true,
+                      maxLines: null,
+                      controller: textEditingController,
+                      decoration: InputDecoration(
+                        isDense: true,
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 8,
+                        ),
+                        hintText: 'بحث',
+                        hintStyle: const TextStyle(fontSize: 12),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                    ),
+                  ),
+                  searchMatchFn: (item, searchValue) {
+                    return item.value?.name.toString().contains(searchValue) ?? false;
+                  },
+                ),
+          onMenuStateChange: !widget.searchable
+              ? null
+              : (isOpen) {
+                  if (!isOpen) {
+                    textEditingController.clear();
+                  }
+                },
         );
       },
     );
@@ -146,6 +194,7 @@ class SpinnerOutlineTitle extends StatelessWidget {
     this.expanded,
     this.decoration,
     this.label = '',
+    this.searchable = false,
   });
 
   final List<SpinnerItem> items;
@@ -158,6 +207,7 @@ class SpinnerOutlineTitle extends StatelessWidget {
   final bool? expanded;
   final BoxDecoration? decoration;
   final String label;
+  final bool searchable;
 
   @override
   Widget build(BuildContext context) {
@@ -165,6 +215,7 @@ class SpinnerOutlineTitle extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         DrawableText(
+          selectable: false,
           text: label,
           color: AppColorManager.black,
           padding: const EdgeInsets.symmetric(horizontal: 10.0).w,
@@ -173,6 +224,7 @@ class SpinnerOutlineTitle extends StatelessWidget {
         3.0.verticalSpace,
         SpinnerWidget(
           items: items,
+          searchable: searchable,
           hint: hint,
           onChanged: onChanged,
           customButton: customButton,

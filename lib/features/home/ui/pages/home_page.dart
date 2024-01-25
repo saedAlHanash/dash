@@ -83,7 +83,7 @@ class _HomePageState extends State<HomePage> {
               builder: (context, state1) {
                 return DrawableText(
                   text: state1.result.name,
-                  fontFamily: FontManager.cairoBold,
+                  fontFamily: FontManager.cairoBold.name,
                 );
               },
             ),

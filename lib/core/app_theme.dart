@@ -9,6 +9,9 @@ final appTheme = ThemeData(
       backgroundColor: primaryColor,
       centerTitle: true,
     ),
+    dividerTheme: DividerThemeData(color: AppColorManager.cardColor,),
+    cardColor: AppColorManager.cardColor,
+    cardTheme: CardTheme(surfaceTintColor: Colors.white),
     scaffoldBackgroundColor: Colors.white,
     switchTheme: const SwitchThemeData(
         thumbColor: MaterialStatePropertyAll(primaryColor),

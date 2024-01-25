@@ -30,11 +30,11 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
             title: text == null
                 ? DrawableText(
                     text: state.result.name,
-                    fontFamily: FontManager.cairoBold,
+                    fontFamily: FontManager.cairoBold.name,
                   )
                 : DrawableText(
                     text: text!,
-                    fontFamily: FontManager.cairoBold,
+                    fontFamily: FontManager.cairoBold.name,
                   ),
             backgroundColor: AppColorManager.f1,
             actions: [

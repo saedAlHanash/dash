@@ -49,7 +49,7 @@ class _MyExpansionWidgetState extends State<MyExpansionWidget> {
                   text: e.headerText!,
                   size: 18.0.sp,
                   matchParent: true,
-                  fontFamily: FontManager.cairoBold,
+                  fontFamily: FontManager.cairoBold.name,
                   color: Colors.black,
                   drawablePadding: 32.0.spMin,
                 ),

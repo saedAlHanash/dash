@@ -1,9 +1,9 @@
 import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_multi_type/image_multi_type.dart';
 
 import '../strings/app_color_manager.dart';
-import 'package:image_multi_type/image_multi_type.dart';
 
 class MyTextFormWidget extends StatelessWidget {
   const MyTextFormWidget({
@@ -21,11 +21,13 @@ class MyTextFormWidget extends StatelessWidget {
     this.icon,
     this.enable,
     this.initialValue,
+    this.autofillHints,
   }) : super(key: key);
 
   final String liable;
   final String hint;
   final String? initialValue;
+  final List<String>? autofillHints;
   final String? icon;
   final int maxLines;
   final int maxLength;
@@ -75,13 +77,14 @@ class MyTextFormWidget extends StatelessWidget {
 
     final textStyle = TextStyle(
       fontFamily: FontManager.cairoSemiBold.name,
-      fontSize: 22.0.sp,
-      color: AppColorManager.gray,
+      fontSize: 18.0.sp,
+      color: AppColorManager.black,
     );
 
     return StatefulBuilder(builder: (context, state) {
       onChangeObscure = () => state(() {});
       return TextFormField(
+        autofillHints: autofillHints,
         decoration: inputDecoration,
         maxLines: maxLines,
         obscureText: obscureText,
@@ -174,7 +177,7 @@ class MyTextFormOutLineWidget extends StatelessWidget {
 
     final textStyle = TextStyle(
       fontFamily: FontManager.cairoSemiBold.name,
-      fontSize: 22.0.sp,
+      fontSize: 18.0.sp,
       color: AppColorManager.black,
     );
 
@@ -405,6 +408,7 @@ class MyTextFormNoLabelWidget extends StatelessWidget {
             text: label,
             matchParent: true,
             color: AppColorManager.black,
+            textAlign: TextAlign.end,
             padding: const EdgeInsets.symmetric(horizontal: 10.0).w,
             size: 16.0.sp,
           ),

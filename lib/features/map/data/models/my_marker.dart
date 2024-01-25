@@ -271,14 +271,14 @@ class ItemInfoInLineSmall extends StatelessWidget {
       size: 16.0.sp,
       padding: const EdgeInsets.only(right: 10.0, bottom: 15.0, top: 3.0).r,
       drawablePadding: 5.0.w,
-      fontFamily: FontManager.cairoBold,
+      fontFamily: FontManager.cairoBold.name,
       drawableEnd: widget == null
           ? Expanded(
               child: DrawableText(
                 text: info ?? '',
                 size: 16.0.sp,
                 selectable: true,
-                fontFamily: FontManager.cairoBold,
+                fontFamily: FontManager.cairoBold.name,
                 color: AppColorManager.mainColor,
               ),
             )

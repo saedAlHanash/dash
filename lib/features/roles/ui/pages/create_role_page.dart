@@ -69,7 +69,7 @@ class _CreateRolePageState extends State<CreateRolePage> {
                       padding: const EdgeInsets.symmetric(vertical: 30.0).h,
                       matchParent: true,
                       textAlign: TextAlign.center,
-                      fontFamily: FontManager.cairoBold,
+                      fontFamily: FontManager.cairoBold.name,
                     ),
                     Row(
                       children: [
@@ -104,7 +104,7 @@ class _CreateRolePageState extends State<CreateRolePage> {
                 padding: const EdgeInsets.symmetric(vertical: 30.0).h,
                 matchParent: true,
                 textAlign: TextAlign.center,
-                fontFamily: FontManager.cairoBold,
+                fontFamily: FontManager.cairoBold.name,
               ),
               BlocBuilder<AllPermissionsCubit, AllPermissionsInitial>(
                 builder: (context, state) {
