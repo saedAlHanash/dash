@@ -11,9 +11,13 @@ import 'package:map_package/map/data/models/my_marker.dart';
 import 'package:map_package/map/ui/widget/map_widget.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/strings/app_color_manager.dart';
+import 'package:qareeb_dash/core/util/note_message.dart';
+import 'package:qareeb_dash/features/drivers/bloc/driver_by_id_cubit/driver_by_id_cubit.dart';
+import 'package:qareeb_dash/features/drivers/ui/pages/driver_info_page.dart';
 import 'package:qareeb_models/extensions.dart';
+import 'package:qareeb_models/global.dart';
+import 'package:qareeb_models/trip_process/data/response/trip_response.dart';
 
-import '../../../../core/injection/injection_container.dart';
 import '../../../../core/util/my_style.dart';
 import '../../../../core/widgets/app_bar_widget.dart';
 import '../../../../generated/assets.dart';
@@ -33,11 +37,14 @@ class TripInfoPage extends StatefulWidget {
 
 class _TripInfoPageState extends State<TripInfoPage> {
   late final MapControllerCubit mapController;
+  late final DriverBuIdCubit driverBuIdCubit;
   var tripId = 0;
+  late Trip trip;
 
   @override
   void initState() {
     mapController = context.read<MapControllerCubit>();
+    driverBuIdCubit = context.read<DriverBuIdCubit>();
     super.initState();
   }
 
@@ -54,10 +61,18 @@ class _TripInfoPageState extends State<TripInfoPage> {
         BlocListener<TripByIdCubit, TripByIdInitial>(
           listenWhen: (p, c) => c.statuses.done,
           listener: (context, state) {
+            trip = state.result;
             tripId = state.result.id;
             mapController.addTrip(trip: state.result);
             if (state.result.driver.id > 0) {
               MapWidget.initImeis([state.result.driver.imei]);
+            }
+            if (state.result.tripStatus == TripStatus.pending) {
+              context.read<DriversImeiCubit>().getDriversImei(
+                    context,
+                    startPoint: trip.startPoint,
+                    status: DriverStatus.unAvailable,
+                  );
             }
           },
         ),
@@ -70,11 +85,12 @@ class _TripInfoPageState extends State<TripInfoPage> {
         BlocListener<CandidateDriversCubit, CandidateDriversInitial>(
           listenWhen: (p, c) => c.statuses.done,
           listener: (context, state) async {
-            if(state.getImeisListString.isEmpty)return;
+            if (state.getImeisListString.isEmpty) return;
             final l = await AtherCubit.getDriverLocationApi(state.getImeisListString);
             mapController.addMarkers(
               marker: (l.first ?? []).mapIndexed(
                 (i, e) {
+                  final isEnginOn = e.params.acc == '1';
                   final driver =
                       context.read<CandidateDriversCubit>().state.getIdByImei(e.ime);
                   return MyMarker(
@@ -85,8 +101,22 @@ class _TripInfoPageState extends State<TripInfoPage> {
                       children: [
                         InkWell(
                           onTap: () {
-                            context.pushNamed(GoRouteName.driverInfo,
-                                queryParams: {'id': driver?.driverId.toString()});
+                            NoteMessage.showMyDialog(context,
+                                child: BlocProvider.value(
+                                  value: driverBuIdCubit
+                                    ..getDriverBuId(
+                                      context,
+                                      id: driver!.driverId.toInt(),
+                                    ),
+                                  child: BlocBuilder<DriverBuIdCubit, DriverBuIdInitial>(
+                                    builder: (context, state) {
+                                      if (state.statuses.loading) {
+                                        return MyStyle.loadingWidget();
+                                      }
+                                      return DriverTableInfo(driver: state.result);
+                                    },
+                                  ),
+                                ));
                           },
                           child: Transform.rotate(
                             angle: -e.angle,
@@ -94,18 +124,89 @@ class _TripInfoPageState extends State<TripInfoPage> {
                               url: Assets.iconsLocator,
                               height: 50.0.spMin,
                               width: 50.0.spMin,
-                              color: AppColorManager.mainColorDark,
+                              color: isEnginOn
+                                  ? AppColorManager.mainColorDark
+                                  : AppColorManager.ampere,
                             ),
                           ),
                         ),
                         5.0.verticalSpace,
                         Container(
-                          color:AppColorManager.mainColorDark,
-                          padding:const EdgeInsets.all(1.0).r,
+                          color: isEnginOn
+                              ? AppColorManager.mainColorDark
+                              : AppColorManager.ampere,
+                          padding: const EdgeInsets.all(1.0).r,
                           child: DrawableText(
                             text: driver?.driver.name ?? '-',
                             color: Colors.white,
                             size: 17.0.sp,
+                            fontFamily: FontManager.cairoBold.name,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ).toList()
+                ..removeWhere((element) => element.point.latitude == 0),
+              update: true,
+              centerZoom: true,
+            );
+          },
+        ),
+        BlocListener<DriversImeiCubit, DriversImeiInitial>(
+          listenWhen: (p, c) => c.statuses.done,
+          listener: (context, state) async {
+            if (state.getImeisListString.isEmpty) return;
+            mapController.addMarkers(
+              marker: state.atherResult.mapIndexed(
+                (i, e) {
+                  final driver =
+                      context.read<DriversImeiCubit>().state.getIdByImei(e.ime);
+                  return MyMarker(
+                    key: driver?.id,
+                    point: e.getLatLng(),
+                    markerSize: Size(120.0.r, 120.0.r),
+                    costumeMarker: Column(
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            NoteMessage.showMyDialog(context,
+                                child: BlocProvider.value(
+                                  value: driverBuIdCubit
+                                    ..getDriverBuId(
+                                      context,
+                                      id: driver!.id,
+                                    ),
+                                  child: BlocBuilder<DriverBuIdCubit, DriverBuIdInitial>(
+                                    builder: (context, state) {
+                                      if (state.statuses.loading) {
+                                        return MyStyle.loadingWidget();
+                                      }
+                                      return DriverTableInfo(driver: state.result);
+                                    },
+                                  ),
+                                ));
+                          },
+                          child: Transform.rotate(
+                            angle: -e.angle,
+                            child: ImageMultiType(
+                              url: Assets.iconsLocator,
+                              height: 50.0.spMin,
+                              width: 50.0.spMin,
+                              color: AppColorManager.red,
+                            ),
+                          ),
+                        ),
+                        5.0.verticalSpace,
+                        Container(
+                          color: AppColorManager.red,
+                          padding: const EdgeInsets.all(1.0).r,
+                          child: DrawableText(
+                            text: driver?.name ?? '-',
+                            color: Colors.white,
+                            size: 16.0.sp,
+                            maxLines: 1,
                             fontFamily: FontManager.cairoBold.name,
                           ),
                         ),

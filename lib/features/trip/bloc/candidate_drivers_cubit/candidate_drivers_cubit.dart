@@ -39,8 +39,10 @@ class CandidateDriversCubit extends Cubit<CandidateDriversInitial> {
   static Future<Pair<List<CandidateDriver>?, String?>> getCandidateDriversApi(
       {required tripId}) async {
     if (tripId == 0) return Pair(null, 'no result with ID:0');
-    final response =
-        await APIService().getApi(url: GetUrl.getCandidateDrivers, query: {'Id': tripId});
+    final response = await APIService().getApi(
+      url: GetUrl.getCandidateDrivers,
+      query: {'Id': tripId},
+    );
 
     if (response.statusCode == 200) {
       final drivers = CandidateDriversResponse.fromJson(jsonDecode(response.body)).result;

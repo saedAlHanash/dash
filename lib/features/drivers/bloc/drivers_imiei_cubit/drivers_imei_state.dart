@@ -3,17 +3,22 @@ part of 'drivers_imei_cubit.dart';
 class DriversImeiInitial extends Equatable {
   final CubitStatuses statuses;
   final List<DriverImei> result;
+  final List<Ime> atherResult;
   final String error;
+  final DriverStatus? status;
 
   const DriversImeiInitial({
     required this.statuses,
     required this.result,
     required this.error,
+    required this.atherResult,
+     this.status,
   });
 
   factory DriversImeiInitial.initial() {
     return const DriversImeiInitial(
       result: <DriverImei>[],
+      atherResult: <Ime>[],
       error: '',
       statuses: CubitStatuses.init,
     );
@@ -47,12 +52,16 @@ class DriversImeiInitial extends Equatable {
   DriversImeiInitial copyWith({
     CubitStatuses? statuses,
     List<DriverImei>? result,
+    List<Ime>? atherResult,
     String? error,
+    DriverStatus? status,
   }) {
     return DriversImeiInitial(
       statuses: statuses ?? this.statuses,
       result: result ?? this.result,
       error: error ?? this.error,
+      status: status ?? this.status,
+      atherResult: atherResult ?? this.atherResult,
     );
   }
 }

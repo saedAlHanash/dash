@@ -86,7 +86,7 @@ class _DriverInfoPageState extends State<DriverInfoPage>
                         children: [
                           _DriverImages(driver: driver),
                           30.0.verticalSpace,
-                          _DriverTableInfo(driver: driver),
+                          DriverTableInfo(driver: driver),
                         ],
                       ),
                       if (!isAgency) LoyaltyWidget(driverId: driver.id),
@@ -130,8 +130,8 @@ class _DriverImages extends StatelessWidget {
   }
 }
 
-class _DriverTableInfo extends StatelessWidget {
-  const _DriverTableInfo({required this.driver});
+class DriverTableInfo extends StatelessWidget {
+  const DriverTableInfo({super.key, required this.driver});
 
   final DriverModel driver;
 

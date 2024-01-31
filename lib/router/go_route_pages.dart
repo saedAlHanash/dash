@@ -23,6 +23,7 @@ import 'package:qareeb_dash/features/trip/ui/pages/trips_page.dart';
 import 'package:qareeb_models/agencies/data/response/agencies_financial_response.dart';
 import 'package:qareeb_models/car_catigory/data/response/car_categories_response.dart';
 import 'package:qareeb_models/companies/data/response/companies_response.dart';
+import 'package:qareeb_models/global.dart';
 import 'package:qareeb_models/plans/data/response/plans_response.dart';
 
 import '../core/injection/injection_container.dart' as di;
@@ -51,6 +52,7 @@ import '../features/company_paths/ui/pages/create_company_path_page.dart';
 import '../features/coupons/bloc/create_coupon_cubit/create_coupon_cubit.dart';
 import '../features/coupons/ui/pages/create_coupon_page.dart';
 import '../features/drivers/bloc/driver_status_history_cubit/driver_status_history_cubit.dart';
+import '../features/drivers/bloc/drivers_imiei_cubit/drivers_imei_cubit.dart';
 import '../features/drivers/ui/pages/driver_info_page.dart';
 import '../features/drivers/ui/pages/trans_driver_info_page.dart';
 import '../features/home/ui/pages/agency_home_page.dart';
@@ -394,6 +396,8 @@ final appGoRouter = GoRouter(
           BlocProvider(create: (_) => di.sl<AtherCubit>()),
           BlocProvider(create: (_) => di.sl<TripByIdCubit>()..tripById(_, tripId: id)),
           BlocProvider(create: (_) => di.sl<TripDebitCubit>()..tripDebit(_, tripId: id)),
+          BlocProvider(create: (_) => di.sl<DriverBuIdCubit>()),
+          BlocProvider(create: (_) => di.sl<DriversImeiCubit>()),
           BlocProvider(
               create: (_) =>
                   di.sl<CandidateDriversCubit>()..getCandidateDrivers(_, tripId: id)),

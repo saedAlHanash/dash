@@ -17,6 +17,7 @@ import '../../../../core/widgets/item_info.dart';
 import '../../../../core/widgets/my_button.dart';
 import '../../../../core/widgets/table_widget.dart';
 import '../../../../router/go_route_pages.dart';
+import '../../../drivers/bloc/drivers_imiei_cubit/drivers_imei_cubit.dart';
 import '../../bloc/candidate_drivers_cubit/candidate_drivers_cubit.dart';
 import '../../bloc/trip_debit_cubit/trip_debit_cubit.dart';
 import '../../bloc/trip_status_cubit/trip_status_cubit.dart';
@@ -82,7 +83,7 @@ class _TripInfoListWidgetState extends State<TripInfoListWidget>
                 if (!isAgency) _DriverInfo(trip: widget.trip),
                 TripDateInfo(trip: widget.trip),
                 _TripCost(trip: widget.trip),
-                const _TripDrivers(),
+                _TripDrivers(trip: widget.trip),
                 if (!isAgency) _TripActions(trip: widget.trip),
               ],
             ),
@@ -94,7 +95,7 @@ class _TripInfoListWidgetState extends State<TripInfoListWidget>
 }
 
 class _TripInfo extends StatelessWidget {
-  const _TripInfo({super.key, required this.trip});
+  const _TripInfo({required this.trip});
 
   final Trip trip;
 
@@ -133,7 +134,7 @@ class _TripInfo extends StatelessWidget {
 }
 
 class _DriverInfo extends StatelessWidget {
-  const _DriverInfo({super.key, required this.trip});
+  const _DriverInfo({required this.trip});
 
   final Trip trip;
 
@@ -261,7 +262,7 @@ class TripDateInfo extends StatelessWidget {
 }
 
 class _TripCost extends StatelessWidget {
-  const _TripCost({super.key, required this.trip});
+  const _TripCost({required this.trip});
 
   final Trip trip;
 
@@ -325,7 +326,7 @@ class _TripCost extends StatelessWidget {
 }
 
 class _TripActions extends StatelessWidget {
-  const _TripActions({super.key, required this.trip});
+  const _TripActions({required this.trip});
 
   final Trip trip;
 
@@ -369,59 +370,105 @@ class _TripActions extends StatelessWidget {
 }
 
 class _TripDrivers extends StatelessWidget {
-  const _TripDrivers();
+  const _TripDrivers({required this.trip});
+
+  final Trip trip;
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: BlocBuilder<CandidateDriversCubit, CandidateDriversInitial>(
-        builder: (context, state) {
-          if (state.statuses.isLoading) {
-            return MyStyle.loadingWidget();
-          }
-          return SaedTableWidget(
-            title: const [
-              'اسم السائق',
-              'رقم هاتف',
-              'استلام الرحلة',
-              'إرسال الرحلة',
-              'اتصال بالانترنت',
-              'حالة ',
-            ],
-            data: state.result
-                .mapIndexed((i, e) => [
+      child: Column(
+        children: [
+          BlocBuilder<CandidateDriversCubit, CandidateDriversInitial>(
+            builder: (context, state) {
+              if (state.statuses.isLoading) {
+                return MyStyle.loadingWidget();
+              }
+              return SaedTableWidget(
+                title: const [
+                  'اسم السائق',
+                  'رقم هاتف',
+                  'استلام الرحلة',
+                  'إرسال الرحلة',
+                  'اتصال بالانترنت',
+                  'حالة ',
+                ],
+                data: state.result
+                    .mapIndexed((i, e) => [
+                          InkWell(
+                            onTap: () {
+                              context.pushNamed(
+                                GoRouteName.driverInfo,
+                                queryParams: {'id': '${e.driverId}'},
+                              );
+                            },
+                            child: DrawableText(
+                              selectable: false,
+                              size: 16.0.sp,
+                              matchParent: true,
+                              textAlign: TextAlign.center,
+                              text: e.driver.fullName,
+                              color: Colors.blue,
+                            ),
+                          ),
+                          e.driver.phoneNumber,
+                          '${e.receivingDate?.formatDate ?? ' - '}'
+                              '\n${e.receivingDate?.formatTime ?? ''}',
+                          '${e.requestDate?.formatDate ?? ' - '}'
+                              '\n${e.requestDate?.formatTime ?? ''}',
+                          '${e.driver.lastInternetConnection?.formatDate ?? ' - '}'
+                              '\n${e.driver.lastInternetConnection?.formatTime ?? ' '}',
+                          e.isAccepted
+                              ? 'قبول'
+                              : e.isRejected
+                                  ? 'رفض'
+                                  : '-'
+                        ])
+                    .toList(),
+              );
+            },
+          ),
+          if (trip.tripStatus == TripStatus.pending)
+            BlocBuilder<DriversImeiCubit, DriversImeiInitial>(
+              builder: (context, state) {
+                if (state.statuses.isLoading) {
+                  return MyStyle.loadingWidget();
+                }
+                return SaedTableWidget(
+                  filters: const DrawableText(text: 'السائقين الغير متاحين'),
+                  title: const [
+                    'اسم السائق',
+                    'حالة السائق',
+                    'IMEI ',
+                  ],
+                  data: state.atherResult.mapIndexed((i, e) {
+                    final driver =
+                        context.read<DriversImeiCubit>().state.getIdByImei(e.ime);
+                    return [
                       InkWell(
                         onTap: () {
                           context.pushNamed(
                             GoRouteName.driverInfo,
-                            queryParams: {'id': '${e.driverId}'},
+                            queryParams: {'id': '${driver?.id}'},
                           );
                         },
                         child: DrawableText(
+                          text: driver?.name ?? '',
                           selectable: false,
                           size: 16.0.sp,
                           matchParent: true,
                           textAlign: TextAlign.center,
-                          text: e.driver.fullName,
                           color: Colors.blue,
                         ),
                       ),
-                      e.driver.phoneNumber,
-                      '${e.receivingDate?.formatDate ?? ' - '}'
-                          '\n${e.receivingDate?.formatTime ?? ''}',
-                      '${e.requestDate?.formatDate ?? ' - '}'
-                          '\n${e.requestDate?.formatTime ?? ''}',
-                      '${e.driver.lastInternetConnection?.formatDate ?? ' - '}'
-                          '\n${e.driver.lastInternetConnection?.formatTime ?? ' '}',
-                      e.isAccepted
-                          ? 'قبول'
-                          : e.isRejected
-                              ? 'رفض'
-                              : '-'
-                    ])
-                .toList(),
-          );
-        },
+                      driver?.status.arabicName,
+                      driver?.imei,
+                    ];
+                  }).toList(),
+                );
+              },
+            ),
+        ],
       ),
     );
   }
