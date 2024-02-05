@@ -10,6 +10,7 @@ import 'package:qareeb_models/extensions.dart';
 
 import '../../../../core/util/my_style.dart';
 import '../../../../router/go_route_pages.dart';
+import '../../../syrian_agency/ui/widget/syrian_filter_widget.dart';
 import '../../bloc/debt_cubit/debts_cubit.dart';
 
 class DebtsPage extends StatelessWidget {
@@ -18,76 +19,97 @@ class DebtsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: BlocBuilder<DebtsCubit, DebtsInitial>(
-        builder: (context, state) {
-          if (state.statuses.isLoading) {
-            return MyStyle.loadingWidget();
-          }
-          final list = state.result;
-          if (list.isEmpty) {
-            return const NotFoundWidget(text: 'السجل فارغ');
-          }
-
-          return SaedTableWidget(
-            fullHeight: 1.8.sh,
-            onChangePage: (command) {
-              context.read<DebtsCubit>().getDebts(context, command: command);
+      child: Column(
+        children: [
+          SyrianFilterWidget(
+            onApply: (request) {
+              context.read<DebtsCubit>().getDebts(
+                context,
+                command: context
+                    .read<DebtsCubit>()
+                    .state
+                    .command
+                    .copyWith(
+                  syrianFilterRequest: request,
+                  skipCount: 0,
+                  totalCount: 0,
+                ),
+              );
             },
-            command: state.command,
-            title: const [
-              'ID',
-              'النوع',
-              'الاجمالي',
-              'للسائق',
-              'للزيت',
-              'للذهب',
-              'للإطارات',
-              'بنزين',
-              'للوكيل',
-              'تاريخ'
-            ],
-            data: list.mapIndexed(
-              (i, e) {
-                return [
-                  InkWell(
-                    onTap: () {
-                      if (e.sharedRequestId != 0) {
-                        context.pushNamed(
-                          GoRouteName.sharedTripInfo,
-                          queryParams: {'requestId': '${e.sharedRequestId}'},
-                        );
-                      } else {
-                        context.pushNamed(
-                          GoRouteName.tripInfo,
-                          queryParams: {'id': '${e.tripId}'},
-                        );
-                      }
-                    },
-                    child: DrawableText(
-                      selectable: false,
-                      size: 16.0.sp,
-                      matchParent: true,
-                      textAlign: TextAlign.center,
-                      underLine: true,
-                      text:
-                          e.sharedRequestId != 0 ? '${e.sharedRequestId}' : '${e.tripId}',
-                      color: Colors.blue,
-                    ),
-                  ),
-                  e.sharedRequestId != 0 ? ' مقعد برحلة تشاركية' : ' عادية ',
-                  e.totalCost.formatPrice,
-                  e.driverShare.formatPrice,
-                  e.oilShare.formatPrice,
-                  e.goldShare.formatPrice,
-                  e.tiresShare.formatPrice,
-                  e.gasShare.formatPrice,
-                  e.agencyShare.formatPrice,
-                  e.date?.formatDate ?? '-',
-                ];
-              },
-            ).toList(),
-          );
-        },
+          ),
+
+          BlocBuilder<DebtsCubit, DebtsInitial>(
+            builder: (context, state) {
+              if (state.statuses.isLoading) {
+                return MyStyle.loadingWidget();
+              }
+              final list = state.result;
+              if (list.isEmpty) {
+                return const NotFoundWidget(text: 'السجل فارغ');
+              }
+
+              return SaedTableWidget(
+                fullHeight: 1.8.sh,
+                onChangePage: (command) {
+                  context.read<DebtsCubit>().getDebts(context, command: command);
+                },
+                command: state.command,
+                title: const [
+                  'ID',
+                  'النوع',
+                  'الاجمالي',
+                  'للسائق',
+                  'للزيت',
+                  'للذهب',
+                  'للإطارات',
+                  'بنزين',
+                  'للوكيل',
+                  'تاريخ'
+                ],
+                data: list.mapIndexed(
+                  (i, e) {
+                    return [
+                      InkWell(
+                        onTap: () {
+                          if (e.sharedRequestId != 0) {
+                            context.pushNamed(
+                              GoRouteName.sharedTripInfo,
+                              queryParams: {'requestId': '${e.sharedRequestId}'},
+                            );
+                          } else {
+                            context.pushNamed(
+                              GoRouteName.tripInfo,
+                              queryParams: {'id': '${e.tripId}'},
+                            );
+                          }
+                        },
+                        child: DrawableText(
+                          selectable: false,
+                          size: 16.0.sp,
+                          matchParent: true,
+                          textAlign: TextAlign.center,
+                          underLine: true,
+                          text:
+                              e.sharedRequestId != 0 ? '${e.sharedRequestId}' : '${e.tripId}',
+                          color: Colors.blue,
+                        ),
+                      ),
+                      e.sharedRequestId != 0 ? ' مقعد برحلة تشاركية' : ' عادية ',
+                      e.totalCost.formatPrice,
+                      e.driverShare.formatPrice,
+                      e.oilShare.formatPrice,
+                      e.goldShare.formatPrice,
+                      e.tiresShare.formatPrice,
+                      e.gasShare.formatPrice,
+                      e.agencyShare.formatPrice,
+                      e.date?.formatDate ?? '-',
+                    ];
+                  },
+                ).toList(),
+              );
+            },
+          ),
+        ],
       ),
     );
   }

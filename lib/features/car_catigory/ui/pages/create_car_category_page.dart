@@ -105,6 +105,20 @@ class _CreateCarCategoryPageState extends State<CreateCarCategoryPage> {
                             },
                           ),
                         ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: MyTextFormNoLabelWidget(
+                            label: 'حصة الهيئة نسبة مئوية',
+                            initialValue: request.syrianAuthorityRatio?.toString(),
+                            maxLength: 2,
+                            onChanged: (p0) {
+                              request.syrianAuthorityRatio = num.tryParse(p0);
+                            },
+                          ),
+                        ),
                         15.0.horizontalSpace,
                         Expanded(
                           child: SpinnerWidget(

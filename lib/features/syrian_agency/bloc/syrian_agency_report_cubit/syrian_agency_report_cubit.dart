@@ -28,11 +28,12 @@ class SyrianAgencyReportCubit extends Cubit<SyrianAgencyReportInitial> {
       }
       emit(state.copyWith(statuses: CubitStatuses.error, error: pair.second));
     } else {
-      emit(state.copyWith(statuses: CubitStatuses.done, result: pair.first));
+      state.command.totalCount = pair.first!.totalCount;
+      emit(state.copyWith(statuses: CubitStatuses.done, result: pair.first?.items));
     }
   }
 
-  Future<Pair<List<SyrianAgencyReport>?, String?>> _getSyrianAgencyReportApi() async {
+  Future<Pair<SyrianAgencyResult?, String?>> _getSyrianAgencyReportApi() async {
     final response = await APIService().getApi(
       url: GetUrl.syrianAgencyFinancialReport,
       query: state.command.toJson(),

@@ -2,7 +2,10 @@ import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_multi_type/image_multi_type.dart';
 import 'package:image_multi_type/round_image_widget.dart';
+import 'package:map_package/api_manager/api_service.dart';
+import 'package:qareeb_dash/core/strings/fix_url.dart';
 import 'package:qareeb_dash/core/util/note_message.dart';
 import 'package:qareeb_dash/core/widgets/table_widget.dart';
 import 'package:qareeb_dash/features/drivers/data/response/drivers_response.dart';
@@ -94,7 +97,7 @@ class _DriverInfoPageState extends State<DriverInfoPage>
                       const DriverStatusHistory(),
                       const DriverFinancialWidget(),
                       const DebtsPage(),
-                       DriverLiveTracking(imei: driver.qarebDeviceimei),
+                      DriverLiveTracking(imei: driver.qarebDeviceimei),
                     ],
                   ),
                 ),
@@ -124,6 +127,7 @@ class _DriverImages extends StatelessWidget {
           ItemImage(image: driver.drivingLicence, text: 'رخصة القيادة'),
           ItemImage(image: driver.carMechanic, text: 'ميكانيك السيارة'),
           ItemImage(image: driver.examination, text: 'فحص السيارة'),
+
         ],
       ),
     );
@@ -183,6 +187,7 @@ class ItemImage extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8.0).w,
       child: InkWell(
         onTap: () {
+          loggerObject.w(image);
           NoteMessage.showImageDialog(context, image: image);
         },
         child: Column(

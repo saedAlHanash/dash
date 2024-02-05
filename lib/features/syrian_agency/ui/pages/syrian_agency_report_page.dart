@@ -15,6 +15,7 @@ const transfersHeaderTable = [
   'حصة السائق',
   'حصة الشركة',
   'حصة الهيئة',
+  'النوع',
   'تاريخ',
 ];
 
@@ -57,6 +58,12 @@ class _SyrianAgencyReportPageState extends State<SyrianAgencyReportPage> {
                   },
                 ),
                 SaedTableWidget(
+                    command: state.command,
+                    onChangePage: (command) {
+                      context
+                          .read<SyrianAgencyReportCubit>()
+                          .getSyrianAgencyReport(context, command: command);
+                    },
                     fullHeight: 1.5.sh,
                     title: transfersHeaderTable,
                     data: state.result.mapIndexed((index, e) {
@@ -65,6 +72,7 @@ class _SyrianAgencyReportPageState extends State<SyrianAgencyReportPage> {
                         e.driverShare.formatPrice,
                         e.companyShare.formatPrice,
                         e.syrianAuthorityShare.formatPrice,
+                        e.type.arabicName,
                         e.date?.formatDateTime,
                       ];
                     }).toList()),

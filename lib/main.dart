@@ -21,10 +21,12 @@ import 'core/injection/injection_container.dart' as di;
 import 'core/injection/injection_container.dart';
 import 'core/util/shared_preferences.dart';
 import 'firebase_options.dart';
+import 'package:hive/hive.dart';
 
 final dbHelper = DatabaseHelper();
 final player = AudioPlayer();
 
+  Box<dynamic>? hiveBox;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -34,6 +36,7 @@ void main() async {
   // await dbHelper.init();
 
   await di.init();
+    hiveBox = await Hive.openBox('image_box');
   // await ScreenUtil.ensureScreenSize();
   await SharedPreferences.getInstance().then((value) {
     AppSharedPreference.init(value);
@@ -61,6 +64,3 @@ void main() async {
   );
 }
 
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  loggerObject.w('background ');
-}

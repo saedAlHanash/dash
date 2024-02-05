@@ -9,7 +9,9 @@ import 'package:qareeb_dash/core/widgets/my_button.dart';
 import "package:universal_html/html.dart";
 
 import '../../generated/assets.dart';
+import '../strings/fix_url.dart';
 import '../widgets/snake_bar_widget.dart';
+import 'my_style.dart';
 
 class NoteMessage {
   static void showSuccessSnackBar(
@@ -218,6 +220,7 @@ class NoteMessage {
     BuildContext context, {
     required String image,
   }) async {
+    var loading = false;
     final result = await showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -231,11 +234,42 @@ class NoteMessage {
           ),
           elevation: 0.0,
           clipBehavior: Clip.hardEdge,
-          child: ImageMultiType(
-            width: 800.0.w,
-            height: 1.0.sh,
-            url: image,
-            fit: BoxFit.fill,
+          child: SizedBox(
+            width: .7.sw,
+            height: .9.sh,
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                ImageMultiType(
+                  width: 800.0.w,
+                  height: 1.0.sh,
+                  url: image,
+                  fit: BoxFit.fill,
+                ),
+                StatefulBuilder(builder: (context, setState) {
+                  if (loading) {
+                    return MyStyle.loadingWidget();
+                  }
+                  return Align(
+                    alignment: Alignment.topRight,
+                    child: SizedBox(
+                      height: 50.0.r,
+                      width: 50.0.r,
+                      child: IconButton(
+                          onPressed: () async {
+                            setState(() => loading = true);
+                            await downloadFile(image);
+                            setState(() => loading = false);
+                          },
+                          icon: const ImageMultiType(
+                            url: Icons.download,
+                            color: Colors.white,
+                          )),
+                    ),
+                  );
+                }),
+              ],
+            ),
           ),
         );
       },

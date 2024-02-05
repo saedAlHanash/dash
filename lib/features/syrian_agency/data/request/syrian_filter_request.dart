@@ -3,8 +3,8 @@ import 'package:qareeb_models/global.dart';
 
 class SyrianFilterRequest {
   String? userName;
-  DateTime? startTime = DateTime.now().addFromNow(month: -1);
-  DateTime? endTime = DateTime.now();
+  DateTime? startTime;
+  DateTime? endTime;
   TransferType? type;
   TransferStatus? status;
 

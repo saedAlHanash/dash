@@ -28,6 +28,7 @@ import 'package:qareeb_models/plans/data/response/plans_response.dart';
 
 import '../core/injection/injection_container.dart' as di;
 import '../core/util/shared_preferences.dart';
+import '../features/accounts/bloc/all_transfers_cubit/all_transfers_cubit.dart';
 import '../features/accounts/bloc/driver_financial_cubit/driver_financial_cubit.dart';
 import '../features/accounts/bloc/reverse_charging_cubit/reverse_charging_cubit.dart';
 import '../features/admins/ui/pages/admin_info_page.dart';
@@ -174,6 +175,7 @@ final appGoRouter = GoRouter(
         final providers = [
           BlocProvider(create: (_) => di.sl<CreateRedeemCubit>()),
           BlocProvider(create: (_) => di.sl<ReverseChargingCubit>()),
+          BlocProvider(create: (_) => di.sl<AllTransfersCubit>()),
           BlocProvider(create: (_) => di.sl<AtherCubit>()),
           BlocProvider(create: (_) => di.sl<MapControllerCubit>()),
           BlocProvider(create: (_) => di.sl<WalletCubit>()..getWallet(id: id)),

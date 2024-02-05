@@ -641,6 +641,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.3.0"
+  hive:
+    dependency: "direct main"
+    description:
+      name: hive
+      sha256: "8dcf6db979d7933da8217edcec84e9df1bdb4e4edc7fc77dbd5aa74356d6d941"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.2.3"
   html:
     dependency: transitive
     description:
@@ -1056,7 +1064,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "23388577bf8100cbc40268c67cda9ed616de0476"
+      resolved-ref: "5b11f5870db7779e48f839aea176ebec7822c7a2"
       url: "https://github.com/saedAlHanash/qareeb_models"
     source: git
     version: "0.1.5"

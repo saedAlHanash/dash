@@ -2,6 +2,7 @@ import 'package:qareeb_models/global.dart';
 
 class TransferFilterRequest{
   String? userName;
+  int? userId;
   DateTime ?startTime;
   DateTime ?endTime;
   TransferType? type;
@@ -9,6 +10,7 @@ class TransferFilterRequest{
 
   TransferFilterRequest({
     this.userName,
+    this.userId,
     this.startTime,
     this.endTime,
     this.type,
@@ -17,6 +19,7 @@ class TransferFilterRequest{
 
   TransferFilterRequest copyWith({
     String? userName,
+    int? userId,
     DateTime? startTime,
     DateTime? endTime,
     TransferType? type,
@@ -24,6 +27,7 @@ class TransferFilterRequest{
   }) {
     return TransferFilterRequest(
       userName: userName ?? this.userName,
+      userId: userId ?? this.userId,
       startTime: startTime ?? this.startTime,
       endTime: endTime ?? this.endTime,
       type: type ?? this.type,
@@ -34,6 +38,7 @@ class TransferFilterRequest{
   Map<String, dynamic> toMap() {
     return {
       'userName': userName,
+      'userId': userId,
       'FromDateTime': startTime?.toIso8601String(),
       'ToDateTime': endTime?.toIso8601String(),
       'type': type?.index,
@@ -44,6 +49,7 @@ class TransferFilterRequest{
   void clearFilter() {
 
     userName= null;
+    userId= null;
     startTime= null;
     endTime= null;
     type= null;

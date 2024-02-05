@@ -384,7 +384,7 @@ void logRequest(String url, Map<String, dynamic>? q, {String? additional}) {
 }
 
 void logResponse(String url, http.Response response) {
-  if (url.contains('api.php')) return;
+  if (url.contains('api.php') || url.contains('GetImageAsByteArray')) return;
   var r = [];
   var res = '';
   if (response.body.length > 800) {

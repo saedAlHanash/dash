@@ -18,6 +18,7 @@ class SpinnerWidget<T> extends StatefulWidget {
     this.sendFirstItem,
     this.expanded,
     this.decoration,
+    this.searchable = true,
   }) : super(key: key);
 
   final List<SpinnerItem> items;
@@ -28,6 +29,7 @@ class SpinnerWidget<T> extends StatefulWidget {
   final double? dropdownWidth;
   final bool? sendFirstItem;
   final bool? expanded;
+  final bool searchable;
   final BoxDecoration? decoration;
 
   @override
@@ -54,11 +56,11 @@ class SpinnerWidgetState<T> extends State<SpinnerWidget<T>> {
             selectable: false,
             text: item.name ?? '',
             padding: padding,
-            color: (item.id != null)
-                ? (item.enable)
+            color: item.id == null
+                ? AppColorManager.gray.withOpacity(0.7)
+                : (item.enable)
                     ? Colors.black
-                    : AppColorManager.gray.withOpacity(0.7)
-                : AppColorManager.gray.withOpacity(0.7),
+                    : AppColorManager.gray.withOpacity(0.7),
             fontFamily: FontManager.cairoBold.name,
             drawableStart: item.icon,
             drawablePadding: 15.0.w,
@@ -84,11 +86,19 @@ class SpinnerWidgetState<T> extends State<SpinnerWidget<T>> {
     }
   }
 
+  final textEditingController = TextEditingController();
+
+  @override
+  void dispose() {
+    textEditingController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return StatefulBuilder(
       builder: (_, state) {
-        return DropdownButton2(
+        return DropdownButton2<SpinnerItem>(
           items: list,
           value: selectedItem,
           hint: widget.hint,
@@ -128,6 +138,48 @@ class SpinnerWidgetState<T> extends State<SpinnerWidget<T>> {
           isExpanded: widget.expanded ?? false,
           customButton: widget.customButton,
           underline: 0.0.verticalSpace,
+          dropdownSearchData: !widget.searchable
+              ? null
+              : DropdownSearchData<SpinnerItem>(
+                  searchController: textEditingController,
+                  searchInnerWidgetHeight: 50,
+                  searchInnerWidget: Container(
+                    height: 50,
+                    padding: const EdgeInsets.only(
+                      top: 8,
+                      bottom: 4,
+                      right: 8,
+                      left: 8,
+                    ),
+                    child: TextFormField(
+                      expands: true,
+                      maxLines: null,
+                      controller: textEditingController,
+                      decoration: InputDecoration(
+                        isDense: true,
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 8,
+                        ),
+                        hintText: 'بحث',
+                        hintStyle: const TextStyle(fontSize: 12),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                    ),
+                  ),
+                  searchMatchFn: (item, searchValue) {
+                    return item.value?.name.toString().contains(searchValue) ?? false;
+                  },
+                ),
+          onMenuStateChange: !widget.searchable
+              ? null
+              : (isOpen) {
+                  if (!isOpen) {
+                    textEditingController.clear();
+                  }
+                },
         );
       },
     );
@@ -147,6 +199,7 @@ class SpinnerOutlineTitle extends StatelessWidget {
     this.expanded,
     this.decoration,
     this.label = '',
+    this.searchable = false,
   });
 
   final List<SpinnerItem> items;
@@ -159,6 +212,7 @@ class SpinnerOutlineTitle extends StatelessWidget {
   final bool? expanded;
   final BoxDecoration? decoration;
   final String label;
+  final bool searchable;
 
   @override
   Widget build(BuildContext context) {
@@ -175,6 +229,7 @@ class SpinnerOutlineTitle extends StatelessWidget {
         3.0.verticalSpace,
         SpinnerWidget(
           items: items,
+          searchable: searchable,
           hint: hint,
           onChanged: onChanged,
           customButton: customButton,

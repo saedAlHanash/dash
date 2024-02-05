@@ -133,6 +133,8 @@ class GetUrl {
       'api/services/app/AccountsService/GetSyrianAuthorityReport';
   static var syrianAgenciesFinancialReport =
       'api/services/app/AccountsService/SyrianAuthorityFinancialReport';
+
+  static var temp ='';
 }
 
 class PostUrl {
@@ -216,6 +218,7 @@ class PostUrl {
       'api/services/app/PathService/GetPlansPathEstimation';
 
   static const createPlanTrip = 'api/services/app/PlanTripsService/Create';
+  static const createRepay = 'api/services/app/PaymentService/CreateRepayingTransfer';
 
   static var createFromSyrian =
       'api/services/app/PaymentService/CreateSyrianAuthorityPayOffPayment';

@@ -1,3 +1,4 @@
+import 'package:http/http.dart';
 import 'package:qareeb_dash/core/api_manager/api_url.dart';
 import 'package:qareeb_dash/core/api_manager/server_proxy/server_proxy_request.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
@@ -26,3 +27,13 @@ final network = sl<NetworkInfo>();
     return Pair(null, AppStringManager.noInternet);
   }
 }
+Future<Response> getServerProxyRowApi({required String url}) async {
+  return await APIService().getApi(
+      hostName: 'qareeb-api.first-pioneers.com.tr',
+      url: 'api/services/app/HttpRequestService/GetImageAsByteArray',
+      query: {
+        'imageUrl': url,
+        // 'quality': 50,
+      });
+}
+

@@ -37,6 +37,7 @@ class CreateCarCatRequest {
   num? sharedGoldRatio;
   num? sharedTiresRatio;
   num? sharedGasRatio;
+  num? syrianAuthorityRatio;
 
   num? priceVariant;
   num? sharedMinimumDistanceInMeters;
@@ -64,6 +65,7 @@ class CreateCarCatRequest {
     this.sharedGoldRatio,
     this.sharedTiresRatio,
     this.sharedGasRatio,
+    this.syrianAuthorityRatio,
     this.priceVariant,
     this.sharedMinimumDistanceInMeters,
     this.planMinimumDistanceInMeters,
@@ -94,6 +96,7 @@ class CreateCarCatRequest {
       'SharedGoldRatio': sharedGoldRatio,
       'SharedTiresRatio': sharedTiresRatio,
       'sharedGasRatio': sharedGasRatio,
+      'syrianAuthorityRatio': syrianAuthorityRatio,
       'priceVariant': priceVariant,
       'sharedMinimumDistanceInMeters': sharedMinimumDistanceInMeters,
       'PlanMinimumDistanceInMeters': planMinimumDistanceInMeters,
@@ -125,6 +128,7 @@ class CreateCarCatRequest {
       sharedGoldRatio: carCategory.sharedGoldRatio,
       sharedTiresRatio: carCategory.sharedTiresRatio,
       sharedGasRatio: carCategory.sharedGasRatio,
+      syrianAuthorityRatio: carCategory.syrianAuthorityRatio,
       priceVariant: carCategory.priceVariant,
       sharedMinimumDistanceInMeters: carCategory.sharedMinimumDistanceInMeters,
       planMinimumDistanceInMeters: carCategory.planMinimumDistanceInMeters,
@@ -203,6 +207,10 @@ class CreateCarCatRequest {
     }
     if (sharedGasRatio == 0) {
       NoteMessage.showErrorSnackBar(message: 'خطأ في نسبة الولاء', context: context);
+      return false;
+    }
+    if (syrianAuthorityRatio == 0) {
+      NoteMessage.showErrorSnackBar(message: 'خطأ في نسبة الهيئة الناظمة', context: context);
       return false;
     }
 

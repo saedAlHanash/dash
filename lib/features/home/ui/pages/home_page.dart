@@ -500,7 +500,10 @@ class _HomePageState extends State<HomePage> {
                   );
 
                 case "/transactions":
-                  return const TransfersPage();
+                  return BlocProvider(
+                    create: (context) => sl<PayToCubit>(),
+                    child: const TransfersPage(),
+                  );
 
                 case "/company_transfers":
                   return const CompanyTransfersPage();

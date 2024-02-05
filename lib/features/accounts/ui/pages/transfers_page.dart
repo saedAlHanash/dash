@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:drawable_text/drawable_text.dart';
+import 'package:floating_action_bubble/floating_action_bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,13 +9,16 @@ import 'package:qareeb_dash/core/strings/app_color_manager.dart';
 import 'package:qareeb_dash/core/widgets/not_found_widget.dart';
 import 'package:qareeb_dash/core/widgets/saed_taple_widget.dart';
 import 'package:qareeb_dash/features/accounts/ui/widget/filters/transfers_filter_widget.dart';
+import 'package:qareeb_dash/features/accounts/ui/widget/re_pay_widget.dart';
 import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_models/global.dart';
 
 import '../../../../core/util/file_util.dart';
 import '../../../../core/util/my_style.dart';
+import '../../../../core/util/note_message.dart';
 import '../../../../router/go_route_pages.dart';
 import '../../bloc/all_transfers_cubit/all_transfers_cubit.dart';
+import '../../bloc/pay_to_cubit/pay_to_cubit.dart';
 
 const transfersHeaderTable = [
   'ID',
@@ -34,38 +38,93 @@ class TransfersPage extends StatefulWidget {
   State<TransfersPage> createState() => _TransfersPageState();
 }
 
-class _TransfersPageState extends State<TransfersPage> {
+class _TransfersPageState extends State<TransfersPage>
+    with SingleTickerProviderStateMixin {
   var loading = false;
+  late Animation<double> _animation;
+  late AnimationController _animationController;
+
+  @override
+  void initState() {
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 260),
+    );
+
+    final curvedAnimation =
+        CurvedAnimation(curve: Curves.easeInOut, parent: _animationController);
+    _animation = Tween<double>(begin: 0, end: 1).animate(curvedAnimation);
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: StatefulBuilder(
-        builder: (context, mState) {
-          return FloatingActionButton(
-            onPressed: () {
-              mState(() => loading = true);
-              context.read<AllTransfersCubit>().getDataAsync(context).then(
-                (value) {
-                  if (value == null) return;
-                  saveXls(
-                    header: value.first,
-                    data: value.second,
-                    fileName: 'تقرير التحويلات المالية${DateTime.now().formatDate}',
-                  );
+      floatingActionButton: StatefulBuilder(builder: (context, mState) {
+        return FloatingActionBubble(
+          // Menu items
+          items: [
+            Bubble(
+              title: "شحن تعويضي",
+              iconColor: Colors.white,
+              bubbleColor: AppColorManager.mainColor,
+              icon: Icons.payments_outlined,
+              titleStyle: const TextStyle(fontSize: 16, color: Colors.white),
+              onPress: () {
+                NoteMessage.showMyDialog(
+                  context,
+                  child: BlocProvider.value(
+                    value: context.read<PayToCubit>(),
+                    child: const RePayWidget(),
+                  ),
+                );
+                _animationController.reverse();
+              },
+            ),
+            // Floating action menu item
+            Bubble(
+              title: loading ? 'جاري التحميل...' : "تحميل ملف إكسل",
+              iconColor: Colors.white,
+              bubbleColor: AppColorManager.mainColor,
+              icon: Icons.file_copy_rounded,
+              titleStyle: const TextStyle(fontSize: 16, color: Colors.white),
+              onPress: () {
+                mState(() => loading = true);
+                context.read<AllTransfersCubit>().getDataAsync(context).then(
+                  (value) {
+                    if (value == null) return;
+                    saveXls(
+                      header: value.first,
+                      data: value.second,
+                      fileName: 'تقرير التحويلات المالية${DateTime.now().formatDate}',
+                    );
 
-                  mState(
-                    () => loading = false,
-                  );
-                },
-              );
-            },
-            child: loading
-                ? const CircularProgressIndicator.adaptive(backgroundColor: Colors.white)
-                : const Icon(Icons.file_download, color: Colors.white),
-          );
-        },
-      ),
+                    mState(
+                      () => loading = false,
+                    );
+                  },
+                );
+              },
+            ),
+          ],
+
+          // animation controller
+          animation: _animation,
+
+          // On pressed change animation state
+          onPress: () => _animationController.isCompleted
+              ? _animationController.reverse()
+              : _animationController.forward(),
+
+          // Floating Action button Icon color
+          iconColor: AppColorManager.whit,
+
+          // Flaoting Action button Icon
+          iconData: Icons.settings,
+          backGroundColor: AppColorManager.mainColor,
+        );
+      }),
       body: SingleChildScrollView(
         padding: const EdgeInsets.only(bottom: 200.0).h,
         child: Column(

@@ -1,15 +1,11 @@
-import 'dart:html' as web;
-
 // import 'package:audioplayers/audioplayers.dart';
 import 'package:drawable_text/drawable_text.dart';
-import 'package:elegant_notification/resources/arrays.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_multi_type/image_multi_type.dart';
-import 'package:just_audio/just_audio.dart';
 import 'package:map_package/map/bloc/set_point_cubit/map_control_cubit.dart';
 import 'package:qareeb_dash/core/api_manager/command.dart';
 import 'package:qareeb_dash/features/syrian_agency/data/request/syrian_filter_request.dart';
@@ -57,7 +53,6 @@ import '../api_manager/api_service.dart';
 import '../app_theme.dart';
 import '../injection/injection_container.dart';
 import '../strings/app_color_manager.dart';
-import 'package:elegant_notification/elegant_notification.dart';
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
