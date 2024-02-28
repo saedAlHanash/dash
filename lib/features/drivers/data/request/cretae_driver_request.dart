@@ -30,6 +30,8 @@ class CreateDriverRequest {
   String? manufacturingYear;
   String? type;
   bool? isExamined;
+  bool? isGPSInstalled;
+  bool? isPlansDriver;
 
   //------------------------
   bool isLoyaltySubscriber = false;
@@ -58,6 +60,8 @@ class CreateDriverRequest {
       'imei': imei,
       'AgencyId': agencyId == 0 ? null : agencyId,
       'isExaminated': isExamined,
+      'IsGPSInstalled': isGPSInstalled,
+      'IsPlansDriver': isPlansDriver,
       'id': id,
       'carGovernorate': carGovernorate,
       'manufacturingYear': manufacturingYear,
@@ -165,6 +169,8 @@ class CreateDriverRequest {
     r.imei = driver.qarebDeviceimei;
     r.agencyId = driver.agency.id;
     r.isExamined = driver.isExamined;
+    r.isGPSInstalled = driver.isGPSInstalled;
+    r.isPlansDriver = driver.isPlansDriver;
     r.carGovernorate = driver.carType.carGovernorate;
     r.manufacturingYear = driver.carType.manufacturingYear;
     r.type = driver.carType.type;

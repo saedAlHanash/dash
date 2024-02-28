@@ -108,7 +108,7 @@ class _MyAppState extends State<MyApp> {
           initialSize: 22.0.sp,
           initialHeightText: 2.0.h,
           selectable: true,
-          renderHtml: true,
+          // renderHtml: true,
           // textDirection: TextDirection.ltr,
         );
         setImageMultiTypeErrorImage(

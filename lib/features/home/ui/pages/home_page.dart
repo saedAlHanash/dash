@@ -280,6 +280,11 @@ class _HomePageState extends State<HomePage> {
                       icon: Icons.stay_primary_landscape_sharp,
                     ),
                     AdminMenuItem(
+                      title: 'المشتركين',
+                      route: '/user_plans',
+                      icon: Icons.supervised_user_circle_sharp,
+                    ),
+                    AdminMenuItem(
                       title: 'الشركات',
                       route: '/companies',
                       icon: Icons.home_repair_service,
@@ -596,6 +601,14 @@ class _HomePageState extends State<HomePage> {
                   return const AttendancesPage();
 
                 case "/allPlans":
+                  return MultiBlocProvider(
+                    providers: [
+                      BlocProvider(create: (_) => sl<DeletePlanCubit>()),
+                    ],
+                    child: const PlansPage(),
+                  );
+
+                case "/user_plans":
                   return MultiBlocProvider(
                     providers: [
                       BlocProvider(create: (_) => sl<DeletePlanCubit>()),

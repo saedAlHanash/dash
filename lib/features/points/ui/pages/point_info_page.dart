@@ -150,6 +150,7 @@ class _PointInfoPageState extends State<PointInfoPage> {
         BlocListener<EdgesPointCubit, EdgesPointInitial>(
           listener: (context, state) {
             mapController.addEncodedPolyLines(
+              addPathLength: false,
               myPolyLines: state.result
                   .mapIndexed(
                     (i, e) => MyPolyLine(

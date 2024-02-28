@@ -270,7 +270,7 @@ class _CreateDriverPageState extends State<CreateDriverPage> {
                               borderRadius: BorderRadius.circular(12.0.r),
                             ),
                             onChanged: (spinnerItem) {
-                              request.gender = Gender.values[spinnerItem.id??0];
+                              request.gender = Gender.values[spinnerItem.id ?? 0];
                             },
                           ),
                         ),
@@ -319,16 +319,50 @@ class _CreateDriverPageState extends State<CreateDriverPage> {
                     ),
                     StatefulBuilder(
                       builder: (context, mState) {
-                        return CheckboxListTile(
-                          title: const DrawableText(
-                            text: 'هل تم فحص السيارة؟',
-                            selectable: false,
-                            color: Colors.black,
-                          ),
-                          value: request.isExamined ?? false,
-                          onChanged: (value) {
-                            mState(() => request.isExamined = value);
-                          },
+                        return Row(
+                          children: [
+                            Expanded(
+                              child: CheckboxListTile(
+                                title: const DrawableText(
+                                  text: 'هل تم فحص السيارة؟',
+                                  selectable: false,
+                                  color: Colors.black,
+                                ),
+                                value: request.isExamined ?? false,
+                                onChanged: (value) {
+                                  mState(() => request.isExamined = value);
+                                },
+                              ),
+                            ),
+                            10.0.horizontalSpace,
+                            Expanded(
+                              child: CheckboxListTile(
+                                title: const DrawableText(
+                                  text: 'هل تم تركيب الجهاز',
+                                  selectable: false,
+                                  color: Colors.black,
+                                ),
+                                value: request.isGPSInstalled ?? false,
+                                onChanged: (value) {
+                                  mState(() => request.isGPSInstalled = value);
+                                },
+                              ),
+                            ),
+                            10.0.horizontalSpace,
+                            Expanded(
+                              child: CheckboxListTile(
+                                title: const DrawableText(
+                                  text: 'سائق للاشتراكات',
+                                  selectable: false,
+                                  color: Colors.black,
+                                ),
+                                value: request.isPlansDriver ?? false,
+                                onChanged: (value) {
+                                  mState(() => request.isPlansDriver = value);
+                                },
+                              ),
+                            ),
+                          ],
                         );
                       },
                     ),
@@ -438,7 +472,11 @@ class _CreateDriverPageState extends State<CreateDriverPage> {
                                   );
                                 },
                               ).toList()
-                                ..insert(0, SpinnerItem(name: 'تصنيف السيارة', /*id: -1,*/));
+                                ..insert(
+                                    0,
+                                    SpinnerItem(
+                                      name: 'تصنيف السيارة', /*id: -1,*/
+                                    ));
                               return SpinnerWidget(
                                 items: list,
                                 width: 1.0.sw,

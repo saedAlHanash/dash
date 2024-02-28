@@ -135,6 +135,8 @@ class GetUrl {
       'api/services/app/AccountsService/SyrianAuthorityFinancialReport';
 
   static var temp ='';
+
+  static var getDriversPool ='api/services/app/TripsService/GetTripDriverPool';
 }
 
 class PostUrl {
@@ -303,7 +305,7 @@ class OrsUrl {
 class OsrmUrl {
   static const getRoutePoints = 'route/v1/driving';
   static const getLocationName = 'reverse';
-  static const hostName = 'router.project-osrm.org';
+  static const hostName = 'osrm.qareeb-maas';
   static const hostOsmName = 'nominatim.openstreetmap.org';
   static const key = '5b3ce3597851110001cf6248989ba286fa3c483496378107c01120f3';
 }

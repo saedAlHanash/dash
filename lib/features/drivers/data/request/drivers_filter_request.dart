@@ -9,6 +9,7 @@ class DriversFilterRequest {
   bool? isExamined;
   bool? isActive;
   bool? engineStatus;
+  bool? orderByLastInternetConnection;
   DriverStatus? status;
 
   DriversFilterRequest({
@@ -20,6 +21,7 @@ class DriversFilterRequest {
     this.isExamined,
     this.isActive = true,
     this.engineStatus,
+    this.orderByLastInternetConnection,
     this.status,
   });
 
@@ -33,6 +35,7 @@ class DriversFilterRequest {
     isExamined = null;
     isActive = null;
     engineStatus = null;
+    orderByLastInternetConnection = null;
     status = null;
   }
 
@@ -45,6 +48,7 @@ class DriversFilterRequest {
     bool? isExamined,
     bool? isActive,
     bool? engineStatus,
+    bool? OrderByLastInternetConnection,
     DriverStatus? status,
   }) {
     return DriversFilterRequest(
@@ -56,6 +60,7 @@ class DriversFilterRequest {
       isExamined: isExamined ?? this.isExamined,
       isActive: isActive ?? this.isActive,
       engineStatus: engineStatus ?? this.engineStatus,
+      orderByLastInternetConnection: OrderByLastInternetConnection ?? this.orderByLastInternetConnection,
       status: status ?? this.status,
     );
   }
@@ -70,6 +75,7 @@ class DriversFilterRequest {
       'IsExaminated': isExamined,
       'isActive': isActive,
       'engineStatus': engineStatus,
+      'OrderByLastInternetConnection': orderByLastInternetConnection,
       'Status': status?.index,
     };
   }
@@ -84,6 +90,7 @@ class DriversFilterRequest {
       isExamined: map['IsExaminated'] ?? '',
       isActive: map['isActive'] ?? '',
       engineStatus: map['engineStatus'] ?? '',
+      orderByLastInternetConnection: map['OrderByLastInternetConnection'] ?? '',
       status: map['status'] ?? '',
     );
   }

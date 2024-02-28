@@ -96,7 +96,7 @@ class _DriverInfoPageState extends State<DriverInfoPage>
                       DriverTripsCard(driver: driver),
                       const DriverStatusHistory(),
                       const DriverFinancialWidget(),
-                      const DebtsPage(),
+                       DebtsPage(driver: driver),
                       DriverLiveTracking(imei: driver.qarebDeviceimei),
                     ],
                   ),
@@ -127,7 +127,6 @@ class _DriverImages extends StatelessWidget {
           ItemImage(image: driver.drivingLicence, text: 'رخصة القيادة'),
           ItemImage(image: driver.carMechanic, text: 'ميكانيك السيارة'),
           ItemImage(image: driver.examination, text: 'فحص السيارة'),
-
         ],
       ),
     );
@@ -152,6 +151,8 @@ class DriverTableInfo extends StatelessWidget {
               'الشركة الصانعة': driver.carType.carBrand,
               'لون': driver.carType.carColor,
               'IMEI': driver.qarebDeviceimei,
+              'حالة الجهاز': driver.isGPSInstalled ? 'تم التركيب' : 'لا يوجد',
+              'سائق اشتراكات؟': driver.isPlansDriver ? 'سائق اشتراكات' : 'سائق عادي',
               'حالة الفحص': driver.isExamined ? 'تم' : 'غير مفحوصة',
             },
             title: 'معلومات السيارة',

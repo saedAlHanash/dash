@@ -30,7 +30,7 @@ dependencies:
   image_multi_type:
     git:
       url: https://github.com/saedAlHanash/image_multi_type
-
+#
   drawable_text:
     git:
       url: https://github.com/saedAlHanash/drawable_text
@@ -51,6 +51,7 @@ dependencies:
 #
 #  qareeb_models:
 #    path: ../../packages/qareeb_models
+
   just_audio: ^0.9.36
   hive: ^2.2.3
   floating_action_bubble: ^1.1.4

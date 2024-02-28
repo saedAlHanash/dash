@@ -94,11 +94,9 @@ class _CreatePlanPageState extends State<CreatePlanPage> {
                         ),
                         15.0.horizontalSpace,
                         Expanded(
-                          child: SpinnerOutlineTitle(
-                            label: 'نوع الخطة',
-                            items: PlanType.values.spinnerItems(
-                              selected: request.type,
-                            ),
+                          child: SpinnerWidget(
+                            expanded: true,
+                            items: PlanType.values.spinnerItems(selected: request.type),
                             onChanged: (p0) => request.type = p0.item,
                           ),
                         ),
@@ -108,15 +106,6 @@ class _CreatePlanPageState extends State<CreatePlanPage> {
                             label: 'وصف مختصر',
                             initialValue: request.description,
                             onChanged: (p0) => request.description = p0,
-                          ),
-                        ),
-                        15.0.horizontalSpace,
-                        Expanded(
-                          child: MyTextFormNoLabelWidget(
-                            label: 'عدد أيام الخطة',
-                            initialValue: request.activationDayNumber.toString(),
-                            onChanged: (p0) =>
-                                request.activationDayNumber = num.tryParse(p0),
                           ),
                         ),
                       ],
@@ -141,6 +130,18 @@ class _CreatePlanPageState extends State<CreatePlanPage> {
                         15.0.horizontalSpace,
                         Expanded(
                           child: MyTextFormNoLabelWidget(
+                            label: 'عدد أيام الخطة',
+                            initialValue: request.activationDayNumber?.toString(),
+                            onChanged: (p0) =>
+                                request.activationDayNumber = num.tryParse(p0),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: MyTextFormNoLabelWidget(
                             label: 'عدد مرات الركوب الشهري',
                             initialValue: request.maxMonthlyUsage?.toString(),
                             onChanged: (p0) => request.maxMonthlyUsage = num.tryParse(p0),
@@ -152,6 +153,14 @@ class _CreatePlanPageState extends State<CreatePlanPage> {
                             label: 'عدد مرات الركوب خلال اليوم',
                             initialValue: request.maxDailyUsage?.toString(),
                             onChanged: (p0) => request.maxDailyUsage = num.tryParse(p0),
+                          ),
+                        ),
+                        15.0.horizontalSpace,
+                        Expanded(
+                          child: MyTextFormNoLabelWidget(
+                            label: 'رصيد الكيلومترات    * بالمتر',
+                            initialValue: request.maxMeters?.toString(),
+                            onChanged: (p0) => request.maxMeters = num.tryParse(p0),
                           ),
                         ),
                       ],

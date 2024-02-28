@@ -47,3 +47,22 @@ class TripDebitCubit extends Cubit<TripDebitInitial> {
     }
   }
 }
+//{
+//   "id": 0,
+//   "driverShare": 0,
+//   "totalCost": 0,
+//   "costAfterDiscount": 0,
+//   "discountAmount": 0,
+//   "sharedRequestId": 0,
+//   "tripId": 0,
+//   "driverId": 0,
+//   "date": "2024-02-11T08:07:54.142Z",
+//   "oilShare": 0,
+//   "goldShare": 0,
+//   "tiresShare": 0,
+//   "gasShare": 0,
+//   "agencyShare": 0,
+//   "syrianAuthorityShare": 0,
+//   "driverCompensation": 0,
+//   "type": "TripPayment"
+// }

@@ -295,7 +295,7 @@ class _TripCost extends StatelessWidget {
                 .getPercentage(trip.carCategory.normalGasRatio)
                 .formatPrice,
           },
-          title: 'المحصلة المالية للولاء',
+          title: '-المحصلة المالية للولاء -للعرض فقط-',
         ),
         if (trip.isDelved)
           BlocBuilder<TripDebitCubit, TripDebitInitial>(
@@ -310,6 +310,8 @@ class _TripCost extends StatelessWidget {
                   'للإطارات': state.result.tiresShare.formatPrice,
                   'للمليون': state.result.goldShare.formatPrice,
                   'للبنزين': state.result.gasShare.formatPrice,
+                  'للهيئة': state.result.syrianAuthorityShare.formatPrice,
+                  'التعويضية': state.result.driverCompensation.formatPrice,
                 },
                 title: 'محصلة السائق من العائدات',
               );
@@ -428,46 +430,6 @@ class _TripDrivers extends StatelessWidget {
               );
             },
           ),
-          if (trip.tripStatus == TripStatus.pending)
-            BlocBuilder<DriversImeiCubit, DriversImeiInitial>(
-              builder: (context, state) {
-                if (state.statuses.isLoading) {
-                  return MyStyle.loadingWidget();
-                }
-                return SaedTableWidget(
-                  filters: const DrawableText(text: 'السائقين الغير متاحين'),
-                  title: const [
-                    'اسم السائق',
-                    'حالة السائق',
-                    'IMEI ',
-                  ],
-                  data: state.atherResult.mapIndexed((i, e) {
-                    final driver =
-                        context.read<DriversImeiCubit>().state.getIdByImei(e.ime);
-                    return [
-                      InkWell(
-                        onTap: () {
-                          context.pushNamed(
-                            GoRouteName.driverInfo,
-                            queryParams: {'id': '${driver?.id}'},
-                          );
-                        },
-                        child: DrawableText(
-                          text: driver?.name ?? '',
-                          selectable: false,
-                          size: 16.0.sp,
-                          matchParent: true,
-                          textAlign: TextAlign.center,
-                          color: Colors.blue,
-                        ),
-                      ),
-                      driver?.status.arabicName,
-                      driver?.imei,
-                    ];
-                  }).toList(),
-                );
-              },
-            ),
         ],
       ),
     );

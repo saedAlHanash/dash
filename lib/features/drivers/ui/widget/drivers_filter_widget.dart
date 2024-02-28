@@ -37,6 +37,7 @@ class _DriversFilterWidgetState extends State<DriversFilterWidget> {
   final key4 = GlobalKey<SpinnerWidgetState>();
   final key5 = GlobalKey<SpinnerWidgetState>();
   final key6 = GlobalKey<SpinnerWidgetState>();
+  final key7 = GlobalKey<SpinnerWidgetState>();
 
   @override
   void initState() {
@@ -87,7 +88,7 @@ class _DriversFilterWidgetState extends State<DriversFilterWidget> {
                       return MyStyle.loadingWidget();
                     }
                     return SpinnerWidget(
-                         width: 1.0.sw,
+                      width: 1.0.sw,
                       key: key2,
                       items: state.getSpinnerItems(selectedId: request.carCategoryId)
                         ..insert(
@@ -114,7 +115,7 @@ class _DriversFilterWidgetState extends State<DriversFilterWidget> {
                         return MyStyle.loadingWidget();
                       }
                       return SpinnerWidget(
-                           width: 1.0.sw,
+                        width: 1.0.sw,
                         key: key3,
                         items: state.getSpinnerItems(selectedId: request.agencyId)
                           ..insert(
@@ -125,7 +126,6 @@ class _DriversFilterWidgetState extends State<DriversFilterWidget> {
                                 /*id: -1,*/
                                 isSelected: request.agencyId == null),
                           ),
-
                         onChanged: (spinnerItem) {
                           request.agencyId = spinnerItem.id;
                         },
@@ -136,7 +136,7 @@ class _DriversFilterWidgetState extends State<DriversFilterWidget> {
                 15.0.horizontalSpace,
                 Expanded(
                   child: SpinnerWidget(
-                       width: 1.0.sw,
+                    width: 1.0.sw,
                     key: key5,
                     items: [
                       SpinnerItem(
@@ -159,23 +159,45 @@ class _DriversFilterWidgetState extends State<DriversFilterWidget> {
                             /*id: -1,*/
                             isSelected: request.engineStatus == null),
                       ),
-
                     onChanged: (spinnerItem) {
                       request.agencyId = spinnerItem.id;
+                    },
+                  ),
+                ),
+                15.0.horizontalSpace,
+                Expanded(
+                  child: SpinnerWidget(
+                    width: 1.0.sw,
+                    key: key7,
+                    items: [
+                      SpinnerItem(
+                        name: 'تاريخ وضع العمل',
+                        item: true,
+                        id: 1,
+                        isSelected: request.orderByLastInternetConnection == true,
+                      ),
+                    ]..insert(
+                        0,
+                        SpinnerItem(
+                            name: 'ترتيب',
+                            item: null,
+                            /*id: -1,*/
+                            isSelected: request.orderByLastInternetConnection == null),
+                      ),
+                    onChanged: (spinnerItem) {
+                      request.orderByLastInternetConnection = spinnerItem.item;
                     },
                   ),
                 ),
               ],
             ],
           ),
-
           10.0.verticalSpace,
-
           Row(
             children: [
               Expanded(
                 child: SpinnerWidget(
-                     width: 1.0.sw,
+                  width: 1.0.sw,
                   key: key1,
                   items: DriverStatus.values.spinnerItems(
                     selected: request.status,
@@ -193,7 +215,7 @@ class _DriversFilterWidgetState extends State<DriversFilterWidget> {
               15.0.horizontalSpace,
               Expanded(
                 child: SpinnerWidget(
-                     width: 1.0.sw,
+                  width: 1.0.sw,
                   key: key4,
                   items: [
                     SpinnerItem(
@@ -220,7 +242,7 @@ class _DriversFilterWidgetState extends State<DriversFilterWidget> {
               15.0.horizontalSpace,
               Expanded(
                 child: SpinnerWidget(
-                     width: 1.0.sw,
+                  width: 1.0.sw,
                   key: key6,
                   items: [
                     SpinnerItem(
@@ -275,6 +297,7 @@ class _DriversFilterWidgetState extends State<DriversFilterWidget> {
                     key3.currentState?.clearSelect();
                     key4.currentState?.clearSelect();
                     key5.currentState?.clearSelect();
+                    key7.currentState?.clearSelect();
                     key6.currentState?.clearSelect();
                   },
                 ),

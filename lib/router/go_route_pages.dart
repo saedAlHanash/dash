@@ -237,24 +237,24 @@ final appGoRouter = GoRouter(
     ),
 
     ///debts
-    GoRoute(
-      name: GoRouteName.debts,
-      path: _GoRoutePath.debts,
-      builder: (BuildContext context, GoRouterState state) {
-        // final driver  = (state.extra ?? DriverModel.fromJson({})) as DriverModel;
-        final q = state.queryParams['id'] ?? '0';
-        final providers = [
-          BlocProvider(
-            create: (_) =>
-                di.sl<DebtsCubit>()..getDebts(context, id: int.tryParse(q) ?? 0),
-          ),
-        ];
-        return MultiBlocProvider(
-          providers: providers,
-          child: const DebtsPage(),
-        );
-      },
-    ),
+    // GoRoute(
+    //   name: GoRouteName.debts,
+    //   path: _GoRoutePath.debts,
+    //   builder: (BuildContext context, GoRouterState state) {
+    //     // final driver  = (state.extra ?? DriverModel.fromJson({})) as DriverModel;
+    //     final q = state.queryParams['id'] ?? '0';
+    //     final providers = [
+    //       BlocProvider(
+    //         create: (_) =>
+    //             di.sl<DebtsCubit>()..getDebts(context, id: int.tryParse(q) ?? 0),
+    //       ),
+    //     ];
+    //     return MultiBlocProvider(
+    //       providers: providers,
+    //       child: const DebtsPage(),
+    //     );
+    //   },
+    // ),
 
     //endregion
 
@@ -399,7 +399,7 @@ final appGoRouter = GoRouter(
           BlocProvider(create: (_) => di.sl<TripByIdCubit>()..tripById(_, tripId: id)),
           BlocProvider(create: (_) => di.sl<TripDebitCubit>()..tripDebit(_, tripId: id)),
           BlocProvider(create: (_) => di.sl<DriverBuIdCubit>()),
-          BlocProvider(create: (_) => di.sl<DriversImeiCubit>()),
+
           BlocProvider(
               create: (_) =>
                   di.sl<CandidateDriversCubit>()..getCandidateDrivers(_, tripId: id)),
@@ -774,7 +774,7 @@ class GoRouteName {
   static const homePage = 'Home Page';
   static const loginPage = 'Login Page';
   static const driverInfo = 'driver info';
-  static const debts = 'debts';
+  // static const debts = 'debts';
   static const createDriver = 'createDriver';
   static const updateDriver = 'updateDriver';
   static const createCarCategory = 'CreateCarCategory';
@@ -807,7 +807,7 @@ class _GoRoutePath {
   static const homePage = '/Home';
   static const driverInfo = '/DriverInfo';
   static const loginPage = '/';
-  static const debts = '/debts';
+  // static const debts = '/debts';
   static const createDriver = '/createDriver';
   static const updateDriver = '/updateDriver';
   static const createCarCategory = '/CreateCarCategory';

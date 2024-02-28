@@ -17,6 +17,7 @@ class CreatePlanRequest {
   num? maxDailyUsage;
   num? maxMonthlyUsage;
   num? activationDayNumber;
+  num? maxMeters;
   PlanType type;
 
   CreatePlanRequest({
@@ -24,11 +25,12 @@ class CreatePlanRequest {
     this.price,
     this.name,
     this.description,
-    this.type = PlanType.bronze,
+    this.type = PlanType.qareep,
     this.maxPathMeters,
     this.maxDailyUsage,
     this.maxMonthlyUsage,
     this.activationDayNumber,
+    this.maxMeters,
   });
 
   Map<String, dynamic> toMap() {
@@ -42,6 +44,7 @@ class CreatePlanRequest {
       'MaxDailyUsage': maxDailyUsage,
       'maxMonthlyUsage': maxMonthlyUsage,
       'activationDayNumber': activationDayNumber,
+      'MaxMeters': maxMeters,
     };
   }
 
@@ -56,6 +59,7 @@ class CreatePlanRequest {
       maxDailyUsage: model.maxDailyUsage,
       maxMonthlyUsage: model.maxMonthlyUsage,
       activationDayNumber: model.activationDayNumber,
+      maxMeters: model.maxMeters,
     )..file =
         UploadFile(fileBytes: null, initialImage: model.imageUrl, nameField: 'ImageFile');
   }
@@ -68,6 +72,10 @@ class CreatePlanRequest {
 
     if (price == null || price == 0) {
       NoteMessage.showErrorSnackBar(message: 'خطأ في السعر', context: context);
+      return false;
+    }
+    if (maxMeters == null || maxMeters == 0) {
+      NoteMessage.showErrorSnackBar(message: 'خطأ في رصيد الكيلومترات', context: context);
       return false;
     }
     if (activationDayNumber == null || activationDayNumber == 0) {

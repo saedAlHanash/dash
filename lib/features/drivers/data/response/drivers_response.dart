@@ -62,6 +62,8 @@ class DriverModel {
     required this.roleNames,
     required this.isActive,
     required this.isExamined,
+    required this.isGPSInstalled,
+    required this.isPlansDriver,
     required this.engineStatus,
     required this.loyalty,
     required this.isGasIncluded,
@@ -122,6 +124,8 @@ class DriverModel {
   final num receivedTripsCount;
   final Agency agency;
   final bool isExamined;
+  final bool isGPSInstalled;
+  final bool isPlansDriver;
   final bool engineStatus;
 
   factory DriverModel.fromJson(Map<String, dynamic> json) {
@@ -146,6 +150,8 @@ class DriverModel {
           : List<String>.from(json["roleNames"]!.map((x) => x)),
       isActive: json["isActive"] ?? false,
       isExamined: json["isExaminated"] ?? false,
+      isGPSInstalled: json["isGPSInstalled"] ?? false,
+      isPlansDriver: json["isPlansDriver"] ?? false,
       engineStatus: json["engineStatus"] ?? false,
       loyalty: json["isLoyaltySupscriper"] ?? false,
       isGasIncluded: json["isGasIncluded"] ?? false,
@@ -188,6 +194,8 @@ class DriverModel {
         "roleNames": roleNames.map((x) => x).toList(),
         "isActive": isActive,
         "isExaminated": isExamined,
+        "isGPSInstalled": isGPSInstalled,
+        "isPlansDriver": isPlansDriver,
         "engineStatus": engineStatus,
         "emailConfirmationCode": emailConfirmationCode,
         "creationTime": creationTime,
