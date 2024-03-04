@@ -5,6 +5,9 @@ import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:map_package/map/bloc/ather_cubit/ather_cubit.dart';
+import 'package:map_package/map/bloc/map_controller_cubit/map_controller_cubit.dart';
+import 'package:map_package/map/bloc/search_location/search_location_cubit.dart';
 import 'package:qareeb_dash/core/api_manager/api_service.dart';
 import 'package:qareeb_dash/core/api_manager/command.dart';
 import 'package:qareeb_dash/features/shared_trip/ui/pages/shared_trips_page.dart';
@@ -26,7 +29,10 @@ import '../../../auth/bloc/change_user_state_cubit/change_user_state_cubit.dart'
 import '../../../drivers/bloc/loyalty_cubit/loyalty_cubit.dart';
 import '../../../drivers/ui/pages/drivers_page.dart';
 import '../../../pay_to_drivers/ui/pages/financial_page.dart';
+import '../../../points/ui/pages/points_page.dart';
 import '../../../redeems/bloc/redeems_cubit/redeems_cubit.dart';
+import '../../../temp_trips/bloc/delete_temp_trip_cubit/delete_temp_trip_cubit.dart';
+import '../../../temp_trips/ui/pages/temp_trips_page.dart';
 import '../../../ticket/bloc/replay_ticket_cubit/replay_ticket_cubit.dart';
 import '../../../ticket/ui/pages/tickets_page.dart';
 import '../../bloc/nav_home_cubit/nav_home_cubit.dart';
@@ -70,21 +76,25 @@ class _AgencyHomePageState extends State<AgencyHomePage> {
             backgroundColor: AppColorManager.f1,
             leading: window.history.length != 0
                 ? IconButton(
-                    onPressed: () => window.history.back(),
-                    icon: const Icon(
-                      Icons.arrow_back_ios,
-                      color: AppColorManager.mainColorDark,
-                    ))
+                onPressed: () => window.history.back(),
+                icon: const Icon(
+                  Icons.arrow_back_ios,
+                  color: AppColorManager.mainColorDark,
+                ))
                 : 0.0.verticalSpace,
           ),
           sideBar: SideBar(
             key: (Key(Random().nextInt(100000).toString())),
             activeTextStyle: TextStyle(
-              color: Theme.of(context).primaryColor,
+              color: Theme
+                  .of(context)
+                  .primaryColor,
               fontFamily: FontManager.cairoBold.name,
               fontSize: 20.0.sp,
             ),
-            activeIconColor: Theme.of(context).primaryColor,
+            activeIconColor: Theme
+                .of(context)
+                .primaryColor,
             textStyle: TextStyle(
               color: Colors.grey[800],
               fontFamily: FontManager.cairoBold.name,
@@ -101,6 +111,23 @@ class _AgencyHomePageState extends State<AgencyHomePage> {
                 title: 'السائقين',
                 route: '/drivers',
                 icon: Icons.supervised_user_circle_sharp,
+              ),
+              AdminMenuItem(
+                title: 'النقاط والمسارات',
+                icon: Icons.timeline_sharp,
+                children: [
+                  // if (isAllowed(AppPermissions.POINTS))
+                    const AdminMenuItem(
+                      route: '/points',
+                      icon: Icons.location_on_sharp,
+                      title: 'النقاط',
+                    ),
+                  const AdminMenuItem(
+                    icon: Icons.linear_scale_rounded,
+                    title: 'المسارات',
+                    route: "/paths",
+                  ),
+                ],
               ),
 
               AdminMenuItem(
@@ -177,7 +204,9 @@ class _AgencyHomePageState extends State<AgencyHomePage> {
                   return MultiBlocProvider(
                     providers: [
                       BlocProvider(
-                          create: (context) => sl<RedeemsCubit>()..getRedeems(context)),
+                          create: (context) =>
+                          sl<RedeemsCubit>()
+                            ..getRedeems(context)),
                       BlocProvider(create: (context) => sl<LoyaltyCubit>()),
                     ],
                     child: const DashboardPage(),
@@ -202,7 +231,22 @@ class _AgencyHomePageState extends State<AgencyHomePage> {
                     ],
                     child: const TicketsPage(),
                   );
-
+                case "/points":
+                  return MultiBlocProvider(
+                    providers: [
+                      BlocProvider(create: (context) => sl<MapControllerCubit>()),
+                      BlocProvider(create: (context) => sl<SearchLocationCubit>()),
+                      BlocProvider(create: (context) => sl<AtherCubit>()),
+                    ],
+                    child: const PointsPage(),
+                  );
+                case "/paths":
+                  return MultiBlocProvider(
+                    providers: [
+                      BlocProvider(create: (context) => sl<DeleteTempTripCubit>()),
+                    ],
+                    child: const TempTripsPage(),
+                  );
                 case "/payToDrivers":
                   final request = TransferFilterRequest();
                   request.type = TransferType.debit;
@@ -210,10 +254,12 @@ class _AgencyHomePageState extends State<AgencyHomePage> {
                   return MultiBlocProvider(
                     providers: [
                       BlocProvider(
-                        create: (_) => sl<AllTransfersCubit>()
+                        create: (_) =>
+                        sl<AllTransfersCubit>()
                           ..getAllTransfers(
                             _,
-                            command: Command.initial()..transferFilterRequest = request,
+                            command: Command.initial()
+                              ..transferFilterRequest = request,
                           ),
                       ),
                       BlocProvider(create: (_) => sl<PayToCubit>()),
@@ -225,7 +271,8 @@ class _AgencyHomePageState extends State<AgencyHomePage> {
                   return MultiBlocProvider(
                     providers: [
                       BlocProvider(
-                        create: (_) => sl<AgencyReportCubit>()
+                        create: (_) =>
+                        sl<AgencyReportCubit>()
                           ..getAgencyReport(
                             _,
                             id: AppSharedPreference.getAgencyId,
@@ -263,7 +310,8 @@ void addQueryParameters({required Map<String, dynamic> params}) {
   if (!parsedUri.toString().contains('Home')) return;
   // context.pushNamed(GoRouteName.homePage, queryParams: params);
 
-  final newQuery = Map.from(parsedUri.queryParameters)..addAll(params);
+  final newQuery = Map.from(parsedUri.queryParameters)
+    ..addAll(params);
   final s = <String, String>{};
   newQuery.forEach((key, value) => s[key.toString()] = value.toString());
   final newUri = Uri(

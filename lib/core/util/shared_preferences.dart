@@ -25,6 +25,7 @@ class AppSharedPreference {
   static const _user = '14';
   static const _email = '15';
   static const _role = '16';
+  static const _distanceDriverRange = '17';
   static const _testMode = '117';
 
   static SharedPreferences? _prefs;
@@ -63,6 +64,13 @@ class AppSharedPreference {
   static cashMyId(int id) {
     _prefs?.setInt(_myId, id);
   }
+
+  static set distanceDriverRange(int? range) {
+    if (range == null) return;
+    _prefs?.setInt(_distanceDriverRange, range);
+  }
+
+  static int get distanceDriverRange => _prefs?.getInt(_distanceDriverRange) ?? 10000;
 
   static int get getMyId => _prefs?.getInt(_myId) ?? 0;
 

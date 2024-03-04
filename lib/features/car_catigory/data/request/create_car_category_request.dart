@@ -43,6 +43,8 @@ class CreateCarCatRequest {
   num? sharedMinimumDistanceInMeters;
   num? planMinimumDistanceInMeters;
   num? seatNumber;
+  num? waitingMinuetPrice;
+  num? minimumWaitingMinuets;
   CarCategoryType carCategoryType;
 
   CreateCarCatRequest({
@@ -69,6 +71,8 @@ class CreateCarCatRequest {
     this.priceVariant,
     this.sharedMinimumDistanceInMeters,
     this.planMinimumDistanceInMeters,
+    this.waitingMinuetPrice,
+    this.minimumWaitingMinuets,
     this.seatNumber,
     this.carCategoryType = CarCategoryType.trips,
     this.planDriverRation,
@@ -100,6 +104,8 @@ class CreateCarCatRequest {
       'priceVariant': priceVariant,
       'sharedMinimumDistanceInMeters': sharedMinimumDistanceInMeters,
       'PlanMinimumDistanceInMeters': planMinimumDistanceInMeters,
+      'waitingMinuetPrice': waitingMinuetPrice,
+      'minimumWaitingMinuets': minimumWaitingMinuets,
       'seatNumber': seatNumber,
       'PlanDriverRation': planDriverRation,
       'PlanKmCost': planKmCost,
@@ -132,6 +138,8 @@ class CreateCarCatRequest {
       priceVariant: carCategory.priceVariant,
       sharedMinimumDistanceInMeters: carCategory.sharedMinimumDistanceInMeters,
       planMinimumDistanceInMeters: carCategory.planMinimumDistanceInMeters,
+      waitingMinuetPrice: carCategory.waitingMinuetPrice,
+      minimumWaitingMinuets: carCategory.minimumWaitingMinuets,
       seatNumber: carCategory.seatNumber,
       carCategoryType: carCategory.carCategoryType,
       planDriverRation: carCategory.planDriverRation,
@@ -244,6 +252,16 @@ class CreateCarCatRequest {
     if (planMinimumDistanceInMeters == 0) {
       NoteMessage.showErrorSnackBar(
           message: 'خطأ في أقل مسافة لرحلة الاشتراكات', context: context);
+      return false;
+    }
+    if (waitingMinuetPrice.isEmpty) {
+      NoteMessage.showErrorSnackBar(
+          message: 'خطأ في كلفة الانتظار', context: context);
+      return false;
+    }
+    if (minimumWaitingMinuets.isEmpty) {
+      NoteMessage.showErrorSnackBar(
+          message: 'خطأ في عدد دقائق الانتظار', context: context);
       return false;
     }
 

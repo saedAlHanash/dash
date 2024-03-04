@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_dash/core/util/shared_preferences.dart';
 import 'package:qareeb_dash/core/widgets/item_info.dart';
 import 'package:qareeb_dash/core/widgets/spinner_widget.dart';
 import 'package:qareeb_models/extensions.dart';
@@ -105,24 +106,35 @@ class _ParamsPageState extends State<ParamsPage> {
                               ),
                             ),
                             15.0.horizontalSpace,
-                            ItemInfoInLine(
-                              title: ':فلترة البحث بتصنيف السيارات  ',
-                              widget: SpinnerWidget(
-                                items: [
-                                  SpinnerItem(
-                                    isSelected: !request.onlySelectedCarCategory,
-                                    name: 'غير مفعل',
-                                    item: false,
-                                  ),
-                                  SpinnerItem(
-                                    isSelected: request.onlySelectedCarCategory,
-                                    name: 'مفعل',
-                                    item: true,
-                                  ),
-                                ],
-                                onChanged: (spinnerItem) {
-                                  request.onlySelectedCarCategory = spinnerItem.item;
-                                },
+                            Expanded(
+                              child: MyTextFormNoLabelWidget(
+                                label: 'نصف دائرة عرض السائقين الغير متاحين',
+                                initialValue: AppSharedPreference.distanceDriverRange.toString(),
+                                onChanged: (p0) =>
+                                AppSharedPreference.distanceDriverRange = int.tryParse(p0),
+                              ),
+                            ),
+                            15.0.horizontalSpace,
+                            Expanded(
+                              child: ItemInfoInLine(
+                                title: ':فلترة البحث بتصنيف السيارات  ',
+                                widget: SpinnerWidget(
+                                  items: [
+                                    SpinnerItem(
+                                      isSelected: !request.onlySelectedCarCategory,
+                                      name: 'غير مفعل',
+                                      item: false,
+                                    ),
+                                    SpinnerItem(
+                                      isSelected: request.onlySelectedCarCategory,
+                                      name: 'مفعل',
+                                      item: true,
+                                    ),
+                                  ],
+                                  onChanged: (spinnerItem) {
+                                    request.onlySelectedCarCategory = spinnerItem.item;
+                                  },
+                                ),
                               ),
                             ),
                           ],

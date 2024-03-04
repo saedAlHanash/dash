@@ -5,7 +5,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:image_multi_type/image_multi_type.dart';
+import 'package:map_package/map/data/models/my_marker.dart';
 import 'package:qareeb_dash/core/widgets/saed_taple_widget.dart';
+import 'package:qareeb_dash/features/home/ui/widget/statistics_widget.dart';
 import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_models/global.dart';
 import 'package:qareeb_models/trip_process/data/response/trip_response.dart';
@@ -16,6 +19,7 @@ import '../../../../core/util/shared_preferences.dart';
 import '../../../../core/widgets/item_info.dart';
 import '../../../../core/widgets/my_button.dart';
 import '../../../../core/widgets/table_widget.dart';
+import '../../../../generated/assets.dart';
 import '../../../../router/go_route_pages.dart';
 import '../../../drivers/bloc/drivers_imiei_cubit/drivers_imei_cubit.dart';
 import '../../bloc/candidate_drivers_cubit/candidate_drivers_cubit.dart';
@@ -101,34 +105,164 @@ class _TripInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        ItemInfoInLine(title: 'الانطلاق', info: trip.sourceName),
-        ItemInfoInLine(title: 'الوجهة', info: trip.destinationName),
-        ItemInfoInLine(title: 'المسافة المقدرة', info: trip.estimatedDistance.toString()),
-        ItemInfoInLine(title: 'المسافة الفعلية', info: trip.actualDistance.toString()),
-        ItemInfoInLine(
-            title: 'المسافة المقدرة التعويضية', info: trip.preAcceptDistance.toString()),
-        ItemInfoInLine(title: 'ملاحظة التقييم', info: trip.reviewNote),
-        ItemInfoInLine(title: 'ملاحظة الرحلة', info: trip.note),
-        ItemInfoInLine(title: 'نوع الرحلة', info: trip.tripType.arabicName),
-        ItemInfoInLine(title: 'حالة الرحلة', info: trip.tripStatus.arabicName),
-        ItemInfoInLine(title: 'سبب الإلغاء', info: trip.cancelReasone),
-        ItemInfoInLine(
-          title: 'تقيم الرحلة',
-          widget: RatingBarIndicator(
-            itemCount: 5,
-            rating: trip.tripRate,
-            itemSize: 50.0.r,
-            itemBuilder: (context, _) => Icon(
-              Icons.star,
-              color: Colors.amber,
-              size: 50.0.r,
-            ),
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: StatisticsCard(
+                  icon: Assets.iconsA,
+                  label: 'الانطلاق',
+                  value: trip.sourceName,
+                ),
+              ),
+              Expanded(
+                child: StatisticsCard(
+                  icon: Assets.iconsB,
+                  label: 'الوجهة',
+                  value: trip.destinationName,
+                ),
+              ),
+            ],
           ),
-        ),
-      ],
+          if (trip.tripStoppingPoints.isNotEmpty)
+            StatisticsCard(
+              icon: Icons.stop_circle_outlined,
+              label: 'نقاط التوقف',
+              value: Column(
+                children: trip.tripStoppingPoints
+                    .mapIndexed(
+                      (i, e) => Row(
+                        children: [
+                          DrawableText(
+                            text: e.point.toString(),
+                            drawableStart: ImageMultiType(
+                              url: (i + 2).iconPoint,
+                              height: 30.0.r,
+                              width: 30.0.r,
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                    .toList(),
+              ),
+            ),
+          if (trip.tripStoppingRecords.isNotEmpty)
+            StatisticsCard(
+              icon: Icons.timer_outlined,
+              label: 'مدة نقاط التوقف',
+              value: Column(
+                children: trip.tripStoppingRecords
+                    .mapIndexed(
+                      (i, e) => Row(
+                        children: [
+                          DrawableText(
+                            text: e.duration.toString(),
+                            drawableStart: ImageMultiType(
+                              url: (i + 2).iconPoint,
+                              height: 30.0.r,
+                              width: 30.0.r,
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                    .toList(),
+              ),
+            ),
+          Row(
+            children: [
+              Expanded(
+                child: StatisticsCard(
+                  icon: Assets.iconsPath,
+                  label: 'المسافة المقدرة',
+                  value: '${(trip.estimatedDistance.fixDistance)} km',
+                ),
+              ),
+              Expanded(
+                child: StatisticsCard(
+                  icon: Assets.iconsPath,
+                  label: 'المسافة الفعلية',
+                  value: '${(trip.actualDistance.fixDistance)} km',
+                ),
+              ),
+              Expanded(
+                child: StatisticsCard(
+                  icon: Assets.iconsPath,
+                  label: 'المسافة التعويضية',
+                  value: '${(trip.preAcceptDistance.fixDistance)} km',
+                ),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: StatisticsCard(
+                  icon: Icons.history,
+                  label: 'حالة',
+                  value: trip.tripStatus.arabicName,
+                ),
+              ),
+              Expanded(
+                child: StatisticsCard(
+                  icon: Icons.merge_type,
+                  label: 'نوع',
+                  value: trip.tripType.arabicName,
+                ),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: StatisticsCard(
+                  icon: Icons.note_alt_outlined,
+                  label: 'ملاحظة التقييم',
+                  value: trip.reviewNote,
+                ),
+              ),
+              Expanded(
+                child: StatisticsCard(
+                  icon: Assets.iconsEmptyStar,
+                  label: 'التقييم',
+                  value: RatingBarIndicator(
+                    itemCount: 5,
+                    rating: trip.tripRate,
+                    itemSize: 50.0.r,
+                    itemBuilder: (context, _) => Icon(
+                      Icons.star,
+                      color: Colors.amber,
+                      size: 50.0.r,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: StatisticsCard(
+                  icon: Icons.edit_note,
+                  label: 'ملاحظة الرحلة',
+                  value: trip.note,
+                ),
+              ),
+              Expanded(
+                child: StatisticsCard(
+                  icon: Icons.cancel_outlined,
+                  label: 'سبب الإلغاء',
+                  value: trip.cancelReasone,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

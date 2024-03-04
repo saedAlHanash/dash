@@ -43,8 +43,8 @@ class CandidateDriversInitial extends Equatable {
   ) async {
     pools.removeWhere((e) {
       final distance  = distanceBetween(trip.startPoint, e.point);
-      print(distance);
-      return distance > 10;
+      print('$distance ${distance > AppSharedPreference.distanceDriverRange}');
+      return distance > AppSharedPreference.distanceDriverRange;
     });
 
     mapController.addMarkers(

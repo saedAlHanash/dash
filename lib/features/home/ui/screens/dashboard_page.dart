@@ -53,77 +53,77 @@ class _DashboardPageState extends State<DashboardPage> {
               16.0.verticalSpace,
               if (isQareebAdmin && !isAgency) const LoyaltyWidget(),
               DashboardScreen(statistics: statistics),
-              if (!isAgency)
-                FutureBuilder(
-                  future: getBestDriver(),
-                  builder: (context, snapShot) {
-                    if (!snapShot.hasData) return MyStyle.loadingWidget();
-
-                    final bestDriver = snapShot.data!;
-                    if (bestDriver.driverId == 0) return 0.0.verticalSpace;
-                    return Column(
-                      children: [
-                        30.0.verticalSpace,
-                        DrawableText(
-                          text: 'أفضل سائق',
-                          matchParent: true,
-                          size: 28.0.sp,
-                          textAlign: TextAlign.center,
-                          padding: const EdgeInsets.symmetric(vertical: 15.0).h,
-                        ),
-                        MyCardWidget(
-                          margin:
-                              const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0)
-                                  .r,
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: DrawableText(
-                                  text: 'اسم السائق: ${bestDriver.driverName}',
-                                  color: Colors.black,
-                                  fontFamily: FontManager.cairoBold.name,
-                                ),
-                              ),
-                              Expanded(
-                                child: DrawableText(
-                                  text: 'عدد الرحلات: ${bestDriver.tripsCount}',
-                                  color: Colors.black,
-                                  fontFamily: FontManager.cairoBold.name,
-                                ),
-                              ),
-                              Expanded(
-                                child: DrawableText(
-                                  text:
-                                      'عدد الرحلات التشاركية: ${bestDriver.sharedTripsCount}',
-                                  color: Colors.black,
-                                  fontFamily: FontManager.cairoBold.name,
-                                ),
-                              ),
-                              Expanded(
-                                child: DrawableText(
-                                  text:
-                                      'الكيلومترات: ${(bestDriver.totalMeters / 1000).round()}',
-                                  color: Colors.black,
-                                  fontFamily: FontManager.cairoBold.name,
-                                ),
-                              ),
-                              IconButton(
-                                  onPressed: () {
-                                    context.pushNamed(GoRouteName.driverInfo,
-                                        queryParams: {
-                                          'id': bestDriver.driverId.toString()
-                                        });
-                                  },
-                                  icon: const ImageMultiType(
-                                      url: Icons.info_outline_rounded))
-                            ],
-                          ),
-                        ),
-                        30.0.verticalSpace,
-                      ],
-                    );
-                  },
-                ),
+              // if (!isAgency)
+              //   FutureBuilder(
+              //     future: getBestDriver(),
+              //     builder: (context, snapShot) {
+              //       if (!snapShot.hasData) return MyStyle.loadingWidget();
+              //
+              //       final bestDriver = snapShot.data!;
+              //       if (bestDriver.driverId == 0) return 0.0.verticalSpace;
+              //       return Column(
+              //         children: [
+              //           30.0.verticalSpace,
+              //           DrawableText(
+              //             text: 'أفضل سائق',
+              //             matchParent: true,
+              //             size: 28.0.sp,
+              //             textAlign: TextAlign.center,
+              //             padding: const EdgeInsets.symmetric(vertical: 15.0).h,
+              //           ),
+              //           MyCardWidget(
+              //             margin:
+              //                 const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0)
+              //                     .r,
+              //             child: Row(
+              //               children: [
+              //                 Expanded(
+              //                   child: DrawableText(
+              //                     text: 'اسم السائق: ${bestDriver.driverName}',
+              //                     color: Colors.black,
+              //                     fontFamily: FontManager.cairoBold.name,
+              //                   ),
+              //                 ),
+              //                 Expanded(
+              //                   child: DrawableText(
+              //                     text: 'عدد الرحلات: ${bestDriver.tripsCount}',
+              //                     color: Colors.black,
+              //                     fontFamily: FontManager.cairoBold.name,
+              //                   ),
+              //                 ),
+              //                 Expanded(
+              //                   child: DrawableText(
+              //                     text:
+              //                         'عدد الرحلات التشاركية: ${bestDriver.sharedTripsCount}',
+              //                     color: Colors.black,
+              //                     fontFamily: FontManager.cairoBold.name,
+              //                   ),
+              //                 ),
+              //                 Expanded(
+              //                   child: DrawableText(
+              //                     text:
+              //                         'الكيلومترات: ${(bestDriver.totalMeters / 1000).round()}',
+              //                     color: Colors.black,
+              //                     fontFamily: FontManager.cairoBold.name,
+              //                   ),
+              //                 ),
+              //                 IconButton(
+              //                     onPressed: () {
+              //                       context.pushNamed(GoRouteName.driverInfo,
+              //                           queryParams: {
+              //                             'id': bestDriver.driverId.toString()
+              //                           });
+              //                     },
+              //                     icon: const ImageMultiType(
+              //                         url: Icons.info_outline_rounded))
+              //               ],
+              //             ),
+              //           ),
+              //           30.0.verticalSpace,
+              //         ],
+              //       );
+              //     },
+              //   ),
               DrawableText(
                 text: 'التتبع المباشر',
                 size: 24.0.sp,

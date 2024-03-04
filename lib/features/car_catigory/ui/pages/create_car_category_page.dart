@@ -265,6 +265,41 @@ class _CreateCarCategoryPageState extends State<CreateCarCategoryPage> {
                     Row(
                       children: [
                         Expanded(
+                          child:  MyTextFormNoLabelWidget(
+                            label: 'متغير السعر',
+                            initialValue: request.priceVariant?.toString(),
+                            onChanged: (p0) {
+                              request.priceVariant = num.tryParse(p0);
+                            },
+                          ),
+                        ),
+                        15.0.horizontalSpace,
+                        Expanded(
+                          child:  MyTextFormNoLabelWidget(
+                            label: 'سعر دقيقة الانتظار',
+                            initialValue: request.waitingMinuetPrice?.toString(),
+                            onChanged: (p0) {
+                              request.waitingMinuetPrice = num.tryParse(p0);
+                            },
+                          ),
+                        ),
+                        15.0.horizontalSpace,
+                        Expanded(
+                          child:  MyTextFormNoLabelWidget(
+                            label: 'أقل مدة انتظار',
+                            initialValue: request.minimumWaitingMinuets?.toString(),
+                            onChanged: (p0) {
+                              request.minimumWaitingMinuets = num.tryParse(p0);
+                            },
+                          ),
+                        ),
+
+
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
                           child: MyTextFormNoLabelWidget(
                             label: 'نسبة ولاء الزيت ',
                             initialValue: request.normalOilRatio?.toString(),
@@ -355,13 +390,6 @@ class _CreateCarCategoryPageState extends State<CreateCarCategoryPage> {
                           ),
                         ),
                       ],
-                    ),
-                    MyTextFormNoLabelWidget(
-                      label: 'متغير السعر',
-                      initialValue: request.priceVariant?.toString(),
-                      onChanged: (p0) {
-                        request.priceVariant = num.tryParse(p0);
-                      },
                     ),
                   ],
                 ),

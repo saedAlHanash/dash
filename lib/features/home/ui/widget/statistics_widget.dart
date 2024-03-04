@@ -49,18 +49,20 @@ class StatisticsCard extends StatelessWidget {
           8.0.verticalSpace,
           DrawableText(
             text: label,
-            size: 20.0.sp,
+            size: 18.0.sp,
           ),
-          Divider(),
-          DrawableText(
-            text: (value is num)
-                ? value.toString()
-                : (value is String)
-                    ? value
-                    : '-',
-            fontFamily: FontManager.cairoBold.name,
-            size: 24.0.sp,
-          ),
+          Divider(color: Colors.grey),
+          value is Widget
+              ? value
+              : DrawableText(
+                  text: (value is num)
+                      ? value.toString()
+                      : (value is String)
+                          ? value
+                          : '-',
+                  fontFamily: FontManager.cairoBold.name,
+                  size: 20.0.sp,
+                ),
         ],
       ),
     );
@@ -129,12 +131,12 @@ class DashboardScreen extends StatelessWidget {
                 value: (state.result.statistics.incoms).formatPrice,
               ),
               if (isAgency)
-              StatisticsCard(
-                icon: Icons.wallet,
-                color: AppColorManager.mainColorDark,
-                label: 'رصيدي الحالي',
-                value: (state.result.statistics.requiredAmountFromComapnay).formatPrice,
-              ),
+                StatisticsCard(
+                  icon: Icons.wallet,
+                  color: AppColorManager.mainColorDark,
+                  label: 'رصيدي الحالي',
+                  value: (state.result.statistics.requiredAmountFromComapnay).formatPrice,
+                ),
               if (!isAgency)
                 StatisticsCard(
                   icon: Icons.star,
