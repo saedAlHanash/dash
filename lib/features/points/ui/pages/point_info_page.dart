@@ -27,6 +27,7 @@ import "package:universal_html/html.dart";
 
 import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/my_style.dart';
+import '../../../../core/util/shared_preferences.dart';
 import '../../../../core/widgets/auto_complete_widget.dart';
 import '../../../../router/go_route_pages.dart';
 import '../../../../services/osrm/bloc/location_name_cubit/location_name_cubit.dart';
@@ -365,7 +366,7 @@ class _PointInfoPageState extends State<PointInfoPage> {
           },
         ),
         20.0.verticalSpace,
-        if (isAllowed(AppPermissions.UPDATE))
+        if (isAllowed(AppPermissions.UPDATE)||isAgency)
           if (!canEdit && !createMode)
             Row(
               children: [

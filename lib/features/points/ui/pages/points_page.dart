@@ -11,6 +11,7 @@ import 'package:qareeb_models/points/data/model/trip_point.dart';
 
 import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/note_message.dart';
+import '../../../../core/util/shared_preferences.dart';
 import '../../../../core/widgets/auto_complete_widget.dart';
 import '../../../../router/go_route_pages.dart';
 import '../../../map/search_location_widget.dart';
@@ -76,7 +77,7 @@ class _PointsPageState extends State<PointsPage> {
         ),
       ],
       child: Scaffold(
-        floatingActionButton: isAllowed(AppPermissions.CREATION)
+        floatingActionButton: isAllowed(AppPermissions.CREATION)||isAgency
             ? Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 mainAxisSize: MainAxisSize.min,
