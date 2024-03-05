@@ -183,6 +183,7 @@ class APIService {
     Map<String, String>? header,
     String? hostName,
   }) async {
+
     if (body != null) body.removeWhere((key, value) => value == null);
 
     if (query != null) {

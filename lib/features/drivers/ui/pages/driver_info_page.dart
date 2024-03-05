@@ -12,12 +12,19 @@ import 'package:qareeb_dash/features/drivers/data/response/drivers_response.dart
 import 'package:qareeb_dash/features/redeems/ui/widget/loyalty_widget.dart';
 import 'package:qareeb_models/extensions.dart';
 
+import '../../../../core/api_manager/command.dart';
+import '../../../../core/injection/injection_container.dart';
 import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/util/my_style.dart';
 import '../../../../core/util/shared_preferences.dart';
 import '../../../../core/widgets/app_bar_widget.dart';
+import '../../../accounts/bloc/all_charging_cubit/all_charging_cubit.dart';
+import '../../../accounts/bloc/driver_financial_cubit/driver_financial_cubit.dart';
+import '../../../accounts/data/request/charging_request.dart';
+import '../../../accounts/data/request/driver_financial_filter_request.dart';
 import '../../../wallet/ui/pages/debts_page.dart';
 import '../../bloc/driver_by_id_cubit/driver_by_id_cubit.dart';
+import '../widget/driver_charging_widget.dart';
 import '../widget/driver_financial_widget.dart';
 import '../widget/driver_live_tracking.dart';
 import '../widget/driver_status_history.dart';
@@ -36,7 +43,7 @@ class _DriverInfoPageState extends State<DriverInfoPage>
 
   @override
   void initState() {
-    _tabController = TabController(length: !isAgency ? 7 : 6, vsync: this);
+    _tabController = TabController(length: !isAgency ? 8 : 7, vsync: this);
     super.initState();
   }
 
@@ -74,6 +81,7 @@ class _DriverInfoPageState extends State<DriverInfoPage>
                     const Tab(text: 'الرحلات'),
                     const Tab(text: 'سجل حالة السائق'),
                     const Tab(text: 'المحصلة المالية'),
+                    const Tab(text: 'شحنات السائق'),
                     const Tab(text: 'عائدات الرحلات'),
                     const Tab(text: 'تتبع مباشر'),
                   ],
@@ -96,7 +104,19 @@ class _DriverInfoPageState extends State<DriverInfoPage>
                       DriverTripsCard(driver: driver),
                       const DriverStatusHistory(),
                       const DriverFinancialWidget(),
-                       DebtsPage(driver: driver),
+                      BlocProvider(
+                        create: (_) => sl<AllChargingCubit>()
+                          ..getAllCharging(
+                            _,
+                            command: Command.noPagination().copyWith(
+                              chargingRequest: ChargingRequest(
+                                chargerPhone: driver.phoneNumber,
+                              ),
+                            ),
+                          ),
+                        child:  DriverChargingWidget(driver: driver),
+                      ),
+                      DebtsPage(driver: driver),
                       DriverLiveTracking(imei: driver.qarebDeviceimei),
                     ],
                   ),

@@ -131,12 +131,14 @@ class GetUrl {
 
   static const syrianAgencyFinancialReport =
       'api/services/app/AccountsService/GetSyrianAuthorityReport';
-  static var syrianAgenciesFinancialReport =
+  static const syrianAgenciesFinancialReport =
       'api/services/app/AccountsService/SyrianAuthorityFinancialReport';
 
-  static var temp ='';
+  static const temp = '';
 
-  static var getDriversPool ='api/services/app/TripsService/GetTripDriverPool';
+  static const getDriversPool = 'api/services/app/TripsService/GetTripDriverPool';
+
+  static const getAllCharging = 'api/services/app/AccountsService/GetAllChargings';
 }
 
 class PostUrl {
@@ -222,7 +224,7 @@ class PostUrl {
   static const createPlanTrip = 'api/services/app/PlanTripsService/Create';
   static const createRepay = 'api/services/app/PaymentService/CreateRepayingTransfer';
 
-  static var createFromSyrian =
+  static const createFromSyrian =
       'api/services/app/PaymentService/CreateSyrianAuthorityPayOffPayment';
 }
 

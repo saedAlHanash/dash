@@ -1,59 +1,19 @@
 {
-  "imei": "999999999",
-  "records": [
-    {
-      "dt": "2024-04-04 09:31:10",
-      "lat": 33.506217,
-      "lng": 36.283169,
-      "altitude": 712.0,
-      "angle": 39,
-      "speed": 0,
-      "loc_valid": 1
-    },
-    {
-      "dt": "2024-04-04 09:32:10",
-      "lat": 33.503512,
-      "lng": 36.286580,
-      "altitude": 712.0,
-      "angle": 0,
-      "speed": 0,
-      "loc_valid": 1
-    },
-    {
-      "dt": "2024-04-04 09:33:10",
-      "lat": 33.503651,
-      "lng": 36.281379,
-      "altitude": 712.0,
-      "angle": 15,
-      "speed": 0,
-      "loc_valid": 1
-    },
-    {
-      "dt": "2024-04-04 09:34:10",
-      "lat": 33.504129,
-      "lng": 36.275964,
-      "altitude": 712.0,
-      "angle": 0,
-      "speed": 0,
-      "loc_valid": 1
-    },
-    {
-      "dt": "2024-04-04 09:35:10",
-      "lat": 33.504427,
-      "lng": 36.269667,
-      "altitude": 712.0,
-      "angle": 0,
-      "speed": 0,
-      "loc_valid": 1
-    },
-    {
-      "dt": "2024-04-04 09:36:10",
-      "lat": 33.506575,
-      "lng": 36.264872,
-      "altitude": 712.0,
-      "angle": 0,
-      "speed": 0,
-      "loc_valid": 1
-    }
-  ]
+  "result": {
+    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW4iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJpbmZvQGZpcnN0LXBpb25lZXJzLmNvbSIsIkFzcE5ldC5JZGVudGl0eS5TZWN1cml0eVN0YW1wIjoiM2E4MzUxOTgtMDkxZC1mNTgzLTE1MmQtM2EwYzM1MzQxMjg5IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJzdWIiOiIxIiwianRpIjoiM2RhMDE1OTctNGQ1OC00MWM5LTg1N2ItYzU2ZTMxZGUxM2IzIiwiaWF0IjoxNzA5NjM1NTcxLCJpZCI6IjEiLCJmdWxsTmFtZSI6InFhcmVlYiBxYXJlZWIiLCJQZXJtaXNzaW9ucyI6IltcIlBhZ2VzLlVzZXJzXCIsXCJQYWdlcy5Vc2Vycy5BY3RpdmF0aW9uXCIsXCJQYWdlcy5Sb2xlc1wiLFwiUGFnZXMuYWNjZXB0X29yZGVyXCIsXCJQYWdlcy5Db3Vwb25cIixcIlBhZ2VzLlJlYXNvblwiLFwiUGFnZXMuUmVwb3J0c1wiLFwiUGFnZXMuQ3VzdG9tZXJzXCIsXCJQYWdlcy5NZXNzYWdlc1wiLFwiUGFnZXMuRHJpdmVyc1wiLFwiUGFnZXMuVHJpcHNcIixcIlBhZ2VzLlNoYXJlZFRyaXBcIixcIlBhZ2VzLlBvaW50c1wiLFwiUGFnZXMuRXBheW1lbnRcIixcIlBhZ2VzLkNhckNhdGVnb3J5XCIsXCJQYWdlcy5TZXR0aW5nc1wiLFwiQ3JlYXRlX1Blcm1pc3Npb25cIixcIlVwZGF0ZV9QZXJtaXNzaW9uXCIsXCJEZWxldGVfUGVybWlzc2lvblwiXSIsIlBob25lTnVtYmVyIjoiOTYzOTY3NTAyNDQ0IiwibmJmIjoxNzA5NjM1NTcxLCJleHAiOjE3MTgyNzU1NzEsImlzcyI6Imh0dHBzOi8vYWRtaW4ucWFyZWViLW1hYXMuY29tLyIsImF1ZCI6Imh0dHBzOi8vYWRtaW4ucWFyZWViLW1hYXMuY29tLyJ9.Pmp13MnUevoVlIcWBX9LKTz4P_7ttWNs3CktDI2sPZ8",
+    "encryptedAccessToken": "JHlZWlp0h2BIJPr0vkBKS3KjS0sWmPpQLTm1W3k4U/1K2Ux65UrZbObxVv8lcW+0N15M7+V50caXJf8l/4JVYSGOoSQ+Cxp+FHBpMIh7Yba+/Ou8dLwI9GVZ3XccToyRgEAXHqbDVdIzFT4/adDEtI88YvGrKZQxVGCaUycHJeDwRtTpO81b/pTLk82go1dRJNhNl/5MHYjwbse3lTwH8PLkAb349O5ClZvfCqi0eRJWZ46zehvmhoLAGwYvtrlesBaWNR+1fiLXQ/BRj81XTajxeTJSzsTOHG7WMY6VgkboANV5rUPFvePCWOIZQf4WJ82jtPulTxs+p+db/i9izu3Oy1URHoogBpS1UZj6k5mhEVJmDkbRe3CtW/1bM5TsZHEGh6yKKCQ8UBIHjyzBoxyhsite1hsSz0Cw7pKDFqTSM/n93GuxE35hPDd3kv4Ua2aunBnKRU0KCrB9YJhchS6wUOEr0gEpdpU3E3wbhLqUoH0cQa62Y2g0F5slJVHpALUHxQDxCka2i0PpFKwzzF411dVNWi8VpN3rXJAUteOfcCoZRrn8zqHF0Vy0ttHEONBB6LpI03agP0QdGQw0hyFvC4/KQV+UIyC3mdFxOEJDDkIzl3sMr6IV8YnJeXDosykMAJp6sBHKPFmigtpxRSx5u7alxorbOIi2madwiXtZU8bEIX3t4erlWupSEwIwoSGJYuBHRAdg1rrhxK7L56mjvVKfSRo+vidRrBK2nmqzdD7/3shBOe3HDdlo5zQEfNKo0dXNc8pMneqHlwohJwKTxXqWH+Psvf0NnR8rPDXt9BQ9TDjouxgjOtATp8UY0Om278uJFijIcIZoIuYOOwxJXrL6+rLvZV+Fq/ZvuTtNXAU8rzpo4MrILXkQYEBfqIDgSdMXc76ZfxKL1lCha9G6OjVHem5c+yzY7GJOUJuqoVk2Q9ipe8HQXR0qX1PghVqhtKfU6P62+9+A07NOlJqUg0tcXvkoVIz8mNzAgalIBM2fDB8/VjAKMoUT9hqjzL05DenXY+2ubalxyWPtnXgx7TJiF3IOa4AA7w3Dn8M+0vkcx2JW9htHZiVESE0L1Bi8VUV9Mck3I3xbX27cx5umbpZsiSo6m/VYevvhgen+2XAZmvzPPcPaXnf/0W4sO8Dvagclpf5CfK2VvfDbQqHBcjIWrgvxJuWzUwI5h36cszv3HMgdiSKgUCW1BRIG2kBEDdHkJss2J1A1Rms7Ad9hHaY8LNZ6wgsOO/LO8ppp4MixuB6WDLlceaGw0GUH6px9KAX7mWKB0cGAbbH5Bk7XpGEmO7yS94AYU8qAXkVaUk3A2fBbx30zIecp5pwgqGMiEYm0BtHpqa0sx1tCHzBgQg0CLc1WEU6It6+4yPTZtegqHGkzuluIX1bGKQsV8OrkjwUWGom6kX47LE5rPcoLvC/g8+KXsx3FQACxMNR6UmrifP5tJ1qQdBa98WXBbzJDfNGMG0MKU5roKGudSZLm6FGFmLS2p0fC5SXK+xF6MR8HbThKbkgxgkio4CikSXKpYvitp13vXQXAt6IUpr85HP7rWYWkfZRz9+GLxdaMWyBfBUApScE86chxleVojJYp9cFwFpYg2ghhYZ5VPTbnzauP7jbD8bUxRz3ogSIymXF45kE/PQAl+ODrSblo/4vRtIaiQIWLvBzvk0N++LMcNaFN/UopPVrTCKTd+jER01x+6OwakQR36M08NuEc3lB9YZSv9fEixuGS7BZY9teqTSE6L5nWo8pTqu2VRBh9KYcNz4afAvFFe6M/kLBuTe8n2ymtqPCZprK1aVOpyHMGrr7z40pjclN6iaUzhLQxeeNGI7hZ7epndHuv9WstMNJo6VxCtmrL/qPBq9ZCJQ19fkf/qKZ6JKunYqaSpSStIDGFjOLU8kLypn2K0TBOCqxOSg05nXHlgaNK4rhorA==",
+    "expireInSeconds": 8640000,
+    "userId": 1,
+    "userTrip": "admin",
+    "accepctPolicy": false,
+    "institutionId": null,
+    "agencyId": null,
+    "userType": 2,
+    "roleName": "Admin"
+  },
+  "targetUrl": null,
+  "success": true,
+  "error": null,
+  "unAuthorizedRequest": false,
+  "__abp": true
 }

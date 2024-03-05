@@ -2,6 +2,7 @@ import 'package:qareeb_dash/core/util/shared_preferences.dart';
 import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_models/global.dart';
 
+import '../../features/accounts/data/request/charging_request.dart';
 import '../../features/accounts/data/request/transfer_filter_request.dart';
 import '../../features/clients/data/request/clients_filter_request.dart';
 import '../../features/companies/data/request/companies_filter_request.dart';
@@ -16,6 +17,7 @@ class Command {
     this.skipCount,
     this.totalCount,
     this.clientsFilterRequest,
+    this.chargingRequest,
     this.driversFilterRequest,
     this.financialFilterRequest,
     this.syrianFilterRequest,
@@ -29,6 +31,7 @@ class Command {
   int maxResultCount = 20;
   int? totalCount;
   ClientsFilterRequest? clientsFilterRequest;
+  ChargingRequest? chargingRequest;
   DriversFilterRequest? driversFilterRequest;
   FinancialFilterRequest? financialFilterRequest;
   SyrianFilterRequest? syrianFilterRequest;
@@ -89,6 +92,9 @@ class Command {
     if (clientsFilterRequest != null) {
       json.addAll(clientsFilterRequest!.toJson());
     }
+    if (chargingRequest != null) {
+      json.addAll(chargingRequest!.toJson());
+    }
 
     if (driversFilterRequest != null) {
       json.addAll(driversFilterRequest!.toJson());
@@ -122,6 +128,7 @@ class Command {
     int? totalCount,
     FilterTripRequest? filterTripRequest,
     ClientsFilterRequest? clientsFilterRequest,
+    ChargingRequest? chargingRequest,
     DriversFilterRequest? driversFilterRequest,
     FinancialFilterRequest? financialFilterRequest,
     SyrianFilterRequest? syrianFilterRequest,
@@ -134,6 +141,7 @@ class Command {
       totalCount: totalCount ?? this.totalCount,
       filterTripRequest: filterTripRequest ?? this.filterTripRequest,
       clientsFilterRequest: clientsFilterRequest ?? this.clientsFilterRequest,
+      chargingRequest: chargingRequest ?? this.chargingRequest,
       driversFilterRequest: driversFilterRequest ?? this.driversFilterRequest,
       financialFilterRequest: financialFilterRequest ?? this.financialFilterRequest,
       syrianFilterRequest: syrianFilterRequest ?? this.syrianFilterRequest,

@@ -28,9 +28,11 @@ import 'package:qareeb_models/plans/data/response/plans_response.dart';
 
 import '../core/injection/injection_container.dart' as di;
 import '../core/util/shared_preferences.dart';
+import '../features/accounts/bloc/all_charging_cubit/all_charging_cubit.dart';
 import '../features/accounts/bloc/all_transfers_cubit/all_transfers_cubit.dart';
 import '../features/accounts/bloc/driver_financial_cubit/driver_financial_cubit.dart';
 import '../features/accounts/bloc/reverse_charging_cubit/reverse_charging_cubit.dart';
+import '../features/accounts/data/request/charging_request.dart';
 import '../features/admins/ui/pages/admin_info_page.dart';
 import '../features/agencies/ui/pages/agency_report_page.dart';
 import '../features/areas/bloc/areas_cubit/areas_cubit.dart';
@@ -180,6 +182,7 @@ final appGoRouter = GoRouter(
           BlocProvider(create: (_) => di.sl<MapControllerCubit>()),
           BlocProvider(create: (_) => di.sl<WalletCubit>()..getWallet(id: id)),
           BlocProvider(create: (_) => di.sl<DebtsCubit>()..getDebts(_, id: id)),
+
           BlocProvider(create: (_) => di.sl<RedeemsCubit>()..getRedeems(_, driverId: id)),
           BlocProvider(
               create: (_) => di.sl<DriverStatusHistoryCubit>()
@@ -399,7 +402,6 @@ final appGoRouter = GoRouter(
           BlocProvider(create: (_) => di.sl<TripByIdCubit>()..tripById(_, tripId: id)),
           BlocProvider(create: (_) => di.sl<TripDebitCubit>()..tripDebit(_, tripId: id)),
           BlocProvider(create: (_) => di.sl<DriverBuIdCubit>()),
-
           BlocProvider(
               create: (_) =>
                   di.sl<CandidateDriversCubit>()..getCandidateDrivers(_, tripId: id)),
@@ -774,6 +776,7 @@ class GoRouteName {
   static const homePage = 'Home Page';
   static const loginPage = 'Login Page';
   static const driverInfo = 'driver info';
+
   // static const debts = 'debts';
   static const createDriver = 'createDriver';
   static const updateDriver = 'updateDriver';
@@ -807,6 +810,7 @@ class _GoRoutePath {
   static const homePage = '/Home';
   static const driverInfo = '/DriverInfo';
   static const loginPage = '/';
+
   // static const debts = '/debts';
   static const createDriver = '/createDriver';
   static const updateDriver = '/updateDriver';
