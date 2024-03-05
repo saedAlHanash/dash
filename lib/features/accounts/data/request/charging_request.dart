@@ -49,6 +49,7 @@ class ChargingRequest {
       'clientPhone': clientPhone,
       'chargerName': chargerName,
       'chargerPhone': chargerPhone,
+      'Type': 1,
     };
   }
 
