@@ -39,8 +39,8 @@ class SaedTableWidget extends StatelessWidget {
       ),
       padding: MyStyle.cardPadding,
       margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0).r,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
+      child: ListView(
+        shrinkWrap: true,
         children: [
           filters ?? 0.0.verticalSpace,
           TitleWidget(title: title),

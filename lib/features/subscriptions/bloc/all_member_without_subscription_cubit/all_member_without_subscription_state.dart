@@ -23,23 +23,24 @@ class AllMemberWithoutSubscriptionInitial extends Equatable {
   }
 
   List<Subscriber> filter(String q) {
-    if (q.isEmpty) return result;
+    if (q.isEmpty) return result.take(30).toList();
     final filterList = <Subscriber>[];
     for (var e in result) {
       if (e.fullName.contains(q)) filterList.add(e);
     }
-    return filterList;
+    return filterList.take(30).toList();
   }
+
   List<SpinnerItem> get getSpinnerItem {
     final list = <SpinnerItem>[];
     for (var e in result) {
-      list.add(SpinnerItem(id: e.id ?? -1, name: e.fullName, item: e));
+      list.add(SpinnerItem(id: e.id, name: e.fullName, item: e));
     }
     return list;
   }
 
   @override
-  List<Object> get props => [statuses, result, error];
+  List<Object> get props => [statuses, error];
 
   AllMemberWithoutSubscriptionInitial copyWith({
     CubitStatuses? statuses,
