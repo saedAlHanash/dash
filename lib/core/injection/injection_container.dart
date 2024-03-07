@@ -51,6 +51,7 @@ import '../../features/coupons/bloc/create_coupon_cubit/create_coupon_cubit.dart
 import '../../features/drivers/bloc/all_drivers/all_drivers_cubit.dart';
 import '../../features/drivers/bloc/create_driver_cubit/create_driver_cubit.dart';
 import '../../features/drivers/bloc/driver_by_id_cubit/driver_by_id_cubit.dart';
+import '../../features/drivers/bloc/driver_report_cubit/driver_report_cubit.dart';
 import '../../features/drivers/bloc/driver_status_history_cubit/driver_status_history_cubit.dart';
 import '../../features/drivers/bloc/drivers_imiei_cubit/drivers_imei_cubit.dart';
 import '../../features/drivers/bloc/loyalty_cubit/loyalty_cubit.dart';
@@ -216,6 +217,7 @@ Future<void> init() async {
   sl.registerFactory(() => AllDriversCubit());
   sl.registerFactory(() => DriverBuIdCubit());
   sl.registerFactory(() => CreateDriverCubit());
+  sl.registerFactory(() => DriverReportCubit());
 
   //endregion
 

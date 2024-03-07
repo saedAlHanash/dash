@@ -54,6 +54,7 @@ import '../features/company_paths/ui/pages/company_path_info_page.dart';
 import '../features/company_paths/ui/pages/create_company_path_page.dart';
 import '../features/coupons/bloc/create_coupon_cubit/create_coupon_cubit.dart';
 import '../features/coupons/ui/pages/create_coupon_page.dart';
+import '../features/drivers/bloc/driver_report_cubit/driver_report_cubit.dart';
 import '../features/drivers/bloc/driver_status_history_cubit/driver_status_history_cubit.dart';
 import '../features/drivers/bloc/drivers_imiei_cubit/drivers_imei_cubit.dart';
 import '../features/drivers/ui/pages/driver_info_page.dart';
@@ -179,6 +180,7 @@ final appGoRouter = GoRouter(
           BlocProvider(create: (_) => di.sl<ReverseChargingCubit>()),
           BlocProvider(create: (_) => di.sl<AllTransfersCubit>()),
           BlocProvider(create: (_) => di.sl<AtherCubit>()),
+          BlocProvider(create: (_) => di.sl<DriverReportCubit>()),
           BlocProvider(create: (_) => di.sl<MapControllerCubit>()),
           BlocProvider(create: (_) => di.sl<WalletCubit>()..getWallet(id: id)),
           BlocProvider(create: (_) => di.sl<DebtsCubit>()..getDebts(_, id: id)),

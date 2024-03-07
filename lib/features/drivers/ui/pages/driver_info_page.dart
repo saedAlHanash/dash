@@ -5,8 +5,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_multi_type/image_multi_type.dart';
 import 'package:image_multi_type/round_image_widget.dart';
 import 'package:map_package/api_manager/api_service.dart';
+import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/strings/fix_url.dart';
 import 'package:qareeb_dash/core/util/note_message.dart';
+import 'package:qareeb_dash/core/widgets/my_button.dart';
 import 'package:qareeb_dash/core/widgets/table_widget.dart';
 import 'package:qareeb_dash/features/drivers/data/response/drivers_response.dart';
 import 'package:qareeb_dash/features/redeems/ui/widget/loyalty_widget.dart';
@@ -24,6 +26,7 @@ import '../../../accounts/data/request/charging_request.dart';
 import '../../../accounts/data/request/driver_financial_filter_request.dart';
 import '../../../wallet/ui/pages/debts_page.dart';
 import '../../bloc/driver_by_id_cubit/driver_by_id_cubit.dart';
+import '../../bloc/driver_report_cubit/driver_report_cubit.dart';
 import '../widget/driver_charging_widget.dart';
 import '../widget/driver_financial_widget.dart';
 import '../widget/driver_live_tracking.dart';
@@ -98,6 +101,20 @@ class _DriverInfoPageState extends State<DriverInfoPage>
                           _DriverImages(driver: driver),
                           30.0.verticalSpace,
                           DriverTableInfo(driver: driver),
+                          30.0.verticalSpace,
+                          BlocBuilder<DriverReportCubit, DriverReportInitial>(
+                            builder: (context, state) {
+                              if (state.statuses.loading) {
+                                return MyStyle.loadingWidget();
+                              }
+                              return MyButton(
+                                text: 'تحميل التقرير',
+                                onTap: () {
+                                  context.read<DriverReportCubit>().getAll(driver);
+                                },
+                              );
+                            },
+                          ),
                         ],
                       ),
                       if (!isAgency) LoyaltyWidget(driverId: driver.id),
@@ -114,7 +131,7 @@ class _DriverInfoPageState extends State<DriverInfoPage>
                               ),
                             ),
                           ),
-                        child:  DriverChargingWidget(driver: driver),
+                        child: DriverChargingWidget(driver: driver),
                       ),
                       DebtsPage(driver: driver),
                       DriverLiveTracking(imei: driver.qarebDeviceimei),
