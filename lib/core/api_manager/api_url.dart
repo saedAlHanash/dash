@@ -334,3 +334,5 @@ String get baseUrl {
 
 const liveUrl = 'live.qareeb-maas.com';
 const testUrl = 'qareeb-api.first-pioneers.com.tr';
+
+bool get isTestMode =>baseUrl==testUrl;

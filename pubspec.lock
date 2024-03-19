@@ -855,10 +855,10 @@ packages:
     description:
       path: "."
       ref: html
-      resolved-ref: bcc77ba144faa2bcf846244f34c3e9709772b303
+      resolved-ref: "9c866f247bdfad93d78903b47e66831e472fadc5"
       url: "https://github.com/saedAlHanash/map_qareeb"
     source: git
-    version: "0.1.6"
+    version: "0.1.7"
   matcher:
     dependency: transitive
     description:

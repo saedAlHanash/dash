@@ -43,13 +43,25 @@ class CandidateDriversInitial extends Equatable {
   ) async {
     pools.removeWhere((e) {
       final distance  = distanceBetween(trip.startPoint, e.point);
-      print('$distance ${distance > AppSharedPreference.distanceDriverRange}');
       return distance > AppSharedPreference.distanceDriverRange;
     });
 
     mapController.addMarkers(
       marker: pools.mapIndexed(
         (i, e) {
+          late final  Color color  ;
+           switch(DriverStatus.values[e.driverStatus.toInt()]){
+
+             case DriverStatus.unAvailable:
+               color = Colors.red;
+
+             case DriverStatus.available:
+               color = Colors.green;
+
+             case DriverStatus.busy:
+               color = Colors.blue;
+
+           }
           return MyMarker(
             key: e.driverId,
             point: LatLng(e.driverLat.toDouble(), e.driverLng.toDouble()),
@@ -79,7 +91,7 @@ class CandidateDriversInitial extends Equatable {
                     url: Assets.iconsLocator,
                     height: 50.0.spMin,
                     width: 50.0.spMin,
-                    color: AppColorManager.red,
+                    color:color,
                   ),
                 ),
                 5.0.verticalSpace,

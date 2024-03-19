@@ -10,6 +10,7 @@ import 'package:qareeb_dash/core/widgets/app_bar_widget.dart';
 import 'package:qareeb_dash/router/go_route_pages.dart';
 import 'package:qareeb_models/global.dart';
 import "package:universal_html/html.dart";
+import '../../../../core/api_manager/api_url.dart';
 import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/strings/app_string_manager.dart';
 import '../../../../core/util/my_style.dart';
@@ -27,8 +28,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  var email = '';
-  var password = '';
+  var email = isTestMode?'info@first-pioneers.com':'';
+  var password = isTestMode?'123qwe':'';
 
   var isLoading = true;
 
@@ -40,6 +41,10 @@ class _LoginPageState extends State<LoginPage> {
         if (AppSharedPreference.isLogin) {
           context.pushNamed(GoRouteName.homePage);
         } else {
+          if(isTestMode){
+            final request = LoginRequest(email: email, password: password);
+            context.read<LoginCubit>().login(context, request: request);
+          }
           setState(() => isLoading = false);
         }
       },
@@ -78,7 +83,7 @@ class _LoginPageState extends State<LoginPage> {
                         autofillHints: const [AutofillHints.username],
                         liable: AppStringManager.enterEmail,
                         textAlign: TextAlign.left,
-                        initialValue: email,
+                        initialValue: isTestMode?'info@first-pioneers.com':email,
                         onChanged: (val) => email = val,
                       ),
                       MyTextFormWidget(
@@ -86,7 +91,7 @@ class _LoginPageState extends State<LoginPage> {
                         liable: AppStringManager.enterPassword,
                         textAlign: TextAlign.left,
                         obscureText: true,
-                        initialValue: password,
+                        initialValue: isTestMode?'123qwe':password,
                         onChanged: (val) => password = val,
                       ),
                     ],

@@ -70,7 +70,7 @@ class AppSharedPreference {
     _prefs?.setInt(_distanceDriverRange, range);
   }
 
-  static int get distanceDriverRange => _prefs?.getInt(_distanceDriverRange) ?? 10000;
+  static int get distanceDriverRange => _prefs?.getInt(_distanceDriverRange) ?? 1000;
 
   static int get getMyId => _prefs?.getInt(_myId) ?? 0;
 

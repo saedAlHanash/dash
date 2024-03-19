@@ -31,6 +31,12 @@ extension NormalTripMap on Trip {
   }
 }
 
+extension NumH on num {
+  int getLengthForList({int count = 3}) {
+    return ((this + count) % count) > 0 ? (this ~/ count) + 1 : this ~/ count;
+  }
+}
+
 List<List<T>> groupingList<T>(int size, List<T> list) {
   final List<List<T>> result = [];
   for (int i = 0; i < list.length; i += size) {
@@ -43,15 +49,14 @@ List<List<T>> groupingList<T>(int size, List<T> list) {
 List<Ime> getNearestPoints(LatLng startLocation, List<Ime> points) {
   // Sort the points based on their distance from the start location
   points.sort((a, b) {
-
-    final  distanceToA = Geolocator.distanceBetween(
+    final distanceToA = Geolocator.distanceBetween(
       startLocation.latitude,
       startLocation.longitude,
       a.lat,
       a.lng,
     );
 
-    final  distanceToB = Geolocator.distanceBetween(
+    final distanceToB = Geolocator.distanceBetween(
       startLocation.latitude,
       startLocation.longitude,
       b.lat,
@@ -64,6 +69,3 @@ List<Ime> getNearestPoints(LatLng startLocation, List<Ime> points) {
   // Return the top 10 nearest points
   return points.take(10).toList();
 }
-
-
-

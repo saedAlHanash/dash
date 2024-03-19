@@ -97,12 +97,16 @@ class _GovernoratesPageState extends State<GovernoratesPage> {
           if (list.isEmpty) return const NotFoundWidget(text: 'لا يوجد محافظات');
           return ListView.builder(
             shrinkWrap: true,
-            itemCount: list.length,
+            padding: const EdgeInsets.only(bottom: 100.0).h,
+            itemCount: (list.length % 3 == 0)
+                ? list.length
+                : ((list.length + 3) % 3) > 0
+                    ? (list.length ~/ 3) + 1
+                    : list.length ~/ 3,
             itemBuilder: (context, i) {
               final item = list[i];
               return MyCardWidget(
-                margin:
-                    const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0).r,
+                margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0).r,
                 child: Row(
                   children: [
                     Expanded(
