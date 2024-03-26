@@ -86,43 +86,45 @@ class _TripInfoListWidgetState extends State<TripInfoListWidget> {
   void showSharedRequest(SharedTrip e) {
     NoteMessage.showMyDialog(
       context,
-      child: SaedTableWidget(
-        title: [
-          'اسم الزبون',
-          if (!isTrans) ...[
-            'رقم الهاتف',
-            'عدد المقاعد',
-            'نقطة الركوب',
-            'رمز النقطة',
-            'حالة الدفع',
-          ]
-        ],
-        data: e.sharedRequests.mapIndexed(
-          (index, element) {
-            final client = element.client;
-            var tripIconId = 0;
-            e.path.getTripPoints.forEachIndexed((i, e1) {
-              if (e1.id == element.pickupPoint.id) {
-                tripIconId = i;
-              }
-            });
-            return [
-              client.fullName,
-              if (!isTrans) ...[
-                client.phoneNumber,
-                element.seatNumber.toString(),
-                element.pickupPoint.arName,
-                ImageMultiType(
-                  url: tripIconId.iconPoint,
-                  height: 40.0.r,
-                  width: 40.0.r,
-                  fit: BoxFit.contain,
-                ),
-                element.status.arabicName,
-              ],
-            ];
-          },
-        ).toList(),
+      child: SingleChildScrollView(
+        child: SaedTableWidget(
+          title: [
+            'اسم الزبون',
+            if (!isTrans) ...[
+              'رقم الهاتف',
+              'عدد المقاعد',
+              'نقطة الركوب',
+              'رمز النقطة',
+              'حالة الدفع',
+            ]
+          ],
+          data: e.sharedRequests.mapIndexed(
+            (index, element) {
+              final client = element.client;
+              var tripIconId = 0;
+              e.path.getTripPoints.forEachIndexed((i, e1) {
+                if (e1.id == element.pickupPoint.id) {
+                  tripIconId = i;
+                }
+              });
+              return [
+                client.fullName,
+                if (!isTrans) ...[
+                  client.phoneNumber,
+                  element.seatNumber.toString(),
+                  element.pickupPoint.arName,
+                  ImageMultiType(
+                    url: tripIconId.iconPoint,
+                    height: 40.0.r,
+                    width: 40.0.r,
+                    fit: BoxFit.contain,
+                  ),
+                  element.status.arabicName,
+                ],
+              ];
+            },
+          ).toList(),
+        ),
       ),
     );
   }
