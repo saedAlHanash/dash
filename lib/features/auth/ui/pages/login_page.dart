@@ -29,7 +29,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   var email = isTestMode?'info@first-pioneers.com':'';
-  var password = isTestMode?'123Qwe@!':'';
+  var password = isTestMode?'':'';
 
   var isLoading = true;
 
