@@ -30,12 +30,10 @@ class InstitutionsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: isAllowed(AppPermissions.CREATION)
-          ? FloatingActionButton(
-              onPressed: () => context.pushNamed(GoRouteName.createInstitution),
-              child: const Icon(Icons.add, color: Colors.white),
-            )
-          : null,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => context.pushNamed(GoRouteName.createInstitution),
+        child: const Icon(Icons.add, color: Colors.white),
+      ),
       body: BlocBuilder<AllInstitutionsCubit, AllInstitutionsInitial>(
         builder: (context, state) {
           if (state.statuses.isLoading) {
@@ -65,12 +63,9 @@ class InstitutionsPage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           InkWell(
-                            onTap: !isAllowed(AppPermissions.UPDATE)
-                                ? null
-                                : () {
-                                    context.pushNamed(GoRouteName.createInstitution,
-                                        extra: e);
-                                  },
+                            onTap: () {
+                              context.pushNamed(GoRouteName.createInstitution, extra: e);
+                            },
                             child: const Icon(
                               Icons.edit,
                               color: Colors.amber,

@@ -28,12 +28,11 @@ class CompaniesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: isAllowed(AppPermissions.CREATION)
-          ? FloatingActionButton(
+      floatingActionButton:   FloatingActionButton(
               onPressed: () => context.pushNamed(GoRouteName.createCompany),
               child: const Icon(Icons.add, color: Colors.white),
             )
-          : null,
+          ,
       body: BlocBuilder<AllCompaniesCubit, AllCompaniesInitial>(
         builder: (context, state) {
           if (state.statuses.isLoading) {
@@ -62,9 +61,7 @@ class CompaniesPage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           InkWell(
-                            onTap: !isAllowed(AppPermissions.UPDATE)
-                                ? null
-                                : () {
+                            onTap: () {
                                     context.pushNamed(
                                       GoRouteName.createCompany,
                                       extra: e,

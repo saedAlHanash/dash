@@ -33,14 +33,13 @@ class _CouponPageState extends State<CouponPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: isAllowed(AppPermissions.CREATION)
-          ? FloatingActionButton(
+      floatingActionButton:   FloatingActionButton(
               onPressed: () {
                 context.pushNamed(GoRouteName.createCoupon);
               },
               child: const Icon(Icons.add, color: Colors.white),
             )
-          : null,
+          ,
       body: BlocBuilder<AllCouponsCubit, AllCouponsInitial>(
         builder: (_, state) {
           if (state.statuses.isLoading) {

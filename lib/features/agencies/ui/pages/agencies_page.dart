@@ -44,8 +44,7 @@ class _AgenciesPageState extends State<AgenciesPage> {
         ),
       ],
       child: Scaffold(
-        floatingActionButton: isAllowed(AppPermissions.CREATION)
-            ? FloatingActionButton(
+        floatingActionButton:  FloatingActionButton(
                 onPressed: () {
                   NoteMessage.showMyDialog(
                     context,
@@ -59,8 +58,7 @@ class _AgenciesPageState extends State<AgenciesPage> {
                   );
                 },
                 child: const Icon(Icons.add, color: Colors.white),
-              )
-            : null,
+              ),
         body: BlocBuilder<AgenciesCubit, AgenciesInitial>(
           builder: (context, state) {
             if (state.statuses.isLoading) {

@@ -1,696 +1,121 @@
 {
   "result": {
-    "driverId": 2256,
-    "pathId": 1130,
-    "path": {
-      "name": null,
-      "arName": null,
-      "distance": null,
-      "duration": null,
-      "edgesOrder": "1007,1005,1008,1009,1010,1011",
-      "edges": [
-        {
-          "startPoint": {
-            "name": "جسر الرئيس ",
-            "arName": "تحت جسر الرئيس(المتحف الوطني) ",
-            "latitude": 33.51318948362893,
-            "langitude": 36.289806027430735,
-            "tags": "جامعة دمشق , المتحف الوطني  ,",
-            "zoneId": 14404,
-            "id": 111
-          },
-          "startPointId": 111,
-          "endPoint": {
-            "name": "Revolution Bridge",
-            "arName": "جسر الثورة ",
-            "latitude": 33.5147876938376,
-            "langitude": 36.30062055464859,
-            "tags": "تحت جسر الثورة , شارع الثورة ",
-            "zoneId": 15350,
-            "id": 841
-          },
-          "endPointId": 841,
-          "distance": 2050.4,
-          "duration": 190.6,
-          "price": 0.0,
-          "steps": "mppkEizn|ECjBw@[SsTj@w@MeGRaDbJbAVUzAe`@u@s@uHXgAOsG?@mAhA?B_CwBDGzD",
-          "name": null,
-          "arName": null,
-          "id": 1007
-        },
-        {
-          "startPoint": {
-            "name": "Revolution Bridge",
-            "arName": "جسر الثورة ",
-            "latitude": 33.5147876938376,
-            "langitude": 36.30062055464859,
-            "tags": "تحت جسر الثورة , شارع الثورة ",
-            "zoneId": 15350,
-            "id": 841
-          },
-          "startPointId": 841,
-          "endPoint": {
-            "name": "Opposite Azbakeya gas station",
-            "arName": "مقابل كازية الازبكية ",
-            "latitude": 33.51988924549686,
-            "langitude": 36.30085333076959,
-            "tags": "كازية الازبكية , شارع بغداد ",
-            "zoneId": 15351,
-            "id": 842
-          },
-          "endPointId": 842,
-          "distance": 586.4,
-          "duration": 42.4,
-          "price": 0.0,
-          "steps": "kzpkE{}p|EAJyF@q@NgI@m@SeFe@}BK@I",
-          "name": null,
-          "arName": null,
-          "id": 1005
-        },
-        {
-          "startPoint": {
-            "name": "Opposite Azbakeya gas station",
-            "arName": "مقابل كازية الازبكية ",
-            "latitude": 33.51988924549686,
-            "langitude": 36.30085333076959,
-            "tags": "كازية الازبكية , شارع بغداد ",
-            "zoneId": 15351,
-            "id": 842
-          },
-          "startPointId": 842,
-          "endPoint": {
-            "name": "Al-Qazzazin",
-            "arName": "القزازين ",
-            "latitude": 33.51894084488062,
-            "langitude": 36.30800749039153,
-            "tags": "اشارة القزازين , شارع بغداد",
-            "zoneId": 15352,
-            "id": 843
-          },
-          "endPointId": 843,
-          "distance": 672.9,
-          "duration": 41.7,
-          "price": 0.0,
-          "steps": "qzqkEk_q|EzDwk@",
-          "name": null,
-          "arName": null,
-          "id": 1008
-        },
-        {
-          "startPoint": {
-            "name": "Al-Qazzazin",
-            "arName": "القزازين ",
-            "latitude": 33.51894084488062,
-            "langitude": 36.30800749039153,
-            "tags": "اشارة القزازين , شارع بغداد",
-            "zoneId": 15352,
-            "id": 843
-          },
-          "startPointId": 843,
-          "endPoint": {
-            "name": "Baghdad Street Damascus Damascus ",
-            "arName": "شارع بغداد مفرق السادات",
-            "latitude": 33.518564,
-            "langitude": 36.310883,
-            "tags": "السادات",
-            "zoneId": 10954,
-            "id": 178
-          },
-          "endPointId": 178,
-          "distance": 270.4,
-          "duration": 16.8,
-          "price": 0.0,
-          "steps": "utqkEclr|EpA}P",
-          "name": null,
-          "arName": null,
-          "id": 1009
-        },
-        {
-          "startPoint": {
-            "name": "Baghdad Street Damascus Damascus ",
-            "arName": "شارع بغداد مفرق السادات",
-            "latitude": 33.518564,
-            "langitude": 36.310883,
-            "tags": "السادات",
-            "zoneId": 10954,
-            "id": 178
-          },
-          "startPointId": 178,
-          "endPoint": {
-            "name": "AL Abaseen ",
-            "arName": "ساحة العباسيين",
-            "latitude": 33.523907698341674,
-            "langitude": 36.3191430044174,
-            "tags": "ساحة العباسيين , رومينزا ",
-            "zoneId": 14373,
-            "id": 46
-          },
-          "endPointId": 46,
-          "distance": 1085.6,
-          "duration": 66.2,
-          "price": 0.0,
-          "steps": "crqkEa~r|EFiA^m@Ni@Fq@CQWU]HcAQuAeBcAmBeC{CwS_Vc@w@Zg@H]B{@Oq@i@q@",
-          "name": null,
-          "arName": null,
-          "id": 1010
-        },
-        {
-          "startPoint": {
-            "name": "AL Abaseen ",
-            "arName": "ساحة العباسيين",
-            "latitude": 33.523907698341674,
-            "langitude": 36.3191430044174,
-            "tags": "ساحة العباسيين , رومينزا ",
-            "zoneId": 14373,
-            "id": 46
-          },
-          "startPointId": 46,
-          "endPoint": {
-            "name": "   kafar batna",
-            "arName": "كفر بطنا ",
-            "latitude": 33.513139141371504,
-            "langitude": 36.37114777657365,
-            "tags": "كفر بطنا , ساحة الكركون ",
-            "zoneId": 15366,
-            "id": 844
-          },
-          "endPointId": 844,
-          "distance": 6123.1,
-          "duration": 418.6,
-          "price": 0.0,
-          "steps": "msrkEsqt|EYiU`BeN`BkEt|@e@Qqp@lLwi@t@aM_F}v@gRwkAPyHjHeRt@{J",
-          "name": null,
-          "arName": null,
-          "id": 1011
-        }
-      ],
-      "id": 1130
-    },
-    "sharedRequests": [
+    "items": [
       {
-        "id": 337,
-        "sharedTripId": 981,
-        "clientId": 4007,
-        "client": {
-          "id": 4007,
-          "userName": "Qareeb963957588168@gmail.com",
-          "fullName": "varyhan  Ganama",
-          "name": "varyhan ",
-          "surname": "Ganama",
-          "phoneNumber": "963957588168",
-          "avatar": null,
-          "emergencyPhone": "963957588168",
-          "userType": "client",
-          "accountBalance": null
-        },
-        "status": 0,
-        "seatNumber": 1,
-        "dropPointId": 844,
-        "dropPoint": {
-          "name": "   kafar batna",
-          "arName": "كفر بطنا ",
-          "latitude": 33.513139141371504,
-          "langitude": 36.37114777657365,
-          "tags": "كفر بطنا , ساحة الكركون ",
-          "zoneId": 15366,
-          "id": 844
-        },
-        "pickupPointId": 111,
-        "pickupPoint": {
-          "name": "جسر الرئيس ",
-          "arName": "تحت جسر الرئيس(المتحف الوطني) ",
-          "latitude": 33.51318948362893,
-          "langitude": 36.289806027430735,
-          "tags": "جامعة دمشق , المتحف الوطني  ,",
-          "zoneId": 14404,
-          "id": 111
-        },
-        "amount": 9500.0,
-        "couponCode": null,
-        "discountValue": 0
+        "name": "Pages.Reason",
+        "displayName": " إدارة اسباب الالغاء",
+        "description": null,
+        "id": 0
       },
       {
-        "id": 338,
-        "sharedTripId": 981,
-        "clientId": 4010,
-        "client": {
-          "id": 4010,
-          "userName": "Qareeb963992479695@gmail.com",
-          "fullName": "وسام الحجي",
-          "name": "وسام",
-          "surname": "الحجي",
-          "phoneNumber": "963992479695",
-          "avatar": null,
-          "emergencyPhone": "963960685945",
-          "userType": "client",
-          "accountBalance": null
-        },
-        "status": 0,
-        "seatNumber": 1,
-        "dropPointId": 844,
-        "dropPoint": {
-          "name": "   kafar batna",
-          "arName": "كفر بطنا ",
-          "latitude": 33.513139141371504,
-          "langitude": 36.37114777657365,
-          "tags": "كفر بطنا , ساحة الكركون ",
-          "zoneId": 15366,
-          "id": 844
-        },
-        "pickupPointId": 46,
-        "pickupPoint": {
-          "name": "AL Abaseen ",
-          "arName": "ساحة العباسيين",
-          "latitude": 33.523907698341674,
-          "langitude": 36.3191430044174,
-          "tags": "ساحة العباسيين , رومينزا ",
-          "zoneId": 14373,
-          "id": 46
-        },
-        "amount": 9500.0,
-        "couponCode": null,
-        "discountValue": 0
+        "name": "Pages.Reports",
+        "displayName": " إدارة التقارير",
+        "description": null,
+        "id": 0
       },
       {
-        "id": 342,
-        "sharedTripId": 981,
-        "clientId": 4021,
-        "client": {
-          "id": 4021,
-          "userName": "Qareeb963980129152@gmail.com",
-          "fullName": "princess sara",
-          "name": "princess",
-          "surname": "sara",
-          "phoneNumber": "963980129152",
-          "avatar": null,
-          "emergencyPhone": "963980129152",
-          "userType": "client",
-          "accountBalance": null
-        },
-        "status": 0,
-        "seatNumber": 1,
-        "dropPointId": 844,
-        "dropPoint": {
-          "name": "   kafar batna",
-          "arName": "كفر بطنا ",
-          "latitude": 33.513139141371504,
-          "langitude": 36.37114777657365,
-          "tags": "كفر بطنا , ساحة الكركون ",
-          "zoneId": 15366,
-          "id": 844
-        },
-        "pickupPointId": 111,
-        "pickupPoint": {
-          "name": "جسر الرئيس ",
-          "arName": "تحت جسر الرئيس(المتحف الوطني) ",
-          "latitude": 33.51318948362893,
-          "langitude": 36.289806027430735,
-          "tags": "جامعة دمشق , المتحف الوطني  ,",
-          "zoneId": 14404,
-          "id": 111
-        },
-        "amount": 9500.0,
-        "couponCode": null,
-        "discountValue": 0
+        "name": "Pages.Trips",
+        "displayName": " إدارة الرحلات",
+        "description": null,
+        "id": 0
       },
       {
-        "id": 344,
-        "sharedTripId": 981,
-        "clientId": 4022,
-        "client": {
-          "id": 4022,
-          "userName": "Qareeb963958434739@gmail.com",
-          "fullName": "فاطمة  بالقاسم",
-          "name": "فاطمة ",
-          "surname": "بالقاسم",
-          "phoneNumber": "963958434739",
-          "avatar": null,
-          "emergencyPhone": "963940271615",
-          "userType": "client",
-          "accountBalance": null
-        },
-        "status": 2,
-        "seatNumber": 1,
-        "dropPointId": 844,
-        "dropPoint": {
-          "name": "   kafar batna",
-          "arName": "كفر بطنا ",
-          "latitude": 33.513139141371504,
-          "langitude": 36.37114777657365,
-          "tags": "كفر بطنا , ساحة الكركون ",
-          "zoneId": 15366,
-          "id": 844
-        },
-        "pickupPointId": 178,
-        "pickupPoint": {
-          "name": "Baghdad Street Damascus Damascus ",
-          "arName": "شارع بغداد مفرق السادات",
-          "latitude": 33.518564,
-          "langitude": 36.310883,
-          "tags": "السادات",
-          "zoneId": 10954,
-          "id": 178
-        },
-        "amount": 9500.0,
-        "couponCode": null,
-        "discountValue": 0
+        "name": "Pages.Messages",
+        "displayName": " إدارة الرسائل",
+        "description": null,
+        "id": 0
       },
       {
-        "id": 345,
-        "sharedTripId": 981,
-        "clientId": 4020,
-        "client": {
-          "id": 4020,
-          "userName": "Qareeb963993580429@gmail.com",
-          "fullName": "عنان صايمه",
-          "name": "عنان",
-          "surname": "صايمه",
-          "phoneNumber": "963993580429",
-          "avatar": null,
-          "emergencyPhone": "963944744678",
-          "userType": "client",
-          "accountBalance": null
-        },
-        "status": 0,
-        "seatNumber": 1,
-        "dropPointId": 844,
-        "dropPoint": {
-          "name": "   kafar batna",
-          "arName": "كفر بطنا ",
-          "latitude": 33.513139141371504,
-          "langitude": 36.37114777657365,
-          "tags": "كفر بطنا , ساحة الكركون ",
-          "zoneId": 15366,
-          "id": 844
-        },
-        "pickupPointId": 111,
-        "pickupPoint": {
-          "name": "جسر الرئيس ",
-          "arName": "تحت جسر الرئيس(المتحف الوطني) ",
-          "latitude": 33.51318948362893,
-          "langitude": 36.289806027430735,
-          "tags": "جامعة دمشق , المتحف الوطني  ,",
-          "zoneId": 14404,
-          "id": 111
-        },
-        "amount": 9500.0,
-        "couponCode": null,
-        "discountValue": 0
+        "name": "Pages.Customers",
+        "displayName": " إدارة الزبائن",
+        "description": null,
+        "id": 0
       },
       {
-        "id": 346,
-        "sharedTripId": 981,
-        "clientId": 4020,
-        "client": {
-          "id": 4020,
-          "userName": "Qareeb963993580429@gmail.com",
-          "fullName": "عنان صايمه",
-          "name": "عنان",
-          "surname": "صايمه",
-          "phoneNumber": "963993580429",
-          "avatar": null,
-          "emergencyPhone": "963944744678",
-          "userType": "client",
-          "accountBalance": null
-        },
-        "status": 0,
-        "seatNumber": 1,
-        "dropPointId": 844,
-        "dropPoint": {
-          "name": "   kafar batna",
-          "arName": "كفر بطنا ",
-          "latitude": 33.513139141371504,
-          "langitude": 36.37114777657365,
-          "tags": "كفر بطنا , ساحة الكركون ",
-          "zoneId": 15366,
-          "id": 844
-        },
-        "pickupPointId": 111,
-        "pickupPoint": {
-          "name": "جسر الرئيس ",
-          "arName": "تحت جسر الرئيس(المتحف الوطني) ",
-          "latitude": 33.51318948362893,
-          "langitude": 36.289806027430735,
-          "tags": "جامعة دمشق , المتحفالوطني  ,",
-          "zoneId": 14404,
-          "id": 111
-        },
-        "amount": 9500.0,
-        "couponCode": null,
-        "discountValue": 0
+        "name": "Pages.Drivers",
+        "displayName": " إدارة السائقين",
+        "description": null,
+        "id": 0
       },
       {
-        "id": 348,
-        "sharedTripId": 981,
-        "clientId": 4023,
-        "client": {
-          "id": 4023,
-          "userName": "Qareeb963941448816@gmail.com",
-          "fullName": "mohamad alraai",
-          "name": "mohamad",
-          "surname": "alraai",
-          "phoneNumber": "963941448816",
-          "avatar": null,
-          "emergencyPhone": "963941448816",
-          "userType": "client",
-          "accountBalance": null
-        },
-        "status": 0,
-        "seatNumber": 1,
-        "dropPointId": 844,
-        "dropPoint": {
-          "name": "   kafar batna",
-          "arName": "كفر بطنا ",
-          "latitude": 33.513139141371504,
-          "langitude": 36.37114777657365,
-          "tags": "كفر بطنا , ساحة الكركون ",
-          "zoneId": 15366,
-          "id": 844
-        },
-        "pickupPointId": 111,
-        "pickupPoint": {
-          "name": "جسر الرئيس ",
-          "arName": "تحت جسر الرئيس(المتحف الوطني) ",
-          "latitude": 33.51318948362893,
-          "langitude": 36.289806027430735,
-          "tags": "جامعة دمشق , المتحف الوطني  ,",
-          "zoneId": 14404,
-          "id": 111
-        },
-        "amount": 9500.0,
-        "couponCode": null,
-        "discountValue": 0
+        "name": "Pages.Coupon",
+        "displayName": " إدارة الكوبونات",
+        "description": null,
+        "id": 0
       },
       {
-        "id": 350,
-        "sharedTripId": 981,
-        "clientId": 4021,
-        "client": {
-          "id": 4021,
-          "userName": "Qareeb963980129152@gmail.com",
-          "fullName": "princess sara",
-          "name": "princess",
-          "surname": "sara",
-          "phoneNumber": "963980129152",
-          "avatar": null,
-          "emergencyPhone": "963980129152",
-          "userType": "client",
-          "accountBalance": null
-        },
-        "status": 0,
-        "seatNumber": 1,
-        "dropPointId": 844,
-        "dropPoint": {
-          "name": "   kafar batna",
-          "arName": "كفر بطنا ",
-          "latitude": 33.513139141371504,
-          "langitude": 36.37114777657365,
-          "tags": "كفر بطنا , ساحة الكركون ",
-          "zoneId": 15366,
-          "id": 844
-        },
-        "pickupPointId": 842,
-        "pickupPoint": {
-          "name": "Opposite Azbakeya gas station",
-          "arName": "مقابل كازية الازبكية ",
-          "latitude": 33.51988924549686,
-          "langitude": 36.30085333076959,
-          "tags": "كازية الازبكية , شارع بغداد ",
-          "zoneId": 15351,
-          "id": 842
-        },
-        "amount": 9500.0,
-        "couponCode": null,
-        "discountValue": 0
+        "name": "Create_Permission",
+        "displayName": " انشاء مزود دفع ",
+        "description": null,
+        "id": 0
       },
       {
-        "id": 351,
-        "sharedTripId": 981,
-        "clientId": 4024,
-        "client": {
-          "id": 4024,
-          "userName": "Qareeb963962900347@gmail.com",
-          "fullName": "نيڤين ",
-          "name": "نيڤين",
-          "surname": "",
-          "phoneNumber": "963962900347",
-          "avatar": null,
-          "emergencyPhone": "963955836277",
-          "userType": "client",
-          "accountBalance": null
-        },
-        "status": 2,
-        "seatNumber": 1,
-        "dropPointId": 844,
-        "dropPoint": {
-          "name": "   kafar batna",
-          "arName": "كفر بطنا ",
-          "latitude": 33.513139141371504,
-          "langitude": 36.37114777657365,
-          "tags": "كفر بطنا , ساحة الكركون ",
-          "zoneId": 15366,
-          "id": 844
-        },
-        "pickupPointId": 46,
-        "pickupPoint": {
-          "name": "AL Abaseen ",
-          "arName": "ساحة العباسيين",
-          "latitude": 33.523907698341674,
-          "langitude": 36.3191430044174,
-          "tags": "ساحة العباسيين , رومينزا ",
-          "zoneId": 14373,
-          "id": 46
-        },
-        "amount": 9500.0,
-        "couponCode": null,
-        "discountValue": 0
+        "name": "Update_Permission",
+        "displayName": " تعديل مزود دفع ",
+        "description": null,
+        "id": 0
       },
       {
-        "id": 352,
-        "sharedTripId": 981,
-        "clientId": 4021,
-        "client": {
-          "id": 4021,
-          "userName": "Qareeb963980129152@gmail.com",
-          "fullName": "princess sara",
-          "name": "princess",
-          "surname": "sara",
-          "phoneNumber": "963980129152",
-          "avatar": null,
-          "emergencyPhone": "963980129152",
-          "userType": "client",
-          "accountBalance": null
-        },
-        "status": 0,
-        "seatNumber": 1,
-        "dropPointId": 844,
-        "dropPoint": {
-          "name": "   kafar batna",
-          "arName": "كفر بطنا ",
-          "latitude": 33.513139141371504,
-          "langitude": 36.37114777657365,
-          "tags": "كفر بطنا , ساحة الكركون ",
-          "zoneId": 15366,
-          "id": 844
-        },
-        "pickupPointId": 46,
-        "pickupPoint": {
-          "name": "AL Abaseen ",
-          "arName": "ساحة العباسيين",
-          "latitude": 33.523907698341674,
-          "langitude": 36.3191430044174,
-          "tags": "ساحة العباسيين , رومينزا ",
-          "zoneId": 14373,
-          "id": 46
-        },
-        "amount": 9500.0,
-        "couponCode": null,
-        "discountValue": 0
+        "name": "Delete_Permission",
+        "displayName": " حذف مزود دفع",
+        "description": null,
+        "id": 0
       },
       {
-        "id": 357,
-        "sharedTripId": 981,
-        "clientId": 4027,
-        "client": {
-          "id": 4027,
-          "userName": "Qareeb963945101722@gmail.com",
-          "fullName": "amer hubbi",
-          "name": "amer",
-          "surname": "hubbi",
-          "phoneNumber": "963945101722",
-          "avatar": null,
-          "emergencyPhone": "963962900347",
-          "userType": "client",
-          "accountBalance": null
-        },
-        "status": 2,
-        "seatNumber": 1,
-        "dropPointId": 844,
-        "dropPoint": {
-          "name": "   kafar batna",
-          "arName": "كفر بطنا ",
-          "latitude": 33.513139141371504,
-          "langitude": 36.37114777657365,
-          "tags": "كفر بطنا , ساحة الكركون ",
-          "zoneId": 15366,
-          "id": 844
-        },
-        "pickupPointId": 111,
-        "pickupPoint": {
-          "name": "جسر الرئيس ",
-          "arName": "تحت جسر الرئيس(المتحف الوطني) ",
-          "latitude": 33.51318948362893,
-          "langitude": 36.289806027430735,
-          "tags": "جامعة دمشق , المتحف الوطني  ,",
-          "zoneId": 14404,
-          "id": 111
-        },
-        "amount": 9500.0,
-        "couponCode": null,
-        "discountValue": 0
+        "name": "Pages.CarCategory",
+        "displayName": "[Pages.Car category]",
+        "description": null,
+        "id": 0
+      },
+      {
+        "name": "Pages.Epayment",
+        "displayName": "[Pages.Epayments]",
+        "description": null,
+        "id": 0
+      },
+      {
+        "name": "Pages.Points",
+        "displayName": "[Pages.Points]",
+        "description": null,
+        "id": 0
+      },
+      {
+        "name": "Pages.Settings",
+        "displayName": "[Pages.Settings]",
+        "description": null,
+        "id": 0
+      },
+      {
+        "name": "Pages.SharedTrip",
+        "displayName": "[Pages.Shared trips]",
+        "description": null,
+        "id": 0
+      },
+      {
+        "name": "Pages.Users",
+        "displayName": "ادارة المستخدمين",
+        "description": null,
+        "id": 0
+      },
+      {
+        "name": "Pages.Roles",
+        "displayName": "إداررة الصلاحيات",
+        "description": null,
+        "id": 0
+      },
+      {
+        "name": "Pages.Users.Activation",
+        "displayName": "تفعيل المتخدمين ",
+        "description": null,
+        "id": 0
+      },
+      {
+        "name": "Pages.accept_order",
+        "displayName": "قبول طلب ",
+        "description": null,
+        "id": 0
       }
-    ],
-    "creationDate": "2024-03-25T15:30:41.662723",
-    "schedulingDate": "2024-03-26T16:15:00",
-    "startDate": null,
-    "endDate": null,
-    "tripStatus": 0,
-    "seatCost": 9500,
-    "totalCost": 66500,
-    "distance": 10788,
-    "availableSeats": 4,
-    "reservedSeats": 3,
-    "seatNumber": 7,
-    "note": null,
-    "driver": {
-      "fullName": "زاهر الرفاعي",
-      "name": "زاهر",
-      "surname": "الرفاعي",
-      "phoneNumber": "963988053691",
-      "imei": "354778343133909",
-      "avatar": "16979606145912qDvnInJ35.jpg",
-      "rating": 0.0,
-      "lastSeen": null,
-      "activeFrom": null,
-      "lastInternetConnection": null,
-      "isLoyaltySupscriper": false,
-      "isGasIncluded": null,
-      "carType": {
-        "userId": 2256,
-        "carBrand": "شانا",
-        "carModel": "شانا",
-        "carColor": "رصاصي",
-        "carNumber": "690119",
-        "seatsNumber": 7,
-        "carGovernorate": "دمشق",
-        "manufacturingYear": "2007",
-        "type": "سياحي"
-      },
-      "isExaminated": true,
-      "examination": "1701853785936D4aGtZN55v.jpg",
-      "id": 2256
-    },
-    "id": 981
+    ]
   },
   "targetUrl": null,
   "success": true,

@@ -22,8 +22,7 @@ class ReasonsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: isAllowed(AppPermissions.CREATION)
-          ? FloatingActionButton(
+      floatingActionButton:   FloatingActionButton(
               onPressed: () {
                 var reason = '';
                 NoteMessage.showCustomBottomSheet(
@@ -66,7 +65,7 @@ class ReasonsPage extends StatelessWidget {
               },
               child: const Icon(Icons.add, color: Colors.white),
             )
-          : null,
+          ,
       body: BlocBuilder<GetReasonsCubit, GetReasonsInitial>(
         builder: (context, state) {
           if (state.statuses.isLoading) {

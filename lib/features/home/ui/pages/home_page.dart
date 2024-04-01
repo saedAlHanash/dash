@@ -175,28 +175,27 @@ class _HomePageState extends State<HomePage> {
                 icon: Icons.dashboard,
               ),
 
-              if (isAllowed(AppPermissions.TRIPS))
-                AdminMenuItem(
-                  title: 'الرحلات',
-                  icon: Icons.turn_right_sharp,
-                  children: [
-                    if (isAllowed(AppPermissions.SHARED_TRIP))
-                      const AdminMenuItem(
-                          title: 'الرحلات التشاركية', route: '/shared_trips'),
-                    if (isAllowed(AppPermissions.TRIPS))
-                      const AdminMenuItem(title: 'الرحلات العادية', route: '/trips'),
-                  ],
-                ),
+              AdminMenuItem(
+                title: 'الرحلات',
+                icon: Icons.turn_right_sharp,
+                children: [
+                  if (allowedSharedTrips)
+                    const AdminMenuItem(
+                        title: 'الرحلات التشاركية', route: '/shared_trips'),
+                  if (allowedNormalTrips)
+                    const AdminMenuItem(title: 'الرحلات العادية', route: '/trips'),
+                ],
+              ),
               //المستخدمين
               AdminMenuItem(
                 title: 'المستخدمين',
                 icon: Icons.supervised_user_circle_sharp,
                 children: [
-                  if (isAllowed(AppPermissions.CUSTOMERS))
+                  if (allowedClients)
                     const AdminMenuItem(title: 'الزبائن', route: '/customers'),
-                  if (isAllowed(AppPermissions.DRIVERS))
+                  if (allowedDrivers)
                     const AdminMenuItem(title: 'السائقين', route: '/drivers'),
-                  if (isAllowed(AppPermissions.USERS))
+                  if (allowedAdmins)
                     const AdminMenuItem(title: 'مسؤولي النظام', route: '/sys_admins'),
                 ],
               ),
@@ -206,17 +205,17 @@ class _HomePageState extends State<HomePage> {
                   title: 'الطلبات',
                   icon: Icons.reorder_sharp,
                   children: [
-                    if (isAllowed(AppPermissions.EPAYMENT))
+                    if (allowedEPayments)
                       const AdminMenuItem(
                           title: 'مزودي الدفع',
                           route: '/epayments_provider',
                           icon: Icons.paypal),
-                    if (isAllowed(AppPermissions.COUPON))
+                    if (allowedCoupons)
                       const AdminMenuItem(
                           title: 'قسائم الحسم',
                           route: '/coupons',
                           icon: Icons.candlestick_chart),
-                    if (isAllowed(AppPermissions.CAR_CATEGORY))
+                    if (allowedCarCategories)
                       const AdminMenuItem(
                           title: 'أصناف السيارات',
                           route: '/car_categories',
@@ -227,143 +226,166 @@ class _HomePageState extends State<HomePage> {
                   title: 'النقاط والمسارات',
                   icon: Icons.timeline_sharp,
                   children: [
-                    if (isAllowed(AppPermissions.POINTS))
+                    if (allowedPoints)
                       const AdminMenuItem(
                         route: '/points',
                         icon: Icons.location_on_sharp,
                         title: 'النقاط',
                       ),
-                    const AdminMenuItem(
-                      icon: Icons.linear_scale_rounded,
-                      title: 'المسارات',
-                      route: "/paths",
-                    ),
+                    if (allowedPaths)
+                      const AdminMenuItem(
+                        icon: Icons.linear_scale_rounded,
+                        title: 'المسارات',
+                        route: "/paths",
+                      ),
                   ],
                 ),
                 AdminMenuItem(
                   title: 'عمليات إدارية',
                   icon: Icons.manage_accounts,
                   children: [
-                    const AdminMenuItem(
-                      title: 'المحافظات',
-                      route: '/government',
-                    ),
-                    if (isAllowed(AppPermissions.CAR_CATEGORY))
+                    if (allowedGovernorate)
+                      const AdminMenuItem(
+                        title: 'المحافظات',
+                        route: '/government',
+                      ),
+                    if (allowedInstitutions)
                       const AdminMenuItem(
                           title: 'المؤسسات',
                           route: '/institutions',
                           icon: Icons.home_work_outlined),
-                    if (isAllowed(AppPermissions.CAR_CATEGORY))
+                    if (allowedAgency)
                       const AdminMenuItem(
                           title: 'الوكلاء',
                           route: '/agencies',
                           icon: Icons.person_pin_outlined),
-                    if (isAllowed(AppPermissions.ROLES))
+                    if (allowedRoles)
                       const AdminMenuItem(
                           title: 'الأدوار', route: '/roles', icon: Icons.menu_book),
-                    const AdminMenuItem(
-                      title: 'إعدادات',
-                      route: '/systemParams',
-                      icon: Icons.settings,
-                    ),
-                    const AdminMenuItem(
-                        title: 'إدارة الإصدارات', route: '/systemVersion'),
+                    if (allowedSystemParams)
+                      const AdminMenuItem(
+                        title: 'إعدادات',
+                        route: '/systemParams',
+                        icon: Icons.settings,
+                      ),
+                    if (allowedVersionControl)
+                      const AdminMenuItem(
+                          title: 'إدارة الإصدارات', route: '/systemVersion'),
                   ],
                 ),
-                const AdminMenuItem(
+                AdminMenuItem(
                   title: 'الاشتراكات',
                   icon: Icons.ads_click,
                   children: [
-                    AdminMenuItem(
-                      title: 'الخطط',
-                      route: '/allPlans',
-                      icon: Icons.stay_primary_landscape_sharp,
-                    ),
-                    AdminMenuItem(
-                      title: 'المشتركين',
-                      route: '/user_plans',
-                      icon: Icons.supervised_user_circle_sharp,
-                    ),
-                    AdminMenuItem(
-                      title: 'الشركات',
-                      route: '/companies',
-                      icon: Icons.home_repair_service,
-                    ),
-                    AdminMenuItem(
-                      icon: Icons.linear_scale_rounded,
-                      title: 'مسارات الشركات',
-                      route: '/subscriptions',
-                    ),
-                    AdminMenuItem(
-                      icon: Icons.line_axis_sharp,
-                      title: 'الرحلات',
-                      route: '/planTrips',
-                    ),
-                    AdminMenuItem(
-                      icon: Icons.history,
-                      title: 'السجل',
-                      route: '/planTripsHistory',
-                    ),
+                    if (allowedPlans)
+                      const AdminMenuItem(
+                        title: 'الخطط',
+                        route: '/allPlans',
+                        icon: Icons.stay_primary_landscape_sharp,
+                      ),
+                    if (allowedEnrollments)
+                      const AdminMenuItem(
+                        title: 'المشتركين',
+                        route: '/user_plans',
+                        icon: Icons.supervised_user_circle_sharp,
+                      ),
+                    if (allowedCompanies)
+                      const AdminMenuItem(
+                        title: 'الشركات',
+                        route: '/companies',
+                        icon: Icons.home_repair_service,
+                      ),
+                    if (allowedCompanyPaths)
+                      const AdminMenuItem(
+                        icon: Icons.linear_scale_rounded,
+                        title: 'مسارات الشركات',
+                        route: '/subscriptions',
+                      ),
+                    if (allowedPlanTrips)
+                      const AdminMenuItem(
+                        icon: Icons.line_axis_sharp,
+                        title: 'الرحلات',
+                        route: '/planTrips',
+                      ),
+                    if (allowedPlanTripsHistory)
+                      const AdminMenuItem(
+                        icon: Icons.history,
+                        title: 'السجل',
+                        route: '/planTripsHistory',
+                      ),
                   ],
                 ),
                 AdminMenuItem(
                   title: 'عمليات مالية',
                   icon: Icons.payments_outlined,
                   children: [
-                    if (isAllowed(AppPermissions.REPORTS)) ...[
+                    if (allowedTransactions)
                       const AdminMenuItem(
                         title: 'التحويلات',
                         icon: Icons.mobiledata_off,
                         route: "/transactions",
                       ),
+                    if (allowedCompanyIncome)
                       const AdminMenuItem(
                         title: 'عائدات الشركة',
                         icon: Icons.incomplete_circle,
                         route: "/company_transfers",
                       ),
+                    if (allowedSyrianIncome)
                       const AdminMenuItem(
                         title: 'عائدات الهيئة الناظمة',
                         icon: Assets.iconsSyrianAgency,
                         route: "/syrian_agency_transfers",
                       ),
-                    ],
-                    if (isAllowed(AppPermissions.SETTINGS)) ...[
+
+                    if (allowedPayToSyrian)
                       const AdminMenuItem(
                         title: 'محاسبة الهيئة',
                         route: "/pay_to_syrian_agency_transfers",
                         icon: Assets.iconsSyrianAgency,
                       ),
+                    if (allowedPayToDriver)
                       const AdminMenuItem(
                         title: 'محاسبة السائقين',
                         route: "/payToDrivers",
                         icon: Icons.attach_money_outlined,
                       ),
+                    if (allowedPayToAgency)
                       const AdminMenuItem(
                         title: 'محاسبة الوكلاء',
                         route: "/payToAgency",
                         icon: Icons.attach_money_outlined,
                       ),
-                    ],
 
                     // const AdminMenuItem(title: 'التقاص', route: "/payToDrivers"),
                   ],
                 ),
               ],
 
-              if (isAllowed(AppPermissions.MESSAGES))
-                AdminMenuItem(children: [
-                  if (isAllowed(AppPermissions.SETTINGS))
+              AdminMenuItem(
+                children: [
+                  if (allowedNotifications)
                     const AdminMenuItem(
                         icon: Icons.notification_add,
                         title: 'إشعارات الزبائن',
                         route: "/notification"),
-                  const AdminMenuItem(
-                      icon: Icons.message, title: 'الشكاوى', route: "/ticket"),
-                  const AdminMenuItem(
-                      icon: Icons.sos, title: 'رسائل الاستغاثة', route: "/sos"),
-                ], icon: Icons.support_agent, title: 'التواصل'),
-
-              if (isAllowed(AppPermissions.SETTINGS))
+                  if (allowedTickets)
+                    const AdminMenuItem(
+                      icon: Icons.message,
+                      title: 'الشكاوى',
+                      route: "/ticket",
+                    ),
+                  if (allowedSos)
+                    const AdminMenuItem(
+                      icon: Icons.sos,
+                      title: 'رسائل الاستغاثة',
+                      route: "/sos",
+                    ),
+                ],
+                icon: Icons.support_agent,
+                title: 'التواصل',
+              ),
+              if (allowedPolicy)
                 const AdminMenuItem(
                     icon: Icons.privacy_tip_rounded,
                     title: 'سياسة الخصوصية',

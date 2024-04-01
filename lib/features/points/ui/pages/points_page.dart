@@ -77,7 +77,7 @@ class _PointsPageState extends State<PointsPage> {
         ),
       ],
       child: Scaffold(
-        floatingActionButton: isAllowed(AppPermissions.CREATION)||isAgency
+        floatingActionButton: allowedManagePoints || isAgency
             ? Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 mainAxisSize: MainAxisSize.min,

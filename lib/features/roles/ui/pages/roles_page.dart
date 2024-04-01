@@ -36,14 +36,13 @@ class _RolesPageState extends State<RolesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: isAllowed(AppPermissions.CREATION)
-          ? FloatingActionButton(
+      floatingActionButton:   FloatingActionButton(
               onPressed: () {
                 context.pushNamed(GoRouteName.createRole);
               },
               child: const Icon(Icons.add, color: Colors.white),
             )
-          : null,
+          ,
       body: BlocBuilder<AllRolesCubit, AllRolesInitial>(
         builder: (_, state) {
           if (state.statuses.isLoading) {
@@ -68,7 +67,7 @@ class _RolesPageState extends State<RolesPage> {
                       Wrap(
                         children: e.grantedPermissions.mapIndexed((i, permission) {
                           return DrawableText(
-                            text: permission,
+                            text:translatePermission( permission),
                             textAlign: TextAlign.start,
                           );
                         }).toList(),
@@ -103,7 +102,7 @@ class _RolesPageState extends State<RolesPage> {
                               },
                             ),
                           ),
-                          if (isAllowed(AppPermissions.UPDATE))
+                          if (allowedAdmins)
                             InkWell(
                               onTap: () {
                                 context.pushNamed(GoRouteName.createRole, extra: e);

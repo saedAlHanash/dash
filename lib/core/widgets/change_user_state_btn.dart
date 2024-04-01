@@ -15,8 +15,7 @@ class ChangeUserStateBtn extends StatelessWidget {
   final DriverModel user;
 
   @override
-  Widget build(BuildContext context) {
-    if (!isAllowed(AppPermissions.UPDATE)) return 0.0.verticalSpace;
+  Widget build(BuildContext context) {;
     return BlocBuilder<ChangeUserStateCubit, ChangeUserStateInitial>(
       buildWhen: (p, c) => c.id == user.id,
       builder: (context, state) {

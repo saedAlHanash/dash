@@ -17,6 +17,7 @@ class CreateRedeemCubit extends Cubit<CreateRedeemInitial> {
 
   Future<void> createRedeem(BuildContext context,
       {required RedeemRequest request}) async {
+
     emit(state.copyWith(statuses: CubitStatuses.loading, request: request));
     final pair = await _createRedeemApi(request: request);
 

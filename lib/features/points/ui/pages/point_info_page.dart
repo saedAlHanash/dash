@@ -82,10 +82,9 @@ class _PointInfoPageState extends State<PointInfoPage> {
   }
 
   void addPoints(List<TripPoint> result) {
-    try{
-    result.removeWhere((e) => e.id == widget.mapMediator?.pointId);
-
-    }catch(e){
+    try {
+      result.removeWhere((e) => e.id == widget.mapMediator?.pointId);
+    } catch (e) {
       loggerObject.e(e);
     }
 
@@ -374,15 +373,16 @@ class _PointInfoPageState extends State<PointInfoPage> {
           },
         ),
         20.0.verticalSpace,
-        if (isAllowed(AppPermissions.UPDATE)||isAgency)
-          if (!canEdit && !createMode)
-            Row(
-              children: [
+        if (!canEdit && !createMode)
+          Row(
+            children: [
+              if (allowedManagePoints || isAgency)
                 MyButton(
                   text: 'وضع التعديل؟',
                   onTap: () => setState(() => canEdit = true),
                 ),
-                10.0.horizontalSpace,
+              10.0.horizontalSpace,
+              if (allowedConnectPoint || isAgency)
                 MyButton(
                   text: 'توصيل بنقطة',
                   onTap: () {
@@ -442,8 +442,8 @@ class _PointInfoPageState extends State<PointInfoPage> {
                     );
                   },
                 ),
-              ],
-            ),
+            ],
+          ),
         10.0.verticalSpace,
         if (createMode || canEdit)
           BlocBuilder<CreatePointCubit, CreatePointInitial>(

@@ -31,10 +31,10 @@ final clientTableHeader = [
   if (!isTrans) "حالة السائق",
   "IMEI",
   if (!isTrans) "آخر ظهور",
-  if (isQareebAdmin) ...[
-    "الولاء",
-    "OTP",
-  ],
+
+  if (allowedLoyalty)  "الولاء",
+  if (allowedAdmins) "OTP",
+
   "العمليات",
 ];
 
@@ -65,7 +65,7 @@ class _DriverPageState extends State<DriverPage> {
           floatingActionButton: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              if (isAllowed(AppPermissions.CREATION))
+              if (allowedManageDrivers)
                 FloatingActionButton(
                   heroTag: '1',
                   onPressed: () {
@@ -167,16 +167,16 @@ class _DriverPageState extends State<DriverPage> {
                               if (!isTrans)
                                 '${e.lastInternetConnection?.formatDate ?? '-'}'
                                     '\n${e.lastInternetConnection?.formatTime ?? '-'}',
-                              if (isQareebAdmin) ...[
-                                LoyalSwitchWidget(driver: e),
-                                e.emailConfirmationCode,
-                              ],
+
+                               if (allowedLoyalty) LoyalSwitchWidget(driver: e),
+                              if (allowedAdmins)   e.emailConfirmationCode,
+
                               Row(
                                 mainAxisSize: MainAxisSize.min,
                                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
-                                  ChangeUserStateBtn(user: e),
-                                  if (isAllowed(AppPermissions.UPDATE))
+                                  if (allowedManageDrivers) ChangeUserStateBtn(user: e),
+                                  if (allowedManageDrivers)
                                     InkWell(
                                       onTap: () {
                                         context.pushNamed(GoRouteName.updateDriver,

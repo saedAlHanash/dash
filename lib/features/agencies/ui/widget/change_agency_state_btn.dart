@@ -16,7 +16,6 @@ class ChangeAgencyStateBtn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (!isAllowed(AppPermissions.UPDATE)) return 0.0.verticalSpace;
     return BlocBuilder<CreateAgencyCubit, CreateAgencyInitial>(
       buildWhen: (p, c) => c.request.id == user.id,
       builder: (context, state) {

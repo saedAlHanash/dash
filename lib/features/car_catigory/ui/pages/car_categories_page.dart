@@ -35,12 +35,10 @@ class CarCategoriesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: isAllowed(AppPermissions.CREATION)
-          ? FloatingActionButton(
-              onPressed: () => context.pushNamed(GoRouteName.createCarCategory),
-              child: const Icon(Icons.add, color: Colors.white),
-            )
-          : null,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => context.pushNamed(GoRouteName.createCarCategory),
+        child: const Icon(Icons.add, color: Colors.white),
+      ),
       body: BlocBuilder<AllCarCategoriesCubit, AllCarCategoriesInitial>(
         builder: (context, state) {
           if (state.statuses.isLoading) {
@@ -80,18 +78,17 @@ class CarCategoriesPage extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          InkWell(
-                            onTap: !isAllowed(AppPermissions.UPDATE)
-                                ? null
-                                : () {
-                                    context.pushNamed(GoRouteName.createCarCategory,
-                                        extra: e);
-                                  },
-                            child: const Icon(
-                              Icons.edit,
-                              color: Colors.amber,
+                          if (allowedCarCategories)
+                            InkWell(
+                              onTap: () {
+                                context.pushNamed(GoRouteName.createCarCategory,
+                                    extra: e);
+                              },
+                              child: const Icon(
+                                Icons.edit,
+                                color: Colors.amber,
+                              ),
                             ),
-                          ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: BlocConsumer<DeleteCarCatCubit, DeleteCarCatInitial>(

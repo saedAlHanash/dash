@@ -82,12 +82,11 @@ class _GovernoratesPageState extends State<GovernoratesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: isAllowed(AppPermissions.CREATION)
-          ? FloatingActionButton(
+      floatingActionButton:   FloatingActionButton(
               onPressed: () => showCreateDialog(),
               child: const Icon(Icons.add, color: Colors.white),
             )
-          : null,
+          ,
       body: BlocBuilder<GovernoratesCubit, GovernoratesInitial>(
         builder: (context, state) {
           if (state.statuses.isLoading) {

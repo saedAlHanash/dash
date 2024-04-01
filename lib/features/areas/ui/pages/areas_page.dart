@@ -87,12 +87,11 @@ class _AreasPageState extends State<AreasPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const AppBarWidget(),
-      floatingActionButton: isAllowed(AppPermissions.CREATION)
-          ? FloatingActionButton(
+      floatingActionButton:   FloatingActionButton(
               onPressed: () => showCreateDialog(),
               child: const Icon(Icons.add, color: Colors.white),
             )
-          : null,
+          ,
       body: BlocBuilder<AreasCubit, AreasInitial>(
         builder: (context, state) {
           if (state.statuses.isLoading) {

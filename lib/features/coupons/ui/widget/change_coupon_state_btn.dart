@@ -16,7 +16,6 @@ class ChangeCouponStateBtn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (!isAllowed(AppPermissions.UPDATE)) return 0.0.verticalSpace;
     return BlocBuilder<ChangeCouponStateCubit, ChangeCouponStateInitial>(
       buildWhen: (p, c) => c.id == coupon.id,
       builder: (context, state) {

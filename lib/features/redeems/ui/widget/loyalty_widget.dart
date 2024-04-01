@@ -12,6 +12,7 @@ import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_models/global.dart';
 import "package:universal_html/html.dart";
 
+import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/my_style.dart';
 import '../../../../core/util/shared_preferences.dart';
 import '../../../../core/widgets/my_card_widget.dart';
@@ -259,7 +260,7 @@ class ItemLoyal extends StatelessWidget {
                     }
                     return MyButton(
                       text: 'استبدال',
-                      active: count > 0,
+                      active: count > 0 && allowedLoyalty,
                       onTap: () {
                         final request = RedeemRequest(driverId: driverId, type: type);
                         context.read<CreateRedeemCubit>().createRedeem(

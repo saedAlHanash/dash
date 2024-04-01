@@ -33,14 +33,12 @@ class _AdminPageState extends State<AdminPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: isAllowed(AppPermissions.CREATION)
-          ? FloatingActionButton(
-              onPressed: () {
-                context.pushNamed(GoRouteName.createAdmin);
-              },
-              child: const Icon(Icons.add, color: Colors.white),
-            )
-          : null,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          context.pushNamed(GoRouteName.createAdmin);
+        },
+        child: const Icon(Icons.add, color: Colors.white),
+      ),
       body: BlocBuilder<AllAdminsCubit, AllAdminsInitial>(
         builder: (_, state) {
           if (state.statuses.isLoading) {
@@ -53,9 +51,7 @@ class _AdminPageState extends State<AdminPage> {
           return SingleChildScrollView(
             child: SaedTableWidget(
               onChangePage: (command) {
-                context
-                    .read<AllAdminsCubit>()
-                    .getAllAdmins(context, command: command);
+                context.read<AllAdminsCubit>().getAllAdmins(context, command: command);
               },
               command: state.command,
               title: adminsEableHeader,
@@ -68,22 +64,18 @@ class _AdminPageState extends State<AdminPage> {
                       e.phoneNumber,
                       e.isActive ? 'مفعل' : 'غير مفعل',
                       e.emailAddress,
-
                       Row(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          if (!e.emailAddress.contains('info@first-pioneers'))
-                            ChangeUserStateBtn(user: e),
-                          if (!e.emailAddress.contains('info@first-pioneers'))
-                            if (isAllowed(AppPermissions.UPDATE))
-                              InkWell(
-                                onTap: () {
-                                  context.pushNamed(GoRouteName.createAdmin, extra: e);
-                                },
-                                child: const CircleButton(
-                                    color: Colors.amber, icon: Icons.edit),
-                              ),
+                          ChangeUserStateBtn(user: e),
+                          InkWell(
+                            onTap: () {
+                              context.pushNamed(GoRouteName.createAdmin, extra: e);
+                            },
+                            child:
+                                const CircleButton(color: Colors.amber, icon: Icons.edit),
+                          ),
                           InkWell(
                             onTap: () {
                               context.pushNamed(GoRouteName.adminInfo, extra: e);
@@ -100,7 +92,6 @@ class _AdminPageState extends State<AdminPage> {
                   .toList(),
             ),
           );
-
         },
       ),
     );

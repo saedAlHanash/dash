@@ -33,12 +33,11 @@ class PlansPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: isAllowed(AppPermissions.CREATION)
-          ? FloatingActionButton(
+      floatingActionButton:   FloatingActionButton(
               onPressed: () => context.pushNamed(GoRouteName.createPlan),
               child: const Icon(Icons.add, color: Colors.white),
             )
-          : null,
+          ,
       body: BlocBuilder<AllPlansCubit, AllPlansInitial>(
         builder: (context, state) {
           if (state.statuses.isLoading) {
@@ -72,9 +71,7 @@ class PlansPage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           InkWell(
-                            onTap: !isAllowed(AppPermissions.UPDATE)
-                                ? null
-                                : () {
+                            onTap: () {
                                     context.pushNamed(
                                       GoRouteName.createPlan,
                                       extra: e,

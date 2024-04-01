@@ -1,3 +1,4 @@
+import 'package:qareeb_dash/core/util/checker_helper.dart';
 import "package:universal_html/html.dart";
 
 import 'package:drawable_text/drawable_text.dart';
@@ -44,7 +45,7 @@ class _CreateRolePageState extends State<CreateRolePage> {
     return BlocListener<CreateRoleCubit, CreateRoleInitial>(
       listenWhen: (p, c) => c.statuses.done,
       listener: (context, state) {
-            window.history.back();
+        window.history.back();
         context.read<AllRolesCubit>().getAllRoles(context);
       },
       child: Scaffold(
@@ -105,7 +106,6 @@ class _CreateRolePageState extends State<CreateRolePage> {
                 textAlign: TextAlign.center,
                 fontFamily: FontManager.cairoBold.name,
               ),
-
               BlocBuilder<AllPermissionsCubit, AllPermissionsInitial>(
                 builder: (context, state) {
                   if (state.statuses.isLoading) {
@@ -115,17 +115,16 @@ class _CreateRolePageState extends State<CreateRolePage> {
                   final list = state.result
                       .map((e) => SpinnerItem(
                           id: e.id,
-                          name: e.name,
-                          item: e,
+                          name: translatePermission(e.name),
+                          item: e.name,
                           isSelected: request.grantedPermissions.contains(e.name)))
                       .toList();
                   return MyCheckboxWidget(
                     items: list,
                     onSelectGetListItems: (list) {
-
                       request.grantedPermissions
                         ..clear()
-                        ..addAll(list.map((e) => e.name!).toList());
+                        ..addAll(list.map((e) => e.item.toString()).toList());
                     },
                   );
                 },
