@@ -29,7 +29,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   var email = isTestMode?'info@first-pioneers.com':'';
-  var password = isTestMode?'':'';
+  var password ;
 
   var isLoading = true;
 
@@ -41,10 +41,6 @@ class _LoginPageState extends State<LoginPage> {
         if (AppSharedPreference.isLogin) {
           context.pushNamed(GoRouteName.homePage);
         } else {
-          if(isTestMode){
-            final request = LoginRequest(email: email, password: password);
-            context.read<LoginCubit>().login(context, request: request);
-          }
           setState(() => isLoading = false);
         }
       },
@@ -91,7 +87,7 @@ class _LoginPageState extends State<LoginPage> {
                         liable: AppStringManager.enterPassword,
                         textAlign: TextAlign.left,
                         obscureText: true,
-                        initialValue: isTestMode?'123qwe':password,
+                        initialValue: password,
                         onChanged: (val) => password = val,
                       ),
                     ],
