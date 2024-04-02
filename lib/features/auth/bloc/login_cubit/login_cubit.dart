@@ -43,20 +43,20 @@ class LoginCubit extends Cubit<LoginInitial> {
       AppSharedPreference.cashRole(pair.first!.roleName);
       AppSharedPreference.cashEmail(request.email!);
 
-      var result = await _getPermissions(id: pair.first!.userId);
+      var result = await getPermissions(id: pair.first!.userId);
 
       if (result.first == null) {
         if (context.mounted) {
           NoteMessage.showSnakeBar(message: result.second ?? '', context: context);
-          return;
         }
+        return;
       }
       var s = '';
       for (var e in result.first!) {
         s += '$e,';
       }
       AppSharedPreference.cashPermissions(s);
-      emit(state.copyWith(statuses: CubitStatuses.error, error: pair.second));
+      // emit(state.copyWith(statuses: CubitStatuses.error, error: pair.second));
       emit(state.copyWith(statuses: CubitStatuses.done, result: pair.first));
     }
   }
@@ -81,24 +81,33 @@ class LoginCubit extends Cubit<LoginInitial> {
       return Pair(null, AppStringManager.noInternet);
     }
   }
+}
 
-  Future<Pair<List<String>?, String?>> _getPermissions({required int id}) async {
-    if (await network.isConnected) {
-      final response = await APIService().getApi(
-        url: PostUrl.getPermissions,
-        query: {'userId': id},
-      );
+Future<Pair<List<String>?, String?>> getPermissions({required int id}) async {
+  final response = await APIService().getApi(
+    url: PostUrl.getPermissions,
+    query: {'userId': id},
+  );
 
-      if (response.statusCode == 200) {
-        final json = response.json['result'] ?? <String, dynamic>{};
+  if (response.statusCode == 200) {
+    final json = response.json['result'] ?? <String, dynamic>{};
 
-        return Pair(
-            json == null ? <String>[] : List<String>.from(json!.map((x) => x)), null);
-      } else {
-        return Pair(null, ErrorManager.getApiError(response));
-      }
-    } else {
-      return Pair(null, AppStringManager.noInternet);
-    }
+    return Pair(json == null ? <String>[] : List<String>.from(json!.map((x) => x)), null);
+  } else {
+    return Pair(null, ErrorManager.getApiError(response));
   }
+}
+
+Future<void> refreshPermissions() async {
+  if (!AppSharedPreference.isLogin) return;
+  var result = await getPermissions(id: AppSharedPreference.getMyId);
+
+  if (result.first == null) {
+    return;
+  }
+  var s = '';
+  for (var e in result.first!) {
+    s += '$e,';
+  }
+  await AppSharedPreference.cashPermissions(s);
 }

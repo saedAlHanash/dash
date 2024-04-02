@@ -200,167 +200,165 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
 
-              if (isQareebAdmin) ...[
-                AdminMenuItem(
-                  title: 'الطلبات',
-                  icon: Icons.reorder_sharp,
-                  children: [
-                    if (allowedEPayments)
-                      const AdminMenuItem(
-                          title: 'مزودي الدفع',
-                          route: '/epayments_provider',
-                          icon: Icons.paypal),
-                    if (allowedCoupons)
-                      const AdminMenuItem(
-                          title: 'قسائم الحسم',
-                          route: '/coupons',
-                          icon: Icons.candlestick_chart),
-                    if (allowedCarCategories)
-                      const AdminMenuItem(
-                          title: 'أصناف السيارات',
-                          route: '/car_categories',
-                          icon: Icons.directions_car_filled_sharp),
-                  ],
-                ),
-                AdminMenuItem(
-                  title: 'النقاط والمسارات',
-                  icon: Icons.timeline_sharp,
-                  children: [
-                    if (allowedPoints)
-                      const AdminMenuItem(
-                        route: '/points',
-                        icon: Icons.location_on_sharp,
-                        title: 'النقاط',
-                      ),
-                    if (allowedPaths)
-                      const AdminMenuItem(
-                        icon: Icons.linear_scale_rounded,
-                        title: 'المسارات',
-                        route: "/paths",
-                      ),
-                  ],
-                ),
-                AdminMenuItem(
-                  title: 'عمليات إدارية',
-                  icon: Icons.manage_accounts,
-                  children: [
-                    if (allowedGovernorate)
-                      const AdminMenuItem(
-                        title: 'المحافظات',
-                        route: '/government',
-                      ),
-                    if (allowedInstitutions)
-                      const AdminMenuItem(
-                          title: 'المؤسسات',
-                          route: '/institutions',
-                          icon: Icons.home_work_outlined),
-                    if (allowedAgency)
-                      const AdminMenuItem(
-                          title: 'الوكلاء',
-                          route: '/agencies',
-                          icon: Icons.person_pin_outlined),
-                    if (allowedRoles)
-                      const AdminMenuItem(
-                          title: 'الأدوار', route: '/roles', icon: Icons.menu_book),
-                    if (allowedSystemParams)
-                      const AdminMenuItem(
-                        title: 'إعدادات',
-                        route: '/systemParams',
-                        icon: Icons.settings,
-                      ),
-                    if (allowedVersionControl)
-                      const AdminMenuItem(
-                          title: 'إدارة الإصدارات', route: '/systemVersion'),
-                  ],
-                ),
-                AdminMenuItem(
-                  title: 'الاشتراكات',
-                  icon: Icons.ads_click,
-                  children: [
-                    if (allowedPlans)
-                      const AdminMenuItem(
-                        title: 'الخطط',
-                        route: '/allPlans',
-                        icon: Icons.stay_primary_landscape_sharp,
-                      ),
-                    if (allowedEnrollments)
-                      const AdminMenuItem(
-                        title: 'المشتركين',
-                        route: '/user_plans',
-                        icon: Icons.supervised_user_circle_sharp,
-                      ),
-                    if (allowedCompanies)
-                      const AdminMenuItem(
-                        title: 'الشركات',
-                        route: '/companies',
-                        icon: Icons.home_repair_service,
-                      ),
-                    if (allowedCompanyPaths)
-                      const AdminMenuItem(
-                        icon: Icons.linear_scale_rounded,
-                        title: 'مسارات الشركات',
-                        route: '/subscriptions',
-                      ),
-                    if (allowedPlanTrips)
-                      const AdminMenuItem(
-                        icon: Icons.line_axis_sharp,
-                        title: 'الرحلات',
-                        route: '/planTrips',
-                      ),
-                    if (allowedPlanTripsHistory)
-                      const AdminMenuItem(
-                        icon: Icons.history,
-                        title: 'السجل',
-                        route: '/planTripsHistory',
-                      ),
-                  ],
-                ),
-                AdminMenuItem(
-                  title: 'عمليات مالية',
-                  icon: Icons.payments_outlined,
-                  children: [
-                    if (allowedTransactions)
-                      const AdminMenuItem(
-                        title: 'التحويلات',
-                        icon: Icons.mobiledata_off,
-                        route: "/transactions",
-                      ),
-                    if (allowedCompanyIncome)
-                      const AdminMenuItem(
-                        title: 'عائدات الشركة',
-                        icon: Icons.incomplete_circle,
-                        route: "/company_transfers",
-                      ),
-                    if (allowedSyrianIncome)
-                      const AdminMenuItem(
-                        title: 'عائدات الهيئة الناظمة',
-                        icon: Assets.iconsSyrianAgency,
-                        route: "/syrian_agency_transfers",
-                      ),
+              AdminMenuItem(
+                title: 'الطلبات',
+                icon: Icons.reorder_sharp,
+                children: [
+                  if (allowedEPayments)
+                    const AdminMenuItem(
+                        title: 'مزودي الدفع',
+                        route: '/epayments_provider',
+                        icon: Icons.paypal),
+                  if (allowedCoupons)
+                    const AdminMenuItem(
+                        title: 'قسائم الحسم',
+                        route: '/coupons',
+                        icon: Icons.candlestick_chart),
+                  if (allowedCarCategories)
+                    const AdminMenuItem(
+                        title: 'أصناف السيارات',
+                        route: '/car_categories',
+                        icon: Icons.directions_car_filled_sharp),
+                ],
+              ),
+              AdminMenuItem(
+                title: 'النقاط والمسارات',
+                icon: Icons.timeline_sharp,
+                children: [
+                  if (allowedPoints)
+                    const AdminMenuItem(
+                      route: '/points',
+                      icon: Icons.location_on_sharp,
+                      title: 'النقاط',
+                    ),
+                  if (allowedPaths)
+                    const AdminMenuItem(
+                      icon: Icons.linear_scale_rounded,
+                      title: 'المسارات',
+                      route: "/paths",
+                    ),
+                ],
+              ),
+              AdminMenuItem(
+                title: 'عمليات إدارية',
+                icon: Icons.manage_accounts,
+                children: [
+                  if (allowedGovernorate)
+                    const AdminMenuItem(
+                      title: 'المحافظات',
+                      route: '/government',
+                    ),
+                  if (allowedInstitutions)
+                    const AdminMenuItem(
+                        title: 'المؤسسات',
+                        route: '/institutions',
+                        icon: Icons.home_work_outlined),
+                  if (allowedAgency)
+                    const AdminMenuItem(
+                        title: 'الوكلاء',
+                        route: '/agencies',
+                        icon: Icons.person_pin_outlined),
+                  if (allowedRoles)
+                    const AdminMenuItem(
+                        title: 'الأدوار', route: '/roles', icon: Icons.menu_book),
+                  if (allowedSystemParams)
+                    const AdminMenuItem(
+                      title: 'إعدادات',
+                      route: '/systemParams',
+                      icon: Icons.settings,
+                    ),
+                  if (allowedVersionControl)
+                    const AdminMenuItem(
+                        title: 'إدارة الإصدارات', route: '/systemVersion'),
+                ],
+              ),
+              AdminMenuItem(
+                title: 'الاشتراكات',
+                icon: Icons.ads_click,
+                children: [
+                  if (allowedPlans)
+                    const AdminMenuItem(
+                      title: 'الخطط',
+                      route: '/allPlans',
+                      icon: Icons.stay_primary_landscape_sharp,
+                    ),
+                  if (allowedEnrollments)
+                    const AdminMenuItem(
+                      title: 'المشتركين',
+                      route: '/user_plans',
+                      icon: Icons.supervised_user_circle_sharp,
+                    ),
+                  if (allowedCompanies)
+                    const AdminMenuItem(
+                      title: 'الشركات',
+                      route: '/companies',
+                      icon: Icons.home_repair_service,
+                    ),
+                  if (allowedCompanyPaths)
+                    const AdminMenuItem(
+                      icon: Icons.linear_scale_rounded,
+                      title: 'مسارات الشركات',
+                      route: '/subscriptions',
+                    ),
+                  if (allowedPlanTrips)
+                    const AdminMenuItem(
+                      icon: Icons.line_axis_sharp,
+                      title: 'الرحلات',
+                      route: '/planTrips',
+                    ),
+                  if (allowedPlanTripsHistory)
+                    const AdminMenuItem(
+                      icon: Icons.history,
+                      title: 'السجل',
+                      route: '/planTripsHistory',
+                    ),
+                ],
+              ),
+              AdminMenuItem(
+                title: 'عمليات مالية',
+                icon: Icons.payments_outlined,
+                children: [
+                  if (allowedTransactions)
+                    const AdminMenuItem(
+                      title: 'التحويلات',
+                      icon: Icons.mobiledata_off,
+                      route: "/transactions",
+                    ),
+                  if (allowedCompanyIncome)
+                    const AdminMenuItem(
+                      title: 'عائدات الشركة',
+                      icon: Icons.incomplete_circle,
+                      route: "/company_transfers",
+                    ),
+                  if (allowedSyrianIncome)
+                    const AdminMenuItem(
+                      title: 'عائدات الهيئة الناظمة',
+                      icon: Assets.iconsSyrianAgency,
+                      route: "/syrian_agency_transfers",
+                    ),
 
-                    if (allowedPayToSyrian)
-                      const AdminMenuItem(
-                        title: 'محاسبة الهيئة',
-                        route: "/pay_to_syrian_agency_transfers",
-                        icon: Assets.iconsSyrianAgency,
-                      ),
-                    if (allowedPayToDriver)
-                      const AdminMenuItem(
-                        title: 'محاسبة السائقين',
-                        route: "/payToDrivers",
-                        icon: Icons.attach_money_outlined,
-                      ),
-                    if (allowedPayToAgency)
-                      const AdminMenuItem(
-                        title: 'محاسبة الوكلاء',
-                        route: "/payToAgency",
-                        icon: Icons.attach_money_outlined,
-                      ),
+                  if (allowedPayToSyrian)
+                    const AdminMenuItem(
+                      title: 'محاسبة الهيئة',
+                      route: "/pay_to_syrian_agency_transfers",
+                      icon: Assets.iconsSyrianAgency,
+                    ),
+                  if (allowedPayToDriver)
+                    const AdminMenuItem(
+                      title: 'محاسبة السائقين',
+                      route: "/payToDrivers",
+                      icon: Icons.attach_money_outlined,
+                    ),
+                  if (allowedPayToAgency)
+                    const AdminMenuItem(
+                      title: 'محاسبة الوكلاء',
+                      route: "/payToAgency",
+                      icon: Icons.attach_money_outlined,
+                    ),
 
-                    // const AdminMenuItem(title: 'التقاص', route: "/payToDrivers"),
-                  ],
-                ),
-              ],
+                  // const AdminMenuItem(title: 'التقاص', route: "/payToDrivers"),
+                ],
+              ),
 
               AdminMenuItem(
                 children: [

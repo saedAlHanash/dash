@@ -201,6 +201,7 @@ class AppPermissions {
   static String connectPoint = "Pages.Users";
   static String paths = "Pages.Roles";
   static String managePaths = "Pages.Users.Activation";
+  static String trans = "Pages.accept_order";
 
   static String governorate = "admin.governorate";
   static String institutions = "admin.institutions";
@@ -242,6 +243,9 @@ String translatePermission(String p) {
   }
   if (p == AppPermissions.manageNormalTrips) {
     return 'إدارة الرحلات العادية';
+  }
+  if (p == AppPermissions.trans) {
+    return 'صلاحيات وزارة النقل';
   }
   if (p == AppPermissions.sharedTrips) {
     return 'عرض الرحلات التشاركية';

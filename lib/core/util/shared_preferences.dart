@@ -7,6 +7,8 @@ import 'package:qareeb_models/global.dart';
 import 'package:qareeb_models/trip_process/data/response/trip_response.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'checker_helper.dart';
+
 class AppSharedPreference {
   static const _token = '1';
   static const _myId = '2';
@@ -32,8 +34,8 @@ class AppSharedPreference {
 
   static String get myPermissions => _prefs?.getString(_myPermission) ?? '';
 
-  static cashPermissions(String permissions) {
-    _prefs?.setString(_myPermission, permissions);
+  static cashPermissions(String permissions) async {
+    await _prefs?.setString(_myPermission, permissions);
   }
 
   static String get getWalletBalance => (_prefs?.getDouble(_wallet) ?? 0.0).formatPrice;
@@ -217,7 +219,8 @@ class AppSharedPreference {
   static String get getEmail => _prefs?.getString(_email) ?? '';
 }
 
-bool get isTrans => !isQareebAdmin && !isAgency;
+bool get isTrans =>
+    AppSharedPreference.myPermissions.contains(AppPermissions.trans) && !isQareebAdmin;
 
 bool get isAgency => AppSharedPreference.getAgencyId != 0;
 

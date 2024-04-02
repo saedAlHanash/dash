@@ -17,6 +17,7 @@ import 'package:qareeb_models/wallet/data/response/debt_response.dart';
 import 'package:qareeb_models/wallet/data/response/driver_financial_response.dart';
 
 import '../../../../core/strings/app_color_manager.dart';
+import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/my_style.dart';
 import '../../../../core/widgets/my_card_widget.dart';
 import '../../../../core/widgets/not_found_widget.dart';
@@ -126,12 +127,13 @@ class DriverFinancialWidget extends StatelessWidget {
                   filters: const DrawableText(
                     text: 'شحنات السائق\n',
                   ),
-                  title: const [
+                  title:  [
                     'المرسل',
                     'المستقبل',
                     'القيمة',
                     'الحالة',
                     'التاريخ',
+                    if(allowedManageDrivers)
                     'عمليات',
                   ],
                   data: state.result.charging.mapIndexed((i, e) {
@@ -141,7 +143,7 @@ class DriverFinancialWidget extends StatelessWidget {
                       e.amount == 0 ? 'عملية استرجاع' : e.amount.formatPrice,
                       e.status.arabicName,
                       e.date?.formatDate,
-                      (e.amount == 0 || isAgency)
+                      (e.amount == 0 || isAgency||!allowedManageDrivers)
                           ? 0.0.verticalSpace
                           : BlocBuilder<ReverseChargingCubit, ReverseChargingInitial>(
                               builder: (context, state) {
