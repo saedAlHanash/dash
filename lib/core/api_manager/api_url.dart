@@ -222,7 +222,10 @@ class PostUrl {
       'api/services/app/PathService/GetPlansPathEstimation';
 
   static const createPlanTrip = 'api/services/app/PlanTripsService/Create';
+
   static const createRepay = 'api/services/app/PaymentService/CreateRepayingTransfer';
+
+  static const shouldLogout = 'api/services/app/UserService/ShouldLogout';
 
   static const createFromSyrian =
       'api/services/app/PaymentService/CreateSyrianAuthorityPayOffPayment';

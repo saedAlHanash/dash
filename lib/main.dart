@@ -55,6 +55,8 @@ void main() async {
   }
   refreshPermissions();
 
+  await shouldLogout();
+
   runApp(
     MultiBlocProvider(
       providers: [

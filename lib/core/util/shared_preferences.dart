@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:qareeb_dash/core/api_manager/api_service.dart';
 import 'package:qareeb_dash/features/auth/data/response/login_response.dart';
+import 'package:qareeb_models/auth/data/response/login_response.dart';
 import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_models/global.dart';
 import 'package:qareeb_models/trip_process/data/response/trip_response.dart';
@@ -10,9 +11,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'checker_helper.dart';
 
 class AppSharedPreference {
-  static const _token = '1';
+  static const _token = '-1';
   static const _myId = '2';
-  static const _agencyId = '2851621';
   static const _phoneNumber = '3';
   static const _toScreen = '4';
   static const _policy = '5';
@@ -28,7 +28,8 @@ class AppSharedPreference {
   static const _email = '15';
   static const _role = '16';
   static const _distanceDriverRange = '17';
-  static const _testMode = '117';
+  static const _identifier = '18';
+  static const _agencyId = '19';
 
   static SharedPreferences? _prefs;
 
@@ -82,7 +83,13 @@ class AppSharedPreference {
 
   static int get getAgencyId => _prefs?.getInt(_agencyId) ?? 0;
 
-  static cashUser(UserModel user) async {
+  static cashIdentifier(String id) {
+    _prefs?.setString(_identifier, id);
+  }
+
+  static String get getIdentifier => _prefs?.getString(_identifier) ?? '';
+
+  static cashUser(LoginResult user) async {
     final string = jsonEncode(user);
     await _prefs?.setString(_user, string);
   }
@@ -98,10 +105,10 @@ class AppSharedPreference {
     return s;
   }
 
-  static UserModel get getUser {
+  static LoginResult get getUser {
     final string = _prefs?.getString(_user) ?? '{}';
 
-    return UserModel.fromJson(jsonDecode(string));
+    return LoginResult.fromJson(jsonDecode(string));
   }
 
   static String getToken() {

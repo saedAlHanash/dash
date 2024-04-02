@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/util/shared_preferences.dart';
+import 'package:qareeb_models/auth/data/response/login_response.dart';
 import 'package:qareeb_models/global.dart';
+import 'package:universal_html/html.dart';
 
 import '../../../../core/api_manager/api_service.dart';
 import '../../../../core/api_manager/api_url.dart';
@@ -42,6 +44,7 @@ class LoginCubit extends Cubit<LoginInitial> {
       AppSharedPreference.cashUser(pair.first!);
       AppSharedPreference.cashRole(pair.first!.roleName);
       AppSharedPreference.cashEmail(request.email!);
+      AppSharedPreference.cashIdentifier(pair.first?.identifier ?? '');
 
       var result = await getPermissions(id: pair.first!.userId);
 
@@ -61,7 +64,7 @@ class LoginCubit extends Cubit<LoginInitial> {
     }
   }
 
-  Future<Pair<UserModel?, String?>> _loginApi() async {
+  Future<Pair<LoginResult?, String?>> _loginApi() async {
     if (await network.isConnected) {
       final response = await APIService().postApi(
         url: PostUrl.login,
@@ -110,4 +113,24 @@ Future<void> refreshPermissions() async {
     s += '$e,';
   }
   await AppSharedPreference.cashPermissions(s);
+}
+
+Future<void> shouldLogout() async {
+  if (!AppSharedPreference.isLogin) return;
+  if (AppSharedPreference.getIdentifier.isEmpty) {
+    AppSharedPreference.logout();
+    APIService.reInitial();
+    window.location.reload();
+    return;
+  }
+  final response = await APIService().postApi(url: PostUrl.shouldLogout, query: {
+    'identifier': AppSharedPreference.getIdentifier,
+    'UserId': AppSharedPreference.getMyId,
+  });
+
+  if (response.statusCode == 401) {
+    AppSharedPreference.logout();
+    APIService.reInitial();
+    window.location.reload();
+  }
 }
