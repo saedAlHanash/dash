@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:qareeb_dash/core/util/checker_helper.dart';
 import 'package:qareeb_models/extensions.dart';
 
 import '../../features/auth/bloc/change_user_state_cubit/change_user_state_cubit.dart';
@@ -15,7 +13,7 @@ class ChangeUserStateBtn extends StatelessWidget {
   final DriverModel user;
 
   @override
-  Widget build(BuildContext context) {;
+  Widget build(BuildContext context) {
     return BlocBuilder<ChangeUserStateCubit, ChangeUserStateInitial>(
       buildWhen: (p, c) => c.id == user.id,
       builder: (context, state) {

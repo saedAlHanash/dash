@@ -268,6 +268,8 @@ class PutUrl {
   static const updateCompanyPath = 'api/services/app/CompanyPathService/Update';
 
   static const updatePlanTrip = 'api/services/app/PlanTripsService/Update';
+  static const changeAdminIdentifier = 'api/services/app/UserService/ChangeAdminIdentifier';
+
 }
 
 class DeleteUrl {

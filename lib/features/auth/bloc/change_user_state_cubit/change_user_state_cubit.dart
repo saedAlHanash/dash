@@ -36,6 +36,16 @@ class ChangeUserStateCubit extends Cubit<ChangeUserStateInitial> {
         url: userState ? PostUrl.activateUser : PostUrl.deactivateUser,
         query: {'userId': state.id});
 
+    if (!userState) {
+      await APIService().puttApi(
+        url: PutUrl.changeAdminIdentifier,
+        body: {
+          "identifier": "",
+          "userId": state.id,
+        },
+      );
+    }
+
     if (response.statusCode == 200) {
       return Pair(true, null);
     } else {

@@ -35,9 +35,9 @@ class LoginCubit extends Cubit<LoginInitial> {
       if (context.mounted) {
         NoteMessage.showSnakeBar(message: pair.second ?? '', context: context);
       }
-
       emit(state.copyWith(statuses: CubitStatuses.error, error: pair.second));
     } else {
+
       AppSharedPreference.cashToken(pair.first!.accessToken);
       AppSharedPreference.cashMyId(pair.first!.userId);
       AppSharedPreference.cashAgencyId(pair.first!.agencyId);
@@ -112,7 +112,9 @@ Future<void> refreshPermissions() async {
   for (var e in result.first!) {
     s += '$e,';
   }
+
   await AppSharedPreference.cashPermissions(s);
+  await AppSharedPreference.reload();
 }
 
 Future<void> shouldLogout() async {
