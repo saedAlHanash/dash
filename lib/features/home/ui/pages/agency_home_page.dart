@@ -178,10 +178,11 @@ class _AgencyHomePageState extends State<AgencyHomePage> {
               width: double.infinity,
               color: AppColorManager.mainColor,
               child: InkWell(
-                onTap: () {
+                onTap: () async{
                   // popAllJs();
-                  AppSharedPreference.logout();
+                  await AppSharedPreference.logout();
                   APIService.reInitial();
+                  await AppSharedPreference.reload();
                   window.location.reload();
                   // context.pushNamed(GoRouteName.loginPage);
                 },

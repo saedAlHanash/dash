@@ -41,8 +41,8 @@ class AppSharedPreference {
 
   static String get getWalletBalance => (_prefs?.getDouble(_wallet) ?? 0.0).formatPrice;
 
-  static void setWalletBalance(double balance) {
-    _prefs?.setDouble(_wallet, balance);
+  static Future<void> setWalletBalance(double balance) async {
+   await _prefs?.setDouble(_wallet, balance);
   }
 
   static bool get isLogin => getToken().isNotEmpty;
@@ -55,36 +55,36 @@ class AppSharedPreference {
     return _prefs != null;
   }
 
-  static cashToken(String token) {
-    _prefs?.setString(_token, token);
+  static cashToken(String token) async {
+    await _prefs?.setString(_token, token);
     APIService.reInitial();
   }
 
-  static cashPhoneNumber(String phone) {
-    _prefs?.setString(_phoneNumber, phone);
+  static cashPhoneNumber(String phone) async {
+   await _prefs?.setString(_phoneNumber, phone);
   }
 
-  static cashMyId(int id) {
-    _prefs?.setInt(_myId, id);
+  static cashMyId(int id) async {
+    await _prefs?.setInt(_myId, id);
   }
 
-  static set distanceDriverRange(int? range) {
+  static  distanceDriverRange(int? range)  async {
     if (range == null) return;
-    _prefs?.setInt(_distanceDriverRange, range);
+   await _prefs?.setInt(_distanceDriverRange, range);
   }
 
-  static int get distanceDriverRange => _prefs?.getInt(_distanceDriverRange) ?? 1000;
+  static int get getDistanceDriverRange => _prefs?.getInt(_distanceDriverRange) ?? 1000;
 
   static int get getMyId => _prefs?.getInt(_myId) ?? 0;
 
-  static cashAgencyId(int id) {
-    _prefs?.setInt(_agencyId, id);
+  static cashAgencyId(int id) async {
+    await _prefs?.setInt(_agencyId, id);
   }
 
   static int get getAgencyId => _prefs?.getInt(_agencyId) ?? 0;
 
-  static cashIdentifier(String id) {
-    _prefs?.setString(_identifier, id);
+  static cashIdentifier(String id) async {
+   await _prefs?.setString(_identifier, id);
   }
 
   static String get getIdentifier => _prefs?.getString(_identifier) ?? '';
@@ -94,8 +94,8 @@ class AppSharedPreference {
     await _prefs?.setString(_user, string);
   }
 
-  static cashRole(String id) {
-    _prefs?.setString(_role, id);
+  static cashRole(String id) async {
+   await _prefs?.setString(_role, id);
   }
 
   static String get getRole {
@@ -119,8 +119,8 @@ class AppSharedPreference {
     return _prefs?.getString(_phoneNumber) ?? '';
   }
 
-  static cashStateScreen(StateScreen appState) {
-    _prefs?.setInt(_toScreen, appState.index);
+  static cashStateScreen(StateScreen appState) async {
+   await _prefs?.setInt(_toScreen, appState.index);
   }
 
   static StateScreen getStateScreen() {
@@ -128,19 +128,19 @@ class AppSharedPreference {
     return StateScreen.values[index];
   }
 
-  static cashAcceptPolicy(bool isAccept) {
+  static cashAcceptPolicy(bool isAccept) async {
     if (isAccept == false) cashStateScreen(StateScreen.policy);
 
-    _prefs?.setBool(_policy, isAccept);
+   await _prefs?.setBool(_policy, isAccept);
   }
 
   static bool isAcceptPolicy() {
     return _prefs?.getBool(_policy) ?? false;
   }
 
-  static void cashPreviousTrips(List<Trip> result) {
+  static Future<void> cashPreviousTrips(List<Trip> result) async {
     var json = jsonEncode(result);
-    _prefs?.setString(_previousTrips, json);
+   await _prefs?.setString(_previousTrips, json);
   }
 
   static List<Trip> getPreviousTrips() {
@@ -155,30 +155,30 @@ class AppSharedPreference {
     _prefs?.clear();
   }
 
-  static void logout() {
-    _prefs?.remove(_token);
-    _prefs?.remove(_myId);
-    _prefs?.remove(_phoneNumber);
-    _prefs?.remove(_toScreen);
-    _prefs?.remove(_policy);
-    _prefs?.remove(_previousTrips);
-    _prefs?.remove(_profileInfo);
-    _prefs?.remove(_trip);
-    _prefs?.remove(_fireToken);
-    _prefs?.remove(_ime);
-    _prefs?.remove(_driverAvailable);
-    _prefs?.remove(_wallet);
-    _prefs?.remove(_myPermission);
-    _prefs?.remove(_user);
-    _prefs?.remove(_email);
+  static Future<void> logout() async {
+   await _prefs?.remove(_token);
+   await _prefs?.remove(_myId);
+   await _prefs?.remove(_phoneNumber);
+   await _prefs?.remove(_toScreen);
+   await _prefs?.remove(_policy);
+   await _prefs?.remove(_previousTrips);
+   await _prefs?.remove(_profileInfo);
+   await _prefs?.remove(_trip);
+   await _prefs?.remove(_fireToken);
+   await _prefs?.remove(_ime);
+   await _prefs?.remove(_driverAvailable);
+   await _prefs?.remove(_wallet);
+   await _prefs?.remove(_myPermission);
+   await _prefs?.remove(_user);
+   await _prefs?.remove(_email);
     // _prefs?.remove(_role);
     // _prefs?.remove(_testMode);
     APIService.reInitial();
   }
 
-  static void cashTrip(Trip? trip) {
+  static Future<void> cashTrip(Trip? trip) async {
     if (trip == null) return;
-    _prefs?.setString(_trip, jsonEncode(trip));
+   await _prefs?.setString(_trip, jsonEncode(trip));
   }
 
   static Future<void> reload() async => await _prefs?.reload();
@@ -194,11 +194,11 @@ class AppSharedPreference {
     _prefs?.remove(_trip);
   }
 
-  static void cashFireToken(String token) {
-    _prefs?.setString(_fireToken, token);
+  static Future<void> cashFireToken(String token) async {
+   await _prefs?.setString(_fireToken, token);
   }
 
-  static void cashIme(String ime) => _prefs?.setString(_ime, ime);
+  static Future<void> cashIme(String ime) async =>await _prefs?.setString(_ime, ime);
 
   static String getFireToken() {
     return _prefs?.getString(_fireToken) ?? '';
@@ -206,8 +206,8 @@ class AppSharedPreference {
 
   static String get ime => _prefs?.getString(_ime) ?? '';
 
-  static void cashDriverAvailable(bool isAvailable) {
-    _prefs?.setBool(_driverAvailable, isAvailable);
+  static Future<void> cashDriverAvailable(bool isAvailable) async {
+   await _prefs?.setBool(_driverAvailable, isAvailable);
   }
 
   static bool isShared() {
@@ -216,11 +216,11 @@ class AppSharedPreference {
   }
 
   static cashShared(bool sh) async {
-    _prefs?.setBool('sh', sh);
+   await _prefs?.setBool('sh', sh);
   }
 
-  static void cashEmail(String email) {
-    _prefs?.setString(_email, email);
+  static Future<void> cashEmail(String email) async {
+    await _prefs?.setString(_email, email);
   }
 
   static String get getEmail => _prefs?.getString(_email) ?? '';

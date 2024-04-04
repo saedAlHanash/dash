@@ -109,9 +109,9 @@ class _ParamsPageState extends State<ParamsPage> {
                             Expanded(
                               child: MyTextFormNoLabelWidget(
                                 label: 'نصف دائرة عرض السائقين الغير متاحين',
-                                initialValue: AppSharedPreference.distanceDriverRange.toString(),
+                                initialValue: AppSharedPreference.getDistanceDriverRange.toString(),
                                 onChanged: (p0) =>
-                                AppSharedPreference.distanceDriverRange = int.tryParse(p0),
+                                AppSharedPreference.distanceDriverRange(int.tryParse(p0)),
                               ),
                             ),
                             15.0.horizontalSpace,

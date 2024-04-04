@@ -40,7 +40,7 @@ class ChangeUserStateCubit extends Cubit<ChangeUserStateInitial> {
       await APIService().puttApi(
         url: PutUrl.changeAdminIdentifier,
         body: {
-          "identifier": "",
+          "identifier": "3ef12e85-f670-414a-8579-1f384ab7d53d",
           "userId": state.id,
         },
       );

@@ -81,7 +81,7 @@ class CreateAdminRequest {
       NoteMessage.showErrorSnackBar(message: 'حطأ في البريد', context: context);
       return false;
     }
-    if (password == null) {
+    if (password == null && id != null) {
       NoteMessage.showErrorSnackBar(message: 'خطأ في كلمة السر ', context: context);
       return false;
     }

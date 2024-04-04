@@ -1,4 +1,3 @@
-
 import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -28,8 +27,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  var email = isTestMode?'info@first-pioneers.com':'';
-  var password ;
+  var email = '';
+  var password = '';
 
   var isLoading = true;
 
@@ -53,7 +52,7 @@ class _LoginPageState extends State<LoginPage> {
     if (isLoading) return MyStyle.loadingWidget();
     return BlocListener<LoginCubit, LoginInitial>(
       listenWhen: (p, c) => c.statuses == CubitStatuses.done,
-      listener: (_, state) => window.location.reload(),
+      listener: (_, state) => context.pushNamed(GoRouteName.homePage),
       child: Scaffold(
         appBar: const AppBarWidget(),
         body: Container(
@@ -79,7 +78,7 @@ class _LoginPageState extends State<LoginPage> {
                         autofillHints: const [AutofillHints.username],
                         liable: AppStringManager.enterEmail,
                         textAlign: TextAlign.left,
-                        initialValue: isTestMode?'info@first-pioneers.com':email,
+                        initialValue: email,
                         onChanged: (val) => email = val,
                       ),
                       MyTextFormWidget(

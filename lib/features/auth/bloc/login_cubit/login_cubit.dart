@@ -37,15 +37,22 @@ class LoginCubit extends Cubit<LoginInitial> {
       }
       emit(state.copyWith(statuses: CubitStatuses.error, error: pair.second));
     } else {
-
-      AppSharedPreference.cashToken(pair.first!.accessToken);
-      AppSharedPreference.cashMyId(pair.first!.userId);
-      AppSharedPreference.cashAgencyId(pair.first!.agencyId);
-      AppSharedPreference.cashUser(pair.first!);
-      AppSharedPreference.cashRole(pair.first!.roleName);
-      AppSharedPreference.cashEmail(request.email!);
-      AppSharedPreference.cashIdentifier(pair.first?.identifier ?? '');
-
+      if (pair.first?.isActive == false && context.mounted) {
+        NoteMessage.showErrorDialog(
+          context,
+          text: 'الحساب متوقف يرجى مراجعة الإدارة',
+        );
+        emit(state.copyWith(statuses: CubitStatuses.error));
+        return;
+      }
+      await AppSharedPreference.cashToken(pair.first!.accessToken);
+      await AppSharedPreference.cashMyId(pair.first!.userId);
+      await AppSharedPreference.cashAgencyId(pair.first!.agencyId);
+      await AppSharedPreference.cashUser(pair.first!);
+      await AppSharedPreference.cashRole(pair.first!.roleName);
+      await AppSharedPreference.cashEmail(request.email!);
+      await AppSharedPreference.cashIdentifier(pair.first?.identifier ?? '');
+      await AppSharedPreference.reload();
       var result = await getPermissions(id: pair.first!.userId);
 
       if (result.first == null) {
@@ -58,7 +65,8 @@ class LoginCubit extends Cubit<LoginInitial> {
       for (var e in result.first!) {
         s += '$e,';
       }
-      AppSharedPreference.cashPermissions(s);
+      await AppSharedPreference.cashPermissions(s);
+      await AppSharedPreference.reload();
       // emit(state.copyWith(statuses: CubitStatuses.error, error: pair.second));
       emit(state.copyWith(statuses: CubitStatuses.done, result: pair.first));
     }
@@ -120,8 +128,9 @@ Future<void> refreshPermissions() async {
 Future<void> shouldLogout() async {
   if (!AppSharedPreference.isLogin) return;
   if (AppSharedPreference.getIdentifier.isEmpty) {
-    AppSharedPreference.logout();
+    await AppSharedPreference.logout();
     APIService.reInitial();
+    await AppSharedPreference.reload();
     window.location.reload();
     return;
   }
@@ -131,8 +140,9 @@ Future<void> shouldLogout() async {
   });
 
   if (response.statusCode == 401) {
-    AppSharedPreference.logout();
+    await AppSharedPreference.logout();
     APIService.reInitial();
+    await AppSharedPreference.reload();
     window.location.reload();
   }
 }

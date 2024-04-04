@@ -216,6 +216,53 @@ class NoteMessage {
     return (result ?? false);
   }
 
+  static Future<bool> showErrorDialog(BuildContext context,
+      {required String text, Function(dynamic val)? onCancel}) async {
+    // show the dialog
+    final result = await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          clipBehavior: Clip.hardEdge,
+          child: Container(
+            width: 0.6.sw,
+            padding: const EdgeInsets.all(20.0).r,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(
+                Radius.circular(20.0.r),
+              ),
+            ),
+            clipBehavior: Clip.hardEdge,
+            child: Column(
+              children: [
+                20.0.verticalSpace,
+                ImageMultiType(
+                  url: Icons.error_outline,
+                  color: Colors.red,
+                  width: 75.0.r,
+                ),
+                20.0.verticalSpace,
+                DrawableText(
+                  text: text,
+                  color: Colors.black,
+                  size: 18.0.sp,
+                  textAlign: TextAlign.center,
+                  matchParent: true,
+                ),
+                20.0.verticalSpace,
+                MyButton(
+                  onTap: () => Navigator.pop(context),
+                  text: 'رجوع',
+                )
+              ],
+            ),
+          ),
+        );
+      },
+    );
+    return (result ?? false);
+  }
+
   static Future<bool> showImageDialog(
     BuildContext context, {
     required String image,
