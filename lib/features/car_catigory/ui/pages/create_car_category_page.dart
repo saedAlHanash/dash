@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_dash/core/util/shared_preferences.dart';
 import 'package:qareeb_dash/core/widgets/my_button.dart';
 import 'package:qareeb_dash/core/widgets/my_card_widget.dart';
 import 'package:qareeb_dash/core/widgets/my_text_form_widget.dart';
@@ -88,6 +89,7 @@ class _CreateCarCategoryPageState extends State<CreateCarCategoryPage> {
                       children: [
                         Expanded(
                           child: MyTextFormNoLabelWidget(
+                            enable: !isAgency,
                             label: 'اسم التصنيف',
                             initialValue: request.name,
                             onChanged: (p0) {
@@ -98,6 +100,7 @@ class _CreateCarCategoryPageState extends State<CreateCarCategoryPage> {
                         15.0.horizontalSpace,
                         Expanded(
                           child: MyTextFormNoLabelWidget(
+                            enable: !isAgency,
                             label: 'عدد المقاعد الافتراضي',
                             initialValue: request.seatNumber?.toString(),
                             onChanged: (p0) {
@@ -111,6 +114,7 @@ class _CreateCarCategoryPageState extends State<CreateCarCategoryPage> {
                       children: [
                         Expanded(
                           child: MyTextFormNoLabelWidget(
+                            enable: !isAgency,
                             label: 'حصة الهيئة نسبة مئوية',
                             initialValue: request.syrianAuthorityRatio?.toString(),
                             maxLength: 2,
@@ -132,7 +136,13 @@ class _CreateCarCategoryPageState extends State<CreateCarCategoryPage> {
                         ),
                       ],
                     ),
-                    const Divider(),
+                  ],
+                ),
+              ),
+              10.0.verticalSpace,
+              MyCardWidget(
+                child: Column(
+                  children: [
                     DrawableText(
                       text: 'الرحلات التشاركية',
                       size: 25.0.sp,
@@ -145,6 +155,7 @@ class _CreateCarCategoryPageState extends State<CreateCarCategoryPage> {
                       children: [
                         Expanded(
                           child: MyTextFormNoLabelWidget(
+                            enable: !isAgency,
                             label: 'سعر الكيلو متر (عدد صحيح بدون فاصلة)',
                             initialValue: request.sharedKMOverCost?.toString(),
                             onChanged: (p0) {
@@ -156,6 +167,7 @@ class _CreateCarCategoryPageState extends State<CreateCarCategoryPage> {
                         15.0.horizontalSpace,
                         Expanded(
                           child: MyTextFormNoLabelWidget(
+                            enable: !isAgency,
                             label: 'نسبة السائق من الرحلات (1 -> 100) %',
                             initialValue: request.sharedDriverRatio?.toString(),
                             onChanged: (p0) {
@@ -166,6 +178,7 @@ class _CreateCarCategoryPageState extends State<CreateCarCategoryPage> {
                         15.0.horizontalSpace,
                         Expanded(
                           child: MyTextFormNoLabelWidget(
+                            enable: !isAgency,
                             label: 'أقل مسافة مسار للرحلة التشاركية (متر)',
                             initialValue:
                                 request.sharedMinimumDistanceInMeters?.toString(),
@@ -180,6 +193,7 @@ class _CreateCarCategoryPageState extends State<CreateCarCategoryPage> {
                       children: [
                         Expanded(
                           child: MyTextFormNoLabelWidget(
+                            enable: !isAgency,
                             label: 'نسبة ولاء الزيت ',
                             initialValue: request.sharedOilRatio?.toString(),
                             onChanged: (p0) {
@@ -190,6 +204,7 @@ class _CreateCarCategoryPageState extends State<CreateCarCategoryPage> {
                         15.0.horizontalSpace,
                         Expanded(
                           child: MyTextFormNoLabelWidget(
+                            enable: !isAgency,
                             label: 'نسبة ولاء الذهب',
                             initialValue: request.sharedGoldRatio?.toString(),
                             onChanged: (p0) {
@@ -200,6 +215,7 @@ class _CreateCarCategoryPageState extends State<CreateCarCategoryPage> {
                         15.0.horizontalSpace,
                         Expanded(
                           child: MyTextFormNoLabelWidget(
+                            enable: !isAgency,
                             label: 'نسبة ولاء الإطارات',
                             initialValue: request.sharedTiresRatio?.toString(),
                             onChanged: (p0) {
@@ -210,6 +226,7 @@ class _CreateCarCategoryPageState extends State<CreateCarCategoryPage> {
                         15.0.horizontalSpace,
                         Expanded(
                           child: MyTextFormNoLabelWidget(
+                            enable: !isAgency,
                             label: 'نسبة ولاء البنزين',
                             initialValue: request.sharedGasRatio?.toString(),
                             onChanged: (p0) {
@@ -219,6 +236,13 @@ class _CreateCarCategoryPageState extends State<CreateCarCategoryPage> {
                         ),
                       ],
                     ),
+                  ],
+                ),
+              ),
+              10.0.verticalSpace,
+              MyCardWidget(
+                child: Column(
+                  children: [
                     DrawableText(
                       text: 'الرحلات العادية',
                       size: 25.0.sp,
@@ -231,6 +255,7 @@ class _CreateCarCategoryPageState extends State<CreateCarCategoryPage> {
                       children: [
                         Expanded(
                           child: MyTextFormNoLabelWidget(
+                            enable: !isAgency,
                             label: 'سعر الكيلو متر (عدد صحيح بدون فاصلة)',
                             initialValue: request.dayKMOverCost?.toString(),
                             onChanged: (p0) {
@@ -242,6 +267,7 @@ class _CreateCarCategoryPageState extends State<CreateCarCategoryPage> {
                         15.0.horizontalSpace,
                         Expanded(
                           child: MyTextFormNoLabelWidget(
+                            enable: !isAgency,
                             label: 'أقل كلفة للرحلة (عدد صحيح بدون فاصلة)',
                             initialValue: request.minimumDayPrice?.toString(),
                             onChanged: (p0) {
@@ -253,6 +279,7 @@ class _CreateCarCategoryPageState extends State<CreateCarCategoryPage> {
                         15.0.horizontalSpace,
                         Expanded(
                           child: MyTextFormNoLabelWidget(
+                            enable: !isAgency,
                             label: 'نسبة السائق من الرحلات (1 -> 100) %',
                             initialValue: request.driverRatio?.toString(),
                             onChanged: (p0) {
@@ -265,7 +292,8 @@ class _CreateCarCategoryPageState extends State<CreateCarCategoryPage> {
                     Row(
                       children: [
                         Expanded(
-                          child:  MyTextFormNoLabelWidget(
+                          child: MyTextFormNoLabelWidget(
+                            enable: !isAgency,
                             label: 'متغير السعر',
                             initialValue: request.priceVariant?.toString(),
                             onChanged: (p0) {
@@ -275,7 +303,8 @@ class _CreateCarCategoryPageState extends State<CreateCarCategoryPage> {
                         ),
                         15.0.horizontalSpace,
                         Expanded(
-                          child:  MyTextFormNoLabelWidget(
+                          child: MyTextFormNoLabelWidget(
+                            enable: !isAgency,
                             label: 'سعر دقيقة الانتظار',
                             initialValue: request.waitingMinuetPrice?.toString(),
                             onChanged: (p0) {
@@ -285,7 +314,8 @@ class _CreateCarCategoryPageState extends State<CreateCarCategoryPage> {
                         ),
                         15.0.horizontalSpace,
                         Expanded(
-                          child:  MyTextFormNoLabelWidget(
+                          child: MyTextFormNoLabelWidget(
+                            enable: !isAgency,
                             label: 'أقل مدة انتظار',
                             initialValue: request.minimumWaitingMinuets?.toString(),
                             onChanged: (p0) {
@@ -293,14 +323,13 @@ class _CreateCarCategoryPageState extends State<CreateCarCategoryPage> {
                             },
                           ),
                         ),
-
-
                       ],
                     ),
                     Row(
                       children: [
                         Expanded(
                           child: MyTextFormNoLabelWidget(
+                            enable: !isAgency,
                             label: 'نسبة ولاء الزيت ',
                             initialValue: request.normalOilRatio?.toString(),
                             onChanged: (p0) {
@@ -311,6 +340,7 @@ class _CreateCarCategoryPageState extends State<CreateCarCategoryPage> {
                         15.0.horizontalSpace,
                         Expanded(
                           child: MyTextFormNoLabelWidget(
+                            enable: !isAgency,
                             label: 'نسبة ولاء الذهب',
                             initialValue: request.normalGoldRatio?.toString(),
                             onChanged: (p0) {
@@ -321,6 +351,7 @@ class _CreateCarCategoryPageState extends State<CreateCarCategoryPage> {
                         15.0.horizontalSpace,
                         Expanded(
                           child: MyTextFormNoLabelWidget(
+                            enable: !isAgency,
                             label: 'نسبة ولاء الإطارات',
                             initialValue: request.normalTiresRatio?.toString(),
                             onChanged: (p0) {
@@ -331,6 +362,7 @@ class _CreateCarCategoryPageState extends State<CreateCarCategoryPage> {
                         15.0.horizontalSpace,
                         Expanded(
                           child: MyTextFormNoLabelWidget(
+                            enable: !isAgency,
                             label: 'نسبة ولاء البنزين',
                             initialValue: request.normalGasRatio?.toString(),
                             onChanged: (p0) {
@@ -340,6 +372,13 @@ class _CreateCarCategoryPageState extends State<CreateCarCategoryPage> {
                         ),
                       ],
                     ),
+                  ],
+                ),
+              ),
+              10.0.verticalSpace,
+              MyCardWidget(
+                child: Column(
+                  children: [
                     DrawableText(
                       text: 'الاشتراكات',
                       size: 25.0.sp,
@@ -352,6 +391,7 @@ class _CreateCarCategoryPageState extends State<CreateCarCategoryPage> {
                       children: [
                         Expanded(
                           child: MyTextFormNoLabelWidget(
+                            enable: !isAgency,
                             label: 'سعر الكيلو متر (عدد صحيح بدون فاصلة)',
                             initialValue: request.planKmCost?.toString(),
                             onChanged: (p0) {
@@ -362,6 +402,7 @@ class _CreateCarCategoryPageState extends State<CreateCarCategoryPage> {
                         15.0.horizontalSpace,
                         Expanded(
                           child: MyTextFormNoLabelWidget(
+                            enable: !isAgency,
                             label: 'أقل كلفة للرحلة (عدد صحيح بدون فاصلة)',
                             initialValue: request.planMinimumCost?.toString(),
                             onChanged: (p0) {
@@ -372,6 +413,7 @@ class _CreateCarCategoryPageState extends State<CreateCarCategoryPage> {
                         15.0.horizontalSpace,
                         Expanded(
                           child: MyTextFormNoLabelWidget(
+                            enable: !isAgency,
                             label: 'نسبة السائق من الرحلات (1 -> 100) %',
                             initialValue: request.planDriverRation?.toString(),
                             onChanged: (p0) {
@@ -382,6 +424,7 @@ class _CreateCarCategoryPageState extends State<CreateCarCategoryPage> {
                         15.0.horizontalSpace,
                         Expanded(
                           child: MyTextFormNoLabelWidget(
+                            enable: !isAgency,
                             label: 'أقل مسافة مسار لرحلة الاشتراكات (متر)',
                             initialValue: request.planMinimumDistanceInMeters?.toString(),
                             onChanged: (p0) {
@@ -394,6 +437,7 @@ class _CreateCarCategoryPageState extends State<CreateCarCategoryPage> {
                   ],
                 ),
               ),
+              if(!isAgency)
               BlocBuilder<CreateCarCategoryCubit, CreateCarCategoryInitial>(
                 builder: (context, state) {
                   if (state.statuses.isLoading) {

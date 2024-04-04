@@ -217,10 +217,10 @@ class CreateCarCatRequest {
       NoteMessage.showErrorSnackBar(message: 'خطأ في نسبة الولاء', context: context);
       return false;
     }
-    if (syrianAuthorityRatio == 0) {
-      NoteMessage.showErrorSnackBar(message: 'خطأ في نسبة الهيئة الناظمة', context: context);
-      return false;
-    }
+    // if (syrianAuthorityRatio == 0) {
+    //   NoteMessage.showErrorSnackBar(message: 'خطأ في نسبة الهيئة الناظمة', context: context);
+    //   return false;
+    // }
 
     if (sharedTiresRatio == 0) {
       NoteMessage.showErrorSnackBar(message: 'خطأ في نسبة الولاء', context: context);
@@ -232,15 +232,15 @@ class CreateCarCatRequest {
       return false;
     }
     if (planDriverRation == 0) {
-      NoteMessage.showErrorSnackBar(message: 'خطأ في متغير السعر', context: context);
+      NoteMessage.showErrorSnackBar(message: 'خطا في حصة السائق', context: context);
       return false;
     }
     if (planKmCost == 0) {
-      NoteMessage.showErrorSnackBar(message: 'خطأ في متغير السعر', context: context);
+      NoteMessage.showErrorSnackBar(message: 'خطا في كلفة الاشتراكات', context: context);
       return false;
     }
     if (planMinimumCost == 0) {
-      NoteMessage.showErrorSnackBar(message: 'خطأ في متغير السعر', context: context);
+      NoteMessage.showErrorSnackBar(message: 'خطا في اقل كلفة للاشتراكات', context: context);
       return false;
     }
 

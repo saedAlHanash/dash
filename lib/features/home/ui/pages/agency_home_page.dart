@@ -26,6 +26,8 @@ import '../../../accounts/data/request/transfer_filter_request.dart';
 import '../../../agencies/bloc/agency_report_cubit/agency_report_cubit.dart';
 import '../../../agencies/ui/pages/agency_report_page.dart';
 import '../../../auth/bloc/change_user_state_cubit/change_user_state_cubit.dart';
+import '../../../car_catigory/bloc/delete_car_cat_cubit/delete_car_cat_cubit.dart';
+import '../../../car_catigory/ui/pages/car_categories_page.dart';
 import '../../../drivers/bloc/loyalty_cubit/loyalty_cubit.dart';
 import '../../../drivers/ui/pages/drivers_page.dart';
 import '../../../pay_to_drivers/ui/pages/financial_page.dart';
@@ -35,6 +37,7 @@ import '../../../temp_trips/bloc/delete_temp_trip_cubit/delete_temp_trip_cubit.d
 import '../../../temp_trips/ui/pages/temp_trips_page.dart';
 import '../../../ticket/bloc/replay_ticket_cubit/replay_ticket_cubit.dart';
 import '../../../ticket/ui/pages/tickets_page.dart';
+import '../../bloc/home_cubit/home_cubit/home_cubit.dart';
 import '../../bloc/nav_home_cubit/nav_home_cubit.dart';
 import '../screens/dashboard_page.dart';
 
@@ -140,6 +143,11 @@ class _AgencyHomePageState extends State<AgencyHomePage> {
               ),
 
               AdminMenuItem(
+                  title: 'أصناف السيارات',
+                  route: '/car_categories',
+                  icon: Icons.directions_car_filled_sharp),
+
+              AdminMenuItem(
                 title: 'محاسبة السائقين',
                 route: "/payToDrivers",
                 icon: Icons.payments_outlined,
@@ -209,6 +217,7 @@ class _AgencyHomePageState extends State<AgencyHomePage> {
                           sl<RedeemsCubit>()
                             ..getRedeems(context)),
                       BlocProvider(create: (context) => sl<LoyaltyCubit>()),
+                      BlocProvider(create: (_) => sl<HomeCubit>()..getHome(_)),
                     ],
                     child: const DashboardPage(),
                   );
@@ -224,7 +233,13 @@ class _AgencyHomePageState extends State<AgencyHomePage> {
                   return const SharedTripsPage();
                 case "/trips":
                   return const TripsPage();
-
+                case "/car_categories":
+                  return MultiBlocProvider(
+                    providers: [
+                      BlocProvider(create: (context) => sl<DeleteCarCatCubit>()),
+                    ],
+                    child: const CarCategoriesPage(),
+                  );
                 case "/ticket":
                   return MultiBlocProvider(
                     providers: [

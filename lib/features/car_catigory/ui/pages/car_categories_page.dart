@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_multi_type/round_image_widget.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_dash/core/util/shared_preferences.dart';
 import 'package:qareeb_dash/core/widgets/not_found_widget.dart';
 import 'package:qareeb_dash/core/widgets/saed_taple_widget.dart';
 import 'package:qareeb_dash/router/go_route_pages.dart';
@@ -35,10 +36,12 @@ class CarCategoriesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => context.pushNamed(GoRouteName.createCarCategory),
-        child: const Icon(Icons.add, color: Colors.white),
-      ),
+      floatingActionButton: (!allowedCarCategories)
+          ? null
+          : FloatingActionButton(
+              onPressed: () => context.pushNamed(GoRouteName.createCarCategory),
+              child: const Icon(Icons.add, color: Colors.white),
+            ),
       body: BlocBuilder<AllCarCategoriesCubit, AllCarCategoriesInitial>(
         builder: (context, state) {
           if (state.statuses.isLoading) {
@@ -78,6 +81,17 @@ class CarCategoriesPage extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
+                          if (isAgency)
+                            InkWell(
+                              onTap: () {
+                                context.pushNamed(GoRouteName.createCarCategory,
+                                    extra: e);
+                              },
+                              child: const Icon(
+                                Icons.info_outline,
+                                color: Colors.amber,
+                              ),
+                            ),
                           if (allowedCarCategories)
                             InkWell(
                               onTap: () {
@@ -89,34 +103,35 @@ class CarCategoriesPage extends StatelessWidget {
                                 color: Colors.amber,
                               ),
                             ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: BlocConsumer<DeleteCarCatCubit, DeleteCarCatInitial>(
-                              listener: (context, state) {
-                                context
-                                    .read<AllCarCategoriesCubit>()
-                                    .getCarCategories(context);
-                              },
-                              listenWhen: (p, c) => c.statuses.done,
-                              buildWhen: (p, c) => c.id == e.id,
-                              builder: (context, state) {
-                                if (state.statuses.isLoading) {
-                                  return MyStyle.loadingWidget();
-                                }
-                                return InkWell(
-                                  onTap: () {
-                                    context
-                                        .read<DeleteCarCatCubit>()
-                                        .deleteCarCat(context, id: e.id);
-                                  },
-                                  child: const Icon(
-                                    Icons.delete_forever,
-                                    color: Colors.red,
-                                  ),
-                                );
-                              },
+                          if (allowedCarCategories)
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: BlocConsumer<DeleteCarCatCubit, DeleteCarCatInitial>(
+                                listener: (context, state) {
+                                  context
+                                      .read<AllCarCategoriesCubit>()
+                                      .getCarCategories(context);
+                                },
+                                listenWhen: (p, c) => c.statuses.done,
+                                buildWhen: (p, c) => c.id == e.id,
+                                builder: (context, state) {
+                                  if (state.statuses.isLoading) {
+                                    return MyStyle.loadingWidget();
+                                  }
+                                  return InkWell(
+                                    onTap: () {
+                                      context
+                                          .read<DeleteCarCatCubit>()
+                                          .deleteCarCat(context, id: e.id);
+                                    },
+                                    child: const Icon(
+                                      Icons.delete_forever,
+                                      color: Colors.red,
+                                    ),
+                                  );
+                                },
+                              ),
                             ),
-                          ),
                         ],
                       )
                     ],
