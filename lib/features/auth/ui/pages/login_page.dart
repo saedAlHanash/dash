@@ -52,7 +52,7 @@ class _LoginPageState extends State<LoginPage> {
     if (isLoading) return MyStyle.loadingWidget();
     return BlocListener<LoginCubit, LoginInitial>(
       listenWhen: (p, c) => c.statuses == CubitStatuses.done,
-      listener: (_, state) => context.pushNamed(GoRouteName.homePage),
+      listener: (_, state) => window.location.reload(),
       child: Scaffold(
         appBar: const AppBarWidget(),
         body: Container(
@@ -78,7 +78,7 @@ class _LoginPageState extends State<LoginPage> {
                         autofillHints: const [AutofillHints.username],
                         liable: AppStringManager.enterEmail,
                         textAlign: TextAlign.left,
-                        initialValue: email,
+                        // initialValue: email,
                         onChanged: (val) => email = val,
                       ),
                       MyTextFormWidget(
@@ -86,7 +86,7 @@ class _LoginPageState extends State<LoginPage> {
                         liable: AppStringManager.enterPassword,
                         textAlign: TextAlign.left,
                         obscureText: true,
-                        initialValue: password,
+                        // initialValue: password,
                         onChanged: (val) => password = val,
                       ),
                     ],

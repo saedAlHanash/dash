@@ -81,6 +81,7 @@ import '../../../ticket/bloc/replay_ticket_cubit/replay_ticket_cubit.dart';
 import '../../../ticket/ui/pages/tickets_page.dart';
 import '../../../wallet/bloc/change_provider_state_cubit/change_provider_state_cubit.dart';
 import '../../../wallet/ui/pages/providers_page.dart';
+import '../../bloc/home_cubit/home_cubit/home_cubit.dart';
 import '../../bloc/nav_home_cubit/nav_home_cubit.dart';
 import '../screens/dashboard_page.dart';
 
@@ -128,9 +129,9 @@ class _HomePageState extends State<HomePage> {
         icon: const ImageMultiType(url: Assets.iconsLogoWithoutText),
       ).show(context);
     });
-    sideMenu.addListener((p0) {
-      page.jumpToPage(p0);
-    });
+
+    sideMenu.addListener((p0) => page.jumpToPage(p0));
+
     super.initState();
   }
 
@@ -414,7 +415,7 @@ class _HomePageState extends State<HomePage> {
               width: double.infinity,
               color: AppColorManager.mainColor,
               child: InkWell(
-                onTap: () async{
+                onTap: () async {
                   // popAllJs();
                   await AppSharedPreference.logout();
                   APIService.reInitial();
@@ -442,6 +443,7 @@ class _HomePageState extends State<HomePage> {
                     providers: [
                       BlocProvider(
                           create: (context) => sl<RedeemsCubit>()..getRedeems(context)),
+                      BlocProvider(create: (_) => sl<HomeCubit>()..getHome(_)),
                       BlocProvider(create: (context) => sl<LoyaltyCubit>()),
                     ],
                     child: const DashboardPage(),

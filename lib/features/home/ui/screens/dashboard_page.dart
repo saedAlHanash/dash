@@ -13,6 +13,7 @@ import 'package:map_package/map/ui/widget/map_widget.dart';
 import 'package:qareeb_dash/core/api_manager/api_service.dart';
 import 'package:qareeb_dash/core/api_manager/api_url.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_dash/core/util/checker_helper.dart';
 import 'package:qareeb_dash/core/util/shared_preferences.dart';
 import 'package:qareeb_dash/core/widgets/my_card_widget.dart';
 import 'package:qareeb_dash/features/drivers/bloc/drivers_imiei_cubit/drivers_imei_cubit.dart';
@@ -51,7 +52,7 @@ class _DashboardPageState extends State<DashboardPage> {
           child: Column(
             children: [
               16.0.verticalSpace,
-              if (isQareebAdmin && !isAgency) const LoyaltyWidget(),
+              if (allowedLoyalty && !isAgency) const LoyaltyWidget(),
               DashboardScreen(statistics: statistics),
               DrawableText(
                 text: 'التتبع المباشر',

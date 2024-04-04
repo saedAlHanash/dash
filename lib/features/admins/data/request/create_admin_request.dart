@@ -77,14 +77,14 @@ class CreateAdminRequest {
       NoteMessage.showErrorSnackBar(message: 'خطأ في الصلاحيات', context: context);
       return false;
     }
-    if (!checkEmail(context, emailAddress)) {
+    if (emailAddress == null) {
       NoteMessage.showErrorSnackBar(message: 'حطأ في البريد', context: context);
       return false;
     }
-    if (password == null && id != null) {
-      NoteMessage.showErrorSnackBar(message: 'خطأ في كلمة السر ', context: context);
-      return false;
-    }
+    // if (password == null && id != null) {
+    //   NoteMessage.showErrorSnackBar(message: 'خطأ في كلمة السر ', context: context);
+    //   return false;
+    // }
 
     return true;
   }

@@ -124,7 +124,7 @@ class _MyAppState extends State<MyApp> {
                 BlocProvider(create: (_) => sl<NavHomeCubit>()),
                 BlocProvider(create: (_) => sl<MapControlCubit>()),
                 BlocProvider(create: (_) => sl<CreatePolicyCubit>()),
-                BlocProvider(create: (_) => sl<HomeCubit>()..getHome(_)),
+
                 BlocProvider(create: (_) => sl<AllSosCubit>()..getSos(_)),
                 BlocProvider(create: (_) => sl<CreateNotificationCubit>()),
                 BlocProvider(create: (_) => sl<TripsCubit>()..getTrips(_)),

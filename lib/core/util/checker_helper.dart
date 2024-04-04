@@ -25,15 +25,6 @@ String? checkPhoneNumber(BuildContext? context, String phone) {
   return phone;
 }
 
-bool checkEmail(BuildContext context, String? email) {
-  final bool emailValid =
-      RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-          .hasMatch(email ?? '');
-  if (!emailValid) {
-    NoteMessage.showSnakeBar(context: context, message: AppStringManager.wrongEmail);
-  }
-  return emailValid;
-}
 
 bool get canPopJs => window.history.length > 1;
 
