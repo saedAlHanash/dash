@@ -2,6 +2,7 @@ import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/widgets/my_button.dart';
 import 'package:qareeb_dash/core/widgets/my_card_widget.dart';
@@ -114,7 +115,10 @@ class _CreateAdminPageState extends State<CreateAdminPage> {
                                   child: DrawableText(
                                     text: request.birthdate == null
                                         ? 'تاريخ الميلاد'
-                                        : request.birthdate?.formatDate ?? '',
+                                        : request.birthdate == null
+                                            ? ''
+                                            : DateFormat('yyyy/MM/dd')
+                                                .format(request.birthdate!),
                                     color: AppColorManager.gray,
                                   ),
                                 ),

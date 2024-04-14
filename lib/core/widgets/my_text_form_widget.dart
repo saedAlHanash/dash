@@ -400,7 +400,7 @@ class MyTextFormNoLabelWidget extends StatelessWidget {
       focusedBorder: border,
       enabledBorder: border,
       counter: const SizedBox(),
-      alignLabelWithHint: true,
+      // alignLabelWithHint: true,
       labelStyle: TextStyle(color: color ?? AppColorManager.mainColor),
       suffixIcon: suffixIcon,
       enabled: enable ?? true,

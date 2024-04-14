@@ -1,8 +1,10 @@
 // import 'package:audioplayers/audioplayers.dart';
 import 'package:drawable_text/drawable_text.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_multi_type/image_multi_type.dart';
@@ -96,6 +98,9 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    final shortcuts = Map.of(WidgetsApp.defaultShortcuts);
+    shortcuts[LogicalKeySet(LogicalKeyboardKey.space)] = ActivateIntent();
+
     return ScreenUtilInit(
       // designSize: const Size(412, 770),
       designSize: const Size(1440, 972),
@@ -115,16 +120,17 @@ class _MyAppState extends State<MyApp> {
           const ImageMultiType(url: Assets.iconsLogoWithoutText),
         );
         return MaterialApp.router(
+          shortcuts: kIsWeb ? shortcuts : null,
           scrollBehavior: MyCustomScrollBehavior(),
           debugShowCheckedModeBanner: false,
           theme: appTheme,
+          locale: const Locale('en'),
           builder: (context, child) {
             return MultiBlocProvider(
               providers: [
                 BlocProvider(create: (_) => sl<NavHomeCubit>()),
                 BlocProvider(create: (_) => sl<MapControlCubit>()),
                 BlocProvider(create: (_) => sl<CreatePolicyCubit>()),
-
                 BlocProvider(create: (_) => sl<AllSosCubit>()..getSos(_)),
                 BlocProvider(create: (_) => sl<CreateNotificationCubit>()),
                 BlocProvider(create: (_) => sl<TripsCubit>()..getTrips(_)),
