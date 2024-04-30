@@ -319,6 +319,7 @@ String get baseUrl {
 }
 
 const testUrl = 'qareeb-api.first-pioneers.com.tr';
+const testLocalUrl = 'livetest.qareeb-maas.com';
 const liveUrl = 'live.qareeb-maas.com';
 
 /*

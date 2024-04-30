@@ -115,13 +115,13 @@ class _HomePageState extends State<HomePage> {
             activeTextStyle: TextStyle(
               color: Theme.of(context).primaryColor,
               fontFamily: FontManager.cairoBold.name,
-              fontSize: 20.0.sp,
+              fontSize: 18.0.sp,
             ),
             activeIconColor: Theme.of(context).primaryColor,
             textStyle: TextStyle(
               color: Colors.grey[800],
               fontFamily: FontManager.cairoBold.name,
-              fontSize: 20.0.sp,
+              fontSize: 18.0.sp,
             ),
             items: [
               const AdminMenuItem(

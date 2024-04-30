@@ -130,7 +130,7 @@ class TitleWidget extends StatelessWidget {
           final widget = e is String
               ? DrawableText(
                   selectable: true,
-                  size: 20.0.sp,
+                  size: 18.0.sp,
                   matchParent: true,
                   textAlign: TextAlign.center,
                   text: e,

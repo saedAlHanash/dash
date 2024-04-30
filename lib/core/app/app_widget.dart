@@ -71,11 +71,12 @@ class _MyAppState extends State<MyApp> {
       designSize: const Size(1440, 972),
       minTextAdapt: true,
       builder: (context, child) {
+
         DrawableText.initial(
           initialColor: AppColorManager.black,
-          titleSizeText: 28.0.sp,
-          headerSizeText: 30.0.sp,
-          initialSize: 22.0.sp,
+          titleSizeText: 22.0.sp,
+          headerSizeText: 22.0.sp,
+          initialSize: 18.0.sp,
           initialHeightText: 2.0.h,
           renderHtml: true,
         );

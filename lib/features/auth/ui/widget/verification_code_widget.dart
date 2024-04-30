@@ -15,7 +15,7 @@ class PinCodeWidget extends StatelessWidget {
     final textStyle = TextStyle(
       color: AppColorManager.black,
       fontFamily: FontManager.cairoBold.name,
-      fontSize: 20.0.sp,
+      fontSize: 18.0.sp,
     );
 
     final defaultPinTheme = PinTheme(

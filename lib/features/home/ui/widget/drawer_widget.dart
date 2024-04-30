@@ -107,7 +107,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
             DrawableText(
               text: name,
               color: AppColorManager.whit,
-              size: 20.0.sp,
+              size: 18.0.sp,
               fontFamily: FontManager.cairo.name,
             ),
           ],

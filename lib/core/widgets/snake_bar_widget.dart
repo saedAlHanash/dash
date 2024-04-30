@@ -21,7 +21,7 @@ class SnakeBarWidget extends StatelessWidget {
     final textWidget = Text(
       text,
       style: TextStyle(
-        fontSize: 20.0.sp,
+        fontSize: 18.0.sp,
         color: Colors.white,
       ),
     );

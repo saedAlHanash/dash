@@ -74,7 +74,7 @@
 //       text: text,
 //       fontFamily: FontManager.cairoBold.name,
 //       color: color ?? AppColorManager.black,
-//       size: 20.0.sp,
+//       size: 18.0.sp,
 //       maxLines: 1,
 //       matchParent: true,
 //       textAlign: TextAlign.start,
