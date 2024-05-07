@@ -68,7 +68,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       // designSize: const Size(412, 770),
-      designSize: const Size(1440, 972),
+      designSize: const Size(1440*1.2, 972),
       minTextAdapt: true,
       builder: (context, child) {
 
