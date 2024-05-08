@@ -103,7 +103,7 @@ class _MyAppState extends State<MyApp> {
 
     return ScreenUtilInit(
       // designSize: const Size(412, 770),
-      designSize: const Size(1440, 972),
+      designSize: const Size(1440*1.3, 972),
       minTextAdapt: true,
       builder: (context, child) {
         DrawableText.initial(

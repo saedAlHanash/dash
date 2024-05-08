@@ -48,10 +48,12 @@ class APIService {
   final innerHeader = {
     'Content-Type': 'application/json',
     // 'Accept': '*/*',
-    // 'origin': 'x-requested-with',
-    // 'X-Frame-Options': 'SAMEORIGIN',
-    // 'x-cors-api-key': 'temp_ddc55961defc6c4343f28eec36c009da',
+    'origin': 'x-requested-with',
+    'X-Frame-Options': 'SAMEORIGIN',
+    'x-cors-api-key': 'temp_ddc55961defc6c4343f28eec36c009da',
     'Authorization': 'Bearer ${AppSharedPreference.getToken()}',
+    "Access-Control-Allow-Origin": "*",
+    'Accept': '*/*'
   };
 
   APIService._internal();
@@ -111,7 +113,8 @@ class APIService {
       _serverDate = getDateTimeFromHeaders(response);
 
       return response;
-    } on Exception {
+    } catch(e) {
+      loggerObject.e(e);
       return http.Response('{}', 481);
     }
   }
@@ -146,7 +149,8 @@ class APIService {
       logResponse(url, response);
       _serverDate = getDateTimeFromHeaders(response);
       return response;
-    } on Exception {
+    } catch(e) {
+      loggerObject.e(e);
       return http.Response('{}', 481);
     }
   }
@@ -171,7 +175,8 @@ class APIService {
           await http.get(uri, headers: innerHeader).timeout(const Duration(seconds: 40));
       _serverDate = getDateTimeFromHeaders(response);
       return response;
-    } on Exception {
+    } catch(e) {
+      loggerObject.e(e);
       return http.Response('{}', 481);
     }
   }
@@ -209,7 +214,8 @@ class APIService {
       logResponse(url, response);
       _serverDate = getDateTimeFromHeaders(response);
       return response;
-    } on Exception {
+    } catch(e) {
+      loggerObject.e(e);
       return http.Response('{}', 481);
     }
   }
@@ -243,7 +249,8 @@ class APIService {
       logResponse(url, response);
       _serverDate = getDateTimeFromHeaders(response);
       return response;
-    } on Exception {
+    } catch(e) {
+      loggerObject.e(e);
       return http.Response('{}', 481);
     }
   }
@@ -277,7 +284,8 @@ class APIService {
       logResponse(url, response);
       _serverDate = getDateTimeFromHeaders(response);
       return response;
-    } on Exception {
+    } catch(e) {
+      loggerObject.e(e);
       return http.Response('{}', 481);
     }
   }
@@ -311,7 +319,8 @@ class APIService {
       logResponse(url, response);
       _serverDate = getDateTimeFromHeaders(response);
       return response;
-    } on Exception {
+    } catch(e) {
+      loggerObject.e(e);
       return http.Response('{}', 481);
     }
   }
@@ -359,7 +368,8 @@ class APIService {
       logResponse(url, response);
       _serverDate = getDateTimeFromHeaders(response);
       return response;
-    } on Exception {
+    } catch(e) {
+      loggerObject.e(e);
       return http.Response('{}', 481);
     }
   }

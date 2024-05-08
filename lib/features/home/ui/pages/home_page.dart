@@ -149,21 +149,25 @@ class _HomePageState extends State<HomePage> {
             backgroundColor: AppColorManager.f1,
             leading: window.history.length != 0
                 ? IconButton(
-                    onPressed: () => window.history.back(),
-                    icon: const Icon(
-                      Icons.arrow_back_ios,
-                      color: AppColorManager.mainColorDark,
-                    ))
+                onPressed: () => window.history.back(),
+                icon: const Icon(
+                  Icons.arrow_back_ios,
+                  color: AppColorManager.mainColorDark,
+                ))
                 : 0.0.verticalSpace,
           ),
           sideBar: SideBar(
             key: (Key(Random().nextInt(100000).toString())),
             activeTextStyle: TextStyle(
-              color: Theme.of(context).primaryColor,
+              color: Theme
+                  .of(context)
+                  .primaryColor,
               fontFamily: FontManager.cairoBold.name,
               fontSize: 20.0.sp,
             ),
-            activeIconColor: Theme.of(context).primaryColor,
+            activeIconColor: Theme
+                .of(context)
+                .primaryColor,
             textStyle: TextStyle(
               color: Colors.grey[800],
               fontFamily: FontManager.cairoBold.name,
@@ -442,8 +446,12 @@ class _HomePageState extends State<HomePage> {
                   return MultiBlocProvider(
                     providers: [
                       BlocProvider(
-                          create: (context) => sl<RedeemsCubit>()..getRedeems(context)),
-                      BlocProvider(create: (_) => sl<HomeCubit>()..getHome(_)),
+                          create: (context) =>
+                          sl<RedeemsCubit>()
+                            ..getRedeems(context)),
+                      BlocProvider(create: (_) =>
+                      sl<HomeCubit>()
+                        ..getHome(_)),
                       BlocProvider(create: (context) => sl<LoyaltyCubit>()),
                     ],
                     child: const DashboardPage(),
@@ -565,7 +573,9 @@ class _HomePageState extends State<HomePage> {
                       BlocProvider(create: (context) => sl<DeleteReasonCubit>()),
                       BlocProvider(create: (context) => sl<CreateReasonCubit>()),
                       BlocProvider(
-                        create: (context) => sl<GetReasonsCubit>()..getReasons(context),
+                        create: (context) =>
+                        sl<GetReasonsCubit>()
+                          ..getReasons(context),
                       ),
                     ],
                     child: const ReasonsPage(),
@@ -699,7 +709,8 @@ void addQueryParameters({required Map<String, dynamic> params}) {
   if (!parsedUri.toString().contains('Home')) return;
   // context.pushNamed(GoRouteName.homePage, queryParams: params);
 
-  final newQuery = Map.from(parsedUri.queryParameters)..addAll(params);
+  final newQuery = Map.from(parsedUri.queryParameters)
+    ..addAll(params);
   final s = <String, String>{};
   newQuery.forEach((key, value) => s[key.toString()] = value.toString());
   final newUri = Uri(
