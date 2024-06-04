@@ -13,7 +13,7 @@ import '../../data/response/drivers_response.dart';
 class DriverChargingWidget extends StatefulWidget {
   const DriverChargingWidget({super.key, required this.driver});
 
-  final DriverModel driver;
+  final Driver driver;
   @override
   State<DriverChargingWidget> createState() => _DriverChargingWidgetState();
 }

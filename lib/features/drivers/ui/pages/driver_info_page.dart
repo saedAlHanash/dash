@@ -146,7 +146,7 @@ class _DriverInfoPageState extends State<DriverInfoPage>
 class _DriverImages extends StatelessWidget {
   const _DriverImages({required this.driver});
 
-  final DriverModel driver;
+  final Driver driver;
 
   @override
   Widget build(BuildContext context) {
@@ -169,7 +169,7 @@ class _DriverImages extends StatelessWidget {
 class DriverTableInfo extends StatelessWidget {
   const DriverTableInfo({super.key, required this.driver});
 
-  final DriverModel driver;
+  final Driver driver;
 
   @override
   Widget build(BuildContext context) {

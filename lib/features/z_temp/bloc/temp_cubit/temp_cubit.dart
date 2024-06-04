@@ -8,9 +8,9 @@ import '../../../../core/strings/enum_manager.dart';
 import '../../../../core/util/abstraction.dart';
 import '../../../../core/util/pair_class.dart';
 import '../../../../services/caching_service/caching_service.dart';
-import '../../data/temp.dart';
+import '../../data/response/temp_response.dart';
 
-part 'temp_t_state.dart';
+part 'temp_state.dart';
 
 class TempCubit extends MCubit<TempInitial> {
   TempCubit() : super(TempInitial.initial());
@@ -18,10 +18,14 @@ class TempCubit extends MCubit<TempInitial> {
   @override
   String get nameCache => 'temp';
 
-  Future<void> getTemp() async {
+  @override
+  String get filter => state.tempId ?? '';
+
+  Future<void> getTemp({required String tempId}) async {
+    emit(state.copyWith(tempId: tempId));
     if (await checkCashed()) return;
 
-    final pair = await _getDataApi();
+    final pair = await _getTemp();
     if (pair.first == null) {
       emit(state.copyWith(statuses: CubitStatuses.error, error: pair.second));
       showErrorFromApi(state);
@@ -29,29 +33,36 @@ class TempCubit extends MCubit<TempInitial> {
       await storeData(pair.first!);
       emit(state.copyWith(statuses: CubitStatuses.done, result: pair.first));
     }
-  } //
+  }
 
-  Future<Pair<TempModel?, String?>> _getDataApi() async {
-    final response = await APIService().getApi(url: GetUrl.temp);
+  Future<Pair<Temp?, String?>> _getTemp() async {
+    final response = await APIService().getApi(
+      url: GetUrl.temp,
+      query: {'Id': state.tempId},
+    );
 
     if (response.success) {
-      return Pair(TempModel.fromJson(response.json), null);
+      return Pair(Temp.fromJson(response.json), null);
     } else {
       return response.getPairError;
     }
   }
 
   Future<bool> checkCashed() async {
+        try {
     final cacheType = await needGetData();
 
     emit(
       state.copyWith(
         statuses: cacheType.getState,
-        result: TempModel.fromJson(await getDataCached()),
+        result: Temp.fromJson(await getDataCached()),
       ),
     );
 
     if (cacheType == NeedUpdateEnum.no) return true;
     return false;
+        } catch (e) {
+      return false;
+    }
   }
 }

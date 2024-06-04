@@ -174,7 +174,7 @@ class CircleButton extends StatelessWidget {
 class LoyalSwitchWidget extends StatelessWidget {
   const LoyalSwitchWidget({super.key, required this.driver});
 
-  final DriverModel driver;
+  final Driver driver;
 
   @override
   Widget build(BuildContext context) {

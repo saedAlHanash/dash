@@ -33,7 +33,7 @@ class _ClientsFilterWidgetState extends State<ClientsFilterWidget> {
 
   @override
   void initState() {
-    request = widget.command?.clientsFilterRequest ?? ClientsFilterRequest();
+    request = ClientsFilterRequest();
 
     phoneNoC = TextEditingController(text: request.phoneNo);
     nameC = TextEditingController(text: request.name);

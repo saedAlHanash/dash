@@ -1,6 +1,6 @@
 part of 'providers_cubit.dart';
 
-class ProvidersInitial extends AbstractCubit<List<Provider>> {
+class ProvidersInitial extends AbstractState<List<Provider>> {
   // final ProvidersRequest request;
   // final  bool providersParam;
   const ProvidersInitial({

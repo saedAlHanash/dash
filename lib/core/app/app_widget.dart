@@ -23,6 +23,7 @@ import '../../features/auth/bloc/create_policy_cubit/policy_cubit.dart';
 import '../../features/auth/bloc/policy_cubit/create_policy_cubit.dart';
 import '../../features/car_catigory/bloc/all_car_categories_cubit/all_car_categories_cubit.dart';
 import '../../features/clients/bloc/all_clients/all_clients_cubit.dart';
+import '../../features/clients/bloc/clients_cubit/clients_cubit.dart';
 import '../../features/companies/bloc/companies_cubit/companies_cubit.dart';
 import '../../features/company_paths/bloc/all_compane_paths_cubit/all_company_paths_cubit.dart';
 import '../../features/coupons/bloc/all_coupons_vubit/all_coupons_cubit.dart';
@@ -151,6 +152,8 @@ class _MyAppState extends State<MyApp> {
                     create: (_) => sl<AllDriversCubit>()..getAllDrivers(_)),
                 BlocProvider(
                     create: (_) => sl<AllClientsCubit>()..getAllClients(_)),
+                BlocProvider(
+                    create: (_) => sl<ClientsCubit>()..getClients()),
                 BlocProvider(
                     create: (_) => sl<AllCouponsCubit>()..getAllCoupons(_)),
                 BlocProvider(

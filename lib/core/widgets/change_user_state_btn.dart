@@ -10,7 +10,7 @@ import 'my_button.dart';
 class ChangeUserStateBtn extends StatelessWidget {
   const ChangeUserStateBtn({super.key, required this.user});
 
-  final DriverModel user;
+  final Driver user;
 
   @override
   Widget build(BuildContext context) {

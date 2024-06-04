@@ -2,7 +2,7 @@ part of 'clients_by_id_cubit.dart';
 
 class ClientByIdInitial extends Equatable {
   final CubitStatuses statuses;
-  final DriverModel result;
+  final Driver result;
   final String error;
 
   const ClientByIdInitial({
@@ -13,7 +13,7 @@ class ClientByIdInitial extends Equatable {
 
   factory ClientByIdInitial.initial() {
     return ClientByIdInitial(
-      result: DriverModel.fromJson({}),
+      result: Driver.fromJson({}),
       error: '',
       statuses: CubitStatuses.init,
     );
@@ -24,7 +24,7 @@ class ClientByIdInitial extends Equatable {
 
   ClientByIdInitial copyWith({
     CubitStatuses? statuses,
-    DriverModel? result,
+    Driver? result,
     String? error,
   }) {
     return ClientByIdInitial(

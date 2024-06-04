@@ -25,7 +25,7 @@ part 'driver_report_state.dart';
 class DriverReportCubit extends Cubit<DriverReportInitial> {
   DriverReportCubit() : super(DriverReportInitial.initial());
 
-  Future<void> getAll(DriverModel driver) async {
+  Future<void> getAll(Driver driver) async {
     emit(state.copyWith(statuses: CubitStatuses.loading));
     var excel = Excel.createExcel();
 
@@ -78,7 +78,7 @@ class DriverReportCubit extends Cubit<DriverReportInitial> {
     emit(state.copyWith(statuses: CubitStatuses.done));
   }
 
-  Future<Pair<ChargingResult?, String?>> _getAllChargingApi(DriverModel driver) async {
+  Future<Pair<ChargingResult?, String?>> _getAllChargingApi(Driver driver) async {
     final response = await APIService().getApi(
       url: GetUrl.getAllCharging,
       query: ChargingRequest(
@@ -94,7 +94,7 @@ class DriverReportCubit extends Cubit<DriverReportInitial> {
   }
 
   Future<Pair<DriverFinancialResult?, String?>> _getDriverFinancialApi(
-      DriverModel driver) async {
+      Driver driver) async {
     final response = await APIService().getApi(
       url: GetUrl.driverFinancialReport,
       query: {
@@ -109,7 +109,7 @@ class DriverReportCubit extends Cubit<DriverReportInitial> {
     }
   }
 
-  Future<Pair<DebtsResult?, String?>> _getDebtsApi(DriverModel driver) async {
+  Future<Pair<DebtsResult?, String?>> _getDebtsApi(Driver driver) async {
     final response = await APIService().getApi(
       url: GetUrl.debt,
       query: {
@@ -125,7 +125,7 @@ class DriverReportCubit extends Cubit<DriverReportInitial> {
     }
   }
 
-  Future<Pair<TransfersResult?, String?>> _getAllTransfersApi(DriverModel driver) async {
+  Future<Pair<TransfersResult?, String?>> _getAllTransfersApi(Driver driver) async {
     final response = await APIService().getApi(
       url: GetUrl.getAllTransfers,
       query: TransferFilterRequest(

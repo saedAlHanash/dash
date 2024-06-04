@@ -2,7 +2,7 @@ part of 'all_admins_cubit.dart';
 
 class AllAdminsInitial extends Equatable {
   final CubitStatuses statuses;
-  final List<DriverModel> result;
+  final List<Driver> result;
   final String error;
   final Command command;
 
@@ -15,7 +15,7 @@ class AllAdminsInitial extends Equatable {
 
   factory AllAdminsInitial.initial() {
     return  AllAdminsInitial(
-      result: const<DriverModel>[],
+      result: const<Driver>[],
       error: '',
       command: Command.initial(),
       statuses: CubitStatuses.init,
@@ -28,7 +28,7 @@ class AllAdminsInitial extends Equatable {
 
   AllAdminsInitial copyWith({
     CubitStatuses? statuses,
-    List<DriverModel>? result,
+    List<Driver>? result,
     String? error,
     Command? command,
   }) {

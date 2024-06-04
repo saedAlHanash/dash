@@ -11,7 +11,7 @@ import '../../../../router/go_route_pages.dart';
 class DriverTripsCard extends StatelessWidget {
   const DriverTripsCard({super.key, required this.driver});
 
-  final DriverModel driver;
+  final Driver driver;
 
   @override
   Widget build(BuildContext context) {

@@ -151,7 +151,7 @@ class CreateDriverRequest {
     return true;
   }
 
-  static CreateDriverRequest fromDriver(DriverModel driver) {
+  static CreateDriverRequest fromDriver(Driver driver) {
     final r = CreateDriverRequest();
     r.name = driver.name;
     r.id = driver.id;

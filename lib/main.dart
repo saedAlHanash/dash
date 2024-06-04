@@ -5,6 +5,7 @@ import 'package:hive/hive.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:qareeb_dash/features/auth/bloc/login_cubit/login_cubit.dart';
 import 'package:qareeb_dash/features/trip/bloc/trip_by_id/trip_by_id_cubit.dart';
+import 'package:qareeb_dash/services/caching_service/caching_service.dart';
 import 'package:qareeb_models/global.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_strategy/url_strategy.dart';
@@ -38,7 +39,8 @@ void main() async {
     AppSharedPreference.init(value);
   });
 
-  await player.setUrl('https://for-delete-c0d5f.web.app/assets/assets/sounds/sound.wav');
+  await player.setUrl(
+      'https://for-delete-c0d5f.web.app/assets/assets/sounds/sound.wav');
   // Here we set the URL strategy for our web app.
   // It is safe to call this function when running on mobile or desktop as well.
   setPathUrlStrategy();

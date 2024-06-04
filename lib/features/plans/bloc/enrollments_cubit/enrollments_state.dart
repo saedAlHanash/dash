@@ -1,6 +1,6 @@
 part of 'enrollments_cubit.dart';
 
-class EnrollmentInitial extends AbstractCubit<List<Enrollment>> {
+class EnrollmentInitial extends AbstractState<List<Enrollment>> {
   // final EnrollmentRequest request;
   // final  bool enrollmentParam;
   const EnrollmentInitial({

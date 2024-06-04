@@ -18,7 +18,7 @@ import '../../bloc/debt_cubit/debts_cubit.dart';
 class DebtsPage extends StatefulWidget {
   const DebtsPage({super.key, required this.driver});
 
-  final DriverModel driver;
+  final Driver driver;
 
   @override
   State<DebtsPage> createState() => _DebtsPageState();

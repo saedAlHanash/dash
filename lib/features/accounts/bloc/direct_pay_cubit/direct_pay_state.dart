@@ -1,6 +1,6 @@
 part of 'direct_pay_cubit.dart';
 
-class DirectPayInitial extends AbstractCubit<bool> {
+class DirectPayInitial extends AbstractState<bool> {
   final DirectPayRequest request;
 
   // final bool direct_payParam;

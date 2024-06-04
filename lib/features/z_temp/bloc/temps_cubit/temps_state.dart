@@ -1,45 +1,44 @@
-part of 'temp_t_cubit.dart';
+part of 'temps_cubit.dart';
 
-class TempInitial extends AbstractCubit<List<TempModel>> {
-  // final TempRequest request;
+class TempsInitial extends AbstractState<List<Temp>> {
+  // final Command request;
   // final  bool tempParam;
-  const TempInitial({
+  const TempsInitial({
     required super.result,
-    required super.command,
     super.error,
     // required this.request,
     // required this.tempParam,
+    super.command,
     super.statuses,
-  });//
+  }); //
 
-  factory TempInitial.initial() {
-    return const TempInitial(
+  factory TempsInitial.initial() {
+    return const TempsInitial(
       result: [],
-      command: null,
       error: '',
+      command: null,
       // tempParam: false,
-      // request: TempRequest(),
+      // request: Command(),
       statuses: CubitStatuses.init,
     );
   }
 
   @override
-  List<Object> get props => [statuses, result, error];
+  List<Object> get props =>
+      [statuses, result, error, if (command != null) command!];
 
-
-  TempInitial copyWith({
+  TempsInitial copyWith({
     CubitStatuses? statuses,
-    List<TempModel>? result,
-    Command? command,
+    List<Temp>? result,
     String? error,
-    // TempRequest? request,
+    Command? command,
     // bool? tempParam,
   }) {
-    return TempInitial(
+    return TempsInitial(
       statuses: statuses ?? this.statuses,
       result: result ?? this.result,
-      command: command ?? this.command,
       error: error ?? this.error,
+      command: command ?? this.command,
       // request: request ?? this.request,
       // tempParam: tempParam ?? this.tempParam,
     );

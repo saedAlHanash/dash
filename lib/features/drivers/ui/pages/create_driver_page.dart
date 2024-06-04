@@ -29,7 +29,7 @@ import '../widget/item_image_create.dart';
 class CreateDriverPage extends StatefulWidget {
   const CreateDriverPage({super.key, this.driver});
 
-  final DriverModel? driver;
+  final Driver? driver;
 
   @override
   State<CreateDriverPage> createState() => _CreateDriverPageState();

@@ -5,13 +5,13 @@ import 'package:qareeb_models/global.dart';
 import '../../services/caching_service/caching_service.dart';
 import '../api_manager/command.dart';
 
-abstract class AbstractCubit<T> extends Equatable {
+abstract class AbstractState<T> extends Equatable {
   final CubitStatuses statuses;
   final String error;
   final T result;
   final Command? command;
 
-  const AbstractCubit({
+  const AbstractState({
     this.statuses = CubitStatuses.init,
     this.error = '',
     this.command,

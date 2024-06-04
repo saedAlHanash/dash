@@ -39,6 +39,7 @@ import '../../features/car_catigory/bloc/create_car_category_cubit/create_car_ca
 import '../../features/car_catigory/bloc/delete_car_cat_cubit/delete_car_cat_cubit.dart';
 import '../../features/clients/bloc/all_clients/all_clients_cubit.dart';
 import '../../features/clients/bloc/clients_by_id_cubit/clients_by_id_cubit.dart';
+import '../../features/clients/bloc/clients_cubit/clients_cubit.dart';
 import '../../features/companies/bloc/companies_cubit/companies_cubit.dart';
 import '../../features/companies/bloc/create_company_cubit/create_company_cubit.dart';
 import '../../features/companies/bloc/delete_company_cubit/delete_company_cubit.dart';
@@ -170,6 +171,7 @@ Future<void> init() async {
   //region map
 
   ///bloc
+  sl.registerFactory(() => ClientsCubit());
   sl.registerFactory(() => MyLocationCubit());
   sl.registerFactory(() => MapControlCubit());
   sl.registerFactory(() => MapControllerCubit());

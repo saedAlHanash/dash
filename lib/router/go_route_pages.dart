@@ -233,7 +233,7 @@ final appGoRouter = GoRouter(
       name: GoRouteName.updateDriver,
       path: _GoRoutePath.updateDriver,
       builder: (BuildContext context, GoRouterState state) {
-        final driver = (state.extra ?? DriverModel.fromJson({})) as DriverModel;
+        final driver = (state.extra ?? Driver.fromJson({})) as Driver;
 
         final providers = [
           BlocProvider(create: (_) => di.sl<CreateDriverCubit>()),
@@ -297,7 +297,7 @@ final appGoRouter = GoRouter(
       name: GoRouteName.createAdmin,
       path: _GoRoutePath.createAdmin,
       builder: (BuildContext context, GoRouterState state) {
-        final admin = state.extra == null ? null : (state.extra) as DriverModel;
+        final admin = state.extra == null ? null : (state.extra) as Driver;
         final providers = [
           BlocProvider(create: (_) => di.sl<CreateAdminCubit>()),
         ];
@@ -314,8 +314,8 @@ final appGoRouter = GoRouter(
       path: _GoRoutePath.adminInfo,
       builder: (BuildContext context, GoRouterState state) {
         final admin = state.extra == null
-            ? DriverModel.fromJson({})
-            : (state.extra) as DriverModel;
+            ? Driver.fromJson({})
+            : (state.extra) as Driver;
         return AdminInfoPage(admin: admin);
       },
     ),

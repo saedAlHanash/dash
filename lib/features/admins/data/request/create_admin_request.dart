@@ -89,7 +89,7 @@ class CreateAdminRequest {
     return true;
   }
 
-  static CreateAdminRequest fromAdmin(DriverModel adminModel) {
+  static CreateAdminRequest fromAdmin(Driver adminModel) {
     return CreateAdminRequest(
       userName: adminModel.userName,
       name: adminModel.name,

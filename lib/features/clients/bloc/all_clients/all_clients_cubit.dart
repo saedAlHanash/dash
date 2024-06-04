@@ -68,7 +68,7 @@ class AllClientsCubit extends Cubit<AllClientsInitial> {
     return null;
   }
 
-  Pair<List<String>, List<List<dynamic>>> _getXlsData(List<DriverModel> data) {
+  Pair<List<String>, List<List<dynamic>>> _getXlsData(List<Driver> data) {
     return Pair(
         [
           'ID',
@@ -76,15 +76,9 @@ class AllClientsCubit extends Cubit<AllClientsInitial> {
           'تاريخ الميلاد',
           'العنوان',
           'رقم الهاتف',
-          // 'تصنيف السيارة',
-          // 'عدد مقاعد السيارة',
-          // 'ماركة السيارة',
-          // 'لون السيارة',
           'حالة الزبون',
-          // 'اشتراك الولاء',
           ' OTP',
           'تاريخ الاشتراك',
-          // 'IMEI',
           'الجنس',
           'ملاحظات',
         ],
@@ -96,15 +90,9 @@ class AllClientsCubit extends Cubit<AllClientsInitial> {
                 element.birthdate?.formatDate,
                 element.address,
                 element.phoneNumber,
-                // element.carCategories.name,
-                // element.carType.seatsNumber,
-                // element.carType.carBrand,
-                // element.carType.carColor,
                 element.isActive,
-                // element.loyalty,
                 element.emailConfirmationCode,
                 element.creationTime?.formatDate,
-                // element.qarebDeviceimei,
                 element.gender == 0 ? 'M' : 'F',
               ],
             )

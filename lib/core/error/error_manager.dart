@@ -79,7 +79,7 @@ class Error {
 
 BuildContext? get ctx => sl<GlobalKey<NavigatorState>>().currentState?.context;
 
-void showErrorFromApi(AbstractCubit state) {
+void showErrorFromApi(AbstractState state) {
   if (ctx == null) return;
   NoteMessage.showErrorSnackBar(context: ctx!, message: state.error);
 }

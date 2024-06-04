@@ -24,7 +24,7 @@ import '../../data/request/create_admin_request.dart';
 class CreateAdminPage extends StatefulWidget {
   const CreateAdminPage({super.key, this.admin});
 
-  final DriverModel? admin;
+  final Driver? admin;
 
   @override
   State<CreateAdminPage> createState() => _CreateAdminPageState();

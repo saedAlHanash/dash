@@ -1,22 +1,23 @@
+import 'dart:convert';
+
 import 'package:qareeb_dash/core/util/shared_preferences.dart';
 import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_models/global.dart';
 
 import '../../features/accounts/data/request/charging_request.dart';
 import '../../features/accounts/data/request/transfer_filter_request.dart';
-import '../../features/clients/data/request/clients_filter_request.dart';
 import '../../features/companies/data/request/companies_filter_request.dart';
 import '../../features/drivers/data/request/drivers_filter_request.dart';
 import '../../features/pay_to_drivers/data/request/financial_filter_request.dart';
 import '../../features/plan_trips/data/request/plan_attendances_filter.dart';
 import '../../features/syrian_agency/data/request/syrian_filter_request.dart';
 import '../../features/trip/data/request/filter_trip_request.dart';
+import 'package:crypto/crypto.dart';
 
 class Command {
   Command({
     this.skipCount,
     this.totalCount,
-    this.clientsFilterRequest,
     this.chargingRequest,
     this.driversFilterRequest,
     this.financialFilterRequest,
@@ -25,12 +26,13 @@ class Command {
     this.transferFilterRequest,
     this.companiesFilterRequest,
     this.planAttendanceFilter,
+    this.filter,
   });
 
   int? skipCount;
   int maxResultCount = 20;
   int? totalCount;
-  ClientsFilterRequest? clientsFilterRequest;
+  Map<String, dynamic>? filter;
   ChargingRequest? chargingRequest;
   DriversFilterRequest? driversFilterRequest;
   FinancialFilterRequest? financialFilterRequest;
@@ -74,6 +76,8 @@ class Command {
     return Command(skipCount: 0)..maxResultCount = 1.0.maxInt;
   }
 
+  set setFilter(Map<String, dynamic> filter) => this.filter = filter;
+
   Map<String, dynamic> toJson() {
     var json = <String, dynamic>{
       'skipCount': skipCount,
@@ -81,6 +85,7 @@ class Command {
       if (AppSharedPreference.getAgencyId != 0)
         'AgencyId': AppSharedPreference.getAgencyId,
     };
+    if (filter != null) json.addAll(filter!);
 
     if (filterTripRequest != null) {
       json.addAll(filterTripRequest!.toMap());
@@ -89,9 +94,6 @@ class Command {
       json.addAll(transferFilterRequest!.toMap());
     }
 
-    if (clientsFilterRequest != null) {
-      json.addAll(clientsFilterRequest!.toJson());
-    }
     if (chargingRequest != null) {
       json.addAll(chargingRequest!.toJson());
     }
@@ -119,15 +121,22 @@ class Command {
 
   factory Command.fromJson(Map<String, dynamic> map) {
     return Command(
-      skipCount: map['skipCount'] ??0,
+      skipCount: map['skipCount'] ?? 0,
     );
+  }
+
+  String get getKey {
+    var jsonString = jsonEncode(this);
+    var bytes = utf8.encode(jsonString);
+    var digest = sha1.convert(bytes);
+
+    return '$digest';
   }
 
   Command copyWith({
     int? skipCount,
     int? totalCount,
     FilterTripRequest? filterTripRequest,
-    ClientsFilterRequest? clientsFilterRequest,
     ChargingRequest? chargingRequest,
     DriversFilterRequest? driversFilterRequest,
     FinancialFilterRequest? financialFilterRequest,
@@ -140,13 +149,15 @@ class Command {
       skipCount: skipCount ?? this.skipCount,
       totalCount: totalCount ?? this.totalCount,
       filterTripRequest: filterTripRequest ?? this.filterTripRequest,
-      clientsFilterRequest: clientsFilterRequest ?? this.clientsFilterRequest,
       chargingRequest: chargingRequest ?? this.chargingRequest,
       driversFilterRequest: driversFilterRequest ?? this.driversFilterRequest,
-      financialFilterRequest: financialFilterRequest ?? this.financialFilterRequest,
+      financialFilterRequest:
+          financialFilterRequest ?? this.financialFilterRequest,
       syrianFilterRequest: syrianFilterRequest ?? this.syrianFilterRequest,
-      transferFilterRequest: transferFilterRequest ?? this.transferFilterRequest,
-      companiesFilterRequest: companiesFilterRequest ?? this.companiesFilterRequest,
+      transferFilterRequest:
+          transferFilterRequest ?? this.transferFilterRequest,
+      companiesFilterRequest:
+          companiesFilterRequest ?? this.companiesFilterRequest,
       planAttendanceFilter: planAttendanceFilter ?? this.planAttendanceFilter,
     );
   }

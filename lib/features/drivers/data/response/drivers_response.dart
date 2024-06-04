@@ -24,14 +24,14 @@ class DriversResult {
     required this.totalCount,
   });
 
-  final List<DriverModel> items;
+  final List<Driver> items;
   final int totalCount;
 
   factory DriversResult.fromJson(Map<String, dynamic> json) {
     return DriversResult(
       items: json["items"] == null
           ? []
-          : List<DriverModel>.from(json["items"]!.map((x) => DriverModel.fromJson(x))),
+          : List<Driver>.from(json["items"]!.map((x) => Driver.fromJson(x))),
       totalCount: json["totalCount"] ?? 0,
     );
   }
@@ -42,8 +42,8 @@ class DriversResult {
       };
 }
 
-class DriverModel {
-  DriverModel({
+class Driver {
+  Driver({
     required this.id,
     required this.userName,
     required this.fullName,
@@ -103,7 +103,6 @@ class DriverModel {
   final UserType userType;
   final List<String> roleNames;
   bool isActive;
-
   bool loyalty;
   bool isGasIncluded;
   final String emailConfirmationCode;
@@ -128,8 +127,8 @@ class DriverModel {
   final bool isPlansDriver;
   final bool engineStatus;
 
-  factory DriverModel.fromJson(Map<String, dynamic> json) {
-    return DriverModel(
+  factory Driver.fromJson(Map<String, dynamic> json) {
+    return Driver(
       id: json["id"] ?? 0,
       userName: json["userName"] ?? "",
       fullName: json["fullName"] ?? "",
@@ -140,7 +139,8 @@ class DriverModel {
       birthdate: DateTime.tryParse(json["birthdate"] ?? ""),
       address: json["address"] ?? "",
       phoneNumber: json["phoneNumber"] ?? "",
-      lastInternetConnection: DateTime.tryParse(json["lastInternetConnection"] ?? ""),
+      lastInternetConnection:
+          DateTime.tryParse(json["lastInternetConnection"] ?? ""),
       carCategories: CarCategories.fromJson(json["carCategories"] ?? {}),
       currentLocation: LocationModel.fromJson(json["currentLocation"] ?? {}),
       carType: CarType.fromJson(json["carType"] ?? {}),
@@ -183,7 +183,7 @@ class DriverModel {
         "fireBaseToken": fireBaseToken,
         "carCategoryID": carCategoryId,
         "surname": surname,
-        "birthdate": birthdate,
+        "birthdate": birthdate?.toIso8601String(),
         "address": address,
         "phoneNumber": phoneNumber,
         "lastInternetConnection": lastInternetConnection?.toIso8601String(),
@@ -198,7 +198,7 @@ class DriverModel {
         "isPlansDriver": isPlansDriver,
         "engineStatus": engineStatus,
         "emailConfirmationCode": emailConfirmationCode,
-        "creationTime": creationTime,
+        "creationTime": creationTime?.toIso8601String(),
         "emailAddress": emailAddress,
         "imei": imei,
         "loyalty": loyalty,

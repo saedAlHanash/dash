@@ -74,7 +74,7 @@ class AllDriversCubit extends Cubit<AllDriversInitial> {
     return null;
   }
 
-  Pair<List<String>, List<List<dynamic>>> _getXlsData(List<DriverModel> data) {
+  Pair<List<String>, List<List<dynamic>>> _getXlsData(List<Driver> data) {
     if (isTrans) data.removeWhere((element) => !element.isActive);
 
     return Pair(

@@ -30,7 +30,7 @@ class DriverBuIdCubit extends Cubit<DriverBuIdInitial> {
     }
   }
 
-  Future<Pair<DriverModel?, String?>> _getDriverBuIdApi({required int id}) async {
+  Future<Pair<Driver?, String?>> _getDriverBuIdApi({required int id}) async {
     final response = await APIService().getApi(
       url: GetUrl.getDriverById,
       query: {'Id':id}
@@ -38,7 +38,7 @@ class DriverBuIdCubit extends Cubit<DriverBuIdInitial> {
     );
 
     if (response.statusCode == 200) {
-      return Pair(DriverModel.fromJson(response.json['result'] ?? {}), null);
+      return Pair(Driver.fromJson(response.json['result'] ?? {}), null);
     } else {
       return Pair(null, ErrorManager.getApiError(response));
     }

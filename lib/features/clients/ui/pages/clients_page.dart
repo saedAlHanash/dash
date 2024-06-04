@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:qareeb_dash/core/util/checker_helper.dart';
+import 'package:qareeb_dash/core/widgets/filter/filter_item.dart';
+import 'package:qareeb_dash/core/widgets/filter/filter_widget.dart';
 import 'package:qareeb_dash/core/widgets/not_found_widget.dart';
+import 'package:qareeb_dash/features/clients/bloc/clients_cubit/clients_cubit.dart';
 import 'package:qareeb_models/extensions.dart';
+import 'package:qareeb_models/global.dart';
 
 import '../../../../core/util/file_util.dart';
 import '../../../../core/util/my_style.dart';
@@ -12,8 +16,6 @@ import '../../../../core/widgets/change_user_state_btn.dart';
 import '../../../../core/widgets/my_button.dart';
 import '../../../../core/widgets/saed_taple_widget.dart';
 import '../../../../router/go_route_pages.dart';
-import '../../bloc/all_clients/all_clients_cubit.dart';
-import '../widget/clients_filter_widget.dart';
 
 final clientTableHeader = [
   "id",
@@ -35,6 +37,8 @@ class ClientsPage extends StatefulWidget {
 class _ClientsPageState extends State<ClientsPage> {
   var loading = false;
 
+  ClientsCubit get cubit => context.read<ClientsCubit>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,20 +47,15 @@ class _ClientsPageState extends State<ClientsPage> {
           return FloatingActionButton(
             onPressed: () {
               mState(() => loading = true);
-              context.read<AllClientsCubit>().getBusAsync(context).then(
+              context.read<ClientsCubit>().getBusAsync().then(
                 (value) {
-                  if (value == null) return;
-                  saveXls(
-                    header: value.first,
-                    data: value.second,
-                    fileName: 'تقرير المستخدمين ${DateTime.now().formatDate}',
-                  );
                   mState(() => loading = false);
                 },
               );
             },
             child: loading
-                ? const CircularProgressIndicator.adaptive(backgroundColor: Colors.white)
+                ? const CircularProgressIndicator.adaptive(
+                    backgroundColor: Colors.white)
                 : const Icon(Icons.file_download, color: Colors.white),
           );
         },
@@ -64,24 +63,54 @@ class _ClientsPageState extends State<ClientsPage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            BlocBuilder<AllClientsCubit, AllClientsInitial>(
-              builder: (context, state) {
-                return ClientsFilterWidget(
-                  onApply: (request) {
-                    context.read<AllClientsCubit>().getAllClients(
-                          context,
-                          command: context.read<AllClientsCubit>().state.command.copyWith(
-                            clientsFilterRequest: request,
-                                skipCount: 0,
-                                totalCount: 0,
-                              ),
-                        );
-                  },
-                  command: state.command,
-                );
+            FilterWidget(
+              filters: [
+                [
+                  FilterItem(
+                    type: FilterType.text,
+                    title: 'اسم الزبون',
+                    key: 'name',
+                    controller: TextEditingController(),
+                  ),
+                  FilterItem(
+                    type: FilterType.text,
+                    title: 'رقم الهاتف',
+                    key: 'phone',
+                    controller: TextEditingController(),
+                  ),
+                  FilterItem(
+                    type: FilterType.spinner,
+                    title: 'الجنس',
+                    key: 'g',
+                    items: Gender.values.spinnerItems(),
+                  ),
+                ]
+              ],
+              onFilter: (map) {
+                cubit
+                  ..setRequest(map)
+                  ..getClients();
               },
             ),
-            BlocBuilder<AllClientsCubit, AllClientsInitial>(
+
+            // BlocBuilder<ClientsCubit, ClientsInitial>(
+            //   builder: (context, state) {
+            //     return ClientsFilterWidget(
+            //       onApply: (request) {
+            //         context.read<ClientsCubit>().getClients(
+            //               context,
+            //               command: context.read<ClientsCubit>().state.command.copyWith(
+            //                 clientsFilterRequest: request,
+            //                     skipCount: 0,
+            //                     totalCount: 0,
+            //                   ),
+            //             );
+            //       },
+            //       command: state.command,
+            //     );
+            //   },
+            // ),
+            BlocBuilder<ClientsCubit, ClientsInitial>(
               builder: (_, state) {
                 if (state.statuses.isLoading) {
                   return MyStyle.loadingWidget();
@@ -92,11 +121,7 @@ class _ClientsPageState extends State<ClientsPage> {
                 }
 
                 return SaedTableWidget(
-                  onChangePage: (command) {
-                    context
-                        .read<AllClientsCubit>()
-                        .getAllClients(context, command: command);
-                  },
+                  onChangePage: (command) {},
                   command: state.command,
                   title: clientTableHeader,
                   data: list
@@ -112,8 +137,8 @@ class _ClientsPageState extends State<ClientsPage> {
                             mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              if(allowedManageClients)
-                              ChangeUserStateBtn(user: e),
+                              if (allowedManageClients)
+                                ChangeUserStateBtn(user: e),
                               InkWell(
                                 onTap: () {
                                   context.pushNamed(GoRouteName.clientInfo,

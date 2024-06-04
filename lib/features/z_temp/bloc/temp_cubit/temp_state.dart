@@ -1,23 +1,23 @@
-part of 'temp_t_cubit.dart';
+part of 'temp_cubit.dart';
 
-class TempInitial extends AbstractCubit<TempModel> {
-  // final TempRequest request;
+class TempInitial extends AbstractState<Temp> {
+  final String tempId;
   // final bool tempParam;
 
   const TempInitial({
     required super.result,
     super.error,
-    // required this.request,
+    required this.tempId,
     // required this.tempParam,
     super.statuses,
   });
 
   factory TempInitial.initial() {
     return TempInitial(
-      result: TempModel.fromJson({}),
+      result: Temp.fromJson({}),
       error: '',
       // tempParam: false,
-      // request: TempRequest(),
+      tempId: '',
       statuses: CubitStatuses.init,
     );
   }
@@ -27,16 +27,16 @@ class TempInitial extends AbstractCubit<TempModel> {
 
   TempInitial copyWith({
     CubitStatuses? statuses,
-    TempModel? result,
+    Temp? result,
     String? error,
-    // TempRequest? request,
+    String? tempId,
     // bool? tempParam,
   }) {
     return TempInitial(
       statuses: statuses ?? this.statuses,
       result: result ?? this.result,
       error: error ?? this.error,
-      // request: request ?? this.request,
+      tempId: tempId ?? this.tempId,
       // tempParam: tempParam ?? this.tempParam,
     );
   }
