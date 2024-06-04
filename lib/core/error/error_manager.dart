@@ -1,7 +1,11 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 
+import '../injection/injection_container.dart';
+import '../util/abstraction.dart';
+import '../util/note_message.dart';
 import '../util/shared_preferences.dart';
 
 class ErrorManager {
@@ -71,4 +75,11 @@ class Error {
         'details': details,
         'validationErrors': validationErrors,
       };
+}
+
+BuildContext? get ctx => sl<GlobalKey<NavigatorState>>().currentState?.context;
+
+void showErrorFromApi(AbstractCubit state) {
+  if (ctx == null) return;
+  NoteMessage.showErrorSnackBar(context: ctx!, message: state.error);
 }

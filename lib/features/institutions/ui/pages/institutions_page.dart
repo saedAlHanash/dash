@@ -10,7 +10,6 @@ import 'package:qareeb_dash/router/go_route_pages.dart';
 import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_models/global.dart';
 
-import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/my_style.dart';
 import '../../bloc/all_institutions_cubit/all_institutions_cubit.dart';
 import '../../bloc/delete_institution_cubit/delete_institution_cubit.dart';

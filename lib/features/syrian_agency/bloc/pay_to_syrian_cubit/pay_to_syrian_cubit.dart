@@ -9,7 +9,6 @@ import '../../../../core/api_manager/api_service.dart';
 import '../../../../core/error/error_manager.dart';
 import '../../../../core/util/note_message.dart';
 import '../../../../core/util/pair_class.dart';
-import '../../../wallet/data/summary_model.dart';
 import '../../data/request/syrian_pay_request.dart';
 
 part 'pay_to_syrian_state.dart';

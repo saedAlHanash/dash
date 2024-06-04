@@ -20,7 +20,6 @@ import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/my_style.dart';
 import '../../../../core/widgets/my_card_widget.dart';
-import '../../../../core/widgets/not_found_widget.dart';
 import '../../../../core/widgets/saed_taple_widget.dart';
 import '../../../../router/go_route_pages.dart';
 import '../../../accounts/bloc/all_transfers_cubit/all_transfers_cubit.dart';

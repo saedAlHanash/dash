@@ -61,8 +61,6 @@ class GetUrl {
 
   static const getAllEdgesPoint = 'api/services/app/EdgesService/GetEdgesFromPoint';
 
-  static const getAllEpay = 'api/services/app/EpaymentService/GetAll';
-
   static const getAllMessages = 'api/services/app/Messages/GetAll';
 
   static const getAllTransfers = 'api/services/app/AccountsService/GetAllTransfers';
@@ -139,6 +137,10 @@ class GetUrl {
   static const getDriversPool = 'api/services/app/TripsService/GetTripDriverPool';
 
   static const getAllCharging = 'api/services/app/AccountsService/GetAllChargings';
+
+  static const providers = 'api/services/app/EpaymentService/GetAll';
+
+  static const enrollment = 'api/services/app/EnrollmentsService/GetAll';
 }
 
 class PostUrl {
@@ -229,6 +231,8 @@ class PostUrl {
 
   static const createFromSyrian =
       'api/services/app/PaymentService/CreateSyrianAuthorityPayOffPayment';
+
+  static const directPay = 'api/services/app/PaymentService/CreateDirectPayment';
 }
 
 class PutUrl {
@@ -330,14 +334,19 @@ class PatchUrl {
       'api/services/app/EpaymentService/ChangeActiveStatus';
 
   static const changeCouponState = 'api/services/app/Coupons/ToggleActiveStatus';
+
 }
 
 String get baseUrl {
-  return testUrl;
+  // return testUrl;
+    return testLocal1Url;
+  // return liveUrlLocal;
   // return liveUrl;
 }
 
+const testLocal1Url = 'demo1.qareeb-maas.com';
 const liveUrl = 'live.qareeb-maas.com';
+const liveUrlLocal = 'livetest.qareeb-maas.com';
 const testUrl = 'qareeb-api.first-pioneers.com.tr';
 
 bool get isTestMode =>baseUrl==testUrl;

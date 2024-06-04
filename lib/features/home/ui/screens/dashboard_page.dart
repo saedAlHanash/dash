@@ -15,7 +15,6 @@ import 'package:qareeb_dash/core/api_manager/api_url.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/util/checker_helper.dart';
 import 'package:qareeb_dash/core/util/shared_preferences.dart';
-import 'package:qareeb_dash/core/widgets/my_card_widget.dart';
 import 'package:qareeb_dash/features/drivers/bloc/drivers_imiei_cubit/drivers_imei_cubit.dart';
 import 'package:qareeb_dash/features/redeems/ui/widget/loyalty_widget.dart';
 import 'package:qareeb_dash/router/go_route_pages.dart';

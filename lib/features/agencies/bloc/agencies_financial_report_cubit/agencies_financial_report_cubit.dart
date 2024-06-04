@@ -4,10 +4,10 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:qareeb_dash/core/api_manager/api_url.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_models/agencies/data/response/agencies_financial_response.dart';
 import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_models/global.dart';
-import 'package:qareeb_models/wallet/data/response/single_driver_financial.dart';
-import 'package:qareeb_models/agencies/data/response/agencies_financial_response.dart';
+
 import '../../../../core/api_manager/api_service.dart';
 import '../../../../core/api_manager/command.dart';
 import '../../../../core/error/error_manager.dart';

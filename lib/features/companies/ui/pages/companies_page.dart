@@ -9,10 +9,8 @@ import 'package:qareeb_dash/core/widgets/saed_taple_widget.dart';
 import 'package:qareeb_dash/router/go_route_pages.dart';
 import 'package:qareeb_models/extensions.dart';
 
-import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/my_style.dart';
 import '../../bloc/companies_cubit/companies_cubit.dart';
-import '../widget/companies_filter_widget.dart';
 
 const companyList = [
   'ID',

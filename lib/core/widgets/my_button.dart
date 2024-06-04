@@ -20,6 +20,7 @@ class MyButton extends StatelessWidget {
     this.elevation,
     this.textColor,
     this.width,
+    this.loading=false,
     this.active = true,
     this.margin,
   }) : super(key: key);
@@ -31,6 +32,7 @@ class MyButton extends StatelessWidget {
   final double? elevation;
   final double? width;
   final bool active;
+  final bool loading;
   final EdgeInsets? margin;
   final Function()? onTap;
 
@@ -43,10 +45,21 @@ class MyButton extends StatelessWidget {
           color: textColor ?? AppColorManager.whit,
           fontFamily: FontManager.cairoBold.name,
           size: 17.0.sp,
+          drawableEnd: !loading
+              ? null
+              : SizedBox(
+                  height: 30.0.r,
+                  width: 30.0.r,
+                  child: MyStyle.loadingWidget(color: Colors.white),
+                ),
         );
 
     var widget = InkWell(
-        onTap: active ? onTap : null,
+        onTap: active
+            ? loading
+                ? null
+                : onTap
+            : null,
         borderRadius: BorderRadius.circular(15.0.r),
         child: GradientContainer(
           width: width,
@@ -130,7 +143,8 @@ class GradientContainer extends StatelessWidget {
 }
 
 class CircleButton extends StatelessWidget {
-  const CircleButton({super.key, required this.color, required this.icon, this.size});
+  const CircleButton(
+      {super.key, required this.color, required this.icon, this.size});
 
   final Color color;
   final IconData icon;

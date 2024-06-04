@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:collection/collection.dart';
+import 'package:drawable_text/drawable_text.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,7 +15,6 @@ import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/util/shared_preferences.dart';
 import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_models/global.dart';
-
 import 'package:qareeb_models/trip_process/data/response/candidate_drivers_response.dart';
 import 'package:qareeb_models/trip_process/data/response/drivers_pool.dart';
 import 'package:qareeb_models/trip_process/data/response/trip_response.dart';
@@ -31,7 +31,7 @@ import '../../../../core/util/pair_class.dart';
 import '../../../../generated/assets.dart';
 import '../../../drivers/bloc/driver_by_id_cubit/driver_by_id_cubit.dart';
 import '../../../drivers/ui/pages/driver_info_page.dart';
-import 'package:drawable_text/drawable_text.dart';
+
 part 'candidate_drivers_state.dart';
 
 //CandidateDrivers_drivers_cubit

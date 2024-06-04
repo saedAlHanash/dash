@@ -2,7 +2,7 @@ part of 'all_plan_trips_cubit.dart';
 
 class AllPlanTripsInitial extends Equatable {
   final CubitStatuses statuses;
-  final List<PlanTripModel> result;
+  final List<PlanTrip> result;
   final String error;
   final Command command;
 
@@ -15,7 +15,7 @@ class AllPlanTripsInitial extends Equatable {
 
   factory AllPlanTripsInitial.initial() {
     return AllPlanTripsInitial(
-      result: const <PlanTripModel>[],
+      result: const <PlanTrip>[],
       error: '',
       command: Command.initial(),
       statuses: CubitStatuses.init,
@@ -35,7 +35,7 @@ class AllPlanTripsInitial extends Equatable {
 
   AllPlanTripsInitial copyWith({
     CubitStatuses? statuses,
-    List<PlanTripModel>? result,
+    List<PlanTrip>? result,
     String? error,
     Command? command,
   }) {

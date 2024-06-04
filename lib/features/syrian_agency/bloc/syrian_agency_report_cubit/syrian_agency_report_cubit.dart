@@ -10,7 +10,6 @@ import '../../../../core/api_manager/api_service.dart';
 import '../../../../core/api_manager/command.dart';
 import '../../../../core/util/note_message.dart';
 import '../../../../core/util/pair_class.dart';
-
 import '../../data/response/syrian_agency_report_response.dart';
 
 part 'syrian_agency_report_state.dart';

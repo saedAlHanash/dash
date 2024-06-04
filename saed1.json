@@ -1,17 +1,126 @@
 {
   "result": {
-    "Statistics": {
-      "Clients": 3396,
-      "Drivers": 73,
-      "Trips": 473,
-      "SharedTrips": 878,
-      "ActiveDrivers": 7,
-      "Institutions": 2,
-      "Agencies": 2,
-      "Incoms": 2619059,
-      "Awards": 38850000,
-      "RequiredAmountFromComapnay": 0.0,
-      "AmountInUsersWallet": 41982637
-    }
-  }
+    "totalCount": 3,
+    "items": [
+      {
+        "companyId": 6,
+        "company": {
+          "name": "شركة المحمد للنقليات",
+          "imageUrl": "17150101735875tYt3qKGt4.jpg",
+          "type": 0,
+          "isActive": true,
+          "manager": null,
+          "employees": [],
+          "id": 6
+        },
+        "planId": 1,
+        "plan": {
+          "price": 50000,
+          "name": "الخطة الفضية",
+          "description": "بيلسيب",
+          "imageUrl": "1705480906988rajaWMtLUl.jpg",
+          "maxPathMeters": 20000,
+          "maxDailyUsage": 2,
+          "maxMonthlyUsage": 30,
+          "activationDayNumber": 30,
+          "maxMeters": 10000,
+          "maxMinutes": 0,
+          "isActive": true,
+          "type": 1,
+          "id": 1
+        },
+        "userId": 3772,
+        "user": null,
+        "startDate": "2024-05-06T17:44:55.431014",
+        "expiryDate": "2024-06-05T18:05:29.418985",
+        "cancellationDate": null,
+        "isCanceled": false,
+        "isExpired": false,
+        "availableMeters": 10000,
+        "availableMinutes": 0,
+        "id": 11
+      },
+      {
+        "companyId": 5,
+        "company": {
+          "name": "شركة فراس",
+          "imageUrl": "17145537883795cNkhkyG5s.jpg",
+          "type": 0,
+          "isActive": true,
+          "manager": null,
+          "employees": [],
+          "id": 5
+        },
+        "planId": 3,
+        "plan": {
+          "price": 2500,
+          "name": "قريب",
+          "description": "ش",
+          "imageUrl": "17145539448847kOcI9BGmG.jpg",
+          "maxPathMeters": 30000,
+          "maxDailyUsage": 1,
+          "maxMonthlyUsage": 30,
+          "activationDayNumber": 30,
+          "maxMeters": 30000,
+          "maxMinutes": 0,
+          "isActive": true,
+          "type": 0,
+          "id": 3
+        },
+        "userId": 81,
+        "user": null,
+        "startDate": "2024-05-01T10:59:44.060674",
+        "expiryDate": "2024-05-31T10:59:44.060812",
+        "cancellationDate": null,
+        "isCanceled": false,
+        "isExpired": false,
+        "availableMeters": 130000,
+        "availableMinutes": 4999,
+        "id": 10
+      },
+      {
+        "companyId": 4,
+        "company": {
+          "name": "سعيد",
+          "imageUrl": "1707901544282DQtDPAnwHb.jpg",
+          "type": 0,
+          "isActive": true,
+          "manager": null,
+          "employees": [],
+          "id": 4
+        },
+        "planId": 2,
+        "plan": {
+          "price": 2000,
+          "name": "شركة مدار ",
+          "description": "بليب",
+          "imageUrl": "1711266649517b8WsldSasC.jpg",
+          "maxPathMeters": 50000,
+          "maxDailyUsage": 100,
+          "maxMonthlyUsage": 600,
+          "activationDayNumber": 30,
+          "maxMeters": 50000,
+          "maxMinutes": 0,
+          "isActive": true,
+          "type": 0,
+          "id": 2
+        },
+        "userId": 23,
+        "user": null,
+        "startDate": "2024-03-24T10:26:17.861407",
+        "expiryDate": "2024-04-23T10:26:17.861439",
+        "cancellationDate": null,
+        "isCanceled": false,
+        "isExpired": true,
+        "availableMeters": 1050000,
+        "availableMinutes": 5000,
+        "id": 9
+      }
+    ]
+  },
+  "targetUrl": null,
+  "success": true,
+  "error": null,
+  "unAuthorizedRequest": false,
+  "__abp": true
 }

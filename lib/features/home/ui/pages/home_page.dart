@@ -6,10 +6,9 @@ import 'package:elegant_notification/elegant_notification.dart';
 import 'package:elegant_notification/resources/arrays.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:image_multi_type/image_multi_type.dart';
-import '../../../../core/widgets/admin_side_bar_widget/admin_scaffold.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_multi_type/image_multi_type.dart';
 import 'package:map_package/map/bloc/ather_cubit/ather_cubit.dart';
 import 'package:map_package/map/bloc/map_controller_cubit/map_controller_cubit.dart';
 import 'package:map_package/map/bloc/search_location/search_location_cubit.dart';
@@ -27,6 +26,7 @@ import '../../../../core/injection/injection_container.dart';
 import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/shared_preferences.dart';
+import '../../../../core/widgets/admin_side_bar_widget/admin_scaffold.dart';
 import '../../../../core/widgets/logo_text.dart';
 import '../../../../generated/assets.dart';
 import '../../../accounts/bloc/pay_to_cubit/pay_to_cubit.dart';
@@ -34,8 +34,8 @@ import '../../../accounts/ui/pages/company_transfers_page.dart';
 import '../../../admins/ui/pages/admins_page.dart';
 import '../../../agencies/bloc/create_agency_cubit/create_agency_cubit.dart';
 import '../../../agencies/bloc/delete_agency_cubit/delete_agency_cubit.dart';
-import '../../../agencies/ui/pages/agencies_page.dart';
 import '../../../agencies/ui/pages/agencies_financial_page.dart';
+import '../../../agencies/ui/pages/agencies_page.dart';
 import '../../../auth/bloc/change_user_state_cubit/change_user_state_cubit.dart';
 import '../../../auth/ui/pages/policy_page.dart';
 import '../../../car_catigory/ui/pages/car_categories_page.dart';
@@ -59,6 +59,7 @@ import '../../../plan_trips/bloc/delete_plan_trip_cubit/delete_plan_trip_cubit.d
 import '../../../plan_trips/ui/pages/attendances_page.dart';
 import '../../../plan_trips/ui/pages/plan_trips_page.dart';
 import '../../../plans/bloc/delete_plan_cubit/delete_plan_cubit.dart';
+import '../../../plans/ui/pages/enrollments_page.dart';
 import '../../../plans/ui/pages/plans_page.dart';
 import '../../../points/ui/pages/points_page.dart';
 import '../../../reasons/bloc/create_cubit/create_cubit.dart';
@@ -290,7 +291,7 @@ class _HomePageState extends State<HomePage> {
                   if (allowedEnrollments)
                     const AdminMenuItem(
                       title: 'المشتركين',
-                      route: '/user_plans',
+                      route: '/enrollments',
                       icon: Icons.supervised_user_circle_sharp,
                     ),
                   if (allowedCompanies)
@@ -641,12 +642,12 @@ class _HomePageState extends State<HomePage> {
                     child: const PlansPage(),
                   );
 
-                case "/user_plans":
+                case "/enrollments":
                   return MultiBlocProvider(
                     providers: [
                       BlocProvider(create: (_) => sl<DeletePlanCubit>()),
                     ],
-                    child: const PlansPage(),
+                    child: const EnrollmentsPage(),
                   );
 
                 case "/companies":

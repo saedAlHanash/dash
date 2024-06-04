@@ -14,6 +14,7 @@ import 'package:qareeb_dash/features/syrian_agency/data/request/syrian_filter_re
 
 import '../../features/accounts/bloc/all_transfers_cubit/all_transfers_cubit.dart';
 import '../../features/accounts/bloc/company_transfers_cubit/company_transfers_cubit.dart';
+import '../../features/accounts/bloc/direct_pay_cubit/direct_pay_cubit.dart';
 import '../../features/accounts/bloc/financial_report_cubit/financial_report_cubit.dart';
 import '../../features/admins/bloc/all_admins/all_admins_cubit.dart';
 import '../../features/agencies/bloc/agencies_cubit/agencies_cubit.dart';
@@ -28,12 +29,12 @@ import '../../features/coupons/bloc/all_coupons_vubit/all_coupons_cubit.dart';
 import '../../features/drivers/bloc/all_drivers/all_drivers_cubit.dart';
 import '../../features/drivers/bloc/drivers_imiei_cubit/drivers_imei_cubit.dart';
 import '../../features/governorates/bloc/governorates_cubit/governorates_cubit.dart';
-import '../../features/home/bloc/home_cubit/home_cubit/home_cubit.dart';
 import '../../features/home/bloc/nav_home_cubit/nav_home_cubit.dart';
 import '../../features/institutions/bloc/all_institutions_cubit/all_institutions_cubit.dart';
 import '../../features/notifications/bloc/notification_cubit/notification_cubit.dart';
 import '../../features/plan_trips/bloc/all_plan_trips_cubit/all_plan_trips_cubit.dart';
 import '../../features/plan_trips/bloc/plan_attendances_cubit/plan_attendances_cubit.dart';
+import '../../features/plans/bloc/enrollments_cubit/enrollments_cubit.dart';
 import '../../features/plans/bloc/plans_cubit/plans_cubit.dart';
 import '../../features/points/bloc/get_edged_point_cubit/get_all_points_cubit.dart';
 import '../../features/roles/bloc/all_roles/all_roles_cubit.dart';
@@ -103,7 +104,7 @@ class _MyAppState extends State<MyApp> {
 
     return ScreenUtilInit(
       // designSize: const Size(412, 770),
-      designSize: const Size(1440*1.3, 972),
+      designSize: const Size(1440 * 1.3, 972),
       minTextAdapt: true,
       builder: (context, child) {
         DrawableText.initial(
@@ -130,6 +131,7 @@ class _MyAppState extends State<MyApp> {
               providers: [
                 BlocProvider(create: (_) => sl<NavHomeCubit>()),
                 BlocProvider(create: (_) => sl<MapControlCubit>()),
+                BlocProvider(create: (_) => sl<DirectPayCubit>()),
                 BlocProvider(create: (_) => sl<CreatePolicyCubit>()),
                 BlocProvider(create: (_) => sl<AllSosCubit>()..getSos(_)),
                 BlocProvider(create: (_) => sl<CreateNotificationCubit>()),
@@ -137,25 +139,48 @@ class _MyAppState extends State<MyApp> {
                 BlocProvider(create: (_) => sl<PolicyCubit>()..getPolicy(_)),
                 BlocProvider(create: (_) => sl<AllPlansCubit>()..getPlans(_)),
                 BlocProvider(create: (_) => sl<PointsCubit>()..getAllPoints(_)),
-                BlocProvider(create: (_) => sl<AgenciesCubit>()..getAgencies(_)),
-                BlocProvider(create: (_) => sl<AllRolesCubit>()..getAllRoles(_)),
-                BlocProvider(create: (_) => sl<AllTicketsCubit>()..getTickets(_)),
-                BlocProvider(create: (_) => sl<AllAdminsCubit>()..getAllAdmins(_)),
-                BlocProvider(create: (_) => sl<AllDriversCubit>()..getAllDrivers(_)),
-                BlocProvider(create: (_) => sl<AllClientsCubit>()..getAllClients(_)),
-                BlocProvider(create: (_) => sl<AllCouponsCubit>()..getAllCoupons(_)),
-                BlocProvider(create: (_) => sl<AllPlanTripsCubit>()..getPlanTrips(_)),
-                BlocProvider(create: (_) => sl<FinancialReportCubit>()..getReport(_)),
-                BlocProvider(create: (_) => sl<AgenciesReportCubit>()..getReport(_)),
-                BlocProvider(create: (_) => sl<AllTempTripsCubit>()..getTempTrips(_)),
-                BlocProvider(create: (_) => sl<AllCompaniesCubit>()..getCompanies(_)),
-                BlocProvider(create: (_) => sl<ActiveTripsCubit>()..getActiveTrips(_)),
-                BlocProvider(create: (_) => sl<DriversImeiCubit>()..getDriversImei(_)),
-                BlocProvider(create: (_) => sl<GovernoratesCubit>()..getGovernorate(_)),
-                BlocProvider(create: (_) => sl<AllTransfersCubit>()..getAllTransfers(_)),
-                BlocProvider(create: (_) => sl<GetSharedTripsCubit>()..getSharesTrip(_)),
-                BlocProvider(create: (_) => sl<SystemParamsCubit>()..getSystemParams(_)),
-                BlocProvider(create: (_) => sl<ProvidersCubit>()..getAllEpayProviders(_)),
+                BlocProvider(
+                    create: (_) => sl<AgenciesCubit>()..getAgencies(_)),
+                BlocProvider(
+                    create: (_) => sl<AllRolesCubit>()..getAllRoles(_)),
+                BlocProvider(
+                    create: (_) => sl<AllTicketsCubit>()..getTickets(_)),
+                BlocProvider(
+                    create: (_) => sl<AllAdminsCubit>()..getAllAdmins(_)),
+                BlocProvider(
+                    create: (_) => sl<AllDriversCubit>()..getAllDrivers(_)),
+                BlocProvider(
+                    create: (_) => sl<AllClientsCubit>()..getAllClients(_)),
+                BlocProvider(
+                    create: (_) => sl<AllCouponsCubit>()..getAllCoupons(_)),
+                BlocProvider(
+                    create: (_) => sl<AllPlanTripsCubit>()..getPlanTrips(_)),
+                BlocProvider(
+                    create: (_) => sl<FinancialReportCubit>()..getReport(_)),
+                BlocProvider(
+                    create: (_) => sl<AgenciesReportCubit>()..getReport(_)),
+                BlocProvider(
+                    create: (_) => sl<AllTempTripsCubit>()..getTempTrips(_)),
+                BlocProvider(
+                    create: (_) => sl<AllCompaniesCubit>()..getCompanies(_)),
+                BlocProvider(
+                    create: (_) => sl<ActiveTripsCubit>()..getActiveTrips(_)),
+                BlocProvider(
+                    create: (_) => sl<DriversImeiCubit>()..getDriversImei(_)),
+                BlocProvider(
+                    create: (_) => sl<GovernoratesCubit>()..getGovernorate(_)),
+                BlocProvider(
+                    create: (_) => sl<AllTransfersCubit>()..getAllTransfers(_)),
+                BlocProvider(
+                    create: (_) => sl<GetSharedTripsCubit>()..getSharesTrip(_)),
+                BlocProvider(
+                    create: (_) => sl<SystemParamsCubit>()..getSystemParams(_)),
+                BlocProvider(
+                  create: (_) => sl<ProvidersCubit>()..getProviders(),
+                ),
+                BlocProvider(
+                  create: (_) => sl<EnrollmentCubit>()..getEnrollment(),
+                ),
                 BlocProvider(
                     create: (_) =>
                         sl<SyrianAgenciesFinancialReportCubit>()..getReport(_)),
@@ -168,21 +193,25 @@ class _MyAppState extends State<MyApp> {
                     ),
                 ),
                 BlocProvider(
-                    create: (_) => sl<PlanAttendancesCubit>()..getAttendances(_)),
+                    create: (_) =>
+                        sl<PlanAttendancesCubit>()..getAttendances(_)),
                 BlocProvider(
-                  create: (_) => sl<CompanyTransfersCubit>()..getCompanyTransfers(_),
+                  create: (_) =>
+                      sl<CompanyTransfersCubit>()..getCompanyTransfers(_),
                 ),
                 BlocProvider(
                   create: (_) => sl<AllCompanyPathsCubit>()..getCompanyPaths(_),
                 ),
                 BlocProvider(
-                  create: (_) => sl<SystemSettingsCubit>()..getSystemSettings(_),
+                  create: (_) =>
+                      sl<SystemSettingsCubit>()..getSystemSettings(_),
                 ),
                 BlocProvider(
                   create: (_) => sl<AllInstitutionsCubit>()..getInstitutions(_),
                 ),
                 BlocProvider(
-                  create: (_) => sl<AllCarCategoriesCubit>()..getCarCategories(_),
+                  create: (_) =>
+                      sl<AllCarCategoriesCubit>()..getCarCategories(_),
                 ),
               ],
               child: Directionality(

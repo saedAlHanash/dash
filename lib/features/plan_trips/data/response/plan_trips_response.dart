@@ -26,14 +26,14 @@
 //   });
 //
 //   int totalCount;
-//   final List<PlanTripModel> items;
+//   final List<PlanTrip> items;
 //
 //   factory PlanTripsResult.fromJson(Map<String, dynamic> json) {
 //     return PlanTripsResult(
 //       totalCount: json["totalCount"] ?? 0,
 //       items: json["items"] == null
 //           ? []
-//           : List<PlanTripModel>.from(json["items"]!.map((x) => PlanTripModel.fromJson(x))),
+//           : List<PlanTrip>.from(json["items"]!.map((x) => PlanTrip.fromJson(x))),
 //     );
 //   }
 //
@@ -43,8 +43,8 @@
 //       };
 // }
 //
-// class PlanTripModel {
-//   PlanTripModel({
+// class PlanTrip {
+//   PlanTrip({
 //     required this.name,
 //     required this.tripTemplateId,
 //     required this.institutionId,
@@ -89,8 +89,8 @@
 //   final List<TripHistoryItem> attendances;
 //   final List<Participation> participations;
 //
-//   factory PlanTripModel.fromJson(Map<String, dynamic> json) {
-//     return PlanTripModel(
+//   factory PlanTrip.fromJson(Map<String, dynamic> json) {
+//     return PlanTrip(
 //       name: json["name"] ?? "",
 //       tripTemplateId: json["tripTemplateId"] ?? 0,
 //       institutionId: json["institutionId"] ?? 0,

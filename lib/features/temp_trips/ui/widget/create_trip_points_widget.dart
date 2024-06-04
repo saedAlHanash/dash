@@ -14,7 +14,6 @@ import '../../../points/bloc/get_edged_point_cubit/get_all_points_cubit.dart';
 import '../../../points/bloc/get_points_edge_cubit/get_points_edge_cubit.dart';
 import '../../../shared_trip/bloc/add_point_cubit/add_point_cubit.dart';
 import '../../../shared_trip/ui/widget/path_points_widget.dart';
-import '../../bloc/create_temp_trip_cubit/create_temp_trip_cubit.dart';
 import 'search_points_widget.dart';
 
 class CreateTempPathWidget extends StatefulWidget {

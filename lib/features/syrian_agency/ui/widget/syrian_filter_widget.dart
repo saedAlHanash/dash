@@ -4,13 +4,11 @@ import 'package:qareeb_dash/core/strings/app_color_manager.dart';
 import 'package:qareeb_dash/core/widgets/my_button.dart';
 import 'package:qareeb_dash/core/widgets/spinner_widget.dart';
 import 'package:qareeb_models/extensions.dart';
-import 'package:qareeb_models/global.dart';
 
 import '../../../../../core/api_manager/command.dart';
 import '../../../../../core/util/my_style.dart';
 import '../../../../../core/widgets/my_text_form_widget.dart';
 import '../../../../../core/widgets/select_date.dart';
-
 import '../../data/request/syrian_filter_request.dart';
 
 class SyrianFilterWidget extends StatefulWidget {

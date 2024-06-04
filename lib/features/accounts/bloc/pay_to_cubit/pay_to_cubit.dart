@@ -3,7 +3,6 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:qareeb_dash/core/api_manager/api_url.dart';
 import 'package:qareeb_dash/features/accounts/data/request/re_pay_request.dart';
-import 'package:qareeb_dash/features/accounts/data/request/re_pay_request.dart';
 import 'package:qareeb_models/global.dart';
 
 import '../../../../core/api_manager/api_service.dart';

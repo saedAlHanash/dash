@@ -1,7 +1,7 @@
 import 'package:collection/collection.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qareeb_dash/core/api_manager/api_url.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_models/extensions.dart';
@@ -33,8 +33,9 @@ class AllPlanTripsCubit extends Cubit<AllPlanTripsInitial> {
       }
       emit(state.copyWith(statuses: CubitStatuses.error, error: pair.second));
     } else {
-      state.command.totalCount = pair.first!.totalCount;
-      emit(state.copyWith(statuses: CubitStatuses.done, result: pair.first?.items));
+      state.command.totalCount = pair.first!.totalCount.toInt();
+      emit(state.copyWith(
+          statuses: CubitStatuses.done, result: pair.first?.items));
     }
   }
 
@@ -53,7 +54,6 @@ class AllPlanTripsCubit extends Cubit<AllPlanTripsInitial> {
 
   Future<Pair<List<String>, List<List<dynamic>>>?> getPlanAsync(
       BuildContext context) async {
-
     var oldSkipCount = state.command.skipCount;
     state.command
       ..maxResultCount = 1.maxInt
@@ -73,7 +73,7 @@ class AllPlanTripsCubit extends Cubit<AllPlanTripsInitial> {
     return null;
   }
 
-  Pair<List<String>, List<List<dynamic>>> _getXlsData(List<PlanTripModel> data) {
+  Pair<List<String>, List<List<dynamic>>> _getXlsData(List<PlanTrip> data) {
     return Pair(
         [
           'ID',

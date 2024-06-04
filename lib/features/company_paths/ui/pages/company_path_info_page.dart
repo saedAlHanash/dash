@@ -5,7 +5,6 @@ import 'package:map_package/map/bloc/map_controller_cubit/map_controller_cubit.d
 import 'package:map_package/map/ui/widget/map_widget.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/widgets/item_info.dart';
-import 'package:qareeb_dash/features/temp_trips/data/request/estimate_request.dart';
 import 'package:qareeb_models/extensions.dart';
 
 import '../../../../core/util/my_style.dart';

@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qareeb_dash/core/api_manager/command.dart';
 import 'package:qareeb_dash/core/strings/app_color_manager.dart';
 import 'package:qareeb_dash/core/widgets/my_button.dart';
-import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_models/global.dart';
 
 import '../../../../core/util/my_style.dart';
-import '../../../../core/util/shared_preferences.dart';
 import '../../../../core/widgets/my_text_form_widget.dart';
 import '../../../../core/widgets/spinner_widget.dart';
-import '../../../agencies/bloc/agencies_cubit/agencies_cubit.dart';
-import '../../../car_catigory/bloc/all_car_categories_cubit/all_car_categories_cubit.dart';
 import '../../data/request/drivers_filter_request.dart';
 
 class TransDriversFilterWidget extends StatefulWidget {

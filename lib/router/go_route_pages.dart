@@ -27,6 +27,7 @@ import 'package:qareeb_models/global.dart';
 import 'package:qareeb_models/plans/data/response/plans_response.dart';
 
 import '../core/injection/injection_container.dart' as di;
+import '../core/injection/injection_container.dart';
 import '../core/util/shared_preferences.dart';
 import '../features/accounts/bloc/all_charging_cubit/all_charging_cubit.dart';
 import '../features/accounts/bloc/all_transfers_cubit/all_transfers_cubit.dart';
@@ -113,6 +114,7 @@ import '../services/osrm/bloc/location_name_cubit/location_name_cubit.dart';
 int initialTapNumber = 0;
 
 final appGoRouter = GoRouter(
+  navigatorKey: sl<GlobalKey<NavigatorState>>(),
   redirect: (BuildContext context, GoRouterState state) {
     // initialTapNumber = int.tryParse(state.queryParams['tap'].toString()) ?? 0;
     //Replace this method depends on how you are managing your user's
@@ -184,16 +186,18 @@ final appGoRouter = GoRouter(
           BlocProvider(create: (_) => di.sl<MapControllerCubit>()),
           BlocProvider(create: (_) => di.sl<WalletCubit>()..getWallet(id: id)),
           BlocProvider(create: (_) => di.sl<DebtsCubit>()..getDebts(_, id: id)),
-
-          BlocProvider(create: (_) => di.sl<RedeemsCubit>()..getRedeems(_, driverId: id)),
+          BlocProvider(
+              create: (_) =>
+                  di.sl<RedeemsCubit>()..getRedeems(_, driverId: id)),
           BlocProvider(
               create: (_) => di.sl<DriverStatusHistoryCubit>()
                 ..getDriverStatusHistory(_, driverId: id)),
           BlocProvider(
-              create: (_) => di.sl<DriverBuIdCubit>()..getDriverBuId(context, id: id)),
-          BlocProvider(
               create: (_) =>
-                  di.sl<RedeemsHistoryCubit>()..getRedeemsHistory(_, driverId: id)),
+                  di.sl<DriverBuIdCubit>()..getDriverBuId(context, id: id)),
+          BlocProvider(
+              create: (_) => di.sl<RedeemsHistoryCubit>()
+                ..getRedeemsHistory(_, driverId: id)),
           BlocProvider(
             create: (_) => di.sl<DriverFinancialCubit>()
               ..getDriverFinancial(_,
@@ -275,7 +279,8 @@ final appGoRouter = GoRouter(
         // final driver = DriverModel.fromJson(jsonDecode(json));
         final providers = [
           BlocProvider(
-              create: (_) => di.sl<AgencyReportCubit>()..getAgencyReport(_, id: id)),
+              create: (_) =>
+                  di.sl<AgencyReportCubit>()..getAgencyReport(_, id: id)),
         ];
         return MultiBlocProvider(
           providers: providers,
@@ -308,8 +313,9 @@ final appGoRouter = GoRouter(
       name: GoRouteName.adminInfo,
       path: _GoRoutePath.adminInfo,
       builder: (BuildContext context, GoRouterState state) {
-        final admin =
-            state.extra == null ? DriverModel.fromJson({}) : (state.extra) as DriverModel;
+        final admin = state.extra == null
+            ? DriverModel.fromJson({})
+            : (state.extra) as DriverModel;
         return AdminInfoPage(admin: admin);
       },
     ),
@@ -326,7 +332,8 @@ final appGoRouter = GoRouter(
         // final driver = DriverModel.fromJson(jsonDecode(json));
         final providers = [
           BlocProvider(
-              create: (_) => di.sl<ClientByIdCubit>()..getClientBuId(context, id: id)),
+              create: (_) =>
+                  di.sl<ClientByIdCubit>()..getClientBuId(context, id: id)),
           BlocProvider(create: (_) => di.sl<WalletCubit>()..getWallet(id: id)),
         ];
         return MultiBlocProvider(
@@ -344,7 +351,8 @@ final appGoRouter = GoRouter(
       name: GoRouteName.createCarCategory,
       path: _GoRoutePath.createCarCategory,
       builder: (BuildContext context, GoRouterState state) {
-        final carCat = state.extra == null ? null : (state.extra) as CarCategory;
+        final carCat =
+            state.extra == null ? null : (state.extra) as CarCategory;
         final providers = [
           BlocProvider(create: (_) => di.sl<CreateCarCategoryCubit>()),
         ];
@@ -368,9 +376,11 @@ final appGoRouter = GoRouter(
         final arg = state.extra;
         final providers = [
           BlocProvider(
-              create: (_) => di.sl<PointByIdCubit>()..getPointById(context, id: id)),
+              create: (_) =>
+                  di.sl<PointByIdCubit>()..getPointById(context, id: id)),
           BlocProvider(
-              create: (_) => di.sl<EdgesPointCubit>()..getAllEdgesPoint(context, id: id)),
+              create: (_) =>
+                  di.sl<EdgesPointCubit>()..getAllEdgesPoint(context, id: id)),
           BlocProvider(create: (_) => di.sl<DeleteEdgeCubit>()),
           BlocProvider(create: (_) => di.sl<LocationNameCubit>()),
           BlocProvider(create: (_) => di.sl<MapControllerCubit>()),
@@ -382,7 +392,8 @@ final appGoRouter = GoRouter(
         ];
         return MultiBlocProvider(
           providers: providers,
-          child: PointInfoPage(mapMediator: arg == null ? null : arg as MapMediator),
+          child: PointInfoPage(
+              mapMediator: arg == null ? null : arg as MapMediator),
         );
       },
     ),
@@ -401,12 +412,14 @@ final appGoRouter = GoRouter(
           BlocProvider(create: (_) => di.sl<MapControllerCubit>()),
           BlocProvider(create: (_) => di.sl<ChangeTripStatusCubit>()),
           BlocProvider(create: (_) => di.sl<AtherCubit>()),
-          BlocProvider(create: (_) => di.sl<TripByIdCubit>()..tripById(_, tripId: id)),
-          BlocProvider(create: (_) => di.sl<TripDebitCubit>()..tripDebit(_, tripId: id)),
+          BlocProvider(
+              create: (_) => di.sl<TripByIdCubit>()..tripById(_, tripId: id)),
+          BlocProvider(
+              create: (_) => di.sl<TripDebitCubit>()..tripDebit(_, tripId: id)),
           BlocProvider(create: (_) => di.sl<DriverBuIdCubit>()),
           BlocProvider(
-              create: (_) =>
-                  di.sl<CandidateDriversCubit>()..getCandidateDrivers(_, tripId: id)),
+              create: (_) => di.sl<CandidateDriversCubit>()
+                ..getCandidateDrivers(_, tripId: id)),
         ];
         return MultiBlocProvider(
           providers: providers,
@@ -457,7 +470,8 @@ final appGoRouter = GoRouter(
       path: _GoRoutePath.sharedTripInfo,
       builder: (BuildContext context, GoRouterState state) {
         final id = int.tryParse(state.queryParams['id'] ?? '0') ?? 0;
-        final requestId = int.tryParse(state.queryParams['requestId'] ?? '0') ?? 0;
+        final requestId =
+            int.tryParse(state.queryParams['requestId'] ?? '0') ?? 0;
 
         final providers = [
           BlocProvider(create: (_) => di.sl<MapControllerCubit>()),
@@ -536,7 +550,8 @@ final appGoRouter = GoRouter(
       name: GoRouteName.createCompany,
       path: _GoRoutePath.createCompany,
       builder: (BuildContext context, GoRouterState state) {
-        final company = state.extra == null ? null : (state.extra) as CompanyModel;
+        final company =
+            state.extra == null ? null : (state.extra) as CompanyModel;
         final providers = [
           BlocProvider(create: (_) => di.sl<CreateCompanyCubit>()),
         ];
@@ -566,8 +581,8 @@ final appGoRouter = GoRouter(
           else
             BlocProvider(create: (_) => di.sl<PointsCubit>()..getAllPoints(_)),
           BlocProvider(
-            create: (_) =>
-                di.sl<CompanyPathBuIdCubit>()..getCompanyPathBuId(context, id: id),
+            create: (_) => di.sl<CompanyPathBuIdCubit>()
+              ..getCompanyPathBuId(context, id: id),
           ),
         ];
         return MultiBlocProvider(
@@ -589,8 +604,8 @@ final appGoRouter = GoRouter(
           BlocProvider(create: (_) => di.sl<AtherCubit>()),
           BlocProvider(create: (_) => di.sl<EstimateCompanyCubit>()),
           BlocProvider(
-            create: (_) =>
-                di.sl<CompanyPathBuIdCubit>()..getCompanyPathBuId(context, id: id),
+            create: (_) => di.sl<CompanyPathBuIdCubit>()
+              ..getCompanyPathBuId(context, id: id),
           ),
         ];
         return MultiBlocProvider(
@@ -642,7 +657,8 @@ final appGoRouter = GoRouter(
           else
             BlocProvider(create: (_) => di.sl<PointsCubit>()..getAllPoints(_)),
           BlocProvider(
-            create: (_) => di.sl<TempTripBuIdCubit>()..getTempTripBuId(context, id: id),
+            create: (_) =>
+                di.sl<TempTripBuIdCubit>()..getTempTripBuId(context, id: id),
           ),
         ];
         return MultiBlocProvider(
@@ -664,7 +680,8 @@ final appGoRouter = GoRouter(
           BlocProvider(create: (_) => di.sl<AtherCubit>()),
           BlocProvider(create: (_) => di.sl<EstimateCubit>()),
           BlocProvider(
-            create: (_) => di.sl<TempTripBuIdCubit>()..getTempTripBuId(context, id: id),
+            create: (_) =>
+                di.sl<TempTripBuIdCubit>()..getTempTripBuId(context, id: id),
           ),
         ];
         return MultiBlocProvider(
@@ -689,7 +706,8 @@ final appGoRouter = GoRouter(
         final providers = [
           BlocProvider(create: (_) => di.sl<CreatePlanTripCubit>()),
           BlocProvider(
-            create: (_) => di.sl<PlanTripBuIdCubit>()..getPlanTripBuId(context, id: id),
+            create: (_) =>
+                di.sl<PlanTripBuIdCubit>()..getPlanTripBuId(context, id: id),
           ),
         ];
         return MultiBlocProvider(
@@ -724,7 +742,9 @@ final appGoRouter = GoRouter(
         final role = state.extra == null ? null : (state.extra) as Role;
         final providers = [
           BlocProvider(create: (_) => di.sl<CreateRoleCubit>()),
-          BlocProvider(create: (_) => di.sl<AllPermissionsCubit>()..getAllPermissions(_)),
+          BlocProvider(
+              create: (_) =>
+                  di.sl<AllPermissionsCubit>()..getAllPermissions(_)),
         ];
         return MultiBlocProvider(
           providers: providers,
@@ -761,8 +781,8 @@ final appGoRouter = GoRouter(
 
         final providers = [
           BlocProvider(
-            create: (_) =>
-                di.sl<RedeemsHistoryCubit>()..getRedeemsHistory(_, driverId: id),
+            create: (_) => di.sl<RedeemsHistoryCubit>()
+              ..getRedeemsHistory(_, driverId: id),
           ),
         ];
         return MultiBlocProvider(

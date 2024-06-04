@@ -1,11 +1,16 @@
 import 'package:collection/collection.dart';
 import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_multi_type/image_multi_type.dart';
 import 'package:map_package/map/data/models/my_marker.dart';
+import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_dash/core/widgets/my_button.dart';
+import 'package:qareeb_dash/features/accounts/data/request/direct_pay_request.dart';
 import 'package:qareeb_dash/features/shared_trip/ui/widget/path_points_widget.dart';
 import 'package:qareeb_models/extensions.dart';
+import 'package:qareeb_models/global.dart';
 import 'package:qareeb_models/shared_trip/data/response/shared_trip.dart';
 
 import '../../../../core/strings/app_color_manager.dart';
@@ -13,6 +18,7 @@ import '../../../../core/util/note_message.dart';
 import '../../../../core/util/shared_preferences.dart';
 import '../../../../core/widgets/item_info.dart';
 import '../../../../core/widgets/saed_taple_widget.dart';
+import '../../../accounts/bloc/direct_pay_cubit/direct_pay_cubit.dart';
 
 class TripInfoListWidget extends StatefulWidget {
   const TripInfoListWidget({Key? key, required this.trip}) : super(key: key);
@@ -31,12 +37,14 @@ class _TripInfoListWidgetState extends State<TripInfoListWidget> {
       children: [
         ItemInfoInLine(title: 'السائق', info: widget.trip.driver.fullName),
         ItemInfoInLine(
-            title: 'عدد المقاعد المتاحة', info: widget.trip.seatNumber.toString()),
+            title: 'عدد المقاعد المتاحة',
+            info: widget.trip.seatNumber.toString()),
         ItemInfoInLine(
           title: 'فيعدد مقاعد السيارة',
           info: widget.trip.driver.carType.seatsNumber.toString(),
         ),
-        ItemInfoInLine(title: 'سعر المقعد', info: widget.trip.seatCost.formatPrice),
+        ItemInfoInLine(
+            title: 'سعر المقعد', info: widget.trip.seatCost.formatPrice),
         ItemInfoInLine(
           title: 'المقاعد المحجوزة',
           info: widget.trip.reservedSeats.toString(),
@@ -62,15 +70,17 @@ class _TripInfoListWidgetState extends State<TripInfoListWidget> {
             title: 'تاريخ الجدولة',
             info: widget.trip.schedulingDate?.formatDateTime ?? '-'),
         ItemInfoInLine(
-            title: 'تاريخ البداية', info: widget.trip.startDate?.formatDateTime ?? '-'),
+            title: 'تاريخ البداية',
+            info: widget.trip.startDate?.formatDateTime ?? '-'),
         ItemInfoInLine(
-            title: 'تاريخ النهاية', info: widget.trip.endDate?.formatDateTime ?? '-'),
+            title: 'تاريخ النهاية',
+            info: widget.trip.endDate?.formatDateTime ?? '-'),
         if (!isAgency)
           ItemInfoInLine(
             title: 'الزبائن',
             widget: TextButton(
               onPressed: () => showSharedRequest(widget.trip),
-              child:  DrawableText(
+              child: DrawableText(
                 text: 'عرض',
                 selectable: false,
                 color: AppColorManager.mainColorDark,
@@ -95,7 +105,8 @@ class _TripInfoListWidgetState extends State<TripInfoListWidget> {
               'عدد المقاعد',
               'نقطة الركوب',
               'رمز النقطة',
-              'حالة الدفع',
+              'الكلفة',
+              'خيارات',
             ]
           ],
           data: e.sharedRequests.mapIndexed(
@@ -119,7 +130,27 @@ class _TripInfoListWidgetState extends State<TripInfoListWidget> {
                     width: 40.0.r,
                     fit: BoxFit.contain,
                   ),
-                  element.status.arabicName,
+                  (element.amount).formatPrice,
+                  if (element.status == SharedRequestStatus.pending)
+                    BlocBuilder<DirectPayCubit, DirectPayInitial>(
+                      builder: (context, state) {
+                        return MyButton(
+                          loading: state.statuses.loading,
+                          onTap: () {
+                            context.read<DirectPayCubit>().directPay(
+                                  request: DirectPayRequest(
+                                    sharedRequestId: element.id,
+                                    userPhoneNo: client.phoneNumber,
+                                    amount: element.amount,
+                                  ),
+                                );
+                          },
+                          text: 'دفع',
+                        );
+                      },
+                    )
+                  else
+                    const DrawableText(text: 'تم الدفع'),
                 ],
               ];
             },

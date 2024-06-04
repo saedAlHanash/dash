@@ -13,7 +13,6 @@ import 'package:qareeb_models/extensions.dart';
 
 import '../../../../core/api_manager/api_service.dart';
 import '../../../../core/strings/app_color_manager.dart';
-import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/my_style.dart';
 import '../../../../core/widgets/my_card_widget.dart';
 import '../../../../generated/assets.dart';

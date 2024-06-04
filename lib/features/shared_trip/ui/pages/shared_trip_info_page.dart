@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:map_package/map/bloc/ather_cubit/ather_cubit.dart';
 import 'package:map_package/map/bloc/map_controller_cubit/map_controller_cubit.dart';
 import 'package:map_package/map/ui/widget/map_widget.dart';
-import 'package:qareeb_dash/core/api_manager/api_service.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/strings/app_color_manager.dart';
 import 'package:qareeb_dash/features/shared_trip/ui/widget/shared_trip_info_list_widget.dart';
@@ -15,6 +14,7 @@ import '../../../../core/util/my_style.dart';
 import '../../../../core/util/shared_preferences.dart';
 import '../../../../core/widgets/app_bar_widget.dart';
 import '../../../../core/widgets/my_button.dart';
+import '../../../accounts/bloc/direct_pay_cubit/direct_pay_cubit.dart';
 import '../../bloc/shared_trip_by_id_cubit/shared_trip_by_id_cubit.dart';
 import '../../bloc/update_shared_cubit/update_shared_cubit.dart';
 import '../../data/request/create_shared_request.dart';
@@ -51,8 +51,11 @@ class _SharedTripInfoPageState extends State<SharedTripInfoPage> {
           listenWhen: (p, c) => c.statuses.done,
           listener: (context, state) {
             mapController.addPath(path: state.result.path);
-            if (!isTrans && state.result.tripStatus == SharedTripStatus.started) {
-              context.read<AtherCubit>().getDriverLocation([state.result.driver.imei]);
+            if (!isTrans &&
+                state.result.tripStatus == SharedTripStatus.started) {
+              context
+                  .read<AtherCubit>()
+                  .getDriverLocation([state.result.driver.imei]);
               MapWidget.initImeis([state.result.driver.imei]);
             }
           },
@@ -60,7 +63,9 @@ class _SharedTripInfoPageState extends State<SharedTripInfoPage> {
         BlocListener<AtherCubit, AtherInitial>(
           listener: (context, state) {
             if (zoomingCenter) return;
-            context.read<MapControllerCubit>().centerPointMarkers(withDriver: true);
+            context
+                .read<MapControllerCubit>()
+                .centerPointMarkers(withDriver: true);
 
             zoomingCenter = true;
           },
@@ -75,6 +80,14 @@ class _SharedTripInfoPageState extends State<SharedTripInfoPage> {
                 );
           },
         ),
+        BlocListener<DirectPayCubit, DirectPayInitial>(
+          listenWhen: (p, c) => c.statuses.done,
+          listener: (context, state) {
+            Navigator.pop(context);
+            context.read<SharedTripByIdCubit>().getSharedTripById(context);
+          },
+          child: Container(),
+        )
       ],
       child: Scaffold(
         appBar: const AppBarWidget(),
@@ -83,7 +96,9 @@ class _SharedTripInfoPageState extends State<SharedTripInfoPage> {
           children: [
             Expanded(
               child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0).r,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0)
+                        .r,
                 child: BlocBuilder<SharedTripByIdCubit, SharedTripByIdInitial>(
                   builder: (context, state) {
                     if (state.statuses.loading) {
@@ -101,11 +116,13 @@ class _SharedTripInfoPageState extends State<SharedTripInfoPage> {
                           color: Colors.black,
                           drawableEnd: isTrans
                               ? null
-                              : (state.result.tripStatus == SharedTripStatus.closed ||
+                              : (state.result.tripStatus ==
+                                          SharedTripStatus.closed ||
                                       state.result.tripStatus ==
                                           SharedTripStatus.canceled)
                                   ? null
-                                  : BlocBuilder<UpdateSharedCubit, UpdateSharedInitial>(
+                                  : BlocBuilder<UpdateSharedCubit,
+                                      UpdateSharedInitial>(
                                       builder: (context, cState) {
                                         if (cState.statuses.loading) {
                                           return MyStyle.loadingWidget();
@@ -128,7 +145,8 @@ class _SharedTripInfoPageState extends State<SharedTripInfoPage> {
                                                     .updateSharedTrip(
                                                       context,
                                                       trip: state.result,
-                                                      tState: SharedTripStatus.canceled,
+                                                      tState: SharedTripStatus
+                                                          .canceled,
                                                     );
                                               },
                                             ),
@@ -139,7 +157,8 @@ class _SharedTripInfoPageState extends State<SharedTripInfoPage> {
                                               color: AppColorManager.mainColor,
                                               textColor: Colors.white,
                                               onTap: () async {
-                                                await updateTripTime(context, state);
+                                                await updateTripTime(
+                                                    context, state);
                                               },
                                             ),
                                           ],
@@ -156,8 +175,7 @@ class _SharedTripInfoPageState extends State<SharedTripInfoPage> {
             ),
             20.0.horizontalSpace,
             const Expanded(
-              child: MapWidget(
-              ),
+              child: MapWidget(),
             ),
           ],
         ),
@@ -165,7 +183,8 @@ class _SharedTripInfoPageState extends State<SharedTripInfoPage> {
     );
   }
 
-  Future<void> updateTripTime(BuildContext context, SharedTripByIdInitial state) async {
+  Future<void> updateTripTime(
+      BuildContext context, SharedTripByIdInitial state) async {
     final time = await showTimePicker(
       context: context,
       initialTime: TimeOfDay.fromDateTime(

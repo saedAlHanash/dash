@@ -61,7 +61,7 @@
 //   final num planId;
 //   final planModel plan;
 //   final num planTripId;
-//   final PlanTripModel planTrip;
+//   final PlanTrip planTrip;
 //   final num planMemberId;
 //   final Member planMember;
 //   final DateTime? date;
@@ -75,7 +75,7 @@
 //       planId: json["planId"] ?? 0,
 //       plan: planModel.fromJson(json["plan"] ?? {}),
 //       planTripId: json["planTripId"] ?? 0,
-//       planTrip: PlanTripModel.fromJson(json["planTrip"] ?? {}),
+//       planTrip: PlanTrip.fromJson(json["planTrip"] ?? {}),
 //       planMemberId: json["planMemberId"] ?? 0,
 //       planMember: Member.fromJson(json["planMember"] ?? {}),
 //       date: DateTime.tryParse(json["date"] ?? ""),

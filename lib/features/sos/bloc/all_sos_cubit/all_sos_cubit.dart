@@ -12,7 +12,6 @@ import '../../../../core/error/error_manager.dart';
 import '../../../../core/util/note_message.dart';
 import '../../../../core/util/pair_class.dart';
 
-
 part 'all_sos_state.dart';
 
 class AllSosCubit extends Cubit<AllSosInitial> {

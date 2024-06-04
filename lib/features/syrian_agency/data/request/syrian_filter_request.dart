@@ -1,4 +1,3 @@
-import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_models/global.dart';
 
 class SyrianFilterRequest {

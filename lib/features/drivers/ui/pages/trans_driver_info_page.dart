@@ -6,18 +6,12 @@ import 'package:image_multi_type/round_image_widget.dart';
 import 'package:qareeb_dash/core/util/note_message.dart';
 import 'package:qareeb_dash/core/widgets/table_widget.dart';
 import 'package:qareeb_dash/features/drivers/data/response/drivers_response.dart';
-import 'package:qareeb_dash/features/redeems/ui/widget/loyalty_widget.dart';
 import 'package:qareeb_models/extensions.dart';
 
-import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/util/my_style.dart';
 import '../../../../core/util/shared_preferences.dart';
 import '../../../../core/widgets/app_bar_widget.dart';
-import '../../../wallet/ui/pages/debts_page.dart';
 import '../../bloc/driver_by_id_cubit/driver_by_id_cubit.dart';
-import '../widget/driver_financial_widget.dart';
-import '../widget/driver_status_history.dart';
-import '../widget/driver_trips_card.dart';
 
 class TransDriverInfoPage extends StatefulWidget {
   const TransDriverInfoPage({super.key});

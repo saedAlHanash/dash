@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qareeb_models/company_paths/data/response/company_paths_response.dart';
 import 'package:qareeb_models/extensions.dart';
-import 'package:qareeb_models/trip_path/data/models/trip_path.dart';
 
 import '../../../../core/util/note_message.dart';
 

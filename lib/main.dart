@@ -1,11 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive/hive.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:map_package/api_manager/api_service.dart';
-import 'package:map_package/api_manager/api_service.dart';
-import 'package:map_package/api_manager/api_service.dart';
 import 'package:qareeb_dash/features/auth/bloc/login_cubit/login_cubit.dart';
 import 'package:qareeb_dash/features/trip/bloc/trip_by_id/trip_by_id_cubit.dart';
 import 'package:qareeb_models/global.dart';
@@ -20,7 +17,6 @@ import 'core/injection/injection_container.dart' as di;
 import 'core/injection/injection_container.dart';
 import 'core/util/shared_preferences.dart';
 import 'firebase_options.dart';
-import 'package:hive/hive.dart';
 
 final dbHelper = DatabaseHelper();
 final player = AudioPlayer();

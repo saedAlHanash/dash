@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:drawable_text/drawable_text.dart';
+import 'package:floating_action_bubble/floating_action_bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,19 +9,13 @@ import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/strings/app_color_manager.dart';
 import 'package:qareeb_dash/core/widgets/not_found_widget.dart';
 import 'package:qareeb_dash/core/widgets/saed_taple_widget.dart';
-
 import 'package:qareeb_dash/router/go_route_pages.dart';
 import 'package:qareeb_models/extensions.dart';
 
-import '../../../../core/strings/enum_manager.dart';
-import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/file_util.dart';
 import '../../../../core/util/my_style.dart';
-
 import '../../bloc/all_plan_trips_cubit/all_plan_trips_cubit.dart';
 import '../../bloc/delete_plan_trip_cubit/delete_plan_trip_cubit.dart';
-import '../widget/trips_filter_widget.dart';
-import 'package:floating_action_bubble/floating_action_bubble.dart';
 
 final _super_userList = [
   'ID',
@@ -159,7 +154,7 @@ class _PlanTripsPageState extends State<PlanTripsPage>
                         ),
                         e.company.name,
                         e.name,
-                        e.drivers.length.toString(),
+                        e.driverTrips.length.toString(),
                         '${e.startDate?.formatDate} \n\n ${e.endDate?.formatDate}',
                         '${e.startDate?.formatTime} \n\n ${e.endDate?.formatTime}',
                         Row(

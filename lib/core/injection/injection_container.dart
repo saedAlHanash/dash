@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get_it/get_it.dart';
 import 'package:map_package/map/bloc/ather_cubit/ather_cubit.dart';
@@ -10,6 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../features/accounts/bloc/all_charging_cubit/all_charging_cubit.dart';
 import '../../features/accounts/bloc/all_transfers_cubit/all_transfers_cubit.dart';
 import '../../features/accounts/bloc/company_transfers_cubit/company_transfers_cubit.dart';
+import '../../features/accounts/bloc/direct_pay_cubit/direct_pay_cubit.dart';
 import '../../features/accounts/bloc/driver_financial_cubit/driver_financial_cubit.dart';
 import '../../features/accounts/bloc/financial_report_cubit/financial_report_cubit.dart';
 import '../../features/accounts/bloc/pay_to_cubit/pay_to_cubit.dart';
@@ -71,6 +73,7 @@ import '../../features/plan_trips/bloc/plan_attendances_cubit/plan_attendances_c
 import '../../features/plan_trips/bloc/plan_trip_by_id_cubit/plan_trip_by_id_cubit.dart';
 import '../../features/plans/bloc/create_plan_cubit/create_plan_cubit.dart';
 import '../../features/plans/bloc/delete_plan_cubit/delete_plan_cubit.dart';
+import '../../features/plans/bloc/enrollments_cubit/enrollments_cubit.dart';
 import '../../features/plans/bloc/plans_cubit/plans_cubit.dart';
 import '../../features/points/bloc/creta_edge_cubit/create_edge_cubit.dart';
 import '../../features/points/bloc/creta_point_cubit/create_point_cubit.dart';
@@ -130,6 +133,10 @@ import '../network/network_info.dart';
 final sl = GetIt.instance;
 
 Future<void> init() async {
+  sl.registerLazySingleton(() => GlobalKey<NavigatorState>());
+
+  sl.registerFactory(() => DirectPayCubit());
+
   //region Auth
 
   /// Bloc
@@ -294,6 +301,7 @@ Future<void> init() async {
   sl.registerFactory(() => AllPlansCubit());
   sl.registerFactory(() => CreatePlanCubit());
   sl.registerFactory(() => DeletePlanCubit());
+  sl.registerFactory(() => EnrollmentCubit());
 
   //endregion
 

@@ -16,7 +16,6 @@ import '../../../../core/strings/app_string_manager.dart';
 import '../../../../core/util/note_message.dart';
 import '../../../../core/util/pair_class.dart';
 import '../../data/request/login_request.dart';
-import '../../data/response/login_response.dart';
 
 part 'login_state.dart';
 

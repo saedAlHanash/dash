@@ -10,7 +10,6 @@ import 'package:qareeb_models/global.dart';
 import '../../../../core/api_manager/api_service.dart';
 import '../../../../core/util/note_message.dart';
 import '../../../../core/util/pair_class.dart';
-import 'package:qareeb_models/agencies/data/response/agency_response.dart';
 
 part 'agency_report_state.dart';
 

@@ -14,7 +14,7 @@ import '../../bloc/change_provider_state_cubit/change_provider_state_cubit.dart'
 class ItemProvider extends StatelessWidget {
   const ItemProvider({super.key, required this.item});
 
-  final EpayItem item;
+  final Provider item;
 
   @override
   Widget build(BuildContext context) {
@@ -129,14 +129,12 @@ class ItemProvider extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                      child: BlocBuilder<ChangeProviderStateCubit,
-                          ChangeProviderStateInitial>(
+                      child: BlocBuilder<ChangeProviderStateCubit, ChangeProviderStateInitial>(
                         buildWhen: (p, c) => c.id == item.id,
                         builder: (context, state) {
                           if (state.statuses.isLoading) {
                             return MyStyle.loadingWidget();
                           }
-                          if (state.statuses.isDone) item.isActive = !item.isActive;
 
                           return InkWell(
                             onTap: () {

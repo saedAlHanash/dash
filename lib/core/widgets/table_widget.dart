@@ -5,10 +5,6 @@ import 'package:qareeb_dash/core/strings/app_color_manager.dart';
 import 'package:qareeb_dash/core/widgets/my_card_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../generated/assets.dart';
-import '../strings/app_string_manager.dart';
-import 'package:image_multi_type/image_multi_type.dart';
-
 class MyTableWidget extends StatelessWidget {
   const MyTableWidget({
     Key? key,

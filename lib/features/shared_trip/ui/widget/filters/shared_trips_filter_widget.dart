@@ -13,7 +13,6 @@ import '../../../../../core/util/shared_preferences.dart';
 import '../../../../../core/widgets/select_date.dart';
 import '../../../../../core/widgets/spinner_widget.dart';
 import '../../../../agencies/bloc/agencies_cubit/agencies_cubit.dart';
-import '../../../../car_catigory/bloc/all_car_categories_cubit/all_car_categories_cubit.dart';
 import '../../../../trip/data/request/filter_trip_request.dart';
 
 class SharedFilterWidget extends StatefulWidget {

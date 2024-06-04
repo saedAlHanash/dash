@@ -57,17 +57,17 @@ class CreatePlanTripRequest {
         "days": days?.map((x) => x.index).toList(),
       };
 
-  CreatePlanTripRequest fromPlanTrip(PlanTripModel model) {
+  CreatePlanTripRequest fromPlanTrip(PlanTrip model) {
     return CreatePlanTripRequest(
       id: model.id,
       name: model.name,
       description: model.description,
-      companyPathId: model.companyPathId,
-      companyId: model.companyId,
+      companyPathId: model.companyPathId as int,
+      companyId: model.companyId as int,
       startDate: model.startDate,
       endDate: model.endDate,
       days: model.days,
-    )..driversIds = model.drivers.map((e) => e.id).toList();
+    )..driversIds = model.driverTrips.map((e) => e.driver.id).toList();
   }
 
   bool validateRequest(BuildContext context) {
@@ -77,22 +77,26 @@ class CreatePlanTripRequest {
     }
 
     if (companyPathId.isEmpty) {
-      NoteMessage.showErrorSnackBar(message: 'يرجى اختيار مسار', context: context);
+      NoteMessage.showErrorSnackBar(
+          message: 'يرجى اختيار مسار', context: context);
       return false;
     }
 
     if (companyPathId.isEmpty) {
-      NoteMessage.showErrorSnackBar(message: 'يرجى اختيار شركة', context: context);
+      NoteMessage.showErrorSnackBar(
+          message: 'يرجى اختيار شركة', context: context);
       return false;
     }
 
     if (driversIds.isEmpty) {
-      NoteMessage.showErrorSnackBar(message: 'يرجى اختيار سائقين', context: context);
+      NoteMessage.showErrorSnackBar(
+          message: 'يرجى اختيار سائقين', context: context);
       return false;
     }
 
     if (startDate == null || endDate == null) {
-      NoteMessage.showErrorSnackBar(message: 'خطأ في توقيت الرحلة ', context: context);
+      NoteMessage.showErrorSnackBar(
+          message: 'خطأ في توقيت الرحلة ', context: context);
       return false;
     }
 

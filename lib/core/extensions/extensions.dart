@@ -5,10 +5,12 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:map_package/map/data/response/ather_response.dart';
 import 'package:qareeb_models/global.dart';
-import 'package:qareeb_models/home/data/response/drivers_imei_response.dart';
 import 'package:qareeb_models/trip_process/data/response/trip_response.dart';
 
+import '../../services/caching_service/caching_service.dart';
+import '../error/error_manager.dart';
 import '../strings/app_string_manager.dart';
+import '../util/pair_class.dart';
 
 extension CubitStateHelper1 on CubitStatuses {
   bool get loading => this == CubitStatuses.loading;
@@ -22,6 +24,12 @@ extension CubitStateHelper1 on CubitStatuses {
 
 extension MapResponse on http.Response {
   dynamic get json => jsonDecode(utf8.decode(bodyBytes));
+
+  bool get success => (statusCode >= 200 && statusCode <= 210);
+
+  get getPairError {
+    return Pair(null, ErrorManager.getApiError(this));
+  }
 }
 
 extension NormalTripMap on Trip {
@@ -68,4 +76,22 @@ List<Ime> getNearestPoints(LatLng startLocation, List<Ime> points) {
 
   // Return the top 10 nearest points
   return points.take(10).toList();
+}
+
+extension NeedUpdateEnumH on NeedUpdateEnum {
+  bool get loading => this == NeedUpdateEnum.withLoading;
+
+  bool get haveData =>
+      this == NeedUpdateEnum.no || this == NeedUpdateEnum.noLoading;
+
+  CubitStatuses get getState {
+    switch (this) {
+      case NeedUpdateEnum.no:
+        return CubitStatuses.done;
+      case NeedUpdateEnum.withLoading:
+        return CubitStatuses.loading;
+      case NeedUpdateEnum.noLoading:
+        return CubitStatuses.done;
+    }
+  }
 }

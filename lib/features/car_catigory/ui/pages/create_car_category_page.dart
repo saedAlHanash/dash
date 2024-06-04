@@ -11,10 +11,9 @@ import 'package:qareeb_dash/core/widgets/my_card_widget.dart';
 import 'package:qareeb_dash/core/widgets/my_text_form_widget.dart';
 import 'package:qareeb_dash/core/widgets/spinner_widget.dart';
 import 'package:qareeb_dash/features/car_catigory/bloc/all_car_categories_cubit/all_car_categories_cubit.dart';
-import 'package:qareeb_dash/features/car_catigory/data/response/car_categories_response.dart';
 import 'package:qareeb_dash/generated/assets.dart';
-import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_models/car_catigory/data/response/car_categories_response.dart';
+import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_models/global.dart';
 
 import '../../../../core/api_manager/api_service.dart';

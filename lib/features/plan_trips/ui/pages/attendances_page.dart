@@ -9,7 +9,6 @@ import 'package:qareeb_dash/core/widgets/saed_taple_widget.dart';
 import 'package:qareeb_models/extensions.dart';
 
 import '../../../../core/strings/app_color_manager.dart';
-import '../../../../core/util/file_util.dart';
 import '../../../../core/util/my_style.dart';
 import '../../bloc/plan_attendances_cubit/plan_attendances_cubit.dart';
 import '../widget/attendances_filter_widget.dart';

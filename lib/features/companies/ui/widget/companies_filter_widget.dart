@@ -8,11 +8,8 @@ import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_models/global.dart';
 
 import '../../../../core/util/my_style.dart';
-import '../../../../core/util/shared_preferences.dart';
 import '../../../../core/widgets/my_text_form_widget.dart';
 import '../../../../core/widgets/spinner_widget.dart';
-import '../../../agencies/bloc/agencies_cubit/agencies_cubit.dart';
-import '../../../car_catigory/bloc/all_car_categories_cubit/all_car_categories_cubit.dart';
 import '../../bloc/companies_cubit/companies_cubit.dart';
 import '../../data/request/companies_filter_request.dart';
 

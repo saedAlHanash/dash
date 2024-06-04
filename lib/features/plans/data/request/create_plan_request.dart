@@ -5,7 +5,6 @@ import 'package:qareeb_models/plans/data/response/plans_response.dart';
 
 import '../../../../core/api_manager/api_service.dart';
 import '../../../../core/util/note_message.dart';
-import '../response/plans_response.dart';
 
 class CreatePlanRequest {
   int? id;

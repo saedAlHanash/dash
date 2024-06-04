@@ -16,12 +16,10 @@ import 'package:qareeb_models/trip_process/data/response/trip_response.dart';
 import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/util/my_style.dart';
 import '../../../../core/util/shared_preferences.dart';
-import '../../../../core/widgets/item_info.dart';
 import '../../../../core/widgets/my_button.dart';
 import '../../../../core/widgets/table_widget.dart';
 import '../../../../generated/assets.dart';
 import '../../../../router/go_route_pages.dart';
-import '../../../drivers/bloc/drivers_imiei_cubit/drivers_imei_cubit.dart';
 import '../../bloc/candidate_drivers_cubit/candidate_drivers_cubit.dart';
 import '../../bloc/trip_debit_cubit/trip_debit_cubit.dart';
 import '../../bloc/trip_status_cubit/trip_status_cubit.dart';
@@ -431,7 +429,7 @@ class _TripCost extends StatelessWidget {
           },
           title: '-المحصلة المالية للولاء -للعرض فقط-',
         ),
-        if (trip.isDelved)
+        if (trip.tripStatus.isDelved)
           BlocBuilder<TripDebitCubit, TripDebitInitial>(
             builder: (context, state) {
               if (state.statuses.isLoading) {
@@ -471,7 +469,7 @@ class _TripActions extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (!(trip.isCanceled || trip.isDelved))
+        if (!(trip.tripStatus.isCanceled || trip.tripStatus.isDelved))
           BlocBuilder<ChangeTripStatusCubit, ChangeTripStatusInitial>(
             builder: (context, cState) {
               if (cState.statuses.isLoading) {
