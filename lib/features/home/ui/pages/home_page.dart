@@ -12,7 +12,7 @@ import 'package:image_multi_type/image_multi_type.dart';
 import 'package:map_package/map/bloc/ather_cubit/ather_cubit.dart';
 import 'package:map_package/map/bloc/map_controller_cubit/map_controller_cubit.dart';
 import 'package:map_package/map/bloc/search_location/search_location_cubit.dart';
-import 'package:qareeb_dash/core/api_manager/api_service.dart';
+import 'package:qareeb_dash/core/api_manager/api_service.dart'; import 'package:qareeb_dash/core/strings/enum_manager.dart';
 import 'package:qareeb_dash/features/accounts/ui/pages/transfers_page.dart';
 import 'package:qareeb_dash/features/car_catigory/bloc/delete_car_cat_cubit/delete_car_cat_cubit.dart';
 import 'package:qareeb_dash/features/coupons/ui/pages/coupons_page.dart';
@@ -423,7 +423,7 @@ class _HomePageState extends State<HomePage> {
                 onTap: () async {
                   // popAllJs();
                   await AppSharedPreference.logout();
-                  APIService.reInitial();
+                  AppSharedPreference.reload();
                   await AppSharedPreference.reload();
                   window.location.reload();
                   // context.pushNamed(GoRouteName.loginPage);

@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:qareeb_models/global.dart';
 
-import '../../../../core/api_manager/api_service.dart';
+import '../../../../core/api_manager/api_service.dart'; import 'package:qareeb_dash/core/strings/enum_manager.dart';
 import '../../../../core/api_manager/api_url.dart';
 import '../../../../core/network/network_info.dart';
 import '../../../../core/util/note_message.dart';
@@ -55,7 +55,7 @@ class LocationNameCubit extends Cubit<LocationNameInitial> {
 static  Future<Pair<String?, String?>> getLocationNameApi({
     required LatLng latLng,
   }) async {
-      final response = await APIService().getApi(
+      final response = await APIService().callApi(type: ApiType.get,
           url: OsrmUrl.getLocationName,
           hostName: OsrmUrl.hostOsmName,
           query: {

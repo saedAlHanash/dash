@@ -7,7 +7,7 @@ import 'package:qareeb_models/auth/data/response/login_response.dart';
 import 'package:qareeb_models/global.dart';
 import 'package:universal_html/html.dart';
 
-import '../../../../core/api_manager/api_service.dart';
+import '../../../../core/api_manager/api_service.dart'; import 'package:qareeb_dash/core/strings/enum_manager.dart';
 import '../../../../core/api_manager/api_url.dart';
 import '../../../../core/error/error_manager.dart';
 import '../../../../core/injection/injection_container.dart';
@@ -73,7 +73,7 @@ class LoginCubit extends Cubit<LoginInitial> {
 
   Future<Pair<LoginResult?, String?>> _loginApi() async {
     if (await network.isConnected) {
-      final response = await APIService().postApi(
+      final response = await APIService().callApi(type: ApiType.post,
         url: PostUrl.login,
         body: state.request.toJson(),
       );
@@ -94,7 +94,7 @@ class LoginCubit extends Cubit<LoginInitial> {
 }
 
 Future<Pair<List<String>?, String?>> getPermissions({required int id}) async {
-  final response = await APIService().getApi(
+  final response = await APIService().callApi(type: ApiType.get,
     url: PostUrl.getPermissions,
     query: {'userId': id},
   );
@@ -128,19 +128,19 @@ Future<void> shouldLogout() async {
   if (!AppSharedPreference.isLogin) return;
   if (AppSharedPreference.getIdentifier.isEmpty) {
     await AppSharedPreference.logout();
-    APIService.reInitial();
+    AppSharedPreference.reload();
     await AppSharedPreference.reload();
     window.location.reload();
     return;
   }
-  final response = await APIService().postApi(url: PostUrl.shouldLogout, query: {
+  final response = await APIService().callApi(type: ApiType.post,url: PostUrl.shouldLogout, query: {
     'identifier': AppSharedPreference.getIdentifier,
     'UserId': AppSharedPreference.getMyId,
   });
 
   if (response.statusCode == 401) {
     await AppSharedPreference.logout();
-    APIService.reInitial();
+    AppSharedPreference.reload();
     await AppSharedPreference.reload();
     window.location.reload();
   }

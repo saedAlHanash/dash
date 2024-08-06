@@ -11,7 +11,7 @@ import 'package:qareeb_dash/core/widgets/saed_taple_widget.dart';
 import 'package:qareeb_models/agencies/data/response/agency_response.dart';
 import 'package:qareeb_models/extensions.dart';
 
-import '../../../../core/api_manager/api_service.dart';
+import '../../../../core/api_manager/api_service.dart'; import 'package:qareeb_dash/core/strings/enum_manager.dart';
 import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/util/my_style.dart';
 import '../../../../core/widgets/my_card_widget.dart';

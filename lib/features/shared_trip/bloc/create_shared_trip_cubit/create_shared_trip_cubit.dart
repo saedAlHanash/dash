@@ -3,11 +3,11 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:qareeb_dash/core/api_manager/api_url.dart';
+import 'package:qareeb_dash/core/strings/enum_manager.dart'; import 'package:qareeb_dash/core/api_manager/api_url.dart';
 import 'package:qareeb_models/global.dart';
 import 'package:qareeb_models/shared_trip/data/response/shared_trip.dart';
 
-import '../../../../core/api_manager/api_service.dart';
+import '../../../../core/api_manager/api_service.dart'; import 'package:qareeb_dash/core/strings/enum_manager.dart';
 import '../../../../core/error/error_manager.dart';
 import '../../../../core/injection/injection_container.dart';
 import '../../../../core/network/network_info.dart';
@@ -43,7 +43,7 @@ class CreateSharedTripCubit extends Cubit<CreateSharedTripInitial> {
 
   Future<Pair<SharedTrip?, String?>> _createSharesTripApi() async {
     if (await network.isConnected) {
-      final response = await APIService().postApi(
+      final response = await APIService().callApi(type: ApiType.post,
         url: PostUrl.createSharedTrip,
         body: state.request.toJson(),
       );

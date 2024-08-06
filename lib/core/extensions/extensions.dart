@@ -10,6 +10,7 @@ import 'package:qareeb_models/trip_process/data/response/trip_response.dart';
 import '../../services/caching_service/caching_service.dart';
 import '../error/error_manager.dart';
 import '../strings/app_string_manager.dart';
+import '../strings/enum_manager.dart';
 import '../util/pair_class.dart';
 
 extension CubitStateHelper1 on CubitStatuses {

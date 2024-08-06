@@ -1,4 +1,4 @@
-import 'package:qareeb_dash/core/api_manager/api_url.dart';
+import 'package:qareeb_dash/core/strings/enum_manager.dart'; import 'package:qareeb_dash/core/api_manager/api_url.dart';
 import 'package:qareeb_dash/core/util/file_util.dart';
 
 String fixAvatarImage(String? image) {

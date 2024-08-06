@@ -7,7 +7,7 @@ import 'package:qareeb_models/global.dart';
 import 'package:qareeb_models/points/data/response/points_edge_response.dart';
 import 'package:qareeb_models/trip_path/data/models/trip_path.dart';
 
-import '../../../../core/api_manager/api_service.dart';
+import '../../../../core/api_manager/api_service.dart'; import 'package:qareeb_dash/core/strings/enum_manager.dart';
 import '../../../../core/api_manager/api_url.dart';
 import '../../../../core/error/error_manager.dart';
 import '../../../../core/injection/injection_container.dart';
@@ -45,7 +45,7 @@ class PointsEdgeCubit extends Cubit<PointsEdgeInitial> {
   Future<Pair<Edge?, String?>> _getPointsEdgeApi(
       {required int start, required int end}) async {
     if (await network.isConnected) {
-      final response = await APIService().getApi(
+      final response = await APIService().callApi(type: ApiType.get,
         url: GetUrl.getPointsEdge,
         query: {
           'firstPointId': start,

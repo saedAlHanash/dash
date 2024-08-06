@@ -2,10 +2,11 @@ import 'dart:async';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 
-import '../../../../core/api_manager/api_service.dart';
+import '../../../../core/api_manager/api_service.dart'; import 'package:qareeb_dash/core/strings/enum_manager.dart';
 import '../../../../core/api_manager/api_url.dart';
 import '../../../../core/error/error_manager.dart';
 import '../../../../core/util/pair_class.dart';
+import '../strings/enum_manager.dart';
 
 class InsertFirebaseTokenService {
   insertFirebaseToken() async {
@@ -31,7 +32,7 @@ class InsertFirebaseTokenService {
   }
 
   Future<Pair<bool?, String?>> _insertFirebaseTokenApi({required String token}) async {
-    final response = await APIService().postApi(
+    final response = await APIService().callApi(type: ApiType.post,
       url: PostUrl.insertFireBaseToken,
       body: {'token': token},
     );

@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:qareeb_dash/core/api_manager/api_service.dart';
+import 'package:qareeb_dash/core/api_manager/api_service.dart'; import 'package:qareeb_dash/core/strings/enum_manager.dart';
 import 'package:qareeb_models/auth/data/response/login_response.dart';
 import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_models/global.dart';
@@ -56,7 +56,7 @@ class AppSharedPreference {
 
   static cashToken(String token) async {
     await _prefs?.setString(_token, token);
-    APIService.reInitial();
+    AppSharedPreference.reload();
   }
 
   static cashPhoneNumber(String phone) async {
@@ -172,7 +172,7 @@ class AppSharedPreference {
    await _prefs?.remove(_email);
     // _prefs?.remove(_role);
     // _prefs?.remove(_testMode);
-    APIService.reInitial();
+   AppSharedPreference.reload();
   }
 
   static Future<void> cashTrip(Trip? trip) async {

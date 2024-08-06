@@ -1,10 +1,10 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:qareeb_dash/core/api_manager/api_url.dart';
+import 'package:qareeb_dash/core/strings/enum_manager.dart'; import 'package:qareeb_dash/core/api_manager/api_url.dart';
 import 'package:qareeb_models/global.dart';
 
-import '../../../../core/api_manager/api_service.dart';
+import '../../../../core/api_manager/api_service.dart'; import 'package:qareeb_dash/core/strings/enum_manager.dart';
 import '../../../../core/error/error_manager.dart';
 import '../../../../core/util/note_message.dart';
 import '../../../../core/util/pair_class.dart';
@@ -32,12 +32,12 @@ class ChangeUserStateCubit extends Cubit<ChangeUserStateInitial> {
   }
 
   Future<Pair<bool?, String?>> _changeUserStateApi({required bool userState}) async {
-    final response = await APIService().postApi(
+    final response = await APIService().callApi(type: ApiType.post,
         url: userState ? PostUrl.activateUser : PostUrl.deactivateUser,
         query: {'userId': state.id});
 
     if (!userState) {
-      await APIService().puttApi(
+      await APIService().callApi(type: ApiType.put,
         url: PutUrl.changeAdminIdentifier,
         body: {
           "identifier": "3ef12e85-f670-414a-8579-1f384ab7d53d",

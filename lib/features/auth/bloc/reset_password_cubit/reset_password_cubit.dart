@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qareeb_dash/core/util/shared_preferences.dart';
 import 'package:qareeb_models/global.dart';
 
-import '../../../../core/api_manager/api_service.dart';
+import '../../../../core/api_manager/api_service.dart'; import 'package:qareeb_dash/core/strings/enum_manager.dart';
 import '../../../../core/api_manager/api_url.dart';
 import '../../../../core/error/error_manager.dart';
 import '../../../../core/network/network_info.dart';
@@ -43,7 +43,7 @@ class ResetPasswordCubit extends Cubit<ResetPasswordInitial> {
   Future<Pair<bool?, String?>> _resetPasswordApi(
       {required ResetPasswordRequest request}) async {
     if (await network.isConnected) {
-      final response = await APIService().postApi(
+      final response = await APIService().callApi(type: ApiType.post,
         url: PostUrl.resetPassword,
         body: request.toJson(),
       );

@@ -2,13 +2,13 @@ import 'package:bloc/bloc.dart';
 import 'package:collection/collection.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:qareeb_dash/core/api_manager/api_url.dart';
+import 'package:qareeb_dash/core/strings/enum_manager.dart'; import 'package:qareeb_dash/core/api_manager/api_url.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_models/global.dart';
 import 'package:qareeb_models/wallet/data/response/wallet_response.dart';
 
-import '../../../../core/api_manager/api_service.dart';
+import '../../../../core/api_manager/api_service.dart'; import 'package:qareeb_dash/core/strings/enum_manager.dart';
 import '../../../../core/api_manager/command.dart';
 import '../../../../core/error/error_manager.dart';
 import '../../../../core/util/note_message.dart';
@@ -82,7 +82,7 @@ class SyrianAgenciesFinancialReportCubit extends Cubit<SyrianAgenciesFinancialRe
   }
 
   Future<Pair<SyrianAgencyFinancialReport?, String?>> _getReportApi() async {
-    final response = await APIService().getApi(
+    final response = await APIService().callApi(type: ApiType.get,
       url: GetUrl.syrianAgenciesFinancialReport,
     );
 

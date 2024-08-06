@@ -2,12 +2,12 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:map_package/error_manager.dart';
-import 'package:qareeb_dash/core/api_manager/api_url.dart';
+import 'package:qareeb_dash/core/strings/enum_manager.dart'; import 'package:qareeb_dash/core/api_manager/api_url.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_models/global.dart';
 import 'package:qareeb_models/wallet/data/response/driver_financial_response.dart';
 
-import '../../../../core/api_manager/api_service.dart';
+import '../../../../core/api_manager/api_service.dart'; import 'package:qareeb_dash/core/strings/enum_manager.dart';
 import '../../../../core/util/note_message.dart';
 import '../../../../core/util/pair_class.dart';
 import '../../data/request/driver_financial_filter_request.dart';
@@ -35,7 +35,7 @@ class DriverFinancialCubit extends Cubit<DriverFinancialInitial> {
   }
 
   Future<Pair<DriverFinancialResult?, String?>> _getDriverFinancialApi() async {
-    final response = await APIService().getApi(
+    final response = await APIService().callApi(type: ApiType.get,
       url: GetUrl.driverFinancialReport,
       query: state.request.toMap(),
     );

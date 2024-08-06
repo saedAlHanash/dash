@@ -10,8 +10,8 @@ import 'package:map_package/map/bloc/map_controller_cubit/map_controller_cubit.d
 import 'package:map_package/map/data/models/my_marker.dart';
 import 'package:map_package/map/data/response/ather_response.dart';
 import 'package:map_package/map/ui/widget/map_widget.dart';
-import 'package:qareeb_dash/core/api_manager/api_service.dart';
-import 'package:qareeb_dash/core/api_manager/api_url.dart';
+import 'package:qareeb_dash/core/api_manager/api_service.dart'; import 'package:qareeb_dash/core/strings/enum_manager.dart';
+import 'package:qareeb_dash/core/strings/enum_manager.dart'; import 'package:qareeb_dash/core/api_manager/api_url.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/util/checker_helper.dart';
 import 'package:qareeb_dash/core/util/shared_preferences.dart';
@@ -124,7 +124,7 @@ class _DashboardPageState extends State<DashboardPage> {
 }
 
 Future<BestDriver> getBestDriver() async {
-  final result = await APIService().getApi(url: GetUrl.bestDriver);
+  final result = await APIService().callApi(type: ApiType.get,url: GetUrl.bestDriver);
 
   if (result.statusCode == 200) {
     return BestDriverResponse.fromJson(result.json).result;

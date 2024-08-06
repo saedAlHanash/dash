@@ -19,7 +19,7 @@ import 'package:qareeb_models/trip_process/data/response/candidate_drivers_respo
 import 'package:qareeb_models/trip_process/data/response/drivers_pool.dart';
 import 'package:qareeb_models/trip_process/data/response/trip_response.dart';
 
-import '../../../../core/api_manager/api_service.dart';
+import '../../../../core/api_manager/api_service.dart'; import 'package:qareeb_dash/core/strings/enum_manager.dart';
 import '../../../../core/api_manager/api_url.dart';
 import '../../../../core/error/error_manager.dart';
 import '../../../../core/injection/injection_container.dart';
@@ -61,7 +61,7 @@ class CandidateDriversCubit extends Cubit<CandidateDriversInitial> {
   static Future<Pair<List<CandidateDriver>?, String?>> getCandidateDriversApi(
       {required tripId}) async {
     if (tripId == 0) return Pair(null, 'no result with ID:0');
-    final response = await APIService().getApi(
+    final response = await APIService().callApi(type: ApiType.get,
       url: GetUrl.getCandidateDrivers,
       query: {'Id': tripId},
     );
@@ -78,7 +78,7 @@ class CandidateDriversCubit extends Cubit<CandidateDriversInitial> {
       {required tripId}) async {
     if (tripId == 0) return Pair(null, 'no result with ID:0');
 
-    final response = await APIService().getApi(
+    final response = await APIService().callApi(type: ApiType.get,
       url: GetUrl.getDriversPool,
       query: {'tripId': tripId},
     );

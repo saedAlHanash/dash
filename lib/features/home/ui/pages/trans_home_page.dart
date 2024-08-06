@@ -5,7 +5,7 @@ import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:qareeb_dash/core/api_manager/api_service.dart';
+import 'package:qareeb_dash/core/api_manager/api_service.dart'; import 'package:qareeb_dash/core/strings/enum_manager.dart';
 import 'package:qareeb_dash/features/shared_trip/ui/pages/shared_trips_page.dart';
 import 'package:qareeb_dash/features/trip/ui/pages/trips_page.dart';
 import "package:universal_html/html.dart";
@@ -122,7 +122,7 @@ class _TransHomePageState extends State<TransHomePage> {
                 onTap: () async {
                   // popAllJs();
                   await AppSharedPreference.logout();
-                  APIService.reInitial();
+                  AppSharedPreference.reload();
                   await AppSharedPreference.reload();
                   window.location.reload();
                   // context.pushNamed(GoRouteName.loginPage);

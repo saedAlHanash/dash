@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qareeb_models/global.dart';
 import 'package:qareeb_models/wallet/data/response/debt_response.dart';
 
-import '../../../../core/api_manager/api_service.dart';
+import '../../../../core/api_manager/api_service.dart'; import 'package:qareeb_dash/core/strings/enum_manager.dart';
 import '../../../../core/api_manager/api_url.dart';
 import '../../../../core/error/error_manager.dart';
 import '../../../../core/injection/injection_container.dart';
@@ -37,7 +37,7 @@ class TripDebitCubit extends Cubit<TripDebitInitial> {
   static Future<Pair<Debt?, String?>> tripDebitApi({required tripId}) async {
     if (tripId == 0) return Pair(null, 'no result with ID:0');
     final response =
-        await APIService().getApi(url: GetUrl.tripDebit, query: {'tripId': tripId});
+        await APIService().callApi(type: ApiType.get,url: GetUrl.tripDebit, query: {'tripId': tripId});
 
     if (response.statusCode == 200) {
       final trip = Debt.fromJson(jsonDecode(response.body)['result'] ?? {});

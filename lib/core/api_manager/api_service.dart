@@ -8,8 +8,11 @@ import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 import 'package:qareeb_models/extensions.dart';
 
+import '../strings/enum_manager.dart';
 import '../util/shared_preferences.dart';
 import 'api_url.dart';
+import 'helpers_api/helper_api_service.dart';
+import 'helpers_api/log_api.dart';
 
 // const baseUrl = 'live.qareeb-maas.com';
 // const baseUrl = '192.168.1.44:44311';
@@ -35,17 +38,12 @@ DateTime? _serverDate;
 DateTime get getServerDate => _serverDate ?? DateTime.now();
 
 class APIService {
+
   static APIService _singleton = APIService._internal();
 
   factory APIService() => _singleton;
 
-  factory APIService.reInitial() {
-    AppSharedPreference.reload();
-    _singleton = APIService._internal();
-    return _singleton;
-  }
-
-  final innerHeader = {
+  Map<String, String> get innerHeader => {
     'Content-Type': 'application/json',
     // 'Accept': '*/*',
     'origin': 'x-requested-with',
@@ -58,272 +56,333 @@ class APIService {
 
   APIService._internal();
 
-  Uri getUri({
+  Future<http.Response> callApi({
     required String url,
-    Map<String, dynamic>? query,
-    Map<String, String>? header,
-    String? path,
-    String? hostName,
-  }) {
-    if (query != null) query.removeWhere((key, value) => value == null);
-
-    innerHeader.addAll(header ?? {});
-
-    if (path != null) url = '$url/$path';
-
-    if (query != null) {
-      query.removeWhere((key, value) => value == null);
-      query.forEach((key, value) => query[key] = value.toString());
-    }
-
-    logRequest('${hostName ?? ''}$url', query);
-
-    final uri = Uri.https(hostName ?? baseUrl, url, query);
-
-    return uri;
-  }
-
-  Future<http.Response> getApi({
-    required String url,
+    required ApiType type,
+    Map<String, dynamic>? body,
     Map<String, dynamic>? query,
     Map<String, String>? header,
     String? path,
     String? hostName,
   }) async {
-    innerHeader.addAll(header ?? {});
+    // if (!await network.isConnected) noInternet;
 
-    if (path != null) url = '$url/$path';
+    fixQuery(query);
 
-    if (query != null) {
-      query.removeWhere((key, value) => (value == null || value.toString().isEmpty));
-      query.forEach((key, value) => query[key] = value.toString());
-    }
+    fixBody(body);
 
-    logRequest('${hostName ?? ''}$url', query);
-
-    final uri = Uri.https(hostName ?? baseUrl, url, query);
+    final uri =
+    getUri(url: url, query: query, path: path, body: body, type: type);
 
     try {
-      final response = await http.get(uri, headers: innerHeader).timeout(
-            const Duration(seconds: 40),
-            onTimeout: () => http.Response('connectionTimeOut', 481),
-          );
+      late final http.Response response;
 
-      logResponse(url, response);
-      _serverDate = getDateTimeFromHeaders(response);
+      switch (type) {
+        case ApiType.get:
+          response = await http
+              .get(uri, headers: (header ?? innerHeader))
+              .timeout(connectionTimeOut, onTimeout: () => timeOut);
+        case ApiType.post:
+          response = await http
+              .post(uri,
+              body: jsonEncode(body), headers: (header ?? innerHeader))
+              .timeout(connectionTimeOut, onTimeout: () => timeOut);
+        case ApiType.put:
+          response = await http
+              .put(uri,
+              body: jsonEncode(body), headers: (header ?? innerHeader))
+              .timeout(connectionTimeOut, onTimeout: () => timeOut);
+        case ApiType.patch:
+          response = await http
+              .patch(uri,
+              body: jsonEncode(body), headers: (header ?? innerHeader))
+              .timeout(connectionTimeOut, onTimeout: () => timeOut);
+        case ApiType.delete:
+          response = await http
+              .delete(uri,
+              body: jsonEncode(body), headers: (header ?? innerHeader))
+              .timeout(connectionTimeOut, onTimeout: () => timeOut);
+      }
+
+      logResponse(url: url, response: response, type: type);
 
       return response;
-    } catch(e) {
-      loggerObject.e(e);
-      return http.Response('{}', 481);
+    } catch (e) {
+      loggerObject.e('API service: $e');
+
+      return noInternet;
     }
   }
 
-  Future<http.Response> getApiProxy({
-    required String url,
-    Map<String, dynamic>? query,
-    Map<String, String>? header,
-    String? path,
-    String? hostName,
-  }) async {
-    innerHeader.addAll(header ?? {});
 
-    if (path != null) url = '$url/$path';
+  // Uri getUri({
+  //   required String url,
+  //   Map<String, dynamic>? query,
+  //   Map<String, String>? header,
+  //   String? path,
+  //   String? hostName,
+  // }) {
+  //   if (query != null) query.removeWhere((key, value) => value == null);
+  //
+  //   innerHeader.addAll(header ?? {});
+  //
+  //   if (path != null) url = '$url/$path';
+  //
+  //   if (query != null) {
+  //     query.removeWhere((key, value) => value == null);
+  //     query.forEach((key, value) => query[key] = value.toString());
+  //   }
+  //
+  //   logRequest('${hostName ?? ''}$url', query);
+  //
+  //   final uri = Uri.https(hostName ?? baseUrl, url, query);
+  //
+  //   return uri;
+  // }
+  //
 
-    if (query != null) {
-      query.removeWhere((key, value) => (value == null || value.toString().isEmpty));
-      query.forEach((key, value) => query[key] = value.toString());
-    }
 
-    logRequest('${hostName ?? ''}$url', query);
-
-    final uri = Uri.https(hostName ?? baseUrl, url, query);
-    final proxyUri = Uri.https('api.allorigins.win', 'raw', {'url': uri.toString()});
-
-    try {
-      final response = await http.get(proxyUri, headers: innerHeader).timeout(
-            const Duration(seconds: 40),
-            onTimeout: () => http.Response('connectionTimeOut', 481),
-          );
-
-      logResponse(url, response);
-      _serverDate = getDateTimeFromHeaders(response);
-      return response;
-    } catch(e) {
-      loggerObject.e(e);
-      return http.Response('{}', 481);
-    }
-  }
-
-  Future<http.Response> getApiProxyPayed({
-    required String url,
-    Map<String, dynamic>? query,
-    Map<String, String>? header,
-    String? path,
-  }) async {
-    if (path != null) url = '$url/$path';
-
-    if (query != null) {
-      query.removeWhere((key, value) => (value == null || value.toString().isEmpty));
-      query.forEach((key, value) => query[key] = value.toString());
-    }
-
-    final uri = Uri.https('proxy.cors.sh', url, query);
-
-    try {
-      final response =
-          await http.get(uri, headers: innerHeader).timeout(const Duration(seconds: 40));
-      _serverDate = getDateTimeFromHeaders(response);
-      return response;
-    } catch(e) {
-      loggerObject.e(e);
-      return http.Response('{}', 481);
-    }
-  }
-
-  Future<http.Response> postApi({
-    required String url,
-    Map<String, dynamic>? body,
-    Map<String, dynamic>? query,
-    Map<String, String>? header,
-    String? hostName,
-  }) async {
-
-    if (body != null) body.removeWhere((key, value) => value == null);
-
-    if (query != null) {
-      query.removeWhere((key, value) => (value == null || value.toString().isEmpty));
-      query.forEach((key, value) {
-        if (value is! List) query[key] = value.toString();
-      });
-    }
-
-    innerHeader.addAll(header ?? {});
-
-    final uri = Uri.https(hostName ?? baseUrl, url, query);
-
-    logRequest(url, (body ?? {})..addAll(query ?? {}));
-
-    try {
-      final response =
-          await http.post(uri, body: jsonEncode(body), headers: innerHeader).timeout(
-                const Duration(seconds: 40),
-                onTimeout: () => http.Response('connectionTimeOut', 481),
-              );
-
-      logResponse(url, response);
-      _serverDate = getDateTimeFromHeaders(response);
-      return response;
-    } catch(e) {
-      loggerObject.e(e);
-      return http.Response('{}', 481);
-    }
-  }
-
-  Future<http.Response> puttApi({
-    required String url,
-    Map<String, dynamic>? body,
-    Map<String, dynamic>? query,
-    Map<String, String>? header,
-  }) async {
-    body?.removeWhere((key, value) => (value == null || value.toString().isEmpty));
-
-    innerHeader.addAll(header ?? {});
-
-    if (query != null) {
-      query.removeWhere((key, value) => (value == null || value.toString().isEmpty));
-      query.forEach((key, value) => query[key] = value.toString());
-    }
-
-    final uri = Uri.https(baseUrl, url, query);
-
-    logRequest(url, body);
-
-    try {
-      final response =
-          await http.put(uri, body: jsonEncode(body), headers: innerHeader).timeout(
-                const Duration(seconds: 40),
-                onTimeout: () => http.Response('connectionTimeOut', 481),
-              );
-
-      logResponse(url, response);
-      _serverDate = getDateTimeFromHeaders(response);
-      return response;
-    } catch(e) {
-      loggerObject.e(e);
-      return http.Response('{}', 481);
-    }
-  }
-
-  Future<http.Response> patchApi({
-    required String url,
-    Map<String, dynamic>? body,
-    Map<String, dynamic>? query,
-    Map<String, String>? header,
-  }) async {
-    if (body != null) body.removeWhere((key, value) => value == null);
-
-    innerHeader.addAll(header ?? {});
-
-    if (query != null) {
-      query.removeWhere((key, value) => (value == null || value.toString().isEmpty));
-      query.forEach((key, value) => query[key] = value.toString());
-    }
-
-    final uri = Uri.https(baseUrl, url, query);
-
-    logRequest(url, body);
-
-    try {
-      final response =
-          await http.patch(uri, body: jsonEncode(body), headers: innerHeader).timeout(
-                const Duration(seconds: 40),
-                onTimeout: () => http.Response('connectionTimeOut', 481),
-              );
-
-      logResponse(url, response);
-      _serverDate = getDateTimeFromHeaders(response);
-      return response;
-    } catch(e) {
-      loggerObject.e(e);
-      return http.Response('{}', 481);
-    }
-  }
-
-  Future<http.Response> deleteApi({
-    required String url,
-    Map<String, dynamic>? body,
-    Map<String, dynamic>? query,
-    Map<String, String>? header,
-  }) async {
-    if (body != null) body.removeWhere((key, value) => value == null);
-
-    if (query != null) {
-      query.removeWhere((key, value) => (value == null || value.toString().isEmpty));
-      query.forEach((key, value) => query[key] = value.toString());
-    }
-
-    innerHeader.addAll(header ?? {});
-
-    final uri = Uri.https(baseUrl, url, query);
-
-    logRequest(url, query);
-
-    try {
-      final response =
-          await http.delete(uri, body: jsonEncode(body), headers: innerHeader).timeout(
-                const Duration(seconds: 40),
-                onTimeout: () => http.Response('connectionTimeOut', 481),
-              );
-
-      logResponse(url, response);
-      _serverDate = getDateTimeFromHeaders(response);
-      return response;
-    } catch(e) {
-      loggerObject.e(e);
-      return http.Response('{}', 481);
-    }
-  }
+  // Future<http.Response> getApi({
+  //   required String url,
+  //   Map<String, dynamic>? query,
+  //   Map<String, String>? header,
+  //   String? path,
+  //   String? hostName,
+  // }) async {
+  //   innerHeader.addAll(header ?? {});
+  //
+  //   if (path != null) url = '$url/$path';
+  //
+  //   if (query != null) {
+  //     query.removeWhere((key, value) => (value == null || value.toString().isEmpty));
+  //     query.forEach((key, value) => query[key] = value.toString());
+  //   }
+  //
+  //   logRequest('${hostName ?? ''}$url', query);
+  //
+  //   final uri = Uri.https(hostName ?? baseUrl, url, query);
+  //
+  //   try {
+  //     final response = await http.get(uri, headers: innerHeader).timeout(
+  //           const Duration(seconds: 40),
+  //           onTimeout: () => http.Response('connectionTimeOut', 481),
+  //         );
+  //
+  //     logResponse(url, response);
+  //     _serverDate = getDateTimeFromHeaders(response);
+  //
+  //     return response;
+  //   } catch(e) {
+  //     loggerObject.e(e);
+  //     return http.Response('{}', 481);
+  //   }
+  // }
+  //
+  // Future<http.Response> getApiProxy({
+  //   required String url,
+  //   Map<String, dynamic>? query,
+  //   Map<String, String>? header,
+  //   String? path,
+  //   String? hostName,
+  // }) async {
+  //   innerHeader.addAll(header ?? {});
+  //
+  //   if (path != null) url = '$url/$path';
+  //
+  //   if (query != null) {
+  //     query.removeWhere((key, value) => (value == null || value.toString().isEmpty));
+  //     query.forEach((key, value) => query[key] = value.toString());
+  //   }
+  //
+  //   logRequest('${hostName ?? ''}$url', query);
+  //
+  //   final uri = Uri.https(hostName ?? baseUrl, url, query);
+  //   final proxyUri = Uri.https('api.allorigins.win', 'raw', {'url': uri.toString()});
+  //
+  //   try {
+  //     final response = await http.get(proxyUri, headers: innerHeader).timeout(
+  //           const Duration(seconds: 40),
+  //           onTimeout: () => http.Response('connectionTimeOut', 481),
+  //         );
+  //
+  //     logResponse(url, response);
+  //     _serverDate = getDateTimeFromHeaders(response);
+  //     return response;
+  //   } catch(e) {
+  //     loggerObject.e(e);
+  //     return http.Response('{}', 481);
+  //   }
+  // }
+  //
+  // Future<http.Response> getApiProxyPayed({
+  //   required String url,
+  //   Map<String, dynamic>? query,
+  //   Map<String, String>? header,
+  //   String? path,
+  // }) async {
+  //   if (path != null) url = '$url/$path';
+  //
+  //   if (query != null) {
+  //     query.removeWhere((key, value) => (value == null || value.toString().isEmpty));
+  //     query.forEach((key, value) => query[key] = value.toString());
+  //   }
+  //
+  //   final uri = Uri.https('proxy.cors.sh', url, query);
+  //
+  //   try {
+  //     final response =
+  //         await http.get(uri, headers: innerHeader).timeout(const Duration(seconds: 40));
+  //     _serverDate = getDateTimeFromHeaders(response);
+  //     return response;
+  //   } catch(e) {
+  //     loggerObject.e(e);
+  //     return http.Response('{}', 481);
+  //   }
+  // }
+  //
+  // Future<http.Response> postApi({
+  //   required String url,
+  //   Map<String, dynamic>? body,
+  //   Map<String, dynamic>? query,
+  //   Map<String, String>? header,
+  //   String? hostName,
+  // }) async {
+  //
+  //   if (body != null) body.removeWhere((key, value) => value == null);
+  //
+  //   if (query != null) {
+  //     query.removeWhere((key, value) => (value == null || value.toString().isEmpty));
+  //     query.forEach((key, value) {
+  //       if (value is! List) query[key] = value.toString();
+  //     });
+  //   }
+  //
+  //   innerHeader.addAll(header ?? {});
+  //
+  //   final uri = Uri.https(hostName ?? baseUrl, url, query);
+  //
+  //   logRequest(url, (body ?? {})..addAll(query ?? {}));
+  //
+  //   try {
+  //     final response =
+  //         await http.post(uri, body: jsonEncode(body), headers: innerHeader).timeout(
+  //               const Duration(seconds: 40),
+  //               onTimeout: () => http.Response('connectionTimeOut', 481),
+  //             );
+  //
+  //     logResponse(url, response);
+  //     _serverDate = getDateTimeFromHeaders(response);
+  //     return response;
+  //   } catch(e) {
+  //     loggerObject.e(e);
+  //     return http.Response('{}', 481);
+  //   }
+  // }
+  //
+  // Future<http.Response> puttApi({
+  //   required String url,
+  //   Map<String, dynamic>? body,
+  //   Map<String, dynamic>? query,
+  //   Map<String, String>? header,
+  // }) async {
+  //   body?.removeWhere((key, value) => (value == null || value.toString().isEmpty));
+  //
+  //   innerHeader.addAll(header ?? {});
+  //
+  //   if (query != null) {
+  //     query.removeWhere((key, value) => (value == null || value.toString().isEmpty));
+  //     query.forEach((key, value) => query[key] = value.toString());
+  //   }
+  //
+  //   final uri = Uri.https(baseUrl, url, query);
+  //
+  //   logRequest(url, body);
+  //
+  //   try {
+  //     final response =
+  //         await http.put(uri, body: jsonEncode(body), headers: innerHeader).timeout(
+  //               const Duration(seconds: 40),
+  //               onTimeout: () => http.Response('connectionTimeOut', 481),
+  //             );
+  //
+  //     logResponse(url, response);
+  //     _serverDate = getDateTimeFromHeaders(response);
+  //     return response;
+  //   } catch(e) {
+  //     loggerObject.e(e);
+  //     return http.Response('{}', 481);
+  //   }
+  // }
+  //
+  // Future<http.Response> patchApi({
+  //   required String url,
+  //   Map<String, dynamic>? body,
+  //   Map<String, dynamic>? query,
+  //   Map<String, String>? header,
+  // }) async {
+  //   if (body != null) body.removeWhere((key, value) => value == null);
+  //
+  //   innerHeader.addAll(header ?? {});
+  //
+  //   if (query != null) {
+  //     query.removeWhere((key, value) => (value == null || value.toString().isEmpty));
+  //     query.forEach((key, value) => query[key] = value.toString());
+  //   }
+  //
+  //   final uri = Uri.https(baseUrl, url, query);
+  //
+  //   logRequest(url, body);
+  //
+  //   try {
+  //     final response =
+  //         await http.patch(uri, body: jsonEncode(body), headers: innerHeader).timeout(
+  //               const Duration(seconds: 40),
+  //               onTimeout: () => http.Response('connectionTimeOut', 481),
+  //             );
+  //
+  //     logResponse(url, response);
+  //     _serverDate = getDateTimeFromHeaders(response);
+  //     return response;
+  //   } catch(e) {
+  //     loggerObject.e(e);
+  //     return http.Response('{}', 481);
+  //   }
+  // }
+  //
+  // Future<http.Response> deleteApi({
+  //   required String url,
+  //   Map<String, dynamic>? body,
+  //   Map<String, dynamic>? query,
+  //   Map<String, String>? header,
+  // }) async {
+  //   if (body != null) body.removeWhere((key, value) => value == null);
+  //
+  //   if (query != null) {
+  //     query.removeWhere((key, value) => (value == null || value.toString().isEmpty));
+  //     query.forEach((key, value) => query[key] = value.toString());
+  //   }
+  //
+  //   innerHeader.addAll(header ?? {});
+  //
+  //   final uri = Uri.https(baseUrl, url, query);
+  //
+  //   logRequest(url, query);
+  //
+  //   try {
+  //     final response =
+  //         await http.delete(uri, body: jsonEncode(body), headers: innerHeader).timeout(
+  //               const Duration(seconds: 40),
+  //               onTimeout: () => http.Response('connectionTimeOut', 481),
+  //             );
+  //
+  //     logResponse(url, response);
+  //     _serverDate = getDateTimeFromHeaders(response);
+  //     return response;
+  //   } catch(e) {
+  //     loggerObject.e(e);
+  //     return http.Response('{}', 481);
+  //   }
+  // }
 
   Future<http.Response> uploadMultiPart({
     required String url,
@@ -333,16 +392,10 @@ class APIService {
     Map<String, dynamic>? fields,
     Map<String, String>? header,
   }) async {
-    Map<String, String> f = {};
-    fields?.removeWhere((key, value) => (value == null || value.toString().isEmpty));
-    (fields ?? {}).forEach((key, value) => f[key] = value.toString());
 
-    innerHeader.addAll(header ?? {});
-    final uri = Uri.https(baseUrl, '$url/${path ?? ''}');
+    final uri = getUri(url: url, query: fields, path: path, type: ApiType.post);
 
     var request = http.MultipartRequest(type, uri);
-
-    logRequest(url, fields, additional: files?.firstOrNull?.nameField);
 
     for (var uploadFile in (files ?? <UploadFile?>[])) {
       if (uploadFile?.fileBytes == null) continue;
@@ -356,22 +409,20 @@ class APIService {
       request.files.add(multipartFile);
     }
 
+    request.headers['Content-Type'] = 'multipart/form-data';
     request.headers.addAll(innerHeader);
+    request.fields.addAll(fixFields(fields));
 
-    request.fields.addAll(f);
+    final stream = await request.send().timeout(
+      const Duration(seconds: 40),
+      onTimeout: () => http.StreamedResponse(Stream.value([]), 481),
+    );
 
-    try {
-      final stream = await request.send();
+    final response = await http.Response.fromStream(stream);
 
-      final response = await http.Response.fromStream(stream);
+    logResponse(url: url, response: response, type: ApiType.post);
 
-      logResponse(url, response);
-      _serverDate = getDateTimeFromHeaders(response);
-      return response;
-    } catch(e) {
-      loggerObject.e(e);
-      return http.Response('{}', 481);
-    }
+    return response;
   }
 
   Future<DateTime> getServerTime() async {
@@ -387,27 +438,6 @@ class APIService {
 
     return _serverDate!;
   }
-}
-
-void logRequest(String url, Map<String, dynamic>? q, {String? additional}) {
-  if (url.contains('api.php')) return;
-  loggerObject.i('$url \n ${jsonEncode(q)}${additional == null ? '' : '\n$additional'}');
-}
-
-void logResponse(String url, http.Response response) {
-  if (url.contains('api.php') || url.contains('GetImageAsByteArray')) return;
-  var r = [];
-  var res = '';
-  if (response.body.length > 800) {
-    r = response.body.splitByLength1(800);
-    for (var e in r) {
-      res += '$e\n';
-    }
-  } else {
-    res = response.body;
-  }
-
-  loggerObject.v('${response.statusCode} \n $res');
 }
 
 DateTime getDateTimeFromHeaders(http.Response response) {

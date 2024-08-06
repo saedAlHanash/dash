@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:qareeb_models/extensions.dart';
 import 'package:qareeb_models/global.dart';
 
-import '../../../../core/api_manager/api_service.dart';
+import '../../../../core/api_manager/api_service.dart'; import 'package:qareeb_dash/core/strings/enum_manager.dart';
 import '../../../../core/util/note_message.dart';
 import '../response/institutions_response.dart';
 

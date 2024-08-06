@@ -272,8 +272,8 @@ class PutUrl {
   static const updateCompanyPath = 'api/services/app/CompanyPathService/Update';
 
   static const updatePlanTrip = 'api/services/app/PlanTripsService/Update';
-  static const changeAdminIdentifier = 'api/services/app/UserService/ChangeAdminIdentifier';
-
+  static const changeAdminIdentifier =
+      'api/services/app/UserService/ChangeAdminIdentifier';
 }
 
 class DeleteUrl {
@@ -334,19 +334,19 @@ class PatchUrl {
       'api/services/app/EpaymentService/ChangeActiveStatus';
 
   static const changeCouponState = 'api/services/app/Coupons/ToggleActiveStatus';
-
 }
 
 String get baseUrl {
-  // return testUrl;
-    return testLocal1Url;
+  return testUrl;
+  // return testLocal1Url;
   // return liveUrlLocal;
   // return liveUrl;
 }
 
+const additionalConst = '';
 const testLocal1Url = 'demo1.qareeb-maas.com';
 const liveUrl = 'live.qareeb-maas.com';
 const liveUrlLocal = 'livetest.qareeb-maas.com';
 const testUrl = 'qareeb-api.first-pioneers.com.tr';
 
-bool get isTestMode =>baseUrl==testUrl;
+bool get isTestMode => baseUrl == testUrl;

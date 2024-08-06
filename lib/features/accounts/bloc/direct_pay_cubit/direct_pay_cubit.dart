@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_models/global.dart';
 
-import '../../../../core/api_manager/api_service.dart';
+import '../../../../core/api_manager/api_service.dart'; import 'package:qareeb_dash/core/strings/enum_manager.dart';
 import '../../../../core/api_manager/api_url.dart';
 import '../../../../core/error/error_manager.dart';
 import '../../../../core/util/abstraction.dart';
@@ -27,7 +27,7 @@ class DirectPayCubit extends Cubit<DirectPayInitial> {
 
   Future<Pair<bool?, String?>> _getDataApi() async {
     final response =
-        await APIService().postApi(url: PostUrl.directPay, body: state.request.toJson());
+        await APIService().callApi(type: ApiType.post,url: PostUrl.directPay, body: state.request.toJson());
 
     if (response.success) {
       return Pair(true, null);

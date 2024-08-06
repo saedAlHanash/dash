@@ -1,5 +1,5 @@
 import 'package:http/http.dart';
-import 'package:qareeb_dash/core/api_manager/api_url.dart';
+import 'package:qareeb_dash/core/strings/enum_manager.dart'; import 'package:qareeb_dash/core/api_manager/api_url.dart';
 import 'package:qareeb_dash/core/api_manager/server_proxy/server_proxy_request.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 
@@ -7,8 +7,9 @@ import '../../error/error_manager.dart';
 import '../../injection/injection_container.dart';
 import '../../network/network_info.dart';
 import '../../strings/app_string_manager.dart';
+import '../../strings/enum_manager.dart';
 import '../../util/pair_class.dart';
-import '../api_service.dart';
+import '../api_service.dart'; import 'package:qareeb_dash/core/strings/enum_manager.dart';
 
 final network = sl<NetworkInfo>();
 
@@ -16,7 +17,7 @@ final network = sl<NetworkInfo>();
     {required ApiServerRequest request}) async {
   if (await network.isConnected) {
     final response =
-        await APIService().postApi(url: PostUrl.serverProxy, body: request.toJson());
+        await APIService().callApi(type: ApiType.post,url: PostUrl.serverProxy, body: request.toJson());
 
     if (response.statusCode == 200) {
       return Pair(response.json['result'], null);
@@ -28,7 +29,7 @@ final network = sl<NetworkInfo>();
   }
 }
 Future<Response> getServerProxyRowApi({required String url}) async {
-  return await APIService().getApi(
+  return await APIService().callApi(type: ApiType.get,
       hostName: 'qareeb-api.first-pioneers.com.tr',
       url: 'api/services/app/HttpRequestService/GetImageAsByteArray',
       query: {

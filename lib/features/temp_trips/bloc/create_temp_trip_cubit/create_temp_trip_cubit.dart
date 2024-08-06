@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart';
 import 'package:qareeb_models/global.dart';
 
-import '../../../../core/api_manager/api_service.dart';
+import '../../../../core/api_manager/api_service.dart'; import 'package:qareeb_dash/core/strings/enum_manager.dart';
 import '../../../../core/api_manager/api_url.dart';
 import '../../../../core/error/error_manager.dart';
 import '../../../../core/util/note_message.dart';
@@ -35,12 +35,12 @@ class CreateTempTripCubit extends Cubit<CreateTempTripInitial> {
     late Response response;
 
     if (state.request.id != null) {
-      response = await APIService().puttApi(
+      response = await APIService().callApi(type: ApiType.put,
         url: PutUrl.updateTempTrip,
         body: state.request.toJson(),
       );
     } else {
-      response = await APIService().postApi(
+      response = await APIService().callApi(type: ApiType.post,
         url: PostUrl.createTempTrip,
         body: state.request.toJson(),
       );

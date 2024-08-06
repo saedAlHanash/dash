@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_multi_type/round_image_widget.dart';
-import 'package:map_package/api_manager/api_service.dart';
+import 'package:map_package/api_manager/api_service.dart'; import 'package:qareeb_dash/core/strings/enum_manager.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/util/note_message.dart';
 import 'package:qareeb_dash/core/widgets/my_button.dart';

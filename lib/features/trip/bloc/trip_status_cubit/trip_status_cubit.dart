@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qareeb_models/global.dart';
 
-import '../../../../core/api_manager/api_service.dart';
+import '../../../../core/api_manager/api_service.dart'; import 'package:qareeb_dash/core/strings/enum_manager.dart';
 import '../../../../core/api_manager/api_url.dart';
 import '../../../../core/error/error_manager.dart';
 import '../../../../core/injection/injection_container.dart';
@@ -40,7 +40,7 @@ class ChangeTripStatusCubit extends Cubit<ChangeTripStatusInitial> {
 
   Future<Pair<bool?, String?>> _changeTripStatusApi() async {
     if (await network.isConnected) {
-      final response = await APIService().puttApi(
+      final response = await APIService().callApi(type: ApiType.put,
         url: PutUrl.updateTrip,
         body: state.request.toJson(),
       );

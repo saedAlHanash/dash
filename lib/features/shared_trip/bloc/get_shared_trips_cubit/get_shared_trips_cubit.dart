@@ -3,12 +3,12 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:qareeb_dash/core/api_manager/api_url.dart';
+import 'package:qareeb_dash/core/strings/enum_manager.dart'; import 'package:qareeb_dash/core/api_manager/api_url.dart';
 import 'package:qareeb_dash/features/shared_trip/data/response/shared_trip.dart';
 import 'package:qareeb_models/global.dart';
 import 'package:qareeb_models/shared_trip/data/response/shared_trip.dart';
 
-import '../../../../core/api_manager/api_service.dart';
+import '../../../../core/api_manager/api_service.dart'; import 'package:qareeb_dash/core/strings/enum_manager.dart';
 import '../../../../core/api_manager/command.dart';
 import '../../../../core/error/error_manager.dart';
 import '../../../../core/injection/injection_container.dart';
@@ -58,7 +58,7 @@ class GetSharedTripsCubit extends Cubit<GetSharedTripsInitial> {
     final network = sl<NetworkInfo>();
 
     if (await network.isConnected) {
-      final response = await APIService().getApi(
+      final response = await APIService().callApi(type: ApiType.get,
         url: GetUrl.getAllSharedTrips,
         query: state.command.toJson(),
       );

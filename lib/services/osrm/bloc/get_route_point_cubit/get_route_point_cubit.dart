@@ -4,8 +4,8 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:qareeb_dash/core/api_manager/api_service.dart';
-import 'package:qareeb_dash/core/api_manager/api_url.dart';
+import 'package:qareeb_dash/core/api_manager/api_service.dart'; import 'package:qareeb_dash/core/strings/enum_manager.dart';
+import 'package:qareeb_dash/core/strings/enum_manager.dart'; import 'package:qareeb_dash/core/api_manager/api_url.dart';
 import 'package:qareeb_dash/services/osrm/data/response/osrm_model.dart';
 import 'package:qareeb_models/global.dart';
 
@@ -40,7 +40,7 @@ class GetRoutePointCubit extends Cubit<GetRoutePointInitial> {
       {required LatLng start, required LatLng end}) async {
     final network = sl<NetworkInfo>();
     if (await network.isConnected) {
-      final response = await APIService().getApi(
+      final response = await APIService().callApi(type: ApiType.get,
           url: OsrmUrl.getRoutePoints,
           hostName: OsrmUrl.hostName,
           path: '${start.longitude},${start.latitude};'

@@ -8,7 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:map_package/map/bloc/ather_cubit/ather_cubit.dart';
 import 'package:map_package/map/bloc/map_controller_cubit/map_controller_cubit.dart';
 import 'package:map_package/map/bloc/search_location/search_location_cubit.dart';
-import 'package:qareeb_dash/core/api_manager/api_service.dart';
+import 'package:qareeb_dash/core/api_manager/api_service.dart'; import 'package:qareeb_dash/core/strings/enum_manager.dart';
 import 'package:qareeb_dash/core/api_manager/command.dart';
 import 'package:qareeb_dash/features/shared_trip/ui/pages/shared_trips_page.dart';
 import 'package:qareeb_dash/features/trip/ui/pages/trips_page.dart';
@@ -189,7 +189,7 @@ class _AgencyHomePageState extends State<AgencyHomePage> {
                 onTap: () async{
                   // popAllJs();
                   await AppSharedPreference.logout();
-                  APIService.reInitial();
+                  AppSharedPreference.reload();
                   await AppSharedPreference.reload();
                   window.location.reload();
                   // context.pushNamed(GoRouteName.loginPage);

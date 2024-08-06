@@ -1,5 +1,5 @@
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:qareeb_dash/core/api_manager/api_service.dart';
+import 'package:qareeb_dash/core/api_manager/api_service.dart'; import 'package:qareeb_dash/core/strings/enum_manager.dart';
 import 'package:qareeb_models/agencies/data/response/agency_response.dart';
 import 'package:qareeb_models/extensions.dart';
 

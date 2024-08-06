@@ -5,13 +5,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:map_package/map/bloc/ather_cubit/ather_cubit.dart';
 import 'package:map_package/map/data/response/ather_response.dart';
-import 'package:qareeb_dash/core/api_manager/api_url.dart';
+import 'package:qareeb_dash/core/strings/enum_manager.dart'; import 'package:qareeb_dash/core/api_manager/api_url.dart';
 import 'package:qareeb_dash/core/api_manager/command.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_models/global.dart';
 import 'package:qareeb_models/home/data/response/drivers_imei_response.dart';
 
-import '../../../../core/api_manager/api_service.dart';
+import '../../../../core/api_manager/api_service.dart'; import 'package:qareeb_dash/core/strings/enum_manager.dart';
 import '../../../../core/error/error_manager.dart';
 import '../../../../core/util/note_message.dart';
 import '../../../../core/util/pair_class.dart';
@@ -51,7 +51,7 @@ class DriversImeiCubit extends Cubit<DriversImeiInitial> {
     if (state.status != null) {
       q['status'] = state.status!.index;
     }
-    final response = await APIService().getApi(
+    final response = await APIService().callApi(type: ApiType.get,
       url: GetUrl.getDriversImei,
       query: q,
     );

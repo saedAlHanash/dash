@@ -7,8 +7,8 @@
 // import 'package:flutter_background_service_android/flutter_background_service_android.dart';
 // import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 // import 'package:geolocator/geolocator.dart';
-// import 'package:qareeb_dash/core/api_manager/api_service.dart';
-// import 'package:qareeb_dash/core/api_manager/api_url.dart';
+// import 'package:qareeb_dash/core/api_manager/api_service.dart'; import 'package:qareeb_dash/core/strings/enum_manager.dart';
+// import 'package:qareeb_dash/core/strings/enum_manager.dart'; import 'package:qareeb_dash/core/api_manager/api_url.dart';
 // import 'package:qareeb_dash/core/util/shared_preferences.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 //
@@ -174,7 +174,7 @@
 
 //       canSend = false;
 //       Future.delayed(const Duration(seconds: 5), () => canSend = true);
-//       APIService().puttApi(
+//       APIService().callApi(type: ApiType.put,
 //         url: PutUrl.changeUserLocation,
 //         body: {
 //           "id": AppSharedPreference.getMyId,

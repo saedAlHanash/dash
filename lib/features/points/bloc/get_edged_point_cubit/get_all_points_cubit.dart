@@ -7,7 +7,7 @@ import 'package:qareeb_models/global.dart';
 import 'package:qareeb_models/points/data/model/trip_point.dart';
 import 'package:qareeb_models/points/data/response/points_response.dart';
 
-import '../../../../core/api_manager/api_service.dart';
+import '../../../../core/api_manager/api_service.dart'; import 'package:qareeb_dash/core/strings/enum_manager.dart';
 import '../../../../core/api_manager/api_url.dart';
 import '../../../../core/api_manager/command.dart';
 import '../../../../core/error/error_manager.dart';
@@ -61,7 +61,7 @@ class PointsCubit extends Cubit<PointsInitial> {
 
   Future<Pair<PointsResult?, String?>> _getAllPointsApi() async {
     if (await network.isConnected) {
-      final response = await APIService().getApi(
+      final response = await APIService().callApi(type: ApiType.get,
         url: GetUrl.getAllPoints,
         query: Command.noPagination().toJson(),
       );
@@ -78,7 +78,7 @@ class PointsCubit extends Cubit<PointsInitial> {
 
   Future<Pair<PointsResult?, String?>> _getConnectedPointsApi() async {
     if (await network.isConnected) {
-      final response = await APIService().getApi(
+      final response = await APIService().callApi(type: ApiType.get,
         url: GetUrl.getConnectedPoints,
         query: {'sourcePointId': state.tempPoint.id},
       );

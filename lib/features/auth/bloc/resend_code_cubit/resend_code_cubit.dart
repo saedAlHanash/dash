@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qareeb_models/global.dart';
 
-import '../../../../core/api_manager/api_service.dart';
+import '../../../../core/api_manager/api_service.dart'; import 'package:qareeb_dash/core/strings/enum_manager.dart';
 import '../../../../core/api_manager/api_url.dart';
 import '../../../../core/error/error_manager.dart';
 import '../../../../core/network/network_info.dart';
@@ -36,7 +36,7 @@ class ResendCodeCubit extends Cubit<ResendCodeInitial> {
 
   Future<Pair<bool?, String?>> _resendCodeApi({required String phone}) async {
     if (await network.isConnected) {
-      final response = await APIService().postApi(
+      final response = await APIService().callApi(type: ApiType.post,
         url: PostUrl.resendCode,
         body: {"phoneNumber": phone},
       );

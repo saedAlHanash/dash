@@ -8,7 +8,7 @@ import 'package:map_package/map/data/response/ors_response.dart';
 import 'package:map_package/map/data/response/rote_points_result.dart';
 import 'package:qareeb_models/global.dart';
 
-import '../../../../core/api_manager/api_service.dart';
+import '../../../../core/api_manager/api_service.dart'; import 'package:qareeb_dash/core/strings/enum_manager.dart';
 import '../../../../core/api_manager/api_url.dart';
 import '../../../../core/network/network_info.dart';
 import '../../../../core/strings/app_string_manager.dart';
@@ -45,7 +45,7 @@ class RoutePointsCubit extends Cubit<RoutePointsInitial> {
   }) async {
     if (await network.isConnected) {
       final response = await APIService()
-          .getApi(url: OrsUrl.getRoutePoints, hostName: OrsUrl.hostName, query: {
+          .callApi(type: ApiType.get,url: OrsUrl.getRoutePoints, hostName: OrsUrl.hostName, query: {
         'api_key': OrsUrl.key,
         'start': '${start.longitude},${start.latitude}',
         'end': '${end.longitude},${end.latitude}',

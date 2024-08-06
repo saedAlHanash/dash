@@ -1,11 +1,11 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:qareeb_dash/core/api_manager/api_url.dart';
+import 'package:qareeb_dash/core/strings/enum_manager.dart'; import 'package:qareeb_dash/core/api_manager/api_url.dart';
 import 'package:qareeb_dash/features/accounts/data/request/re_pay_request.dart';
 import 'package:qareeb_models/global.dart';
 
-import '../../../../core/api_manager/api_service.dart';
+import '../../../../core/api_manager/api_service.dart'; import 'package:qareeb_dash/core/strings/enum_manager.dart';
 import '../../../../core/error/error_manager.dart';
 import '../../../../core/util/checker_helper.dart';
 import '../../../../core/util/note_message.dart';
@@ -158,7 +158,7 @@ class PayToCubit extends Cubit<PayToInitial> {
   }
 
   Future<Pair<bool?, String?>> _rePayToClientApi({required RePayRequest request}) async {
-    final response = await APIService().postApi(
+    final response = await APIService().callApi(type: ApiType.post,
       url: PostUrl.createRepay,
       body: request.toJson(),
     );
@@ -179,7 +179,7 @@ class PayToCubit extends Cubit<PayToInitial> {
       required int driverId,
       required TransferPayType type,
       String? note}) async {
-    final response = await APIService().postApi(
+    final response = await APIService().callApi(type: ApiType.post,
       url: type == TransferPayType.companyToDriver
           ? PostUrl.createFromCompany
           : PostUrl.createFromDriver,
@@ -195,7 +195,7 @@ class PayToCubit extends Cubit<PayToInitial> {
 
   Future<Pair<bool?, String?>> _payPayToAgencyApi(
       {required num amount, required int agencyId, String? note}) async {
-    final response = await APIService().postApi(
+    final response = await APIService().callApi(type: ApiType.post,
       url: PostUrl.createToAgency,
       body: {"amount": amount, "agencyId": agencyId, 'note': note},
     );

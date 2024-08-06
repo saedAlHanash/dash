@@ -3,10 +3,10 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:qareeb_dash/core/api_manager/api_url.dart';
+import 'package:qareeb_dash/core/strings/enum_manager.dart'; import 'package:qareeb_dash/core/api_manager/api_url.dart';
 import 'package:qareeb_models/global.dart';
 
-import '../../../../core/api_manager/api_service.dart';
+import '../../../../core/api_manager/api_service.dart'; import 'package:qareeb_dash/core/strings/enum_manager.dart';
 import '../../../../core/error/error_manager.dart';
 import '../../../../core/network/network_info.dart';
 import '../../../../core/strings/app_string_manager.dart';
@@ -38,7 +38,7 @@ class CreatePolicyCubit extends Cubit<CreatePolicyInitial> {
 
   Future<Pair<PolicyResult?, String?>> _createPolicyApi({required String policy}) async {
     if (await network.isConnected) {
-      final response = await APIService().puttApi(
+      final response = await APIService().callApi(type: ApiType.put,
         url: PostUrl.createPolicy,
         body: {"policy": policy},
       );

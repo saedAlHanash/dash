@@ -5,7 +5,7 @@ import 'package:qareeb_dash/core/util/shared_preferences.dart';
 import 'package:qareeb_models/global.dart';
 import 'package:qareeb_models/wallet/data/response/wallet_response.dart';
 
-import '../../../../core/api_manager/api_service.dart';
+import '../../../../core/api_manager/api_service.dart'; import 'package:qareeb_dash/core/strings/enum_manager.dart';
 import '../../../../core/api_manager/api_url.dart';
 import '../../../../core/error/error_manager.dart';
 import '../../../../core/injection/injection_container.dart';
@@ -32,7 +32,7 @@ class WalletCubit extends Cubit<WalletInitial> {
   static Future<Pair<WalletResult?, String?>> getWalletApi({required int id}) async {
     final network = sl<NetworkInfo>();
     if (await network.isConnected) {
-      final response = await APIService().getApi(
+      final response = await APIService().callApi(type: ApiType.get,
         url: GetUrl.myWallet,
         query: {'UserId': id},
       );

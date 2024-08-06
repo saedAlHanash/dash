@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qareeb_models/global.dart';
 
-import '../../../../core/api_manager/api_service.dart';
+import '../../../../core/api_manager/api_service.dart'; import 'package:qareeb_dash/core/strings/enum_manager.dart';
 import '../../../../core/api_manager/api_url.dart';
 import '../../../../core/error/error_manager.dart';
 import '../../../../core/network/network_info.dart';
@@ -51,7 +51,7 @@ class SignupCubit extends Cubit<SignupInitial> {
       {required SignupRequest request}) async {
     if (await network.isConnected) {
       final response = await APIService()
-          .postApi(url: PostUrl.signup, body: request.toJson());
+          .callApi(type: ApiType.post,url: PostUrl.signup, body: request.toJson());
 
       if (response.statusCode == 200) {
         return Pair(true, null);

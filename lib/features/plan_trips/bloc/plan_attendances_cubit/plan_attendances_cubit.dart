@@ -5,7 +5,7 @@ import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_models/global.dart';
 import 'package:qareeb_models/plans/data/response/plan_attendances.dart';
 
-import '../../../../core/api_manager/api_service.dart';
+import '../../../../core/api_manager/api_service.dart'; import 'package:qareeb_dash/core/strings/enum_manager.dart';
 import '../../../../core/api_manager/api_url.dart';
 import '../../../../core/api_manager/command.dart';
 import '../../../../core/error/error_manager.dart';
@@ -36,7 +36,7 @@ class PlanAttendancesCubit extends Cubit<PlanAttendancesInitial> {
   }
 
   Future<Pair<PlanAttendanceResult?, String?>> _getAttendancesApi() async {
-    final response = await APIService().getApi(
+    final response = await APIService().callApi(type: ApiType.get,
       url: GetUrl.planAttendance,
       query: state.command.toJson()..addAll(state.request.toJson()),
     );

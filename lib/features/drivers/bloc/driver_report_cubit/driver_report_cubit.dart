@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:collection/collection.dart';
 import 'package:equatable/equatable.dart';
 import 'package:excel/excel.dart';
-import 'package:qareeb_dash/core/api_manager/api_url.dart';
+import 'package:qareeb_dash/core/strings/enum_manager.dart'; import 'package:qareeb_dash/core/api_manager/api_url.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/features/accounts/data/request/charging_request.dart';
 import 'package:qareeb_dash/features/accounts/data/request/transfer_filter_request.dart';
@@ -13,7 +13,7 @@ import 'package:qareeb_models/wallet/data/response/debt_response.dart';
 import 'package:qareeb_models/wallet/data/response/driver_financial_response.dart';
 import 'package:qareeb_models/wallet/data/response/wallet_response.dart';
 
-import '../../../../core/api_manager/api_service.dart';
+import '../../../../core/api_manager/api_service.dart'; import 'package:qareeb_dash/core/strings/enum_manager.dart';
 import '../../../../core/error/error_manager.dart';
 import '../../../../core/util/file_util.dart';
 import '../../../../core/util/pair_class.dart';
@@ -79,7 +79,7 @@ class DriverReportCubit extends Cubit<DriverReportInitial> {
   }
 
   Future<Pair<ChargingResult?, String?>> _getAllChargingApi(Driver driver) async {
-    final response = await APIService().getApi(
+    final response = await APIService().callApi(type: ApiType.get,
       url: GetUrl.getAllCharging,
       query: ChargingRequest(
         chargerPhone: driver.phoneNumber,
@@ -95,7 +95,7 @@ class DriverReportCubit extends Cubit<DriverReportInitial> {
 
   Future<Pair<DriverFinancialResult?, String?>> _getDriverFinancialApi(
       Driver driver) async {
-    final response = await APIService().getApi(
+    final response = await APIService().callApi(type: ApiType.get,
       url: GetUrl.driverFinancialReport,
       query: {
         'driverId': driver.id,
@@ -110,7 +110,7 @@ class DriverReportCubit extends Cubit<DriverReportInitial> {
   }
 
   Future<Pair<DebtsResult?, String?>> _getDebtsApi(Driver driver) async {
-    final response = await APIService().getApi(
+    final response = await APIService().callApi(type: ApiType.get,
       url: GetUrl.debt,
       query: {
         'driverId': driver.id,
@@ -126,7 +126,7 @@ class DriverReportCubit extends Cubit<DriverReportInitial> {
   }
 
   Future<Pair<TransfersResult?, String?>> _getAllTransfersApi(Driver driver) async {
-    final response = await APIService().getApi(
+    final response = await APIService().callApi(type: ApiType.get,
       url: GetUrl.getAllTransfers,
       query: TransferFilterRequest(
         userId: driver.id,

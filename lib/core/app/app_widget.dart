@@ -53,7 +53,7 @@ import '../../features/wallet/bloc/providers_cubit/providers_cubit.dart';
 import '../../generated/assets.dart';
 import '../../main.dart';
 import '../../router/go_route_pages.dart';
-import '../api_manager/api_service.dart';
+import '../api_manager/api_service.dart'; import 'package:qareeb_dash/core/strings/enum_manager.dart';
 import '../app_theme.dart';
 import '../injection/injection_container.dart';
 import '../strings/app_color_manager.dart';

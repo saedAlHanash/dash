@@ -2,14 +2,24 @@ import 'dart:convert';
 
 import 'package:collection/collection.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:qareeb_models/extensions.dart';
 
 import '../../core/api_manager/api_service.dart';
+import 'package:qareeb_dash/core/strings/enum_manager.dart';
 
 const latestUpdateBox = 'latestUpdateBox';
 
 class CachingService {
+  static var timeInterval = 30;
+
   static Future<void> initial() async {
     await Hive.initFlutter();
+  }
+
+  static Future<void> updateLatestUpdateBox(String name) async {
+    final boxUpdate = await getBox(latestUpdateBox);
+
+    await boxUpdate.put(name, DateTime.now().toIso8601String());
   }
 
   static Future<void> sortData({
@@ -17,73 +27,139 @@ class CachingService {
     required String name,
     String filter = '',
   }) async {
-    final key = '_${filter}_';
+    await updateLatestUpdateBox(name);
 
-    final boxUpdate = await getBox(latestUpdateBox);
+    final haveId = _getIdParam(data).isNotEmpty;
 
-    await boxUpdate.put(name, DateTime.now().toIso8601String());
+    final key = CacheKey(
+      id: '',
+      filter: filter,
+      version: 0,
+    );
 
     final box = await getBox(name);
 
     if (data is List) {
-      await clearKeysId(box: box, filter: filter);
+      await clearKeysId(box: box, filter: key);
 
       for (var e in data) {
-        await box.put('$key${box.values.length}', jsonEncode(e));
+        await box.put(
+            key.copyWith(id: haveId ? _getIdParam(e) : '').jsonString, jsonEncode(e));
       }
-
-      // loggerObject.w('cached key $key count ${data.length}');
-
       return;
     }
 
-    await box.put(key, jsonEncode(data));
-    // loggerObject.w('cached key $key');
+    await box.put(
+        key.copyWith(id: haveId ? _getIdParam(data) : '').jsonString, jsonEncode(data));
+  }
+
+  static Future<Iterable<dynamic>?> addOrUpdate({
+    required List<dynamic> data,
+    required String name,
+    required String filter,
+  }) async {
+    final key = CacheKey(
+      id: getIdFromData(data),
+      filter: filter,
+      version: 0,
+    );
+
+    if (key.id.isEmpty) return null;
+
+    final box = await getBox(name);
+
+    for (var d in data) {
+      final keys = box.keys.where((e) => jsonDecode(e)['id'] == d.id);
+
+      final item = jsonEncode(d);
+
+      final mapUpdate = Map.fromEntries(keys.map((key) => MapEntry(key, item)));
+
+      //if not found the operation is add
+      if (mapUpdate.isEmpty) mapUpdate[key.jsonString] = item;
+
+      await box.putAll(mapUpdate);
+    }
+
+    return await getList(name, filter: filter);
+  }
+
+  static Future<Iterable<dynamic>?> delete({
+    required List<String> data,
+    required String name,
+    required String filter,
+  }) async {
+    if (getIdFromData(data).isEmpty) return null;
+
+    final box = await getBox(name);
+
+    for (var id in data) {
+      final keys = box.keys.where((e) {
+        loggerObject.w(jsonDecode(e)['id']);
+        return jsonDecode(e)['id'] == id;
+      });
+
+      await box.deleteAll(keys);
+    }
+
+    return await getList(name, filter: filter);
   }
 
   static Future<void> clearKeysId({
     required Box<String> box,
-    String filter = '',
+    required CacheKey filter,
   }) async {
-    final key = '_${filter}_';
+    try {
+      final keys = box.keys.where((e) {
+        final keyCache = jsonDecode(e);
+        return keyCache['filter'] == filter.filter;
+      });
 
-    final keys = box.keys.where((e) => e.startsWith(key));
-
-    loggerObject.e('deleted keys:\n$key \n$keys');
-
-    await box.deleteAll(keys);
+      await box.deleteAll(keys);
+    } catch (e) {
+      await (box).clear();
+      loggerObject.e('clearKeysId ${box.name} $e');
+    }
   }
 
   static Future<Iterable<dynamic>> getList(
-      String name, {
-        String filter = '',
-      }) async {
-    final key = '_${filter}_';
+    String name, {
+    String filter = '',
+  }) async {
+    final key = CacheKey(
+      id: '',
+      filter: filter,
+      version: 0,
+    );
 
     final box = await getBox(name);
 
     final f = box.keys
-        .where((e) => e.startsWith(key))
+        .where((e) => jsonDecode(e)['filter'] == key.filter)
         .map((e) => jsonDecode(box.get(e) ?? '{}'));
-
-    loggerObject.t('getList(): \nkey:$key count ${f.length}');
 
     return f;
   }
 
   static Future<dynamic> getData(
-      String name, {
-        String filter = '',
-      }) async {
-    final key = '_${filter}_';
+    String name, {
+    String filter = '',
+  }) async {
+    final key = CacheKey(
+      id: '',
+      filter: filter,
+      version: 0,
+    );
 
     final box = await getBox(name);
 
-    final dataByKey = box.get(key);
+    final keyBox =
+        box.keys.firstWhereOrNull((e) => jsonDecode(e)['filter'] == key.filter);
+
+    if (keyBox == null) return null;
+    final dataByKey = box.get(keyBox);
 
     if (dataByKey == null) return null;
-
-    loggerObject.t('getList(): \nkey:$key key found $dataByKey');
 
     return jsonDecode(dataByKey);
   }
@@ -94,47 +170,114 @@ class CachingService {
         : await Hive.openBox<String>(name);
   }
 
-  static Future<NeedUpdateEnum> needGetData(String name,
-      {String filter = ''}) async {
+  static Future<NeedUpdateEnum> needGetData(
+    String name, {
+    String filter = '',
+    int? timeInterval,
+  }) async {
+    try {
+      final key = CacheKey(
+        id: '',
+        filter: filter,
+        version: 0,
+      );
 
-    var key = '_${filter}_';
+      final box = await getBox(name);
 
-    var message = 'needGetData key: $key';
+      final keyFounded =
+          box.keys.firstWhereOrNull((e) => jsonDecode(e)['filter'] == key.filter);
 
-    final box = await getBox(name);
-    final keyFounded = box.keys.firstWhereOrNull((e) => (e).startsWith(key));
+      if (keyFounded == null) {
+        return NeedUpdateEnum.withLoading;
+      }
 
-    if (keyFounded == null) {
-      loggerObject.v(box.keys);
-      // loggerObject.f('need get data (key Not Founded): \n$key With loading');
+      final latest = DateTime.tryParse((await getBox(latestUpdateBox)).get(name) ?? '');
+
+      if (latest == null) {
+        return NeedUpdateEnum.withLoading;
+      }
+
+      final d = DateTime.now().difference(latest).inSeconds.abs();
+
+      if (d > (timeInterval ?? CachingService.timeInterval)) {
+        return NeedUpdateEnum.noLoading;
+      }
+
+      return NeedUpdateEnum.no;
+    } catch (e) {
+      await (await getBox(name)).clear();
+      loggerObject.e('needGetData $name $e');
       return NeedUpdateEnum.withLoading;
     }
+  }
 
-    message += '\n found Key with ID : ';
-    final latest =
-    DateTime.tryParse((await getBox(latestUpdateBox)).get(name) ?? '');
+  static String getIdFromData(dynamic data) {
+    return _getIdParam(data);
+  }
 
-    final haveData = (await getList(name, filter: filter)).isNotEmpty;
+  static String _getIdParam(dynamic data) {
+    try {
+      if (data is List) {
+        if (data.first is String) return data.first;
 
-    if (latest == null) {
-      // loggerObject.f('need get data (latest): \n$key With loading');
-      return NeedUpdateEnum.withLoading;
+        return (data.first.id.toString().isBlank) ? '' : data.first.id.toString();
+      } else {
+        return (!(data.id.toString().isBlank)) ? '' : data.id.toString();
+      }
+    } catch (e) {
+      return '';
     }
-
-    final d = DateTime.now().difference(latest).inMinutes.abs();
-
-    if (d > 0) {
-      // loggerObject.f(
-      //   'need get data :'
-      //   ' \n$key data > 2 '
-      //   '\n${haveData ? NeedUpdateEnum.noLoading.name : NeedUpdateEnum.withLoading.name}',
-      // );
-
-      return haveData ? NeedUpdateEnum.noLoading : NeedUpdateEnum.withLoading;
-    }
-    // loggerObject.f('need get data : \n$key Not get data');
-    return NeedUpdateEnum.no;
   }
 }
 
-enum NeedUpdateEnum { no, withLoading, noLoading }
+class CacheKey {
+  CacheKey({
+    required this.id,
+    required this.filter,
+    required this.version,
+    this.date,
+  }) {
+    date = DateTime.now().millisecondsSinceEpoch;
+    filter = filter.replaceAll('null', '');
+  }
+
+  final String id;
+  String filter;
+  final num version;
+  int? date;
+
+  factory CacheKey.fromJson(Map<String, dynamic> json) {
+    return CacheKey(
+      id: json["id"] ?? "",
+      filter: json["filter"] ?? "",
+      version: json["version"] ?? 0,
+      date: json["date"] ?? 0,
+    );
+  }
+
+  bool isMatchFilter(CacheKey key) {
+    return filter == key.filter;
+  }
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "filter": filter,
+        "version": version,
+        "date": date,
+      };
+
+  String get jsonString => jsonEncode(this);
+
+  CacheKey copyWith({
+    String? id,
+    String? filter,
+    num? version,
+  }) {
+    return CacheKey(
+      id: id ?? this.id,
+      filter: filter ?? this.filter,
+      version: version ?? this.version,
+      date: DateTime.now().millisecondsSinceEpoch,
+    );
+  }
+}
