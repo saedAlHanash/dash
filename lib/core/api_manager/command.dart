@@ -14,8 +14,8 @@ import '../../features/syrian_agency/data/request/syrian_filter_request.dart';
 import '../../features/trip/data/request/filter_trip_request.dart';
 import 'package:crypto/crypto.dart';
 
-class Command {
-  Command({
+class FilterRequest {
+  FilterRequest({
     this.skipCount,
     this.totalCount,
     this.chargingRequest,
@@ -63,8 +63,8 @@ class Command {
     skipCount = (pageIndex - 1) * maxResultCount;
   }
 
-  factory Command.initial() {
-    return Command(
+  factory FilterRequest.initial() {
+    return FilterRequest(
       skipCount: 0,
       totalCount: 0,
     );
@@ -72,8 +72,8 @@ class Command {
 
   bool get isInitial => skipCount == 0;
 
-  factory Command.noPagination() {
-    return Command(skipCount: 0)..maxResultCount = 1.0.maxInt;
+  factory FilterRequest.noPagination() {
+    return FilterRequest(skipCount: 0)..maxResultCount = 1.0.maxInt;
   }
 
   set setFilter(Map<String, dynamic> filter) => this.filter = filter;
@@ -119,8 +119,8 @@ class Command {
     return json;
   }
 
-  factory Command.fromJson(Map<String, dynamic> map) {
-    return Command(
+  factory FilterRequest.fromJson(Map<String, dynamic> map) {
+    return FilterRequest(
       skipCount: map['skipCount'] ?? 0,
     );
   }
@@ -133,7 +133,7 @@ class Command {
     return '$digest';
   }
 
-  Command copyWith({
+  FilterRequest copyWith({
     int? skipCount,
     int? totalCount,
     FilterTripRequest? filterTripRequest,
@@ -145,7 +145,7 @@ class Command {
     CompaniesFilterRequest? companiesFilterRequest,
     PlanAttendanceFilter? planAttendanceFilter,
   }) {
-    return Command(
+    return FilterRequest(
       skipCount: skipCount ?? this.skipCount,
       totalCount: totalCount ?? this.totalCount,
       filterTripRequest: filterTripRequest ?? this.filterTripRequest,

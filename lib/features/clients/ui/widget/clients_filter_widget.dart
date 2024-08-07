@@ -16,7 +16,7 @@ class ClientsFilterWidget extends StatefulWidget {
 
   final Function(ClientsFilterRequest request)? onApply;
 
-  final Command? command;
+  final FilterRequest? command;
 
   final bool isDriver;
 

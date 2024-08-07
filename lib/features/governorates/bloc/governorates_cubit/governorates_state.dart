@@ -4,7 +4,7 @@ class GovernoratesInitial extends Equatable {
   final CubitStatuses statuses;
   final List<GovernorateModel> result;
   final String error;
-  final Command command;
+  final FilterRequest command;
 
   const GovernoratesInitial({
     required this.statuses,
@@ -17,7 +17,7 @@ class GovernoratesInitial extends Equatable {
     return GovernoratesInitial(
       result: const <GovernorateModel>[],
       error: '',
-      command: Command.noPagination(),
+      command: FilterRequest.noPagination(),
       statuses: CubitStatuses.init,
     );
   }
@@ -43,7 +43,7 @@ class GovernoratesInitial extends Equatable {
     CubitStatuses? statuses,
     List<GovernorateModel>? result,
     String? error,
-    Command? command,
+    FilterRequest? command,
   }) {
     return GovernoratesInitial(
       statuses: statuses ?? this.statuses,

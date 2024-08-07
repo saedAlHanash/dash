@@ -34,7 +34,7 @@ class CreateCarCategoryCubit extends Cubit<CreateCarCategoryInitial> {
     final response = await APIService().uploadMultiPart(
       url:
           state.request.id != null ? PutUrl.updateCarCategory : PostUrl.createCarCategory,
-      type: state.request.id != null ? 'PUT' : 'POST',
+      type: state.request.id != null ? ApiType.put:ApiType.post,
       fields: state.request.toMap(),
       files: [
         state.request.file,

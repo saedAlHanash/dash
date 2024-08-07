@@ -20,7 +20,7 @@ class DriversFilterWidget extends StatefulWidget {
 
   final Function(DriversFilterRequest request)? onApply;
 
-  final Command? command;
+  final FilterRequest? command;
 
   @override
   State<DriversFilterWidget> createState() => _DriversFilterWidgetState();

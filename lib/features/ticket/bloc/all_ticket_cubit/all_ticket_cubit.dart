@@ -17,7 +17,7 @@ part 'all_ticket_state.dart';
 class AllTicketsCubit extends Cubit<AllTicketsInitial> {
   AllTicketsCubit() : super(AllTicketsInitial.initial());
 
-  Future<void> getTickets(BuildContext context, {Command? command}) async {
+  Future<void> getTickets(BuildContext context, {FilterRequest? command}) async {
     emit(state.copyWith(statuses: CubitStatuses.loading, command: command));
     final pair = await _getTicketsApi();
 

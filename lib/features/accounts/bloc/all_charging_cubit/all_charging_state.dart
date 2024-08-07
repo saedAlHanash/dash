@@ -4,7 +4,7 @@ class AllChargingInitial extends Equatable {
   final CubitStatuses statuses;
   final List<Charging> result;
   final String error;
-  final Command command;
+  final FilterRequest command;
 
   const AllChargingInitial({
     required this.statuses,
@@ -17,7 +17,7 @@ class AllChargingInitial extends Equatable {
     return AllChargingInitial(
       result: const <Charging>[],
       error: '',
-      command: Command.initial(),
+      command: FilterRequest.initial(),
       statuses: CubitStatuses.init,
     );
   }
@@ -29,7 +29,7 @@ class AllChargingInitial extends Equatable {
     CubitStatuses? statuses,
     List<Charging>? result,
     String? error,
-    Command? command,
+    FilterRequest? command,
   }) {
     return AllChargingInitial(
       statuses: statuses ?? this.statuses,

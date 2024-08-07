@@ -17,7 +17,7 @@ part 'all_company_paths_state.dart';
 class AllCompanyPathsCubit extends Cubit<AllCompanyPathsInitial> {
   AllCompanyPathsCubit() : super(AllCompanyPathsInitial.initial());
 
-  Future<void> getCompanyPaths(BuildContext context, {Command? command}) async {
+  Future<void> getCompanyPaths(BuildContext context, {FilterRequest? command}) async {
     emit(state.copyWith(statuses: CubitStatuses.loading, command: command));
     final pair = await _getCompanyPathsApi();
 

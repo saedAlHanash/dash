@@ -4,7 +4,7 @@ class AllPlanTripsInitial extends Equatable {
   final CubitStatuses statuses;
   final List<PlanTrip> result;
   final String error;
-  final Command command;
+  final FilterRequest command;
 
   const AllPlanTripsInitial({
     required this.statuses,
@@ -17,7 +17,7 @@ class AllPlanTripsInitial extends Equatable {
     return AllPlanTripsInitial(
       result: const <PlanTrip>[],
       error: '',
-      command: Command.initial(),
+      command: FilterRequest.initial(),
       statuses: CubitStatuses.init,
     );
   }
@@ -37,7 +37,7 @@ class AllPlanTripsInitial extends Equatable {
     CubitStatuses? statuses,
     List<PlanTrip>? result,
     String? error,
-    Command? command,
+    FilterRequest? command,
   }) {
     return AllPlanTripsInitial(
       statuses: statuses ?? this.statuses,

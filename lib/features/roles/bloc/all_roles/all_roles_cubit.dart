@@ -17,7 +17,7 @@ part 'all_roles_state.dart';
 class AllRolesCubit extends Cubit<AllRolesInitial> {
   AllRolesCubit() : super(AllRolesInitial.initial());
 
-  Future<void> getAllRoles(BuildContext context, {Command? command}) async {
+  Future<void> getAllRoles(BuildContext context, {FilterRequest? command}) async {
     emit(state.copyWith(statuses: CubitStatuses.loading, command: command));
     final pair = await _getAllRolesApi();
 

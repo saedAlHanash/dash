@@ -4,7 +4,7 @@ class AllTempTripsInitial extends Equatable {
   final CubitStatuses statuses;
   final List<TripPath> result;
   final String error;
-  final Command command;
+  final FilterRequest command;
 
   const AllTempTripsInitial({
     required this.statuses,
@@ -17,7 +17,7 @@ class AllTempTripsInitial extends Equatable {
     return AllTempTripsInitial(
       result: const <TripPath>[],
       error: '',
-      command: Command.initial(),
+      command: FilterRequest.initial(),
       statuses: CubitStatuses.init,
     );
   }
@@ -37,7 +37,7 @@ class AllTempTripsInitial extends Equatable {
     CubitStatuses? statuses,
     List<TripPath>? result,
     String? error,
-    Command? command,
+    FilterRequest? command,
   }) {
     return AllTempTripsInitial(
       statuses: statuses ?? this.statuses,

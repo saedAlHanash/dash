@@ -17,7 +17,7 @@ part 'system_params_state.dart';
 class SystemParamsCubit extends Cubit<SystemParamsInitial> {
   SystemParamsCubit() : super(SystemParamsInitial.initial());
 
-  Future<void> getSystemParams(BuildContext context, {Command? command}) async {
+  Future<void> getSystemParams(BuildContext context, {FilterRequest? command}) async {
     emit(state.copyWith(statuses: CubitStatuses.loading, command: command));
     final pair = await _getSystemParamsApi();
 

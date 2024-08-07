@@ -63,7 +63,7 @@ class PointsCubit extends Cubit<PointsInitial> {
     if (await network.isConnected) {
       final response = await APIService().callApi(type: ApiType.get,
         url: GetUrl.getAllPoints,
-        query: Command.noPagination().toJson(),
+        query: FilterRequest.noPagination().toJson(),
       );
 
       if (response.statusCode == 200) {

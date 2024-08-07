@@ -23,7 +23,7 @@ class ClientsCubit extends MCubit<ClientsInitial> {
   String get nameCache => 'clients';
 
   @override
-  String get filter => state.command?.getKey ?? '';
+  String get filter => state.filterRequest?.getKey ?? '';
 
   Future<void> getClients() async {
     if (await checkCashed()) return;
@@ -35,7 +35,7 @@ class ClientsCubit extends MCubit<ClientsInitial> {
       showErrorFromApi(state);
     } else {
       await storeData(pair.first!.items);
-      state.command?.totalCount = pair.first!.totalCount;
+      state.filterRequest?.totalCount = pair.first!.totalCount;
       emit(state.copyWith(
           statuses: CubitStatuses.done, result: pair.first?.items));
     }
@@ -44,7 +44,7 @@ class ClientsCubit extends MCubit<ClientsInitial> {
   Future<Pair<DriversResult?, String?>> _getClients() async {
     final response = await APIService().callApi(type: ApiType.get,
       url: GetUrl.getAllClients,
-      query: state.command?.toJson() ?? {},
+      query: state.filterRequest?.toJson() ?? {},
     );
 
     if (response.success) {
@@ -54,7 +54,7 @@ class ClientsCubit extends MCubit<ClientsInitial> {
     }
   }
 
-  void setRequest(Map<String, dynamic> map) => state.command?.setFilter = map;
+  void setRequest(Map<String, dynamic> map) => state.filterRequest?.setFilter = map;
 
   Future<bool> checkCashed() async {
     try {
@@ -76,13 +76,13 @@ class ClientsCubit extends MCubit<ClientsInitial> {
   }
 
   Future<void> getBusAsync() async {
-    var oldSkipCount = state.command?.skipCount;
-    state.command!
+    var oldSkipCount = state.filterRequest?.skipCount;
+    state.filterRequest!
       ..maxResultCount = 1.maxInt
       ..skipCount = 0;
 
     final pair = await _getClients();
-    state.command!
+    state.filterRequest!
       ..maxResultCount = 20
       ..skipCount = oldSkipCount;
 

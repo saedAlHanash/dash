@@ -274,7 +274,7 @@ class _AgencyHomePageState extends State<AgencyHomePage> {
                         sl<AllTransfersCubit>()
                           ..getAllTransfers(
                             _,
-                            command: Command.initial()
+                            command: FilterRequest.initial()
                               ..transferFilterRequest = request,
                           ),
                       ),

@@ -4,7 +4,7 @@ class AreasInitial extends Equatable {
   final CubitStatuses statuses;
   final List<AreaModel> result;
   final String error;
-  final Command command;
+  final FilterRequest command;
   final int id;
 
   const AreasInitial({
@@ -19,7 +19,7 @@ class AreasInitial extends Equatable {
     return AreasInitial(
       result: const <AreaModel>[],
       error: '',
-      command: Command.noPagination(),
+      command: FilterRequest.noPagination(),
       id: 0,
       statuses: CubitStatuses.init,
     );
@@ -32,7 +32,7 @@ class AreasInitial extends Equatable {
     CubitStatuses? statuses,
     List<AreaModel>? result,
     String? error,
-    Command? command,
+    FilterRequest? command,
     int? id,
   }) {
     return AreasInitial(

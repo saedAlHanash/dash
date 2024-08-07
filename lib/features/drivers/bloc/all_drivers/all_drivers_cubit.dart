@@ -20,7 +20,7 @@ part 'all_drivers_state.dart';
 class AllDriversCubit extends Cubit<AllDriversInitial> {
   AllDriversCubit() : super(AllDriversInitial.initial());
 
-  Future<void> getAllDrivers(BuildContext context, {Command? command}) async {
+  Future<void> getAllDrivers(BuildContext context, {FilterRequest? command}) async {
     emit(state.copyWith(statuses: CubitStatuses.loading, command: command));
     final pair = await _getAllDriversApi();
 

@@ -51,7 +51,7 @@ class EnrollmentsPage extends StatelessWidget {
             return const NotFoundWidget(text: 'لا يوجد مشتركين');
           return SingleChildScrollView(
             child: SaedTableWidget(
-              command: state.command,
+              command: state.filterRequest,
               title: headers,
               data: list
                   .mapIndexed(

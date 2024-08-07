@@ -47,7 +47,7 @@ class _FinancialPageState extends State<FinancialPage> {
   void initState() {
     context
         .read<AllDriversCubit>()
-        .getAllDrivers(context, command: Command.noPagination());
+        .getAllDrivers(context, command: FilterRequest.noPagination());
     super.initState();
   }
 

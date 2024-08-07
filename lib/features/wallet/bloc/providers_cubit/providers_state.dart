@@ -5,7 +5,7 @@ class ProvidersInitial extends AbstractState<List<Provider>> {
   // final  bool providersParam;
   const ProvidersInitial({
     required super.result,
-    required super.command,
+    required super.filterRequest,
     super.error,
     // required this.request,
     // required this.providersParam,
@@ -15,7 +15,7 @@ class ProvidersInitial extends AbstractState<List<Provider>> {
   factory ProvidersInitial.initial() {
     return const ProvidersInitial(
       result: [],
-      command: null,
+      filterRequest: null,
       error: '',
       // providersParam: false,
       // request: ProvidersRequest(),
@@ -30,7 +30,7 @@ class ProvidersInitial extends AbstractState<List<Provider>> {
   ProvidersInitial copyWith({
     CubitStatuses? statuses,
     List<Provider>? result,
-    Command? command,
+    FilterRequest? filterRequest,
     String? error,
     // ProvidersRequest? request,
     // bool? providersParam,
@@ -38,7 +38,7 @@ class ProvidersInitial extends AbstractState<List<Provider>> {
     return ProvidersInitial(
       statuses: statuses ?? this.statuses,
       result: result ?? this.result,
-      command: command ?? this.command,
+      filterRequest: filterRequest ?? this.filterRequest,
       error: error ?? this.error,
       // request: request ?? this.request,
       // providersParam: providersParam ?? this.providersParam,

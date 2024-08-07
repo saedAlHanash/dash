@@ -17,7 +17,7 @@ part 'all_sos_state.dart';
 class AllSosCubit extends Cubit<AllSosInitial> {
   AllSosCubit() : super(AllSosInitial.initial());
 
-  Future<void> getSos(BuildContext context, {Command? command}) async {
+  Future<void> getSos(BuildContext context, {FilterRequest? command}) async {
     emit(state.copyWith(statuses: CubitStatuses.loading, command: command));
     final pair = await _getSosApi();
 

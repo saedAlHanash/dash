@@ -8,7 +8,7 @@ class ClientsInitial extends AbstractState<List<Driver>> {
     super.error,
     // required this.request,
     // required this.clientParam,
-    super.command,
+    super.filterRequest,
     super.statuses,
   }); //
 
@@ -16,7 +16,7 @@ class ClientsInitial extends AbstractState<List<Driver>> {
     return  ClientsInitial(
       result: [],
       error: '',
-      command: Command.initial(),
+      filterRequest: FilterRequest.initial(),
       // clientParam: false,
       // request: Command(),
       statuses: CubitStatuses.init,
@@ -25,20 +25,20 @@ class ClientsInitial extends AbstractState<List<Driver>> {
 
   @override
   List<Object> get props =>
-      [statuses, result, error, if (command != null) command!];
+      [statuses, result, error, if (filterRequest != null) filterRequest!];
 
   ClientsInitial copyWith({
     CubitStatuses? statuses,
     List<Driver>? result,
     String? error,
-    Command? command,
+    FilterRequest? filterRequest,
     // bool? clientParam,
   }) {
     return ClientsInitial(
       statuses: statuses ?? this.statuses,
       result: result ?? this.result,
       error: error ?? this.error,
-      command: command ?? this.command,
+      filterRequest: filterRequest ?? this.filterRequest,
       // request: request ?? this.request,
       // clientParam: clientParam ?? this.clientParam,
     );

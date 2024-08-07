@@ -4,7 +4,7 @@ class AllInstitutionsInitial extends Equatable {
   final CubitStatuses statuses;
   final List<InstitutionModel> result;
   final String error;
-  final Command command;
+  final FilterRequest command;
 
   const AllInstitutionsInitial({
     required this.statuses,
@@ -17,7 +17,7 @@ class AllInstitutionsInitial extends Equatable {
     return AllInstitutionsInitial(
       result: const <InstitutionModel>[],
       error: '',
-      command: Command.initial(),
+      command: FilterRequest.initial(),
       statuses: CubitStatuses.init,
     );
   }
@@ -37,7 +37,7 @@ class AllInstitutionsInitial extends Equatable {
     CubitStatuses? statuses,
     List<InstitutionModel>? result,
     String? error,
-    Command? command,
+    FilterRequest? command,
   }) {
     return AllInstitutionsInitial(
       statuses: statuses ?? this.statuses,

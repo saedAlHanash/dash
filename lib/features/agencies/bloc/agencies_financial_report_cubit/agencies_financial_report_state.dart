@@ -4,7 +4,7 @@ class AgenciesReportInitial extends Equatable {
   final CubitStatuses statuses;
   final AgenciesFinancialResult result;
   final String error;
-  final Command command;
+  final FilterRequest command;
 
   const AgenciesReportInitial({
     required this.statuses,
@@ -17,7 +17,7 @@ class AgenciesReportInitial extends Equatable {
     return AgenciesReportInitial(
       result: AgenciesFinancialResult.fromJson({}),
       error: '',
-      command: Command.initial(),
+      command: FilterRequest.initial(),
       statuses: CubitStatuses.init,
     );
   }
@@ -29,7 +29,7 @@ class AgenciesReportInitial extends Equatable {
     CubitStatuses? statuses,
     AgenciesFinancialResult? result,
     String? error,
-    Command? command,
+    FilterRequest? command,
   }) {
     return AgenciesReportInitial(
       statuses: statuses ?? this.statuses,

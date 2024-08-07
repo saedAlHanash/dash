@@ -19,7 +19,7 @@ part 'debts_state.dart';
 class DebtsCubit extends Cubit<DebtsInitial> {
   DebtsCubit() : super(DebtsInitial.initial());
 
-  Future<void> getDebts(BuildContext context, {int? id, Command? command}) async {
+  Future<void> getDebts(BuildContext context, {int? id, FilterRequest? command}) async {
     emit(state.copyWith(statuses: CubitStatuses.loading, command: command, id: id));
     final pair = await _getDebtsApi(id: id ?? state.id);
 

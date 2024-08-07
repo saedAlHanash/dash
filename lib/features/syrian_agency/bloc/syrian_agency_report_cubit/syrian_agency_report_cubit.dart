@@ -17,7 +17,7 @@ part 'syrian_agency_report_state.dart';
 class SyrianAgencyReportCubit extends Cubit<SyrianAgencyReportInitial> {
   SyrianAgencyReportCubit() : super(SyrianAgencyReportInitial.initial());
 
-  Future<void> getSyrianAgencyReport(BuildContext context, {Command? command}) async {
+  Future<void> getSyrianAgencyReport(BuildContext context, {FilterRequest? command}) async {
     emit(state.copyWith(statuses: CubitStatuses.loading, command: command));
     final pair = await _getSyrianAgencyReportApi();
 

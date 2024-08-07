@@ -25,10 +25,10 @@ class SaedTableWidget extends StatelessWidget {
   final Widget? filters;
   final List<List<dynamic>> data;
 
-  final Command? command;
+  final FilterRequest? command;
   final double? fullHeight;
 
-  final Function(Command command)? onChangePage;
+  final Function(FilterRequest command)? onChangePage;
 
   @override
   Widget build(BuildContext context) {

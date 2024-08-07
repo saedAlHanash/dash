@@ -4,7 +4,7 @@ class AllPermissionsInitial extends Equatable {
   final CubitStatuses statuses;
   final List<Permission> result;
   final String error;
-  final Command command;
+  final FilterRequest command;
 
   const AllPermissionsInitial({
     required this.statuses,
@@ -17,7 +17,7 @@ class AllPermissionsInitial extends Equatable {
     return  AllPermissionsInitial(
       result: const<Permission>[],
       error: '',
-      command: Command.initial(),
+      command: FilterRequest.initial(),
       statuses: CubitStatuses.init,
     );
   }
@@ -30,7 +30,7 @@ class AllPermissionsInitial extends Equatable {
     CubitStatuses? statuses,
     List<Permission>? result,
     String? error,
-    Command? command,
+    FilterRequest? command,
   }) {
     return AllPermissionsInitial(
       statuses: statuses ?? this.statuses,

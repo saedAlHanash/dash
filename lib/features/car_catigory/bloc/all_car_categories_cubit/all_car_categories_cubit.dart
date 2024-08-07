@@ -17,7 +17,7 @@ part 'all_car_categories_state.dart';
 class AllCarCategoriesCubit extends Cubit<AllCarCategoriesInitial> {
   AllCarCategoriesCubit() : super(AllCarCategoriesInitial.initial());
 
-  Future<void> getCarCategories(BuildContext context,{ Command? command}) async {
+  Future<void> getCarCategories(BuildContext context,{ FilterRequest? command}) async {
     emit(state.copyWith(statuses: CubitStatuses.loading, command: command));
     final pair = await _getCarCategoriesApi();
 

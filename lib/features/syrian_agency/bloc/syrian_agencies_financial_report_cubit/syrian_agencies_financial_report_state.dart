@@ -4,7 +4,7 @@ class SyrianAgenciesFinancialReportInitial extends Equatable {
   final CubitStatuses statuses;
   final SyrianAgencyFinancialReport result;
   final String error;
-  final Command command;
+  final FilterRequest command;
 
   const SyrianAgenciesFinancialReportInitial({
     required this.statuses,
@@ -17,7 +17,7 @@ class SyrianAgenciesFinancialReportInitial extends Equatable {
     return SyrianAgenciesFinancialReportInitial(
       result: SyrianAgencyFinancialReport.fromJson({}),
       error: '',
-      command: Command.initial(),
+      command: FilterRequest.initial(),
       statuses: CubitStatuses.init,
     );
   }
@@ -29,7 +29,7 @@ class SyrianAgenciesFinancialReportInitial extends Equatable {
     CubitStatuses? statuses,
     SyrianAgencyFinancialReport? result,
     String? error,
-    Command? command,
+    FilterRequest? command,
   }) {
     return SyrianAgenciesFinancialReportInitial(
       statuses: statuses ?? this.statuses,

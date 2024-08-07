@@ -17,7 +17,7 @@ part 'all_permissions_state.dart';
 class AllPermissionsCubit extends Cubit<AllPermissionsInitial> {
   AllPermissionsCubit() : super(AllPermissionsInitial.initial());
 
-  Future<void> getAllPermissions(BuildContext context, {Command? command}) async {
+  Future<void> getAllPermissions(BuildContext context, {FilterRequest? command}) async {
     emit(state.copyWith(statuses: CubitStatuses.loading, command: command));
     final pair = await _getAllPermissionsApi();
 

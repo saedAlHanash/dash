@@ -4,7 +4,7 @@ class AllCompaniesInitial extends Equatable {
   final CubitStatuses statuses;
   final List<CompanyModel> result;
   final String error;
-  final Command command;
+  final FilterRequest command;
 
   const AllCompaniesInitial({
     required this.statuses,
@@ -17,7 +17,7 @@ class AllCompaniesInitial extends Equatable {
     return AllCompaniesInitial(
       result: const <CompanyModel>[],
       error: '',
-      command: Command.initial(),
+      command: FilterRequest.initial(),
       statuses: CubitStatuses.init,
     );
   }
@@ -51,7 +51,7 @@ class AllCompaniesInitial extends Equatable {
     CubitStatuses? statuses,
     List<CompanyModel>? result,
     String? error,
-    Command? command,
+    FilterRequest? command,
   }) {
     return AllCompaniesInitial(
       statuses: statuses ?? this.statuses,

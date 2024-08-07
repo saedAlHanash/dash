@@ -4,7 +4,7 @@ class SystemParamsInitial extends Equatable {
   final CubitStatuses statuses;
   final List<SystemParam> result;
   final String error;
-  final Command command;
+  final FilterRequest command;
 
   const SystemParamsInitial({
     required this.statuses,
@@ -17,7 +17,7 @@ class SystemParamsInitial extends Equatable {
     return  SystemParamsInitial(
       result: const<SystemParam>[],
       error: '',
-      command: Command.initial(),
+      command: FilterRequest.initial(),
       statuses: CubitStatuses.init,
     );
   }
@@ -30,7 +30,7 @@ class SystemParamsInitial extends Equatable {
     CubitStatuses? statuses,
     List<SystemParam>? result,
     String? error,
-    Command? command,
+    FilterRequest? command,
   }) {
     return SystemParamsInitial(
       statuses: statuses ?? this.statuses,

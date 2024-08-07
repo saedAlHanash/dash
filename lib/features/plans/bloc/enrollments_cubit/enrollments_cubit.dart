@@ -27,7 +27,7 @@ class EnrollmentCubit extends MCubit<EnrollmentInitial> {
       showErrorFromApi(state);
     } else {
       await storeData(pair.first!);
-      state.command?.totalCount = pair.first!.totalCount.toInt();
+      state.filterRequest?.totalCount = pair.first!.totalCount.toInt();
       emit(state.copyWith(
           statuses: CubitStatuses.done, result: pair.first?.items));
     }

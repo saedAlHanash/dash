@@ -19,7 +19,7 @@ class PlanAttendancesCubit extends Cubit<PlanAttendancesInitial> {
   PlanAttendancesCubit() : super(PlanAttendancesInitial.initial());
 
   Future<void> getAttendances(BuildContext context,
-      {PlanAttendanceFilter? request, Command? command}) async {
+      {PlanAttendanceFilter? request, FilterRequest? command}) async {
     emit(state.copyWith(
         statuses: CubitStatuses.loading, request: request, command: command));
     final pair = await _getAttendancesApi();

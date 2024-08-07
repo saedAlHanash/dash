@@ -22,7 +22,7 @@ class TripsCubit extends Cubit<TripsInitial> {
 
   final network = sl<NetworkInfo>();
 
-  Future<void> getTrips(BuildContext context, {Command? command}) async {
+  Future<void> getTrips(BuildContext context, {FilterRequest? command}) async {
     emit(
       state.copyWith(
         statuses: CubitStatuses.loading,

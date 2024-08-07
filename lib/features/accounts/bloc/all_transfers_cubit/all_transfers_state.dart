@@ -4,7 +4,7 @@ class AllTransfersInitial extends Equatable {
   final CubitStatuses statuses;
   final List<Transfer> result;
   final String error;
-  final Command command;
+  final FilterRequest command;
 
   const AllTransfersInitial({
     required this.statuses,
@@ -17,7 +17,7 @@ class AllTransfersInitial extends Equatable {
     return  AllTransfersInitial(
       result: const<Transfer>[],
       error: '',
-      command: Command.initial(),
+      command: FilterRequest.initial(),
       statuses: CubitStatuses.init,
     );
   }
@@ -30,7 +30,7 @@ class AllTransfersInitial extends Equatable {
     CubitStatuses? statuses,
     List<Transfer>? result,
     String? error,
-    Command? command,
+    FilterRequest? command,
   }) {
     return AllTransfersInitial(
       statuses: statuses ?? this.statuses,

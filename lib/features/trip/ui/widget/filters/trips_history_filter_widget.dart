@@ -23,7 +23,7 @@ class TripsFilterWidget extends StatefulWidget {
   final Function(FilterTripRequest request)? onApply;
 
   final bool activeTrips;
-  final Command? command;
+  final FilterRequest? command;
 
   @override
   State<TripsFilterWidget> createState() => _TripsFilterWidgetState();

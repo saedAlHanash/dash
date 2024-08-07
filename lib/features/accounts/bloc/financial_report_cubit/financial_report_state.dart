@@ -5,7 +5,7 @@ class FinancialReportInitial extends Equatable {
   final List<FinancialResult> result;
   final String error;
   final FinancialReportResult response;
-  final Command command;
+  final FilterRequest command;
 
   const FinancialReportInitial({
     required this.statuses,
@@ -20,7 +20,7 @@ class FinancialReportInitial extends Equatable {
       result: const[],
       error: '',
       response: FinancialReportResult.fromJson({}),
-      command: Command.initial(),
+      command: FilterRequest.initial(),
       statuses: CubitStatuses.init,
     );
   }
@@ -34,7 +34,7 @@ class FinancialReportInitial extends Equatable {
     List<FinancialResult>? result,
     String? error,
     FinancialReportResult? response,
-    Command? command,
+    FilterRequest? command,
   }) {
     return FinancialReportInitial(
       statuses: statuses ?? this.statuses,

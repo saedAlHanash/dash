@@ -22,6 +22,7 @@ import '../../features/agencies/bloc/agencies_financial_report_cubit/agencies_fi
 import '../../features/auth/bloc/create_policy_cubit/policy_cubit.dart';
 import '../../features/auth/bloc/policy_cubit/create_policy_cubit.dart';
 import '../../features/car_catigory/bloc/all_car_categories_cubit/all_car_categories_cubit.dart';
+import '../../features/cards/bloc/cards_cubit/cards_cubit.dart';
 import '../../features/clients/bloc/all_clients/all_clients_cubit.dart';
 import '../../features/clients/bloc/clients_cubit/clients_cubit.dart';
 import '../../features/companies/bloc/companies_cubit/companies_cubit.dart';
@@ -140,6 +141,7 @@ class _MyAppState extends State<MyApp> {
                 BlocProvider(create: (_) => sl<PolicyCubit>()..getPolicy(_)),
                 BlocProvider(create: (_) => sl<AllPlansCubit>()..getPlans(_)),
                 BlocProvider(create: (_) => sl<PointsCubit>()..getAllPoints(_)),
+                BlocProvider(create: (_) => sl<CardsCubit>()..getCards()),
                 BlocProvider(
                     create: (_) => sl<AgenciesCubit>()..getAgencies(_)),
                 BlocProvider(
@@ -191,7 +193,7 @@ class _MyAppState extends State<MyApp> {
                   create: (_) => sl<SyrianAgencyReportCubit>()
                     ..getSyrianAgencyReport(
                       _,
-                      command: Command.initial()
+                      command: FilterRequest.initial()
                           .copyWith(syrianFilterRequest: SyrianFilterRequest()),
                     ),
                 ),

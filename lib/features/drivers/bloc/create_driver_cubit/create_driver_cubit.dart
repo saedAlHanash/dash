@@ -37,7 +37,7 @@ class CreateDriverCubit extends Cubit<CreateDriverInitial> {
     final response = await APIService().uploadMultiPart(
       url: request.id != null ? PutUrl.updateDriver : PostUrl.createDriver,
       fields: request.toMap(),
-      type: request.id != null ? 'PUT' : 'POST',
+      type: request.id != null  ? ApiType.put:ApiType.post,
       files: [
         request.imageFile,
         request.identityFile,

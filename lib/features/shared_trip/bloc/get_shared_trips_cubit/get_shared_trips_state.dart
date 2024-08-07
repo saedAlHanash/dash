@@ -6,7 +6,7 @@ class GetSharedTripsInitial extends Equatable {
 
   final List<SharedTrip> oldTrips;
   final String error;
-  final Command command;
+  final FilterRequest command;
 
 
   const GetSharedTripsInitial({
@@ -23,7 +23,7 @@ class GetSharedTripsInitial extends Equatable {
       currentTrips: const [],
       oldTrips: const [],
       error: '',
-      command: Command.initial(),
+      command: FilterRequest.initial(),
 
       statuses: CubitStatuses.init,
     );
@@ -37,7 +37,7 @@ class GetSharedTripsInitial extends Equatable {
     List<SharedTrip>? currentTrips,
     List<SharedTrip>? oldTrips,
     String? error,
-    Command? command,
+    FilterRequest? command,
 
   }) {
     return GetSharedTripsInitial(

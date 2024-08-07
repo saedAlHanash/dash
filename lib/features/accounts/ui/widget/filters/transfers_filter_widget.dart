@@ -17,7 +17,7 @@ class TransfersFilterWidget extends StatefulWidget {
 
   final Function(TransferFilterRequest request)? onApply;
 
-  final Command? command;
+  final FilterRequest? command;
 
   @override
   State<TransfersFilterWidget> createState() => _TransfersFilterWidgetState();

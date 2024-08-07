@@ -5,7 +5,7 @@ class PlanAttendancesInitial extends Equatable {
   final List<PlanAttendance> result;
   final String error;
   final PlanAttendanceFilter request;
-  final Command command;
+  final FilterRequest command;
 
   const PlanAttendancesInitial({
     required this.statuses,
@@ -20,7 +20,7 @@ class PlanAttendancesInitial extends Equatable {
       result: const <PlanAttendance>[],
       error: '',
       request: PlanAttendanceFilter(),
-      command: Command.noPagination(),
+      command: FilterRequest.noPagination(),
       statuses: CubitStatuses.init,
     );
   }
@@ -33,7 +33,7 @@ class PlanAttendancesInitial extends Equatable {
     List<PlanAttendance>? result,
     String? error,
     PlanAttendanceFilter? request,
-    Command? command,
+    FilterRequest? command,
   }) {
     return PlanAttendancesInitial(
       statuses: statuses ?? this.statuses,

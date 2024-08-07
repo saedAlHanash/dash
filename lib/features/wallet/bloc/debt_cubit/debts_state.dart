@@ -4,7 +4,7 @@ class DebtsInitial extends Equatable {
   final CubitStatuses statuses;
   final List<Debt> result;
   final String error;
-  final Command command;
+  final FilterRequest command;
   final int id;
 
   const DebtsInitial({
@@ -20,7 +20,7 @@ class DebtsInitial extends Equatable {
       result: const <Debt>[],
       error: '',
       statuses: CubitStatuses.init,
-      command: Command.initial(),
+      command: FilterRequest.initial(),
       id: 0,
     );
   }
@@ -32,7 +32,7 @@ class DebtsInitial extends Equatable {
     CubitStatuses? statuses,
     List<Debt>? result,
     String? error,
-    Command? command,
+    FilterRequest? command,
     int? id,
   }) {
     return DebtsInitial(

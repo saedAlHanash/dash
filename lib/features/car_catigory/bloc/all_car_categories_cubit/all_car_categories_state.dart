@@ -4,7 +4,7 @@ class AllCarCategoriesInitial extends Equatable {
   final CubitStatuses statuses;
   final List<CarCategory> result;
   final String error;
-  final Command command;
+  final FilterRequest command;
 
   const AllCarCategoriesInitial({
     required this.statuses,
@@ -17,7 +17,7 @@ class AllCarCategoriesInitial extends Equatable {
     return AllCarCategoriesInitial(
       result: const <CarCategory>[],
       error: '',
-      command: Command.initial(),
+      command: FilterRequest.initial(),
       statuses: CubitStatuses.init,
     );
   }
@@ -50,7 +50,7 @@ class AllCarCategoriesInitial extends Equatable {
     CubitStatuses? statuses,
     List<CarCategory>? result,
     String? error,
-    Command? command,
+    FilterRequest? command,
   }) {
     return AllCarCategoriesInitial(
       statuses: statuses ?? this.statuses,

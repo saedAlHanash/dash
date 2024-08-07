@@ -15,7 +15,7 @@ class TransDriversFilterWidget extends StatefulWidget {
 
   final Function(DriversFilterRequest request)? onApply;
 
-  final Command? command;
+  final FilterRequest? command;
 
   @override
   State<TransDriversFilterWidget> createState() => _TransDriversFilterWidgetState();

@@ -4,7 +4,7 @@ class AgenciesInitial extends Equatable {
   final CubitStatuses statuses;
   final List<Agency> result;
   final String error;
-  final Command command;
+  final FilterRequest command;
 
   const AgenciesInitial({
     required this.statuses,
@@ -39,7 +39,7 @@ class AgenciesInitial extends Equatable {
     return AgenciesInitial(
       result: const <Agency>[],
       error: '',
-      command: Command.initial(),
+      command: FilterRequest.initial(),
       statuses: CubitStatuses.init,
     );
   }
@@ -51,7 +51,7 @@ class AgenciesInitial extends Equatable {
     CubitStatuses? statuses,
     List<Agency>? result,
     String? error,
-    Command? command,
+    FilterRequest? command,
   }) {
     return AgenciesInitial(
       statuses: statuses ?? this.statuses,

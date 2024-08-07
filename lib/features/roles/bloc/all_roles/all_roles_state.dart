@@ -4,7 +4,7 @@ class AllRolesInitial extends Equatable {
   final CubitStatuses statuses;
   final List<Role> result;
   final String error;
-  final Command command;
+  final FilterRequest command;
 
   const AllRolesInitial({
     required this.statuses,
@@ -17,7 +17,7 @@ class AllRolesInitial extends Equatable {
     return  AllRolesInitial(
       result: const<Role>[],
       error: '',
-      command: Command.initial(),
+      command: FilterRequest.initial(),
       statuses: CubitStatuses.init,
     );
   }
@@ -30,7 +30,7 @@ class AllRolesInitial extends Equatable {
     CubitStatuses? statuses,
     List<Role>? result,
     String? error,
-    Command? command,
+    FilterRequest? command,
   }) {
     return AllRolesInitial(
       statuses: statuses ?? this.statuses,

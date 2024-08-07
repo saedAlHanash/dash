@@ -35,7 +35,7 @@ class HomeCubit extends Cubit<HomeInitial> {
   Future<Pair<HomeResult?, String?>> _getHomeApi() async {
     final response = await APIService().callApi(type: ApiType.get,
       url: GetUrl.getHome,
-      query: Command.initial().toJson()
+      query: FilterRequest.initial().toJson()
         ..addAll(
           {'Identifier': AppSharedPreference.getIdentifier},
         ),

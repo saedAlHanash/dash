@@ -1,26 +1,48 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_multi_type/image_multi_type.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_models/global.dart';
 
+import '../../generated/assets.dart';
 import '../../services/caching_service/caching_service.dart';
 import '../api_manager/api_service.dart';
 import '../api_manager/command.dart';
 import '../error/error_manager.dart';
 import '../strings/enum_manager.dart';
 
+
 abstract class AbstractState<T> extends Equatable {
   final CubitStatuses statuses;
   final String error;
   final T result;
-  final Command? command;
+  final FilterRequest? filterRequest;
+  final dynamic request;
 
   const AbstractState({
     this.statuses = CubitStatuses.init,
     this.error = '',
-    this.command,
+    this.filterRequest,
+    this.request,
     required this.result,
   });
+
+  bool get loading => statuses == CubitStatuses.loading;
+
+  bool get isDataEmpty =>
+      (statuses != CubitStatuses.loading) &&
+          (result is List) &&
+          ((result as List).isEmpty);
+
+  Widget get emptyWidget => Center(
+    child: ImageMultiType(
+      url: Assets.iconsLogoPng,
+      height: 0.9.sw,
+      width: 0.9.sw,
+    ),
+  );
 }
 
 abstract class AbstractJson {

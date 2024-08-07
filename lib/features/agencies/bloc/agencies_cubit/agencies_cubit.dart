@@ -18,7 +18,7 @@ part 'agencies_state.dart';
 class AgenciesCubit extends Cubit<AgenciesInitial> {
   AgenciesCubit() : super(AgenciesInitial.initial());
 
-  Future<void> getAgencies(BuildContext context, {Command? command}) async {
+  Future<void> getAgencies(BuildContext context, {FilterRequest? command}) async {
     emit(state.copyWith(statuses: CubitStatuses.loading, command: command));
     final pair = await _getAgenciesApi();
 

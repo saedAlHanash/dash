@@ -47,7 +47,7 @@ class DriversImeiCubit extends Cubit<DriversImeiInitial> {
   }
 
   Future<Pair<List<DriverImei>?, String?>> _getDriversImeiApi() async {
-    final q = Command.initial().toJson();
+    final q = FilterRequest.initial().toJson();
     if (state.status != null) {
       q['status'] = state.status!.index;
     }

@@ -17,7 +17,7 @@ part 'all_institutions_state.dart';
 class AllInstitutionsCubit extends Cubit<AllInstitutionsInitial> {
   AllInstitutionsCubit() : super(AllInstitutionsInitial.initial());
 
-  Future<void> getInstitutions(BuildContext context, {Command? command}) async {
+  Future<void> getInstitutions(BuildContext context, {FilterRequest? command}) async {
     emit(state.copyWith(statuses: CubitStatuses.loading, command: command));
     final pair = await _getInstitutionsApi();
 

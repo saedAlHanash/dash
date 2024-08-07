@@ -20,7 +20,7 @@ class SharedFilterWidget extends StatefulWidget {
 
   final Function(FilterTripRequest request)? onApply;
 
-  final Command? command;
+  final FilterRequest? command;
 
   @override
   State<SharedFilterWidget> createState() => _SharedFilterWidgetState();

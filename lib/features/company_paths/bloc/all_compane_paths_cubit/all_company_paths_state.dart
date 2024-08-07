@@ -4,7 +4,7 @@ class AllCompanyPathsInitial extends Equatable {
   final CubitStatuses statuses;
   final List<CompanyPath> result;
   final String error;
-  final Command command;
+  final FilterRequest command;
 
   const AllCompanyPathsInitial({
     required this.statuses,
@@ -17,7 +17,7 @@ class AllCompanyPathsInitial extends Equatable {
     return AllCompanyPathsInitial(
       result: const <CompanyPath>[],
       error: '',
-      command: Command.initial(),
+      command: FilterRequest.initial(),
       statuses: CubitStatuses.init,
     );
   }
@@ -43,7 +43,7 @@ class AllCompanyPathsInitial extends Equatable {
     CubitStatuses? statuses,
     List<CompanyPath>? result,
     String? error,
-    Command? command,
+    FilterRequest? command,
   }) {
     return AllCompanyPathsInitial(
       statuses: statuses ?? this.statuses,

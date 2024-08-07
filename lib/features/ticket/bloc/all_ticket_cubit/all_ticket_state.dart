@@ -4,7 +4,7 @@ class AllTicketsInitial extends Equatable {
   final CubitStatuses statuses;
   final List<Ticket> result;
   final String error;
-  final Command command;
+  final FilterRequest command;
 
   const AllTicketsInitial({
     required this.statuses,
@@ -17,7 +17,7 @@ class AllTicketsInitial extends Equatable {
     return AllTicketsInitial(
       result: const <Ticket>[],
       error: '',
-      command: Command.initial(),
+      command: FilterRequest.initial(),
       statuses: CubitStatuses.init,
     );
   }
@@ -37,7 +37,7 @@ class AllTicketsInitial extends Equatable {
     CubitStatuses? statuses,
     List<Ticket>? result,
     String? error,
-    Command? command,
+    FilterRequest? command,
   }) {
     return AllTicketsInitial(
       statuses: statuses ?? this.statuses,

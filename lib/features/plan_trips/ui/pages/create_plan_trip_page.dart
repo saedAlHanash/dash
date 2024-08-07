@@ -52,7 +52,7 @@ class _CreatePlanTripPageState extends State<CreatePlanTripPage> {
   void initState() {
     allCompaniesCubit = context.read<AllCompaniesCubit>();
 
-    allCompaniesCubit.getCompanies(context, command: Command.noPagination());
+    allCompaniesCubit.getCompanies(context, command: FilterRequest.noPagination());
 
     super.initState();
   }

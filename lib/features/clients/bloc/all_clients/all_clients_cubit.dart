@@ -19,7 +19,7 @@ part 'all_clients_state.dart';
 class AllClientsCubit extends Cubit<AllClientsInitial> {
   AllClientsCubit() : super(AllClientsInitial.initial());
 
-  Future<void> getAllClients(BuildContext context, {Command? command}) async {
+  Future<void> getAllClients(BuildContext context, {FilterRequest? command}) async {
     emit(state.copyWith(statuses: CubitStatuses.loading, command: command));
     final pair = await _getAllClientsApi();
 

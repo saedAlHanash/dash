@@ -19,7 +19,7 @@ part 'company_transfers_state.dart';
 class CompanyTransfersCubit extends Cubit<CompanyTransfersInitial> {
   CompanyTransfersCubit() : super(CompanyTransfersInitial.initial());
 
-  Future<void> getCompanyTransfers(BuildContext context, {Command? command}) async {
+  Future<void> getCompanyTransfers(BuildContext context, {FilterRequest? command}) async {
     emit(state.copyWith(statuses: CubitStatuses.loading, command: command));
     final pair = await _getCompanyTransfersApi();
 

@@ -17,7 +17,7 @@ part 'system_settings_state.dart';
 class SystemSettingsCubit extends Cubit<SystemSettingsInitial> {
   SystemSettingsCubit() : super(SystemSettingsInitial.initial());
 
-  Future<void> getSystemSettings(BuildContext context, {Command? command}) async {
+  Future<void> getSystemSettings(BuildContext context, {FilterRequest? command}) async {
     emit(state.copyWith(statuses: CubitStatuses.loading, command: command));
     final pair = await _getSystemSettingsApi();
 

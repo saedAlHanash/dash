@@ -4,7 +4,7 @@ class AllSosInitial extends Equatable {
   final CubitStatuses statuses;
   final List<Sos> result;
   final String error;
-  final Command command;
+  final FilterRequest command;
 
   const AllSosInitial({
     required this.statuses,
@@ -17,7 +17,7 @@ class AllSosInitial extends Equatable {
     return AllSosInitial(
       result: const <Sos>[],
       error: '',
-      command: Command.initial(),
+      command: FilterRequest.initial(),
       statuses: CubitStatuses.init,
     );
   }
@@ -37,7 +37,7 @@ class AllSosInitial extends Equatable {
     CubitStatuses? statuses,
     List<Sos>? result,
     String? error,
-    Command? command,
+    FilterRequest? command,
   }) {
     return AllSosInitial(
       statuses: statuses ?? this.statuses,

@@ -4,7 +4,7 @@ class AllCouponsInitial extends Equatable {
   final CubitStatuses statuses;
   final List<Coupon> result;
   final String error;
-  final Command command;
+  final FilterRequest command;
 
   const AllCouponsInitial({
     required this.statuses,
@@ -17,7 +17,7 @@ class AllCouponsInitial extends Equatable {
     return  AllCouponsInitial(
       result: const<Coupon>[],
       error: '',
-      command: Command.initial(),
+      command: FilterRequest.initial(),
       statuses: CubitStatuses.init,
     );
   }
@@ -30,7 +30,7 @@ class AllCouponsInitial extends Equatable {
     CubitStatuses? statuses,
     List<Coupon>? result,
     String? error,
-    Command? command,
+    FilterRequest? command,
   })  {
     return AllCouponsInitial(
       statuses: statuses ?? this.statuses,

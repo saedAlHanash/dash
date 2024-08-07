@@ -26,7 +26,7 @@ class GetSharedTripsCubit extends Cubit<GetSharedTripsInitial> {
     BuildContext context, {
     List<SharedTripStatus>? tripState,
 
-    Command? command,
+    FilterRequest? command,
   }) async {
     emit(
       state.copyWith(

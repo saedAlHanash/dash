@@ -43,7 +43,7 @@ class DriverFinancialWidget extends StatelessWidget {
         BlocListener<DriverFinancialCubit, DriverFinancialInitial>(
           listenWhen: (p, c) => c.statuses.isDone,
           listener: (context, state) {
-            final command = Command.noPagination();
+            final command = FilterRequest.noPagination();
             command.transferFilterRequest = TransferFilterRequest(
               userId: state.request.driverId,
               startTime: state.result.lastTransferFromCompanyToDriver.transferDate?.add(

@@ -21,7 +21,7 @@ class FinancialFilterWidget extends StatefulWidget {
 
   final Function(FinancialFilterRequest request)? onApply;
 
-  final Command? command;
+  final FilterRequest? command;
 
   final bool isDriver;
 

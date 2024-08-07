@@ -19,7 +19,7 @@ class CompanyPathesFilterWidget extends StatefulWidget {
 
   final Function(CompaniesFilterRequest request)? onApply;
 
-  final Command? command;
+  final FilterRequest? command;
 
   @override
   State<CompanyPathesFilterWidget> createState() => _CompanyPathesFilterWidgetState();

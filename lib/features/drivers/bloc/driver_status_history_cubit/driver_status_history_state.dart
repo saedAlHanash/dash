@@ -5,7 +5,7 @@ class DriverStatusHistoryInitial extends Equatable {
   final List<DriverStatusHistory> result;
   final String error;
   final int driverId;
-  final Command command;
+  final FilterRequest command;
 
   const DriverStatusHistoryInitial({
     required this.statuses,
@@ -28,7 +28,7 @@ class DriverStatusHistoryInitial extends Equatable {
       result: const <DriverStatusHistory>[],
       error: '',
       driverId: 0,
-      command: Command.initial(),
+      command: FilterRequest.initial(),
       statuses: CubitStatuses.init,
     );
   }
@@ -41,7 +41,7 @@ class DriverStatusHistoryInitial extends Equatable {
     List<DriverStatusHistory>? result,
     String? error,
     int? driverId,
-    Command? command,
+    FilterRequest? command,
   }) {
     return DriverStatusHistoryInitial(
       statuses: statuses ?? this.statuses,

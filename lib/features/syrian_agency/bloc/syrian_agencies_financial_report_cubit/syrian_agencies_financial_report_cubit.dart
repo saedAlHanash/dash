@@ -20,7 +20,7 @@ part 'syrian_agencies_financial_report_state.dart';
 class SyrianAgenciesFinancialReportCubit extends Cubit<SyrianAgenciesFinancialReportInitial> {
   SyrianAgenciesFinancialReportCubit() : super(SyrianAgenciesFinancialReportInitial.initial());
 
-  Future<void> getReport(BuildContext context, {Command? command}) async {
+  Future<void> getReport(BuildContext context, {FilterRequest? command}) async {
     emit(state.copyWith(statuses: CubitStatuses.loading, command: command));
     final pair = await _getReportApi();
 

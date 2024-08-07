@@ -4,7 +4,7 @@ class AllDriversInitial extends Equatable {
   final CubitStatuses statuses;
   final List<Driver> result;
   final String error;
-  final Command command;
+  final FilterRequest command;
 
   const AllDriversInitial({
     required this.statuses,
@@ -25,7 +25,7 @@ class AllDriversInitial extends Equatable {
     return AllDriversInitial(
       result: const <Driver>[],
       error: '',
-      command: Command.initial(),
+      command: FilterRequest.initial(),
       statuses: CubitStatuses.init,
     );
   }
@@ -37,7 +37,7 @@ class AllDriversInitial extends Equatable {
     CubitStatuses? statuses,
     List<Driver>? result,
     String? error,
-    Command? command,
+    FilterRequest? command,
   }) {
     return AllDriversInitial(
       statuses: statuses ?? this.statuses,

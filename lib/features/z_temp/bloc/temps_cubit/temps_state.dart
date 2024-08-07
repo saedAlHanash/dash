@@ -1,14 +1,11 @@
 part of 'temps_cubit.dart';
 
 class TempsInitial extends AbstractState<List<Temp>> {
-  // final Command request;
-  // final  bool tempParam;
   const TempsInitial({
     required super.result,
     super.error,
-    // required this.request,
-    // required this.tempParam,
-    super.command,
+    super.request,
+    super.filterRequest,
     super.statuses,
   }); //
 
@@ -16,31 +13,33 @@ class TempsInitial extends AbstractState<List<Temp>> {
     return const TempsInitial(
       result: [],
       error: '',
-      command: null,
-      // tempParam: false,
-      // request: Command(),
+      filterRequest: null,
       statuses: CubitStatuses.init,
     );
   }
 
   @override
-  List<Object> get props =>
-      [statuses, result, error, if (command != null) command!];
+  List<Object> get props => [
+        statuses,
+        result,
+        error,
+        if (request != null) request,
+        if (filterRequest != null) filterRequest!
+      ];
 
   TempsInitial copyWith({
     CubitStatuses? statuses,
     List<Temp>? result,
     String? error,
-    Command? command,
-    // bool? tempParam,
+    FilterRequest? filterRequest,
+    dynamic request,
   }) {
     return TempsInitial(
       statuses: statuses ?? this.statuses,
       result: result ?? this.result,
       error: error ?? this.error,
-      command: command ?? this.command,
-      // request: request ?? this.request,
-      // tempParam: tempParam ?? this.tempParam,
+      filterRequest: filterRequest ?? this.filterRequest,
+      request: request ?? this.request,
     );
   }
 }

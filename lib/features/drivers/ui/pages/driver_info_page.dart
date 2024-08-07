@@ -121,7 +121,7 @@ class _DriverInfoPageState extends State<DriverInfoPage>
                         create: (_) => sl<AllChargingCubit>()
                           ..getAllCharging(
                             _,
-                            command: Command.noPagination().copyWith(
+                            command: FilterRequest.noPagination().copyWith(
                               chargingRequest: ChargingRequest(
                                 chargerPhone: driver.phoneNumber,
                               ),

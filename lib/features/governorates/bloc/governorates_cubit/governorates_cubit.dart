@@ -17,7 +17,7 @@ part 'governorates_state.dart';
 class GovernoratesCubit extends Cubit<GovernoratesInitial> {
   GovernoratesCubit() : super(GovernoratesInitial.initial());
 
-  Future<void> getGovernorate(BuildContext context, {Command? command}) async {
+  Future<void> getGovernorate(BuildContext context, {FilterRequest? command}) async {
     emit(state.copyWith(statuses: CubitStatuses.loading, command: command));
     final pair = await _getGovernorateApi();
 

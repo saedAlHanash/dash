@@ -19,7 +19,7 @@ part 'all_charging_state.dart';
 class AllChargingCubit extends Cubit<AllChargingInitial> {
   AllChargingCubit() : super(AllChargingInitial.initial());
 
-  Future<void> getAllCharging(BuildContext context, {Command? command}) async {
+  Future<void> getAllCharging(BuildContext context, {FilterRequest? command}) async {
     emit(state.copyWith(statuses: CubitStatuses.loading, command: command));
     final pair = await _getAllChargingApi();
 

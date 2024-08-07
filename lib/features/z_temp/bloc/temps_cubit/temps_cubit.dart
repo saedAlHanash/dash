@@ -1,14 +1,12 @@
-import 'package:qareeb_dash/core/strings/enum_manager.dart'; import 'package:qareeb_dash/core/api_manager/api_url.dart';
-import 'package:qareeb_dash/core/api_manager/command.dart';
+import 'package:qareeb_dash/core/api_manager/api_url.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_models/global.dart';
 
-import '../../../../core/api_manager/api_service.dart'; import 'package:qareeb_dash/core/strings/enum_manager.dart';
-import '../../../../core/error/error_manager.dart';
+import '../../../../core/api_manager/api_service.dart';
+import '../../../../core/api_manager/command.dart';
 import '../../../../core/strings/enum_manager.dart';
 import '../../../../core/util/abstraction.dart';
 import '../../../../core/util/pair_class.dart';
-import '../../../../services/caching_service/caching_service.dart';
 import '../../data/response/temp_response.dart';
 
 part 'temps_state.dart';
@@ -20,26 +18,22 @@ class TempsCubit extends MCubit<TempsInitial> {
   String get nameCache => 'temps';
 
   @override
-  String get filter => state.command?.getKey ?? '';
+  String get filter => (state.filterRequest?.getKey) ?? state.request?.toString() ?? '';
 
-  Future<void> getTemps() async {
-    if (await checkCashed()) return;
-
-    final pair = await _getTemps();
-
-    if (pair.first == null) {
-      emit(state.copyWith(statuses: CubitStatuses.error, error: pair.second));
-      showErrorFromApi(state);
-    } else {
-      await storeData(pair.first!);
-      emit(state.copyWith(statuses: CubitStatuses.done, result: pair.first));
-    }
+  Future<void> getTemps({bool newData = false}) async {
+    await getDataAbstract(
+      fromJson: Temp.fromJson,
+      state: state,
+      getDataApi: _getTemps,
+      newData: newData,
+    );
   }
 
   Future<Pair<List<Temp>?, String?>> _getTemps() async {
-    final response = await APIService().callApi(type: ApiType.get,
-      url: GetUrl.temp,
-      query: state.command?.toJson() ?? {},
+    final response = await APIService().callApi(
+      type: ApiType.post,
+      url: PostUrl.temps,
+      body: state.filterRequest?.toJson() ?? {},
     );
 
     if (response.success) {
@@ -49,25 +43,17 @@ class TempsCubit extends MCubit<TempsInitial> {
     }
   }
 
-  void setRequest(Command request) {
-    emit(state.copyWith(command: request));
+  Future<void> addTemp(Temp item) async {
+    final listJson = await addOrUpdateDate([item]);
+    if (listJson == null) return;
+    final list = listJson.map((e) => Temp.fromJson(e)).toList();
+    emit(state.copyWith(result: list));
   }
 
-  Future<bool> checkCashed() async {
-    try {
-      final cacheType = await needGetData();
-
-      emit(
-        state.copyWith(
-          statuses: cacheType.getState,
-          result: (await getListCached()).map((e) => Temp.fromJson(e)).toList(),
-        ),
-      );
-
-      if (cacheType == NeedUpdateEnum.no) return true;
-      return false;
-    } catch (e) {
-      return false;
-    }
+  Future<void> deleteTempFromCache(String id) async {
+    final listJson = await deleteDate([id]);
+    if (listJson == null) return;
+    final list = listJson.map((e) => Temp.fromJson(e)).toList();
+    emit(state.copyWith(result: list));
   }
 }

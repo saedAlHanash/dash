@@ -2,7 +2,9 @@ import 'dart:math';
 
 import 'package:http/http.dart' as http;
 
+
 import '../../strings/enum_manager.dart';
+import '../api_service.dart';
 import '../api_url.dart';
 import 'log_api.dart';
 
@@ -88,16 +90,20 @@ Uri getUri({
   Map<String, dynamic>? body,
   String? path,
 }) {
-
   if (path != null) url = '$url/$path';
 
   final uri = Uri.https(baseUrl, url, query);
 
-  logRequest(
-      type: type,
-      url: url,
-      q: {}
-        ..addAll(query ?? {})
-        ..addAll(body ?? {}));
+  try {
+    logRequest(
+        type: type,
+        url: url,
+        q: {}
+          ..addAll(query ?? {})
+          ..addAll(body ?? {}));
+  } catch (e) {
+    loggerObject.e(e);
+  }
+
   return uri;
 }

@@ -17,7 +17,7 @@ part 'areas_state.dart';
 class AreasCubit extends Cubit<AreasInitial> {
   AreasCubit() : super(AreasInitial.initial());
 
-  Future<void> getArea(BuildContext context, {Command? command, required int id}) async {
+  Future<void> getArea(BuildContext context, {FilterRequest? command, required int id}) async {
     if (id <= 0) return;
     emit(state.copyWith(statuses: CubitStatuses.loading, command: command, id: id));
 

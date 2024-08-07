@@ -16,7 +16,7 @@ class AttendancesFilterWidget extends StatefulWidget {
 
   final Function(PlanAttendanceFilter request)? onApply;
 
-  final Command? command;
+  final FilterRequest? command;
 
   @override
   State<AttendancesFilterWidget> createState() => _AttendancesFilterWidgetState();

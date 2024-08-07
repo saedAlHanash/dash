@@ -17,7 +17,7 @@ part 'all_coupons_state.dart';
 class AllCouponsCubit extends Cubit<AllCouponsInitial> {
   AllCouponsCubit() : super(AllCouponsInitial.initial());
 
-  Future<void> getAllCoupons(BuildContext context, {Command? command}) async {
+  Future<void> getAllCoupons(BuildContext context, {FilterRequest? command}) async {
     emit(state.copyWith(statuses: CubitStatuses.loading, command: command));
     final pair = await _getAllCouponsApi();
 

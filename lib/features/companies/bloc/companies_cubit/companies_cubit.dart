@@ -17,7 +17,7 @@ part 'companies_state.dart';
 class AllCompaniesCubit extends Cubit<AllCompaniesInitial> {
   AllCompaniesCubit() : super(AllCompaniesInitial.initial());
 
-  Future<void> getCompanies(BuildContext context, {Command? command}) async {
+  Future<void> getCompanies(BuildContext context, {FilterRequest? command}) async {
     emit(state.copyWith(statuses: CubitStatuses.loading, command: command));
     final pair = await _getCompaniesApi();
 

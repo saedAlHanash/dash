@@ -16,7 +16,7 @@ class SyrianFilterWidget extends StatefulWidget {
 
   final Function(SyrianFilterRequest request)? onApply;
 
-  final Command? command;
+  final FilterRequest? command;
 
   @override
   State<SyrianFilterWidget> createState() => _SyrianFilterWidgetState();

@@ -17,7 +17,7 @@ part 'plans_state.dart';
 class AllPlansCubit extends Cubit<AllPlansInitial> {
   AllPlansCubit() : super(AllPlansInitial.initial());
 
-  Future<void> getPlans(BuildContext context, {Command? command}) async {
+  Future<void> getPlans(BuildContext context, {FilterRequest? command}) async {
     emit(state.copyWith(statuses: CubitStatuses.loading, command: command));
     final pair = await _getPlansApi();
 

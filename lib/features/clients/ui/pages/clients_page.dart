@@ -122,7 +122,7 @@ class _ClientsPageState extends State<ClientsPage> {
 
                 return SaedTableWidget(
                   onChangePage: (command) {},
-                  command: state.command,
+                  command: state.filterRequest,
                   title: clientTableHeader,
                   data: list
                       .mapIndexed(

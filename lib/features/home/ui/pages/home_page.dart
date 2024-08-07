@@ -12,7 +12,8 @@ import 'package:image_multi_type/image_multi_type.dart';
 import 'package:map_package/map/bloc/ather_cubit/ather_cubit.dart';
 import 'package:map_package/map/bloc/map_controller_cubit/map_controller_cubit.dart';
 import 'package:map_package/map/bloc/search_location/search_location_cubit.dart';
-import 'package:qareeb_dash/core/api_manager/api_service.dart'; import 'package:qareeb_dash/core/strings/enum_manager.dart';
+import 'package:qareeb_dash/core/api_manager/api_service.dart';
+import 'package:qareeb_dash/core/strings/enum_manager.dart';
 import 'package:qareeb_dash/features/accounts/ui/pages/transfers_page.dart';
 import 'package:qareeb_dash/features/car_catigory/bloc/delete_car_cat_cubit/delete_car_cat_cubit.dart';
 import 'package:qareeb_dash/features/coupons/ui/pages/coupons_page.dart';
@@ -39,6 +40,8 @@ import '../../../agencies/ui/pages/agencies_page.dart';
 import '../../../auth/bloc/change_user_state_cubit/change_user_state_cubit.dart';
 import '../../../auth/ui/pages/policy_page.dart';
 import '../../../car_catigory/ui/pages/car_categories_page.dart';
+import '../../../cards/bloc/delete_card_cubit/delete_card_cubit.dart';
+import '../../../cards/ui/pages/cards_page.dart';
 import '../../../clients/ui/pages/clients_page.dart';
 import '../../../companies/bloc/delete_company_cubit/delete_company_cubit.dart';
 import '../../../companies/ui/pages/companies_page.dart';
@@ -150,25 +153,21 @@ class _HomePageState extends State<HomePage> {
             backgroundColor: AppColorManager.f1,
             leading: window.history.length != 0
                 ? IconButton(
-                onPressed: () => window.history.back(),
-                icon: const Icon(
-                  Icons.arrow_back_ios,
-                  color: AppColorManager.mainColorDark,
-                ))
+                    onPressed: () => window.history.back(),
+                    icon: const Icon(
+                      Icons.arrow_back_ios,
+                      color: AppColorManager.mainColorDark,
+                    ))
                 : 0.0.verticalSpace,
           ),
           sideBar: SideBar(
             key: (Key(Random().nextInt(100000).toString())),
             activeTextStyle: TextStyle(
-              color: Theme
-                  .of(context)
-                  .primaryColor,
+              color: Theme.of(context).primaryColor,
               fontFamily: FontManager.cairoBold.name,
               fontSize: 20.0.sp,
             ),
-            activeIconColor: Theme
-                .of(context)
-                .primaryColor,
+            activeIconColor: Theme.of(context).primaryColor,
             textStyle: TextStyle(
               color: Colors.grey[800],
               fontFamily: FontManager.cairoBold.name,
@@ -203,6 +202,16 @@ class _HomePageState extends State<HomePage> {
                     const AdminMenuItem(title: 'السائقين', route: '/drivers'),
                   if (allowedAdmins)
                     const AdminMenuItem(title: 'مسؤولي النظام', route: '/sys_admins'),
+                ],
+              ),
+
+              //التذاكر
+              AdminMenuItem(
+                title: 'التذاكر',
+                icon: Icons.supervised_user_circle_sharp,
+                children: [
+                  const AdminMenuItem(title: 'التذاكر', route: '/cards'),
+                  const AdminMenuItem(title: 'تم الحجز', route: '/activeCards'),
                 ],
               ),
 
@@ -439,6 +448,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           body: Container(
+
             margin: EdgeInsets.symmetric(horizontal: 20.w),
             child: Builder(builder: (context) {
               addQueryParameters(params: {'key': state.page.replaceAll('/', '')});
@@ -447,12 +457,8 @@ class _HomePageState extends State<HomePage> {
                   return MultiBlocProvider(
                     providers: [
                       BlocProvider(
-                          create: (context) =>
-                          sl<RedeemsCubit>()
-                            ..getRedeems(context)),
-                      BlocProvider(create: (_) =>
-                      sl<HomeCubit>()
-                        ..getHome(_)),
+                          create: (context) => sl<RedeemsCubit>()..getRedeems(context)),
+                      BlocProvider(create: (_) => sl<HomeCubit>()..getHome(_)),
                       BlocProvider(create: (context) => sl<LoyaltyCubit>()),
                     ],
                     child: const DashboardPage(),
@@ -574,9 +580,7 @@ class _HomePageState extends State<HomePage> {
                       BlocProvider(create: (context) => sl<DeleteReasonCubit>()),
                       BlocProvider(create: (context) => sl<CreateReasonCubit>()),
                       BlocProvider(
-                        create: (context) =>
-                        sl<GetReasonsCubit>()
-                          ..getReasons(context),
+                        create: (context) => sl<GetReasonsCubit>()..getReasons(context),
                       ),
                     ],
                     child: const ReasonsPage(),
@@ -658,6 +662,14 @@ class _HomePageState extends State<HomePage> {
                     child: const CompaniesPage(),
                   );
 
+                case "/cards":
+                  return MultiBlocProvider(
+                    providers: [
+                      BlocProvider(create: (_) => sl<DeleteCardCubit>()),
+                    ],
+                    child: const CardsPage(),
+                  );
+
                 case "/payToDrivers":
                   return MultiBlocProvider(
                     providers: [
@@ -710,8 +722,7 @@ void addQueryParameters({required Map<String, dynamic> params}) {
   if (!parsedUri.toString().contains('Home')) return;
   // context.pushNamed(GoRouteName.homePage, queryParams: params);
 
-  final newQuery = Map.from(parsedUri.queryParameters)
-    ..addAll(params);
+  final newQuery = Map.from(parsedUri.queryParameters)..addAll(params);
   final s = <String, String>{};
   newQuery.forEach((key, value) => s[key.toString()] = value.toString());
   final newUri = Uri(

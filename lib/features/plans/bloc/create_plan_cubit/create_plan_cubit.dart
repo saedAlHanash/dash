@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qareeb_models/global.dart';
 
-import '../../../../core/api_manager/api_service.dart'; import 'package:qareeb_dash/core/strings/enum_manager.dart';
+import '../../../../core/api_manager/api_service.dart';
+import 'package:qareeb_dash/core/strings/enum_manager.dart';
 import '../../../../core/api_manager/api_url.dart';
 import '../../../../core/error/error_manager.dart';
 import '../../../../core/util/note_message.dart';
@@ -32,13 +33,10 @@ class CreatePlanCubit extends Cubit<CreatePlanInitial> {
 
   Future<Pair<bool?, String?>> _createPlanApi() async {
     final response = await APIService().uploadMultiPart(
-      url:
-          state.request.id != null ? PutUrl.updatePlan : PostUrl.createPlan,
-      type: state.request.id != null ? 'PUT' : 'POST',
+      url: state.request.id != null ? PutUrl.updatePlan : PostUrl.createPlan,
+      type: state.request.id != null ? ApiType.put : ApiType.post,
       fields: state.request.toMap(),
-      files: [
-        state.request.file
-      ],
+      files: [state.request.file],
     );
 
     if (response.statusCode == 200) {

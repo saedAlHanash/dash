@@ -387,15 +387,16 @@ class APIService {
   Future<http.Response> uploadMultiPart({
     required String url,
     String? path,
-    String type = 'POST',
+    ApiType type = ApiType.post,
     List<UploadFile?>? files,
     Map<String, dynamic>? fields,
     Map<String, String>? header,
   }) async {
 
-    final uri = getUri(url: url, query: fields, path: path, type: ApiType.post);
+    fixQuery(fields);
+    final uri = getUri(url: url, query: fields, path: path, type: type);
 
-    var request = http.MultipartRequest(type, uri);
+    var request = http.MultipartRequest(type.name.toUpperCase(), uri);
 
     for (var uploadFile in (files ?? <UploadFile?>[])) {
       if (uploadFile?.fileBytes == null) continue;

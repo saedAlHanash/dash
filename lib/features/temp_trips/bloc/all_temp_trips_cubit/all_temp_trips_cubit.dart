@@ -18,7 +18,7 @@ part 'all_temp_trips_state.dart';
 class AllTempTripsCubit extends Cubit<AllTempTripsInitial> {
   AllTempTripsCubit() : super(AllTempTripsInitial.initial());
 
-  Future<void> getTempTrips(BuildContext context, {Command? command}) async {
+  Future<void> getTempTrips(BuildContext context, {FilterRequest? command}) async {
     emit(state.copyWith(statuses: CubitStatuses.loading, command: command));
     final pair = await _getTempTripsApi();
 

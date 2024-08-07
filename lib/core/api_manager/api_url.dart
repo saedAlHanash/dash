@@ -141,6 +141,10 @@ class GetUrl {
   static const providers = 'api/services/app/EpaymentService/GetAll';
 
   static const enrollment = 'api/services/app/EnrollmentsService/GetAll';
+
+  static const allUserCards = 'api/services/app/CardService/GetAll';
+
+  static var allActiveCards = 'api/services/app/CardService/GetActivations';
 }
 
 class PostUrl {
@@ -233,6 +237,12 @@ class PostUrl {
       'api/services/app/PaymentService/CreateSyrianAuthorityPayOffPayment';
 
   static const directPay = 'api/services/app/PaymentService/CreateDirectPayment';
+
+  static var createTemp;
+
+  static var temps;
+
+  static var createCard = 'api/services/app/CardService/Create';
 }
 
 class PutUrl {
@@ -274,6 +284,10 @@ class PutUrl {
   static const updatePlanTrip = 'api/services/app/PlanTripsService/Update';
   static const changeAdminIdentifier =
       'api/services/app/UserService/ChangeAdminIdentifier';
+
+  static var updateTemp;
+
+  static var updateCard = 'api/services/app/CardService/Update';
 }
 
 class DeleteUrl {
@@ -304,6 +318,10 @@ class DeleteUrl {
   static const deleteCompanyPath = 'api/services/app/CompanyPathService/Delete';
 
   static const deletePlanTrip = 'api/services/app/PlanTripsService/Delete';
+
+  static var deleteTemp;
+
+  static var deleteCard = 'api/services/app/CardService/Delete';
 }
 
 class OrsUrl {

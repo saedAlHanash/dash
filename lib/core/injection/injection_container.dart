@@ -37,6 +37,9 @@ import '../../features/auth/bloc/signup_cubit/signup_cubit.dart';
 import '../../features/car_catigory/bloc/all_car_categories_cubit/all_car_categories_cubit.dart';
 import '../../features/car_catigory/bloc/create_car_category_cubit/create_car_category_cubit.dart';
 import '../../features/car_catigory/bloc/delete_car_cat_cubit/delete_car_cat_cubit.dart';
+import '../../features/cards/bloc/cards_cubit/cards_cubit.dart';
+import '../../features/cards/bloc/create_card_cubit/create_card_cubit.dart';
+import '../../features/cards/bloc/delete_card_cubit/delete_card_cubit.dart';
 import '../../features/clients/bloc/all_clients/all_clients_cubit.dart';
 import '../../features/clients/bloc/clients_by_id_cubit/clients_by_id_cubit.dart';
 import '../../features/clients/bloc/clients_cubit/clients_cubit.dart';
@@ -327,6 +330,12 @@ Future<void> init() async {
   sl.registerFactory(() => DeletePlanTripCubit());
   sl.registerFactory(() => PlanTripBuIdCubit());
   sl.registerFactory(() => PlanAttendancesCubit());
+  //endregion
+
+  //region Card
+  sl.registerFactory(() => CardsCubit());
+  sl.registerFactory(() => CreateCardCubit());
+  sl.registerFactory(() => DeleteCardCubit());
   //endregion
 
   sl.registerFactory(() => AllSosCubit());

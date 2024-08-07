@@ -17,7 +17,7 @@ part 'all_admins_state.dart';
 class AllAdminsCubit extends Cubit<AllAdminsInitial> {
   AllAdminsCubit() : super(AllAdminsInitial.initial());
 
-  Future<void> getAllAdmins(BuildContext context, {Command? command}) async {
+  Future<void> getAllAdmins(BuildContext context, {FilterRequest? command}) async {
     emit(state.copyWith(statuses: CubitStatuses.loading, command: command));
     final pair = await _getAllAdminsApi();
 

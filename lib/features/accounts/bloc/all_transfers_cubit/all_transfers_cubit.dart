@@ -19,7 +19,7 @@ part 'all_transfers_state.dart';
 class AllTransfersCubit extends Cubit<AllTransfersInitial> {
   AllTransfersCubit() : super(AllTransfersInitial.initial());
 
-  Future<void> getAllTransfers(BuildContext context, {Command? command}) async {
+  Future<void> getAllTransfers(BuildContext context, {FilterRequest? command}) async {
     emit(state.copyWith(statuses: CubitStatuses.loading, command: command));
     final pair = await _getAllTransfersApi();
 

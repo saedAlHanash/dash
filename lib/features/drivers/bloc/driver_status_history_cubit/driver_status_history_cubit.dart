@@ -19,7 +19,7 @@ class DriverStatusHistoryCubit extends Cubit<DriverStatusHistoryInitial> {
   DriverStatusHistoryCubit() : super(DriverStatusHistoryInitial.initial());
 
   Future<void> getDriverStatusHistory(BuildContext context,
-      {Command? command, int? driverId}) async {
+      {FilterRequest? command, int? driverId}) async {
     emit(state.copyWith(
         statuses: CubitStatuses.loading, command: command, driverId: driverId));
     final pair = await _getDriverStatusHistoryApi();
