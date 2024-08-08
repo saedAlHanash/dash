@@ -1,6 +1,7 @@
-
-
 import 'cards_user_response.dart';
+import 'dart:convert';
+
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class ActiveCards {
   ActiveCards({
@@ -43,7 +44,7 @@ class ActiveCard {
   final num userId;
   final User user;
   final DateTime? date;
-  final String address;
+  final AddressModel address;
 
   factory ActiveCard.fromJson(Map<String, dynamic> json) {
     return ActiveCard(
@@ -53,7 +54,7 @@ class ActiveCard {
       userId: json["userId"] ?? 0,
       user: User.fromJson(json["user"] ?? {}),
       date: DateTime.tryParse(json["date"] ?? ""),
-      address: json["address"] ?? "",
+      address: AddressModel.fromJson(jsonDecode(json["address"] ?? "{}")),
     );
   }
 
@@ -64,7 +65,7 @@ class ActiveCard {
         "userId": userId,
         "user": user.toJson(),
         "date": date?.toIso8601String(),
-        "address": address,
+        "address": jsonEncode(address),
       };
 }
 
@@ -119,5 +120,33 @@ class User {
         "emergencyPhone": emergencyPhone,
         "userType": userType,
         "accountBalance": accountBalance,
+      };
+}
+
+class AddressModel {
+  AddressModel({
+    required this.lat,
+    required this.lng,
+    required this.address,
+  });
+
+  final double lat;
+  final double lng;
+  final String address;
+
+  LatLng get getLatLng => LatLng(lat, lng);
+
+  factory AddressModel.fromJson(Map<String, dynamic> json) {
+    return AddressModel(
+      lat: json["lat"] ?? 0,
+      lng: json["lng"] ?? 0,
+      address: json["address"] ?? "",
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        "lat": lat,
+        "lng": lng,
+        "address": address,
       };
 }
