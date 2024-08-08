@@ -22,6 +22,7 @@ import '../../features/agencies/bloc/agencies_financial_report_cubit/agencies_fi
 import '../../features/auth/bloc/create_policy_cubit/policy_cubit.dart';
 import '../../features/auth/bloc/policy_cubit/create_policy_cubit.dart';
 import '../../features/car_catigory/bloc/all_car_categories_cubit/all_car_categories_cubit.dart';
+import '../../features/cards/bloc/active_cards_cubit/active_cards_cubit.dart';
 import '../../features/cards/bloc/cards_cubit/cards_cubit.dart';
 import '../../features/clients/bloc/all_clients/all_clients_cubit.dart';
 import '../../features/clients/bloc/clients_cubit/clients_cubit.dart';
@@ -54,7 +55,8 @@ import '../../features/wallet/bloc/providers_cubit/providers_cubit.dart';
 import '../../generated/assets.dart';
 import '../../main.dart';
 import '../../router/go_route_pages.dart';
-import '../api_manager/api_service.dart'; import 'package:qareeb_dash/core/strings/enum_manager.dart';
+import '../api_manager/api_service.dart';
+import 'package:qareeb_dash/core/strings/enum_manager.dart';
 import '../app_theme.dart';
 import '../injection/injection_container.dart';
 import '../strings/app_color_manager.dart';
@@ -141,45 +143,29 @@ class _MyAppState extends State<MyApp> {
                 BlocProvider(create: (_) => sl<PolicyCubit>()..getPolicy(_)),
                 BlocProvider(create: (_) => sl<AllPlansCubit>()..getPlans(_)),
                 BlocProvider(create: (_) => sl<PointsCubit>()..getAllPoints(_)),
-                BlocProvider(create: (_) => sl<CardsCubit>()..getCards()),
+                BlocProvider(create: (_) => sl<AgenciesCubit>()..getAgencies(_)),
+                BlocProvider(create: (_) => sl<AllRolesCubit>()..getAllRoles(_)),
+                BlocProvider(create: (_) => sl<AllTicketsCubit>()..getTickets(_)),
+                BlocProvider(create: (_) => sl<AllAdminsCubit>()..getAllAdmins(_)),
+                BlocProvider(create: (_) => sl<AllDriversCubit>()..getAllDrivers(_)),
+                BlocProvider(create: (_) => sl<AllClientsCubit>()..getAllClients(_)),
+                BlocProvider(create: (_) => sl<ClientsCubit>()..getClients()),
+                BlocProvider(create: (_) => sl<AllCouponsCubit>()..getAllCoupons(_)),
+                BlocProvider(create: (_) => sl<AllPlanTripsCubit>()..getPlanTrips(_)),
+                BlocProvider(create: (_) => sl<FinancialReportCubit>()..getReport(_)),
+                BlocProvider(create: (_) => sl<AgenciesReportCubit>()..getReport(_)),
+                BlocProvider(create: (_) => sl<AllTempTripsCubit>()..getTempTrips(_)),
+                BlocProvider(create: (_) => sl<AllCompaniesCubit>()..getCompanies(_)),
+                BlocProvider(create: (_) => sl<ActiveTripsCubit>()..getActiveTrips(_)),
+                BlocProvider(create: (_) => sl<DriversImeiCubit>()..getDriversImei(_)),
+                BlocProvider(create: (_) => sl<GovernoratesCubit>()..getGovernorate(_)),
+                BlocProvider(create: (_) => sl<AllTransfersCubit>()..getAllTransfers(_)),
+                BlocProvider(create: (_) => sl<GetSharedTripsCubit>()..getSharesTrip(_)),
+                BlocProvider(create: (_) => sl<SystemParamsCubit>()..getSystemParams(_)),
+                BlocProvider(create: (_) => sl<CardsCubit>()..getCards(newData: true)),
                 BlocProvider(
-                    create: (_) => sl<AgenciesCubit>()..getAgencies(_)),
-                BlocProvider(
-                    create: (_) => sl<AllRolesCubit>()..getAllRoles(_)),
-                BlocProvider(
-                    create: (_) => sl<AllTicketsCubit>()..getTickets(_)),
-                BlocProvider(
-                    create: (_) => sl<AllAdminsCubit>()..getAllAdmins(_)),
-                BlocProvider(
-                    create: (_) => sl<AllDriversCubit>()..getAllDrivers(_)),
-                BlocProvider(
-                    create: (_) => sl<AllClientsCubit>()..getAllClients(_)),
-                BlocProvider(
-                    create: (_) => sl<ClientsCubit>()..getClients()),
-                BlocProvider(
-                    create: (_) => sl<AllCouponsCubit>()..getAllCoupons(_)),
-                BlocProvider(
-                    create: (_) => sl<AllPlanTripsCubit>()..getPlanTrips(_)),
-                BlocProvider(
-                    create: (_) => sl<FinancialReportCubit>()..getReport(_)),
-                BlocProvider(
-                    create: (_) => sl<AgenciesReportCubit>()..getReport(_)),
-                BlocProvider(
-                    create: (_) => sl<AllTempTripsCubit>()..getTempTrips(_)),
-                BlocProvider(
-                    create: (_) => sl<AllCompaniesCubit>()..getCompanies(_)),
-                BlocProvider(
-                    create: (_) => sl<ActiveTripsCubit>()..getActiveTrips(_)),
-                BlocProvider(
-                    create: (_) => sl<DriversImeiCubit>()..getDriversImei(_)),
-                BlocProvider(
-                    create: (_) => sl<GovernoratesCubit>()..getGovernorate(_)),
-                BlocProvider(
-                    create: (_) => sl<AllTransfersCubit>()..getAllTransfers(_)),
-                BlocProvider(
-                    create: (_) => sl<GetSharedTripsCubit>()..getSharesTrip(_)),
-                BlocProvider(
-                    create: (_) => sl<SystemParamsCubit>()..getSystemParams(_)),
+                  create: (_) => sl<ActiveCardsCubit>()..getActiveCards(newData: true),
+                ),
                 BlocProvider(
                   create: (_) => sl<ProvidersCubit>()..getProviders(),
                 ),
@@ -198,25 +184,21 @@ class _MyAppState extends State<MyApp> {
                     ),
                 ),
                 BlocProvider(
-                    create: (_) =>
-                        sl<PlanAttendancesCubit>()..getAttendances(_)),
+                    create: (_) => sl<PlanAttendancesCubit>()..getAttendances(_)),
                 BlocProvider(
-                  create: (_) =>
-                      sl<CompanyTransfersCubit>()..getCompanyTransfers(_),
+                  create: (_) => sl<CompanyTransfersCubit>()..getCompanyTransfers(_),
                 ),
                 BlocProvider(
                   create: (_) => sl<AllCompanyPathsCubit>()..getCompanyPaths(_),
                 ),
                 BlocProvider(
-                  create: (_) =>
-                      sl<SystemSettingsCubit>()..getSystemSettings(_),
+                  create: (_) => sl<SystemSettingsCubit>()..getSystemSettings(_),
                 ),
                 BlocProvider(
                   create: (_) => sl<AllInstitutionsCubit>()..getInstitutions(_),
                 ),
                 BlocProvider(
-                  create: (_) =>
-                      sl<AllCarCategoriesCubit>()..getCarCategories(_),
+                  create: (_) => sl<AllCarCategoriesCubit>()..getCarCategories(_),
                 ),
               ],
               child: Directionality(

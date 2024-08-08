@@ -243,6 +243,8 @@ class PostUrl {
   static var temps;
 
   static var createCard = 'api/services/app/CardService/Create';
+
+  static var allActiveCards = 'api/services/app/CardService/GetActivations';
 }
 
 class PutUrl {

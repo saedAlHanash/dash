@@ -41,6 +41,7 @@ import '../../../auth/bloc/change_user_state_cubit/change_user_state_cubit.dart'
 import '../../../auth/ui/pages/policy_page.dart';
 import '../../../car_catigory/ui/pages/car_categories_page.dart';
 import '../../../cards/bloc/delete_card_cubit/delete_card_cubit.dart';
+import '../../../cards/ui/pages/active_cards_page.dart';
 import '../../../cards/ui/pages/cards_page.dart';
 import '../../../clients/ui/pages/clients_page.dart';
 import '../../../companies/bloc/delete_company_cubit/delete_company_cubit.dart';
@@ -208,7 +209,7 @@ class _HomePageState extends State<HomePage> {
               //التذاكر
               AdminMenuItem(
                 title: 'التذاكر',
-                icon: Icons.supervised_user_circle_sharp,
+                icon: Icons.airplane_ticket_outlined,
                 children: [
                   const AdminMenuItem(title: 'التذاكر', route: '/cards'),
                   const AdminMenuItem(title: 'تم الحجز', route: '/activeCards'),
@@ -668,6 +669,14 @@ class _HomePageState extends State<HomePage> {
                       BlocProvider(create: (_) => sl<DeleteCardCubit>()),
                     ],
                     child: const CardsPage(),
+                  );
+
+                case "/activeCards":
+                  return MultiBlocProvider(
+                    providers: [
+                      BlocProvider(create: (_) => sl<DeleteCardCubit>()),
+                    ],
+                    child: const ActiveCardsPage(),
                   );
 
                 case "/payToDrivers":
