@@ -364,9 +364,12 @@ String get baseUrl {
 }
 
 const additionalConst = '';
-const testLocal1Url = 'demo1.qareeb-maas.com';
+
+// const testLocal1Url = 'demo1.qareeb-maas.com';
+// const liveUrlLocal = 'livetest.qareeb-maas.com';
+
+
 const liveUrl = 'live.qareeb-maas.com';
-const liveUrlLocal = 'livetest.qareeb-maas.com';
 const testUrl = 'qareeb-api.first-pioneers.com.tr';
 
 bool get isTestMode => baseUrl == testUrl;

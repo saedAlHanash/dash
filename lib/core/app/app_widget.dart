@@ -124,6 +124,7 @@ class _MyAppState extends State<MyApp> {
         setImageMultiTypeErrorImage(
           const ImageMultiType(url: Assets.iconsLogoWithoutText),
         );
+
         return MaterialApp.router(
           shortcuts: kIsWeb ? shortcuts : null,
           scrollBehavior: MyCustomScrollBehavior(),

@@ -1,11 +1,13 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:qareeb_dash/core/strings/enum_manager.dart'; import 'package:qareeb_dash/core/api_manager/api_url.dart';
+import 'package:qareeb_dash/core/strings/enum_manager.dart';
+import 'package:qareeb_dash/core/api_manager/api_url.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_models/global.dart';
 
-import '../../../../core/api_manager/api_service.dart'; import 'package:qareeb_dash/core/strings/enum_manager.dart';
+import '../../../../core/api_manager/api_service.dart';
+import 'package:qareeb_dash/core/strings/enum_manager.dart';
 import '../../../../core/api_manager/command.dart';
 import '../../../../core/error/error_manager.dart';
 import '../../../../core/util/note_message.dart';
@@ -17,8 +19,10 @@ part 'areas_state.dart';
 class AreasCubit extends Cubit<AreasInitial> {
   AreasCubit() : super(AreasInitial.initial());
 
-  Future<void> getArea(BuildContext context, {FilterRequest? command, required int id}) async {
+  Future<void> getArea(BuildContext context,
+      {FilterRequest? command, required int id}) async {
     if (id <= 0) return;
+
     emit(state.copyWith(statuses: CubitStatuses.loading, command: command, id: id));
 
     final pair = await _getAreaApi();
@@ -35,7 +39,8 @@ class AreasCubit extends Cubit<AreasInitial> {
   }
 
   Future<Pair<AreaResult?, String?>> _getAreaApi() async {
-    final response = await APIService().callApi(type: ApiType.get,
+    final response = await APIService().callApi(
+      type: ApiType.get,
       url: GetUrl.areas,
       query: state.command.toJson()..addAll({'GovernorateId': state.id}),
     );

@@ -7,6 +7,7 @@ class AreasInitial extends Equatable {
   final FilterRequest command;
   final int id;
 
+
   const AreasInitial({
     required this.statuses,
     required this.result,

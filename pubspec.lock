@@ -186,7 +186,7 @@ packages:
     source: hosted
     version: "0.10.1"
   drawable_text:
-    dependency: transitive
+    dependency: "direct main"
     description:
       path: "."
       ref: html

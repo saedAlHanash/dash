@@ -26,7 +26,9 @@ class PointsPage extends StatefulWidget {
 }
 
 class _PointsPageState extends State<PointsPage> {
-  late final MapControllerCubit mapController;
+  // late final MapControllerCubit mapController;
+
+  MapControllerCubit get mapController => context.read<MapControllerCubit>();
 
   final mapKey = GlobalKey<MapWidgetState>();
 
@@ -53,7 +55,6 @@ class _PointsPageState extends State<PointsPage> {
 
   @override
   void initState() {
-    mapController = context.read<MapControllerCubit>();
     Future.delayed(
       const Duration(seconds: 1),
       () {
@@ -113,7 +114,7 @@ class _PointsPageState extends State<PointsPage> {
                                   final c = MapMediator(
                                     zoom: mapKey.currentState?.controller.zoom,
                                     center: mapKey.currentState?.controller.center.gll,
-                                    pointId: spinnerItem.id??0,
+                                    pointId: spinnerItem.id ?? 0,
                                   );
                                   context.pushNamed(
                                     GoRouteName.pointInfo,
