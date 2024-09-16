@@ -24,7 +24,8 @@ class CachedTileProvider extends TileProvider {
   ImageProvider<Object> getImage(TileCoordinates coordinates, TileLayer options) {
     return CachedNetworkImageProvider(
       getTileUrl(coordinates, options),
-      imageRenderMethodForWeb: ImageRenderMethodForWeb.HttpGet,
+      imageRenderMethodForWeb: ImageRenderMethodForWeb.HtmlImage,
+
     );
   }
 }

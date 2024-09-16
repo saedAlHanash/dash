@@ -1,4 +1,3 @@
-
 import 'package:drawable_text/drawable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -37,11 +36,13 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     Future.delayed(
       const Duration(seconds: 1),
-          () {
+      () {
         if (AppSharedPreference.isLogin) {
           context.pushNamed(GoRouteName.homePage);
         } else {
           setState(() => isLoading = false);
+          context.read<LoginCubit>().login(context,
+              request: LoginRequest(email: 'saedAdmin@gmail.com', password: '123qwe'));
         }
       },
     );
