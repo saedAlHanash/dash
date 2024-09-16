@@ -1,12 +1,12 @@
 import 'dart:convert';
-import 'dart:html';
-import 'dart:html' as html;
 
 import 'package:excel/excel.dart';
 import 'package:flutter/services.dart' show ByteData, Uint8List, rootBundle;
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:http/http.dart' as http;
 import 'package:pdf/widgets.dart' as pw;
+import 'package:universal_html/html.dart';
+import 'package:universal_html/html.dart' as html;
 
 import '../../main.dart';
 import '../api_manager/api_service.dart';
@@ -20,11 +20,11 @@ saveXls(
 
   sheetObject.isRTL = true;
 
-  sheetObject.setColAutoFit(0);
+  sheetObject.setColumnAutoFit(0);
   for (int i = 0; i < header.length; i++) {
     sheetObject.updateCell(
       CellIndex.indexByColumnRow(rowIndex: 0, columnIndex: i),
-      header[i],
+      TextCellValue(header[i]),
       cellStyle: CellStyle(
         leftBorder: Border(borderStyle: BorderStyle.Thin),
         rightBorder: Border(borderStyle: BorderStyle.Thin),
@@ -38,7 +38,7 @@ saveXls(
   }
 
   for (int i = 1; i < data.length + 1; i++) {
-    sheetObject.setColAutoFit(i);
+    sheetObject.setColumnAutoFit(i);
     for (int j = 0; j < data[i - 1].length; j++) {
       final dataItem = data[i - 1][j];
       sheetObject.updateCell(
@@ -51,9 +51,9 @@ saveXls(
           bottomBorder: Border(borderStyle: BorderStyle.Thin),
           backgroundColorHex: (dataItem is bool)
               ? dataItem
-                  ? '#8BB93E'
-                  : '#C60000'
-              : 'none',
+                  ? ExcelColor.fromHexString('#8BB93E')
+                  : ExcelColor.fromHexString('#C60000')
+              : ExcelColor.fromHexString('#FFFFFF'),
           horizontalAlign: HorizontalAlign.Center,
           verticalAlign: VerticalAlign.Center,
         ),
@@ -75,7 +75,6 @@ saveFile({
   if (fileBytes != null) {
     // Create a Blob from the content
     final blob = Blob(fileBytes);
-
 
     // Create a download link
     AnchorElement()
@@ -136,13 +135,11 @@ Future<Uint8List?> fetchImage(String imageUrl, {bool withCompress = true}) async
     final b = base64Decode(response.body);
 
     if (response.statusCode == 200) {
-
       final compressedImage = await testComporessList(b);
 
       hiveBox?.put(imageUrl, b);
 
       return withCompress ? compressedImage : b;
-
     } else {
       return null;
     }

@@ -25,78 +25,56 @@ dependencies:
       url: https://github.com/saedAlHanash/drawable_text
       ref: html
 
-  flutter_map_marker_cluster: any
-  universal_html:
-  flutter_bloc: ^8.1.3
-  dartz: ^0.10.1
+  flutter_map_marker_cluster: ^1.3.6
+  cached_network_image:
+  universal_html: ^2.2.4
+  flutter_bloc: ^8.1.6
   equatable: ^2.0.5
-  get_it: any
-  pdf: ^3.10.4
-  http: any
-  easy_sidemenu: ^0.4.1+1
-  syncfusion_flutter_xlsio: any
-  #  responsive_sizer: ^3.1.1
-  shared_preferences: any
-  bloc: ^8.1.2
+  get_it: ^7.7.0
+  pdf: ^3.11.1
+  http: ^1.2.2
+  easy_sidemenu: ^0.6.0
 
-  lottie: any
-  flutter_dialogs: any
-  flutter_screenutil: any
+  shared_preferences: ^2.3.2
+  bloc: ^8.1.4
+
+  lottie: ^3.1.2
+  flutter_dialogs: ^3.0.0
+  flutter_screenutil: ^5.9.3
   #  animated_snack_bar: ^0.3.0
-  pinput: ^2.2.21
-  syncfusion_flutter_datepicker: any
-  flutter_rating_bar: ^4.0.1
-  image_picker: any
-  carousel_slider:
-  flutter_map_animations: ^0.3.0
-  #  syncfusion_flutter_charts: ^22.1.37
-  #  responsive_table: ^0.2.0+2
-  syncfusion_flutter_datagrid: any
+  pinput: ^5.0.0
+  syncfusion_flutter_datepicker: ^26.2.14
+  image_picker: ^1.1.2
+
+  flutter_map_animations:
+
   #  flutter_osm_plugin: any
-  url_launcher: any
+  url_launcher: ^6.3.0
   qr_flutter: ^4.1.0
-  screenshot: ^2.1.0
-  latlong2: any
-  share_plus: ^7.1.0
-  flutter_map: 4.0.0
-  logger: ^1.1.0
+
+  latlong2: ^0.9.1
+
+  flutter_map: ^6.0.0
+  logger: ^2.4.0
   dropdown_button2: ^2.3.9
-  flutter_image_compress: ^2.1.0
-  syncfusion_flutter_pdf: ^23.1.42
-  flutter_keyboard_visibility: ^5.4.0
-  firebase_core: any
-  firebase_messaging: any
-  geolocator: ^9.0.2
-  excel: ^2.1.0
-  flutter_html_to_pdf: any
-  package_info_plus: ^4.1.0
-  flutter_cache_manager: any
-  widgets_to_image: ^0.0.2
+  flutter_image_compress: ^2.3.0
+  syncfusion_flutter_pdf: ^26.2.14
+
+  excel: ^4.0.6
+
+  widgets_to_image: ^1.0.0
   hive: ^2.2.3
-  #  flutter_background_service: ^3.0.1
-  intl:
-  toggle_switch: ^2.1.0
-  collection:
-  path_provider: any
-  path: any
-  flutter_local_notifications: ^16.1.0
-  sqflite: any
-  #  flutter_typeahead: ^4.3.6
-  #  awesome_dialog: ^3.0.2
-  webview_flutter: any
-  #  flutter_map_animated_marker: ^1.0.1
+  intl: ^0.19.0
+
+  collection: ^1.18.0
   google_polyline_algorithm: ^3.1.0
-  shimmer_animation: ^2.1.0+1
-  #  flutter_cache_manager: ^3.3.0
-  url_strategy:
-  group_button: ^5.2.2
+  url_strategy: ^0.3.0
+  group_button: ^5.3.4
   go_router: ^6.5.8
-  #  easy_autocomplete: ^1.6.0
+
   floating_action_bubble: ^1.1.4
-  webview_flutter_android: ^3.4.5
-  webview_flutter_wkwebview: ^3.2.4
   multi_select_flutter: ^4.1.3
-  dropdown_search: ^5.0.6
+  archive: ^3.6.1
 #  flutter_cupertino_datetime_picker: ^3.0.0
 #  location_permissions:
 dev_dependencies:

@@ -82,6 +82,7 @@ class _LoginPageState extends State<LoginPage> {
                         initialValue: email,
                         onChanged: (val) => email = val,
                       ),
+                      10.0.verticalSpace,
                       MyTextFormWidget(
                         autofillHints: const [AutofillHints.password],
                         liable: AppStringManager.enterPassword,

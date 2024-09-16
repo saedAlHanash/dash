@@ -32,7 +32,7 @@ class PinCodeWidget extends StatelessWidget {
       textDirection: TextDirection.ltr,
       child: Pinput(
         length: 6,
-        androidSmsAutofillMethod: AndroidSmsAutofillMethod.smsUserConsentApi,
+
         defaultPinTheme: defaultPinTheme,
         onCompleted: onCompleted,
         onChanged: onChange,
