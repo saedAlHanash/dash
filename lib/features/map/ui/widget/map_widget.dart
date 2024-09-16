@@ -155,28 +155,8 @@ class MapWidgetState extends State<MapWidget> with TickerProviderStateMixin {
           zoom: 12.0,
           center: widget.initialPoint ?? initialPoint,
         ),
-        nonRotatedChildren: [
-          MapTypeSpinner(
-            controller: controller.mapController,
-          ),
-          if (widget.search != null)
-            Positioned(
-              top: 100.0.h,
-              right: 10.0.w,
-              child: MyCardWidget(
-                elevation: 10.0,
-                padding: const EdgeInsets.all(10.0).r,
-                cardColor: AppColorManager.lightGray,
-                child: InkWell(
-                  onTap: widget.search,
-                  child: const Icon(
-                    Icons.search,
-                    color: AppColorManager.mainColor,
-                  ),
-                ),
-              ),
-            ),
-        ],
+
+
         children: [
           TileLayer(
             urlTemplate: tile,
@@ -228,6 +208,27 @@ class MapWidgetState extends State<MapWidget> with TickerProviderStateMixin {
               );
             },
           ),
+
+          MapTypeSpinner(
+            controller: controller.mapController,
+          ),
+          if (widget.search != null)
+            Positioned(
+              top: 100.0.h,
+              right: 10.0.w,
+              child: MyCardWidget(
+                elevation: 10.0,
+                padding: const EdgeInsets.all(10.0).r,
+                cardColor: AppColorManager.lightGray,
+                child: InkWell(
+                  onTap: widget.search,
+                  child: const Icon(
+                    Icons.search,
+                    color: AppColorManager.mainColor,
+                  ),
+                ),
+              ),
+            ),
         ],
       ),
     );
@@ -267,25 +268,21 @@ class MapTypeSpinner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      top: 40.0.h,
-      right: 10.0.w,
-      child: SpinnerWidget(
-        items: mapTypeList,
-        width: 50.0.w,
-        dropdownWidth: 200.0.w,
-        customButton: MyCardWidget(
-          elevation: 10.0,
-          padding: const EdgeInsets.all(10.0).r,
-          cardColor: AppColorManager.lightGray,
-          child: const Icon(Icons.layers_rounded, color: AppColorManager.mainColor),
-        ),
-        onChanged: (p0) {
-          context
-              .read<MapControlCubit>()
-              .changeMapType(MapType.values[p0.id], controller.center);
-        },
+    return SpinnerWidget(
+      items: mapTypeList,
+      width: 50.0.w,
+      dropdownWidth: 200.0.w,
+      customButton: MyCardWidget(
+        elevation: 10.0,
+        padding: const EdgeInsets.all(10.0).r,
+        cardColor: AppColorManager.lightGray,
+        child: const Icon(Icons.layers_rounded, color: AppColorManager.mainColor),
       ),
+      onChanged: (p0) {
+        context
+            .read<MapControlCubit>()
+            .changeMapType(MapType.values[p0.id], controller.center);
+      },
     );
   }
 }

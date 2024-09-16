@@ -129,16 +129,6 @@
     <div class="loader"></div>
 </div>
 
-<script type="text/javascript">
-    (async () => {
-        const engineInitializer = await import('./flutter_engine_initializer.js');
-        await engineInitializer.initializeEngine({
-            useUrlStrategy: true,  // Optional: enables a custom URL strategy like path-based navigation
-            renderer: "html",  // Can be "html" or "canvaskit"
-        });
-    })();
-</script>
-
 <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>

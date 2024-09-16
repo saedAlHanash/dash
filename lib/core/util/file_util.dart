@@ -41,9 +41,10 @@ saveXls(
     sheetObject.setColumnAutoFit(i);
     for (int j = 0; j < data[i - 1].length; j++) {
       final dataItem = data[i - 1][j];
+      loggerObject.w(dataItem);
       sheetObject.updateCell(
         CellIndex.indexByColumnRow(rowIndex: i, columnIndex: j),
-        (dataItem is bool) ? '' : dataItem,
+        (dataItem is bool) ? TextCellValue('') :TextCellValue(dataItem.toString()) ,
         cellStyle: CellStyle(
           leftBorder: Border(borderStyle: BorderStyle.Thin),
           rightBorder: Border(borderStyle: BorderStyle.Thin),

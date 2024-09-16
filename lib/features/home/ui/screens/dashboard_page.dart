@@ -7,6 +7,7 @@ import 'package:qareeb_dash/core/api_manager/command.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
 import 'package:qareeb_dash/core/widgets/my_expansion/item_expansion.dart';
 import 'package:qareeb_dash/core/widgets/my_expansion/my_expansion_widget.dart';
+import 'package:qareeb_dash/core/widgets/spinner_widget.dart';
 import 'package:qareeb_dash/features/home/data/response/home_response.dart';
 import 'package:qareeb_dash/features/map/bloc/set_point_cubit/map_control_cubit.dart';
 import 'package:qareeb_dash/features/map/ui/widget/map_widget.dart';
@@ -56,7 +57,7 @@ class _DashboardPageState extends State<DashboardPage> {
                       point: e.getLatLng,
                       item: e,
                       type: MyMarkerType.point,
-                      nou: e.subscriperCount ,
+                      nou: e.subscriperCount,
                     ),
                   )
                   .toList(),
@@ -78,34 +79,34 @@ class _DashboardPageState extends State<DashboardPage> {
                     return MyExpansionWidget(
                       items: [
                         ItemExpansion(
-                            body: Column(
-                              children: [
-                                TotalWidget(
-                                  text: 'عدد باصات ${state1.result.name}',
-                                  icon: Assets.iconsBuses,
-                                  number: state.result.imeis.length,
-                                ),
-                                TotalWidget(
-                                  text: 'عدد طلاب ${state1.result.name}',
-                                  icon: Assets.iconsStudents,
-                                  number: state.result.membersCount,
-                                ),
-                                TotalWidget(
-                                  text:
-                                      'عدد طلاب ${state1.result.name} المشتركين في النقل',
-                                  icon: Assets.iconsCheckCircle,
-                                  number: state.result.membersWithSubscription,
-                                ),
-                                TotalWidget(
-                                  text:
-                                      'عدد طلاب ${state1.result.name} الغير مشتركين في النقل',
-                                  icon: Assets.iconsReject,
-                                  number: state.result.membersWithoutSubscription,
-                                ),
-                              ],
-                            ),
-                            isExpanded: false,
-                            headerText: 'التفاصيل'),
+                          body: Column(
+                            children: [
+                              TotalWidget(
+                                text: 'عدد باصات ${state1.result.name}',
+                                icon: Assets.iconsBuses,
+                                number: state.result.imeis.length,
+                              ),
+                              TotalWidget(
+                                text: 'عدد طلاب ${state1.result.name}',
+                                icon: Assets.iconsStudents,
+                                number: state.result.membersCount,
+                              ),
+                              TotalWidget(
+                                text: 'عدد طلاب ${state1.result.name} المشتركين في النقل',
+                                icon: Assets.iconsCheckCircle,
+                                number: state.result.membersWithSubscription,
+                              ),
+                              TotalWidget(
+                                text:
+                                    'عدد طلاب ${state1.result.name} الغير مشتركين في النقل',
+                                icon: Assets.iconsReject,
+                                number: state.result.membersWithoutSubscription,
+                              ),
+                            ],
+                          ),
+                          isExpanded: false,
+                          headerText: 'التفاصيل',
+                        ),
                       ],
                     );
                   },
