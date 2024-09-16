@@ -1,10 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cached_network_image_platform_interface/cached_network_image_platform_interface.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_map/flutter_map.dart';
-
+import 'package:flutter_map/plugin_api.dart';
 import 'package:flutter_map_animations/flutter_map_animations.dart';
 import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -24,8 +22,7 @@ class CachedTileProvider extends TileProvider {
   ImageProvider<Object> getImage(TileCoordinates coordinates, TileLayer options) {
     return CachedNetworkImageProvider(
       getTileUrl(coordinates, options),
-      imageRenderMethodForWeb: ImageRenderMethodForWeb.HtmlImage,
-
+      //Now you can set options that determine how the image gets cached via whichever plugin you use.
     );
   }
 }
@@ -69,7 +66,7 @@ class MapWidgetState extends State<MapWidget> with TickerProviderStateMixin {
   var trackCar = true;
 
   controlMarkersListener(_, MapControlInitial state) async {
-    if (state.moveCamera) controller.animateTo(dest: state.point, zoom: controller.mapController.zoom);
+    if (state.moveCamera) controller.animateTo(dest: state.point, zoom: controller.zoom);
 
     if (state.state == 'mt') {
       switch (state.type) {
@@ -109,8 +106,9 @@ class MapWidgetState extends State<MapWidget> with TickerProviderStateMixin {
             }
 
             if (state.centerZoomPoints.isNotEmpty) {
-              await controller.animatedFitCamera(
-                cameraFit: CameraFit.coordinates(coordinates: state.centerZoomPoints,forceIntegerZoomLevel: true),
+              await controller.centerOnPoints(
+                state.centerZoomPoints,
+                options: const FitBoundsOptions(forceIntegerZoomLevel: true),
               );
 
               mapControllerCubit.state.centerZoomPoints.clear();
@@ -123,7 +121,7 @@ class MapWidgetState extends State<MapWidget> with TickerProviderStateMixin {
       ],
       child: FlutterMap(
         key: mapWidgetKey,
-        mapController: controller.mapController,
+        mapController: controller,
         options: MapOptions(
           maxZoom: maxZoom,
           interactiveFlags: InteractiveFlag.pinchZoom | InteractiveFlag.drag,
@@ -137,11 +135,11 @@ class MapWidgetState extends State<MapWidget> with TickerProviderStateMixin {
               if (mapControllerCubit.state.point == null) return;
               if (mapControllerCubit.state.markers.isNotEmpty) return;
 
-              controller.mapController.move(LatLng(33.16, 36.16), 9);
+              controller.move(LatLng(33.16, 36.16), 9);
             }
 
             if (widget.onMapReady != null) {
-              widget.onMapReady!(controller.mapController);
+              widget.onMapReady!(controller);
             }
           },
           onTap: widget.onMapClick == null
@@ -157,7 +155,7 @@ class MapWidgetState extends State<MapWidget> with TickerProviderStateMixin {
         ),
         nonRotatedChildren: [
           MapTypeSpinner(
-            controller: controller.mapController,
+            controller: controller,
           ),
           if (widget.search != null)
             Positioned(
@@ -204,8 +202,11 @@ class MapWidgetState extends State<MapWidget> with TickerProviderStateMixin {
                   zoomToBoundsOnClick: true,
                   maxClusterRadius: 70.0.r.toInt(),
                   size: Size(50.r, 50.r),
-
-
+                  anchor: AnchorPos.align(AnchorAlign.center),
+                  fitBoundsOptions: const FitBoundsOptions(
+                    padding: EdgeInsets.all(50),
+                    maxZoom: 15,
+                  ),
                   markers: MapHelper.initMarker(state),
                   builder: (context, markers) {
                     return Container(

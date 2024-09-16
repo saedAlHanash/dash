@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_multi_type/image_multi_type.dart';
 import 'package:qareeb_dash/core/api_manager/api_service.dart';
-import 'package:qareeb_dash/core/api_manager/api_url.dart';
 
 import '../../features/accounts/bloc/all_transfers_cubit/all_transfers_cubit.dart';
 import '../../features/admins/bloc/all_admins/all_admins_cubit.dart';
@@ -69,9 +68,11 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       // designSize: const Size(412, 770),
-      designSize: const Size(1440 * 1.2, 972),
+      // designSize: const Size(1440*1.2, 972),
+      designSize: MediaQuery.sizeOf(context),
       minTextAdapt: true,
       builder: (context, child) {
+
         DrawableText.initial(
           initialColor: AppColorManager.black,
           titleSizeText: 22.0.sp,

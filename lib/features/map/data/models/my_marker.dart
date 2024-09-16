@@ -3,17 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:image_multi_type/image_multi_type.dart';
+import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:qareeb_dash/core/extensions/extensions.dart';
+import 'package:qareeb_dash/core/widgets/item_info.dart';
+import 'package:qareeb_dash/core/widgets/my_card_widget.dart';
 import 'package:qareeb_dash/features/map/bloc/map_controller_cubit/map_controller_cubit.dart';
 
 import '../../../../core/strings/app_color_manager.dart';
 import '../../../../core/strings/enum_manager.dart';
 import '../../../../core/util/my_style.dart';
+import 'package:image_multi_type/image_multi_type.dart';
 import '../../../../generated/assets.dart';
+import '../../../../router/go_route_pages.dart';
 import '../../../buses/bloc/bus_by_imei_cubti/bus_by_imei_cubit.dart';
 import '../../../home/data/response/home_response.dart';
+import '../../../points/data/response/points_response.dart';
 import '../response/ather_response.dart';
 
 class MyMarker {
@@ -42,27 +47,29 @@ class MyMarker {
           point: point,
           height: 40.0.spMin,
           width: 40.0.spMin,
-          child: Transform.rotate(
-            angle: bearing ?? 0.0,
-            child: ImageMultiType(
-              url: Assets.iconsMainColorMarker,
-              height: 40.0.spMin,
-              width: 40.0.spMin,
-            ),
-          ),
+          builder: (context) {
+            return Transform.rotate(
+              angle: bearing ?? 0.0,
+              child: ImageMultiType(
+                url: Assets.iconsMainColorMarker,
+                height: 40.0.spMin,
+                width: 40.0.spMin,
+              ),
+            );
+          },
         );
       case MyMarkerType.driver:
         return Marker(
           point: point,
-          child: 0.0.verticalSpace,
+          builder: (context) => 0.0.verticalSpace,
         );
       case MyMarkerType.point:
         return Marker(
           point: point,
           height: 150.0.spMin,
           width: 150.0.spMin,
-          child: Builder(
-            builder: (context) {
+          builder: (context) {
+            return Builder(builder: (context) {
               NotificationPoint? e;
               if (item is NotificationPoint) {
                 e = item as NotificationPoint;
@@ -97,121 +104,132 @@ class MyMarker {
                   ),
                 ],
               );
-            },
-          ),
+            });
+          },
         );
       case MyMarkerType.sharedPint:
         return Marker(
           point: point,
           height: 100.0.spMin,
           width: 150.0.spMin,
-          child: ImageMultiType(
-            url: index.iconPoint,
-            height: 50.0.spMin,
-            width: 50.0.spMin,
-          ),
+          builder: (context) {
+            return Builder(builder: (context) {
+              return Column(
+                children: [
+                  ImageMultiType(
+                    url: index.iconPoint,
+                    height: 50.0.spMin,
+                    width: 50.0.spMin,
+                  ),
+                ],
+              );
+            });
+          },
         );
       case MyMarkerType.bus:
         return Marker(
-            point: point,
-            height: 150.0.spMin,
-            width: 150.0.spMin,
-            child: Builder(builder: (context) {
-              final imei = item as Ime;
-              return InkWell(
-                onTap: () {
-                  context.read<MapControllerCubit>().addTooltipMarker(
-                        marker: MyMarker(
-                          point: point,
-                          type: MyMarkerType.tooltip,
-                          item: item,
-                        ),
-                      );
-                },
-                child: Column(
-                  children: [
-                    Transform.rotate(
-                      angle: bearing ?? 0.0,
-                      child: ImageMultiType(
-                        url: Assets.iconsLocator,
-                        height: 40.0.spMin,
-                        width: 40.0.spMin,
-                        color: imei.speed == '0' ? Colors.red : AppColorManager.mainColor,
+          point: point,
+          height: 150.0.spMin,
+          width: 150.0.spMin,
+          builder: (context) {
+            final imei = item as Ime;
+            return InkWell(
+              onTap: () {
+                context.read<MapControllerCubit>().addTooltipMarker(
+                      marker: MyMarker(
+                        point: point,
+                        type: MyMarkerType.tooltip,
+                        item: item,
+                      ),
+                    );
+              },
+              child: Column(
+                children: [
+                  Transform.rotate(
+                    angle: bearing ?? 0.0,
+                    child: ImageMultiType(
+                      url: Assets.iconsLocator,
+                      height: 40.0.spMin,
+                      width: 40.0.spMin,
+                      color: imei.speed == '0' ? Colors.red : AppColorManager.mainColor,
+                    ),
+                  ),
+                  if (nou >= 0)
+                    Container(
+                      margin: EdgeInsets.only(bottom: 5.0.spMin),
+                      color: Colors.white,
+                      alignment: Alignment.center,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          DrawableText(
+                            text: '$nou طالب',
+                            color: Colors.black,
+                            size: 18.0.sp,
+                          ),
+                        ],
                       ),
                     ),
-                    if (nou >= 0)
-                      Container(
-                        margin: EdgeInsets.only(bottom: 5.0.spMin),
-                        color: Colors.white,
-                        alignment: Alignment.center,
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            DrawableText(
-                              text: '$nou طالب',
-                              color: Colors.black,
-                              size: 18.0.sp,
-                            ),
-                          ],
-                        ),
-                      ),
-                  ],
-                ),
-              );
-            }));
+                ],
+              ),
+            );
+          },
+        );
 
       case MyMarkerType.tooltip:
         return Marker(
           point: point,
           height: 150.0.r,
           width: 250.0.r,
-          child: BlocBuilder<BusByImeiCubit, BusByImeiInitial>(
-            builder: (context, state) {
-              if (state.statuses.loading) {
-                return MyStyle.loadingWidget();
-              }
+          builder: (context) {
+            return BlocBuilder<BusByImeiCubit, BusByImeiInitial>(
+              builder: (context, state) {
+                if (state.statuses.loading) {
+                  return MyStyle.loadingWidget();
+                }
 
-              return Container(
-                constraints: BoxConstraints(maxHeight: 100.0.r, maxWidth: 250.0.r),
-                padding: const EdgeInsets.all(10.0).r,
-                color: Colors.white,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        context.read<MapControllerCubit>().addTooltipMarker(
-                              marker: null,
-                            );
-                      },
-                      child: Icon(
-                        size: 25.r,
-                        Icons.cancel_outlined,
+                return Container(
+                  constraints: BoxConstraints(maxHeight: 100.0.r, maxWidth: 250.0.r),
+                  padding: const EdgeInsets.all(10.0).r,
+                  color: Colors.white,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          context.read<MapControllerCubit>().addTooltipMarker(
+                                marker: null,
+                              );
+                        },
+                        child: Icon(
+                          size: 25.r,
+                          Icons.cancel_outlined,
+                        ),
                       ),
-                    ),
-                    DrawableText(
-                      text: 'اسم: ${(item as Ime).name}',
-                      color: Colors.black,
-                      matchParent: true,
-                      size: 16.0.sp,
-                    ),
-                    DrawableText(
-                      text: 'السرعة: ${(item as Ime).speed}',
-                      color: Colors.black,
-                      matchParent: true,
-                      size: 16.0.sp,
-                    ),
-                    DrawableText(
-                      text: 'معرف الباص: ${(item as Ime).ime}',
-                      color: Colors.black,
-                      matchParent: true,
-                      size: 16.0.sp,
-                    ),
-                  ],
-                ),
-              );
-            },
-          ),
+                      DrawableText(
+                        text: 'اسم: ${(item as Ime).name}',
+                        color: Colors.black,
+                        matchParent: true,
+                        size: 16.0.sp,
+                      ),
+                      DrawableText(
+                        text: 'السرعة: ${(item as Ime).speed}',
+                        color: Colors.black,
+                        matchParent: true,
+                        size: 16.0.sp,
+                      ),
+                      DrawableText(
+                        text: 'معرف الباص: ${(item as Ime).ime}',
+                        color: Colors.black,
+                        matchParent: true,
+                        size: 16.0.sp,
+                      ),
+                    ],
+                  ),
+                );
+              },
+            );
+          },
         );
     }
   }

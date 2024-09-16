@@ -120,7 +120,7 @@ class Assets {
   static const String iconsCard = 'assets/icons/card.svg';
   static const String iconsKey = 'assets/icons/key.svg';
   static const String iconsQrCode = 'assets/icons/qr_code.svg';
-  static const String iconsTestMode = 'assets/icons/test_mode.png';
+
   static const String lottiesError = 'assets/lotties/error.json';
   static const String lottiesMochup02Location = 'assets/lotties/mochup_02_location.json';
   static const String lottiesMochup03Done = 'assets/lotties/mochup_03_done.json';

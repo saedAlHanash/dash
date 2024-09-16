@@ -8,7 +8,7 @@ import 'package:qareeb_dash/core/strings/app_color_manager.dart';
 import '../../features/drivers/bloc/loyalty_cubit/loyalty_cubit.dart';
 import '../../features/drivers/data/response/drivers_response.dart';
 import '../util/my_style.dart';
-
+import 'package:toggle_switch/toggle_switch.dart';
 class MyButton extends StatelessWidget {
   const MyButton({
     Key? key,

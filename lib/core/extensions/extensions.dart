@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-
+import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
@@ -20,6 +20,14 @@ import '../strings/enum_manager.dart';
 
 export 'package:google_polyline_algorithm/google_polyline_algorithm.dart'
     show decodePolyline;
+
+extension LatLngHelper on LatLng {
+  int distanceBetweenLatLng(LatLng end) {
+    final d =
+        Geolocator.distanceBetween(latitude, longitude, end.latitude, end.longitude);
+    return d.toInt();
+  }
+}
 
 extension PolylineExt on List<List<num>> {
   List<LatLng> unpackPolyline() =>
