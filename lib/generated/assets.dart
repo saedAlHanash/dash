@@ -124,6 +124,7 @@ class Assets {
   static const String lottiesError = 'assets/lotties/error.json';
   static const String lottiesMochup02Location = 'assets/lotties/mochup_02_location.json';
   static const String lottiesMochup03Done = 'assets/lotties/mochup_03_done.json';
+  static const String iconsStamp = 'assets/icons/stamp.png';
 
 
 }

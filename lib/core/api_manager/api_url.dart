@@ -314,11 +314,13 @@ String get baseUrl {
   //     ? 'live.qareeb-maas.com'
   //     : 'livetest.qareeb-maas.com';
 
-  return testUrl;
+  // return testUrl;
+  return testDemoUrl;
   // return liveUrl;
 }
 
- bool get isTestMode => baseUrl == testUrl;
+bool get isTestMode => baseUrl == testUrl || baseUrl == testDemoUrl;
 const testUrl = 'qareeb-api.first-pioneers.com.tr';
 // const testLocalUrl = 'livetest.qareeb-maas.com';
 const liveUrl = 'live.qareeb-maas.com';
+const testDemoUrl = 'demo1.qareeb-maas.com';

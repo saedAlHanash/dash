@@ -124,9 +124,21 @@ class _MyAppState extends State<MyApp> {
                   create: (_) => sl<AllCarCategoriesCubit>()..getCarCategories(_),
                 ),
               ],
-              child: Directionality(
-                textDirection: TextDirection.rtl,
-                child: child!,
+              child: Stack(
+                children: [
+                  Directionality(textDirection: TextDirection.rtl, child: child!),
+                  if (isTestMode)
+                    Center(
+                      child: IgnorePointer(
+                        child: ImageMultiType(
+                          height: 300.0.h,
+                          width: 300.0.w,
+                          color: Colors.grey,
+                          url: Assets.iconsTestMode,
+                        ),
+                      ),
+                    ),
+                ],
               ),
             );
           },

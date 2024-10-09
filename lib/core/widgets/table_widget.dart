@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qareeb_dash/core/strings/app_color_manager.dart';
 import 'package:qareeb_dash/core/widgets/my_card_widget.dart';
-import 'package:url_launcher/url_launcher.dart';
+
 
 import '../../generated/assets.dart';
 import '../strings/app_string_manager.dart';
@@ -51,7 +51,7 @@ class MyTableWidget extends StatelessWidget {
                   ? InkWell(
                       splashColor: Colors.transparent,
                       onTap: () {
-                        _makePhoneCall('0$value');
+
                       },
                       child:  ImageMultiType(url:
                         Assets.iconsCallDriver,
@@ -95,10 +95,3 @@ class MyTableWidget extends StatelessWidget {
   }
 }
 
-Future<void> _makePhoneCall(String phoneNumber) async {
-  final Uri launchUri = Uri(
-    scheme: 'tel',
-    path: phoneNumber,
-  );
-  await launchUrl(launchUri);
-}
